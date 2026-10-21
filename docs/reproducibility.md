@@ -1,0 +1,209 @@
+# Reproducibility, architecture and operations
+
+## Documentation map
+
+| Question | Document |
+| --- | --- |
+| Install and basic commands | [README](../README.md) |
+| Exact model/reward equations and limitations | [Methodology](methodology.md) |
+| Controlled experiments, metrics and evidence | [Experimental protocol](experiments.md) |
+| Galaxy 2 addresses and derivation | [Memory profile](memory-profile.md) |
+| Galaxy 1 assets, addresses and live evidence | [Galaxy 1 validation](smg1.md) |
+| Hidden instances, CUDA, throughput and stopping | [Background training](background-training.md) |
+| Original desktop validation | [Validation report](validation.md) |
+| Practical training guidance | [Training guide](training.md) |
+| Bibliographic metadata | [BibTeX references](references.bib) |
+
+## Module responsibilities
+
+```mermaid
+flowchart LR
+  YAML[Game-specific YAML] --> CLI[CLI / validation / trainer]
+  CLI --> Workers[Isolated worker processes]
+  Workers --> DSU[Private DSU server per worker]
+  DSU --> Dolphin[Owned Dolphin instance]
+  Dolphin --> PNG[Fresh renderer PNG]
+  Dolphin --> RAM[Read-only PID-scoped RAM]
+  PNG --> Obs[Image stack + scenario]
+  PNG --> Novelty[Local episodic novelty and RND]
+  RAM --> Telemetry[Coordinates / scene / actor state]
+  Telemetry --> Reward[Progress and terminal reward]
+  Novelty --> Reward
+  Obs --> PPO[CUDA recurrent PPO]
+  Reward --> PPO
+  Telemetry --> Logs[CSV / JSON / top-down plots]
+  PPO --> Pair[Policy and curiosity checkpoint pair]
+```
+
+| File under `src/smg_rl/` | Responsibility |
+| --- | --- |
+| `config.py` | YAML loading and project-relative path expansion |
+| `profiles.py` | Executable-specific memory layouts and validation-only guard |
+| `memory.py` | Big-endian pointer graph and telemetry predicates |
+| `process_memory.py` | Windows read-only memory mappings for an explicit PID |
+| `dolphin.py` | Owned profile preparation and visible desktop adapter |
+| `dsu.py` | Loopback controller protocol and per-worker input state |
+| `background.py` | Hidden Dolphin lifecycle, pause handshake, fresh renderer capture |
+| `actions.py` | Stable 54-action enumeration |
+| `curiosity.py` | Inverse features, episodic kNN, RND, optimizer/statistics persistence |
+| `rewards.py` | Bounded high-water progress and displacement/height gates |
+| `env.py` | Observation boundary, resets, episode limits, rewards and logs |
+| `train.py` | Desktop recurrent PPO, evaluation, run/config snapshots |
+| `parallel.py` | Spawned vector environments, CUDA learning, status and checkpoints |
+| `validation.py` | Positive/negative live detector checks and calibration fixtures |
+| `plotting.py` | Standalone equal-scale world X/Z figures |
+| `cli.py` | User commands, status, graceful stop and training guards |
+
+There is no writable RAM interface, network gameplay service, cloud learner,
+external telemetry upload, multi-machine coordinator or in-game patch.
+
+## Environment and provenance
+
+The live development environment uses Windows, Python 3.11, Dolphin 2609a,
+i9-14900HX, 32 logical CPU threads, approximately 32 GB RAM, and an RTX 4070
+Laptop GPU with 8 GB VRAM. The tested CUDA wheel is Torch 2.6.0+cu124 with
+Stable-Baselines3/sb3-contrib 2.6.0. The dependency lock records actual versions.
+
+Use `requirements-gpu.lock.txt` for the CUDA setup and
+`requirements-windows.lock.txt` for the older desktop CPU environment. Installing
+unconstrained current SB3 after the tested CUDA wheel can upgrade dependencies
+and change the environment; use the lock and `--no-deps` project installation:
+
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements-gpu.lock.txt
+.\.venv\Scripts\python.exe -m pip install --no-deps -e .
+.\.venv\Scripts\python.exe -m pip check
+.\.venv\Scripts\python.exe -m pytest -q
+.\.venv\Scripts\python.exe -m ruff check src tests
+```
+
+For an archived experiment preserve the exact repository commit, dirty diff if
+any, lockfile, run `config.json`, calibration, emulator hash/version, input state
+hashes, package versions, hardware and driver information. A config snapshot
+alone is insufficient to reproduce changed source code. Useful local commands:
+
+```powershell
+git rev-parse HEAD
+git status --short
+.\.venv\Scripts\python.exe -m pip freeze
+Get-FileHash -Algorithm SHA256 'D:\emuladores\Dolphin-x64\Dolphin.exe'
+Get-FileHash -Algorithm SHA256 data/SB4E01.s01,data/SB4E01.s02,data/SB4E01.s03,data/SB4E01.s04
+Get-FileHash -Algorithm SHA256 data/RMGE01.s01,data/RMGE01.s02
+nvidia-smi
+```
+
+Hash ROMs locally when archiving a study; do not redistribute them. State files
+can contain user game data and are also local-only. An emulator update may make
+old savestates incompatible. Do not substitute an unrelated scripting fork and
+assume its state format matches; revalidation is mandatory.
+
+Address derivation uses pinned sources: Garigari
+`89df1f33c7f6bcf1c159c9f91b0ad76b04a1d84e` for Galaxy 2 and Petari
+`bfa933645d969a8f0b4fea24f490370ee85e7c29` for Galaxy 1. Only address/layout facts
+and small measured telemetry fixtures are included, not either game executable.
+
+## Configuration contract
+
+`--config` appears before the subcommand. Paths resolve relative to the project
+root and expand environment variables. `game.id` selects a memory profile;
+omitting it preserves the original `SB4E01` default. `variations` specifies names,
+scenario numbers and start/goal slots. Profile preparation copies only slots
+referenced by those variations. Existing destination state files are not
+overwritten; use a new owned profile after replacing source states.
+
+| Section | Meaning |
+| --- | --- |
+| `paths` | Emulator, source/owned user profile, ROM, assets, runs and calibration |
+| `environment` | Capture shape/crop, desktop timing, episode limits and progress gates |
+| `rewards` | Completion, death, progress, intrinsic and step coefficients |
+| `novelty` | kNN count/capacity, embedding dimension and lifelong clipping |
+| `training` | Seed, learning budget, rollout/minibatch, optimizer settings and device |
+| `parallel` | Worker count, emulator speed, approximate frame budget, timeout, hiding and plot cadence |
+| `game` | Disc ID and human-readable game title |
+| `variations` | Stage missions and local savestate role mapping |
+| `validation` (optional) | `death_action`, default `[s]`, for the negative detector test |
+
+`config/default.yaml` selects desktop Galaxy 2. `config/parallel.yaml` selects
+hidden parallel Galaxy 2 with CUDA. `config/smg1.yaml` selects a single hidden
+Galaxy 1 validation instance; both the flag and game-specific guard prohibit
+training. The Galaxy 1 command must be passed explicitly. Ordinary Galaxy 2
+training never samples its states.
+
+## Checkpoint semantics and failure recovery
+
+A resumable checkpoint consists of matching `model-N.zip` and
+`model-N.intrinsic.pt`. The first contains SB3 policy/value parameters and
+optimizer state. The second contains each worker/scenario's learned encoder,
+inverse classifier, fixed RND target, predictor, curiosity optimizer and running
+RND moments. The newest three completed periodic pairs are retained; a normal
+exit additionally saves `model-final`.
+
+Episodic embeddings, emulator state at interruption, LSTM episode state,
+partially collected PPO rollouts and random-generator states are not preserved
+as an exact replay snapshot. On resume, workers return to their start savestates.
+Changing worker count maps saved curiosity states cyclically. Changing scenarios
+or the observation/action space is not a supported checkpoint migration.
+
+The two files are saved sequentially, not as one atomic filesystem transaction.
+After a crash, choose a pair for which both files exist and load successfully;
+avoid an incomplete newest save. A failed worker aborts the run and cleans up
+owned descendants. If a model is available, `policy-emergency.zip` preserves it
+for inspection; it has no matching curiosity state and is not advertised as a
+normal resumable pair. There is currently no automatic watchdog/restart loop.
+
+```powershell
+.\.venv\Scripts\smg-rl.exe --config config/parallel.yaml status
+.\.venv\Scripts\smg-rl.exe --config config/parallel.yaml stop
+.\.venv\Scripts\smg-rl.exe --config config/parallel.yaml train-parallel --workers 4 --steps 1000000 --resume runs/parallel-EXAMPLE/model-2048.zip
+```
+
+`status` checks PID creation time, reducing the risk of confusing a recycled PID
+with the saved controller. `stop` writes a marker consumed at the next vector
+step. Allow time for screenshot/worker synchronization and checkpoint saving.
+Do not kill all Dolphin processes to stop one run; the project cleans only its
+owned process tree. A hung/crashed worker may prevent a graceful final pair;
+periodic pairs remain the recovery point.
+
+## Output interpretation
+
+`status.json` records aggregate timesteps, optimizer updates, device, active
+worker count, per-worker current-episode best progress, elapsed time and aggregate
+new decisions per second. Its elapsed denominator includes callback lifetime,
+not full process startup. A resumed timestep count includes earlier training.
+Progress values reset on new episodes and are not lifetime record maxima.
+
+Trajectory CSVs record decision step, host time, scenario, action, XYZ, current
+and best valid projection, reward, intrinsic reward, death/completion flags,
+actor pointer, actor/scene nerves, scene counter and outcome. Host time is Unix
+seconds; world coordinates have game units, not meters. `episodes.jsonl` records
+episode summaries. JSON/CSV artifacts are the measurement source of truth;
+console averages can mix episodes and should not replace per-scenario analysis.
+
+Top-down figures plot actual world X against world Z with equal coordinate
+scale and color indicating decision order. They are not collision maps or
+reconstructions of unseen floor geometry. World Y is retained in CSV. An
+auto-scaled progress chart can make a small percentage look large; inspect its
+numeric axis and the full-course annotation. Detector traces without a
+`best_progress` field use a raw running maximum for display only.
+
+## Test scope
+
+The portable suite tests terminal predicates, cross-game rejection, pointer
+relocation, invalid telemetry, geometric reward safeguards, curiosity behavior
+and persistence, observation separation, DSU encoding/isolation, profile
+configuration, fresh capture rejection, and pause-stall regression. These tests
+do not boot a ROM. Live calibration separately tests the real emulator and
+supplied states. CUDA/parallel training and stop/resume require local integration
+tests. The CI template is provided in `ci/windows-tests.yml`; its presence does
+not mean a hosted GitHub Actions run has executed.
+
+## Repository and artifact policy
+
+The canonical remote is [PedroM2626/smg-rl](https://github.com/PedroM2626/smg-rl).
+It is private at the owner's request. Source, documentation, small measured
+fixtures, tests and calibration are versioned. `data/`, `.local/`, `runs/`,
+checkpoints, copied profiles and virtual environments are ignored, except for
+the explanatory `data/README.md`. Check staged files before every push. Access
+to a private repository requires the owner's GitHub authorization; a 404 for an
+unauthenticated visitor does not imply the repository is absent.

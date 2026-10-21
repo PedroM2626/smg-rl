@@ -1,6 +1,6 @@
 # Verified SB4E01 memory profile
 
-All addresses below are **emulated Wii addresses**, not host process pointers. Wii data is big-endian. RAM is read through `dolphin-memory-engine`; the project never writes game RAM or invokes emulated functions.
+All addresses below are **emulated Wii addresses**, not host process pointers. Wii data is big-endian. The desktop backend reads through `dolphin-memory-engine`; hidden workers use explicit-PID read-only process access. The project never writes game RAM or invokes emulated functions.
 
 The profile was derived from the live executable and the [Garigari SB4E01 symbol map](https://github.com/SMGCommunity/Garigari/blob/89df1f33c7f6bcf1c159c9f91b0ad76b04a1d84e/config/SB4E01/symbols.txt). Only address/layout facts are used; game code and assets are not distributed.
 
@@ -57,3 +57,5 @@ The top-down plot uses world X horizontally and world Z vertically with equal co
 ## Revalidation
 
 Run `smg-rl calibrate` with no other Dolphin process, or `smg-rl calibrate --attach` while a compatible session is already open. The command rejects a near-star baseline already marked complete, then requires a real post-jump completion and a real post-fall death in **each** variation. Inspect `config/calibration.json` and the emitted CSV/PNG evidence. Never label an untested regional address map as verified.
+
+The separate [Galaxy 1 profile](smg1.md) uses different offsets and terminal nerves. Layout selection is explicit in `profiles.py`.

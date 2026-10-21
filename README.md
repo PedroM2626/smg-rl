@@ -1,11 +1,22 @@
 # SMG RL
 
-**Recommended on this machine:** [hidden parallel training with four Dolphin workers and CUDA](docs/background-training.md). It measured about 7.9 aggregate decisions/second, versus about 1 decision/second for the original desktop controller. It does not use your keyboard, mouse, desktop screenshots, or foreground window.
+Canonical repository: **[PedroM2626/smg-rl](https://github.com/PedroM2626/smg-rl)** (private). All source, configuration, documentation and generated labels are in English.
+
+## Documentation and supported games
+
+| Game | Scope | Configuration |
+| --- | --- | --- |
+| Galaxy 2 USA (`SB4E01`), two Twisty Trials variations | Visual recurrent RL, live-verified telemetry, hidden parallel training | `config/parallel.yaml` |
+| Galaxy 1 USA (`RMGE01`), Sweet Sweet Galaxy | Live-verified star/death/coordinates; **validation only, training blocked** | `config/smg1.yaml` |
+
+The detailed technical report covers [mathematical methodology](docs/methodology.md), [experimental design and limitations](docs/experiments.md), [architecture/reproducibility/operations](docs/reproducibility.md), [Galaxy 1 validation](docs/smg1.md), and [bibliographic references](docs/references.bib). Empirical learning claims are limited to the measured evidence; no learned full-course solution is claimed.
+
+**Recommended on this machine:** [hidden parallel training with four Dolphin workers and CUDA](docs/background-training.md). The initial short benchmark measured about 7.9 aggregate decisions/second, versus about 1 for the original desktop controller. The revised pause check favors stability; its subsequent live run measured about 4.6 aggregate decisions/second. It does not use your keyboard, mouse, desktop screenshots, or foreground window.
 
 Vision-based recurrent reinforcement learning for **Super Mario Galaxy 2**, running in the Windows desktop version of Dolphin. One scenario-conditioned policy trains on both Twisty Trials variations:
 
-1. **Spinning and Spinning and Spinning** — start state 1, near-star state 2.
-2. **Turning Turning Double Time** — start state 3, near-star state 4.
+1. **Spinning and Spinning and Spinning** â€” start state 1, near-star state 2.
+2. **Turning Turning Double Time** â€” start state 3, near-star state 4.
 
 The policy sees four grayscale gameplay frames and a scenario one-hot vector. World coordinates, death, and completion are read from game RAM **only for rewards, validation, logging, and trajectory plots**. They are never policy observations.
 
@@ -30,7 +41,7 @@ py -3.11 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -e ".[dev]"
 ```
 
-The tested Windows dependency versions are recorded in `requirements-windows.lock.txt`. To reproduce them in a fresh environment, install that file before installing the project with `--no-deps -e .`.
+The tested GPU dependency versions are recorded in `requirements-gpu.lock.txt`; `requirements-windows.lock.txt` records the older desktop CPU environment. To reproduce them in a fresh environment, install that file before installing the project with `--no-deps -e .`.
 
 The local assets belong in `data/`:
 
@@ -49,7 +60,7 @@ ROMs, savestates, copied Dolphin profiles, checkpoints, and full experiment logs
 
 The defaults use `D:\emuladores\Dolphin-x64\Dolphin.exe` and `%APPDATA%\Dolphin Emulator` as the source profile. Change paths in a copy of `config/default.yaml` named `config/local.yaml` if needed. That local file is ignored by Git. Pass `--config config/local.yaml` **before** the subcommand.
 
-The project copies the source profile into `.local/dolphin-user`, preserving the original profile. The disposable Wii play log is omitted because Dolphin may lock it. The copy receives explicit F1–F4 load bindings and an F10 pause binding. State files are copied only if the destination does not already exist.
+The project copies the source profile into `.local/dolphin-user`, preserving the original profile. The disposable Wii play log is omitted because Dolphin may lock it. The copy receives explicit F1â€“F4 load bindings and an F10 pause binding. State files are copied only if the destination does not already exist.
 
 ```powershell
 .\.venv\Scripts\smg-rl.exe prepare
@@ -82,7 +93,7 @@ With the game still open, start training:
 .\.venv\Scripts\smg-rl.exe train --attach --steps 1000000
 ```
 
-If Dolphin is closed, omit `--attach` to launch the isolated profile automatically. To attach to an existing session, it must already be in one of these two Twisty Trials scenarios, with working F1–F4 and F10 bindings.
+If Dolphin is closed, omit `--attach` to launch the isolated profile automatically. To attach to an existing session, it must already be in one of these two Twisty Trials scenarios, with working F1â€“F4 and F10 bindings.
 
 Press **Ctrl+C in the terminal** to stop and save. Each run has its own timestamped directory:
 
@@ -122,6 +133,16 @@ Evaluation disables intrinsic rewards and curiosity updates, uses deterministic 
 
 A successful near-star calibration validates the detector; it does not count as an agent completing a full course. Training and evaluation reset only to states **1 and 3**.
 
+## Galaxy 1 validation only
+
+Place `RMGE01.s01`, `RMGE01.s02` and the Galaxy 1 ROM in `data/`, then run:
+
+```powershell
+.\.venv\Scripts\smg-rl.exe --config config/smg1.yaml calibrate-background
+```
+
+The supplied Sweet Sweet Galaxy states passed star collection, death, coordinate movement and pause checks. Completion uses scene nerve **`0x806A1BD8`**, independently derived from Galaxy 2. Evidence, pointer chains and measured top-down plots are documented in [the Galaxy 1 report](docs/smg1.md). Both training commands reject Galaxy 1 before launching anything. Its files and calibration are separate from Galaxy 2.
+
 ## Tests
 
 ```powershell
@@ -133,7 +154,7 @@ A successful near-star calibration validates the detector; it does not count as 
 
 ## Practical limits
 
-This backend uses a visible desktop window and polled Windows inputs. It acknowledges pause using the game's frame counter, pauses during learning updates, and releases controller inputs around emulator shortcuts. Decision duration is variable; `action_seconds` is the additional held-action interval, not a promise of an exact frame count. Neutral game frames can occur during the shortcut handshake. A headless or frame-synchronous Dolphin integration would improve throughput and action precision.
+The visible desktop backend uses a visible desktop window and polled Windows inputs. It acknowledges pause using the game's frame counter, pauses during learning updates, and releases controller inputs around emulator shortcuts. Decision duration is variable; `action_seconds` is the additional held-action interval, not a promise of an exact frame count. Neutral game frames can occur during the shortcut handshake. The hidden parallel backend removes foreground input, while a future native frame-synchronous bridge could improve action precision further.
 
 The address profile deliberately fails on unsupported game IDs, executable signatures, scenes, scenarios, invalid pointers, and non-finite coordinates. The route reward projects XYZ positions onto the calibrated start-to-star axis in X/Z. This is useful for these courses, but is a geometric progress proxy rather than a hidden native "percent complete" field. Completion is exclusively the star-collection state transition.
 

@@ -45,7 +45,7 @@ The original desktop Dolphin session is independent of these workers. It can rem
 
 These select the newest parallel run unless an explicit run directory is supplied. `stop` creates that run's `STOP` marker. The learner finishes the current vector step, saves the final policy and curiosity states, and closes the workers. Ctrl+C also requests shutdown in a foreground terminal.
 
-Each run has `controller.json`, `status.json`, periodic checkpoint pairs, and a final checkpoint pair. Trajectories live under `worker-XX/<variation>/episode-NNNNNN.csv`. CSVs are saved for every episode. PNGs are generated every 20 episodes per worker, on every success, and when saving an interrupted episode; any CSV can also be plotted later with the `plot` command.
+Each run has `controller.json`, `status.json`, periodic checkpoint pairs (every 1024 aggregate decisions, newest three retained), and a final checkpoint pair on normal exit. An error may leave a policy-only emergency snapshot; resume from a complete periodic pair. Trajectories live under `worker-XX/<variation>/episode-NNNNNN.csv`. CSVs are saved for every episode. PNGs are generated every 20 episodes per worker, on every success, and when saving an interrupted episode; any CSV can also be plotted later with the `plot` command.
 
 Runtime profiles are stored under `.local/parallel-profiles/<run-name>/worker-XX`. Each run uses a separate namespace, so restarting training does not reuse another run's controller files or UDP port.
 
@@ -58,6 +58,8 @@ On the local i9-14900HX / RTX 4070 laptop:
 | Original desktop controller | about 1.0 |
 | 2 hidden workers + CUDA | about 4.6 |
 | 4 hidden workers + CUDA | about 7.9 |
+
+These historical measurements preceded the longer pause-stability check. The revised backend measured approximately 4.6 aggregate decisions/second in its subsequent live run; measure each revision separately.
 
 The four-worker test collected 512 additional decisions in about 65 seconds, resumed from 256 to 768 total decisions, completed PPO updates, and saved all four curiosity states. These are decisions, not rendered frames per second. Startup and shader compilation are separate from steady-state collection time.
 
@@ -73,7 +75,7 @@ Higher `emulation_speed` or `frame_skip` can improve throughput but makes contro
 
 The local `runs/background-validation-20261021-175431-396382/` test passed star collection, death, movement, and pause checks in both variations using a hidden worker. Movement checks allow the initial spawn animation to release control.
 
-The resume/stop integration test at `runs/parallel-20261021-175601-308500/` stopped gracefully at 1140 total decisions, saved both final checkpoint files, and closed its workers. The test suite has 35 passing tests. No full course has been solved by these short tests; the long run must be judged by independent success rates.
+The resume/stop integration test at `runs/parallel-20261021-175601-308500/` stopped gracefully at 1140 total decisions, saved both final checkpoint files, and closed its workers. The expanded suite covers both games and the pause-stall regression. No full course has been solved by these short tests; the long run must be judged by independent success rates.
 
 ## Sources
 
@@ -82,3 +84,7 @@ The resume/stop integration test at `runs/parallel-20261021-175601-308500/` stop
 - [Dolphin hotkey focus setting](https://github.com/dolphin-emu/dolphin/blob/master/Source/Core/Core/Config/UISettings.cpp)
 - [Dolphin internal screenshot pipeline](https://github.com/dolphin-emu/dolphin/blob/master/Source/Core/VideoCommon/FrameDumper.cpp)
 - [Official PyTorch CUDA installation commands](https://pytorch.org/get-started/previous-versions/)
+
+## Pause-stall correction
+
+The first long run failed at 1944 total decisions after a pause acknowledgment error. The previous 45 ms stability probe could interpret a brief rendering stall as a paused emulator. The revised probe requires up to 180 ms of stable samples and reconciles the measured pause state before toggling. Failures still abort explicitly; no fabricated transition is added to a rollout. More frequent checkpoints bound lost work, and periodic retention bounds disk growth. See [reproducibility](reproducibility.md) for recovery and [the experiment register](experiments.md) for the distinction between historical smoke throughput and current measurements.

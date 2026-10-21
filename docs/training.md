@@ -54,3 +54,7 @@ The defaults are a starting configuration, not a demonstrated convergent solutio
 | Profile copy failure | Close the source Dolphin process and rerun `prepare`; incomplete owned copies are recoverable. |
 | Game moves but observation is black | Keep Dolphin visible and unobscured; screen capture requires a usable desktop. |
 | GitHub workflow publishing rejected | Keep the template in `ci/` or use a credential with workflow permission. |
+
+## Mathematical specification and research protocol
+
+The implementation-level equations, network shapes, constants, reward bounds and information boundary are in [methodology](methodology.md). The [experiment protocol](experiments.md) specifies independent seeds, ablations, evaluation intervals, uncertainty and throughput measurement. [Reproducibility](reproducibility.md) documents modules, file formats, configuration, checkpoint limits and failure recovery. These research procedures are documented separately from completed engineering validation; no ablation or converged full-course result is claimed. Galaxy 1 is [validation-only](smg1.md) and must not be trained in the current scope.

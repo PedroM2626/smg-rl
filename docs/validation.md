@@ -78,3 +78,11 @@ A final fresh 32-decision PPO run also passed using the production 0.25-second a
 The test suite covers dynamic pointer relocation, endianness, both scenario IDs, pending nerve precedence, completion/death separation, invalid memory rejection, progress farming prevention, fall/teleport suppression, frozen episodic embeddings, RND checkpoint state, small-distance normalization, policy observation boundaries, episode logging/plots, input release around pause shortcuts, bounded pause retries, and source-profile preservation.
 
 `python -m pytest -q`: **27 passed**. `python -m ruff check src tests`: **passed**. `python -m pip check`: **no broken requirements**.
+
+## Subsequent integration and reliability checks (2026-10-21)
+
+The canonical private repository is `PedroM2626/smg-rl`; its history was transferred from the initially configured account. The expanded portable suite has 43 passing tests, including independent RMGE01 telemetry, cross-game rejection, both CLI training guards, two-slot profile preparation and pause-stall regression. Ruff and dependency consistency checks passed locally.
+
+Galaxy 1 Sweet Sweet Galaxy passed live star collection from slot 2, backward-fall death from slot 1, coordinate movement and pause checks. The full pointer map, fixture telemetry and measured top-down plots are in [the Galaxy 1 report](smg1.md). No Galaxy 1 training was started.
+
+The first Galaxy 2 long run stopped at 1944 aggregate timesteps on a pause acknowledgment failure. It was resumed from the intact 1140-step paired checkpoint after extending frame-stability detection and reconciling measured pause state. The revised four-worker CUDA run is `runs/parallel-20261021-183228-379160/`. During the subsequent live observation it exceeded 2700 aggregate timesteps, completed further PPO updates and wrote a fresh policy/curiosity pair at 2164. Its measured collection/optimization rate was approximately 4.6 new aggregate decisions per second. This is an active training observation, not a claim of an unattended completed experiment or learned full-course success.
