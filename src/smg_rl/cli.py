@@ -9,11 +9,12 @@ from pathlib import Path
 import psutil
 
 from smg_rl.config import load_config
+from smg_rl.profiles import game_id, require_training_enabled
 
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Visual reinforcement learning for Twisty Trials in Dolphin."
+        description="Visual reinforcement learning and game telemetry validation in Dolphin."
     )
     parser.add_argument("--config", default="config/default.yaml")
     commands = parser.add_subparsers(dest="command", required=True)
@@ -24,7 +25,7 @@ def main():
     launch_parser.add_argument("--slot", type=int, choices=range(1, 5), default=1)
     commands.add_parser("telemetry", help="Print a read-only telemetry snapshot.")
     commands.add_parser(
-        "calibrate-background", help="Validate both scenarios with a hidden worker."
+        "calibrate-background", help="Validate configured scenarios with a hidden worker."
     )
     for name in ("status", "stop"):
         command = commands.add_parser(name)
@@ -40,7 +41,7 @@ def main():
     for command in ("calibrate", "train", "evaluate"):
         sub = commands.add_parser(command)
         sub.add_argument(
-            "--attach", action="store_true", help="Use an already running SB4E01 game window."
+            "--attach", action="store_true", help="Use an already running configured game window."
         )
         if command == "train":
             sub.add_argument("--steps", type=int)
@@ -59,6 +60,8 @@ def main():
         print(plot_trajectory(args.trajectory, args.output))
         return
     config = load_config(args.config)
+    if args.command in ("train", "train-parallel"):
+        require_training_enabled(config)
     if args.command in ("status", "stop"):
         root = Path(config["paths"]["runs"]).resolve()
         candidates = sorted(root.glob("parallel-*"))
@@ -125,7 +128,7 @@ def main():
     if args.command == "telemetry":
         from smg_rl.memory import GameMemory
 
-        print(json.dumps(GameMemory().sample().to_dict(), indent=2))
+        print(json.dumps(GameMemory(game_id=game_id(config)).sample().to_dict(), indent=2))
         return
     from smg_rl.dolphin import DesktopDolphin, launch, prepare_profile
 

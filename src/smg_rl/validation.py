@@ -10,6 +10,7 @@ import numpy as np
 
 from smg_rl.memory import GameMemory, MemoryFault
 from smg_rl.plotting import plot_trajectory
+from smg_rl.profiles import game_id
 
 
 def write_trace(path, samples, variation, outcome, start, goal):
@@ -48,11 +49,11 @@ def write_trace(path, samples, variation, outcome, start, goal):
 
 
 def calibrate(config, backend, output_dir):
-    memory = getattr(backend, "memory", None) or GameMemory()
+    memory = getattr(backend, "memory", None) or GameMemory(game_id=game_id(config))
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     result = {
-        "game_id": "SB4E01",
+        "game_id": game_id(config),
         "validated": False,
         "created_utc": datetime.now(timezone.utc).isoformat(),
         "variations": {},
@@ -96,7 +97,7 @@ def calibrate(config, backend, output_dir):
         backend.load_slot(variation["start_slot"])
         samples = [memory.sample()]
         for _ in range(100):
-            backend.advance(["s"])
+            backend.advance(config.get("validation", {}).get("death_action", ["s"]))
             sample = memory.sample()
             samples.append(sample)
             if sample.dead or sample.complete:

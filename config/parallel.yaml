@@ -1,3 +1,6 @@
+game:
+  id: SB4E01
+  title: Super Mario Galaxy 2
 paths:
   dolphin: 'D:\emuladores\Dolphin-x64\Dolphin.exe'
   source_user: '%APPDATA%\Dolphin Emulator'
@@ -38,7 +41,7 @@ training:
   gamma: 0.997
   gae_lambda: 0.95
   entropy: 0.01
-  checkpoint_steps: 4096
+  checkpoint_steps: 1024
   device: cuda
   torch_threads: 2
 parallel:

@@ -1,3 +1,6 @@
+game:
+  id: SB4E01
+  title: Super Mario Galaxy 2
 paths:
   dolphin: 'D:\emuladores\Dolphin-x64\Dolphin.exe'
   source_user: '%APPDATA%\Dolphin Emulator'

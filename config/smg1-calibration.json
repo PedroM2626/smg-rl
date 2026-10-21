@@ -1,0 +1,94 @@
+{
+  "game_id": "RMGE01",
+  "validated": true,
+  "created_utc": "2026-10-21T21:30:48.845772+00:00",
+  "variations": {
+    "sweet_sweet": {
+      "start": [
+        -50.0,
+        45.0000114440918,
+        -50.0
+      ],
+      "start_telemetry": {
+        "position": [
+          -50.0,
+          45.0000114440918,
+          -50.0
+        ],
+        "scenario": 1,
+        "stage": "BeltConveyerExGalaxy",
+        "actor": 2164967084,
+        "actor_nerve": 2154426424,
+        "scene_nerve": 2154437584,
+        "scene_frame": 1324,
+        "dead": false,
+        "complete": false
+      },
+      "goal": [
+        26681.45703125,
+        950.0,
+        -11984.625
+      ],
+      "goal_telemetry": {
+        "position": [
+          26681.45703125,
+          950.0,
+          -11984.625
+        ],
+        "scenario": 1,
+        "stage": "BeltConveyerExGalaxy",
+        "actor": 2164967084,
+        "actor_nerve": 2154426424,
+        "scene_nerve": 2154437584,
+        "scene_frame": 9094,
+        "dead": false,
+        "complete": false
+      },
+      "completion_telemetry": {
+        "position": [
+          26683.052734375,
+          1260.0,
+          -11987.6201171875
+        ],
+        "scenario": 1,
+        "stage": "BeltConveyerExGalaxy",
+        "actor": 2164967084,
+        "actor_nerve": 2154426424,
+        "scene_nerve": 2154437592,
+        "scene_frame": 11,
+        "dead": false,
+        "complete": true
+      },
+      "death_telemetry": {
+        "position": [
+          -39.43770217895508,
+          -2405.94189453125,
+          1786.111083984375
+        ],
+        "scenario": 1,
+        "stage": "BeltConveyerExGalaxy",
+        "actor": 2164967084,
+        "actor_nerve": 2154426432,
+        "scene_nerve": 2154437600,
+        "scene_frame": 2,
+        "dead": true,
+        "complete": false
+      },
+      "movement_telemetry": {
+        "position": [
+          -50.31810760498047,
+          45.0000114440918,
+          -105.29934692382812
+        ],
+        "scenario": 1,
+        "stage": "BeltConveyerExGalaxy",
+        "actor": 2164967084,
+        "actor_nerve": 2154426424,
+        "scene_nerve": 2154437584,
+        "scene_frame": 1347,
+        "dead": false,
+        "complete": false
+      }
+    }
+  }
+}

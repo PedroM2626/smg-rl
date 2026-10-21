@@ -14,6 +14,8 @@ from pathlib import Path
 import cv2
 import numpy as np
 
+from smg_rl.profiles import game_id
+
 
 def prepare_profile(config: dict) -> Path:
     paths = config["paths"]
@@ -62,8 +64,13 @@ def prepare_profile(config: dict) -> Path:
         marker.write_text("ready\n", encoding="utf-8")
     state_dir = target / "StateSaves"
     state_dir.mkdir(exist_ok=True)
-    for slot in range(1, 5):
-        source_state = Path(paths["assets"]) / f"SB4E01.s{slot:02d}"
+    slots = (
+        sorted({v[k] for v in config["variations"] for k in ("start_slot", "goal_slot")})
+        if "variations" in config
+        else range(1, 5)
+    )
+    for slot in slots:
+        source_state = Path(paths["assets"]) / f"{game_id(config)}.s{slot:02d}"
         if not source_state.is_file():
             raise FileNotFoundError(source_state)
         dest = state_dir / source_state.name
@@ -92,7 +99,7 @@ class DesktopDolphin:
         self.focus()
         from smg_rl.memory import GameMemory
 
-        self.memory = GameMemory()
+        self.memory = GameMemory(game_id=game_id(config))
         self.paused = self.detect_pause()
 
     def detect_pause(self):
@@ -106,12 +113,16 @@ class DesktopDolphin:
 
         def visit(hwnd, _):
             title = self.gui.GetWindowText(hwnd)
-            if self.gui.IsWindowVisible(hwnd) and "Dolphin" in title and "(SB4E01)" in title:
+            if (
+                self.gui.IsWindowVisible(hwnd)
+                and "Dolphin" in title
+                and f"({game_id(self.config)})" in title
+            ):
                 windows.append(hwnd)
 
         self.gui.EnumWindows(visit, None)
         if len(windows) != 1:
-            raise RuntimeError(f"Expected one SB4E01 render window, found {len(windows)}.")
+            raise RuntimeError(f"Expected one configured game render window, found {len(windows)}.")
         return windows[0]
 
     def focus(self):
@@ -243,7 +254,7 @@ def launch(config, slot=1):
     ).stdout
     if '"dolphin.exe"' in processes.lower():
         raise RuntimeError(
-            "Close the existing Dolphin process, or use --attach with a running SB4E01 stage."
+            "Close the existing Dolphin process, or use --attach with a running configured stage."
         )
     user = prepare_profile(config)
     paths = config["paths"]
@@ -257,6 +268,6 @@ def launch(config, slot=1):
             "--exec",
             paths["rom"],
             "--save_state",
-            str(user / "StateSaves" / f"SB4E01.s{slot:02d}"),
+            str(user / "StateSaves" / f"{game_id(config)}.s{slot:02d}"),
         ]
     )

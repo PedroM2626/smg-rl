@@ -4,6 +4,7 @@ import ctypes as ct
 from ctypes import wintypes as wt
 
 from smg_rl.memory import MemoryFault
+from smg_rl.profiles import PROFILES
 
 
 class Region(ct.Structure):
@@ -20,7 +21,8 @@ class Region(ct.Structure):
 
 
 class ProcessMemory:
-    def __init__(self, pid):
+    def __init__(self, pid, game_id="SB4E01"):
+        profile = PROFILES[game_id]
         self.pid = pid
         self.api = ct.WinDLL("kernel32", use_last_error=True)
         self.api.OpenProcess.argtypes = [wt.DWORD, wt.BOOL, wt.DWORD]
@@ -48,16 +50,18 @@ class ProcessMemory:
                 regions.append((region.base, region.size))
                 if region.size >= 0x1800000:
                     try:
-                        if self._read(region.base, 6) == b"SB4E01" and self._read(
-                            region.base + 0x45A970, 8
-                        ) == bytes.fromhex("806d9a8480630024"):
+                        if (
+                            self._read(region.base, 6) == profile.game_id.encode("ascii")
+                            and self._read(region.base + profile.signature_address - 0x80000000, 8)
+                            == profile.signature
+                        ):
                             self.mem1 = region.base
                     except MemoryFault:
                         pass
             address = (region.base or 0) + region.size
         if self.mem1 is None:
             self.close()
-            raise MemoryFault(f"Could not locate verified SB4E01 RAM in PID {pid}.")
+            raise MemoryFault(f"Could not locate verified {game_id} RAM in PID {pid}.")
         candidates = [
             base
             for base, size in regions

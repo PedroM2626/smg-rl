@@ -19,6 +19,7 @@ from smg_rl.dolphin import prepare_profile
 from smg_rl.dsu import DSUServer
 from smg_rl.memory import GameMemory, MemoryFault
 from smg_rl.process_memory import ProcessMemory
+from smg_rl.profiles import game_id
 
 
 def prepare_worker(config, index, port):
@@ -99,7 +100,7 @@ class BackgroundDolphin:
                     "--exec",
                     config["paths"]["rom"],
                     "--save_state",
-                    str(self.root / "StateSaves" / "SB4E01.s01"),
+                    str(self.root / "StateSaves" / f"{game_id(config)}.s01"),
                 ],
                 startupinfo=startup,
             )
@@ -120,15 +121,17 @@ class BackgroundDolphin:
                 self.hide_windows()
                 try:
                     if self.reader is None:
-                        self.reader = ProcessMemory(self.process.pid)
-                    self.memory = GameMemory(self.reader)
+                        self.reader = ProcessMemory(self.process.pid, game_id(config))
+                    self.memory = GameMemory(self.reader, game_id(config))
                     self.memory.sample()
                     if not self.server.clients:
                         raise MemoryFault("Waiting for the private DSU connection.")
                     break
-                except MemoryFault:
+                except MemoryFault as exc:
                     if self.process.poll() is not None or time.monotonic() >= deadline:
-                        raise RuntimeError(f"Dolphin worker {index} did not become ready.")
+                        raise RuntimeError(
+                            f"Dolphin worker {index} did not become ready: {exc}"
+                        ) from exc
                     time.sleep(0.2)
             self.hide_windows()
             self.paused = self.detect_pause()
@@ -157,12 +160,19 @@ class BackgroundDolphin:
 
     def detect_pause(self):
         first = self.memory.sample()
-        time.sleep(0.045)
-        second = self.memory.sample()
-        return (first.scene_frame, first.scene_nerve) == (second.scene_frame, second.scene_nerve)
+        # A 45 ms rendering stall was previously mistaken for a paused emulator.
+        # Return early on movement; require a longer stable window for a pause.
+        for _ in range(6):
+            time.sleep(0.03)
+            second = self.memory.sample()
+            if (first.scene_frame, first.scene_nerve) != (second.scene_frame, second.scene_nerve):
+                return False
+        return True
 
     def pause(self, value=True):
-        if self.paused == value and self.detect_pause() == value:
+        # Reconcile against RAM before toggling, even if the cached state differs.
+        self.paused = self.detect_pause()
+        if self.paused == value:
             return
         for _ in range(3):
             self._pulse("pause")

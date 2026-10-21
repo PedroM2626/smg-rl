@@ -1,0 +1,3 @@
+step,variation,x,y,z,progress,outcome,actor_nerve,scene_nerve
+0,sweet_sweet,26681.45703125,950.0,-11984.625,1.0,running,0x8069F038,0x806A1BD0
+1,sweet_sweet,26683.052734375,1260.0,-11987.6201171875,1.0,success,0x8069F038,0x806A1BD8

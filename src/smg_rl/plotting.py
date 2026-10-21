@@ -23,6 +23,7 @@ def plot_trajectory(csv_path, output=None):
         segments = np.stack((points[:-1], points[1:]), axis=1)
         lines = LineCollection(segments, cmap="viridis", linewidth=2)
         lines.set_array(np.arange(len(segments)))
+        lines.set_clim(0, max(1, len(points) - 1))
         ax.add_collection(lines)
         fig.colorbar(lines, ax=ax, label="Decision step", shrink=0.55)
     ax.scatter(*points[0], color="#1b9e77", marker="o", label="Start", zorder=3)
@@ -38,7 +39,10 @@ def plot_trajectory(csv_path, output=None):
         if "best_progress" in rows[0]
         else np.maximum.accumulate(progress)
     )
-    chart.plot(best, label="Best valid progress")
+    chart.plot(
+        best,
+        label="Best valid progress" if "best_progress" in rows[0] else "Running max projection",
+    )
     chart.set(
         xlabel="Decision step",
         ylabel="Course projection (%)",

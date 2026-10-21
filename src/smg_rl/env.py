@@ -14,6 +14,7 @@ from smg_rl.actions import ACTIONS, action_name
 from smg_rl.curiosity import IntrinsicReward
 from smg_rl.memory import GameMemory, MemoryFault
 from smg_rl.plotting import plot_trajectory
+from smg_rl.profiles import game_id
 from smg_rl.rewards import ProgressReward
 
 
@@ -23,18 +24,21 @@ class GalaxyEnv(gym.Env):
     def __init__(self, config, backend, run_dir, memory=None, intrinsic=True, variation=None):
         super().__init__()
         self.config, self.backend = config, backend
-        self.memory = memory or GameMemory()
+        self.memory = memory or GameMemory(game_id=game_id(config))
         self.run_dir = Path(run_dir)
         self.run_dir.mkdir(parents=True, exist_ok=True)
         calibration = json.loads(Path(config["paths"]["calibration"]).read_text(encoding="utf-8"))
         if not calibration.get("validated"):
             raise ValueError("Run calibration and validation before training.")
+        if calibration.get("game_id", "SB4E01") != game_id(config):
+            raise ValueError("Calibration belongs to another game.")
         self.calibration = calibration["variations"]
+        self.scenario_count = len(config["variations"])
         n, stack = config["environment"]["image_size"], config["environment"]["frame_stack"]
         self.observation_space = spaces.Dict(
             {
                 "image": spaces.Box(0, 255, (stack, n, n), np.uint8),
-                "scenario": spaces.Box(0, 1, (2,), np.float32),
+                "scenario": spaces.Box(0, 1, (self.scenario_count,), np.float32),
             }
         )
         self.action_space = spaces.Discrete(len(ACTIONS))
@@ -54,8 +58,8 @@ class GalaxyEnv(gym.Env):
         self.closed = False
 
     def _observation(self):
-        scenario = np.zeros(2, dtype=np.float32)
-        scenario[self.variation["scenario"] - 1] = 1.0
+        scenario = np.zeros(self.scenario_count, dtype=np.float32)
+        scenario[self.config["variations"].index(self.variation)] = 1.0
         return {"image": np.stack(self.frames), "scenario": scenario}
 
     def reset(self, *, seed=None, options=None):
@@ -65,9 +69,9 @@ class GalaxyEnv(gym.Env):
         options = options or {}
         index = options.get("variation", self.fixed_variation)
         if index is None:
-            index = int(self.np_random.integers(2))
-        if index not in (0, 1):
-            raise ValueError("Variation must be 0 or 1.")
+            index = int(self.np_random.integers(self.scenario_count))
+        if index not in range(self.scenario_count):
+            raise ValueError("Variation index is outside the configured scenarios.")
         self.variation = self.config["variations"][index]
         self.backend.load_slot(self.variation["start_slot"])
         self.telemetry = self.memory.sample()

@@ -9,4 +9,9 @@ Place your own legally obtained game image and Dolphin savestates here. These fi
 | `SB4E01.s03` | Turning Turning Double Time: episode start |
 | `SB4E01.s04` | Second variation: near-star validation only |
 
+| `RMGE01.s01` | Galaxy 1 Sweet Sweet Galaxy: validation start; no training |
+| `RMGE01.s02` | Galaxy 1: near-star completion detector validation only |
+
+The Galaxy 1 ROM is `Super Mario Galaxy (USA) (En,Fr,Es).nkit.iso`; Galaxy 2 is `Super Mario Galaxy 2 (USA) (En,Fr,Es).nkit.iso`. Use the matching explicit configuration.
+
 The near-star states are not completed states. Completion must be observed after collecting the star.

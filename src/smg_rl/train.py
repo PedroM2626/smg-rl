@@ -11,6 +11,7 @@ from sb3_contrib import RecurrentPPO
 from stable_baselines3.common.callbacks import BaseCallback
 
 from smg_rl.env import GalaxyEnv
+from smg_rl.profiles import require_training_enabled
 
 
 def save_checkpoint(model, env, path):
@@ -46,6 +47,7 @@ def new_run(config, kind):
 
 
 def train(config, backend, steps=None, resume=None, rollout_steps=None):
+    require_training_enabled(config)
     settings = config["training"]
     seed = settings["seed"]
     random.seed(seed)

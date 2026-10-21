@@ -16,6 +16,7 @@ from stable_baselines3.common.vec_env import SubprocVecEnv
 
 from smg_rl.background import BackgroundDolphin
 from smg_rl.env import GalaxyEnv
+from smg_rl.profiles import require_training_enabled
 from smg_rl.train import new_run
 
 
@@ -35,7 +36,7 @@ class WorkerFactory:
                 backend,
                 Path(self.run_dir) / f"worker-{self.index:02d}",
                 memory=backend.memory,
-                variation=self.index % 2,
+                variation=self.index % len(self.config["variations"]),
             )
         except BaseException:
             backend.close()
@@ -90,10 +91,19 @@ class ProgressCallback(BaseCallback):
         if self.num_timesteps - self.last_checkpoint >= self.every:
             checkpoint(self.model, self.environments, self.run_dir / f"model-{self.num_timesteps}")
             self.last_checkpoint = self.num_timesteps
+            # Retain three complete periodic pairs; long experiments stay bounded.
+            pairs = sorted(
+                (p for p in self.run_dir.glob("model-*.zip") if p.stem[6:].isdigit()),
+                key=lambda p: int(p.stem[6:]),
+            )
+            for old in pairs[:-3]:
+                old.unlink()
+                old.with_suffix(".intrinsic.pt").unlink(missing_ok=True)
         return not (self.run_dir / "STOP").exists()
 
 
 def parallel_train(config, steps=None, workers=None, resume=None):
+    require_training_enabled(config)
     config = deepcopy(config)
     workers = workers or config["parallel"]["workers"]
     config["parallel"]["workers"] = workers
@@ -179,6 +189,10 @@ def parallel_train(config, steps=None, workers=None, resume=None):
     except BaseException as exc:
         failed = True
         (run_dir / "error.txt").write_text(repr(exc) + "\n", encoding="utf-8")
+        if model is not None:
+            # Worker state may be inaccessible. Preserve the policy for inspection,
+            # but do not advertise it as a paired, resumable curiosity checkpoint.
+            model.save(str(run_dir / "policy-emergency"))
         raise
     finally:
         try:

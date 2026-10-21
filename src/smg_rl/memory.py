@@ -1,6 +1,7 @@
-"""Read-only SB4E01 telemetry, resolved through the game's object graph.
+"""Read-only game-specific telemetry, resolved through the game's object graph.
 
-Offsets are derived from Garigari SB4E01 symbols and the live PowerPC code.
+Layouts are derived independently from Garigari (SB4E01), Petari (RMGE01),
+and live game telemetry. See profiles.py and the game-specific documentation.
 No host addresses, game patches, writes, or emulated function calls are used.
 """
 
@@ -8,6 +9,8 @@ import math
 import struct
 from dataclasses import asdict, dataclass
 from typing import Protocol
+
+from smg_rl.profiles import PROFILES
 
 
 class MemoryFault(RuntimeError):
@@ -41,7 +44,9 @@ class GameMemory:
     # forceKill switches to +0x38; forceGameOverAbyss switches to +0x3C.
     DEATH = (0x807D4E38, 0x807D4E3C)
 
-    def __init__(self, reader: Reader | None = None):
+    def __init__(self, reader: Reader | None = None, game_id="SB4E01"):
+        self.profile = PROFILES[game_id]
+        profile = self.profile
         if reader is None:
             import dolphin_memory_engine as engine
 
@@ -50,12 +55,12 @@ class GameMemory:
                 raise MemoryFault("Start exactly one Dolphin process and boot the game first.")
             reader = engine
         self.reader = reader
-        if self.reader.read_bytes(0x80000000, 6) != b"SB4E01":
-            raise MemoryFault("Only the USA SB4E01 game is supported by this address profile.")
-        # Fail closed on another executable revision even if the game ID matches.
-        expected = bytes.fromhex("806d9a8480630024")
-        if self.reader.read_bytes(0x8045A970, 8) != expected:
-            raise MemoryFault("The executable does not match the verified SB4E01 object graph.")
+        if self.reader.read_bytes(0x80000000, 6) != profile.game_id.encode("ascii"):
+            raise MemoryFault(f"Expected the USA {profile.game_id} executable.")
+        if self.reader.read_bytes(profile.signature_address, 8) != profile.signature:
+            raise MemoryFault(
+                f"The executable does not match the verified {profile.game_id} object graph."
+            )
 
     def u32(self, address: int) -> int:
         return struct.unpack(">I", self.reader.read_bytes(address, 4))[0]
@@ -74,23 +79,28 @@ class GameMemory:
 
     def sample(self) -> Telemetry:
         try:
-            root = self.pointer(self.ROOT)
+            p = self.profile
+            root = self.pointer(p.root)
             controller = self.pointer(root + 0x24)
-            scene = self.pointer(controller + 0x12C)
-            stage = self.reader.read_bytes(controller + 0x40, 64).split(b"\0")[0].decode("ascii")
-            scenario = self.u32(controller + 0x80)
-            if stage != "SecretAthleticGalaxy" or scenario not in (1, 2):
+            scene = self.pointer(controller + p.scene_offset)
+            stage = (
+                self.reader.read_bytes(controller + p.stage_offset, 32)
+                .split(b"\0")[0]
+                .decode("ascii")
+            )
+            scenario = self.u32(controller + p.scenario_offset)
+            if stage != p.stage or scenario not in p.scenarios:
                 raise MemoryFault(f"Unexpected stage/scenario: {stage}/{scenario}")
             # Verify the current scene is actually GameScene, not a stale heap object.
-            if self.u32(scene) != 0x806EFA28:
+            if self.u32(scene) != p.scene_vtable:
                 raise MemoryFault(f"Unexpected scene vtable: 0x{self.u32(scene):08X}")
             holder = self.pointer(scene + 0x10)
-            mario_holder = self.pointer(holder + 0x54)
-            actor = self.pointer(mario_holder + 0x14)
-            position = struct.unpack(">fff", self.reader.read_bytes(actor + 0x14, 12))
+            mario_holder = self.pointer(holder + p.mario_holder_offset)
+            actor = self.pointer(mario_holder + p.actor_offset)
+            position = struct.unpack(">fff", self.reader.read_bytes(actor + p.position_offset, 12))
             if not all(math.isfinite(v) and abs(v) < 1e7 for v in position):
                 raise MemoryFault("Non-finite or implausible Mario coordinates.")
-            actor_nerve = self.nerve(self.pointer(actor + 0x58))
+            actor_nerve = self.nerve(self.pointer(actor + p.actor_spine_offset))
             scene_spine = self.pointer(scene + 4)
             scene_nerve = self.nerve(scene_spine)
             return Telemetry(
@@ -101,8 +111,8 @@ class GameMemory:
                 actor_nerve,
                 scene_nerve,
                 self.u32(scene_spine + 12),
-                actor_nerve in self.DEATH or scene_nerve == 0x807D5320,
-                scene_nerve in self.COMPLETE,
+                actor_nerve in p.death or scene_nerve == p.game_over,
+                scene_nerve in p.complete,
             )
         except MemoryFault:
             raise
