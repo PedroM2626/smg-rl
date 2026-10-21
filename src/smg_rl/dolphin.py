@@ -182,7 +182,9 @@ class DesktopDolphin:
 
     def load_slot(self, slot):
         self.release()
-        self.pause(False)
+        # Dolphin accepts load shortcuts while paused. Preserve the saved scene
+        # before moving platforms can carry Mario away from a near-star state.
+        self.pause(True)
         self.hotkey(self.con.VK_F1 + slot - 1)
         time.sleep(0.6)
         self.pause(True)

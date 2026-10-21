@@ -46,7 +46,7 @@ The completion singleton is a **state identity**, not the value stored at an add
 
 ## Progress and coordinate frames
 
-Both starts are near `(0, -1150, 500)`. The first near-star point is near `(-2835, -450, -37225)`. The second is near `(-2857, -627, -52697)`. Moving platforms and the settling interval can slightly change the second endpoint.
+Both starts are near `(0, -1150, 500)`. The first near-star point is near `(-2835, -450, -37225)`. The second paused snapshot is near `(-3095, -695, -52697)`. Earlier captures taken after settling on the rotating platform were near `(-2857, -627, -52697)`; the final profile restores states while paused to preserve the saved position. Use the current `config/calibration.json` rather than assuming an immutable heap address or platform-relative position.
 
 For each variation, project the current X/Z position onto its own start-to-goal vector, clamp to `[0, 1]`, and reward only increases over the episode's farthest valid projection. Reversing and re-crossing the same point cannot repeatedly earn progress. A large one-step displacement, a height below `min_reward_y`, or death suppresses progress reward. The policy never receives this projection.
 

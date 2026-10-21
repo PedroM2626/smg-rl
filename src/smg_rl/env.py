@@ -187,6 +187,9 @@ class GalaxyEnv(gym.Env):
         )
 
     def _save_episode(self, outcome):
+        if self.steps == 0:
+            self.rows = []
+            return
         self.rows[-1]["outcome"] = outcome
         folder = self.run_dir / self.variation["name"]
         folder.mkdir(exist_ok=True)

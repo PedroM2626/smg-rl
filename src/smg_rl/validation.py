@@ -81,17 +81,17 @@ def calibrate(config, backend, output_dir):
             if sample.complete or sample.dead:
                 break
             backend.advance([])
-        if not samples[-1].complete or samples[-1].dead:
-            raise RuntimeError(f"Star collection could not be validated for {name}.")
-        baseline["completion_telemetry"] = samples[-1].to_dict()
         write_trace(
             output_dir / f"{name}-star.csv",
             samples,
             name,
-            "success",
+            "success" if samples[-1].complete else "failed",
             baseline["start"],
             baseline["goal"],
         )
+        if not samples[-1].complete or samples[-1].dead:
+            raise RuntimeError(f"Star collection could not be validated for {name}.")
+        baseline["completion_telemetry"] = samples[-1].to_dict()
         # Walk backward from the start into the void; no RAM is modified.
         backend.load_slot(variation["start_slot"])
         samples = [memory.sample()]
@@ -101,17 +101,17 @@ def calibrate(config, backend, output_dir):
             samples.append(sample)
             if sample.dead or sample.complete:
                 break
-        if not samples[-1].dead or samples[-1].complete:
-            raise RuntimeError(f"Death could not be validated for {name}.")
-        baseline["death_telemetry"] = samples[-1].to_dict()
         write_trace(
             output_dir / f"{name}-death.csv",
             samples,
             name,
-            "death",
+            "death" if samples[-1].dead else "failed",
             baseline["start"],
             baseline["goal"],
         )
+        if not samples[-1].dead or samples[-1].complete:
+            raise RuntimeError(f"Death could not be validated for {name}.")
+        baseline["death_telemetry"] = samples[-1].to_dict()
         # Prove coordinates respond to a movement input without death/completion.
         backend.load_slot(variation["start_slot"])
         before = memory.sample()

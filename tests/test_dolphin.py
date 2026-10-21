@@ -68,3 +68,15 @@ def test_profile_preparation_preserves_original_and_is_repeatable(tmp_path):
 def test_preparation_refuses_to_modify_unowned_directory(tmp_path):
     with pytest.raises(RuntimeError, match="unowned"):
         prepare_profile({"paths": {"user": str(tmp_path)}})
+
+
+def test_state_load_does_not_advance_rotating_platforms(monkeypatch):
+    monkeypatch.setattr("smg_rl.dolphin.time.sleep", lambda _: None)
+    backend = object.__new__(DesktopDolphin)
+    backend.con = type("Keys", (), {"VK_F1": 112})
+    events = []
+    backend.release = lambda: events.append("release")
+    backend.pause = lambda value: events.append(("pause", value))
+    backend.hotkey = lambda key: events.append(("hotkey", key))
+    backend.load_slot(4)
+    assert events == ["release", ("pause", True), ("hotkey", 115), ("pause", True)]

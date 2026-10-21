@@ -8,6 +8,8 @@ The 54 discrete actions combine nine movement directions (including idle) with s
 
 The environment is paused between decisions, during CNN/RND/PPO updates, while writing episode plots, and on normal shutdown. Pause is checked against the scene's RAM counter, with bounded retries. A missed pause produces an error instead of silently continuing training on stale observations. Focus loss also aborts and releases inputs.
 
+State loading also takes place while paused. This preserves the supplied near-star snapshots before a moving platform can carry Mario away. The production held-action interval is 0.25 seconds; early smoke runs used 0.10 seconds. Very short movement pulses can be mostly canceled by neutral frames in the desktop shortcut handshake.
+
 ## Novelty
 
 Each scenario owns an independent RND target, predictor, optimizer, and running error statistics, as well as its own episodic memory. A visual inverse-dynamics encoder predicts the selected action from consecutive frames. Its frozen copy supplies kNN embeddings for the current episode; the snapshot is refreshed only at reset, so embeddings already in memory stay comparable.

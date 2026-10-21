@@ -38,14 +38,14 @@ def plot_trajectory(csv_path, output=None):
         if "best_progress" in rows[0]
         else np.maximum.accumulate(progress)
     )
-    chart.plot(best, label="Farthest valid progress")
+    chart.plot(best, label="Best valid progress")
     chart.set(
         xlabel="Decision step",
         ylabel="Course projection (%)",
         ylim=(0, max(1, min(100, 1.1 * max(max(progress), max(best))))),
         title="Progress toward the star",
     )
-    chart.legend()
+    chart.legend(loc="upper left", fontsize=9)
     chart.text(0.98, 0.02, "Full course = 100%", ha="right", transform=chart.transAxes, alpha=0.65)
     for axis in (ax, chart):
         axis.grid(alpha=0.2)
