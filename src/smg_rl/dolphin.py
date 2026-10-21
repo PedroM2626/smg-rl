@@ -188,15 +188,15 @@ class DesktopDolphin:
         self.pause(True)
 
     def advance(self, names):
-        # Release modifiers for Dolphin's hotkey polling. Prepare movement before
-        # jumping so directional crouch+jump can produce a running long jump.
-        movement = [name for name in names if name in ("w", "a", "s", "d")]
-        self.set_action(movement)
+        # Use a neutral controller while Dolphin polls emulator hotkeys. A held
+        # controller key can otherwise suppress a hotkey through input priority.
+        self.release()
         try:
             self.pause(False)
             self.set_action(names)
             time.sleep(self.config["environment"]["action_seconds"])
-            self.set_action(movement)
+            self.release()
+            time.sleep(0.04)
             self.pause(True)
         finally:
             self.release()

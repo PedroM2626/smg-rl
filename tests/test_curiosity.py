@@ -15,6 +15,14 @@ def test_stationary_revisits_decay_and_episode_reset_restores_novelty():
     assert memory.reward(embedding) == first
 
 
+def test_small_embedding_distances_are_normalized_without_suppressing_new_states():
+    memory = EpisodicMemory()
+    for _ in range(20):
+        repeated = memory.reward(np.zeros(64))
+    assert repeated == 0
+    assert memory.reward(np.full(64, 0.01)) > 0.5
+
+
 def test_curiosity_checkpoint_roundtrip_and_frozen_embedding():
     torch.set_num_threads(1)
     config = dict(embedding_size=16, neighbors=5, capacity=20, rnd_clip=5)

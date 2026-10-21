@@ -173,6 +173,7 @@ class GalaxyEnv(gym.Env):
                 y=t.position[1],
                 z=t.position[2],
                 progress=progress,
+                best_progress=self.progress.best,
                 reward=reward,
                 dead=t.dead,
                 complete=t.complete,

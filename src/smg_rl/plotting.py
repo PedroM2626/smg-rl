@@ -33,14 +33,20 @@ def plot_trajectory(csv_path, output=None):
     ax.legend(loc="best")
     progress = [100 * float(row["progress"]) for row in rows]
     chart.plot(progress, label="Current progress", alpha=0.65)
-    chart.plot(np.maximum.accumulate(progress), label="Farthest progress")
+    best = (
+        [100 * float(row["best_progress"]) for row in rows]
+        if "best_progress" in rows[0]
+        else np.maximum.accumulate(progress)
+    )
+    chart.plot(best, label="Farthest valid progress")
     chart.set(
         xlabel="Decision step",
         ylabel="Course projection (%)",
-        ylim=(-2, 102),
+        ylim=(0, max(1, min(100, 1.1 * max(max(progress), max(best))))),
         title="Progress toward the star",
     )
     chart.legend()
+    chart.text(0.98, 0.02, "Full course = 100%", ha="right", transform=chart.transAxes, alpha=0.65)
     for axis in (ax, chart):
         axis.grid(alpha=0.2)
     fig.suptitle(f"{rows[0]['variation']} — {rows[-1]['outcome']}")
