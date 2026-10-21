@@ -1,0 +1,181 @@
+{
+  "game_id": "SB4E01",
+  "validated": true,
+  "created_utc": "2026-10-21T20:06:16.482988+00:00",
+  "variations": {
+    "spinning": {
+      "start": [
+        0.0,
+        -1150.0,
+        500.0
+      ],
+      "start_telemetry": {
+        "position": [
+          0.0,
+          -1150.0,
+          500.0
+        ],
+        "scenario": 1,
+        "stage": "SecretAthleticGalaxy",
+        "actor": 2166529088,
+        "actor_nerve": 2155695668,
+        "scene_nerve": 2155696912,
+        "scene_frame": 137,
+        "dead": false,
+        "complete": false
+      },
+      "goal": [
+        -2834.5078125,
+        -450.0,
+        -37224.53515625
+      ],
+      "goal_telemetry": {
+        "position": [
+          -2834.5078125,
+          -450.0,
+          -37224.53515625
+        ],
+        "scenario": 1,
+        "stage": "SecretAthleticGalaxy",
+        "actor": 2166529088,
+        "actor_nerve": 2155695668,
+        "scene_nerve": 2155696912,
+        "scene_frame": 4399,
+        "dead": false,
+        "complete": false
+      },
+      "completion_telemetry": {
+        "position": [
+          -2834.5078125,
+          -331.5,
+          -37224.53515625
+        ],
+        "scenario": 1,
+        "stage": "SecretAthleticGalaxy",
+        "actor": 2166529088,
+        "actor_nerve": 2155695668,
+        "scene_nerve": 2155696920,
+        "scene_frame": 6,
+        "dead": false,
+        "complete": true
+      },
+      "death_telemetry": {
+        "position": [
+          -0.9076848030090332,
+          -3736.619873046875,
+          1683.5426025390625
+        ],
+        "scenario": 1,
+        "stage": "SecretAthleticGalaxy",
+        "actor": 2166529088,
+        "actor_nerve": 2155695676,
+        "scene_nerve": 2155696928,
+        "scene_frame": 10,
+        "dead": true,
+        "complete": false
+      },
+      "movement_telemetry": {
+        "position": [
+          0.00768619030714035,
+          -1150.0,
+          489.978759765625
+        ],
+        "scenario": 1,
+        "stage": "SecretAthleticGalaxy",
+        "actor": 2166529088,
+        "actor_nerve": 2155695668,
+        "scene_nerve": 2155696912,
+        "scene_frame": 152,
+        "dead": false,
+        "complete": false
+      }
+    },
+    "double_time": {
+      "start": [
+        0.0,
+        -1150.0,
+        500.0
+      ],
+      "start_telemetry": {
+        "position": [
+          0.0,
+          -1150.0,
+          500.0
+        ],
+        "scenario": 2,
+        "stage": "SecretAthleticGalaxy",
+        "actor": 2166530752,
+        "actor_nerve": 2155695668,
+        "scene_nerve": 2155696912,
+        "scene_frame": 76,
+        "dead": false,
+        "complete": false
+      },
+      "goal": [
+        -2856.9091796875,
+        -626.8089599609375,
+        -52697.125
+      ],
+      "goal_telemetry": {
+        "position": [
+          -2856.9091796875,
+          -626.8089599609375,
+          -52697.125
+        ],
+        "scenario": 2,
+        "stage": "SecretAthleticGalaxy",
+        "actor": 2166530752,
+        "actor_nerve": 2155695668,
+        "scene_nerve": 2155696912,
+        "scene_frame": 6283,
+        "dead": false,
+        "complete": false
+      },
+      "completion_telemetry": {
+        "position": [
+          -2765.494140625,
+          -414.4240417480469,
+          -52697.125
+        ],
+        "scenario": 2,
+        "stage": "SecretAthleticGalaxy",
+        "actor": 2166530752,
+        "actor_nerve": 2155695668,
+        "scene_nerve": 2155696920,
+        "scene_frame": 0,
+        "dead": false,
+        "complete": true
+      },
+      "death_telemetry": {
+        "position": [
+          -0.8706406354904175,
+          -3321.89990234375,
+          1635.231201171875
+        ],
+        "scenario": 2,
+        "stage": "SecretAthleticGalaxy",
+        "actor": 2166530752,
+        "actor_nerve": 2155695676,
+        "scene_nerve": 2155696912,
+        "scene_frame": 237,
+        "dead": true,
+        "complete": false
+      },
+      "movement_telemetry": {
+        "position": [
+          0.007686190772801638,
+          -1150.0,
+          489.978759765625
+        ],
+        "scenario": 2,
+        "stage": "SecretAthleticGalaxy",
+        "actor": 2166530752,
+        "actor_nerve": 2155695668,
+        "scene_nerve": 2155696912,
+        "scene_frame": 89,
+        "dead": false,
+        "complete": false
+      }
+    }
+  }
+}
