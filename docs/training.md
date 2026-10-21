@@ -39,7 +39,7 @@ Watch `episodes.jsonl` for `best_progress`, `outcome`, and `variation`. PPO cons
 
 Evaluate every substantial checkpoint on both variations with intrinsic reward disabled. Ten or more episodes per variation are more informative than a single successful attempt. The two courses share their visual policy, but their novelty models and progress references remain separate. The initial scenario distribution is uniform; a curriculum can be added once the easier course is consistently solved.
 
-The defaults are a starting configuration, not a demonstrated convergent solution. This repository has no claim of sample efficiency or full-course success. Desktop input variability prevents bit-exact replay. GPU acceleration can help PPO, but the single Dolphin process and pause handshake limit throughput; parallel vector environments cannot safely share this desktop controller.
+The defaults are a starting configuration, not a demonstrated convergent solution. This repository has no claim of sample efficiency or full-course success. The desktop controller supports a single visible instance. The separate [background backend](background-training.md) supports isolated parallel environments and GPU learning.
 
 ## Troubleshooting
 

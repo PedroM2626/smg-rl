@@ -1,5 +1,7 @@
 # Local validation report
 
+The newer [background training report](background-training.md) records four-worker CUDA validation, approximately 8x aggregate throughput, hidden star/death checks, and graceful stopping. The report below retains the original desktop baseline for comparison.
+
 Validation date: **2026-10-21**, America/Sao_Paulo. Emulator: **Dolphin 2609a**, Windows. Game: **SB4E01**. Python: **3.11**. All tests used the supplied local states; no game asset was uploaded.
 
 ## Memory and control validation

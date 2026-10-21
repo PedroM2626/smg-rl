@@ -1,5 +1,7 @@
 # SMG RL
 
+**Recommended on this machine:** [hidden parallel training with four Dolphin workers and CUDA](docs/background-training.md). It measured about 7.9 aggregate decisions/second, versus about 1 decision/second for the original desktop controller. It does not use your keyboard, mouse, desktop screenshots, or foreground window.
+
 Vision-based recurrent reinforcement learning for **Super Mario Galaxy 2**, running in the Windows desktop version of Dolphin. One scenario-conditioned policy trains on both Twisty Trials variations:
 
 1. **Spinning and Spinning and Spinning** — start state 1, near-star state 2.
@@ -62,7 +64,7 @@ The existing controller bindings are used:
 | Left mouse button | Jump |
 | Middle mouse button | Shake / spin |
 
-Close other Dolphin processes before starting the isolated profile. Keep the render window visible and in front while the agent runs. Do not use the keyboard or mouse during training. Losing focus releases the held inputs and aborts the run, saving the available checkpoint.
+For the desktop backend described below, close other Dolphin processes before launching its isolated profile and keep its render window in front. Losing focus releases its held inputs and aborts the run, saving the available checkpoint. The recommended parallel backend uses independent hidden workers and allows normal use of the keyboard and mouse.
 
 ## Calibrate and train
 
