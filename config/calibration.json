@@ -1,7 +1,7 @@
 {
   "game_id": "SB4E01",
   "validated": true,
-  "created_utc": "2026-10-21T20:54:33.819641+00:00",
+  "created_utc": "2026-10-21T21:39:57.034047+00:00",
   "variations": {
     "spinning": {
       "start": [
@@ -20,7 +20,7 @@
         "actor": 2166529088,
         "actor_nerve": 2155695668,
         "scene_nerve": 2155696912,
-        "scene_frame": 110,
+        "scene_frame": 109,
         "dead": false,
         "complete": false
       },
@@ -55,37 +55,37 @@
         "actor": 2166529088,
         "actor_nerve": 2155695668,
         "scene_nerve": 2155696920,
-        "scene_frame": 7,
+        "scene_frame": 9,
         "dead": false,
         "complete": true
       },
       "death_telemetry": {
         "position": [
-          -0.8957622647285461,
-          -3564.97021484375,
-          1667.991455078125
+          -0.8789154291152954,
+          -3391.689697265625,
+          1646.020751953125
         ],
         "scenario": 1,
         "stage": "SecretAthleticGalaxy",
         "actor": 2166529088,
         "actor_nerve": 2155695676,
         "scene_nerve": 2155696928,
-        "scene_frame": 5,
+        "scene_frame": 0,
         "dead": true,
         "complete": false
       },
       "movement_telemetry": {
         "position": [
-          0.0076861754059791565,
+          0.04769730195403099,
           -1150.0,
-          489.978759765625
+          437.8122863769531
         ],
         "scenario": 1,
         "stage": "SecretAthleticGalaxy",
         "actor": 2166529088,
         "actor_nerve": 2155695668,
         "scene_nerve": 2155696912,
-        "scene_frame": 137,
+        "scene_frame": 147,
         "dead": false,
         "complete": false
       }
@@ -133,8 +133,8 @@
       },
       "completion_telemetry": {
         "position": [
-          -2895.649169921875,
-          -372.4208679199219,
+          -2881.789306640625,
+          -323.5655822753906,
           -52697.125
         ],
         "scenario": 2,
@@ -142,37 +142,37 @@
         "actor": 2166530752,
         "actor_nerve": 2155695668,
         "scene_nerve": 2155696920,
-        "scene_frame": 0,
+        "scene_frame": 10,
         "dead": false,
         "complete": true
       },
       "death_telemetry": {
         "position": [
-          -0.9035276770591736,
-          -3668.1484375,
-          1678.119384765625
+          -0.8895767331123352,
+          -3495.859130859375,
+          1659.924560546875
         ],
         "scenario": 2,
         "stage": "SecretAthleticGalaxy",
         "actor": 2166530752,
         "actor_nerve": 2155695676,
         "scene_nerve": 2155696928,
-        "scene_frame": 8,
+        "scene_frame": 3,
         "dead": true,
         "complete": false
       },
       "movement_telemetry": {
         "position": [
-          0.013122443109750748,
+          0.042414695024490356,
           -1150.0,
-          482.8909606933594
+          444.69976806640625
         ],
         "scenario": 2,
         "stage": "SecretAthleticGalaxy",
         "actor": 2166530752,
         "actor_nerve": 2155695668,
         "scene_nerve": 2155696912,
-        "scene_frame": 76,
+        "scene_frame": 83,
         "dead": false,
         "complete": false
       }

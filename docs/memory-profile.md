@@ -59,3 +59,5 @@ The top-down plot uses world X horizontally and world Z vertically with equal co
 Run `smg-rl calibrate` with no other Dolphin process, or `smg-rl calibrate --attach` while a compatible session is already open. The command rejects a near-star baseline already marked complete, then requires a real post-jump completion and a real post-fall death in **each** variation. Inspect `config/calibration.json` and the emitted CSV/PNG evidence. Never label an untested regional address map as verified.
 
 The separate [Galaxy 1 profile](smg1.md) uses different offsets and terminal nerves. Layout selection is explicit in `profiles.py`.
+
+The latest revised-backend detector traces are in `docs/assets/smg2-calibration/` (relative to the repository root). Both collection and death tests passed again on 2026-10-21.

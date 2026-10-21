@@ -15,8 +15,8 @@ The detailed technical report covers [mathematical methodology](docs/methodology
 
 Vision-based recurrent reinforcement learning for **Super Mario Galaxy 2**, running in the Windows desktop version of Dolphin. One scenario-conditioned policy trains on both Twisty Trials variations:
 
-1. **Spinning and Spinning and Spinning** â€” start state 1, near-star state 2.
-2. **Turning Turning Double Time** â€” start state 3, near-star state 4.
+1. **Spinning and Spinning and Spinning** — start state 1, near-star state 2.
+2. **Turning Turning Double Time** — start state 3, near-star state 4.
 
 The policy sees four grayscale gameplay frames and a scenario one-hot vector. World coordinates, death, and completion are read from game RAM **only for rewards, validation, logging, and trajectory plots**. They are never policy observations.
 
@@ -60,7 +60,7 @@ ROMs, savestates, copied Dolphin profiles, checkpoints, and full experiment logs
 
 The defaults use `D:\emuladores\Dolphin-x64\Dolphin.exe` and `%APPDATA%\Dolphin Emulator` as the source profile. Change paths in a copy of `config/default.yaml` named `config/local.yaml` if needed. That local file is ignored by Git. Pass `--config config/local.yaml` **before** the subcommand.
 
-The project copies the source profile into `.local/dolphin-user`, preserving the original profile. The disposable Wii play log is omitted because Dolphin may lock it. The copy receives explicit F1â€“F4 load bindings and an F10 pause binding. State files are copied only if the destination does not already exist.
+The project copies the source profile into `.local/dolphin-user`, preserving the original profile. The disposable Wii play log is omitted because Dolphin may lock it. The copy receives explicit F1–F4 load bindings and an F10 pause binding. State files are copied only if the destination does not already exist.
 
 ```powershell
 .\.venv\Scripts\smg-rl.exe prepare
@@ -93,7 +93,7 @@ With the game still open, start training:
 .\.venv\Scripts\smg-rl.exe train --attach --steps 1000000
 ```
 
-If Dolphin is closed, omit `--attach` to launch the isolated profile automatically. To attach to an existing session, it must already be in one of these two Twisty Trials scenarios, with working F1â€“F4 and F10 bindings.
+If Dolphin is closed, omit `--attach` to launch the isolated profile automatically. To attach to an existing session, it must already be in one of these two Twisty Trials scenarios, with working F1–F4 and F10 bindings.
 
 Press **Ctrl+C in the terminal** to stop and save. Each run has its own timestamped directory:
 

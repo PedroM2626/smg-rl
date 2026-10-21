@@ -1,0 +1,3 @@
+step,variation,x,y,z,progress,outcome,actor_nerve,scene_nerve
+0,spinning,-2834.5078125,-450.0,-37224.53515625,1.0,running,0x807D4E34,0x807D5310
+1,spinning,-2834.5078125,-331.5,-37224.53515625,1.0,success,0x807D4E34,0x807D5318
