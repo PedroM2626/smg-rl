@@ -1,0 +1,61 @@
+paths:
+  dolphin: 'D:\emuladores\Dolphin-x64\Dolphin.exe'
+  source_user: '%APPDATA%\Dolphin Emulator'
+  user: '.local/dolphin-user'
+  rom: 'data/Super Mario Galaxy 2 (USA) (En,Fr,Es).nkit.iso'
+  assets: 'data'
+  runs: 'runs'
+  calibration: 'config/calibration.json'
+environment:
+  action_seconds: 0.25
+  key_hold_seconds: 0.08
+  reset_timeout: 30.0
+  max_steps: 3000
+  idle_limit: 400
+  image_size: 84
+  frame_stack: 4
+  crop: [0.12, 0.17, 0.88, 0.91]
+  min_reward_y: -1800.0
+  max_step_distance: 2500.0
+rewards:
+  completion: 20.0
+  death: -2.0
+  progress: 5.0
+  intrinsic: 0.02
+  step: -0.0001
+novelty:
+  neighbors: 10
+  capacity: 4000
+  embedding_size: 64
+  rnd_clip: 5.0
+training:
+  seed: 42
+  steps: 1000000
+  rollout_steps: 128
+  batch_size: 256
+  epochs: 4
+  learning_rate: 0.0001
+  gamma: 0.997
+  gae_lambda: 0.95
+  entropy: 0.01
+  checkpoint_steps: 4096
+  device: cuda
+  torch_threads: 2
+parallel:
+  workers: 4
+  emulation_speed: 2.0
+  frame_skip: 12
+  timeout: 30.0
+  hidden: true
+  plot_every: 20
+variations:
+  - name: spinning
+    title: Spinning and Spinning and Spinning
+    scenario: 1
+    start_slot: 1
+    goal_slot: 2
+  - name: double_time
+    title: Turning Turning Double Time
+    scenario: 2
+    start_slot: 3
+    goal_slot: 4

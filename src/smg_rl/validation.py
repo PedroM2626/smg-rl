@@ -48,7 +48,7 @@ def write_trace(path, samples, variation, outcome, start, goal):
 
 
 def calibrate(config, backend, output_dir):
-    memory = GameMemory()
+    memory = getattr(backend, "memory", None) or GameMemory()
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     result = {
@@ -115,8 +115,17 @@ def calibrate(config, backend, output_dir):
         # Prove coordinates respond to a movement input without death/completion.
         backend.load_slot(variation["start_slot"])
         before = memory.sample()
-        backend.advance(["w"])
-        after = memory.sample()
+        # Short frame-based decisions may finish before the spawn animation
+        # releases player control; require measured movement within a few steps.
+        for _ in range(5):
+            backend.advance(["w"])
+            after = memory.sample()
+            if (
+                after.dead
+                or after.complete
+                or np.linalg.norm(np.array(after.position) - before.position) >= 1
+            ):
+                break
         if (
             after.dead
             or after.complete

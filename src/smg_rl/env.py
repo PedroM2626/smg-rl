@@ -198,7 +198,9 @@ class GalaxyEnv(gym.Env):
             writer = csv.DictWriter(stream, fieldnames=self.rows[0].keys())
             writer.writeheader()
             writer.writerows(self.rows)
-        plot_trajectory(path)
+        plot_every = self.config.get("parallel", {}).get("plot_every", 1)
+        if outcome == "success" or self.episode % plot_every == 0 or outcome == "interrupted":
+            plot_trajectory(path)
         with (self.run_dir / "episodes.jsonl").open("a", encoding="utf-8") as stream:
             stream.write(
                 json.dumps(
@@ -224,3 +226,18 @@ class GalaxyEnv(gym.Env):
                 self._save_episode("interrupted")
         finally:
             self.backend.close()
+
+    def intrinsic_state(self):
+        return {name: module.state_dict() for name, module in self.curiosity.items()}
+
+    def restore_intrinsic_state(self, state):
+        for name, module in self.curiosity.items():
+            module.load_state_dict(state[name])
+
+    def worker_status(self):
+        return {
+            "pid": self.backend.process.pid,
+            "port": self.backend.server.port,
+            "frame": self.memory.sample().scene_frame,
+            "variation": self.variation["name"] if hasattr(self, "variation") else None,
+        }
