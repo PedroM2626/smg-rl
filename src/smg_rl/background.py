@@ -116,7 +116,7 @@ class BackgroundDolphin:
                 ),
                 encoding="utf-8",
             )
-            deadline = time.monotonic() + config["parallel"]["timeout"]
+            deadline = time.monotonic() + config["parallel"].get("startup_timeout", 90.0)
             while True:
                 self.hide_windows()
                 try:
@@ -130,7 +130,7 @@ class BackgroundDolphin:
                 except MemoryFault as exc:
                     if self.process.poll() is not None or time.monotonic() >= deadline:
                         raise RuntimeError(
-                            f"Dolphin worker {index} did not become ready: {exc}"
+                            f"Dolphin worker {index} did not become ready (exit={self.process.poll()}): {exc}"
                         ) from exc
                     time.sleep(0.2)
             self.hide_windows()

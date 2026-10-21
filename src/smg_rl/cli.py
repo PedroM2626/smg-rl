@@ -24,6 +24,10 @@ def main():
     launch_parser = commands.add_parser("launch", help="Boot Dolphin with the isolated profile.")
     launch_parser.add_argument("--slot", type=int, choices=range(1, 5), default=1)
     commands.add_parser("telemetry", help="Print a read-only telemetry snapshot.")
+    report = commands.add_parser(
+        "report", help="Audit training success and peak valid progress across games."
+    )
+    report.add_argument("--output", help="Save JSON and measured best-trajectory figures.")
     commands.add_parser(
         "calibrate-background", help="Validate configured scenarios with a hidden worker."
     )
@@ -60,6 +64,11 @@ def main():
         print(plot_trajectory(args.trajectory, args.output))
         return
     config = load_config(args.config)
+    if args.command == "report":
+        from smg_rl.reporting import training_report
+
+        print(json.dumps(training_report(Path(config["root"]) / "runs", args.output), indent=2))
+        return
     if args.command in ("train", "train-parallel"):
         require_training_enabled(config)
     if args.command in ("status", "stop"):

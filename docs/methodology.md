@@ -9,7 +9,10 @@ death penalties and a RAM-verified star-collection bonus. The policy observes
 pixels and a scenario identity. Privileged RAM telemetry supplies supervision
 and diagnostics only. This is an engineering research implementation; calibration
 and throughput measurements do not establish learned full-course success.
-Super Mario Galaxy 1 is a separate validation-only integration.
+Super Mario Galaxy 1 uses a separately authorized single-scenario learner; its
+independent configuration and initial concurrent measurements are documented in
+[concurrent training](concurrent-training.md). The equations below describe the
+shared algorithm, while the hyperparameter table specifies the Galaxy 2 run.
 
 ## 1. Problem definition and information boundary
 

@@ -7,7 +7,7 @@ Canonical repository: **[PedroM2626/smg-rl](https://github.com/PedroM2626/smg-rl
 | Game | Scope | Configuration |
 | --- | --- | --- |
 | Galaxy 2 USA (`SB4E01`), two Twisty Trials variations | Visual recurrent RL, live-verified telemetry, hidden parallel training | `config/parallel.yaml` |
-| Galaxy 1 USA (`RMGE01`), Sweet Sweet Galaxy | Live-verified star/death/coordinates; **validation only, training blocked** | `config/smg1.yaml` |
+| Galaxy 1 USA (`RMGE01`), Sweet Sweet Galaxy | Live-verified telemetry and separate single-worker visual RL | `config/smg1-training.yaml` |
 
 The detailed technical report covers [mathematical methodology](docs/methodology.md), [experimental design and limitations](docs/experiments.md), [architecture/reproducibility/operations](docs/reproducibility.md), [Galaxy 1 validation](docs/smg1.md), and [bibliographic references](docs/references.bib). Empirical learning claims are limited to the measured evidence; no learned full-course solution is claimed.
 
@@ -133,7 +133,7 @@ Evaluation disables intrinsic rewards and curiosity updates, uses deterministic 
 
 A successful near-star calibration validates the detector; it does not count as an agent completing a full course. Training and evaluation reset only to states **1 and 3**.
 
-## Galaxy 1 validation only
+## Galaxy 1 validation and separate training
 
 Place `RMGE01.s01`, `RMGE01.s02` and the Galaxy 1 ROM in `data/`, then run:
 
@@ -141,7 +141,16 @@ Place `RMGE01.s01`, `RMGE01.s02` and the Galaxy 1 ROM in `data/`, then run:
 .\.venv\Scripts\smg-rl.exe --config config/smg1.yaml calibrate-background
 ```
 
-The supplied Sweet Sweet Galaxy states passed star collection, death, coordinate movement and pause checks. Completion uses scene nerve **`0x806A1BD8`**, independently derived from Galaxy 2. Evidence, pointer chains and measured top-down plots are documented in [the Galaxy 1 report](docs/smg1.md). Both training commands reject Galaxy 1 before launching anything. Its files and calibration are separate from Galaxy 2.
+The supplied Sweet Sweet Galaxy states passed star collection, death, coordinate movement and pause checks. Completion uses scene nerve **`0x806A1BD8`**, independently derived from Galaxy 2. Evidence, pointer chains and measured top-down plots are documented in [the Galaxy 1 report](docs/smg1.md). The validation configuration remains disabled for training. The owner-authorized `config/smg1-training.yaml` enables a separate single-worker learner, starting only from slot 1. Its files, policy and calibration are separate from Galaxy 2. See [concurrent training and morning reports](docs/concurrent-training.md).
+
+To start the separately authorized Galaxy 1 learner:
+
+```powershell
+.\.venv\Scripts\smg-rl.exe --config config/smg1-training.yaml train-parallel --workers 1 --steps 1000000
+.\.venv\Scripts\smg-rl.exe report --output runs/training-report.json
+```
+
+The report excludes detector fixtures and uses the maximum valid geometric progress recorded in training, including live snapshots. It counts success only when a full-start trajectory has the correct RAM completion nerve. The percentage is an approximation, especially on a curved course.
 
 ## Tests
 

@@ -1,5 +1,6 @@
 import json
 from dataclasses import replace
+from pathlib import Path
 
 import numpy as np
 
@@ -80,5 +81,59 @@ def test_terminal_death_penalty_is_logged_and_no_intrinsic_is_used(tmp_path):
         assert reward < -1 and terminated and not truncated
         assert info["intrinsic_reward"] == 0
         assert not env.rows
+    finally:
+        env.close()
+
+
+def test_live_snapshot_includes_in_progress_high_water(tmp_path):
+    env, _ = make_env(tmp_path)
+    try:
+        env.reset(options={"variation": 0})
+        for _ in range(16):
+            env.step(1)
+        import csv
+
+        with (env.run_dir / "live.csv").open() as stream:
+            rows = list(csv.DictReader(stream))
+        assert len(rows) == 17
+        assert rows[0]["action"] == "reset"
+        assert float(rows[-1]["best_progress"]) > 0
+        assert rows[-1]["outcome"] == "running"
+    finally:
+        env.close()
+
+
+def test_viewer_file_lock_does_not_abort_collection(tmp_path, monkeypatch):
+    env, _ = make_env(tmp_path)
+    original = Path.replace
+
+    def locked(path, target):
+        if path.name == "live.tmp":
+            raise PermissionError("Viewer is reading the previous live snapshot")
+        return original(path, target)
+
+    monkeypatch.setattr(Path, "replace", locked)
+    try:
+        env.reset(options={"variation": 0})
+        env.step(1)
+    finally:
+        env.close()
+
+
+def test_single_scenario_smg1_observation_has_its_own_shape(tmp_path):
+    config = load_config("config/smg1-training.yaml")
+    backend = FakeDolphin()
+    original = backend.sample
+    backend.sample = lambda: replace(
+        original(), position=(-50, 45, -50 - 100 * backend.steps), stage="BeltConveyerExGalaxy"
+    )
+    env = GalaxyEnv(config, backend, tmp_path / "single", memory=backend, intrinsic=False)
+    try:
+        obs, _ = env.reset()
+        assert obs["scenario"].tolist() == [1]
+        assert env.observation_space.contains(obs)
+        _, _, terminated, truncated, _ = env.step(1)
+        assert not terminated and not truncated
+        assert backend.slot == 1
     finally:
         env.close()

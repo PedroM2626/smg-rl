@@ -74,5 +74,5 @@ def game_id(config):
 
 
 def require_training_enabled(config):
-    if not config.get("training", {}).get("enabled", True) or game_id(config) == "RMGE01":
-        raise ValueError("Galaxy 1 is validation-only. Training is explicitly disabled.")
+    if not config.get("training", {}).get("enabled", True):
+        raise ValueError("This configuration is validation-only. Training is explicitly disabled.")

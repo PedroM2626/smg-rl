@@ -2,10 +2,13 @@
 
 ## Scope and status
 
-Super Mario Galaxy (USA, `RMGE01`) is integrated for **validation only**. No
-policy, inverse-dynamics model, RND model, or training rollout was created for
-this game. Both training entry points reject this game before launching workers.
-`config/smg1.yaml` also explicitly sets `training.enabled: false`.
+Super Mario Galaxy (USA, `RMGE01`) has independently validated telemetry and a
+separate visual RL learner. The initial validation-only scope was extended by
+the owner on 2026-10-21 to allow concurrent training. `config/smg1.yaml` remains
+validation-only with `training.enabled: false`. The explicit
+`config/smg1-training.yaml` enables one hidden worker and a new policy (seed 142),
+with its own run/checkpoint namespace. No Galaxy 2 weights are reused.
+See [concurrent training](concurrent-training.md) for commands and measurements.
 
 The supplied Sweet Sweet Galaxy states identify the stage as
 `BeltConveyerExGalaxy`, scenario 1. Slot 1 is the course start; slot 2 is a
@@ -93,19 +96,20 @@ scene's nerve pointer with `0x806A1BD8`; it does not read that address as a Bool
 Only the listed stage/scenario is accepted. Unsupported disc IDs, code
 signatures, scene vtables, invalid pointers and non-finite coordinates fail closed.
 
-## Progress and future training readiness
+## Progress interpretation and future reward refinement
 
 The shared progress function can project X/Z onto the calibrated start-to-star
-axis. For Sweet Sweet Galaxy this is only a diagnostic projection. A curved
+axis. Sweet Sweet Galaxy training uses this projection as a shaping heuristic. A curved
 route can increase that number without following the playable path, or make
 legitimate travel temporarily decrease it. No claim is made that the projection
-is a verified native course percentage or sufficient future reward design.
+is a verified native course percentage or an optimal reward design.
 
-Before authorizing training later, inspect the full course, consider ordered
+For future reward refinement, inspect the full course, consider ordered
 waypoints, validate the height/displacement thresholds over legal jumps and
 moving platforms, and define a new experiment and checkpoint namespace. A Galaxy 2
 checkpoint has a different scenario space and cannot serve as a ready-made Galaxy 1
-policy. The hard validation-only guard is intentional for the current scope.
+policy. The validation configuration stays disabled; only the explicitly enabled
+training configuration starts learning.
 
 The short death plot may show increasing geometric projection during a fall.
 The live death flag and reward-height/displacement gates prevent interpreting

@@ -62,6 +62,17 @@ def test_smg1_training_guard_precedes_environment_creation():
         require_training_enabled(config)
 
 
+def test_explicit_smg1_training_configuration_is_enabled_and_isolated():
+    config = load_config("config/smg1-training.yaml")
+    require_training_enabled(config)
+    assert config["parallel"]["workers"] == 1
+    assert config["variations"][0]["start_slot"] == 1
+    assert config["training"]["enabled"]
+    assert config["paths"]["runs"].endswith("runs\\smg1") or config["paths"]["runs"].endswith(
+        "runs/smg1"
+    )
+
+
 @pytest.mark.parametrize("command", ["train", "train-parallel"])
 def test_smg1_cli_rejects_training_before_launch(command, monkeypatch):
     from smg_rl.cli import main

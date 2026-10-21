@@ -26,8 +26,9 @@ different amounts before control begins changes the task distribution.
 Full-course success requires collection after a start-state reset. Calibration
 success after a near-star reset is a separate detector test.
 
-Galaxy 1 is outside the training and comparison protocol. Its two states are
-used only for independent telemetry and detector validation.
+Galaxy 1 is a separately authorized exploratory training pilot. Its start state
+is used for training and its near-star state exclusively for detector validation.
+Do not pool its results with the controlled two-scenario Galaxy 2 comparison.
 
 ## Controlled comparisons
 

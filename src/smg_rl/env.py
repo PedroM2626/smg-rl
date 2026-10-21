@@ -189,6 +189,23 @@ class GalaxyEnv(gym.Env):
                 intrinsic_reward=metrics.get("intrinsic_reward", 0.0),
             )
         )
+        if self.steps % 16 == 0 or outcome != "running":
+            self._save_live()
+
+    def _save_live(self):
+        """Expose a bounded current-episode snapshot without interrupting collection."""
+        path = self.run_dir / "live.csv"
+        pending = path.with_suffix(".tmp")
+        with pending.open("w", encoding="utf-8", newline="") as stream:
+            writer = csv.DictWriter(stream, fieldnames=self.rows[0].keys())
+            writer.writeheader()
+            writer.writerows(self.rows)
+        try:
+            pending.replace(path)
+        except PermissionError:
+            # A report/viewer can briefly hold a Windows file handle. Skip this
+            # diagnostic snapshot; never abort learning because a viewer is open.
+            pass
 
     def _save_episode(self, outcome):
         if self.steps == 0:

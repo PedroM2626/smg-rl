@@ -29,6 +29,7 @@ class WorkerFactory:
     def __call__(self):
         torch.set_num_threads(self.config["training"]["torch_threads"])
         torch.manual_seed(self.config["training"]["seed"] + self.index)
+        time.sleep(self.index * self.config.get("parallel", {}).get("startup_spacing_seconds", 1.0))
         backend = BackgroundDolphin(self.config, self.index)
         try:
             return GalaxyEnv(

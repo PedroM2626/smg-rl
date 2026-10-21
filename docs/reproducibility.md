@@ -8,7 +8,8 @@
 | Exact model/reward equations and limitations | [Methodology](methodology.md) |
 | Controlled experiments, metrics and evidence | [Experimental protocol](experiments.md) |
 | Galaxy 2 addresses and derivation | [Memory profile](memory-profile.md) |
-| Galaxy 1 assets, addresses and live evidence | [Galaxy 1 validation](smg1.md) |
+| Galaxy 1 assets, addresses and live evidence | [Galaxy 1 integration](smg1.md) |
+| Concurrent learners, resource measurement and morning reports | [Concurrent training](concurrent-training.md) |
 | Hidden instances, CUDA, throughput and stopping | [Background training](background-training.md) |
 | Original desktop validation | [Validation report](validation.md) |
 | Practical training guidance | [Training guide](training.md) |
@@ -53,6 +54,7 @@ flowchart LR
 | `validation.py` | Positive/negative live detector checks and calibration fixtures |
 | `plotting.py` | Standalone equal-scale world X/Z figures |
 | `cli.py` | User commands, status, graceful stop and training guards |
+| `reporting.py` | Audited multi-game success, peak valid progress and measured best trajectories |
 
 There is no writable RAM interface, network gameplay service, cloud learner,
 external telemetry upload, multi-machine coordinator or in-game patch.
@@ -126,9 +128,10 @@ overwritten; use a new owned profile after replacing source states.
 
 `config/default.yaml` selects desktop Galaxy 2. `config/parallel.yaml` selects
 hidden parallel Galaxy 2 with CUDA. `config/smg1.yaml` selects a single hidden
-Galaxy 1 validation instance; both the flag and game-specific guard prohibit
-training. The Galaxy 1 command must be passed explicitly. Ordinary Galaxy 2
-training never samples its states.
+Galaxy 1 validation instance and prohibits training via its disabled flag.
+`config/smg1-training.yaml` explicitly enables the separately authorized
+single-worker learner. The Galaxy 1 command must be passed explicitly. Ordinary
+Galaxy 2 training never samples its states.
 
 ## Checkpoint semantics and failure recovery
 
@@ -177,7 +180,9 @@ Trajectory CSVs record decision step, host time, scenario, action, XYZ, current
 and best valid projection, reward, intrinsic reward, death/completion flags,
 actor pointer, actor/scene nerves, scene counter and outcome. Host time is Unix
 seconds; world coordinates have game units, not meters. `episodes.jsonl` records
-episode summaries. JSON/CSV artifacts are the measurement source of truth;
+episode summaries. `live.csv` publishes a current-episode snapshot every 16
+decisions and on terminal transitions; `report` combines completed and live data
+without including calibration fixtures. See [report semantics](concurrent-training.md). JSON/CSV artifacts are the measurement source of truth;
 console averages can mix episodes and should not replace per-scenario analysis.
 
 Top-down figures plot actual world X against world Z with equal coordinate
