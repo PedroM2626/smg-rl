@@ -46,8 +46,11 @@ $manifest = @{
     upstream_revision = $revision
     upstream_license = 'GPL-2.0-or-later'
     bridge_license = 'MIT'
+    protocol_version = 2
     executable_sha256 = (Get-FileHash -LiteralPath "$Deploy\Dolphin.exe" -Algorithm SHA256).Hash
     patch_script_sha256 = (Get-FileHash -LiteralPath "$PSScriptRoot\prepare_native_source.py" -Algorithm SHA256).Hash
+    bridge_header_sha256 = (Get-FileHash -LiteralPath "$projectRoot\native\SMGRLBridge.h" -Algorithm SHA256).Hash
+    bridge_host_sha256 = (Get-FileHash -LiteralPath "$projectRoot\native\SMGRLHost.cpp" -Algorithm SHA256).Hash
 }
 $manifest | ConvertTo-Json | Set-Content -LiteralPath "$Deploy\native-build.json" -Encoding UTF8
 Write-Output "Native build deployed to $Deploy. Validate both game configurations before training."

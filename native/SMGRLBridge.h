@@ -14,7 +14,9 @@ constexpr int PIXEL_BYTES = 1920 * 1080 * 4;
 enum Field : int
 {
   Magic, Version, Pid, Request, Response, Command, Argument, Buttons,
-  CompletedFrames, ImageSequence, Width, Height, Stride, Error, Paused, LoadComplete
+  CompletedFrames, ImageSequence, Width, Height, Stride, Error, Paused, LoadComplete,
+  StepComplete, FieldCount, AcknowledgedField, Options, ReadbackMicros, FrameWaitMicros,
+  SkippedPresents, Reconciliations, RejectedState
 };
 
 struct Mapping
@@ -30,7 +32,7 @@ struct Mapping
     if (handle)
       fields = static_cast<volatile LONG*>(
           MapViewOfFile(handle, FILE_MAP_ALL_ACCESS, 0, 0, HEADER_BYTES + PIXEL_BYTES));
-    if (fields && fields[Magic] == 0x534d4752 && fields[Version] == 1)
+    if (fields && fields[Magic] == 0x534d4752 && fields[Version] == 2)
       fields[Pid] = static_cast<LONG>(GetCurrentProcessId());
     else
       fields = nullptr;
@@ -51,6 +53,21 @@ inline volatile LONG* Fields()
 }
 
 inline bool Enabled() { return Fields() != nullptr; }
+
+inline bool SkipPresentation() { auto* f = Fields(); return f && (f[Options] & 1); }
+
+inline long long Ticks()
+{
+  LARGE_INTEGER value;
+  QueryPerformanceCounter(&value);
+  return value.QuadPart;
+}
+
+inline LONG ElapsedMicros(long long started)
+{
+  static const long long frequency = [] { LARGE_INTEGER f; QueryPerformanceFrequency(&f); return f.QuadPart; }();
+  return static_cast<LONG>((Ticks() - started) * 1000000 / frequency);
+}
 
 inline bool WantsPixels()
 {

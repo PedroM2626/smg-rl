@@ -1,9 +1,9 @@
 {
   "game_id": "SB4E01",
   "backend": "native",
-  "emulator_sha256": "22752b2342996ec78e73a0cf43ba84fb787c4666ddb2252432e8170cd213e228",
+  "emulator_sha256": "e1a2220eb772afde8956bb369b30adde88725d1ddba20972f27c8163cccb7964",
   "validated": true,
-  "created_utc": "2026-10-22T11:07:20.678630+00:00",
+  "created_utc": "2026-10-22T15:44:41.333397+00:00",
   "variations": {
     "spinning": {
       "start": [

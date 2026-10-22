@@ -22,7 +22,9 @@ void Start(QObject* parent, Core::System& system)
   auto* timer = new QTimer(parent);
   timer->setTimerType(Qt::PreciseTimer);
   // Host-thread state access and savestate loading follow Dolphin's own UI path.
-  QObject::connect(timer, &QTimer::timeout, parent, [f, &system, pending = LONG{0}]() mutable {
+  QObject::connect(timer, &QTimer::timeout, parent,
+                   [f, &system, pending = LONG{0}, pending_command = LONG{0},
+                    pending_argument = LONG{0}]() mutable {
     const auto state = Core::GetState(system);
     f[Paused] = state == Core::State::Paused;
     if (pending)
@@ -31,9 +33,18 @@ void Start(QObject* parent, Core::System& system)
         return;
       if (f[Command] == 3 && f[LoadComplete] != pending)
         return;
-      MemoryBarrier();
-      InterlockedExchange(&f[Response], pending);
+      if (pending_command == 2 &&
+          (f[StepComplete] != pending || f[CompletedFrames] != pending_argument))
+        return;
+      // GetState(Paused) is not a CPU-idle barrier. SetState waits for the CPU
+      // and adjacent systems to stop before publishing a completed operation.
+      Core::SetState(system, Core::State::Paused, false);
+      f[Paused] = 1;
+      f[AcknowledgedField] = f[FieldCount];
+      const LONG completed = pending;
       pending = 0;
+      MemoryBarrier();
+      InterlockedExchange(&f[Response], completed);
       return;
     }
     const LONG request = f[Request];
@@ -42,6 +53,8 @@ void Start(QObject* parent, Core::System& system)
     MemoryBarrier();
     f[Error] = 0;
     const LONG command = f[Command];
+    pending_command = command;
+    pending_argument = f[Argument];
     if (command == 1 || command == 4)
     {
       Core::SetState(system, Core::State::Paused);
@@ -49,15 +62,35 @@ void Start(QObject* parent, Core::System& system)
     }
     else if (command == 2)
     {
-      if (state != Core::State::Paused || f[Argument] < 1 || f[Argument] > 600)
+      if (pending_argument < 1 || pending_argument > 600)
       {
         f[Error] = 1;
         InterlockedExchange(&f[Response], request);
         return;
       }
+      // A transient running flag is reconciled only if no field has advanced
+      // since the previous acknowledgment. Never hide unobserved gameplay.
+      if (state != Core::State::Paused)
+        InterlockedIncrement(&f[Reconciliations]);
+      Core::SetState(system, Core::State::Paused, false);
+      if (f[FieldCount] != f[AcknowledgedField])
+      {
+        f[Error] = 4;
+        f[RejectedState] = static_cast<LONG>(state);
+        f[Paused] = 1;
+        InterlockedExchange(&f[Response], request);
+        return;
+      }
       f[CompletedFrames] = 0;
+      f[FrameWaitMicros] = 0;
       pending = request;
-      Core::DoFrameSteps(system, static_cast<unsigned int>(f[Argument]));
+      if (!Core::DoFrameSteps(system, static_cast<unsigned int>(pending_argument)))
+      {
+        pending = 0;
+        f[Error] = 3;
+        f[RejectedState] = static_cast<LONG>(Core::GetState(system));
+        InterlockedExchange(&f[Response], request);
+      }
     }
     else if (command == 3)
     {

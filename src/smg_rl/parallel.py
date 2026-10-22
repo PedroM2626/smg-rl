@@ -16,7 +16,7 @@ from stable_baselines3.common.vec_env import SubprocVecEnv
 from smg_rl.diagnostics import atomic_json, measured
 from smg_rl.env import GalaxyEnv
 from smg_rl.native import background_backend
-from smg_rl.profiles import require_training_enabled
+from smg_rl.profiles import game_id, require_training_enabled
 from smg_rl.timed_ppo import TimedRecurrentPPO
 from smg_rl.train import new_run
 
@@ -43,6 +43,12 @@ class WorkerFactory:
         except BaseException:
             backend.close()
             raise
+
+
+def runtime_directory(config, run_dir):
+    """Isolate games even if their independently named runs share a timestamp."""
+    return (Path(config["paths"]["user"]).parent / "parallel-profiles" /
+            game_id(config) / Path(run_dir).name)
 
 
 @measured("checkpoint")
@@ -80,6 +86,7 @@ class ProgressCallback(BaseCallback):
             "worker_timing_ms": [info.get("timing_ms", {}) for info in self.infos],
             "backend_timing_ms": [info.get("backend_timing_ms", {}) for info in self.infos],
             "advanced_frames": [info.get("advanced_frames") for info in self.infos],
+            "native_diagnostics": [info.get("native_diagnostics") for info in self.infos],
             "learner_timings": self.model.profiler.snapshot()
             if hasattr(self.model, "profiler")
             else {},
@@ -125,7 +132,7 @@ def parallel_train(config, steps=None, workers=None, resume=None):
     run_dir = new_run(config, "parallel")
     print(f"Parallel training output: {run_dir}", flush=True)
     worker_config = deepcopy(config)
-    runtime = Path(config["paths"]["user"]).parent / "parallel-profiles" / run_dir.name
+    runtime = runtime_directory(config, run_dir)
     worker_config["paths"]["user"] = str(runtime / "template")
     (run_dir / "controller.json").write_text(
         json.dumps(

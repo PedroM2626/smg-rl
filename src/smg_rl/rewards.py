@@ -3,6 +3,35 @@
 import numpy as np
 
 
+class ExplorationBudget:
+    """Bound per-episode novelty and fade it during a measured progress stall."""
+
+    def __init__(self, limit=None, decay_start=None, decay_end=None):
+        if limit is not None and limit < 0:
+            raise ValueError("The intrinsic episode budget must be nonnegative.")
+        if decay_end is not None and (decay_start is None or not 0 <= decay_start < decay_end):
+            raise ValueError("Intrinsic decay requires 0 <= start < end.")
+        self.limit, self.decay_start, self.decay_end = limit, decay_start, decay_end
+        self.paid = 0.0
+
+    @property
+    def remaining(self):
+        return None if self.limit is None else max(0.0, self.limit - self.paid)
+
+    def pay(self, raw_reward, idle_steps):
+        if not np.isfinite(raw_reward) or raw_reward < 0:
+            raise ValueError("Intrinsic reward must be finite and nonnegative.")
+        gate = 1.0
+        if self.decay_end is not None:
+            gate = float(np.clip((self.decay_end - idle_steps) /
+                                 (self.decay_end - self.decay_start), 0, 1))
+        amount = raw_reward * gate
+        if self.remaining is not None:
+            amount = min(amount, self.remaining)
+        self.paid += amount
+        return amount, gate
+
+
 class DamageTracker:
     """Count net HP loss once, with a fresh baseline after every savestate reset."""
 

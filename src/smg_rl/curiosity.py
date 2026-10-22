@@ -52,15 +52,19 @@ class EpisodicMemory:
         self.reset()
 
     def reset(self):
-        self.values = []
+        self.values = None
+        self.count = 0
+        self.cursor = 0
         self.distance_scale = None
 
     def reward(self, embedding):
         embedding = np.asarray(embedding, dtype=np.float32)
-        if not self.values:
+        if self.values is None:
+            self.values = np.empty((self.capacity, embedding.size), dtype=np.float32)
+        if not self.count:
             novelty = 1.0
         else:
-            distances = np.square(np.stack(self.values) - embedding).sum(axis=1)
+            distances = np.square(self.values[:self.count] - embedding).sum(axis=1)
             nearest = np.partition(distances, min(self.k, len(distances)) - 1)[: self.k]
             mean_distance = float(nearest.mean())
             if self.distance_scale is None:
@@ -71,15 +75,21 @@ class EpisodicMemory:
             kernel = 0.0001 / (normalized + 0.0001)
             similarity = float(np.sqrt(kernel.sum()) + 0.001)
             novelty = 0.0 if similarity > 3.0 else min(1.0, 1.0 / similarity)
-        if len(self.values) == self.capacity:
-            self.values.pop(0)
-        self.values.append(embedding.copy())
+        self.values[self.cursor] = embedding
+        self.cursor = (self.cursor + 1) % self.capacity
+        self.count = min(self.count + 1, self.capacity)
         return novelty
 
 
 class IntrinsicReward:
     def __init__(self, action_count, config):
         dimension = config["embedding_size"]
+        self.device = torch.device(config.get("device", "cpu"))
+        self.update_every = int(config.get("update_every", 1))
+        if self.update_every < 1:
+            raise ValueError("Curiosity update_every must be positive.")
+        self.pending = []
+        self.updates = 0
         self.encoder = Encoder(dimension)
         self.inverse = nn.Linear(2 * dimension, action_count)
         self.episodic_encoder = deepcopy(self.encoder).eval()
@@ -87,6 +97,8 @@ class IntrinsicReward:
         for p in self.target.parameters():
             p.requires_grad_(False)
         self.predictor = Encoder(dimension)
+        for module in (self.encoder, self.inverse, self.episodic_encoder, self.target, self.predictor):
+            module.to(self.device)
         self.optimizer = torch.optim.Adam(
             list(self.encoder.parameters())
             + list(self.inverse.parameters())
@@ -97,20 +109,22 @@ class IntrinsicReward:
         self.error_stats = Moments()
         self.rnd_clip = config["rnd_clip"]
 
-    @staticmethod
-    def tensor(image):
-        return torch.from_numpy(np.asarray(image).copy()).float()[None, None] / 255.0
+    def tensor(self, image):
+        return torch.from_numpy(np.asarray(image).copy()).to(self.device).float()[None, None] / 255.0
 
     def reset(self, image):
+        self.flush_pending()
         self.episodic_encoder.load_state_dict(self.encoder.state_dict())
         self.memory.reset()
         with torch.no_grad():
-            self.memory.reward(self.episodic_encoder(self.tensor(image))[0].numpy())
+            self.memory.reward(self.episodic_encoder(self.tensor(image))[0].cpu().numpy())
 
     def step(self, before, after, action):
+        if self.update_every > 1:
+            return self._batched_step(before, after, action)
         before, after = self.tensor(before), self.tensor(after)
         with torch.no_grad():
-            embedding = self.episodic_encoder(after)[0].numpy()
+            embedding = self.episodic_encoder(after)[0].cpu().numpy()
             target = self.target(after)
         prediction = self.predictor(after)
         rnd_loss = F.mse_loss(prediction, target)
@@ -121,7 +135,7 @@ class IntrinsicReward:
         episodic = self.memory.reward(embedding)
         self.error_stats.update(error)
         inverse_logits = self.inverse(torch.cat((self.encoder(before), self.encoder(after)), dim=1))
-        inverse_loss = F.cross_entropy(inverse_logits, torch.tensor([action]))
+        inverse_loss = F.cross_entropy(inverse_logits, torch.tensor([action], device=self.device))
         self.optimizer.zero_grad()
         (rnd_loss + inverse_loss).backward()
         torch.nn.utils.clip_grad_norm_(
@@ -131,11 +145,58 @@ class IntrinsicReward:
             1.0,
         )
         self.optimizer.step()
+        self.updates += 1
         return episodic * lifelong, {
             "episodic_novelty": episodic,
             "rnd_error": error,
             "lifelong_novelty": lifelong,
+            "curiosity_update": 1,
+            "curiosity_batch_size": 1,
         }
+
+    def _batched_step(self, before, after, action):
+        with torch.no_grad():
+            tensor = self.tensor(after)
+            embedding = self.episodic_encoder(tensor)[0].cpu().numpy()
+            target = self.target(tensor)
+            error = float(F.mse_loss(self.predictor(tensor), target))
+        scale = max(self.error_stats.variance**0.5, 1e-4)
+        lifelong = float(np.clip(1 + (error - self.error_stats.mean) / scale, 1, self.rnd_clip))
+        episodic = self.memory.reward(embedding)
+        self.error_stats.update(error)
+        self.pending.append((torch.from_numpy(np.asarray(before).copy()),
+                             torch.from_numpy(np.asarray(after).copy()), int(action),
+                             target[0].detach().cpu()))
+        count = len(self.pending) if len(self.pending) >= self.update_every else 0
+        if count:
+            self.flush_pending()
+        return episodic * lifelong, {
+            "episodic_novelty": episodic, "rnd_error": error,
+            "lifelong_novelty": lifelong, "curiosity_update": int(bool(count)),
+            "curiosity_batch_size": count,
+        }
+
+    def flush_pending(self):
+        if not self.pending:
+            return
+        before, after, actions, targets = zip(*self.pending)
+        before = torch.stack(before).to(self.device).float()[:, None] / 255.0
+        after = torch.stack(after).to(self.device).float()[:, None] / 255.0
+        targets = torch.stack(targets).to(self.device)
+        labels = torch.tensor(actions, device=self.device)
+        rnd_loss = F.mse_loss(self.predictor(after), targets)
+        inverse_loss = F.cross_entropy(
+            self.inverse(torch.cat((self.encoder(before), self.encoder(after)), dim=1)), labels
+        )
+        self.optimizer.zero_grad()
+        (rnd_loss + inverse_loss).backward()
+        torch.nn.utils.clip_grad_norm_(
+            list(self.encoder.parameters()) + list(self.inverse.parameters())
+            + list(self.predictor.parameters()), 1.0,
+        )
+        self.optimizer.step()
+        self.updates += 1
+        self.pending.clear()
 
     def state_dict(self):
         return {
@@ -145,9 +206,13 @@ class IntrinsicReward:
             "predictor": self.predictor.state_dict(),
             "optimizer": self.optimizer.state_dict(),
             "moments": vars(self.error_stats).copy(),
+            "pending": self.pending.copy(),
+            "updates": self.updates,
         }
 
     def load_state_dict(self, state):
         for key in ("encoder", "inverse", "target", "predictor", "optimizer"):
             getattr(self, key).load_state_dict(state[key])
         vars(self.error_stats).update(state["moments"])
+        self.pending = state.get("pending", []).copy()
+        self.updates = state.get("updates", 0)

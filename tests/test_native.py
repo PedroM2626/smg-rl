@@ -5,7 +5,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from smg_rl.native import HEADER_BYTES, PIXEL_BYTES, NativeBridge, NativeDolphin
+from smg_rl.native import HEADER_BYTES, PIXEL_BYTES, PROTOCOL_VERSION, NativeBridge, NativeDolphin
 
 
 def bridge():
@@ -55,6 +55,30 @@ def test_native_action_rejects_inexact_frame_acknowledgment():
         backend.advance(["jump"])
 
 
+def test_frame_reply_requires_matching_cpu_completion_even_when_paused():
+    source = bridge()
+    source.timeout = 1
+    source.set(0, 0x534D4752)
+    source.set(1, PROTOCOL_VERSION)
+
+    def premature_reply():
+        while source.get(3) == 0:
+            time.sleep(0.0005)
+        source.set(14, 1)
+        source.set(8, 12)
+        source.set(16, source.get(3) - 1)
+        source.set(4, source.get(3))
+
+    thread = threading.Thread(target=premature_reply)
+    thread.start()
+    try:
+        with pytest.raises(RuntimeError, match="CPU frame completion"):
+            source.command(2, 12)
+    finally:
+        thread.join()
+        source.close()
+
+
 @pytest.mark.parametrize(
     "pid,paused,error,expected",
     [
@@ -69,7 +93,7 @@ def test_native_rejects_ack_from_wrong_pid_unpaused_or_failed_emulator(
     source = bridge()
     source.timeout = 1
     source.set(0, 0x534D4752)
-    source.set(1, 1)
+    source.set(1, PROTOCOL_VERSION)
     process = SimpleNamespace(pid=100, poll=lambda: None)
 
     def reply():

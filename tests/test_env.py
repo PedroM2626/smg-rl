@@ -85,6 +85,27 @@ def test_terminal_death_penalty_is_logged_and_no_intrinsic_is_used(tmp_path):
         env.close()
 
 
+def test_stall_timeout_penalty_is_separate_from_ram_death_and_in_episode_return(tmp_path):
+    env, backend = make_env(tmp_path)
+    env.config["environment"]["idle_limit"] = 2
+    env.config["rewards"].update(timeout=-2.0, step=-0.001)
+    baseline = backend.sample()
+    backend.sample = lambda: baseline
+    try:
+        env.reset(options={"variation": 0})
+        env.step(0)
+        _, reward, terminated, truncated, info = env.step(0)
+        assert not terminated and truncated and not info["dead"]
+        assert info["timeout_penalty"] == -2
+        assert reward == -2.001
+        assert abs(info["episode"]["r"] - (-2.002)) < 1e-9
+        episode = json.loads((env.run_dir / "episodes.jsonl").read_text(encoding="utf-8"))
+        assert episode["outcome"] == "timeout"
+        assert episode["timeout_total"] == -2
+    finally:
+        env.close()
+
+
 def test_live_snapshot_includes_in_progress_high_water(tmp_path):
     env, _ = make_env(tmp_path)
     try:

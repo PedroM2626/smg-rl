@@ -16,7 +16,7 @@ from smg_rl.diagnostics import StageProfiler, atomic_json, measured
 from smg_rl.memory import GameMemory, MemoryFault
 from smg_rl.plotting import plot_trajectory
 from smg_rl.profiles import game_id
-from smg_rl.rewards import DamageTracker, ProgressReward
+from smg_rl.rewards import DamageTracker, ExplorationBudget, ProgressReward
 
 
 class GalaxyEnv(gym.Env):
@@ -100,6 +100,11 @@ class GalaxyEnv(gym.Env):
         self.damage = DamageTracker()
         self.damage.reset(self.telemetry.health)
         self.steps, self.idle_steps, self.total_reward = 0, 0, 0.0
+        weights = self.config["rewards"]
+        self.exploration_budget = ExplorationBudget(
+            weights.get("intrinsic_episode_budget"),
+            weights.get("intrinsic_decay_start"), weights.get("intrinsic_decay_end"),
+        )
         self.episode += 1
         self.rows = []
         if self.use_intrinsic:
@@ -143,7 +148,9 @@ class GalaxyEnv(gym.Env):
                 curiosity, metrics = self.curiosity[self.variation["name"]].step(
                     before, frame, action
                 )
-        reward = weights["step"] + weights["progress"] * delta + weights["intrinsic"] * curiosity
+        raw_intrinsic = weights["intrinsic"] * curiosity
+        intrinsic_reward, intrinsic_gate = self.exploration_budget.pay(raw_intrinsic, self.idle_steps)
+        reward = weights["step"] + weights["progress"] * delta + intrinsic_reward
         if self.telemetry.complete:
             reward += weights["completion"]
         elif self.telemetry.dead:
@@ -155,12 +162,14 @@ class GalaxyEnv(gym.Env):
         )
         reward += damage_penalty
         self.steps += 1
-        self.total_reward += reward
         terminated = self.telemetry.complete or self.telemetry.dead
         truncated = not terminated and (
             self.steps >= self.config["environment"]["max_steps"]
             or self.idle_steps >= self.config["environment"]["idle_limit"]
         )
+        timeout_penalty = weights.get("timeout", 0.0) if truncated else 0.0
+        reward += timeout_penalty
+        self.total_reward += reward
         outcome = (
             "success"
             if self.telemetry.complete
@@ -174,7 +183,11 @@ class GalaxyEnv(gym.Env):
             progress=fraction,
             best_progress=self.progress.best,
             progress_reward=weights["progress"] * delta,
-            intrinsic_reward=weights["intrinsic"] * curiosity,
+            intrinsic_reward=intrinsic_reward,
+            raw_intrinsic_reward=raw_intrinsic,
+            intrinsic_gate=intrinsic_gate,
+            intrinsic_budget_remaining=self.exploration_budget.remaining,
+            timeout_penalty=timeout_penalty,
             is_success=self.telemetry.complete,
             variation=self.variation["name"],
             health_lost=health_lost,
@@ -190,6 +203,8 @@ class GalaxyEnv(gym.Env):
         }
         info["backend_timing_ms"] = dict(getattr(self.backend, "profiler", self.profiler).last)
         info["advanced_frames"] = getattr(self.backend, "last_frame_count", None)
+        if hasattr(self.backend, "bridge"):
+            info["native_diagnostics"] = self.backend.bridge.diagnostics()
         info["scene_frames_advanced"] = (
             self.telemetry.scene_frame - previous_telemetry.scene_frame
             if self.telemetry.scene_nerve == previous_telemetry.scene_nerve
@@ -232,6 +247,16 @@ class GalaxyEnv(gym.Env):
                 scene_frame=t.scene_frame,
                 outcome=outcome,
                 intrinsic_reward=metrics.get("intrinsic_reward", 0.0),
+                raw_intrinsic_reward=metrics.get("raw_intrinsic_reward", 0.0),
+                progress_reward=metrics.get("progress_reward", 0.0),
+                episodic_novelty=metrics.get("episodic_novelty", 0.0),
+                rnd_error=metrics.get("rnd_error", 0.0),
+                lifelong_novelty=metrics.get("lifelong_novelty", 0.0),
+                intrinsic_gate=metrics.get("intrinsic_gate", 1.0),
+                intrinsic_budget_remaining=metrics.get("intrinsic_budget_remaining"),
+                timeout_penalty=metrics.get("timeout_penalty", 0.0),
+                curiosity_update=metrics.get("curiosity_update", 0),
+                curiosity_batch_size=metrics.get("curiosity_batch_size", 0),
                 health=t.health,
                 max_health=t.max_health,
                 health_lost=metrics.get("health_lost", 0),
@@ -282,6 +307,10 @@ class GalaxyEnv(gym.Env):
                         "reward": self.total_reward,
                         "steps": self.steps,
                         "best_progress": self.progress.best,
+                        "intrinsic_total": sum(r["intrinsic_reward"] for r in self.rows),
+                        "progress_total": sum(r["progress_reward"] for r in self.rows),
+                        "timeout_total": sum(r["timeout_penalty"] for r in self.rows),
+                        "reward_revision": self.config["rewards"].get("revision", "legacy"),
                     }
                 )
                 + "\n"

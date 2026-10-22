@@ -15,18 +15,20 @@ from smg_rl.diagnostics import measured
 HEADER_BYTES = 256
 PIXEL_BYTES = 1920 * 1080 * 4
 MAGIC = 0x534D4752
+PROTOCOL_VERSION = 2
 CONTROLS = ("w", "a", "s", "d", "jump", "crouch", "spin")
 
 
 class NativeBridge:
-    def __init__(self, timeout=30.0):
+    def __init__(self, timeout=30.0, skip_present=False):
         if os.name != "nt":
             raise RuntimeError("The Dolphin native bridge requires Windows.")
         self.name = "Local\\SMGRL-" + uuid.uuid4().hex
         self.mapping = mmap.mmap(-1, HEADER_BYTES + PIXEL_BYTES, tagname=self.name)
         self.mapping[:HEADER_BYTES] = bytes(HEADER_BYTES)
         self.set(0, MAGIC)
-        self.set(1, 1)
+        self.set(1, PROTOCOL_VERSION)
+        self.set(19, int(skip_present))
         self.timeout = timeout
 
     def get(self, field):
@@ -51,14 +53,27 @@ class NativeBridge:
             if time.monotonic() >= deadline:
                 raise TimeoutError(f"Native command {command} timed out (sequence {sequence}).")
             time.sleep(0.0005)
-        if self.get(0) != MAGIC or self.get(1) != 1:
+        if self.get(0) != MAGIC or self.get(1) != PROTOCOL_VERSION:
             raise RuntimeError("Native bridge protocol mismatch.")
         if process is not None and self.get(2) != process.pid:
             raise RuntimeError("Native bridge belongs to a different Dolphin PID.")
         if self.get(13):
-            raise RuntimeError(f"Native bridge rejected command {command}: error {self.get(13)}.")
+            raise RuntimeError(
+                f"Native bridge rejected command {command}: error {self.get(13)}; "
+                f"diagnostics={self.diagnostics()}."
+            )
         if not self.get(14):
             raise RuntimeError("Native command returned without a paused emulator.")
+        if command == 2 and (self.get(16) != sequence or self.get(8) != argument):
+            raise RuntimeError("Native response precedes the matching CPU frame completion.")
+
+    def diagnostics(self):
+        return {name: self.get(field) for name, field in {
+            "request": 3, "response": 4, "completed_frames": 8,
+            "step_complete_sequence": 16, "field_count": 17,
+            "acknowledged_field": 18, "readback_us": 20, "frame_wait_us": 21,
+            "skipped_presents": 22, "reconciliations": 23, "rejected_state": 24,
+        }.items()}
 
     def image(self):
         width, height, stride = (self.get(i) for i in (10, 11, 12))
@@ -75,7 +90,8 @@ class NativeBridge:
 
 class NativeDolphin(BackgroundDolphin):
     def __init__(self, config, index=0):
-        self.bridge = NativeBridge(config["parallel"]["timeout"])
+        self.bridge = NativeBridge(config["parallel"]["timeout"],
+                                   config["parallel"].get("skip_present", False))
         self.last_frame_count = 0
         try:
             super().__init__(config, index)

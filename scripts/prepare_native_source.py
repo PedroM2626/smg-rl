@@ -16,6 +16,10 @@ def prepare(source):
     ).strip()
     if revision != REVISION:
         raise ValueError(f"Expected Dolphin 2609a {REVISION}, found {revision}")
+    core_header = (source / "Source/Core/Core/Core.h").read_text(encoding="utf-8")
+    if "void DoFrameSteps(" in core_header:
+        raise ValueError("Protocol v1 patches detected. Use a fresh pinned checkout for v2; "
+                         "this script does not overwrite existing source changes.")
 
     def replace(file, old, new):
         path = source / "Source/Core" / file
@@ -42,7 +46,7 @@ def prepare(source):
     replace(
         "Core/Core.h",
         "void DoFrameStep(Core::System& system);",
-        "void DoFrameStep(Core::System& system);\nvoid DoFrameSteps(Core::System& system, unsigned int count);",
+        "void DoFrameStep(Core::System& system);\nbool DoFrameSteps(Core::System& system, unsigned int count);",
     )
     replace(
         "Core/Core.cpp",
@@ -52,7 +56,25 @@ def prepare(source):
     replace(
         "Core/Core.cpp",
         "static bool s_frame_step = false;",
-        "static bool s_frame_step = false;\nstatic unsigned int s_native_steps_remaining = 0;",
+        "static bool s_frame_step = false;\nstatic unsigned int s_native_steps_remaining = 0;\nstatic LONG s_native_request = 0;",
+    )
+    replace(
+        "Core/Core.cpp",
+        "void Callback_NewField(Core::System& system)\n{",
+        """void Callback_NewField(Core::System& system)
+{
+#ifdef _WIN32
+  if (auto* f = SMGRL::Fields())
+    InterlockedIncrement(&f[SMGRL::FieldCount]);
+#endif""",
+    )
+    replace(
+        "Core/Core.cpp",
+        "    AsyncRequests::GetInstance()->WaitForEmptyQueue();",
+        """    const auto wait_started = SMGRL::Ticks();
+    AsyncRequests::GetInstance()->WaitForEmptyQueue();
+    if (auto* f = SMGRL::Fields())
+      InterlockedExchangeAdd(&f[SMGRL::FrameWaitMicros], SMGRL::ElapsedMicros(wait_started));""",
     )
     replace(
         "Core/Core.cpp",
@@ -70,20 +92,27 @@ def prepare(source):
       }
 #endif
       s_frame_step = false;
-      system.GetCPU().Break();""",
+      system.GetCPU().Break();
+#ifdef _WIN32
+      if (auto* f = SMGRL::Fields(); f && s_native_request)
+        InterlockedExchange(&f[SMGRL::StepComplete], s_native_request);
+#endif""",
     )
     replace(
         "Core/Core.cpp",
         "void UpdateInputGate(bool require_focus, bool require_full_focus)",
-        """void DoFrameSteps(Core::System& system, unsigned int count)
+        """bool DoFrameSteps(Core::System& system, unsigned int count)
 {
   std::lock_guard lock(s_core_mutex);
   if (GetState(system) != State::Paused || count == 0)
-    return;
+    return false;
+  if (auto* f = SMGRL::Fields())
+    s_native_request = f[SMGRL::Request];
   s_native_steps_remaining = count;
   s_stop_frame_step = false;
   s_frame_step = true;
   SetState(system, State::Running, false);
+  return true;
 }
 
 void UpdateInputGate(bool require_focus, bool require_full_focus)""",
@@ -99,6 +128,7 @@ void UpdateInputGate(bool require_focus, bool require_full_focus)""",
         """#ifdef _WIN32
   if (SMGRL::Enabled())
   {
+    const auto readback_started = SMGRL::Ticks();
     auto& output = m_frame_dump_readback_texture;
     output->Flush();
     if (output->Map())
@@ -107,6 +137,7 @@ void UpdateInputGate(bool require_focus, bool require_full_focus)""",
                           target_width, target_height, static_cast<int>(output->GetMappedStride()));
       output->Unmap();
     }
+    SMGRL::Fields()[SMGRL::ReadbackMicros] = SMGRL::ElapsedMicros(readback_started);
     return;
   }
 #endif
@@ -121,6 +152,32 @@ void UpdateInputGate(bool require_focus, bool require_full_focus)""",
   if (SMGRL::WantsPixels())
     return true;
 #endif""",
+    )
+    replace(
+        "VideoCommon/Present.cpp",
+        '#include "VideoCommon/Present.h"',
+        '#include "VideoCommon/Present.h"\n#include "Common/SMGRLBridge.h"',
+    )
+    replace(
+        "VideoCommon/Present.cpp",
+        "  m_present_count++;\n\n  if (g_gfx->IsHeadless()",
+        """  m_present_count++;
+#ifdef _WIN32
+  if (SMGRL::SkipPresentation() && m_xfb_entry)
+  {
+    g_vertex_manager->Flush();
+    UpdateDrawRectangle();
+    if (present_info)
+    {
+      present_info->actual_present_time = Clock::now();
+      present_info->present_time_accuracy = PresentInfo::PresentTimeAccuracy::Unimplemented;
+    }
+    InterlockedIncrement(&SMGRL::Fields()[SMGRL::SkippedPresents]);
+    return;
+  }
+#endif
+
+  if (g_gfx->IsHeadless()""",
     )
     file = "InputCommon/ControllerInterface/DualShockUDPClient/DualShockUDPClient.cpp"
     replace(
