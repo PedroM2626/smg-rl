@@ -116,3 +116,7 @@ The live death flag and reward-height/displacement gates prevent interpreting
 that raw chart value as earned learning progress. The calibration trace plot
 uses the running maximum of raw projection because it is a detector test, not
 an environment reward log; training CSVs have a separate `best_progress` column.
+
+## Health and damage
+
+The Galaxy 1 profile now reads current/max HP at actor offsets `+0x380` and `+0x3E0`. A live nonfatal 3-to-2 transition was verified against the HUD. Nonfatal net HP loss adds -0.25 per point once per decrease; death retains its -2 penalty without a second damage charge. The value is not a policy input. See [health evidence and recovery behavior](damage-and-recovery.md) for measured traces, reward replay, safeguards and sampling limits.

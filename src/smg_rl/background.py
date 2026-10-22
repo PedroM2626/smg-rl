@@ -71,6 +71,17 @@ def prepare_worker(config, index, port):
         graphics[section].update(entries)
     with (root / "Config" / "GFX.ini").open("w", encoding="utf-8") as stream:
         graphics.write(stream)
+    logger = configparser.ConfigParser(interpolation=None)
+    logger.optionxform = str
+    logger["Options"] = {
+        "WriteToFile": "True",
+        "WriteToConsole": "False",
+        "WriteToWindow": "False",
+        "Verbosity": "3",
+    }
+    logger["Logs"] = {key: "True" for key in ("BOOT", "CORE", "COMMON", "Video", "CI")}
+    with (root / "Config" / "Logger.ini").open("w", encoding="utf-8") as stream:
+        logger.write(stream)
     return root
 
 
@@ -154,19 +165,25 @@ class BackgroundDolphin:
 
     def _pulse(self, command):
         self.server.set(self.names, [command])
-        time.sleep(0.045)
+        time.sleep(0.12 if command == "pause" else 0.045)
         self.server.set(self.names)
-        time.sleep(0.012)
+        time.sleep(0.035 if command == "pause" else 0.012)
 
     def detect_pause(self):
         first = self.memory.sample()
         # A 45 ms rendering stall was previously mistaken for a paused emulator.
         # Return early on movement; require a longer stable window for a pause.
+        changes = 0
+        previous = (first.scene_frame, first.scene_nerve)
         for _ in range(6):
             time.sleep(0.03)
             second = self.memory.sample()
-            if (first.scene_frame, first.scene_nerve) != (second.scene_frame, second.scene_nerve):
-                return False
+            current = (second.scene_frame, second.scene_nerve)
+            if previous != current:
+                changes += 1
+                if changes >= 2:
+                    return False
+            previous = current
         return True
 
     def pause(self, value=True):
@@ -174,7 +191,7 @@ class BackgroundDolphin:
         self.paused = self.detect_pause()
         if self.paused == value:
             return
-        for _ in range(3):
+        for _ in range(6):
             self._pulse("pause")
             self.paused = self.detect_pause()
             if self.paused == value:

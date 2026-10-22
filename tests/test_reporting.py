@@ -2,6 +2,8 @@ import csv
 import json
 from pathlib import Path
 
+import pytest
+
 from smg_rl.reporting import training_report
 
 
@@ -68,9 +70,13 @@ def trajectory(path, progress=0.4, success=False, start=(0, 0, 0), nerve=None):
         writer.writerows(rows)
 
 
-def test_report_excludes_calibration_and_near_star_resets(tmp_path):
+@pytest.mark.parametrize(
+    "validation_name",
+    ["background-validation-example", "damage-validation-example", "eval-example"],
+)
+def test_report_excludes_calibration_and_near_star_resets(tmp_path, validation_name):
     run = make_run(tmp_path)
-    validation = make_run(tmp_path, "background-validation-example")
+    validation = make_run(tmp_path, validation_name)
     trajectory(run / "worker-00/spinning/episode-000001.csv")
     trajectory(run / "worker-00/spinning/episode-000002.csv", success=True, start=(0, 0, -1000))
     trajectory(validation / "spinning/episode-000001.csv", success=True)

@@ -32,6 +32,8 @@ class Telemetry:
     scene_frame: int
     dead: bool
     complete: bool
+    health: int | None = None
+    max_health: int | None = None
 
     def to_dict(self):
         return asdict(self)
@@ -103,6 +105,12 @@ class GameMemory:
             actor_nerve = self.nerve(self.pointer(actor + p.actor_spine_offset))
             scene_spine = self.pointer(scene + 4)
             scene_nerve = self.nerve(scene_spine)
+            health = self.u32(actor + p.health_offset) if p.health_offset is not None else None
+            maximum = (
+                self.u32(actor + p.max_health_offset) if p.max_health_offset is not None else None
+            )
+            if health is not None and (maximum not in (1, 3, 6) or not 0 <= health <= maximum):
+                raise MemoryFault(f"Invalid health telemetry: {health}/{maximum}")
             return Telemetry(
                 position,
                 scenario,
@@ -111,8 +119,10 @@ class GameMemory:
                 actor_nerve,
                 scene_nerve,
                 self.u32(scene_spine + 12),
-                actor_nerve in p.death or scene_nerve == p.game_over,
+                actor_nerve in p.death or scene_nerve == p.game_over or health == 0,
                 scene_nerve in p.complete,
+                health,
+                maximum,
             )
         except MemoryFault:
             raise

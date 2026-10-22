@@ -3,6 +3,22 @@
 import numpy as np
 
 
+class DamageTracker:
+    """Count net HP loss once, with a fresh baseline after every savestate reset."""
+
+    def reset(self, health):
+        self.previous = health
+
+    def update(self, health):
+        lost = (
+            max(0, self.previous - health)
+            if self.previous is not None and health is not None
+            else 0
+        )
+        self.previous = health
+        return lost
+
+
 class ProgressReward:
     def __init__(self, start, goal, min_y=-1800.0, max_step_distance=2500.0):
         self.start = np.asarray(start, dtype=np.float64)[[0, 2]]

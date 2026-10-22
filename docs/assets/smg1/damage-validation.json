@@ -1,0 +1,551 @@
+{
+  "game_id": "RMGE01",
+  "validated": true,
+  "validation_kind": "Read-only live health transition with reward replay of measured telemetry; no policy training",
+  "health_address": "0x810aca2c",
+  "max_health_address": "0x810aca8c",
+  "source_run": "damage-validation-20261021-223158-726034",
+  "baseline": {
+    "action": "load1",
+    "position": [
+      -50.0,
+      45.0000114440918,
+      -50.0
+    ],
+    "scenario": 1,
+    "stage": "BeltConveyerExGalaxy",
+    "actor": 2164967084,
+    "actor_nerve": 2154426424,
+    "scene_nerve": 2154437584,
+    "scene_frame": 1324,
+    "dead": false,
+    "complete": false,
+    "health": 3,
+    "max_health": 3
+  },
+  "hit": {
+    "action": [
+      "w"
+    ],
+    "position": [
+      793.3195190429688,
+      -33.42522430419922,
+      -3886.30126953125
+    ],
+    "scenario": 1,
+    "stage": "BeltConveyerExGalaxy",
+    "actor": 2164967084,
+    "actor_nerve": 2154426424,
+    "scene_nerve": 2154437584,
+    "scene_frame": 1727,
+    "dead": false,
+    "complete": false,
+    "health": 2,
+    "max_health": 3
+  },
+  "measured_trace": [
+    {
+      "action": "load1",
+      "position": [
+        -50.0,
+        45.0000114440918,
+        -50.0
+      ],
+      "scenario": 1,
+      "stage": "BeltConveyerExGalaxy",
+      "actor": 2164967084,
+      "actor_nerve": 2154426424,
+      "scene_nerve": 2154437584,
+      "scene_frame": 1324,
+      "dead": false,
+      "complete": false,
+      "health": 3,
+      "max_health": 3
+    },
+    {
+      "action": [
+        "d"
+      ],
+      "position": [
+        34.6406135559082,
+        45.0000114440918,
+        -50.486900329589844
+      ],
+      "scenario": 1,
+      "stage": "BeltConveyerExGalaxy",
+      "actor": 2164967084,
+      "actor_nerve": 2154426424,
+      "scene_nerve": 2154437584,
+      "scene_frame": 1352,
+      "dead": false,
+      "complete": false,
+      "health": 3,
+      "max_health": 3
+    },
+    {
+      "action": [
+        "d"
+      ],
+      "position": [
+        306.2032775878906,
+        45.0000114440918,
+        -52.0490608215332
+      ],
+      "scenario": 1,
+      "stage": "BeltConveyerExGalaxy",
+      "actor": 2164967084,
+      "actor_nerve": 2154426424,
+      "scene_nerve": 2154437584,
+      "scene_frame": 1378,
+      "dead": false,
+      "complete": false,
+      "health": 3,
+      "max_health": 3
+    },
+    {
+      "action": [
+        "d"
+      ],
+      "position": [
+        650.5529174804688,
+        45.0000114440918,
+        -54.02993392944336
+      ],
+      "scenario": 1,
+      "stage": "BeltConveyerExGalaxy",
+      "actor": 2164967084,
+      "actor_nerve": 2154426424,
+      "scene_nerve": 2154437584,
+      "scene_frame": 1405,
+      "dead": false,
+      "complete": false,
+      "health": 3,
+      "max_health": 3
+    },
+    {
+      "action": [
+        "w"
+      ],
+      "position": [
+        795.9042358398438,
+        45.0000114440918,
+        -307.63983154296875
+      ],
+      "scenario": 1,
+      "stage": "BeltConveyerExGalaxy",
+      "actor": 2164967084,
+      "actor_nerve": 2154426424,
+      "scene_nerve": 2154437584,
+      "scene_frame": 1432,
+      "dead": false,
+      "complete": false,
+      "health": 3,
+      "max_health": 3
+    },
+    {
+      "action": [
+        "w"
+      ],
+      "position": [
+        793.885498046875,
+        45.0000114440918,
+        -658.6112060546875
+      ],
+      "scenario": 1,
+      "stage": "BeltConveyerExGalaxy",
+      "actor": 2164967084,
+      "actor_nerve": 2154426424,
+      "scene_nerve": 2154437584,
+      "scene_frame": 1459,
+      "dead": false,
+      "complete": false,
+      "health": 3,
+      "max_health": 3
+    },
+    {
+      "action": [
+        "w",
+        "crouch",
+        "jump"
+      ],
+      "position": [
+        791.1060791015625,
+        280.6248779296875,
+        -1141.771240234375
+      ],
+      "scenario": 1,
+      "stage": "BeltConveyerExGalaxy",
+      "actor": 2164967084,
+      "actor_nerve": 2154426424,
+      "scene_nerve": 2154437584,
+      "scene_frame": 1486,
+      "dead": false,
+      "complete": false,
+      "health": 3,
+      "max_health": 3
+    },
+    {
+      "action": [
+        "w",
+        "crouch",
+        "jump"
+      ],
+      "position": [
+        787.8196411132812,
+        185.44973754882812,
+        -1713.073974609375
+      ],
+      "scenario": 1,
+      "stage": "BeltConveyerExGalaxy",
+      "actor": 2164967084,
+      "actor_nerve": 2154426424,
+      "scene_nerve": 2154437584,
+      "scene_frame": 1513,
+      "dead": false,
+      "complete": false,
+      "health": 3,
+      "max_health": 3
+    },
+    {
+      "action": [
+        "w",
+        "spin"
+      ],
+      "position": [
+        786.732177734375,
+        381.8497009277344,
+        -1902.202880859375
+      ],
+      "scenario": 1,
+      "stage": "BeltConveyerExGalaxy",
+      "actor": 2164967084,
+      "actor_nerve": 2154426424,
+      "scene_nerve": 2154437584,
+      "scene_frame": 1540,
+      "dead": false,
+      "complete": false,
+      "health": 3,
+      "max_health": 3
+    },
+    {
+      "action": [
+        "w"
+      ],
+      "position": [
+        785.5032348632812,
+        68.87474060058594,
+        -2115.84326171875
+      ],
+      "scenario": 1,
+      "stage": "BeltConveyerExGalaxy",
+      "actor": 2164967084,
+      "actor_nerve": 2154426424,
+      "scene_nerve": 2154437584,
+      "scene_frame": 1567,
+      "dead": false,
+      "complete": false,
+      "health": 3,
+      "max_health": 3
+    },
+    {
+      "action": [
+        "w"
+      ],
+      "position": [
+        784.6896362304688,
+        -33.42522430419922,
+        -2257.271484375
+      ],
+      "scenario": 1,
+      "stage": "BeltConveyerExGalaxy",
+      "actor": 2164967084,
+      "actor_nerve": 2154426424,
+      "scene_nerve": 2154437584,
+      "scene_frame": 1594,
+      "dead": false,
+      "complete": false,
+      "health": 3,
+      "max_health": 3
+    },
+    {
+      "action": [
+        "w"
+      ],
+      "position": [
+        782.9783935546875,
+        -33.42522430419922,
+        -2554.74609375
+      ],
+      "scenario": 1,
+      "stage": "BeltConveyerExGalaxy",
+      "actor": 2164967084,
+      "actor_nerve": 2154426424,
+      "scene_nerve": 2154437584,
+      "scene_frame": 1621,
+      "dead": false,
+      "complete": false,
+      "health": 3,
+      "max_health": 3
+    },
+    {
+      "action": [
+        "w"
+      ],
+      "position": [
+        780.98388671875,
+        -33.42522430419922,
+        -2901.47900390625
+      ],
+      "scenario": 1,
+      "stage": "BeltConveyerExGalaxy",
+      "actor": 2164967084,
+      "actor_nerve": 2154426424,
+      "scene_nerve": 2154437584,
+      "scene_frame": 1648,
+      "dead": false,
+      "complete": false,
+      "health": 3,
+      "max_health": 3
+    },
+    {
+      "action": [
+        "w"
+      ],
+      "position": [
+        778.9661254882812,
+        -33.42522430419922,
+        -3252.22216796875
+      ],
+      "scenario": 1,
+      "stage": "BeltConveyerExGalaxy",
+      "actor": 2164967084,
+      "actor_nerve": 2154426424,
+      "scene_nerve": 2154437584,
+      "scene_frame": 1675,
+      "dead": false,
+      "complete": false,
+      "health": 3,
+      "max_health": 3
+    },
+    {
+      "action": [
+        "w"
+      ],
+      "position": [
+        776.8726196289062,
+        -33.42522430419922,
+        -3616.20166015625
+      ],
+      "scenario": 1,
+      "stage": "BeltConveyerExGalaxy",
+      "actor": 2164967084,
+      "actor_nerve": 2154426424,
+      "scene_nerve": 2154437584,
+      "scene_frame": 1703,
+      "dead": false,
+      "complete": false,
+      "health": 3,
+      "max_health": 3
+    },
+    {
+      "action": [
+        "w"
+      ],
+      "position": [
+        793.3195190429688,
+        -33.42522430419922,
+        -3886.30126953125
+      ],
+      "scenario": 1,
+      "stage": "BeltConveyerExGalaxy",
+      "actor": 2164967084,
+      "actor_nerve": 2154426424,
+      "scene_nerve": 2154437584,
+      "scene_frame": 1727,
+      "dead": false,
+      "complete": false,
+      "health": 2,
+      "max_health": 3
+    },
+    {
+      "action": [
+        "w"
+      ],
+      "position": [
+        814.0776977539062,
+        -33.42522430419922,
+        -3928.422607421875
+      ],
+      "scenario": 1,
+      "stage": "BeltConveyerExGalaxy",
+      "actor": 2164967084,
+      "actor_nerve": 2154426424,
+      "scene_nerve": 2154437584,
+      "scene_frame": 1754,
+      "dead": false,
+      "complete": false,
+      "health": 2,
+      "max_health": 3
+    },
+    {
+      "action": [
+        "w"
+      ],
+      "position": [
+        814.0776977539062,
+        -33.42522430419922,
+        -3928.422607421875
+      ],
+      "scenario": 1,
+      "stage": "BeltConveyerExGalaxy",
+      "actor": 2164967084,
+      "actor_nerve": 2154426424,
+      "scene_nerve": 2154437584,
+      "scene_frame": 1783,
+      "dead": false,
+      "complete": false,
+      "health": 2,
+      "max_health": 3
+    }
+  ],
+  "reward_replay": [
+    {
+      "health": 3,
+      "health_lost": 0,
+      "damage_penalty": -0.0,
+      "reward": 0.013134316415722042,
+      "dead": false
+    },
+    {
+      "health": 3,
+      "health_lost": 0,
+      "damage_penalty": -0.0,
+      "reward": 0.04236124822563841,
+      "dead": false
+    },
+    {
+      "health": 3,
+      "health_lost": 0,
+      "damage_penalty": -0.0,
+      "reward": 0.05374214251849177,
+      "dead": false
+    },
+    {
+      "health": 3,
+      "health_lost": 0,
+      "damage_penalty": -0.0,
+      "reward": 0.04022755307265944,
+      "dead": false
+    },
+    {
+      "health": 3,
+      "health_lost": 0,
+      "damage_penalty": -0.0,
+      "reward": 0.024023212705183684,
+      "dead": false
+    },
+    {
+      "health": 3,
+      "health_lost": 0,
+      "damage_penalty": -0.0,
+      "reward": 0.03310884245365616,
+      "dead": false
+    },
+    {
+      "health": 3,
+      "health_lost": 0,
+      "damage_penalty": -0.0,
+      "reward": 0.03916712344625802,
+      "dead": false
+    },
+    {
+      "health": 3,
+      "health_lost": 0,
+      "damage_penalty": -0.0,
+      "reward": 0.012899400896988902,
+      "dead": false
+    },
+    {
+      "health": 3,
+      "health_lost": 0,
+      "damage_penalty": -0.0,
+      "reward": 0.01458406402348764,
+      "dead": false
+    },
+    {
+      "health": 3,
+      "health_lost": 0,
+      "damage_penalty": -0.0,
+      "reward": 0.00962072535644672,
+      "dead": false
+    },
+    {
+      "health": 3,
+      "health_lost": 0,
+      "damage_penalty": -0.0,
+      "reward": 0.020346202349158685,
+      "dead": false
+    },
+    {
+      "health": 3,
+      "health_lost": 0,
+      "damage_penalty": -0.0,
+      "reward": 0.023731868479724864,
+      "dead": false
+    },
+    {
+      "health": 3,
+      "health_lost": 0,
+      "damage_penalty": -0.0,
+      "reward": 0.024007474769993545,
+      "dead": false
+    },
+    {
+      "health": 3,
+      "health_lost": 0,
+      "damage_penalty": -0.0,
+      "reward": 0.02491730408109318,
+      "dead": false
+    },
+    {
+      "health": 2,
+      "health_lost": 1,
+      "damage_penalty": -0.25,
+      "reward": -0.22872799769781477,
+      "dead": false
+    },
+    {
+      "health": 2,
+      "health_lost": 0,
+      "damage_penalty": -0.0,
+      "reward": 0.006070310648054289,
+      "dead": false
+    },
+    {
+      "health": 2,
+      "health_lost": 0,
+      "damage_penalty": -0.0,
+      "reward": -0.0001,
+      "dead": false
+    }
+  ],
+  "restored_baseline": {
+    "action": "load1",
+    "position": [
+      -50.0,
+      45.0000114440918,
+      -50.0
+    ],
+    "scenario": 1,
+    "stage": "BeltConveyerExGalaxy",
+    "actor": 2164967084,
+    "actor_nerve": 2154426424,
+    "scene_nerve": 2154437584,
+    "scene_frame": 1324,
+    "dead": false,
+    "complete": false,
+    "health": 3,
+    "max_health": 3
+  },
+  "evidence_written_utc": "2026-10-22T01:53:47.127012+00:00"
+}

@@ -28,6 +28,8 @@ def smg1_ram():
         (0x80007004, 0x8069F038),
         (0x80008004, 0x806A1BD0),
         (0x80002040, 1),
+        (0x80006380, 3),
+        (0x800063E0, 3),
     ]:
         ram.word(address, value)
     ram.put(0x80002020, b"BeltConveyerExGalaxy\0")
@@ -73,7 +75,7 @@ def test_explicit_smg1_training_configuration_is_enabled_and_isolated():
     )
 
 
-@pytest.mark.parametrize("command", ["train", "train-parallel"])
+@pytest.mark.parametrize("command", ["train", "train-parallel", "train-supervised"])
 def test_smg1_cli_rejects_training_before_launch(command, monkeypatch):
     from smg_rl.cli import main
 
@@ -107,9 +109,19 @@ def test_pause_reconciles_actual_state_without_unnecessary_toggle():
 
 def test_short_render_stall_is_not_classified_as_pause(monkeypatch):
     backend = object.__new__(BackgroundDolphin)
-    samples = iter([0, 0, 0, 1])
+    samples = iter([0, 0, 0, 1, 2])
     backend.memory = SimpleNamespace(
         sample=lambda: SimpleNamespace(scene_frame=next(samples), scene_nerve=123)
     )
     monkeypatch.setattr("smg_rl.background.time.sleep", lambda _: None)
     assert not backend.detect_pause()
+
+
+def test_one_queued_screenshot_frame_does_not_masquerade_as_unpaused(monkeypatch):
+    backend = object.__new__(BackgroundDolphin)
+    samples = iter([0, 1, 1, 1, 1, 1, 1])
+    backend.memory = SimpleNamespace(
+        sample=lambda: SimpleNamespace(scene_frame=next(samples), scene_nerve=123)
+    )
+    monkeypatch.setattr("smg_rl.background.time.sleep", lambda _: None)
+    assert backend.detect_pause()

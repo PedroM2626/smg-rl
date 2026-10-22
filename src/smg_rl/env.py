@@ -15,7 +15,7 @@ from smg_rl.curiosity import IntrinsicReward
 from smg_rl.memory import GameMemory, MemoryFault
 from smg_rl.plotting import plot_trajectory
 from smg_rl.profiles import game_id
-from smg_rl.rewards import ProgressReward
+from smg_rl.rewards import DamageTracker, ProgressReward
 
 
 class GalaxyEnv(gym.Env):
@@ -94,6 +94,8 @@ class GalaxyEnv(gym.Env):
             self.config["environment"]["max_step_distance"],
         )
         self.progress.reset(self.telemetry.position)
+        self.damage = DamageTracker()
+        self.damage.reset(self.telemetry.health)
         self.steps, self.idle_steps, self.total_reward = 0, 0, 0.0
         self.episode += 1
         self.rows = []
@@ -111,6 +113,7 @@ class GalaxyEnv(gym.Env):
         before = self.frames[-1]
         self.backend.advance(ACTIONS[action])
         self.telemetry = self.memory.sample()
+        health_lost = self.damage.update(self.telemetry.health)
         if self.telemetry.scenario != self.variation["scenario"]:
             raise MemoryFault("Scenario changed during an episode.")
         frame = self.backend.image()
@@ -126,6 +129,7 @@ class GalaxyEnv(gym.Env):
             self.use_intrinsic
             and not self.telemetry.dead
             and not self.telemetry.complete
+            and health_lost == 0
             and self.telemetry.position[1] >= self.config["environment"]["min_reward_y"]
         ):
             curiosity, metrics = self.curiosity[self.variation["name"]].step(before, frame, action)
@@ -134,6 +138,12 @@ class GalaxyEnv(gym.Env):
             reward += weights["completion"]
         elif self.telemetry.dead:
             reward += weights["death"]
+        damage_penalty = (
+            weights.get("damage", 0.0) * health_lost
+            if not self.telemetry.dead and not self.telemetry.complete
+            else 0.0
+        )
+        reward += damage_penalty
         self.steps += 1
         self.total_reward += reward
         terminated = self.telemetry.complete or self.telemetry.dead
@@ -157,6 +167,8 @@ class GalaxyEnv(gym.Env):
             intrinsic_reward=weights["intrinsic"] * curiosity,
             is_success=self.telemetry.complete,
             variation=self.variation["name"],
+            health_lost=health_lost,
+            damage_penalty=damage_penalty,
         )
         self._append(action, reward, fraction, outcome, metrics)
         info = {**self.telemetry.to_dict(), **metrics}
@@ -187,6 +199,10 @@ class GalaxyEnv(gym.Env):
                 scene_frame=t.scene_frame,
                 outcome=outcome,
                 intrinsic_reward=metrics.get("intrinsic_reward", 0.0),
+                health=t.health,
+                max_health=t.max_health,
+                health_lost=metrics.get("health_lost", 0),
+                damage_penalty=metrics.get("damage_penalty", 0.0),
             )
         )
         if self.steps % 16 == 0 or outcome != "running":

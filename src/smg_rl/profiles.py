@@ -23,6 +23,8 @@ class MemoryProfile:
     game_over: int
     stage: str
     scenarios: tuple[int, ...]
+    health_offset: int | None = None
+    max_health_offset: int | None = None
 
 
 PROFILES = {
@@ -65,6 +67,8 @@ PROFILES = {
         0x806A1BE0,
         "BeltConveyerExGalaxy",
         (1,),
+        health_offset=0x380,
+        max_health_offset=0x3E0,
     ),
 }
 

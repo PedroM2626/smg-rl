@@ -153,6 +153,16 @@ def training_report(root, output=None):
         "tasks": list(tasks.values()),
         "runs": runs,
         "warnings": warnings,
+        "supervisors": [
+            {
+                "path": str(path.parent),
+                "controller_running": controller_alive(
+                    read_json(path.parent / "controller.json", {})
+                ),
+                **read_json(path, {}),
+            }
+            for path in sorted(root.rglob("supervised-*/status.json"))
+        ],
     }
     if output:
         output = Path(output).resolve()

@@ -130,6 +130,8 @@ def parallel_train(config, steps=None, workers=None, resume=None):
                 "requested_steps": settings["steps"],
                 "resume": str(resume) if resume else None,
                 "runtime": str(runtime),
+                "supervisor": os.environ.get("SMG_RL_SUPERVISOR"),
+                "supervisor_attempt": int(os.environ.get("SMG_RL_SUPERVISOR_ATTEMPT", "0")),
                 "started_at": datetime.now(timezone.utc).isoformat(),
             },
             indent=2,

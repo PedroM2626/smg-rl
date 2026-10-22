@@ -7,7 +7,7 @@ Canonical repository: **[PedroM2626/smg-rl](https://github.com/PedroM2626/smg-rl
 | Game | Scope | Configuration |
 | --- | --- | --- |
 | Galaxy 2 USA (`SB4E01`), two Twisty Trials variations | Visual recurrent RL, live-verified telemetry, hidden parallel training | `config/parallel.yaml` |
-| Galaxy 1 USA (`RMGE01`), Sweet Sweet Galaxy | Live-verified telemetry and separate single-worker visual RL | `config/smg1-training.yaml` |
+| Galaxy 1 USA (`RMGE01`), Sweet Sweet Galaxy | Live-verified health/damage/terminal telemetry and separate single-worker visual RL | `config/smg1-training.yaml` |
 
 The detailed technical report covers [mathematical methodology](docs/methodology.md), [experimental design and limitations](docs/experiments.md), [architecture/reproducibility/operations](docs/reproducibility.md), [Galaxy 1 validation](docs/smg1.md), and [bibliographic references](docs/references.bib). Empirical learning claims are limited to the measured evidence; no learned full-course solution is claimed.
 
@@ -177,3 +177,9 @@ Long training and reward tuning are still required to learn both courses. Compar
 - [Garigari SB4E01 symbols](https://github.com/SMGCommunity/Garigari/blob/main/config/SB4E01/symbols.txt)
 - [Python Dolphin Memory Engine](https://github.com/randovania/py-dolphin-memory-engine)
 - [Dolphin source](https://github.com/dolphin-emu/dolphin)
+
+## Galaxy 1 damage and resilient training
+
+Galaxy 1 now reads health directly from RAM and applies -0.25 per nonfatal HP lost, once per decrease. Death uses the existing -2 penalty without double charging. Health remains excluded from policy observations. Live 3-to-2 HP evidence and reward replay are documented in [damage and recovery](docs/damage-and-recovery.md).
+
+Use `train-supervised` in place of `train-parallel` for recovery from infrastructure failures. It restarts from completed policy/curiosity pairs, keeps the same total target and backs off between failed attempts. The ordinary `stop` command also stops the owning supervisor. `report` includes supervisor state and continues to exclude validation fixtures.

@@ -42,6 +42,12 @@ def main():
     parallel.add_argument("--workers", type=int)
     parallel.add_argument("--steps", type=int)
     parallel.add_argument("--resume")
+    supervised = commands.add_parser(
+        "train-supervised", help="Recover failed learners from paired checkpoints."
+    )
+    supervised.add_argument("--workers", type=int)
+    supervised.add_argument("--steps", type=int)
+    supervised.add_argument("--resume")
     for command in ("calibrate", "train", "evaluate"):
         sub = commands.add_parser(command)
         sub.add_argument(
@@ -69,8 +75,20 @@ def main():
 
         print(json.dumps(training_report(Path(config["root"]) / "runs", args.output), indent=2))
         return
-    if args.command in ("train", "train-parallel"):
+    if args.command in ("train", "train-parallel", "train-supervised"):
         require_training_enabled(config)
+    if args.command == "train-supervised":
+        from smg_rl.supervision import supervised_train
+
+        if (
+            args.steps is not None
+            and args.steps <= 0
+            or args.workers is not None
+            and args.workers <= 0
+        ):
+            parser.error("Steps and workers must be positive.")
+        print(supervised_train(args.config, args.steps, args.workers, args.resume))
+        return
     if args.command in ("status", "stop"):
         root = Path(config["paths"]["runs"]).resolve()
         candidates = sorted(root.glob("parallel-*"))
@@ -78,6 +96,11 @@ def main():
         if run is None or run.parent != root or not (run / "controller.json").is_file():
             parser.error("Choose an existing parallel run in the configured runs directory.")
         controller = json.loads((run / "controller.json").read_text(encoding="utf-8"))
+        supervisor = Path(controller["supervisor"]) if controller.get("supervisor") else None
+        if supervisor and (
+            supervisor.parent != root or not supervisor.name.startswith("supervised-")
+        ):
+            parser.error("Invalid supervisor ownership metadata.")
         try:
             process = psutil.Process(controller["pid"])
             alive = (
@@ -87,11 +110,17 @@ def main():
         except psutil.NoSuchProcess:
             alive = False
         if args.command == "stop":
+            if supervisor:
+                (supervisor / "STOP").touch()
             if alive:
                 (run / "STOP").touch()
                 print(f"Graceful stop requested; the final checkpoint will be saved in {run}.")
             else:
-                print("The training controller is no longer running.")
+                print(
+                    "Supervisor stop requested."
+                    if supervisor
+                    else "The training controller is no longer running."
+                )
         else:
             status = (
                 json.loads((run / "status.json").read_text(encoding="utf-8"))
@@ -100,7 +129,18 @@ def main():
             )
             print(
                 json.dumps(
-                    {"run": str(run), "controller_running": alive, **controller, **status}, indent=2
+                    {
+                        "run": str(run),
+                        "controller_running": alive,
+                        **controller,
+                        **status,
+                        "supervisor_status": json.loads(
+                            (supervisor / "status.json").read_text(encoding="utf-8")
+                        )
+                        if supervisor and (supervisor / "status.json").exists()
+                        else None,
+                    },
+                    indent=2,
                 )
             )
         return

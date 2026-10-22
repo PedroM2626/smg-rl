@@ -55,6 +55,7 @@ flowchart LR
 | `plotting.py` | Standalone equal-scale world X/Z figures |
 | `cli.py` | User commands, status, graceful stop and training guards |
 | `reporting.py` | Audited multi-game success, peak valid progress and measured best trajectories |
+| `supervision.py` | Owned-child lifecycle, checkpoint-pair recovery, retry backoff and stop propagation |
 
 There is no writable RAM interface, network gameplay service, cloud learner,
 external telemetry upload, multi-machine coordinator or in-game patch.
@@ -153,7 +154,7 @@ After a crash, choose a pair for which both files exist and load successfully;
 avoid an incomplete newest save. A failed worker aborts the run and cleans up
 owned descendants. If a model is available, `policy-emergency.zip` preserves it
 for inspection; it has no matching curiosity state and is not advertised as a
-normal resumable pair. There is currently no automatic watchdog/restart loop.
+normal resumable pair. `train-parallel` by itself has no automatic restart. The added `train-supervised` wrapper supplies checkpoint recovery, retry backoff and a 240-second status timeout; see [recovery semantics](damage-and-recovery.md).
 
 ```powershell
 .\.venv\Scripts\smg-rl.exe --config config/parallel.yaml status
@@ -212,3 +213,5 @@ checkpoints, copied profiles and virtual environments are ignored, except for
 the explanatory `data/README.md`. Check staged files before every push. Access
 to a private repository requires the owner's GitHub authorization; a 404 for an
 unauthenticated visitor does not imply the repository is absent.
+
+The Galaxy 1 reward revision adds `health`, `max_health`, `health_lost` and `damage_penalty` to CSV/info. Their source is documented in [health telemetry](damage-and-recovery.md). Older logs without these fields cannot be used to infer historical hit counts. Supervised-run metadata and logs live under `supervised-*`; reports expose their state separately from learner attempts.

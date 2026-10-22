@@ -100,3 +100,7 @@ by the reward system. This is an approximate geometric progress measure; it is
 not a native completion percentage, remaining path length, or probability of
 winning. In particular, Sweet Sweet Galaxy's curved route has not been mapped
 to ordered waypoints. Full-course completion remains a separate RAM event.
+
+## Subsequent damage and recovery revision
+
+Both initial concurrent learners later stopped on pause acknowledgment failures. They have been resumed under [recovery supervisors](damage-and-recovery.md) from the 37512-step Galaxy 2 and 2048-step Galaxy 1 checkpoint pairs. Galaxy 1 now includes measured HP supervision and a -0.25 nonfatal damage coefficient. Longer pause pulses trade some throughput for more reliable hotkey delivery; the earlier throughput table is historical and should not be treated as the revised runtime rate.

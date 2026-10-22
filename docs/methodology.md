@@ -267,3 +267,14 @@ over RND alone, a solved full course, generalization to unseen stages, native
 route completion percentage, exact deterministic replay, or a scientifically
 meaningful success rate from the calibration fixtures. The
 [experiment protocol](experiments.md) defines how to test these claims.
+
+## Galaxy 1 damage reward revision
+
+For the separately authorized Galaxy 1 learner, the scalar reward additionally
+includes $-0.25\max(0,h_{t-1}-h_t)$ on nonfatal, non-completion transitions.
+Terminal death uses only the existing death penalty. Health is reset as a tracker
+baseline after each savestate load, and healing gives no positive bonus. Novelty
+is suppressed on sampled HP-loss transitions. Current/max HP are privileged
+reward/logging telemetry, not policy features. This is a new reward condition;
+previous checkpoint continuation is not an independent training seed. See
+[measured damage evidence and sampling limits](damage-and-recovery.md).
