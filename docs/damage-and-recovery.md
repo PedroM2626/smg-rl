@@ -126,3 +126,5 @@ adjustments near platform edges; the recorded trace is the evidence for this
 specific observed transition.
 
 The first supervised Galaxy 1 attempt subsequently stopped advancing frames. Its supervisor recovered automatically from the complete 2816-step pair, launched attempt 2 and continued collecting experience without manual intervention. This is observed live recovery, in addition to the controlled recovery/budget tests; it is not a claim that the underlying emulator can no longer stall.
+
+The Galaxy 2 configuration now spaces emulator initialization by five seconds per worker index. This affects startup only; it reduces simultaneous controller/graphics initialization after intermittent verified-RAM boot timeouts. A failed startup remains an explicit failed attempt and is retried by its supervisor.

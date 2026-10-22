@@ -45,6 +45,7 @@ training:
   device: cuda
   torch_threads: 2
 parallel:
+  startup_spacing_seconds: 5.0
   workers: 4
   emulation_speed: 2.0
   frame_skip: 12
