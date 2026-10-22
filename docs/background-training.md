@@ -1,5 +1,11 @@
 # Hidden parallel training on Windows
 
+**Native backend update (2026-10-22):** the local learners now use
+`config/native.yaml` and `config/smg1-native.yaml`, with shared-memory RGBA
+capture and bounded frame stepping. The stock hotkey/PNG backend remains a
+fallback. See [native controls, profiling, benchmarks, and migration](native-backend.md).
+The older measurements below retain their original backend/timing context.
+
 The background backend runs multiple independent Dolphin processes with no visible game windows and no foreground input requirement. Within one learner, a recurrent visual PPO policy learns from all workers. `config/parallel.yaml` uses four workers balanced between the two Galaxy 2 scenarios; `config/smg1-training.yaml` runs an independent single-worker Galaxy 1 policy. Both use CUDA optimization. See [concurrent operation](concurrent-training.md) for running the two learners together.
 
 This uses Dolphin batch mode with a hidden Win32 rendering surface. The GPU still renders game images for computer vision. It is not a renderer-free `DolphinNoGUI` executable. The existing Dolphin 2609a and original savestate format are preserved.

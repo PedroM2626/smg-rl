@@ -1,5 +1,11 @@
 # Training and experiment guide
 
+**Native backend update (2026-10-22):** the local learners now use
+`config/native.yaml` and `config/smg1-native.yaml`, with shared-memory RGBA
+capture and bounded frame stepping. The stock hotkey/PNG backend remains a
+fallback. See [native controls, profiling, benchmarks, and migration](native-backend.md).
+The older measurements below retain their original backend/timing context.
+
 ## Operating workflow
 
 Use the [README quick start](../README.md) for installation and hidden supervised

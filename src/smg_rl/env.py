@@ -12,6 +12,7 @@ from gymnasium import spaces
 
 from smg_rl.actions import ACTIONS, action_name
 from smg_rl.curiosity import IntrinsicReward
+from smg_rl.diagnostics import StageProfiler, atomic_json, measured
 from smg_rl.memory import GameMemory, MemoryFault
 from smg_rl.plotting import plot_trajectory
 from smg_rl.profiles import game_id
@@ -56,12 +57,14 @@ class GalaxyEnv(gym.Env):
         self.episode = 0
         self.rows = []
         self.closed = False
+        self.profiler = StageProfiler()
 
     def _observation(self):
         scenario = np.zeros(self.scenario_count, dtype=np.float32)
         scenario[self.config["variations"].index(self.variation)] = 1.0
         return {"image": np.stack(self.frames), "scenario": scenario}
 
+    @measured("reset")
     def reset(self, *, seed=None, options=None):
         super().reset(seed=seed)
         if self.rows:
@@ -104,6 +107,7 @@ class GalaxyEnv(gym.Env):
         self._append(-1, 0.0, 0.0, "running", {})
         return self._observation(), self.telemetry.to_dict()
 
+    @measured("step")
     def step(self, action):
         if not self.rows:
             raise RuntimeError("Call reset before stepping.")
@@ -111,8 +115,11 @@ class GalaxyEnv(gym.Env):
         if not self.action_space.contains(action):
             raise ValueError(f"Invalid action: {action}")
         before = self.frames[-1]
-        self.backend.advance(ACTIONS[action])
-        self.telemetry = self.memory.sample()
+        previous_telemetry = self.telemetry
+        with self.profiler.measure("environment_control_and_capture"):
+            self.backend.advance(ACTIONS[action])
+        with self.profiler.measure("telemetry"):
+            self.telemetry = self.memory.sample()
         health_lost = self.damage.update(self.telemetry.health)
         if self.telemetry.scenario != self.variation["scenario"]:
             raise MemoryFault("Scenario changed during an episode.")
@@ -132,7 +139,10 @@ class GalaxyEnv(gym.Env):
             and health_lost == 0
             and self.telemetry.position[1] >= self.config["environment"]["min_reward_y"]
         ):
-            curiosity, metrics = self.curiosity[self.variation["name"]].step(before, frame, action)
+            with self.profiler.measure("curiosity"):
+                curiosity, metrics = self.curiosity[self.variation["name"]].step(
+                    before, frame, action
+                )
         reward = weights["step"] + weights["progress"] * delta + weights["intrinsic"] * curiosity
         if self.telemetry.complete:
             reward += weights["completion"]
@@ -170,8 +180,31 @@ class GalaxyEnv(gym.Env):
             health_lost=health_lost,
             damage_penalty=damage_penalty,
         )
-        self._append(action, reward, fraction, outcome, metrics)
+        with self.profiler.measure("logging"):
+            self._append(action, reward, fraction, outcome, metrics)
         info = {**self.telemetry.to_dict(), **metrics}
+        info["timing_ms"] = {
+            name: value
+            for name, value in self.profiler.last.items()
+            if name not in ("step", "reset")
+        }
+        info["backend_timing_ms"] = dict(getattr(self.backend, "profiler", self.profiler).last)
+        info["advanced_frames"] = getattr(self.backend, "last_frame_count", None)
+        info["scene_frames_advanced"] = (
+            self.telemetry.scene_frame - previous_telemetry.scene_frame
+            if self.telemetry.scene_nerve == previous_telemetry.scene_nerve
+            and self.telemetry.scene_frame >= previous_telemetry.scene_frame
+            else None
+        )
+        if self.steps % 16 == 0 or terminated or truncated:
+            atomic_json(
+                self.run_dir / "timings.json",
+                {
+                    "environment": self.profiler.snapshot(),
+                    "backend": getattr(self.backend, "profiler", self.profiler).snapshot(),
+                    "note": "Nested wall-clock stages overlap; recent percentiles use at most 512 calls.",
+                },
+            )
         if terminated or truncated:
             info["episode"] = {"r": self.total_reward, "l": self.steps}
             self._save_episode(outcome)
@@ -223,6 +256,7 @@ class GalaxyEnv(gym.Env):
             # diagnostic snapshot; never abort learning because a viewer is open.
             pass
 
+    @measured("episode_output")
     def _save_episode(self, outcome):
         if self.steps == 0:
             self.rows = []

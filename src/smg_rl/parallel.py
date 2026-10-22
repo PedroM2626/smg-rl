@@ -10,13 +10,14 @@ from pathlib import Path
 
 import psutil
 import torch
-from sb3_contrib import RecurrentPPO
 from stable_baselines3.common.callbacks import BaseCallback
 from stable_baselines3.common.vec_env import SubprocVecEnv
 
-from smg_rl.background import BackgroundDolphin
+from smg_rl.diagnostics import atomic_json, measured
 from smg_rl.env import GalaxyEnv
+from smg_rl.native import background_backend
 from smg_rl.profiles import require_training_enabled
+from smg_rl.timed_ppo import TimedRecurrentPPO
 from smg_rl.train import new_run
 
 
@@ -30,7 +31,7 @@ class WorkerFactory:
         torch.set_num_threads(self.config["training"]["torch_threads"])
         torch.manual_seed(self.config["training"]["seed"] + self.index)
         time.sleep(self.index * self.config.get("parallel", {}).get("startup_spacing_seconds", 1.0))
-        backend = BackgroundDolphin(self.config, self.index)
+        backend = background_backend(self.config, self.index)
         try:
             return GalaxyEnv(
                 self.config,
@@ -44,6 +45,7 @@ class WorkerFactory:
             raise
 
 
+@measured("checkpoint")
 def checkpoint(model, environments, base):
     model.save(str(base))
     torch.save({"workers": environments.env_method("intrinsic_state")}, str(base) + ".intrinsic.pt")
@@ -75,10 +77,14 @@ class ProgressCallback(BaseCallback):
             "workers": len(self.infos),
             "updated_at": datetime.now(timezone.utc).isoformat(),
             "progress": [info.get("best_progress", 0) for info in self.infos],
+            "worker_timing_ms": [info.get("timing_ms", {}) for info in self.infos],
+            "backend_timing_ms": [info.get("backend_timing_ms", {}) for info in self.infos],
+            "advanced_frames": [info.get("advanced_frames") for info in self.infos],
+            "learner_timings": self.model.profiler.snapshot()
+            if hasattr(self.model, "profiler")
+            else {},
         }
-        pending = self.run_dir / "status.tmp"
-        pending.write_text(json.dumps(status, indent=2) + "\n", encoding="utf-8")
-        pending.replace(self.run_dir / "status.json")
+        atomic_json(self.run_dir / "status.json", status)
 
     def _on_step(self):
         self.infos = self.locals["infos"]
@@ -158,7 +164,7 @@ def parallel_train(config, steps=None, workers=None, resume=None):
                 environments.env_method(
                     "restore_intrinsic_state", states[index % len(states)], indices=index
                 )
-            model = RecurrentPPO.load(
+            model = TimedRecurrentPPO.load(
                 base,
                 env=environments,
                 device=settings["device"],
@@ -166,7 +172,7 @@ def parallel_train(config, steps=None, workers=None, resume=None):
                 batch_size=settings["batch_size"],
             )
         else:
-            model = RecurrentPPO(
+            model = TimedRecurrentPPO(
                 "MultiInputLstmPolicy",
                 environments,
                 learning_rate=settings["learning_rate"],
@@ -181,6 +187,7 @@ def parallel_train(config, steps=None, workers=None, resume=None):
                 verbose=1,
                 policy_kwargs={"lstm_hidden_size": 128, "net_arch": {"pi": [128], "vf": [128]}},
             )
+        model.install_inference_timing()
         callback = ProgressCallback(environments, run_dir, settings["checkpoint_steps"])
         model.learn(
             total_timesteps=steps or settings["steps"],

@@ -1,0 +1,65 @@
+{
+  "state": "completed",
+  "timesteps": 3284,
+  "updates": 92,
+  "target_timesteps": 3284,
+  "elapsed_seconds": 15.421999999991385,
+  "decisions_per_second": 8.299831409679127,
+  "device": "cuda",
+  "workers": 1,
+  "updated_at": "2026-10-22T11:09:45.273006+00:00",
+  "progress": [
+    0.009225121634657333
+  ],
+  "worker_timing_ms": [
+    {
+      "environment_control_and_capture": 89.42460000980645,
+      "telemetry": 0.1311999949393794,
+      "curiosity": 14.305300006526522,
+      "logging": 2.7227000100538135
+    }
+  ],
+  "backend_timing_ms": [
+    {
+      "pause": 13.100199998007156,
+      "startup": 3044.684499996947,
+      "capture": 2.6119000103790313,
+      "reset": 159.35639999224804,
+      "native_round_trip": 86.76570000534412,
+      "advance": 89.41960000083782
+    }
+  ],
+  "advanced_frames": [
+    12
+  ],
+  "learner_timings": {
+    "policy_forward": {
+      "count": 128,
+      "total_ms": 656.8741999653867,
+      "mean_ms": 5.131829687229583,
+      "recent_p50_ms": 2.430649990856182,
+      "recent_p95_ms": 4.686945004505104
+    },
+    "rollout_collection": {
+      "count": 1,
+      "total_ms": 14178.210500002024,
+      "mean_ms": 14178.210500002024,
+      "recent_p50_ms": 14178.210500002024,
+      "recent_p95_ms": 14178.210500002024
+    },
+    "ppo_update": {
+      "count": 1,
+      "total_ms": 1015.6733000039821,
+      "mean_ms": 1015.6733000039821,
+      "recent_p50_ms": 1015.6733000039821,
+      "recent_p95_ms": 1015.6733000039821
+    },
+    "checkpoint": {
+      "count": 1,
+      "total_ms": 70.6757000007201,
+      "mean_ms": 70.6757000007201,
+      "recent_p50_ms": 70.6757000007201,
+      "recent_p95_ms": 70.6757000007201
+    }
+  }
+}

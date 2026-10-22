@@ -1,0 +1,113 @@
+{
+  "state": "completed",
+  "timesteps": 44052,
+  "updates": 340,
+  "target_timesteps": 44052,
+  "elapsed_seconds": 24.297000000005937,
+  "decisions_per_second": 21.072560398397947,
+  "device": "cuda",
+  "workers": 4,
+  "updated_at": "2026-10-22T11:10:36.044451+00:00",
+  "progress": [
+    0.0,
+    0.002971628863278583,
+    0.015820080885545942,
+    0.0006279849784800216
+  ],
+  "worker_timing_ms": [
+    {
+      "environment_control_and_capture": 78.96090000576805,
+      "telemetry": 0.35880001087207347,
+      "curiosity": 30.449500001850538,
+      "logging": 3.718699997989461
+    },
+    {
+      "environment_control_and_capture": 73.575799993705,
+      "telemetry": 0.3904000041075051,
+      "curiosity": 31.025799995404668,
+      "logging": 5.877000003238209
+    },
+    {
+      "environment_control_and_capture": 81.00710000144318,
+      "telemetry": 0.2643999905558303,
+      "curiosity": 28.149699995992705,
+      "logging": 8.364000008441508
+    },
+    {
+      "environment_control_and_capture": 71.76740000431892,
+      "telemetry": 1.22900000133086,
+      "curiosity": 31.874799999059178,
+      "logging": 4.560200002742931
+    }
+  ],
+  "backend_timing_ms": [
+    {
+      "pause": 28.616600000532344,
+      "startup": 3162.5282000022708,
+      "capture": 3.9778999926056713,
+      "reset": 311.8105000030482,
+      "native_round_trip": 74.9160999985179,
+      "advance": 78.95300000382122
+    },
+    {
+      "pause": 4.6941000036895275,
+      "startup": 3219.472199998563,
+      "capture": 2.844400005415082,
+      "reset": 336.89969999250025,
+      "native_round_trip": 70.66919999488164,
+      "advance": 73.56730000174139
+    },
+    {
+      "pause": 15.200800000457093,
+      "startup": 3299.199700006284,
+      "capture": 5.5739999952493235,
+      "reset": 337.410699998145,
+      "native_round_trip": 75.37600000796374,
+      "advance": 80.9986999956891
+    },
+    {
+      "pause": 11.533899989444762,
+      "startup": 3964.778800000204,
+      "capture": 4.330099996877834,
+      "reset": 355.5938000063179,
+      "native_round_trip": 67.36989998898935,
+      "advance": 71.75889999780338
+    }
+  ],
+  "advanced_frames": [
+    12,
+    12,
+    12,
+    12
+  ],
+  "learner_timings": {
+    "policy_forward": {
+      "count": 128,
+      "total_ms": 1289.1988998890156,
+      "mean_ms": 10.071866405382934,
+      "recent_p50_ms": 5.513849995622877,
+      "recent_p95_ms": 8.148110003094189
+    },
+    "rollout_collection": {
+      "count": 1,
+      "total_ms": 21126.642999995966,
+      "mean_ms": 21126.642999995966,
+      "recent_p50_ms": 21126.642999995966,
+      "recent_p95_ms": 21126.642999995966
+    },
+    "ppo_update": {
+      "count": 1,
+      "total_ms": 2706.1441999976523,
+      "mean_ms": 2706.1441999976523,
+      "recent_p50_ms": 2706.1441999976523,
+      "recent_p95_ms": 2706.1441999976523
+    },
+    "checkpoint": {
+      "count": 1,
+      "total_ms": 88.84700000635348,
+      "mean_ms": 88.84700000635348,
+      "recent_p50_ms": 88.84700000635348,
+      "recent_p95_ms": 88.84700000635348
+    }
+  }
+}

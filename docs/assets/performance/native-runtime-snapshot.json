@@ -1,0 +1,118 @@
+{
+  "learners": [
+    {
+      "supervisor": "runs\\supervised-20261022-081111-35424",
+      "state": "running",
+      "attempts": 1,
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\parallel-20261022-081113-797630",
+      "timesteps": 170068,
+      "decisions_per_second": 24.98839590443686,
+      "frames": [
+        12,
+        12,
+        12,
+        12
+      ],
+      "learner_timings": {
+        "policy_forward": {
+          "count": 2288,
+          "total_ms": 10148.392099858029,
+          "mean_ms": 4.435486057630257,
+          "recent_p50_ms": 2.867600000172388,
+          "recent_p95_ms": 4.343440007505706
+        },
+        "rollout_collection": {
+          "count": 17,
+          "total_ms": 316712.9009999917,
+          "mean_ms": 18630.170647058334,
+          "recent_p50_ms": 19024.86599999247,
+          "recent_p95_ms": 21016.900200003874
+        },
+        "ppo_update": {
+          "count": 17,
+          "total_ms": 34935.973400002695,
+          "mean_ms": 2055.057258823688,
+          "recent_p50_ms": 1950.7014999981038,
+          "recent_p95_ms": 3944.662040006368
+        },
+        "checkpoint": {
+          "count": 8,
+          "total_ms": 763.8661000091815,
+          "mean_ms": 95.48326250114769,
+          "recent_p50_ms": 70.63080000079935,
+          "recent_p95_ms": 176.9521949907357
+        }
+      },
+      "updated_at": "2026-10-22T11:17:44.809429+00:00"
+    },
+    {
+      "supervisor": "runs\\smg1\\supervised-20261022-081111-24888",
+      "state": "running",
+      "attempts": 1,
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\smg1\\parallel-20261022-081113-798631",
+      "timesteps": 39494,
+      "decisions_per_second": 7.331935028581671,
+      "frames": [
+        12
+      ],
+      "learner_timings": {
+        "policy_forward": {
+          "count": 2800,
+          "total_ms": 13607.522600097582,
+          "mean_ms": 4.85982950003485,
+          "recent_p50_ms": 3.185599998687394,
+          "recent_p95_ms": 4.82566000719089
+        },
+        "rollout_collection": {
+          "count": 21,
+          "total_ms": 356572.69290002296,
+          "mean_ms": 16979.652042858237,
+          "recent_p50_ms": 17144.278799998574,
+          "recent_p95_ms": 19443.5758000036
+        },
+        "ppo_update": {
+          "count": 21,
+          "total_ms": 11387.241700009326,
+          "mean_ms": 542.2496047623489,
+          "recent_p50_ms": 254.81090000539552,
+          "recent_p95_ms": 1678.6145999940345
+        },
+        "checkpoint": {
+          "count": 10,
+          "total_ms": 784.1917000041576,
+          "mean_ms": 78.41917000041576,
+          "recent_p50_ms": 58.085399999981746,
+          "recent_p95_ms": 141.61614999757143
+        }
+      },
+      "updated_at": "2026-10-22T11:17:44.747712+00:00"
+    }
+  ],
+  "emulators": [
+    {
+      "exe": "C:\\Users\\Acer\\Downloads\\smg-rl\\.local\\native-dolphin\\Dolphin.exe",
+      "pid": 6036,
+      "name": "Dolphin.exe"
+    },
+    {
+      "exe": "C:\\Users\\Acer\\Downloads\\smg-rl\\.local\\native-dolphin\\Dolphin.exe",
+      "pid": 29404,
+      "name": "Dolphin.exe"
+    },
+    {
+      "exe": "C:\\Users\\Acer\\Downloads\\smg-rl\\.local\\native-dolphin\\Dolphin.exe",
+      "pid": 35048,
+      "name": "Dolphin.exe"
+    },
+    {
+      "exe": "C:\\Users\\Acer\\Downloads\\smg-rl\\.local\\native-dolphin\\Dolphin.exe",
+      "pid": 36868,
+      "name": "Dolphin.exe"
+    },
+    {
+      "exe": "C:\\Users\\Acer\\Downloads\\smg-rl\\.local\\native-dolphin\\Dolphin.exe",
+      "pid": 41876,
+      "name": "Dolphin.exe"
+    }
+  ]
+}

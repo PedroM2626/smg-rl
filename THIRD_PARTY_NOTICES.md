@@ -20,8 +20,11 @@ the Python distribution. This repository grants no rights to those assets.
 
 ## Emulator, research sources, and dependencies
 
-Dolphin is a separate program with its own license; it is not distributed as
-part of this project. Installed Python dependencies also retain their own
+Dolphin is a separate GPL-2.0-or-later program. The original MIT bridge sources
+and patch-preparation script in `native/` and `scripts/` build a modified Dolphin
+locally; the combined executable remains GPL-2.0-or-later. Upstream source,
+dependencies, and built binaries are excluded from this Git repository. See the
+[native build/protocol guide](docs/native-backend.md). Installed Python dependencies also retain their own
 licenses. Consult each dependency's distribution metadata and upstream license
 when redistributing an environment; the project MIT license does not replace
 those terms.

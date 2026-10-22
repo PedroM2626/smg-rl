@@ -70,6 +70,22 @@ requests are accepted only for newly written complete PNGs; they come from the
 renderer, not an obscured desktop window. A hidden rendering surface is still
 required; this is not a renderer-free headless simulator.
 
+### Native frame-control revision (2026-10-22)
+
+The native backend retains the action and observation spaces but replaces the
+asynchronous hotkey/PNG loop with a versioned shared-memory bridge in a pinned
+Dolphin 2609a build. It advances 12 newly presented frame-step boundaries per
+decision and acknowledges only while paused. Direct renderer RGBA readback is
+performed for the final frame; images are cropped/resized as before. Scene-nerve
+counters remain diagnostic and may reset on transitions. In the live final
+benchmarks, all native acknowledgments were 12 and same-nerve scene deltas matched.
+
+This changes the temporal abstraction relative to legacy checkpoints; it is not
+an exact continuation of the old control-duration distribution. No inference of
+sample-efficiency superiority follows from the faster wall-clock rate. The
+[protocol, benchmarks, and limitations](native-backend.md) define this backend
+condition. Earlier asynchronous timing evidence in this report remains historical.
+
 ## 3. Progress and extrinsic reward
 
 Let $p_t=(x_t,z_t)$, calibrated start $b_v$ and near-star point $g_v$. Define:

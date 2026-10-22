@@ -1,0 +1,117 @@
+{
+  "backend": "legacy",
+  "steps": 32,
+  "step_wall_seconds": 31.622060499998042,
+  "decisions_per_second_excluding_resets": 1.011951767026756,
+  "step_p50_ms": 986.7938499955926,
+  "step_p95_ms": 1020.0069000042275,
+  "native_completed_frames": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "environment": {
+    "reset": {
+      "count": 3,
+      "total_ms": 3508.190199994715,
+      "mean_ms": 1169.3967333315716,
+      "recent_p50_ms": 1084.6898999880068,
+      "recent_p95_ms": 1324.9706400049035
+    },
+    "environment_control_and_capture": {
+      "count": 32,
+      "total_ms": 31043.05969993584,
+      "mean_ms": 970.095615622995,
+      "recent_p50_ms": 967.548850007006,
+      "recent_p95_ms": 996.9801349943737
+    },
+    "telemetry": {
+      "count": 32,
+      "total_ms": 7.443700029398315,
+      "mean_ms": 0.23261562591869733,
+      "recent_p50_ms": 0.17825000395532697,
+      "recent_p95_ms": 0.37144500020076515
+    },
+    "curiosity": {
+      "count": 30,
+      "total_ms": 535.1029000303242,
+      "mean_ms": 17.83676333434414,
+      "recent_p50_ms": 15.546600006928202,
+      "recent_p95_ms": 28.662860007170817
+    },
+    "logging": {
+      "count": 32,
+      "total_ms": 7.321599929127842,
+      "mean_ms": 0.22879999778524507,
+      "recent_p50_ms": 0.019450002582743764,
+      "recent_p95_ms": 1.2956000013218707
+    },
+    "step": {
+      "count": 32,
+      "total_ms": 31621.682499942835,
+      "mean_ms": 988.1775781232136,
+      "recent_p50_ms": 986.7800999927567,
+      "recent_p95_ms": 1019.9932200004696
+    }
+  },
+  "backend_stages": {
+    "pause": {
+      "count": 71,
+      "total_ms": 27425.954699967406,
+      "mean_ms": 386.28105211221697,
+      "recent_p50_ms": 402.22060000814963,
+      "recent_p95_ms": 416.1351500079036
+    },
+    "capture": {
+      "count": 35,
+      "total_ms": 6095.704600011231,
+      "mean_ms": 174.16298857174948,
+      "recent_p50_ms": 160.3160999948159,
+      "recent_p95_ms": 310.0621799909277
+    },
+    "reset": {
+      "count": 3,
+      "total_ms": 3488.8337000011234,
+      "mean_ms": 1162.944566667041,
+      "recent_p50_ms": 1078.672399991774,
+      "recent_p95_ms": 1316.4137900035712
+    },
+    "advance": {
+      "count": 32,
+      "total_ms": 31042.83000002033,
+      "mean_ms": 970.0884375006353,
+      "recent_p50_ms": 967.542999998841,
+      "recent_p95_ms": 996.9743100002233
+    }
+  },
+  "note": "Fixed action cycle, one worker, curiosity enabled; startup/reset time separate."
+}

@@ -11,6 +11,7 @@ from pathlib import Path
 import psutil
 
 from smg_rl.config import load_config
+from smg_rl.diagnostics import atomic_json
 from smg_rl.profiles import require_training_enabled
 from smg_rl.reporting import read_json
 
@@ -100,12 +101,7 @@ def supervised_train(config_path, steps=None, workers=None, resume=None):
             "updated_at": time.time(),
             **extra,
         }
-        pending = folder / "status.tmp"
-        pending.write_text(json.dumps(data, indent=2), encoding="utf-8")
-        try:
-            pending.replace(folder / "status.json")
-        except PermissionError:
-            pass  # A Windows report/viewer may briefly hold the previous snapshot.
+        atomic_json(folder / "status.json", data)
 
     try:
         while progress < target and not (folder / "STOP").exists():

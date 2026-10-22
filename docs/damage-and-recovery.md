@@ -1,5 +1,11 @@
 # Galaxy 1 health supervision and learner recovery
 
+**Native backend update (2026-10-22):** the local learners now use
+`config/native.yaml` and `config/smg1-native.yaml`, with shared-memory RGBA
+capture and bounded frame stepping. The stock hotkey/PNG backend remains a
+fallback. See [native controls, profiling, benchmarks, and migration](native-backend.md).
+The older measurements below retain their original backend/timing context.
+
 ## Read-only health telemetry
 
 For the supported USA Galaxy 1 executable (`RMGE01`), the dynamically resolved

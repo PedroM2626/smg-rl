@@ -5,7 +5,7 @@ throughput values describe their respective revisions, rather than current
 performance guarantees. The [background report](background-training.md) records
 hidden star/death checks, CUDA collection, stop/resume, and timing revisions.
 The original approximately 8x smoke speedup preceded the stricter pause checks.
-The latest documented suite contains 66 tests; [damage and recovery](damage-and-recovery.md)
+The damage/recovery revision contained 66 tests; [damage and recovery](damage-and-recovery.md)
 adds live HP evidence and supervised continuation. The report below retains the
 original desktop baseline and subsequent failures for comparison. Current
 learner counts and maxima belong in generated reports, not this static register.
@@ -104,3 +104,19 @@ The concurrent-training/report extension passed 51 portable tests. Coverage now 
 Galaxy 1 health was independently checked with a real 3-to-2 nonfatal transition and a return to 3 after resetting slot 1. Reward replay of the measured states charged -0.25 exactly once and no repeated animation penalty. Evidence and the HUD screenshot are in [damage and recovery](damage-and-recovery.md). The expanded suite passed 66 tests, including health bounds, early zero-HP death, reset/healing behavior, no death double charge, unchanged Galaxy 2 behavior, complete-pair selection and supervised retry budget preservation. Both learners were resumed from their last complete pairs after the observed pause failures; their pre-failure progress remains in the report.
 
 A regression test also verifies that a single queued screenshot frame is not accepted as evidence of continuously running emulation. The final pause acknowledgment requires two separate observed changes. A real supervised Galaxy 1 recovery selected timestep 2816 after a frame-advancement failure and continued in a new learner attempt.
+
+## Native bridge revision, 2026-10-22
+
+The separate Dolphin 2609a native build passed both Galaxy 2 star/fall detector
+checks and Galaxy 1 star/fall checks, movement, and paused-state baselines. Native
+calibration files include backend identity and executable SHA256. Final 128-step
+environment benchmarks acknowledged exactly 12 frames each; same-nerve RAM scene
+counter deltas matched. Old policy/curiosity pairs loaded in CUDA continuation
+smoke runs, PPO updated, and complete final pairs were saved for four Galaxy 2
+workers and one Galaxy 1 worker. The expanded portable suite passed 75 tests.
+See [raw measurements, build/protocol, and migration limits](native-backend.md).
+
+A controlled native recovery test terminated one test-owned emulator after its
+64-step pair was saved. The supervisor resumed that pair on attempt two and
+finished the original 256-step target. The isolated fixture and its records are
+separate from production course-success claims; see the native evidence guide.

@@ -31,6 +31,10 @@ def main():
     commands.add_parser(
         "calibrate-background", help="Validate configured scenarios with a hidden worker."
     )
+    benchmark = commands.add_parser(
+        "benchmark", help="Measure environment stages without training PPO."
+    )
+    benchmark.add_argument("--steps", type=int, default=64)
     for name in ("status", "stop"):
         command = commands.add_parser(name)
         command.add_argument(
@@ -70,6 +74,13 @@ def main():
         print(plot_trajectory(args.trajectory, args.output))
         return
     config = load_config(args.config)
+    if args.command == "benchmark":
+        if args.steps < 1:
+            parser.error("--steps must be positive")
+        from smg_rl.benchmark import benchmark
+
+        print(benchmark(config, args.steps))
+        return
     if args.command == "report":
         from smg_rl.reporting import training_report
 
@@ -145,7 +156,7 @@ def main():
             )
         return
     if args.command == "calibrate-background":
-        from smg_rl.background import BackgroundDolphin
+        from smg_rl.native import background_backend
         from smg_rl.train import new_run
         from smg_rl.validation import calibrate
 
@@ -156,7 +167,7 @@ def main():
         isolated["paths"]["user"] = str(
             Path(config["paths"]["user"]).parent / "parallel-profiles" / output.name / "template"
         )
-        backend = BackgroundDolphin(isolated)
+        backend = background_backend(isolated)
         try:
             calibrate(isolated, backend, output)
             print(f"Hidden worker calibration passed. Evidence: {output}")

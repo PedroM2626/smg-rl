@@ -26,6 +26,7 @@ Example paths containing `EXAMPLE` below must be replaced with real local paths.
 | `stop [RUN]` | Request graceful stop of that parallel attempt and its supervisor, when present. |
 | `evaluate [--attach] ZIP [--episodes N]` | Visible desktop deterministic evaluation, intrinsic reward/curiosity updates disabled; default 5 episodes per configured variation. |
 | `plot CSV [--output PNG]` | Generate a top-down measured trajectory and progress figure from a CSV; no emulator access. |
+| `benchmark [--steps N]` | Fixed-action environment profiling with curiosity, without PPO; default 64 decisions; results excluded from success reports. |
 | `report [--output JSON]` | Audit training evidence across both games under project `runs/`; with output, save JSON and available best-trajectory artifacts. |
 
 Desktop launch refuses to run alongside existing Dolphin processes. Desktop
@@ -38,6 +39,8 @@ intended Dolphin process is available. Use worker CSVs/status for parallel runs.
 
 | Configuration | Use | Run root |
 | --- | --- | --- |
+| `config/native.yaml` | Galaxy 2 native capture/frame control, CUDA | `runs/` |
+| `config/smg1-native.yaml` | Galaxy 1 native capture/frame control, CUDA | `runs/smg1/` |
 | `config/default.yaml` | Galaxy 2 visible desktop, CPU | `runs/` |
 | `config/parallel.yaml` | Galaxy 2 hidden workers, CUDA | `runs/` |
 | `config/smg1.yaml` | Galaxy 1 hidden detector validation; training disabled | `runs/smg1/` |

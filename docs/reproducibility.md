@@ -5,6 +5,7 @@
 | Question | Document |
 | --- | --- |
 | Install and basic commands | [README](../README.md) |
+| Native frame bridge, profiling, build provenance, and measured acceleration | [Native backend](native-backend.md) |
 | Complete documentation navigation | [Documentation index](README.md) |
 | Exact CLI arguments and backend selection | [Command reference](cli.md) |
 | Health penalties and supervised recovery | [Damage and recovery](damage-and-recovery.md) |
@@ -47,6 +48,10 @@ flowchart LR
 | `process_memory.py` | Windows read-only memory mappings for an explicit PID |
 | `dolphin.py` | Owned profile preparation and visible desktop adapter |
 | `dsu.py` | Loopback controller protocol and per-worker input state |
+| `native.py` | Versioned shared-memory client, direct capture, bounded-frame commands, and backend selection |
+| `diagnostics.py` | Bounded timing statistics and resilient atomic diagnostic publication |
+| `timed_ppo.py` | PPO collection/inference/update timing with checkpoint-compatible policy persistence |
+| `benchmark.py` | Fixed-action environment measurements excluded from audited training success |
 | `background.py` | Hidden Dolphin lifecycle, pause handshake, fresh renderer capture |
 | `actions.py` | Stable 54-action enumeration |
 | `curiosity.py` | Inverse features, episodic kNN, RND, optimizer/statistics persistence |
@@ -81,7 +86,7 @@ py -3.11 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install --no-deps -e .
 .\.venv\Scripts\python.exe -m pip check
 .\.venv\Scripts\python.exe -m pytest -q
-.\.venv\Scripts\python.exe -m ruff check src tests
+.\.venv\Scripts\python.exe -m ruff check src tests scripts
 ```
 
 For an archived experiment preserve the exact repository commit, dirty diff if
@@ -132,6 +137,8 @@ overwritten; use a new owned profile after replacing source states.
 | `variations` | Stage missions and local savestate role mapping |
 | `validation` (optional) | `death_action`, default `[s]`, for the negative detector test |
 
+`config/native.yaml` and `config/smg1-native.yaml` select the separately built
+shared-memory/frame-step backend, with their own calibration files.
 `config/default.yaml` selects desktop Galaxy 2. `config/parallel.yaml` selects
 hidden parallel Galaxy 2 with CUDA. `config/smg1.yaml` selects a single hidden
 Galaxy 1 validation instance and prohibits training via its disabled flag.
@@ -143,6 +150,10 @@ The Galaxy 2 profile sets `startup_spacing_seconds: 5.0`; worker index zero has
 no added delay. `startup_timeout` defaults to 90 seconds when omitted, while
 `timeout: 30.0` bounds normal operations. These are distinct from the supervisor's
 240-second no-status watchdog. Galaxy 1's one worker needs no startup stagger.
+
+Native frame control and legacy timing have different action-duration
+distributions even with the same nominal `frame_skip`. Migrating a checkpoint
+is a changed experimental condition; see [migration evidence](native-backend.md).
 
 ## Checkpoint semantics and failure recovery
 

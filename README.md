@@ -12,8 +12,9 @@ visual inverse-dynamics features, episodic k-nearest-neighbor novelty, and Rando
 Network Distillation (RND). This is **NGU-inspired exploration**, rather than a
 reproduction of NGU's distributed Q-learning algorithm.
 
-The implementation has live detector, health, capture, training, checkpoint, and
-recovery evidence. **A learned full-course solution has not been established.**
+The native backend provides shared-memory renderer capture, bounded frame
+stepping, stage profiling, and supervised checkpoint recovery. It has live
+detector, health, capture, training, checkpoint, and recovery evidence. **A learned full-course solution has not been established.**
 Near-star calibration success is a detector test, not evidence of learning.
 The [documentation index](docs/README.md) separates operating instructions,
 mathematical specification, measured evidence, and planned experiments.
@@ -22,9 +23,9 @@ mathematical specification, measured evidence, and planned experiments.
 
 | Game / executable | Mission | Training start | Detector fixture | Recommended configuration |
 | --- | --- | --- | --- | --- |
-| Galaxy 2 USA / `SB4E01` | Twisty Trials: Spinning and Spinning and Spinning | Slot 1 | Slot 2, near star | `config/parallel.yaml` |
-| Galaxy 2 USA / `SB4E01` | Twisty Trials: Turning Turning Double Time | Slot 3 | Slot 4, near star | `config/parallel.yaml` |
-| Galaxy 1 USA / `RMGE01` | Sweet Sweet Galaxy: Rocky Road | Slot 1 | Slot 2, near star | `config/smg1-training.yaml` |
+| Galaxy 2 USA / `SB4E01` | Twisty Trials: Spinning and Spinning and Spinning | Slot 1 | Slot 2, near star | `config/native.yaml` |
+| Galaxy 2 USA / `SB4E01` | Twisty Trials: Turning Turning Double Time | Slot 3 | Slot 4, near star | `config/native.yaml` |
+| Galaxy 1 USA / `RMGE01` | Sweet Sweet Galaxy: Rocky Road | Slot 1 | Slot 2, near star | `config/smg1-native.yaml` |
 
 The checked profiles and supplied savestates were tested with **Dolphin 2609a**.
 Other regions, revisions, or state files require new validation. Galaxy 1's
@@ -101,13 +102,31 @@ See [asset roles](data/README.md). ROMs, savestates, copied profiles, virtual
 environments, checkpoints, and full run logs are local-only and ignored by Git.
 Savestates must match the emulator build.
 
-Defaults point to `D:\emuladores\Dolphin-x64\Dolphin.exe` and use
+Legacy configurations point to `D:\emuladores\Dolphin-x64\Dolphin.exe` and use
 `%APPDATA%\Dolphin Emulator` as the source user profile. Edit a copy of the
 appropriate YAML if paths differ. `--config` must appear **before** the
 subcommand. Paths resolve relative to the project root. Profiles are copied
 into owned `.local/` directories; the source profile is preserved. Existing
 destination state copies are not overwritten; use a new owned profile after
 replacing source savestates.
+
+## Build the native backend
+
+The recommended native configurations use `.local/native-dolphin/Dolphin.exe`.
+They require a separate patched **Dolphin 2609a** build, compatible MSVC/Windows
+SDK, CMake, and Ninja. The original installed emulator remains available for the
+legacy fallback. From a compatible developer PowerShell:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/build_native.ps1
+```
+
+The build script pins upstream source, applies the local bridge, and deploys into
+an owned ignored directory. See [build prerequisites, protocol, measured evidence,
+and licensing](docs/native-backend.md). For the stock emulator instead, use
+`config/parallel.yaml` (Galaxy 2) or `config/smg1-training.yaml` (Galaxy 1) in the
+commands below; those retain hotkey/PNG control and their original calibration.
+Native configurations have separate calibration files.
 
 ## Validate before training
 
@@ -116,8 +135,8 @@ after changing the game executable, savestates, Dolphin build, memory profile,
 or control timing:
 
 ```powershell
-.\.venv\Scripts\smg-rl.exe --config config/parallel.yaml calibrate-background
-.\.venv\Scripts\smg-rl.exe --config config/smg1.yaml calibrate-background
+.\.venv\Scripts\smg-rl.exe --config config/native.yaml calibrate-background
+.\.venv\Scripts\smg-rl.exe --config config/smg1-native.yaml calibrate-background
 ```
 
 Calibration uses a temporary hidden worker to check start/goal states, movement,
@@ -132,16 +151,16 @@ processes**: four Galaxy 2 workers alternating its missions and one Galaxy 1
 worker. Run each command in a separate terminal when starting fresh experiments:
 
 ```powershell
-.\.venv\Scripts\smg-rl.exe --config config/parallel.yaml train-supervised --workers 4 --steps 1000000
+.\.venv\Scripts\smg-rl.exe --config config/native.yaml train-supervised --workers 4 --steps 1000000
 ```
 
 ```powershell
-.\.venv\Scripts\smg-rl.exe --config config/smg1-training.yaml train-supervised --workers 1 --steps 1000000
+.\.venv\Scripts\smg-rl.exe --config config/smg1-native.yaml train-supervised --workers 1 --steps 1000000
 ```
 
 Check `status` before starting additional learners. These commands do not attach
-to an existing training run. Each worker owns its profile, DSU loopback input,
-RAM reader, and renderer capture. Keyboard/mouse focus is unnecessary. The GPU
+to an existing training run. Each worker owns its profile, loopback device discovery, shared-memory inputs
+and renderer capture, and read-only RAM reader. Keyboard/mouse focus is unnecessary. The GPU
 still renders to a hidden Win32 surface: this is **hidden rendering, not
 renderer-free headless emulation**. CUDA runs policy learning; curiosity models
 run on CPU with independent worker/scenario statistics.
@@ -158,7 +177,7 @@ resuming; a PPO rollout can round the final count upward. To resume a particular
 experiment, replace the example path with a real matching checkpoint pair:
 
 ```powershell
-.\.venv\Scripts\smg-rl.exe --config config/parallel.yaml train-supervised --workers 4 --steps 100000 --resume runs/parallel-EXAMPLE/model-final.zip
+.\.venv\Scripts\smg-rl.exe --config config/native.yaml train-supervised --workers 4 --steps 100000 --resume runs/parallel-EXAMPLE/model-final.zip
 ```
 
 Both `model-final.zip` and `model-final.intrinsic.pt` must exist. Policy,
@@ -169,8 +188,8 @@ This is statistical continuation, not exact replay.
 ## Inspect, report, and stop
 
 ```powershell
-.\.venv\Scripts\smg-rl.exe --config config/parallel.yaml status
-.\.venv\Scripts\smg-rl.exe --config config/smg1-training.yaml status
+.\.venv\Scripts\smg-rl.exe --config config/native.yaml status
+.\.venv\Scripts\smg-rl.exe --config config/smg1-native.yaml status
 .\.venv\Scripts\smg-rl.exe report --output runs/training-report.json
 ```
 
@@ -183,8 +202,8 @@ A success requires a full-start trace and the correct RAM completion evidence.
 Missing evidence is reported as a warning or unknown value.
 
 ```powershell
-.\.venv\Scripts\smg-rl.exe --config config/parallel.yaml stop
-.\.venv\Scripts\smg-rl.exe --config config/smg1-training.yaml stop
+.\.venv\Scripts\smg-rl.exe --config config/native.yaml stop
+.\.venv\Scripts\smg-rl.exe --config config/smg1-native.yaml stop
 ```
 
 Each stop request also stops the owning supervisor. Allow the current vector
@@ -208,6 +227,7 @@ runs/                                      # Galaxy 2
     worker-00/spinning/episode-000001.png
     worker-00/live.csv
     worker-00/episodes.jsonl
+    worker-00/timings.json                    # Bounded stage timing statistics
 runs/smg1/                                 # Independent Galaxy 1 namespace
   supervised-TIMESTAMP-PID/
   parallel-TIMESTAMP/worker-00/sweet_sweet/
@@ -236,8 +256,8 @@ and close their Dolphin instances before starting a desktop evaluation. It uses
 deterministic actions with intrinsic rewards and curiosity learning disabled:
 
 ```powershell
-.\.venv\Scripts\smg-rl.exe --config config/parallel.yaml evaluate runs/parallel-EXAMPLE/model-final.zip --episodes 10
-.\.venv\Scripts\smg-rl.exe --config config/smg1-training.yaml evaluate runs/smg1/parallel-EXAMPLE/model-final.zip --episodes 10
+.\.venv\Scripts\smg-rl.exe --config config/native.yaml evaluate runs/parallel-EXAMPLE/model-final.zip --episodes 10
+.\.venv\Scripts\smg-rl.exe --config config/smg1-native.yaml evaluate runs/smg1/parallel-EXAMPLE/model-final.zip --episodes 10
 ```
 
 Galaxy 2 evaluates both missions; Galaxy 1 evaluates its single mission. Match
@@ -247,29 +267,56 @@ mouse spin. The owned profile sets F1-F4 load and F10 pause. `prepare`, `launch`
 `calibrate`, `train`, and `--attach` support this single-instance fallback;
 `telemetry` also uses the single-process hook. See the [complete CLI reference](docs/cli.md).
 
+## Profiling and measured acceleration
+
+```powershell
+.\.venv\Scripts\smg-rl.exe --config config/native.yaml benchmark --steps 128
+.\.venv\Scripts\smg-rl.exe --config config/smg1-native.yaml benchmark --steps 128
+```
+
+The benchmark measures a fixed action cycle with visual curiosity and no PPO
+optimization; it is excluded from training success reports. Workers publish
+`timings.json`; learner status includes control/capture, telemetry, curiosity,
+policy-forward, rollout, PPO-update, and checkpoint timings. Nested stages overlap
+and must not be summed as exclusive costs.
+
+Short native environment tests measured **9.69 decisions/s in Galaxy 1** and
+**12.56 in Galaxy 2**, one worker each, versus **1.06** in the Galaxy 1 legacy
+repeat. Native CUDA continuation smoke runs measured about **21.07 aggregate
+training decisions/s with four Galaxy 2 workers**, and **8.30 with one Galaxy 1
+worker**, including PPO updates/final save. These are different measurements;
+startup/reset load and action-duration differences limit direct comparisons.
+See [raw benchmarks and validation](docs/native-backend.md).
+
 ## Timing, performance, and research limits
 
-Input, pause, and PNG capture are asynchronous. Scene counters reset on state
-transitions; screenshot flushing can add frames. Approximate frame skipping is
-not a frame-synchronous simulator API. Current pause checks use longer pulses,
-reconciliation, and two observed counter advances to avoid queued-frame errors.
-Galaxy 2 startup is staggered by five seconds per worker index, with a separate
-90-second boot timeout and 30-second ordinary action/capture timeout.
+Native commands advance exactly the requested number of Dolphin frame-step
+boundaries and return while paused, with fresh RGBA pixels in shared memory.
+The final-frame readback avoids PNG files and screenshot-flush frames. Native
+configurations use unlimited emulation speed and 12 frames per decision. All
+128 decisions in each final environment benchmark acknowledged 12 frames;
+unchanged-nerve scene-counter deltas also matched 12. Scene counters can reset
+on transitions and are not the frame-control clock.
 
-Short historical throughput benchmarks used earlier timing revisions and are
-documented in [background training](docs/background-training.md). Re-measure the
-current revision, include startup and failures separately, and avoid inferring
-linear scaling from worker count. Higher emulation speed or frame skip can
-coarsen control and miss brief events. Pause and startup failures have occurred;
-supervision bounds interruption, rather than removing the underlying timing
-limitations. Long runs, multiple seeds, reward ablations, and independent success
-evaluation remain necessary to establish learning quality.
+The fallback retains asynchronous hotkeys, bounded pause probes, and PNG capture.
+Its historical throughput and failures are documented in
+[background training](docs/background-training.md). Native control removes those
+hotkey/capture failure paths; file-lock retries, panic exits, PID checks, command
+timeouts, and supervision handle other failures. This is not a guarantee against
+persistent file locks, invalid states, or driver/process crashes.
+
+A 12-frame native action is shorter than the old approximate action, whose
+handshakes added many frames. Migrating old policy/curiosity checkpoints changes
+the control-duration distribution. It preserves weights, not an identical
+experimental condition. More decisions per second do not prove better learning.
+Long runs, independent seeds, reward ablations, and full-start success evaluation
+remain necessary.
 
 ## Development and license
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q
-.\.venv\Scripts\python.exe -m ruff check src tests
+.\.venv\Scripts\python.exe -m ruff check src tests scripts
 ```
 
 Portable tests cover telemetry, health/reward semantics, curiosity persistence,

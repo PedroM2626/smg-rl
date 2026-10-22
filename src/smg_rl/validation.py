@@ -1,6 +1,7 @@
 """Live calibration and reproducible positive/negative reward checks."""
 
 import csv
+import hashlib
 import json
 import time
 from datetime import datetime, timezone
@@ -54,6 +55,12 @@ def calibrate(config, backend, output_dir):
     output_dir.mkdir(parents=True, exist_ok=True)
     result = {
         "game_id": game_id(config),
+        "backend": config.get("parallel", {}).get("backend", "legacy")
+        if "parallel" in config
+        else "desktop",
+        "emulator_sha256": hashlib.sha256(
+            Path(config["paths"]["dolphin"]).read_bytes()
+        ).hexdigest(),
         "validated": False,
         "created_utc": datetime.now(timezone.utc).isoformat(),
         "variations": {},

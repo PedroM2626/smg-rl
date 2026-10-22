@@ -15,6 +15,7 @@ from pathlib import Path
 import cv2
 import numpy as np
 
+from smg_rl.diagnostics import measured
 from smg_rl.dolphin import prepare_profile
 from smg_rl.dsu import DSUServer
 from smg_rl.memory import GameMemory, MemoryFault
@@ -32,7 +33,11 @@ def prepare_worker(config, index, port):
     for section, entries in {
         "Input": {"BackgroundInput": "True"},
         "General": {"HotkeysRequireFocus": "False"},
-        "Interface": {"PauseOnFocusLost": "False", "OnScreenDisplayMessages": "False"},
+        "Interface": {
+            "PauseOnFocusLost": "False",
+            "OnScreenDisplayMessages": "False",
+            "AbortOnPanicAlert": "True",
+        },
         "Core": {"EmulationSpeed": str(config["parallel"]["emulation_speed"])},
         "DSP": {"Backend": "Null", "Volume": "0"},
     }.items():
@@ -86,6 +91,7 @@ def prepare_worker(config, index, port):
 
 
 class BackgroundDolphin:
+    @measured("startup")
     def __init__(self, config, index=0):
         self.config, self.index = config, index
         self.server = DSUServer()
@@ -114,6 +120,9 @@ class BackgroundDolphin:
                     str(self.root / "StateSaves" / f"{game_id(config)}.s01"),
                 ],
                 startupinfo=startup,
+                env={**os.environ, "SMG_RL_BRIDGE": self.bridge.name}
+                if hasattr(self, "bridge")
+                else {k: v for k, v in os.environ.items() if k != "SMG_RL_BRIDGE"},
             )
             (self.root / "process.json").write_text(
                 json.dumps(
@@ -135,7 +144,7 @@ class BackgroundDolphin:
                         self.reader = ProcessMemory(self.process.pid, game_id(config))
                     self.memory = GameMemory(self.reader, game_id(config))
                     self.memory.sample()
-                    if not self.server.clients:
+                    if not self.server.clients and not hasattr(self, "bridge"):
                         raise MemoryFault("Waiting for the private DSU connection.")
                     break
                 except MemoryFault as exc:
@@ -186,6 +195,7 @@ class BackgroundDolphin:
             previous = current
         return True
 
+    @measured("pause")
     def pause(self, value=True):
         # Reconcile against RAM before toggling, even if the cached state differs.
         self.paused = self.detect_pause()
@@ -203,6 +213,7 @@ class BackgroundDolphin:
         self.names = ()
         self.server.set()
 
+    @measured("reset")
     def load_slot(self, slot):
         self.release()
         self.pause(True)
@@ -213,6 +224,7 @@ class BackgroundDolphin:
         self.last_image = None
         self.capture()
 
+    @measured("advance")
     def advance(self, names):
         self.names = tuple(names)
         self.server.set(self.names)
@@ -235,6 +247,7 @@ class BackgroundDolphin:
         self.capture()
         self.release()
 
+    @measured("capture")
     def capture(self):
         # The screenshot comes from Dolphin's renderer, not the desktop surface.
         started = time.time_ns()

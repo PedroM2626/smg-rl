@@ -1,5 +1,11 @@
 # Concurrent Galaxy 1 and Galaxy 2 training
 
+**Native backend update (2026-10-22):** the local learners now use
+`config/native.yaml` and `config/smg1-native.yaml`, with shared-memory RGBA
+capture and bounded frame stepping. The stock hotkey/PNG backend remains a
+fallback. See [native controls, profiling, benchmarks, and migration](native-backend.md).
+The older measurements below retain their original backend/timing context.
+
 ## Authorized configuration
 
 On 2026-10-21 the owner authorized Sweet Sweet Galaxy training alongside the
