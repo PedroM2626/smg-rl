@@ -288,3 +288,13 @@ dependencies, build a wheel into an ignored local directory and inspect its
 ```powershell
 .\.venv\Scripts\python.exe -m pip wheel --no-deps --no-build-isolation --wheel-dir .local/package-check .
 ```
+
+## Experimental world-model provenance
+
+The new [world-model workflow](world-model.md) has independent architecture,
+checkpoints, replay and real/imagined counters. Preserve visual NPZ data alongside
+its signature and model manifests; earlier coordinate CSVs cannot reproduce
+missing frames. Whole episodes remain in one training/validation split. A checkpoint
+saves Torch/CUDA and replay-sampler RNG states, but not exact game/acting hidden
+state. The current implementation has synthetic validation only and remains
+under an explicit owner hold, including offline fitting.

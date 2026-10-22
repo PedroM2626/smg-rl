@@ -1,0 +1,71 @@
+{
+  "created_utc": "2026-10-22T22:57:10.903128+00:00",
+  "validation_scope": "Synthetic software tests and read-only state inspection only. No real-game collection, world-model fitting or policy training started. No acceleration or course completion claim.",
+  "full_portable_suite": "........................................................................ [ 62%]\n...........................................                              [100%]\n115 passed in 39.62s",
+  "final_targeted_after_stochastic_validation_change": "...............                                                          [100%]\n15 passed in 6.26s",
+  "ruff": "All checks passed!",
+  "pip_check": "No broken requirements found.",
+  "stopped_ppo": [
+    {
+      "supervisor": "runs/supervised-20261022-191241-46584",
+      "state": "stopped",
+      "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\parallel-20261022-191244-766492\\model-final.zip",
+      "verified_decisions": 824416
+    },
+    {
+      "supervisor": "runs/smg1/supervised-20261022-191241-50148",
+      "state": "stopped",
+      "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\smg1\\parallel-20261022-191244-766492\\model-final.zip",
+      "verified_decisions": 220891
+    }
+  ],
+  "training_hold_checks": {
+    "config/world-model.yaml": "Training is on hold by explicit user request. Await authorization to resume.",
+    "config/smg1-world-model.yaml": "Training is on hold by explicit user request. Await authorization to resume."
+  },
+  "replay": {
+    "config/world-model.yaml": {
+      "chunks": 0,
+      "transitions": 0,
+      "train_episodes": 0,
+      "validation_episodes": 0,
+      "scenarios": {
+        "spinning": 0,
+        "double_time": 0
+      },
+      "train_scenarios": {
+        "spinning": 0,
+        "double_time": 0
+      },
+      "validation_scenarios": {
+        "spinning": 0,
+        "double_time": 0
+      },
+      "rejected": []
+    },
+    "config/smg1-world-model.yaml": {
+      "chunks": 0,
+      "transitions": 0,
+      "train_episodes": 0,
+      "validation_episodes": 0,
+      "scenarios": {
+        "sweet_sweet": 0
+      },
+      "train_scenarios": {
+        "sweet_sweet": 0
+      },
+      "validation_scenarios": {
+        "sweet_sweet": 0
+      },
+      "rejected": []
+    }
+  },
+  "default_parameter_counts": {
+    "world": 2643491,
+    "actor": 154678,
+    "critic": 141057,
+    "target_critic": 141057
+  },
+  "owned_native_emulator_pids": [],
+  "implementation_commit": "4650291"
+}

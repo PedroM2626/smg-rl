@@ -21,6 +21,7 @@ evidence rather than continuously updated dashboards.
 | Two learners, resource measurements, status, and cross-game reports | [Concurrent training](concurrent-training.md) |
 | Health penalties, checkpoint recovery, and measured damage evidence | [Damage and recovery](damage-and-recovery.md) |
 | Practical reward tuning, evaluation, and troubleshooting | [Training guide](training.md) |
+| Current training hold, visual replay, recurrent world model and imagined actor/critic experiment | [World-model implementation](world-model.md) |
 
 ## Understand and reproduce
 

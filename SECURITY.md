@@ -58,3 +58,17 @@ local-version suffix when querying advisories. Otherwise a tool can silently
 skip `torch==...+cu126`. It audits exact installed versions, not the emulator
 binary or the project's own code. Advisory data and an audit's coverage change
 over time. A clean result is not a guarantee that all vulnerabilities are absent.
+
+## Visual replay and world-model checkpoints
+
+Visual replay uses schema-checked NPZ archives with `allow_pickle=False`, fixed
+members, bounded expanded size and validated observation/action/boundary arrays.
+The new world-model checkpoint format uses restricted tensor loading with a
+SHA-256/signature/settings manifest and an interrupted-publication marker. It is
+separate from SB3 ZIP metadata. These checks do not authenticate external authors;
+continue to use only trusted local datasets/checkpoints. Replay contains game
+imagery and stays ignored/local.
+
+The owner's current training hold is enforced before all training entry points,
+including offline model fitting. Do not remove `.local/training-hold.json` without
+explicit authorization. Synthetic tests exercise code independently of game data.

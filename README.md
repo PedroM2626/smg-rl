@@ -6,8 +6,13 @@ Dolphin on Windows. The canonical repository is
 request. Original project code and documentation use the [MIT License](LICENSE).
 All repository text and generated labels are in English.
 
-One scenario-conditioned recurrent PPO policy learns the two Galaxy 2 missions.
-A separate policy learns Sweet Sweet Galaxy in Galaxy 1. Exploration combines
+**Training is currently stopped at the owner's request.** The local training
+hold blocks both online training and offline model fitting until explicit resume
+authorization. Final PPO pairs are preserved at 824416 Galaxy 2 and 220891 Galaxy 1
+decisions. See [the world-model implementation and current status](docs/world-model.md).
+
+The baseline uses one scenario-conditioned recurrent PPO policy for the two Galaxy 2 missions.
+A separate policy targets Sweet Sweet Galaxy in Galaxy 1. Exploration combines
 visual inverse-dynamics features, episodic k-nearest-neighbor novelty, and Random
 Network Distillation (RND). This is **NGU-inspired exploration**, rather than a
 reproduction of NGU's distributed Q-learning algorithm.
@@ -29,6 +34,14 @@ The recommended profiles now select Vulkan after a matched renderer comparison.
 The latest revision also updates Torch/SB3, verifies checkpoint pair integrity,
 and bounds failed-worker recovery. See the [renderer and security audit](docs/optimization-v4.md)
 and [security policy](SECURITY.md). Full-course learning remains unproven.
+
+An experimental PyTorch visual world model now provides episode-separated pixel
+replay, recurrent dynamics, reward/continuation prediction, disagreement exploration,
+and quality-gated actor/critic updates in latent imagination. It is Dreamer-inspired,
+not a DreamerV3 reproduction. No real world-model training or speedup has been
+measured; old trajectory CSVs lack the required images. Experimental profiles are
+`config/world-model.yaml` and `config/smg1-world-model.yaml`; their training commands
+remain blocked during the hold. `inspect-replay` is read-only.
 
 ## Supported tasks
 
