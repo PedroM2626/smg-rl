@@ -1,60 +1,125 @@
 # Training and experiment guide
 
+## Operating workflow
+
+Use the [README quick start](../README.md) for installation and hidden supervised
+training, the [CLI reference](cli.md) for exact arguments, and
+[concurrent operation](concurrent-training.md) for two independent game policies.
+This guide explains control/reward choices and experimental practice.
+
 ## Observation and action model
 
-The centered 16:9 Dolphin viewport is cropped to remove most HUD content, converted to grayscale, resized to 84 by 84, and stacked over four decisions. A two-element scenario identity lets one recurrent visual policy represent both variants. No coordinate, actor pointer, frame counter, death flag, progress fraction, or success flag enters the observation.
+The 16:9 viewport is cropped to remove most HUD content, converted to grayscale,
+resized to 84 x 84, and stacked over four decisions. Galaxy 2 has a two-element
+scenario identity; the independent Galaxy 1 policy has one element. No coordinate,
+actor pointer, scene counter, health value, terminal flag, or computed progress
+enters the observation.
 
-The 54 discrete actions combine nine movement directions (including idle) with six modes: no modifier, jump, spin, crouch, crouch+jump, and jump+spin. Shift is injected before jump in combined actions. All controller inputs are released around F10 because held-input priority can suppress the emulator shortcut. Neutral game frames occur during the pause handshake. The actual elapsed game frames are logged; this desktop adapter does not claim exact action repeat.
+The 54 discrete actions combine nine movement directions, including idle, with
+six modes: neutral, jump, spin, crouch, crouch+jump, and jump+spin. Hidden workers
+send controller state through private DSU servers. The desktop fallback injects
+Shift before jump in combined actions and releases inputs around F10. Held-input
+priority can otherwise suppress the shortcut.
 
-The environment is paused between decisions, during CNN/RND/PPO updates, while writing episode plots, and on normal shutdown. Pause is checked against the scene's RAM counter, with bounded retries. A missed pause produces an error instead of silently continuing training on stale observations. Focus loss also aborts and releases inputs.
+Both backends have asynchronous timing. Hidden workers target 12 scene frames
+at 2x emulation speed; the desktop interval is 0.25 seconds. Pause/input/capture
+overhead makes achieved duration variable, so neither claims exact action repeat.
+Logs retain the scene counter and nerve: differences across nerve changes are
+not elapsed-frame measurements. Very short desktop pulses can be canceled by
+neutral frames during shortcut delivery.
 
-State loading also takes place while paused. This preserves the supplied near-star snapshots before a moving platform can carry Mario away. The production held-action interval is 0.25 seconds; early smoke runs used 0.10 seconds. Very short movement pulses can be mostly canceled by neutral frames in the desktop shortcut handshake.
+Workers pause for observation processing, learning, and episode output. Pause
+checks use RAM with bounded retries. A missed acknowledgment aborts the attempt.
+The current hidden probe requires two distinct counter/nerve changes to classify
+running, and pause pulses last 120 ms with a 35 ms release interval. Hidden
+workers close on shutdown; the desktop adapter leaves its window paused. Desktop
+focus loss aborts/releases inputs. Hidden inputs/capture need no foreground focus.
 
-## Novelty
+## Novelty and reward
 
-Each scenario owns an independent RND target, predictor, optimizer, and running error statistics, as well as its own episodic memory. A visual inverse-dynamics encoder predicts the selected action from consecutive frames. Its frozen copy supplies kNN embeddings for the current episode; the snapshot is refreshed only at reset, so embeddings already in memory stay comparable.
+Each worker/scenario has independent RND target/predictor, optimizer, running
+statistics, and episodic memory. A visual inverse-dynamics encoder predicts the
+action from consecutive frames. An episode-frozen copy provides kNN embeddings;
+it is refreshed at reset so existing episodic embeddings remain comparable.
 
-Episodic novelty uses normalized squared neighbor distances and a similarity kernel, following the structure of NGU's episodic bonus. Repeated nearly identical embeddings eventually receive zero bonus. RND predictor error is normalized using previous error statistics and clipped into a lifelong multiplier from 1 to `rnd_clip`. These components are multiplied. Terminal cinematics and observations below the reward height threshold cannot collect intrinsic reward.
-
-The encoder is learned from images, not coordinates. Rotating backgrounds can still create visual novelty; inverse-dynamics features reduce that problem but do not eliminate it. Compare the RND and episodic metrics against actual progress and independent evaluation success.
-
-## Reward
+Episodic novelty uses normalized squared neighbor distances and a similarity
+kernel. RND error is normalized using previous running statistics and clipped to
+a multiplier from 1 to `rnd_clip`. The components are multiplied. Repeated nearly
+identical embeddings eventually receive zero episodic bonus. Terminal frames,
+frames below the reward height, and Galaxy 1 sampled HP-loss transitions cannot
+collect novelty. Rotating backgrounds can still produce unhelpful visual novelty;
+inverse-dynamics features do not guarantee its elimination.
 
 ```text
 reward = progress_weight * new_valid_high_water_progress
-       + intrinsic_weight * episodic_novelty * lifelong_novelty
+       + intrinsic_weight * eligible_intrinsic_bonus
        + completion_bonus OR death_penalty
+       + nonfatal_damage_penalty_if_applicable
        + step_cost
 ```
 
-The weights are explicit in `config/default.yaml`. Progress has an episode high-water mark and its endpoint is calibrated separately per variation. Success requires the RAM state transition, never merely reaching a coordinate or seeing a bright object.
+Defaults are progress 5, intrinsic 0.02, completion +20, death -2, and step
+-0.0001. Galaxy 1 additionally charges -0.25 per nonfatal HP lost, once per
+sampled decrease. Healing/reset do not earn rewards, and a fatal transition uses
+only the death penalty. This is a net-health detector and can miss a hit followed
+by healing between samples. Galaxy 2 retains death-only penalties for the two
+selected missions. See [live health evidence](damage-and-recovery.md).
 
-Episodes end on death or completion and truncate at the decision or no-progress limits. Only start states 1 and 3 are sampled during learning and evaluation. States 2 and 4 are reserved for detector calibration. This prevents a trivial near-star reset from being reported as full-course learning.
+Progress is a gated high-water geometric X/Z projection onto a separately
+calibrated start-to-near-star axis, not a native percentage. Its approximation
+is especially limited on Sweet Sweet Galaxy's curved route. Full completion
+requires the game-specific RAM event. Episodes terminate on death/completion and
+truncate at decision/no-progress limits. Galaxy 2 trains/evaluates only from
+slots 1/3, reserving 2/4 for detector checks; Galaxy 1 uses start 1 and fixture 2.
 
-## Running longer experiments
+## Longer experiments and evaluation
 
-Start with a short test using a local configuration with `max_steps: 32` and `idle_limit: 32` so both variations and reset paths are exercised. Then restore the default timeouts for real training. Use a fresh run directory for each experiment and preserve its config snapshot.
+Exercise collection, reset, both Galaxy 2 variations, and stop/resume in a short
+pilot before a long experiment. A local configuration with `max_steps: 32` and
+`idle_limit: 32` can test truncation/reset paths; restore full limits afterward.
+Use a fresh run and preserve configuration/source provenance per experiment.
 
-Watch `episodes.jsonl` for `best_progress`, `outcome`, and `variation`. PPO console output includes policy/value losses and separate curiosity metrics. The CSV and top-down plot make it possible to inspect repeated loops, sideways wandering, falls, and false progress. A high novelty return with no forward progress is a reason to lower the intrinsic coefficient or change the visual crop/embedding settings.
+Inspect per-worker `episodes.jsonl`, episode CSVs, `live.csv`, and top-down plots.
+Current `status` progress resets per episode; `report` audits available historical
+maxima. High novelty with little valid progress suggests inspecting the crop,
+embedding, reward balance, and repeated routes before scaling the budget.
 
-Evaluate every substantial checkpoint on both variations with intrinsic reward disabled. Ten or more episodes per variation are more informative than a single successful attempt. The two courses share their visual policy, but their novelty models and progress references remain separate. The initial scenario distribution is uniform; a curriculum can be added once the easier course is consistently solved.
+The default recommendation is `train-supervised`: it recovers infrastructure
+failures from paired checkpoints while preserving the target. `train-parallel`
+is a single attempt. Observe retry logs; repeated startup failures can indicate
+bad assets or profiles that retry cannot repair. Follow
+[checkpoint semantics](reproducibility.md), rather than treating policy-only
+emergency snapshots as full resumable pairs.
 
-The defaults are a starting configuration, not a demonstrated convergent solution. This repository has no claim of sample efficiency or full-course success. The desktop controller supports a single visible instance. The separate [background backend](background-training.md) supports isolated parallel environments and GPU learning.
+Evaluate substantial checkpoints with deterministic actions and intrinsic reward
+and curiosity updates disabled. The current `evaluate` command uses the visible
+adapter, so shut down parallel learners before running it. Use the checkpoint's
+game configuration and at least ten episodes per variation for a pilot; rigorous
+comparisons need the multi-seed protocol below. A continuation after reward/timing
+changes is not an independent seed. No converged solution is claimed.
 
 ## Troubleshooting
 
-| Symptom | Action |
+| Symptom / backend | Action |
 | --- | --- |
-| Invalid executable signature | Use the verified SB4E01 executable or derive and test a new profile. |
-| Unexpected scene / stage | Load a Twisty Trials starting state before attaching. |
-| No render window | Boot the game with the same Dolphin build that created the states. |
-| Focus error | Bring the Dolphin render window to the foreground and restart/resume. |
-| Pause acknowledgment error | Check F10 and the hotkey device; release physical modifier keys. Prefer the isolated profile. |
-| Savestate mismatch | Use a compatible Dolphin version and your matching state files. |
-| Profile copy failure | Close the source Dolphin process and rerun `prepare`; incomplete owned copies are recoverable. |
-| Game moves but observation is black | Keep Dolphin visible and unobscured; screen capture requires a usable desktop. |
-| GitHub workflow publishing rejected | Keep the template in `ci/` or use a credential with workflow permission. |
+| Invalid executable or stage / either | Match the verified USA game profile and configured start states; revalidate replacements. |
+| Savestate mismatch / either | Use the compatible Dolphin build and matching game/state files. |
+| Verified RAM missing on boot / hidden | Inspect attempt stderr and owned Dolphin log; allow the 90-second boot window and five-second Galaxy 2 worker spacing. |
+| Pause acknowledgment or frame stall / hidden | Inspect worker logs and controller configuration; supervised retry preserves completed pairs, but repeated faults need investigation. |
+| Stale/black PNG / hidden | Inspect the owned renderer/capture logs; desktop visibility is irrelevant to this backend. |
+| Focus error or black desktop capture / visible | Keep the render window foreground and unobscured, then resume from a pair. |
+| Pause shortcut failure / visible | Check F10/hotkey device and release physical modifiers; held inputs can suppress the shortcut. |
+| Profile copy failure / either | Close the source Dolphin process before copying and inspect the owned-profile marker; preserve the original profile. |
+| Wrong learner selected by status/stop | Select the game configuration explicitly and, if needed, pass its `parallel-*` attempt directory. |
+| Repeated supervised attempts with no progress | Inspect `attempt-*.stderr.log`, validate assets/configuration, and stop the owning supervisor while fixing the cause. |
+| Workflow publishing rejected | Keep the template in `ci/` until a publishing credential has workflow permission. |
 
 ## Mathematical specification and research protocol
 
-The implementation-level equations, network shapes, constants, reward bounds and information boundary are in [methodology](methodology.md). The [experiment protocol](experiments.md) specifies independent seeds, ablations, evaluation intervals, uncertainty and throughput measurement. [Reproducibility](reproducibility.md) documents modules, file formats, configuration, checkpoint limits and failure recovery. These research procedures are documented separately from completed engineering validation; no ablation or converged full-course result is claimed. Galaxy 1 has a [separately authorized single-worker learner](concurrent-training.md); its validation configuration remains disabled for learning.
+[Methodology](methodology.md) specifies equations, network shapes, constants,
+reward bounds, and the information boundary. The [experimental protocol](experiments.md)
+specifies independent seeds, ablations, evaluation, uncertainty, and throughput
+measurement. [Reproducibility](reproducibility.md) specifies modules, outputs,
+configuration, and recovery limits. These planned research procedures are
+separate from completed engineering validation; neither algorithm superiority
+nor full-course learning success follows from smoke tests.

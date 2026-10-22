@@ -1,11 +1,15 @@
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=77.0.3"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "smg-rl"
 version = "0.1.0"
-description = "Vision-based recurrent reinforcement learning for two Twisty Trials scenarios in Dolphin"
+description = "Visual recurrent reinforcement learning for Super Mario Galaxy 1 and 2 in Dolphin"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md"]
+authors = [{name = "PedroM2626"}]
 requires-python = ">=3.11,<3.13"
 dependencies = [
   "numpy>=1.26,<3", "opencv-python>=4.10,<5", "gymnasium>=1.0,<2",
@@ -19,6 +23,11 @@ dev = ["pytest>=8,<10", "ruff>=0.9,<1"]
 
 [project.scripts]
 smg-rl = "smg_rl.cli:main"
+
+[project.urls]
+Repository = "https://github.com/PedroM2626/smg-rl"
+Documentation = "https://github.com/PedroM2626/smg-rl/blob/main/docs/README.md"
+Issues = "https://github.com/PedroM2626/smg-rl/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]

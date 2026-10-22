@@ -1,6 +1,6 @@
 # Hidden parallel training on Windows
 
-The background backend runs multiple independent Dolphin processes with no visible game windows and no foreground input requirement. One recurrent visual PPO policy learns from all workers. The default configuration uses four workers, balanced between the two scenarios, and CUDA optimization on the RTX 4070.
+The background backend runs multiple independent Dolphin processes with no visible game windows and no foreground input requirement. Within one learner, a recurrent visual PPO policy learns from all workers. `config/parallel.yaml` uses four workers balanced between the two Galaxy 2 scenarios; `config/smg1-training.yaml` runs an independent single-worker Galaxy 1 policy. Both use CUDA optimization. See [concurrent operation](concurrent-training.md) for running the two learners together.
 
 This uses Dolphin batch mode with a hidden Win32 rendering surface. The GPU still renders game images for computer vision. It is not a renderer-free `DolphinNoGUI` executable. The existing Dolphin 2609a and original savestate format are preserved.
 
@@ -17,9 +17,8 @@ The parent runs CNN/LSTM inference and PPO updates on CUDA. Every worker trains 
 ## Tested CUDA environment
 
 ```powershell
-.\.venv\Scripts\python.exe -m pip install torch==2.6.0 --index-url https://download.pytorch.org/whl/cu124
-.\.venv\Scripts\python.exe -m pip install stable-baselines3==2.6.0 sb3-contrib==2.6.0
-.\.venv\Scripts\python.exe -m pip install -e ".[dev]"
+.\.venv\Scripts\python.exe -m pip install -r requirements-gpu.lock.txt
+.\.venv\Scripts\python.exe -m pip install --no-deps -e .
 .\.venv\Scripts\python.exe -c "import torch; print(torch.cuda.is_available(), torch.cuda.get_device_name())"
 ```
 
@@ -28,22 +27,22 @@ The parent runs CNN/LSTM inference and PPO updates on CUDA. Every worker trains 
 ## Start and resume
 
 ```powershell
-.\.venv\Scripts\smg-rl.exe --config config/parallel.yaml train-parallel --workers 4 --steps 1000000
-.\.venv\Scripts\smg-rl.exe --config config/parallel.yaml train-parallel --workers 4 --steps 1000000 --resume runs/parallel-EXAMPLE/model-final.zip
+.\.venv\Scripts\smg-rl.exe --config config/parallel.yaml train-supervised --workers 4 --steps 1000000
+.\.venv\Scripts\smg-rl.exe --config config/parallel.yaml train-supervised --workers 4 --steps 100000 --resume runs/parallel-EXAMPLE/model-final.zip
 ```
 
-Both the policy and matching curiosity checkpoint are required. If the worker count changes, saved novelty states are mapped cyclically to new workers. Episodes, episodic memory, LSTM state, and incomplete PPO rollouts restart. `--steps` counts aggregate decisions and can round up to a full rollout.
+Both the policy and matching curiosity checkpoint are required. These are alternative fresh/resume examples; do not start duplicate learners unintentionally. If the worker count changes, saved novelty states are mapped cyclically to new workers. Episodes, episodic memory, LSTM state, RNG state, and incomplete PPO rollouts restart. `--steps` counts additional aggregate decisions, including on resume, and can round up to a full rollout. The supervisor preserves this initial target across retries. `train-parallel` remains available for a single attempt without restart; see [recovery semantics](damage-and-recovery.md).
 
 The original desktop Dolphin session is independent of these workers. It can remain paused or be closed separately. The dedicated training controller closes its own child processes when the run ends.
 
 ## Inspect and stop
 
 ```powershell
-.\.venv\Scripts\smg-rl.exe status
-.\.venv\Scripts\smg-rl.exe stop
+.\.venv\Scripts\smg-rl.exe --config config/parallel.yaml status
+.\.venv\Scripts\smg-rl.exe --config config/parallel.yaml stop
 ```
 
-These select the newest parallel run unless an explicit run directory is supplied. `stop` creates that run's `STOP` marker. The learner finishes the current vector step, saves the final policy and curiosity states, and closes the workers. Ctrl+C also requests shutdown in a foreground terminal.
+These select the newest parallel run in the selected configuration's runs root unless an explicit learner attempt directory is supplied. `stop` creates that run's `STOP` marker and also signals its owning supervisor. A healthy learner finishes the current vector step, saves the final policy and curiosity states, and closes the workers. A worker failure can prevent a final save. Ctrl+C also requests shutdown in a foreground terminal. Select `config/smg1-training.yaml` to control Galaxy 1 separately.
 
 Each run has `controller.json`, `status.json`, periodic checkpoint pairs (every 1024 aggregate decisions, newest three retained), and a final checkpoint pair on normal exit. An error may leave a policy-only emergency snapshot; resume from a complete periodic pair. Trajectories live under `worker-XX/<variation>/episode-NNNNNN.csv`. CSVs are saved for every episode. PNGs are generated every 20 episodes per worker, on every success, and when saving an interrupted episode; any CSV can also be plotted later with the `plot` command.
 
@@ -59,7 +58,7 @@ On the local i9-14900HX / RTX 4070 laptop:
 | 2 hidden workers + CUDA | about 4.6 |
 | 4 hidden workers + CUDA | about 7.9 |
 
-These historical measurements preceded the longer pause-stability check. The revised backend measured approximately 4.6 aggregate decisions/second in its subsequent live run; measure each revision separately.
+These historical measurements preceded the longer pause-stability check. An intermediate revision subsequently measured approximately 4.6 aggregate decisions/second. The later 120 ms pause pulse and two-counter-advance check add further overhead; none of these historical rates is a current throughput guarantee. Measure each revision and concurrent workload separately using aggregate **new** decisions over elapsed collection/update time, and record startup/failure downtime separately.
 
 The four-worker test collected 512 additional decisions in about 65 seconds, resumed from 256 to 768 total decisions, completed PPO updates, and saved all four curiosity states. These are decisions, not rendered frames per second. Startup and shader compilation are separate from steady-state collection time.
 
@@ -87,4 +86,6 @@ The resume/stop integration test at `runs/parallel-20261021-175601-308500/` stop
 
 ## Pause-stall correction
 
-The first long run failed at 1944 total decisions after a pause acknowledgment error. The previous 45 ms stability probe could interpret a brief rendering stall as a paused emulator. The revised probe requires up to 180 ms of stable samples and reconciles the measured pause state before toggling. Failures still abort explicitly; no fabricated transition is added to a rollout. More frequent checkpoints bound lost work, and periodic retention bounds disk growth. See [reproducibility](reproducibility.md) for recovery and [the experiment register](experiments.md) for the distinction between historical smoke throughput and current measurements.
+The first long run failed at 1944 total decisions after a pause acknowledgment error. The original 45 ms stability probe could interpret a brief rendering stall as a paused emulator. The current probe samples six times at 30 ms intervals and requires **two separate counter changes** before classifying emulation as running: one pending screenshot step must not count as sustained advancement. It reconciles the measured state before toggling, holds pause input for 120 ms with a 35 ms release interval, and allows six bounded toggle attempts. Ordinary operation timeout remains 30 seconds. Boot has a separate 90-second timeout, and Galaxy 2 startup spacing is five seconds per worker index.
+
+Failures still abort explicitly; no fabricated transition is added to a rollout. Supervision retries from complete pairs, more frequent checkpoints bound lost work, and periodic retention bounds disk growth. These measures have not eliminated every pause/boot failure. See [reproducibility](reproducibility.md) and [damage/recovery evidence](damage-and-recovery.md).

@@ -29,6 +29,7 @@ $I$ is a cropped, grayscale 84 by 84 image; four consecutive decision images
 form a channels-first uint8 tensor. $e_v$ is a two-dimensional one-hot scenario
 vector for Galaxy 2. Coordinates, velocities, death/completion flags, object
 pointers, state-machine values and computed progress are excluded from $o_t$.
+Galaxy 1 uses a one-element scenario vector; current/max HP are also excluded.
 The code enforcing this boundary is `GalaxyEnv._observation` in `env.py`.
 
 This is **visual control with privileged reward supervision**, rather than
@@ -36,7 +37,8 @@ purely unsupervised learning or a pixels-only reward system. Its outcomes should
 not be compared directly with an intrinsic-only benchmark without describing
 the additional geometric and terminal supervision.
 
-Training starts are slots 1 and 3. Slots 2 and 4 are calibration fixtures only.
+Galaxy 2 training starts are slots 1 and 3. Slots 2 and 4 are calibration fixtures only.
+Galaxy 1 trains from slot 1 and reserves slot 2 for detector checks.
 Fixed worker assignments alternate scenarios, so four workers allocate two to
 each variation. An odd worker count creates a sampling imbalance; episodes per
 scenario can also differ because episode lengths differ.
@@ -91,7 +93,8 @@ no further progress reward within that episode. This is a geometric proxy,
 not a discovered native percentage. It is not guaranteed to be potential-based
 shaping or to preserve the optimal policy of a sparse-reward task.
 
-The implemented scalar reward is:
+The Galaxy 2 scalar reward is below. Galaxy 1 adds the nonfatal HP-loss term
+specified in the final section, and suppresses novelty on HP-loss transitions:
 
 $$
 r_t=5\Delta_t+0.02\,m_t n_t+
@@ -251,11 +254,17 @@ a layout guard, not a cryptographic guarantee of executable equivalence.
 
 The initial four-worker long run failed at timestep 1944 after a pause
 acknowledgment error. A 45 ms frame-stability check could misclassify a brief
-render stall. The revised detector observes stability for up to 180 ms, returns
-early on actual frame changes and reconciles measured state before toggling.
+render stall. The current detector samples six times at 30 ms intervals and
+requires two distinct changes in the scene counter/nerve tuple before returning
+early as running. This rejects a single queued screenshot step as evidence of
+sustained advancement. It reconciles measured state before toggling and allows
+six attempts with 120 ms pause pulses and 35 ms release intervals.
 This trades some throughput for reliability; it does not establish immunity to
 OS stalls. Failures remain explicit, with owned child cleanup and periodic
-paired checkpoints. No synthetic transition is substituted for a failed step.
+paired checkpoints. The optional recovery supervisor retries from completed
+pairs and maintains the original target; it does not repair invalid game
+profiles or eliminate control failures. No synthetic transition is substituted
+for a failed step.
 
 The historical 7.9 decisions/second benchmark predates this stability change.
 It must not be presented as the revised backend's measured long-run speed.

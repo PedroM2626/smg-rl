@@ -5,6 +5,9 @@
 | Question | Document |
 | --- | --- |
 | Install and basic commands | [README](../README.md) |
+| Complete documentation navigation | [Documentation index](README.md) |
+| Exact CLI arguments and backend selection | [Command reference](cli.md) |
+| Health penalties and supervised recovery | [Damage and recovery](damage-and-recovery.md) |
 | Exact model/reward equations and limitations | [Methodology](methodology.md) |
 | Controlled experiments, metrics and evidence | [Experimental protocol](experiments.md) |
 | Galaxy 2 addresses and derivation | [Memory profile](memory-profile.md) |
@@ -28,7 +31,7 @@ flowchart LR
   PNG --> Obs[Image stack + scenario]
   PNG --> Novelty[Local episodic novelty and RND]
   RAM --> Telemetry[Coordinates / scene / actor state]
-  Telemetry --> Reward[Progress and terminal reward]
+  Telemetry --> Reward[Progress / terminals / HP loss]
   Novelty --> Reward
   Obs --> PPO[CUDA recurrent PPO]
   Reward --> PPO
@@ -39,7 +42,7 @@ flowchart LR
 | File under `src/smg_rl/` | Responsibility |
 | --- | --- |
 | `config.py` | YAML loading and project-relative path expansion |
-| `profiles.py` | Executable-specific memory layouts and validation-only guard |
+| `profiles.py` | Executable-specific memory layouts and training-enablement guard |
 | `memory.py` | Big-endian pointer graph and telemetry predicates |
 | `process_memory.py` | Windows read-only memory mappings for an explicit PID |
 | `dolphin.py` | Owned profile preparation and visible desktop adapter |
@@ -47,7 +50,7 @@ flowchart LR
 | `background.py` | Hidden Dolphin lifecycle, pause handshake, fresh renderer capture |
 | `actions.py` | Stable 54-action enumeration |
 | `curiosity.py` | Inverse features, episodic kNN, RND, optimizer/statistics persistence |
-| `rewards.py` | Bounded high-water progress and displacement/height gates |
+| `rewards.py` | Bounded high-water progress, displacement/height gates, and reset-aware HP-loss tracking |
 | `env.py` | Observation boundary, resets, episode limits, rewards and logs |
 | `train.py` | Desktop recurrent PPO, evaluation, run/config snapshots |
 | `parallel.py` | Spawned vector environments, CUDA learning, status and checkpoints |
@@ -108,8 +111,10 @@ and small measured telemetry fixtures are included, not either game executable.
 
 ## Configuration contract
 
-`--config` appears before the subcommand. Paths resolve relative to the project
-root and expand environment variables. `game.id` selects a memory profile;
+`--config` appears before the subcommand. YAML files are complete configurations,
+not overlays, and should be kept directly under `config/`: the loader treats the
+file's grandparent as the project root. Paths resolve relative to that root and
+expand environment variables. `game.id` selects a memory profile;
 omitting it preserves the original `SB4E01` default. `variations` specifies names,
 scenario numbers and start/goal slots. Profile preparation copies only slots
 referenced by those variations. Existing destination state files are not
@@ -119,10 +124,10 @@ overwritten; use a new owned profile after replacing source states.
 | --- | --- |
 | `paths` | Emulator, source/owned user profile, ROM, assets, runs and calibration |
 | `environment` | Capture shape/crop, desktop timing, episode limits and progress gates |
-| `rewards` | Completion, death, progress, intrinsic and step coefficients |
+| `rewards` | Completion, death, progress, intrinsic and step coefficients; Galaxy 1 nonfatal `damage` coefficient |
 | `novelty` | kNN count/capacity, embedding dimension and lifelong clipping |
 | `training` | Seed, learning budget, rollout/minibatch, optimizer settings and device |
-| `parallel` | Worker count, emulator speed, approximate frame budget, timeout, hiding and plot cadence |
+| `parallel` | Worker count, emulator speed, approximate frame budget, operation/boot timeouts, startup spacing, hiding and plot cadence |
 | `game` | Disc ID and human-readable game title |
 | `variations` | Stage missions and local savestate role mapping |
 | `validation` (optional) | `death_action`, default `[s]`, for the negative detector test |
@@ -133,6 +138,11 @@ Galaxy 1 validation instance and prohibits training via its disabled flag.
 `config/smg1-training.yaml` explicitly enables the separately authorized
 single-worker learner. The Galaxy 1 command must be passed explicitly. Ordinary
 Galaxy 2 training never samples its states.
+
+The Galaxy 2 profile sets `startup_spacing_seconds: 5.0`; worker index zero has
+no added delay. `startup_timeout` defaults to 90 seconds when omitted, while
+`timeout: 30.0` bounds normal operations. These are distinct from the supervisor's
+240-second no-status watchdog. Galaxy 1's one worker needs no startup stagger.
 
 ## Checkpoint semantics and failure recovery
 
@@ -159,7 +169,7 @@ normal resumable pair. `train-parallel` by itself has no automatic restart. The 
 ```powershell
 .\.venv\Scripts\smg-rl.exe --config config/parallel.yaml status
 .\.venv\Scripts\smg-rl.exe --config config/parallel.yaml stop
-.\.venv\Scripts\smg-rl.exe --config config/parallel.yaml train-parallel --workers 4 --steps 1000000 --resume runs/parallel-EXAMPLE/model-2048.zip
+.\.venv\Scripts\smg-rl.exe --config config/parallel.yaml train-supervised --workers 4 --steps 100000 --resume runs/parallel-EXAMPLE/model-2048.zip
 ```
 
 `status` checks PID creation time, reducing the risk of confusing a recycled PID
@@ -168,6 +178,11 @@ step. Allow time for screenshot/worker synchronization and checkpoint saving.
 Do not kill all Dolphin processes to stop one run; the project cleans only its
 owned process tree. A hung/crashed worker may prevent a graceful final pair;
 periodic pairs remain the recovery point.
+
+`--steps` is an additional aggregate-decision budget, including on resume.
+The manager fixes its target once and requests the remaining budget after each
+retry. `status`/`stop` take a learner `parallel-*` attempt directory; ownership
+metadata connects it to its manager. See [the CLI contract](cli.md).
 
 ## Output interpretation
 
@@ -179,7 +194,9 @@ Progress values reset on new episodes and are not lifetime record maxima.
 
 Trajectory CSVs record decision step, host time, scenario, action, XYZ, current
 and best valid projection, reward, intrinsic reward, death/completion flags,
-actor pointer, actor/scene nerves, scene counter and outcome. Host time is Unix
+actor pointer, actor/scene nerves, scene counter and outcome. Galaxy 1 additionally
+records `health`, `max_health`, `health_lost`, and `damage_penalty`; older logs
+without these fields cannot reveal historical hit counts. Host time is Unix
 seconds; world coordinates have game units, not meters. `episodes.jsonl` records
 episode summaries. `live.csv` publishes a current-episode snapshot every 16
 decisions and on terminal transitions; `report` combines completed and live data
@@ -195,10 +212,12 @@ numeric axis and the full-course annotation. Detector traces without a
 
 ## Test scope
 
-The portable suite tests terminal predicates, cross-game rejection, pointer
+The portable suite tests terminal predicates, HP bounds and reset-aware damage,
+nonfatal/fatal penalty separation, cross-game rejection, pointer
 relocation, invalid telemetry, geometric reward safeguards, curiosity behavior
 and persistence, observation separation, DSU encoding/isolation, profile
-configuration, fresh capture rejection, and pause-stall regression. These tests
+configuration, fresh capture rejection, pause-stall regression, supervised
+checkpoint selection/retry budgeting, and report evidence filtering. These tests
 do not boot a ROM. Live calibration separately tests the real emulator and
 supplied states. CUDA/parallel training and stop/resume require local integration
 tests. The CI template is provided in `ci/windows-tests.yml`; its presence does
@@ -214,4 +233,25 @@ the explanatory `data/README.md`. Check staged files before every push. Access
 to a private repository requires the owner's GitHub authorization; a 404 for an
 unauthenticated visitor does not imply the repository is absent.
 
-The Galaxy 1 reward revision adds `health`, `max_health`, `health_lost` and `damage_penalty` to CSV/info. Their source is documented in [health telemetry](damage-and-recovery.md). Older logs without these fields cannot be used to infer historical hit counts. Supervised-run metadata and logs live under `supervised-*`; reports expose their state separately from learner attempts.
+Supervised-run metadata and logs live under `supervised-*`; reports expose their
+state separately from learner attempts. The report schedule configured for the
+owner in the local desktop app is external to this repository and is not
+recreated by installing the Python package.
+
+## Licensing and packaging
+
+Original code, tests, configuration, documentation, and project-authored figures
+use the [MIT License](../LICENSE). The [third-party notices](../THIRD_PARTY_NOTICES.md)
+identify the retained gameplay screenshot and distinguish game content, Dolphin,
+dependencies, and upstream research sources. ROMs and savestates remain excluded.
+
+`pyproject.toml` declares SPDX `license = "MIT"`, the README, the canonical remote,
+and distribution license files. Setuptools 77.0.3 or later supports this metadata.
+An isolated package build may install its own build backend; it need not change
+the training environment. To check packaging without replacing installed runtime
+dependencies, build a wheel into an ignored local directory and inspect its
+`METADATA` and `.dist-info/licenses/` entries:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip wheel --no-deps --no-build-isolation --wheel-dir .local/package-check .
+```

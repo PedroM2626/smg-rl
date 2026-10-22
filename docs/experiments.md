@@ -126,7 +126,9 @@ renderer-free Dolphin build is included.
 | Original four-worker CUDA smoke | `runs/parallel-20261021-175102-110584/` | 512 new decisions in 64.94 s; model reached 768 total | Sustained 7.9 decisions/s after later changes |
 | Graceful stop/resume | `runs/parallel-20261021-175601-308500/` | Stopped at 1140 total; policy and curiosity saved | Exact deterministic continuation |
 | Initial long run | `runs/parallel-20261021-175922-132631/` | Failed at 1944 on a pause acknowledgment error | Reliable unattended training |
-| Revised pause implementation | Unit regression tests and the subsequent live run | Longer stability window; measured-state reconciliation | Elimination of all possible OS stalls |
+| Intermediate pause implementation | Unit regression tests and the subsequent live run | Longer stability window; measured-state reconciliation | Elimination of all possible OS stalls |
+| Current pause/recovery revision | `docs/damage-and-recovery.md`; portable regression tests | Two counter changes required, longer pause pulses, paired-checkpoint supervised continuation | Failure-free operation or exact replay |
+| Galaxy 1 health | `docs/assets/smg1/damage-validation.json` and HUD screenshot | Live 3-to-2 HP transition and one-time damage penalty on reward replay | Learned damage avoidance or detection of every between-sample hit |
 | Galaxy 1 validation | `config/smg1-calibration.json`; `docs/assets/smg1/` | Independent star/death/movement/pause detection passed | Training or a solved course policy |
 
 Local run directories are ignored by Git. Small measured CSV/PNG detector
@@ -150,6 +152,6 @@ workers therefore change both throughput and exploration dynamics.
 Savestate resets constrain the initial distribution and can conceal failures on
 normal game loading. Frame crops may omit useful hazards/HUD information.
 Independent test stages and additional start states are required before claiming
-generalization. The small engineering measurements and a single active training
-seed do not justify claims of algorithm superiority or publication-grade
-performance.
+generalization. The small engineering measurements and one policy seed per game
+(with checkpoint continuations) do not justify claims of algorithm superiority
+or publication-grade performance.

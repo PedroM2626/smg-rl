@@ -1,6 +1,14 @@
 # Local validation report
 
-The newer [background training report](background-training.md) records four-worker CUDA validation, approximately 8x aggregate throughput, hidden star/death checks, and graceful stopping. The report below retains the original desktop baseline for comparison.
+This is a chronological engineering evidence register. Earlier test counts and
+throughput values describe their respective revisions, rather than current
+performance guarantees. The [background report](background-training.md) records
+hidden star/death checks, CUDA collection, stop/resume, and timing revisions.
+The original approximately 8x smoke speedup preceded the stricter pause checks.
+The latest documented suite contains 66 tests; [damage and recovery](damage-and-recovery.md)
+adds live HP evidence and supervised continuation. The report below retains the
+original desktop baseline and subsequent failures for comparison. Current
+learner counts and maxima belong in generated reports, not this static register.
 
 Validation date: **2026-10-21**, America/Sao_Paulo. Emulator: **Dolphin 2609a**, Windows. Game: **SB4E01**. Python: **3.11**. All tests used the supplied local states; no game asset was uploaded.
 
@@ -85,7 +93,7 @@ The canonical private repository is `PedroM2626/smg-rl`; its history was transfe
 
 Galaxy 1 Sweet Sweet Galaxy passed live star collection from slot 2, backward-fall death from slot 1, coordinate movement and pause checks. The full pointer map, fixture telemetry and measured top-down plots are in [the Galaxy 1 report](smg1.md). No Galaxy 1 training was started during that initial validation-only integration. The owner subsequently authorized the separate learner described in [concurrent training](concurrent-training.md).
 
-The first Galaxy 2 long run stopped at 1944 aggregate timesteps on a pause acknowledgment failure. It was resumed from the intact 1140-step paired checkpoint after extending frame-stability detection and reconciling measured pause state. The revised four-worker CUDA run is `runs/parallel-20261021-183228-379160/`. During the subsequent live observation it exceeded 2700 aggregate timesteps, completed further PPO updates and wrote a fresh policy/curiosity pair at 2164. Its measured collection/optimization rate was approximately 4.6 new aggregate decisions per second. This is an active training observation, not a claim of an unattended completed experiment or learned full-course success.
+The first Galaxy 2 long run stopped at 1944 aggregate timesteps on a pause acknowledgment failure. It was resumed from the intact 1140-step paired checkpoint after extending frame-stability detection and reconciling measured pause state. The revised four-worker CUDA run is `runs/parallel-20261021-183228-379160/`. During the subsequent live observation it exceeded 2700 aggregate timesteps, completed further PPO updates and wrote a fresh policy/curiosity pair at 2164. Its measured collection/optimization rate was approximately 4.6 new aggregate decisions per second. This was a contemporaneous training observation, not a claim of an unattended completed experiment or learned full-course success.
 
 A final Galaxy 2 hidden calibration using the revised pause logic passed both star collections, both backward-fall deaths, both movement checks and pause stability. Its source evidence is `runs/background-validation-20261021-183949-902972/`; the calibration JSON was refreshed and portable measured traces were copied to `docs/assets/smg2-calibration/`. These detector checks ran in an isolated instance while the four-worker Galaxy 2 learner continued.
 

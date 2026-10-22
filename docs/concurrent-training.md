@@ -22,18 +22,25 @@ a one-element scenario vector, rather than Galaxy 2's two-element vector.
 enforced by configuration rather than a hardcoded ban on the game ID.
 
 ```powershell
-.\.venv\Scripts\smg-rl.exe --config config/parallel.yaml train-parallel --workers 4 --steps 1000000
-.\.venv\Scripts\smg-rl.exe --config config/smg1-training.yaml train-parallel --workers 1 --steps 1000000
+.\.venv\Scripts\smg-rl.exe --config config/parallel.yaml train-supervised --workers 4 --steps 1000000
+.\.venv\Scripts\smg-rl.exe --config config/smg1-training.yaml train-supervised --workers 1 --steps 1000000
 ```
 
 These commands start fresh runs. Do not execute them again when the two learners
 are already running. To resume, supply a matching checkpoint pair with `--resume`.
-The existing Galaxy 2 learner was saved at 14984 aggregate timesteps, then
-resumed with the remaining 986156 requested decisions and live trajectory
-snapshots enabled. One startup attempt failed to locate a worker's verified RAM;
-a retry with staggered startup succeeded. Workers now allow 90 seconds to boot,
-separate from the normal 30-second action/capture timeout. Startup is staggered
-by one second per worker index to reduce simultaneous initialization pressure.
+Each command should run in its own terminal. `--steps` requests additional
+aggregate decisions, including on resume. A supervisor fixes the total target
+once and uses the remaining budget after each failure; it does not reset the
+requested budget on retry. Policies and curiosity models remain separate across
+games. Galaxy 1 charges -0.25 per nonfatal HP lost; Galaxy 2 retains death-only
+penalization for these missions. See [damage and recovery](damage-and-recovery.md).
+
+Startup attempts have failed to locate a worker's verified RAM. Workers allow
+90 seconds to boot, separate from the normal 30-second action/capture timeout.
+The current Galaxy 2 configuration staggers startup by **five seconds per worker
+index** (0/5/10/15 seconds); the earlier one-second spacing was insufficient in
+some attempts. Galaxy 1 has one worker, so its index-zero startup adds no delay.
+Boot failures remain possible and are handled by supervised retry.
 
 ## Initial concurrent resource measurement
 
@@ -60,8 +67,10 @@ by default merely because VRAM is available.
 .\.venv\Scripts\smg-rl.exe --config config/smg1-training.yaml stop
 ```
 
-The two stop commands are independent and save their respective final checkpoint
-pairs. Periodic retention keeps the newest three completed pairs per run. The
+The two stop commands are independent and also stop their owning supervisors.
+Healthy learners save final checkpoint pairs; a failed or hung worker may prevent
+a final save, leaving a periodic pair as the recovery point. Periodic retention
+keeps the newest three completed pairs per learner attempt. The
 machine must remain running for local training; suspending it halts emulation.
 The scheduled morning report also needs the local desktop app available.
 
@@ -103,4 +112,11 @@ to ordered waypoints. Full-course completion remains a separate RAM event.
 
 ## Subsequent damage and recovery revision
 
-Both initial concurrent learners later stopped on pause acknowledgment failures. They have been resumed under [recovery supervisors](damage-and-recovery.md) from the 37512-step Galaxy 2 and 2048-step Galaxy 1 checkpoint pairs. Galaxy 1 now includes measured HP supervision and a -0.25 nonfatal damage coefficient. Longer pause pulses trade some throughput for more reliable hotkey delivery; the earlier throughput table is historical and should not be treated as the revised runtime rate.
+Both initial concurrent learners later stopped on pause acknowledgment failures.
+The first supervised recovery used the 37512-step Galaxy 2 and 2048-step Galaxy 1
+checkpoint pairs. Subsequent continuation used newer complete pairs. These
+counts identify historical recovery evidence, not the latest training status.
+Galaxy 1 now includes measured HP supervision and a -0.25 nonfatal damage
+coefficient. Longer pause pulses and stricter counter checks trade throughput
+for more reliable hotkey delivery. The initial resource/rate measurements above
+are historical; query `status` and `report` for current run artifacts.
