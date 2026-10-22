@@ -65,6 +65,12 @@ parallel:
   plot_every: 20
   backend: native
   skip_present: false
+  bridge_wakeup: events
+  native_capture: cpu
+  collector: measured
+  shared_observations: false
+  receive_order: ordered
+  quiet_ui: true
 variations:
 - name: spinning
   title: Spinning and Spinning and Spinning

@@ -46,6 +46,35 @@ def test_native_timeout_and_pending_request_are_explicit():
         source.close()
 
 
+def test_compact_gray_frame_is_owned_and_does_not_accept_wrong_stride():
+    source = bridge()
+    try:
+        for field, value in [(10, 2), (11, 2), (12, 2), (30, 1)]:
+            source.set(field, value)
+        source.mapping[HEADER_BYTES:HEADER_BYTES + 4] = bytes([0, 30, 60, 90])
+        pixels = source.image()
+        source.mapping[HEADER_BYTES] = 255
+        assert pixels.shape == (2, 2) and pixels.tolist() == [[0, 30], [60, 90]]
+        source.set(12, 8)
+        with pytest.raises(RuntimeError, match="valid RGBA"):
+            source.image()
+    finally:
+        source.close()
+
+
+def test_stale_reply_event_cannot_acknowledge_an_unfinished_command():
+    source = bridge()
+    source.timeout = 0.01
+    source.events = SimpleNamespace(publish=lambda: None, wait=lambda ms: None, close=lambda: None)
+    source.wakeup = "events"
+    try:
+        with pytest.raises(TimeoutError):
+            source.command(2, 12)
+        assert source.get(3) != source.get(4)
+    finally:
+        source.close()
+
+
 def test_native_action_rejects_inexact_frame_acknowledgment():
     backend = object.__new__(NativeDolphin)
     backend.config = {"parallel": {"frame_skip": 12}}

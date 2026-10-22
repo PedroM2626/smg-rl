@@ -11,6 +11,7 @@ from smg_rl.actions import ACTIONS
 from smg_rl.diagnostics import atomic_json
 from smg_rl.env import GalaxyEnv
 from smg_rl.native import background_backend
+from smg_rl.profiles import game_id
 from smg_rl.train import new_run
 
 
@@ -20,7 +21,7 @@ def benchmark(config, steps=64):
     torch.manual_seed(42)
     output = new_run(config, "benchmark")
     config["paths"]["user"] = str(
-        Path(config["paths"]["user"]).parent / "benchmark-profiles" / output.name / "template"
+        Path(config["paths"]["user"]).parent / "benchmark-profiles" / game_id(config) / output.name / "template"
     )
     backend = background_backend(config)
     try:
@@ -29,7 +30,7 @@ def benchmark(config, steps=64):
         backend.close()
         raise
     actions = [ACTIONS.index(names) for names in ((), ("w",), ("jump",), ("s",), ("w", "jump"))]
-    durations, frames, scene_frames = [], [], []
+    durations, frames, scene_frames, native_samples = [], [], [], []
     try:
         env.reset(seed=42)
         for index in range(steps):
@@ -38,6 +39,7 @@ def benchmark(config, steps=64):
             durations.append(time.perf_counter() - started)
             frames.append(info.get("advanced_frames"))
             scene_frames.append(info.get("scene_frames_advanced"))
+            native_samples.append(info.get("native_diagnostics", {}))
             if terminated or truncated:
                 env.reset(seed=42)
         result = {
@@ -48,10 +50,19 @@ def benchmark(config, steps=64):
             "emulation_speed": config["parallel"]["emulation_speed"],
             "seed": 42,
             "skip_present": config["parallel"].get("skip_present", False),
+            "bridge_wakeup": config["parallel"].get("bridge_wakeup", "events"),
+            "native_capture": config["parallel"].get("native_capture", "cpu"),
+            "quiet_ui": config["parallel"].get("quiet_ui", True),
             "curiosity_update_every": config["novelty"].get("update_every", 1),
             "torch_threads": config["training"]["torch_threads"],
             "reward_revision": config["rewards"].get("revision", "legacy"),
             "native_diagnostics": backend.bridge.diagnostics() if hasattr(backend, "bridge") else None,
+            "native_stages": {
+                key: {"mean": float(np.mean([s[key] for s in native_samples])),
+                      "p50": float(np.percentile([s[key] for s in native_samples], 50)),
+                      "p95": float(np.percentile([s[key] for s in native_samples], 95))}
+                for key in native_samples[0] if key.endswith("_us") or key == "image_bytes"
+            } if native_samples else {},
             "action_cycle": [list(ACTIONS[index]) for index in actions],
             "step_wall_seconds": sum(durations),
             "decisions_per_second_excluding_resets": steps / sum(durations),

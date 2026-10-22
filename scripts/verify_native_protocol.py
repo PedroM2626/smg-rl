@@ -47,6 +47,7 @@ def verify(config_path, steps=256, output=None):
                     assert current.scenario == variation["scenario"]
                     resets += 1
         result = {"passed": True, "commands": checks, "resets": resets,
+                  "executable_sha256": hashlib.sha256(Path(config["paths"]["dolphin"]).read_bytes()).hexdigest(),
                   "paused_wait_checks": pause_checks, "observation_digest": digest.hexdigest(),
                   "elapsed_seconds": time.perf_counter() - started,
                   "native_diagnostics": backend.bridge.diagnostics()}

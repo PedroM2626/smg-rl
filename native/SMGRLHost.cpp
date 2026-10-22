@@ -1,12 +1,14 @@
 // Copyright (c) 2026 PedroM2626
 // SPDX-License-Identifier: MIT
-// Loaded only when an explicitly named, versioned shared-memory mapping exists.
+// Host state changes follow Dolphin's UI path; events replace latency polling.
 #include "Common/SMGRLBridge.h"
 
 #ifdef _WIN32
-#include <QCoreApplication>
+#include <functional>
+#include <memory>
 #include <QObject>
 #include <QTimer>
+#include <QWinEventNotifier>
 
 #include "Core/Core.h"
 #include "Core/State.h"
@@ -17,44 +19,33 @@ namespace SMGRL
 void Start(QObject* parent, Core::System& system)
 {
   auto* f = Fields();
-  if (!f)
-    return;
-  auto* timer = new QTimer(parent);
-  timer->setTimerType(Qt::PreciseTimer);
-  // Host-thread state access and savestate loading follow Dolphin's own UI path.
-  QObject::connect(timer, &QTimer::timeout, parent,
-                   [f, &system, pending = LONG{0}, pending_command = LONG{0},
-                    pending_argument = LONG{0}]() mutable {
-    const auto state = Core::GetState(system);
-    f[Paused] = state == Core::State::Paused;
-    if (pending)
-    {
-      if (state != Core::State::Paused)
-        return;
-      if (f[Command] == 3 && f[LoadComplete] != pending)
-        return;
-      if (pending_command == 2 &&
-          (f[StepComplete] != pending || f[CompletedFrames] != pending_argument))
-        return;
-      // GetState(Paused) is not a CPU-idle barrier. SetState waits for the CPU
-      // and adjacent systems to stop before publishing a completed operation.
+  if (!f) return;
+  auto process = std::make_shared<std::function<void()>>();
+  *process = [f, &system, pending = LONG{0}, command = LONG{0}, argument = LONG{0}]() mutable {
+    f[Paused] = Core::GetState(system) == Core::State::Paused;
+    auto complete = [&] {
+      if (!pending || Core::GetState(system) != Core::State::Paused) return;
+      if (command == 3 && f[LoadComplete] != pending) return;
+      if (command == 2 && (f[StepComplete] != pending || f[CompletedFrames] != argument)) return;
+      const auto started = Ticks();
       Core::SetState(system, Core::State::Paused, false);
+      f[CpuIdleMicros] = ElapsedMicros(started);
       f[Paused] = 1;
       f[AcknowledgedField] = f[FieldCount];
-      const LONG completed = pending;
+      const LONG sequence = pending;
       pending = 0;
-      MemoryBarrier();
-      InterlockedExchange(&f[Response], completed);
-      return;
-    }
+      Reply(sequence);
+    };
+    if (pending) { complete(); return; }
     const LONG request = f[Request];
-    if (request == f[Response] || !Core::IsRunning(system))
-      return;
+    if (request == f[Response] || !Core::IsRunning(system)) return;
     MemoryBarrier();
+    const auto requested = static_cast<long long>(
+        (static_cast<unsigned long long>(static_cast<unsigned int>(f[RequestTicksHigh])) << 32) |
+        static_cast<unsigned int>(f[RequestTicksLow]));
+    f[DispatchMicros] = requested ? ElapsedMicros(requested) : 0;
     f[Error] = 0;
-    const LONG command = f[Command];
-    pending_command = command;
-    pending_argument = f[Argument];
+    command = f[Command]; argument = f[Argument];
     if (command == 1 || command == 4)
     {
       Core::SetState(system, Core::State::Paused);
@@ -62,62 +53,54 @@ void Start(QObject* parent, Core::System& system)
     }
     else if (command == 2)
     {
-      if (pending_argument < 1 || pending_argument > 600)
-      {
-        f[Error] = 1;
-        InterlockedExchange(&f[Response], request);
-        return;
-      }
-      // A transient running flag is reconciled only if no field has advanced
-      // since the previous acknowledgment. Never hide unobserved gameplay.
-      if (state != Core::State::Paused)
-        InterlockedIncrement(&f[Reconciliations]);
+      if (argument < 1 || argument > 600) { f[Error] = 1; Reply(request); return; }
+      const auto state = Core::GetState(system);
+      if (state != Core::State::Paused) InterlockedIncrement(&f[Reconciliations]);
       Core::SetState(system, Core::State::Paused, false);
       if (f[FieldCount] != f[AcknowledgedField])
       {
-        f[Error] = 4;
-        f[RejectedState] = static_cast<LONG>(state);
-        f[Paused] = 1;
-        InterlockedExchange(&f[Response], request);
-        return;
+        f[Error] = 4; f[RejectedState] = static_cast<LONG>(state); f[Paused] = 1;
+        Reply(request); return;
       }
-      f[CompletedFrames] = 0;
-      f[FrameWaitMicros] = 0;
+      f[CompletedFrames] = f[FrameWaitMicros] = f[PresentMicros] = f[ScaleMicros] = 0;
+      f[QueueDrainCalls] = f[CpuBatchMicros] = 0;
       pending = request;
-      if (!Core::DoFrameSteps(system, static_cast<unsigned int>(pending_argument)))
+      if (!Core::DoFrameSteps(system, static_cast<unsigned int>(argument)))
       {
-        pending = 0;
-        f[Error] = 3;
+        pending = 0; f[Error] = 3;
         f[RejectedState] = static_cast<LONG>(Core::GetState(system));
-        InterlockedExchange(&f[Response], request);
+        Reply(request); return;
       }
     }
     else if (command == 3)
     {
-      if (f[Argument] < 1 || f[Argument] > 4)
-      {
-        f[Error] = 1;
-        InterlockedExchange(&f[Response], request);
-        return;
-      }
+      if (argument < 1 || argument > 4) { f[Error] = 1; Reply(request); return; }
       Core::SetState(system, Core::State::Paused);
-      State::Load(system, static_cast<unsigned int>(f[Argument]));
-      // State::Load queues asynchronous CPU work. A paused-state observation
-      // alone is not an acknowledgment that the savestate was restored.
+      State::Load(system, static_cast<unsigned int>(argument));
       Core::RunOnCPUThread(system, [f, request] {
         MemoryBarrier();
         InterlockedExchange(&f[LoadComplete], request);
+        SignalCpu();
       });
       Core::SetState(system, Core::State::Paused);
       pending = request;
     }
-    else
+    else { f[Error] = 1; Reply(request); return; }
+    complete();
+  };
+  // The slow timer handles boot readiness and provides a missed-wakeup safety net.
+  const bool events = (f[Options] & 4) && GetMapping().request_event && GetMapping().cpu_event;
+  if (events)
+    for (HANDLE event : {GetMapping().request_event, GetMapping().cpu_event})
     {
-      f[Error] = 1;
-      InterlockedExchange(&f[Response], request);
+      auto* notifier = new QWinEventNotifier(event, parent);
+      QObject::connect(notifier, &QWinEventNotifier::activated, parent,
+                       [process](HANDLE) { (*process)(); });
     }
-  });
-  timer->start(1);
+  auto* timer = new QTimer(parent);
+  timer->setTimerType(Qt::PreciseTimer);
+  QObject::connect(timer, &QTimer::timeout, parent, [process] { (*process)(); });
+  timer->start(events ? 50 : 1);
 }
 }  // namespace SMGRL
 #endif

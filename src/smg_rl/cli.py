@@ -165,7 +165,7 @@ def main():
         output = new_run(config, "background-validation")
         isolated = deepcopy(config)
         isolated["paths"]["user"] = str(
-            Path(config["paths"]["user"]).parent / "parallel-profiles" / output.name / "template"
+            Path(config["paths"]["user"]).parent / "parallel-profiles" / game_id(config) / output.name / "template"
         )
         backend = background_backend(isolated)
         try:

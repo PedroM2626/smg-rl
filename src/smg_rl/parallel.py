@@ -19,6 +19,7 @@ from smg_rl.native import background_backend
 from smg_rl.profiles import game_id, require_training_enabled
 from smg_rl.timed_ppo import TimedRecurrentPPO
 from smg_rl.train import new_run
+from smg_rl.vector import MeasuredSubprocVecEnv
 
 
 @dataclass
@@ -87,6 +88,8 @@ class ProgressCallback(BaseCallback):
             "backend_timing_ms": [info.get("backend_timing_ms", {}) for info in self.infos],
             "advanced_frames": [info.get("advanced_frames") for info in self.infos],
             "native_diagnostics": [info.get("native_diagnostics") for info in self.infos],
+            "collector_timings": self.environments.timing_snapshot()
+            if hasattr(self.environments, "timing_snapshot") else {},
             "learner_timings": self.model.profiler.snapshot()
             if hasattr(self.model, "profiler")
             else {},
@@ -156,10 +159,20 @@ def parallel_train(config, steps=None, workers=None, resume=None):
     callback = None
     failed = False
     try:
-        environments = SubprocVecEnv(
-            [WorkerFactory(worker_config, i, str(run_dir)) for i in range(workers)],
-            start_method="spawn",
-        )
+        factories = [WorkerFactory(worker_config, i, str(run_dir)) for i in range(workers)]
+        collector = config["parallel"].get("collector", "standard")
+        if collector not in ("standard", "measured"):
+            raise ValueError("Unknown parallel collector.")
+        if collector == "standard":
+            environments = SubprocVecEnv(factories, start_method="spawn")
+        else:
+            environments = MeasuredSubprocVecEnv(
+                factories,
+                (config["environment"]["frame_stack"], config["environment"]["image_size"],
+                 config["environment"]["image_size"]),
+                shared=config["parallel"].get("shared_observations", True),
+                receive_order=config["parallel"].get("receive_order", "ready"),
+            )
         environments.seed(settings["seed"])
         if resume:
             base = (
