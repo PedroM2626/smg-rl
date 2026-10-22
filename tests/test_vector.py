@@ -1,5 +1,6 @@
 import time
 from dataclasses import dataclass
+from pathlib import Path
 
 import gymnasium as gym
 import numpy as np
@@ -84,5 +85,51 @@ def test_worker_barrier_identifies_slow_environment_and_collects_ready_first():
         assert result["receive_order"] == [1, 0]
         assert result["barrier_idle_ms"][1] > 50
         assert result["compute_ms"][0] > result["compute_ms"][1]
+    finally:
+        env.close()
+
+
+def test_hung_worker_has_bounded_receive_and_shutdown():
+    env = MeasuredSubprocVecEnv([TinyFactory(30)], (4, 8, 8), receive_order="ordered")
+    try:
+        env.reset()
+        env.remotes[0].timeout = 0.05
+        with pytest.raises(TimeoutError, match="Worker 0"):
+            env.step(np.array([0]))
+    finally:
+        started = time.monotonic()
+        env.close()
+        assert time.monotonic() - started < 10
+        assert all(not process.is_alive() for process in env.processes)
+
+
+class FailingEnv(TinyEnv):
+    def __init__(self, closed_file):
+        super().__init__(0)
+        self.closed_file = closed_file
+
+    def step(self, action):
+        raise RuntimeError("Injected environment failure")
+
+    def close(self):
+        Path(self.closed_file).write_text("closed", encoding="utf-8")
+
+
+@dataclass
+class FailingFactory:
+    closed_file: str
+
+    def __call__(self):
+        return FailingEnv(self.closed_file)
+
+
+def test_unexpected_worker_error_closes_owned_environment(tmp_path):
+    closed = tmp_path / "closed.txt"
+    env = MeasuredSubprocVecEnv([FailingFactory(str(closed))], (4, 8, 8))
+    try:
+        env.reset()
+        with pytest.raises((EOFError, BrokenPipeError)):
+            env.step(np.array([0]))
+        assert closed.read_text(encoding="utf-8") == "closed"
     finally:
         env.close()

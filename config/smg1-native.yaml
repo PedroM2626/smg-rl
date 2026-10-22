@@ -69,6 +69,10 @@ parallel:
   shared_observations: false
   receive_order: ordered
   quiet_ui: true
+  graphics_backend: Vulkan
+  cpu_affinity: auto
+  worker_timeout: 120.0
+  max_stalled_attempts: 8
 variations:
 - name: sweet_sweet
   title: Rocky Road

@@ -10,6 +10,7 @@ from pathlib import Path
 
 import psutil
 
+from smg_rl.checkpoints import verify_pair_manifest
 from smg_rl.config import load_config
 from smg_rl.diagnostics import atomic_json
 from smg_rl.profiles import require_training_enabled
@@ -18,15 +19,21 @@ from smg_rl.reporting import read_json
 
 def checkpoint_steps(path):
     path = Path(path)
+    declared_steps = verify_pair_manifest(path)
     if not path.with_suffix(".intrinsic.pt").is_file():
         raise ValueError(f"Missing curiosity checkpoint for {path}")
     with zipfile.ZipFile(path.with_suffix(".intrinsic.pt")) as archive:
         if archive.testzip() is not None:
             raise ValueError(f"Corrupt curiosity checkpoint for {path}")
     with zipfile.ZipFile(path) as archive:
+        if archive.testzip() is not None:
+            raise ValueError(f"Corrupt policy checkpoint for {path}")
         archive.getinfo("data")
         data = json.loads(archive.read("data"))
-    return int(data["num_timesteps"])
+    steps = int(data["num_timesteps"])
+    if steps < 0 or (declared_steps is not None and declared_steps != steps):
+        raise ValueError(f"Checkpoint timestep metadata mismatch: {path}")
+    return steps
 
 
 def newest_pair(run, fallback=None):
@@ -37,7 +44,7 @@ def newest_pair(run, fallback=None):
     for path in candidates:
         try:
             verified.append((checkpoint_steps(path), path))
-        except (OSError, ValueError, KeyError, zipfile.BadZipFile):
+        except (OSError, ValueError, KeyError, TypeError, zipfile.BadZipFile):
             continue
     return max(verified, key=lambda pair: pair[0]) if verified else (0, None)
 
@@ -74,6 +81,10 @@ def supervised_train(config_path, steps=None, workers=None, resume=None):
     folder.mkdir()
     start = checkpoint_steps(resume) if resume else 0
     target = start + (steps or config["training"]["steps"])
+    stalled_attempts = 0
+    max_stalled_attempts = config.get("parallel", {}).get("max_stalled_attempts", 8)
+    if max_stalled_attempts < 1:
+        raise ValueError("max_stalled_attempts must be positive.")
     controller = {
         "pid": os.getpid(),
         "created_time": psutil.Process().create_time(),
@@ -170,12 +181,18 @@ def supervised_train(config_path, steps=None, workers=None, resume=None):
                     time.sleep(1)
                 code = child.wait()
             status = read_json(run / "status.json", {}) if run else {}
+            previous_progress = progress
             progress, pair = newest_pair(run, pair)
             if (folder / "STOP").exists() or status.get("state") == "stopped":
                 publish("stopped", child_exit=code)
                 return folder
             if progress >= target:
                 break
+            stalled_attempts = 0 if progress > previous_progress else stalled_attempts + 1
+            if stalled_attempts >= max_stalled_attempts:
+                publish("failed", child_exit=code, reason="Repeated failures without a new checkpoint",
+                        stalled_attempts=stalled_attempts)
+                raise RuntimeError(f"Supervisor stopped after {stalled_attempts} attempts without checkpoint progress.")
             delay = min(30, 2 ** min(attempt, 5))
             publish("recovering", child_exit=code, retry_seconds=delay)
             deadline = time.monotonic() + delay

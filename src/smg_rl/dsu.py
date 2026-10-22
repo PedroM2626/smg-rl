@@ -7,6 +7,18 @@ import time
 import zlib
 
 
+def valid_request(data):
+    """Reject malformed lengths, versions and checksums before dispatch."""
+    if len(data) < 20 or data[:4] != b"DSUC":
+        return False
+    version, length, checksum = struct.unpack_from("<HHI", data, 4)
+    if version != 1001 or length != len(data) - 16:
+        return False
+    checked = bytearray(data)
+    checked[8:12] = bytes(4)
+    return zlib.crc32(checked) == checksum
+
+
 def packet(kind, payload, uid=0x534D4752):
     data = bytearray(
         struct.pack("<4sHHII I", b"DSUS", 1001, 4 + len(payload), 0, uid, kind) + payload
@@ -67,27 +79,30 @@ class DSUServer:
         while self.running:
             try:
                 request, peer = self.socket.recvfrom(256)
-                if len(request) < 20 or request[:4] != b"DSUC":
-                    continue
-                kind = struct.unpack_from("<I", request, 16)[0]
+                kind = struct.unpack_from("<I", request, 16)[0] if valid_request(request) else None
                 if kind == 0x100000:
                     self.socket.sendto(packet(kind, struct.pack("<H2x", 1001)), peer)
                 elif kind == 0x100001:
                     for index in range(4):
                         self.socket.sendto(packet(kind, port_info(index)), peer)
                 elif kind == 0x100002:
-                    self.clients[peer] = time.monotonic()
+                    if len(request) >= 28 and (peer in self.clients or len(self.clients) < 8):
+                        self.clients[peer] = time.monotonic()
             except socket.timeout:
                 pass
             except OSError:
-                break
+                if not self.running:
+                    break
             now = time.monotonic()
             if now >= next_send:
-                self.count += 1
+                self.count = (self.count + 1) & 0xFFFFFFFF
                 frame = packet(0x100002, pad_data(self.names, self.commands, self.count))
                 for peer, seen in tuple(self.clients.items()):
                     if now - seen < 10:
-                        self.socket.sendto(frame, peer)
+                        try:
+                            self.socket.sendto(frame, peer)
+                        except OSError:
+                            self.clients.pop(peer, None)
                     else:
                         self.clients.pop(peer, None)
                 next_send = now + 0.004

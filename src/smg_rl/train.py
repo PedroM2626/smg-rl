@@ -10,16 +10,15 @@ import torch
 from sb3_contrib import RecurrentPPO
 from stable_baselines3.common.callbacks import BaseCallback
 
+from smg_rl.checkpoints import save_pair
 from smg_rl.env import GalaxyEnv
 from smg_rl.profiles import require_training_enabled
 
 
 def save_checkpoint(model, env, path):
-    path = Path(path)
-    model.save(str(path))
-    torch.save(
+    save_pair(model,
         {name: module.state_dict() for name, module in env.curiosity.items()},
-        str(path) + ".intrinsic.pt",
+        path,
     )
 
 
@@ -59,9 +58,12 @@ def train(config, backend, steps=None, resume=None, rollout_steps=None):
     model = None
     try:
         if resume:
+            from smg_rl.supervision import checkpoint_steps
+
             base = (
                 str(Path(resume).with_suffix("")) if str(resume).endswith(".zip") else str(resume)
             )
+            checkpoint_steps(Path(base + ".zip"))
             state = torch.load(base + ".intrinsic.pt", map_location="cpu", weights_only=True)
             for name, module in env.curiosity.items():
                 module.load_state_dict(state[name])

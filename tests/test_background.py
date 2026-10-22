@@ -41,6 +41,8 @@ def test_loopback_servers_have_independent_ports_and_states():
         first.set({"jump"})
         request = bytearray(packet(0x100002, bytes(8)))
         request[:4] = b"DSUC"
+        struct.pack_into("<I", request, 8, 0)
+        struct.pack_into("<I", request, 8, zlib.crc32(request))
         client.sendto(request, ("127.0.0.1", first.port))
         state, _ = client.recvfrom(256)
         assert state[:4] == b"DSUS" and state[20 + 18] == 1

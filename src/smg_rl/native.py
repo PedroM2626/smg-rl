@@ -154,7 +154,8 @@ class NativeBridge:
         return np.frombuffer(self.mapping[HEADER_BYTES : HEADER_BYTES + size], np.uint8).reshape(shape)
 
     def close(self):
-        self.mapping.close()
+        if not self.mapping.closed:
+            self.mapping.close()
         if getattr(self, "events", None):
             self.events.close()
 
@@ -220,8 +221,8 @@ class NativeDolphin(BackgroundDolphin):
         rgba = self.bridge.image()
         if rgba.ndim == 2:
             size = self.config["environment"]["image_size"]
-            if rgba.shape != (size, size) or rgba.std() <= 1:
-                raise RuntimeError("Native compact observation has an invalid shape or is uniform.")
+            if rgba.shape != (size, size):
+                raise RuntimeError("Native compact observation has an invalid shape.")
             self.last_image = rgba
             return
         height, width = rgba.shape[:2]
@@ -230,8 +231,8 @@ class NativeDolphin(BackgroundDolphin):
             int(top * height) : int(bottom * height), int(left * width) : int(right * width)
         ]
         gray = cv2.cvtColor(crop, cv2.COLOR_RGBA2GRAY)
-        if gray.std() <= 1:
-            raise RuntimeError("Native renderer published an empty or uniform observation.")
+        # A valid, fresh renderer frame can be uniform during a fade/cinematic.
+        # Sequence/PID/layout checks establish freshness, not image variance.
         size = self.config["environment"]["image_size"]
         self.last_image = cv2.resize(gray, (size, size), interpolation=cv2.INTER_AREA)
 

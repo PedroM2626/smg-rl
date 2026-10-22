@@ -21,6 +21,7 @@ from smg_rl.dsu import DSUServer
 from smg_rl.memory import GameMemory, MemoryFault
 from smg_rl.process_memory import ProcessMemory
 from smg_rl.profiles import game_id
+from smg_rl.scheduling import apply_affinity
 
 
 def prepare_worker(config, index, port):
@@ -39,16 +40,24 @@ def prepare_worker(config, index, port):
             "AbortOnPanicAlert": "True",
         },
         "Core": {"EmulationSpeed": str(config["parallel"]["emulation_speed"])},
+        "Analytics": {"Enabled": "False"},
         "DSP": {"Backend": "Null", "Volume": "0"},
     }.items():
         if section not in ini:
             ini[section] = {}
         ini[section].update(entries)
+    if "cpu_thread" in config["parallel"]:
+        ini["Core"]["CPUThread"] = str(bool(config["parallel"]["cpu_thread"]))
+    if "graphics_backend" in config["parallel"]:
+        graphics_backend = config["parallel"]["graphics_backend"]
+        if graphics_backend not in ("D3D", "D3D12", "Vulkan", "OGL"):
+            raise ValueError("Unsupported Dolphin graphics backend.")
+        ini["Core"]["GFXBackend"] = graphics_backend
     with (root / "Config" / "Dolphin.ini").open("w", encoding="utf-8") as stream:
         ini.write(stream)
     device = "DSUClient/0/SMG-RL"
     (root / "Config" / "DSUClient.ini").write_text(
-        f"[Server]\nEnabled = True\nEntries = SMG-RL:127.0.0.1:{port};\n", encoding="utf-8"
+        f"[Server]\nEnabled = {bool(port)}\nEntries = SMG-RL:127.0.0.1:{port};\n", encoding="utf-8"
     )
     (root / "Config" / "Hotkeys.ini").write_text(
         f"[Hotkeys]\nDevice = {device}\nGeneral/Toggle Pause = Share\n"
@@ -94,6 +103,8 @@ class BackgroundDolphin:
     @measured("startup")
     def __init__(self, config, index=0):
         self.config, self.index = config, index
+        # Native masks bypass UDP input updates, but the current native build
+        # still needs DSU discovery to instantiate its controller device.
         self.server = DSUServer()
         self.closed = False
         self.reader = None
@@ -101,10 +112,10 @@ class BackgroundDolphin:
         self.names = ()
         self.last_image = None
         self.last_signature = None
-        self.root = prepare_worker(config, index, self.server.port)
-        self.screenshots = self.root / "ScreenShots"
-        self.screenshots.mkdir(exist_ok=True)
         try:
+            self.root = prepare_worker(config, index, self.server.port)
+            self.screenshots = self.root / "ScreenShots"
+            self.screenshots.mkdir(exist_ok=True)
             startup = subprocess.STARTUPINFO()
             startup.dwFlags = subprocess.STARTF_USESHOWWINDOW
             startup.wShowWindow = 0
@@ -124,6 +135,7 @@ class BackgroundDolphin:
                 if hasattr(self, "bridge")
                 else {k: v for k, v in os.environ.items() if k != "SMG_RL_BRIDGE"},
             )
+            self.affinity = apply_affinity(self.process.pid, config["parallel"].get("cpu_affinity", "auto"))
             (self.root / "process.json").write_text(
                 json.dumps(
                     {
@@ -131,6 +143,7 @@ class BackgroundDolphin:
                         "owner": os.getpid(),
                         "port": self.server.port,
                         "user": str(self.root),
+                        "cpu_affinity": self.affinity,
                     },
                     indent=2,
                 ),
@@ -308,10 +321,16 @@ class BackgroundDolphin:
         if self.closed:
             return
         self.closed = True
-        self.release()
-        if self.reader:
-            self.reader.close()
-        if self.process and self.process.poll() is None:
-            self.process.terminate()
-            self.process.wait(timeout=10)
-        self.server.close()
+        try:
+            self.release()
+            if self.reader:
+                self.reader.close()
+            if self.process and self.process.poll() is None:
+                self.process.terminate()
+                try:
+                    self.process.wait(timeout=10)
+                except subprocess.TimeoutExpired:
+                    self.process.kill()
+                    self.process.wait(timeout=5)
+        finally:
+            self.server.close()

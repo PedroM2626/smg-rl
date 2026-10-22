@@ -10,6 +10,7 @@ import time
 from multiprocessing.connection import wait
 
 import numpy as np
+import psutil
 from stable_baselines3.common.vec_env.base_vec_env import CloudpickleWrapper, VecEnv
 from stable_baselines3.common.vec_env.subproc_vec_env import SubprocVecEnv, _stack_obs, _worker
 
@@ -49,16 +50,32 @@ class WorkerConnection:
 
 
 def measured_worker(remote, parent, factory, pixels, statistics, index, shape):
-    # _worker retains SB3's reset/termination/env_method behavior and exceptions.
-    _worker(WorkerConnection(remote, pixels, statistics, index, shape), parent, factory)
+    # SB3's worker does not close its environment on an unexpected step error.
+    # Keep an owned reference so its emulator/reader/socket are closed on exit.
+    owned = []
+
+    def create():
+        environment = factory.var()
+        owned.append(environment)
+        return environment
+
+    try:
+        _worker(WorkerConnection(remote, pixels, statistics, index, shape), parent,
+                CloudpickleWrapper(create))
+    finally:
+        for environment in owned:
+            environment.close()
 
 
 class ParentConnection:
-    def __init__(self, remote, pixels, index, shape):
+    def __init__(self, remote, pixels, index, shape, timeout=120.0):
         self.remote, self.index = remote, index
+        self.timeout = timeout
         self.images = np.frombuffer(pixels, dtype=np.uint8).reshape((-1, *shape)) if pixels is not None else None
 
     def recv(self):
+        if not self.remote.poll(self.timeout):
+            raise TimeoutError(f"Worker {self.index} did not reply within {self.timeout} seconds.")
         result = self.remote.recv()
         if (self.images is not None and isinstance(result, tuple) and len(result) in (2, 5)
                 and isinstance(result[0], dict) and result[0].get("image", False) is None):
@@ -74,12 +91,16 @@ class ParentConnection:
 
 
 class MeasuredSubprocVecEnv(SubprocVecEnv):
-    def __init__(self, env_fns, image_shape, shared=True, receive_order="ready", start_method="spawn"):
+    def __init__(self, env_fns, image_shape, shared=True, receive_order="ready", start_method="spawn",
+                 timeout=120.0):
+        if not env_fns or timeout <= 0 or not np.isfinite(timeout):
+            raise ValueError("At least one environment and a positive finite timeout are required.")
         if receive_order not in ("ready", "ordered"):
             raise ValueError("Unknown worker receive order.")
         self.waiting, self.closed = False, False
         self.profiler = StageProfiler()
         self.receive_order = receive_order
+        self.timeout = timeout
         self.last_statistics = {}
         self.vector_steps = 0
         self.compute_totals = np.zeros(len(env_fns), dtype=np.float64)
@@ -90,19 +111,23 @@ class MeasuredSubprocVecEnv(SubprocVecEnv):
         self.statistics = context.RawArray(ctypes.c_double, len(env_fns) * 2)
         self.pixels = context.RawArray(ctypes.c_ubyte, int(len(env_fns) * np.prod(image_shape))) if shared else None
         raw_remotes, self.work_remotes = zip(*[context.Pipe() for _ in env_fns])
-        self.remotes = tuple(ParentConnection(remote, self.pixels, index, image_shape)
+        self.remotes = tuple(ParentConnection(remote, self.pixels, index, image_shape, timeout)
                              for index, remote in enumerate(raw_remotes))
         self.processes = []
-        for index, (remote, work, factory) in enumerate(zip(raw_remotes, self.work_remotes, env_fns)):
-            process = context.Process(target=measured_worker,
-                                      args=(work, remote, CloudpickleWrapper(factory), self.pixels,
-                                            self.statistics, index, image_shape), daemon=True)
-            process.start()
-            self.processes.append(process)
-            work.close()
-        self.remotes[0].send(("get_spaces", None))
-        observation_space, action_space = self.remotes[0].recv()
-        VecEnv.__init__(self, len(env_fns), observation_space, action_space)
+        try:
+            for index, (remote, work, factory) in enumerate(zip(raw_remotes, self.work_remotes, env_fns)):
+                process = context.Process(target=measured_worker,
+                                          args=(work, remote, CloudpickleWrapper(factory), self.pixels,
+                                                self.statistics, index, image_shape), daemon=True)
+                process.start()
+                self.processes.append(process)
+                work.close()
+            self.remotes[0].send(("get_spaces", None))
+            observation_space, action_space = self.remotes[0].recv()
+            VecEnv.__init__(self, len(env_fns), observation_space, action_space)
+        except BaseException:
+            self.close()
+            raise
 
     def step_async(self, actions):
         self.dispatched = time.perf_counter()
@@ -118,7 +143,9 @@ class MeasuredSubprocVecEnv(SubprocVecEnv):
             while pending:
                 if self.receive_order == "ready":
                     with self.profiler.measure("wait_ready"):
-                        ready = wait(list(pending))
+                        ready = wait(list(pending), timeout=self.timeout)
+                        if not ready:
+                            raise TimeoutError(f"Workers {list(pending.values())} did not reply.")
                 else:
                     ready = [next(iter(pending))]
                 for remote in ready:
@@ -152,3 +179,33 @@ class MeasuredSubprocVecEnv(SubprocVecEnv):
                 "mean_worker_compute_ms": (self.compute_totals / max(1, self.vector_steps)).tolist(),
                 "mean_worker_barrier_idle_ms": (self.idle_totals / max(1, self.vector_steps)).tolist(),
                 "bottleneck_count_per_worker": self.bottleneck_counts.tolist()}
+
+    def close(self):
+        if self.closed:
+            return
+        self.closed = True
+        # Do not wait on pending step replies: a crashed/hung worker may never send one.
+        for remote in self.remotes:
+            try:
+                remote.send(("close", None))
+            except (OSError, EOFError):
+                pass
+        deadline = time.monotonic() + 5
+        for process in self.processes:
+            process.join(timeout=max(0, deadline - time.monotonic()))
+            if process.is_alive():
+                try:
+                    parent = psutil.Process(process.pid)
+                    owned = parent.children(recursive=True)
+                    for child in [*owned, parent]:
+                        try:
+                            child.kill()
+                        except psutil.NoSuchProcess:
+                            pass
+                except psutil.NoSuchProcess:
+                    pass
+                process.join(timeout=2)
+        for remote in self.remotes:
+            remote.close()
+        for remote in self.work_remotes:
+            remote.close()

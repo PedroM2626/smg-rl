@@ -3,6 +3,7 @@ import threading
 import time
 from types import SimpleNamespace
 
+import numpy as np
 import pytest
 
 from smg_rl.native import HEADER_BYTES, PIXEL_BYTES, PROTOCOL_VERSION, NativeBridge, NativeDolphin
@@ -60,6 +61,14 @@ def test_compact_gray_frame_is_owned_and_does_not_accept_wrong_stride():
             source.image()
     finally:
         source.close()
+
+
+def test_legitimate_uniform_native_transition_frame_is_accepted():
+    backend = object.__new__(NativeDolphin)
+    backend.config = {"environment": {"image_size": 84}}
+    backend.bridge = SimpleNamespace(image=lambda: np.zeros((84, 84), np.uint8))
+    backend.capture()
+    assert backend.last_image.shape == (84, 84)
 
 
 def test_stale_reply_event_cannot_acknowledge_an_unfinished_command():

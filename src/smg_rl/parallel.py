@@ -13,6 +13,7 @@ import torch
 from stable_baselines3.common.callbacks import BaseCallback
 from stable_baselines3.common.vec_env import SubprocVecEnv
 
+from smg_rl.checkpoints import save_pair
 from smg_rl.diagnostics import atomic_json, measured
 from smg_rl.env import GalaxyEnv
 from smg_rl.native import background_backend
@@ -54,8 +55,7 @@ def runtime_directory(config, run_dir):
 
 @measured("checkpoint")
 def checkpoint(model, environments, base):
-    model.save(str(base))
-    torch.save({"workers": environments.env_method("intrinsic_state")}, str(base) + ".intrinsic.pt")
+    save_pair(model, {"workers": environments.env_method("intrinsic_state")}, base)
 
 
 class ProgressCallback(BaseCallback):
@@ -116,6 +116,7 @@ class ProgressCallback(BaseCallback):
             for old in pairs[:-3]:
                 old.unlink()
                 old.with_suffix(".intrinsic.pt").unlink(missing_ok=True)
+                old.with_suffix(".pair.json").unlink(missing_ok=True)
         return not (self.run_dir / "STOP").exists()
 
 
@@ -172,12 +173,16 @@ def parallel_train(config, steps=None, workers=None, resume=None):
                  config["environment"]["image_size"]),
                 shared=config["parallel"].get("shared_observations", True),
                 receive_order=config["parallel"].get("receive_order", "ready"),
+                timeout=config["parallel"].get("worker_timeout", 120.0),
             )
         environments.seed(settings["seed"])
         if resume:
+            from smg_rl.supervision import checkpoint_steps
+
             base = (
                 str(Path(resume).with_suffix("")) if str(resume).endswith(".zip") else str(resume)
             )
+            checkpoint_steps(Path(base + ".zip"))
             intrinsic = torch.load(base + ".intrinsic.pt", map_location="cpu", weights_only=True)
             states = intrinsic.get("workers", [intrinsic])
             for index in range(workers):
@@ -237,7 +242,7 @@ def parallel_train(config, steps=None, workers=None, resume=None):
                     else "completed"
                 )
         finally:
-            if environments is not None and not failed:
+            if environments is not None and (not failed or isinstance(environments, MeasuredSubprocVecEnv)):
                 environments.close()
             children = psutil.Process().children(recursive=True)
             for child in children:

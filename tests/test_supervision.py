@@ -2,6 +2,8 @@ import json
 import zipfile
 from pathlib import Path
 
+import pytest
+
 from smg_rl.supervision import newest_pair, supervised_train
 
 
@@ -77,3 +79,31 @@ def test_supervisor_restarts_at_last_complete_pair_and_preserves_total_budget(
     assert commands[0][commands[0].index("--steps") + 1] == "8"
     assert commands[1][commands[1].index("--steps") + 1] == "4"
     assert "--resume" in commands[1]
+
+
+def test_supervisor_bounds_permanent_failures_without_checkpoint_progress(tmp_path, monkeypatch):
+    config = {"root": str(tmp_path), "paths": {"runs": str(tmp_path / "runs")},
+              "training": {"enabled": True, "steps": 8},
+              "parallel": {"workers": 1, "max_stalled_attempts": 2}}
+    monkeypatch.setattr("smg_rl.supervision.load_config", lambda _: config)
+    monkeypatch.setattr("smg_rl.supervision.time.sleep", lambda _: None)
+    ticks = iter(range(0, 10000, 100))
+    monkeypatch.setattr("smg_rl.supervision.time.monotonic", lambda: next(ticks))
+
+    class Child:
+        pid = 9988
+
+        def __init__(self, *args, **kwargs):
+            pass
+
+        def poll(self):
+            return 1
+
+        def wait(self):
+            return 1
+
+    monkeypatch.setattr("smg_rl.supervision.subprocess.Popen", Child)
+    with pytest.raises(RuntimeError, match="2 attempts without checkpoint progress"):
+        supervised_train(tmp_path / "config.yaml")
+    status = json.loads(next(Path(config["paths"]["runs"]).glob("supervised-*/status.json")).read_text())
+    assert status["state"] == "failed" and status["attempts"] == 2
