@@ -156,3 +156,13 @@ workload observed about 11.6% higher Galaxy 2 throughput and 6.6% higher Galaxy 
 throughput over same-build poll/full references. Vector shared images did not
 establish an advantage. These are engineering results and do not establish
 faster sample-efficient learning or course success.
+
+## October 22 renderer and security revision
+
+The updated Torch 2.14.1+cu126 / SB3 2.9.0 stack passed the portable suite,
+CUDA recurrent forward/backward, all three missions' Vulkan detector calibration,
+192 paired graphics replay transitions and a deliberate test-owned emulator
+exit/recovery to 256 steps. Coordinates and terminal/health signals matched the
+Direct3D reference in the paired replay; small image rounding differences remain.
+The installed-version advisory audit normalizes CUDA versions to avoid silently
+skipping Torch. See [the complete evidence and limits](optimization-v4.md).

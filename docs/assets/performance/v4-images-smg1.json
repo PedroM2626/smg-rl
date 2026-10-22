@@ -1,0 +1,22 @@
+[
+  {
+    "variation": "sweet_sweet",
+    "graphics_backend": "D3D",
+    "steps": 64,
+    "image_mean_error": 0.0,
+    "image_max_error": 0,
+    "position_max_error": 0.0,
+    "displacement_from_reset": 706.0276960883888,
+    "signals_equal": true
+  },
+  {
+    "variation": "sweet_sweet",
+    "graphics_backend": "Vulkan",
+    "steps": 64,
+    "image_mean_error": 0.0001616532029478458,
+    "image_max_error": 6,
+    "position_max_error": 0.0,
+    "displacement_from_reset": 706.0276960883888,
+    "signals_equal": true
+  }
+]

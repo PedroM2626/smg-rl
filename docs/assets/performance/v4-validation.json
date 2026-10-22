@@ -1,0 +1,50 @@
+{
+  "portable_tests": "........................................................................ [ 73%]\n..........................                                               [100%]\n98 passed in 91.35s (0:01:31)",
+  "ruff": "All checks passed!",
+  "pip_check": "No broken requirements found.",
+  "smg2_calibration": "spinning: start=(0.0, -1150.0, 500.0), goal=(-2834.5078125, -450.0, -37224.53515625)\nspinning: completion, death, movement, and pause checks passed\ndouble_time: start=(0.0, -1150.0, 500.0), goal=(-3094.63134765625, -694.5638427734375, -52697.125)\ndouble_time: completion, death, movement, and pause checks passed\nHidden worker calibration passed. Evidence: C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\background-validation-20261022-151307-293588",
+  "smg1_calibration": "sweet_sweet: start=(-50.0, 45.0000114440918, -50.0), goal=(26681.45703125, 950.0, -11984.625)\nsweet_sweet: completion, death, movement, and pause checks passed\nHidden worker calibration passed. Evidence: C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\smg1\\background-validation-20261022-151316-545142",
+  "protocol_check": {
+    "passed": true,
+    "commands": 128,
+    "resets": 4,
+    "executable_sha256": "202a74aac54e41d24afe15d5a2f5b3b470752457cd1553a724533dab9388aeee",
+    "paused_wait_checks": 8,
+    "observation_digest": "c487fb605b4be0d56bf9ada0a3e5436308e91ff34fb455adadfe85c18801156c",
+    "elapsed_seconds": 7.608199700000114,
+    "native_diagnostics": {
+      "request": 135,
+      "response": 135,
+      "completed_frames": 12,
+      "step_complete_sequence": 135,
+      "field_count": 1077,
+      "acknowledged_field": 1077,
+      "readback_us": 723,
+      "frame_wait_us": 0,
+      "skipped_presents": 0,
+      "reconciliations": 0,
+      "rejected_state": 0,
+      "pixel_format": 1,
+      "cpu_batch_us": 44096,
+      "cpu_idle_us": 2,
+      "dispatch_us": 86,
+      "present_us": 947,
+      "scale_us": 0,
+      "image_bytes": 7056,
+      "source_width": 834,
+      "source_height": 456,
+      "queue_drain_calls": 12,
+      "preprocess_us": 334,
+      "capture_mode": 1
+    }
+  },
+  "recovery": "v4-recovery.json",
+  "images": [
+    "v4-images-smg2.json",
+    "v4-images-smg1.json"
+  ],
+  "note": "All calibration, replay and recovery evidence is excluded from production success accounting. Native executable unchanged from v3.",
+  "rejected_experiments": {
+    "serverless_input": "Invalid for this native build: DSU discovery is required. All serverless throughput values excluded; two startup/reset native exits were observed, cause unresolved. Restored DSU passed selected-path validation."
+  }
+}

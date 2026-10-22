@@ -91,8 +91,11 @@ worker protocol is exercised directly by collector equivalence tests.
 
 The live development environment uses Windows, Python 3.11, Dolphin 2609a,
 i9-14900HX, 32 logical CPU threads, approximately 32 GB RAM, and an RTX 4070
-Laptop GPU with 8 GB VRAM. The tested CUDA wheel is Torch 2.6.0+cu124 with
-Stable-Baselines3/sb3-contrib 2.6.0. The dependency lock records actual versions.
+Laptop GPU with 8 GB VRAM. The current tested CUDA wheel is Torch 2.14.1+cu126 with
+Stable-Baselines3/sb3-contrib 2.9.0. Earlier revisions used Torch 2.6.0+cu124 and
+SB3 2.6.0; their historical measurements retain that provenance. The current
+[renderer/security revision](optimization-v4.md) documents revalidation and the
+remaining trusted-checkpoint boundary. The dependency lock records actual versions.
 
 Use `requirements-gpu.lock.txt` for the CUDA setup and
 `requirements-windows.lock.txt` for the older desktop CPU environment. Installing

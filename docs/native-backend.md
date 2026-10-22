@@ -268,3 +268,18 @@ the local game assets and native calibration available:
 
 The fixture runs under `.local/native-recovery-check-*`, outside the audited
 training run roots, and is excluded from course-success reports.
+
+## Current renderer and recovery settings
+
+The current native profiles use `graphics_backend: Vulkan`, `cpu_affinity: auto`,
+`worker_timeout: 120.0` and `max_stalled_attempts: 8`. Native protocol 3 and its
+12-frame action contract remain. `graphics_backend` also supports D3D, D3D12
+and OGL for explicit experiments; revalidate changed renderers before training.
+The optional `cpu_thread` override is an execution experiment and is not set in
+the recommended profiles. `cpu_affinity: performance` selects the fastest
+available Windows CPU efficiency class; it did not establish a production speed
+benefit here. The learner's own affinity is not changed.
+
+The [current renderer/security revision](optimization-v4.md) documents matched
+timings, image/coordinate replay, new dependency versions, complete checkpoint
+pair manifests and bounded worker recovery. The native binary itself is unchanged.

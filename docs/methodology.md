@@ -260,7 +260,8 @@ measures predictor difficulty, not progress or semantic novelty.
 
 ## 5. Recurrent PPO
 
-The implementation uses `sb3-contrib` 2.6.0's `MultiInputLstmPolicy`:
+The current implementation uses `sb3-contrib` 2.9.0's `MultiInputLstmPolicy`
+(the earlier protocol-v3 evidence used 2.6.0):
 the default combined image/vector extractor, 128-unit LSTM state, and separate
 128-unit actor/value MLP heads. Policy image normalization is handled by SB3.
 The tested library defaults include PPO clipping 0.2, value coefficient 0.5,
@@ -282,7 +283,7 @@ $\widehat A_t=\sum_l(\gamma\lambda)^l\delta_{t+l}$.
 Timeouts use SB3's truncation handling. Recurrent state is masked at episode
 boundaries. See [PPO](https://arxiv.org/abs/1707.06347),
 [GAE](https://arxiv.org/abs/1506.02438), and the
-[versioned implementation documentation](https://sb3-contrib.readthedocs.io/en/v2.6.0/modules/ppo_recurrent.html).
+[versioned implementation documentation](https://sb3-contrib.readthedocs.io/en/v2.9.0/modules/ppo_recurrent.html).
 
 | Parameter | Hidden parallel configuration |
 | --- | ---: |

@@ -111,3 +111,17 @@ training checkpoints, pass the same game configuration to evaluation; the
 configuration selects the correct observation shape, states, and memory profile.
 The original desktop keyboard/mouse mappings remain required. Evaluation creates
 its own evidence and does not count as training success in `report`.
+
+## Checkpoint integrity and bounded recovery
+
+New `train` and `train-parallel` saves include `model-*.pair.json` SHA-256
+manifests. Keep that file with its ZIP and `.intrinsic.pt` partner. Recovery
+rejects `.incomplete` publications and checksum/archive errors; complete legacy
+local pairs remain supported. Only load trusted local models: SB3 metadata can
+contain serialized Python objects. See [the security policy](../SECURITY.md).
+
+`parallel.worker_timeout` bounds measured collector replies (default 120 s).
+`parallel.max_stalled_attempts` bounds consecutive supervised attempts without a
+new checkpoint (default 8). A permanent failure is published as `failed` and
+returns an error. Progress resets that consecutive-failure count. These options
+do not extend the requested total training budget.

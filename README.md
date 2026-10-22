@@ -25,6 +25,11 @@ collector profiles each worker's barrier wait and can transfer frame stacks
 through shared memory while preserving synchronous recurrent PPO semantics.
 See [image equivalence, configuration and timing evidence](docs/optimization-v3.md).
 
+The recommended profiles now select Vulkan after a matched renderer comparison.
+The latest revision also updates Torch/SB3, verifies checkpoint pair integrity,
+and bounds failed-worker recovery. See the [renderer and security audit](docs/optimization-v4.md)
+and [security policy](SECURITY.md). Full-course learning remains unproven.
+
 ## Supported tasks
 
 | Game / executable | Mission | Training start | Detector fixture | Recommended configuration |
@@ -82,7 +87,7 @@ and [reward equations and limitations](docs/methodology.md).
 ## Install and supply local assets
 
 Use 64-bit **Python 3.11 or 3.12** on Windows. The tested GPU environment uses
-Python 3.11, Torch 2.6.0+cu124, and SB3/sb3-contrib 2.6.0. Run these commands from
+Python 3.11, Torch 2.14.1+cu126, and SB3/sb3-contrib 2.9.0. Run these commands from
 the repository root in a fresh environment:
 
 ```powershell

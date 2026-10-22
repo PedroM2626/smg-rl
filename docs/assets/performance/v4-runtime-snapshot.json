@@ -1,0 +1,964 @@
+{
+  "created_utc": "2026-10-22T22:16:42.167090+00:00",
+  "torch": "2.14.1+cu126",
+  "games": [
+    {
+      "supervisor": "runs\\supervised-20261022-191241-46584",
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\parallel-20261022-191244-766492",
+      "manager": {
+        "pid": 46584,
+        "created_time": 1792707159.0648189,
+        "config": "C:\\Users\\Acer\\Downloads\\smg-rl\\config\\native.yaml",
+        "target_timesteps": 1001140,
+        "state": "running",
+        "attempts": 1,
+        "confirmed_checkpoint_timesteps": 803876,
+        "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\parallel-20261022-135019-838027\\model-final.zip",
+        "current_run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\parallel-20261022-191244-766492",
+        "updated_at": 1792707400.4794788,
+        "child_pid": 49832,
+        "child_status": {
+          "state": "running",
+          "timesteps": 807012,
+          "updates": 6248,
+          "target_timesteps": 1001140,
+          "elapsed_seconds": 203.79700000000594,
+          "decisions_per_second": 15.387861450364376,
+          "device": "cuda",
+          "workers": 4,
+          "updated_at": "2026-10-22T22:16:40.403687+00:00",
+          "progress": [
+            0.012233858307610434,
+            0.003972208335722166,
+            0.004488030436368581,
+            0.006482767972186936
+          ],
+          "worker_timing_ms": [
+            {
+              "environment_control_and_capture": 152.8412999905413,
+              "telemetry": 0.16140000661835074,
+              "curiosity": 2.403600010438822,
+              "logging": 0.02479999966453761,
+              "episode_output": 28.847299996414222
+            },
+            {
+              "environment_control_and_capture": 163.84259999904316,
+              "telemetry": 0.17680000746622682,
+              "curiosity": 3.227499997592531,
+              "logging": 0.023100001271814108,
+              "episode_output": 32.07960000145249
+            },
+            {
+              "environment_control_and_capture": 179.29939999885391,
+              "telemetry": 0.16429999959655106,
+              "curiosity": 2.364200001466088,
+              "logging": 0.022100008209235966,
+              "episode_output": 16.316399996867403
+            },
+            {
+              "environment_control_and_capture": 170.41790000803303,
+              "telemetry": 0.15589999384246767,
+              "curiosity": 2.6217999984510243,
+              "logging": 0.020100007532164454,
+              "episode_output": 27.34030000283383
+            }
+          ],
+          "backend_timing_ms": [
+            {
+              "pause": 95.6473999976879,
+              "startup": 9811.852400001953,
+              "capture": 0.046900007873773575,
+              "reset": 508.28460000047926,
+              "native_round_trip": 152.73840000736527,
+              "advance": 152.8344999969704
+            },
+            {
+              "pause": 4.490600011195056,
+              "startup": 5079.749200012884,
+              "capture": 0.03819999983534217,
+              "reset": 397.1168999996735,
+              "native_round_trip": 163.75859999971,
+              "advance": 163.83540000242647
+            },
+            {
+              "pause": 70.26549999136478,
+              "startup": 4945.405999998911,
+              "capture": 0.040099999750964344,
+              "reset": 346.9370999955572,
+              "native_round_trip": 179.2014999955427,
+              "advance": 179.29000000003725
+            },
+            {
+              "pause": 131.1827000026824,
+              "startup": 6031.111599993892,
+              "capture": 0.03479998849797994,
+              "reset": 495.5233000073349,
+              "native_round_trip": 170.3304999973625,
+              "advance": 170.40930000075605
+            }
+          ],
+          "advanced_frames": [
+            12,
+            12,
+            12,
+            12
+          ],
+          "native_diagnostics": [
+            {
+              "request": 787,
+              "response": 787,
+              "completed_frames": 12,
+              "step_complete_sequence": 787,
+              "field_count": 9411,
+              "acknowledged_field": 9411,
+              "readback_us": 11355,
+              "frame_wait_us": 0,
+              "skipped_presents": 0,
+              "reconciliations": 0,
+              "rejected_state": 0,
+              "pixel_format": 1,
+              "cpu_batch_us": 151918,
+              "cpu_idle_us": 9,
+              "dispatch_us": 563,
+              "present_us": 1838,
+              "scale_us": 0,
+              "image_bytes": 7056,
+              "source_width": 834,
+              "source_height": 456,
+              "queue_drain_calls": 12,
+              "preprocess_us": 1039,
+              "capture_mode": 1
+            },
+            {
+              "request": 787,
+              "response": 787,
+              "completed_frames": 12,
+              "step_complete_sequence": 787,
+              "field_count": 9411,
+              "acknowledged_field": 9411,
+              "readback_us": 8449,
+              "frame_wait_us": 0,
+              "skipped_presents": 0,
+              "reconciliations": 0,
+              "rejected_state": 0,
+              "pixel_format": 1,
+              "cpu_batch_us": 162575,
+              "cpu_idle_us": 6,
+              "dispatch_us": 678,
+              "present_us": 1961,
+              "scale_us": 0,
+              "image_bytes": 7056,
+              "source_width": 834,
+              "source_height": 456,
+              "queue_drain_calls": 12,
+              "preprocess_us": 687,
+              "capture_mode": 1
+            },
+            {
+              "request": 789,
+              "response": 789,
+              "completed_frames": 12,
+              "step_complete_sequence": 789,
+              "field_count": 9413,
+              "acknowledged_field": 9413,
+              "readback_us": 7703,
+              "frame_wait_us": 0,
+              "skipped_presents": 0,
+              "reconciliations": 0,
+              "rejected_state": 0,
+              "pixel_format": 1,
+              "cpu_batch_us": 176996,
+              "cpu_idle_us": 9,
+              "dispatch_us": 1061,
+              "present_us": 1639,
+              "scale_us": 0,
+              "image_bytes": 7056,
+              "source_width": 834,
+              "source_height": 456,
+              "queue_drain_calls": 12,
+              "preprocess_us": 1049,
+              "capture_mode": 1
+            },
+            {
+              "request": 787,
+              "response": 787,
+              "completed_frames": 12,
+              "step_complete_sequence": 787,
+              "field_count": 9411,
+              "acknowledged_field": 9411,
+              "readback_us": 4360,
+              "frame_wait_us": 0,
+              "skipped_presents": 0,
+              "reconciliations": 0,
+              "rejected_state": 0,
+              "pixel_format": 1,
+              "cpu_batch_us": 168795,
+              "cpu_idle_us": 7,
+              "dispatch_us": 1199,
+              "present_us": 1439,
+              "scale_us": 0,
+              "image_bytes": 7056,
+              "source_width": 834,
+              "source_height": 456,
+              "queue_drain_calls": 12,
+              "preprocess_us": 910,
+              "capture_mode": 1
+            }
+          ],
+          "collector_timings": {
+            "stages": {
+              "dispatch": {
+                "count": 784,
+                "total_ms": 298.51719991711434,
+                "mean_ms": 0.38076173458815604,
+                "recent_p50_ms": 0.3731499964487739,
+                "recent_p95_ms": 0.5518949968973175
+              },
+              "receive": {
+                "count": 3136,
+                "total_ms": 167032.72850056237,
+                "mean_ms": 53.26298740451606,
+                "recent_p50_ms": 9.698799993202556,
+                "recent_p95_ms": 169.76582500137735
+              },
+              "barrier": {
+                "count": 784,
+                "total_ms": 167108.63910004264,
+                "mean_ms": 213.1487743622993,
+                "recent_p50_ms": 193.95855000038864,
+                "recent_p95_ms": 249.68587499533896
+              }
+            },
+            "last_barrier": {
+              "compute_ms": [
+                155.81599999859463,
+                167.62559999187943,
+                182.23690000013448,
+                173.55439999664668
+              ],
+              "ready_after_dispatch_ms": [
+                156.029399993713,
+                167.87449999537785,
+                182.55169999611098,
+                173.90069999964908
+              ],
+              "barrier_idle_ms": [
+                26.52230000239797,
+                14.677200000733137,
+                0.0,
+                8.650999996461906
+              ],
+              "reply_transfer_and_receive_ms": [
+                0.5166000046301633,
+                0.4521000082604587,
+                0.5075000080978498,
+                9.347500003059395
+              ],
+              "slowest_worker": 2,
+              "receive_order": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "shared_observations": false,
+              "note": "Synchronous on-policy barrier preserved. Idle/transfer intervals overlap; ordered receives include head-of-line waiting."
+            },
+            "vector_steps": 784,
+            "mean_worker_compute_ms": [
+              173.8646954080075,
+              188.76797232138526,
+              189.66577997434797,
+              196.11324260222318
+            ],
+            "mean_worker_barrier_idle_ms": [
+              38.709385331402494,
+              23.73132436208166,
+              22.776259949082764,
+              16.269479846674326
+            ],
+            "bottleneck_count_per_worker": [
+              38,
+              145,
+              167,
+              434
+            ]
+          },
+          "learner_timings": {
+            "policy_forward": {
+              "count": 784,
+              "total_ms": 10649.40999985265,
+              "mean_ms": 13.583431122261034,
+              "recent_p50_ms": 11.639750002359506,
+              "recent_p95_ms": 21.717444997921117
+            },
+            "rollout_collection": {
+              "count": 6,
+              "total_ms": 180373.1514999963,
+              "mean_ms": 30062.191916666052,
+              "recent_p50_ms": 29984.472550000646,
+              "recent_p95_ms": 33319.04887499695
+            },
+            "ppo_update": {
+              "count": 6,
+              "total_ms": 18920.958100017742,
+              "mean_ms": 3153.4930166696236,
+              "recent_p50_ms": 2713.935849998961,
+              "recent_p95_ms": 5794.3939750039135
+            },
+            "checkpoint": {
+              "count": 3,
+              "total_ms": 652.3058999882778,
+              "mean_ms": 217.4352999960926,
+              "recent_p50_ms": 229.14599999785423,
+              "recent_p95_ms": 238.53921000118135
+            }
+          }
+        }
+      },
+      "learner": {
+        "state": "running",
+        "timesteps": 807012,
+        "updates": 6248,
+        "target_timesteps": 1001140,
+        "elapsed_seconds": 203.79700000000594,
+        "decisions_per_second": 15.387861450364376,
+        "device": "cuda",
+        "workers": 4,
+        "updated_at": "2026-10-22T22:16:40.403687+00:00",
+        "progress": [
+          0.012233858307610434,
+          0.003972208335722166,
+          0.004488030436368581,
+          0.006482767972186936
+        ],
+        "worker_timing_ms": [
+          {
+            "environment_control_and_capture": 152.8412999905413,
+            "telemetry": 0.16140000661835074,
+            "curiosity": 2.403600010438822,
+            "logging": 0.02479999966453761,
+            "episode_output": 28.847299996414222
+          },
+          {
+            "environment_control_and_capture": 163.84259999904316,
+            "telemetry": 0.17680000746622682,
+            "curiosity": 3.227499997592531,
+            "logging": 0.023100001271814108,
+            "episode_output": 32.07960000145249
+          },
+          {
+            "environment_control_and_capture": 179.29939999885391,
+            "telemetry": 0.16429999959655106,
+            "curiosity": 2.364200001466088,
+            "logging": 0.022100008209235966,
+            "episode_output": 16.316399996867403
+          },
+          {
+            "environment_control_and_capture": 170.41790000803303,
+            "telemetry": 0.15589999384246767,
+            "curiosity": 2.6217999984510243,
+            "logging": 0.020100007532164454,
+            "episode_output": 27.34030000283383
+          }
+        ],
+        "backend_timing_ms": [
+          {
+            "pause": 95.6473999976879,
+            "startup": 9811.852400001953,
+            "capture": 0.046900007873773575,
+            "reset": 508.28460000047926,
+            "native_round_trip": 152.73840000736527,
+            "advance": 152.8344999969704
+          },
+          {
+            "pause": 4.490600011195056,
+            "startup": 5079.749200012884,
+            "capture": 0.03819999983534217,
+            "reset": 397.1168999996735,
+            "native_round_trip": 163.75859999971,
+            "advance": 163.83540000242647
+          },
+          {
+            "pause": 70.26549999136478,
+            "startup": 4945.405999998911,
+            "capture": 0.040099999750964344,
+            "reset": 346.9370999955572,
+            "native_round_trip": 179.2014999955427,
+            "advance": 179.29000000003725
+          },
+          {
+            "pause": 131.1827000026824,
+            "startup": 6031.111599993892,
+            "capture": 0.03479998849797994,
+            "reset": 495.5233000073349,
+            "native_round_trip": 170.3304999973625,
+            "advance": 170.40930000075605
+          }
+        ],
+        "advanced_frames": [
+          12,
+          12,
+          12,
+          12
+        ],
+        "native_diagnostics": [
+          {
+            "request": 787,
+            "response": 787,
+            "completed_frames": 12,
+            "step_complete_sequence": 787,
+            "field_count": 9411,
+            "acknowledged_field": 9411,
+            "readback_us": 11355,
+            "frame_wait_us": 0,
+            "skipped_presents": 0,
+            "reconciliations": 0,
+            "rejected_state": 0,
+            "pixel_format": 1,
+            "cpu_batch_us": 151918,
+            "cpu_idle_us": 9,
+            "dispatch_us": 563,
+            "present_us": 1838,
+            "scale_us": 0,
+            "image_bytes": 7056,
+            "source_width": 834,
+            "source_height": 456,
+            "queue_drain_calls": 12,
+            "preprocess_us": 1039,
+            "capture_mode": 1
+          },
+          {
+            "request": 787,
+            "response": 787,
+            "completed_frames": 12,
+            "step_complete_sequence": 787,
+            "field_count": 9411,
+            "acknowledged_field": 9411,
+            "readback_us": 8449,
+            "frame_wait_us": 0,
+            "skipped_presents": 0,
+            "reconciliations": 0,
+            "rejected_state": 0,
+            "pixel_format": 1,
+            "cpu_batch_us": 162575,
+            "cpu_idle_us": 6,
+            "dispatch_us": 678,
+            "present_us": 1961,
+            "scale_us": 0,
+            "image_bytes": 7056,
+            "source_width": 834,
+            "source_height": 456,
+            "queue_drain_calls": 12,
+            "preprocess_us": 687,
+            "capture_mode": 1
+          },
+          {
+            "request": 789,
+            "response": 789,
+            "completed_frames": 12,
+            "step_complete_sequence": 789,
+            "field_count": 9413,
+            "acknowledged_field": 9413,
+            "readback_us": 7703,
+            "frame_wait_us": 0,
+            "skipped_presents": 0,
+            "reconciliations": 0,
+            "rejected_state": 0,
+            "pixel_format": 1,
+            "cpu_batch_us": 176996,
+            "cpu_idle_us": 9,
+            "dispatch_us": 1061,
+            "present_us": 1639,
+            "scale_us": 0,
+            "image_bytes": 7056,
+            "source_width": 834,
+            "source_height": 456,
+            "queue_drain_calls": 12,
+            "preprocess_us": 1049,
+            "capture_mode": 1
+          },
+          {
+            "request": 787,
+            "response": 787,
+            "completed_frames": 12,
+            "step_complete_sequence": 787,
+            "field_count": 9411,
+            "acknowledged_field": 9411,
+            "readback_us": 4360,
+            "frame_wait_us": 0,
+            "skipped_presents": 0,
+            "reconciliations": 0,
+            "rejected_state": 0,
+            "pixel_format": 1,
+            "cpu_batch_us": 168795,
+            "cpu_idle_us": 7,
+            "dispatch_us": 1199,
+            "present_us": 1439,
+            "scale_us": 0,
+            "image_bytes": 7056,
+            "source_width": 834,
+            "source_height": 456,
+            "queue_drain_calls": 12,
+            "preprocess_us": 910,
+            "capture_mode": 1
+          }
+        ],
+        "collector_timings": {
+          "stages": {
+            "dispatch": {
+              "count": 784,
+              "total_ms": 298.51719991711434,
+              "mean_ms": 0.38076173458815604,
+              "recent_p50_ms": 0.3731499964487739,
+              "recent_p95_ms": 0.5518949968973175
+            },
+            "receive": {
+              "count": 3136,
+              "total_ms": 167032.72850056237,
+              "mean_ms": 53.26298740451606,
+              "recent_p50_ms": 9.698799993202556,
+              "recent_p95_ms": 169.76582500137735
+            },
+            "barrier": {
+              "count": 784,
+              "total_ms": 167108.63910004264,
+              "mean_ms": 213.1487743622993,
+              "recent_p50_ms": 193.95855000038864,
+              "recent_p95_ms": 249.68587499533896
+            }
+          },
+          "last_barrier": {
+            "compute_ms": [
+              155.81599999859463,
+              167.62559999187943,
+              182.23690000013448,
+              173.55439999664668
+            ],
+            "ready_after_dispatch_ms": [
+              156.029399993713,
+              167.87449999537785,
+              182.55169999611098,
+              173.90069999964908
+            ],
+            "barrier_idle_ms": [
+              26.52230000239797,
+              14.677200000733137,
+              0.0,
+              8.650999996461906
+            ],
+            "reply_transfer_and_receive_ms": [
+              0.5166000046301633,
+              0.4521000082604587,
+              0.5075000080978498,
+              9.347500003059395
+            ],
+            "slowest_worker": 2,
+            "receive_order": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "shared_observations": false,
+            "note": "Synchronous on-policy barrier preserved. Idle/transfer intervals overlap; ordered receives include head-of-line waiting."
+          },
+          "vector_steps": 784,
+          "mean_worker_compute_ms": [
+            173.8646954080075,
+            188.76797232138526,
+            189.66577997434797,
+            196.11324260222318
+          ],
+          "mean_worker_barrier_idle_ms": [
+            38.709385331402494,
+            23.73132436208166,
+            22.776259949082764,
+            16.269479846674326
+          ],
+          "bottleneck_count_per_worker": [
+            38,
+            145,
+            167,
+            434
+          ]
+        },
+        "learner_timings": {
+          "policy_forward": {
+            "count": 784,
+            "total_ms": 10649.40999985265,
+            "mean_ms": 13.583431122261034,
+            "recent_p50_ms": 11.639750002359506,
+            "recent_p95_ms": 21.717444997921117
+          },
+          "rollout_collection": {
+            "count": 6,
+            "total_ms": 180373.1514999963,
+            "mean_ms": 30062.191916666052,
+            "recent_p50_ms": 29984.472550000646,
+            "recent_p95_ms": 33319.04887499695
+          },
+          "ppo_update": {
+            "count": 6,
+            "total_ms": 18920.958100017742,
+            "mean_ms": 3153.4930166696236,
+            "recent_p50_ms": 2713.935849998961,
+            "recent_p95_ms": 5794.3939750039135
+          },
+          "checkpoint": {
+            "count": 3,
+            "total_ms": 652.3058999882778,
+            "mean_ms": 217.4352999960926,
+            "recent_p50_ms": 229.14599999785423,
+            "recent_p95_ms": 238.53921000118135
+          }
+        }
+      },
+      "owned_emulators": [
+        {
+          "pid": 27012,
+          "name": "Dolphin.exe"
+        },
+        {
+          "pid": 50444,
+          "name": "Dolphin.exe"
+        },
+        {
+          "pid": 47864,
+          "name": "Dolphin.exe"
+        },
+        {
+          "pid": 46872,
+          "name": "Dolphin.exe"
+        }
+      ],
+      "verified_checkpoint_steps": 806948,
+      "verified_checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\parallel-20261022-191244-766492\\model-806948.zip",
+      "recent_decisions_per_second": 16.388195378013812
+    },
+    {
+      "supervisor": "runs\\smg1\\supervised-20261022-191241-50148",
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\smg1\\parallel-20261022-191244-766492",
+      "manager": {
+        "pid": 50148,
+        "created_time": 1792707159.0955868,
+        "config": "C:\\Users\\Acer\\Downloads\\smg-rl\\config\\smg1-native.yaml",
+        "target_timesteps": 1000000,
+        "state": "running",
+        "attempts": 1,
+        "confirmed_checkpoint_timesteps": 214719,
+        "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\smg1\\parallel-20261022-135019-774889\\model-final.zip",
+        "current_run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\smg1\\parallel-20261022-191244-766492",
+        "updated_at": 1792707401.3313422,
+        "child_pid": 45884,
+        "child_status": {
+          "state": "running",
+          "timesteps": 215679,
+          "updates": 6696,
+          "target_timesteps": 1000000,
+          "elapsed_seconds": 212.43799999999464,
+          "decisions_per_second": 4.51896553347341,
+          "device": "cuda",
+          "workers": 1,
+          "updated_at": "2026-10-22T22:16:38.447455+00:00",
+          "progress": [
+            0.0027401188268765717
+          ],
+          "worker_timing_ms": [
+            {
+              "environment_control_and_capture": 237.40990000078455,
+              "telemetry": 0.228899996727705,
+              "curiosity": 4.295999999158084,
+              "logging": 0.027300004148855805,
+              "episode_output": 19.504600000800565
+            }
+          ],
+          "backend_timing_ms": [
+            {
+              "pause": 13.236200000392273,
+              "startup": 9535.040900009335,
+              "capture": 0.04879999323748052,
+              "reset": 333.3529999945313,
+              "native_round_trip": 237.29619999357965,
+              "advance": 237.39979999663774
+            }
+          ],
+          "advanced_frames": [
+            12
+          ],
+          "native_diagnostics": [
+            {
+              "request": 966,
+              "response": 966,
+              "completed_frames": 12,
+              "step_complete_sequence": 966,
+              "field_count": 11521,
+              "acknowledged_field": 11521,
+              "readback_us": 14777,
+              "frame_wait_us": 0,
+              "skipped_presents": 0,
+              "reconciliations": 0,
+              "rejected_state": 0,
+              "pixel_format": 1,
+              "cpu_batch_us": 235170,
+              "cpu_idle_us": 6,
+              "dispatch_us": 185,
+              "present_us": 2269,
+              "scale_us": 0,
+              "image_bytes": 7056,
+              "source_width": 834,
+              "source_height": 456,
+              "queue_drain_calls": 12,
+              "preprocess_us": 871,
+              "capture_mode": 1
+            }
+          ],
+          "collector_timings": {
+            "stages": {
+              "dispatch": {
+                "count": 960,
+                "total_ms": 186.55329998000525,
+                "mean_ms": 0.1943263541458388,
+                "recent_p50_ms": 0.1875000016298145,
+                "recent_p95_ms": 0.28658999945037067
+              },
+              "receive": {
+                "count": 960,
+                "total_ms": 178453.2723001612,
+                "mean_ms": 185.8888253126679,
+                "recent_p50_ms": 178.38304999895627,
+                "recent_p95_ms": 240.87993000648567
+              },
+              "barrier": {
+                "count": 960,
+                "total_ms": 178475.43080014293,
+                "mean_ms": 185.91190708348222,
+                "recent_p50_ms": 178.4034000011161,
+                "recent_p95_ms": 240.89718000686844
+              }
+            },
+            "last_barrier": {
+              "compute_ms": [
+                242.4587999994401
+              ],
+              "ready_after_dispatch_ms": [
+                242.79699999897275
+              ],
+              "barrier_idle_ms": [
+                0.0
+              ],
+              "reply_transfer_and_receive_ms": [
+                0.6056000129319727
+              ],
+              "slowest_worker": 0,
+              "receive_order": [
+                0
+              ],
+              "shared_observations": false,
+              "note": "Synchronous on-policy barrier preserved. Idle/transfer intervals overlap; ordered receives include head-of-line waiting."
+            },
+            "vector_steps": 960,
+            "mean_worker_compute_ms": [
+              185.2440604165622
+            ],
+            "mean_worker_barrier_idle_ms": [
+              0.0
+            ],
+            "bottleneck_count_per_worker": [
+              960
+            ]
+          },
+          "learner_timings": {
+            "policy_forward": {
+              "count": 960,
+              "total_ms": 15261.136199929751,
+              "mean_ms": 15.897016874926825,
+              "recent_p50_ms": 12.381200001982506,
+              "recent_p95_ms": 29.1058949973376
+            },
+            "rollout_collection": {
+              "count": 7,
+              "total_ms": 189321.3063000294,
+              "mean_ms": 27045.9009000042,
+              "recent_p50_ms": 27028.932400004123,
+              "recent_p95_ms": 30305.14822000696
+            },
+            "ppo_update": {
+              "count": 7,
+              "total_ms": 9112.978699995438,
+              "mean_ms": 1301.8540999993481,
+              "recent_p50_ms": 1160.649099998409,
+              "recent_p95_ms": 2134.667540001101
+            },
+            "checkpoint": {
+              "count": 3,
+              "total_ms": 1162.6657000015257,
+              "mean_ms": 387.5552333338419,
+              "recent_p50_ms": 154.97880001203157,
+              "recent_p95_ms": 783.1016699914471
+            }
+          }
+        }
+      },
+      "learner": {
+        "state": "running",
+        "timesteps": 215679,
+        "updates": 6696,
+        "target_timesteps": 1000000,
+        "elapsed_seconds": 212.43799999999464,
+        "decisions_per_second": 4.51896553347341,
+        "device": "cuda",
+        "workers": 1,
+        "updated_at": "2026-10-22T22:16:38.447455+00:00",
+        "progress": [
+          0.0027401188268765717
+        ],
+        "worker_timing_ms": [
+          {
+            "environment_control_and_capture": 237.40990000078455,
+            "telemetry": 0.228899996727705,
+            "curiosity": 4.295999999158084,
+            "logging": 0.027300004148855805,
+            "episode_output": 19.504600000800565
+          }
+        ],
+        "backend_timing_ms": [
+          {
+            "pause": 13.236200000392273,
+            "startup": 9535.040900009335,
+            "capture": 0.04879999323748052,
+            "reset": 333.3529999945313,
+            "native_round_trip": 237.29619999357965,
+            "advance": 237.39979999663774
+          }
+        ],
+        "advanced_frames": [
+          12
+        ],
+        "native_diagnostics": [
+          {
+            "request": 966,
+            "response": 966,
+            "completed_frames": 12,
+            "step_complete_sequence": 966,
+            "field_count": 11521,
+            "acknowledged_field": 11521,
+            "readback_us": 14777,
+            "frame_wait_us": 0,
+            "skipped_presents": 0,
+            "reconciliations": 0,
+            "rejected_state": 0,
+            "pixel_format": 1,
+            "cpu_batch_us": 235170,
+            "cpu_idle_us": 6,
+            "dispatch_us": 185,
+            "present_us": 2269,
+            "scale_us": 0,
+            "image_bytes": 7056,
+            "source_width": 834,
+            "source_height": 456,
+            "queue_drain_calls": 12,
+            "preprocess_us": 871,
+            "capture_mode": 1
+          }
+        ],
+        "collector_timings": {
+          "stages": {
+            "dispatch": {
+              "count": 960,
+              "total_ms": 186.55329998000525,
+              "mean_ms": 0.1943263541458388,
+              "recent_p50_ms": 0.1875000016298145,
+              "recent_p95_ms": 0.28658999945037067
+            },
+            "receive": {
+              "count": 960,
+              "total_ms": 178453.2723001612,
+              "mean_ms": 185.8888253126679,
+              "recent_p50_ms": 178.38304999895627,
+              "recent_p95_ms": 240.87993000648567
+            },
+            "barrier": {
+              "count": 960,
+              "total_ms": 178475.43080014293,
+              "mean_ms": 185.91190708348222,
+              "recent_p50_ms": 178.4034000011161,
+              "recent_p95_ms": 240.89718000686844
+            }
+          },
+          "last_barrier": {
+            "compute_ms": [
+              242.4587999994401
+            ],
+            "ready_after_dispatch_ms": [
+              242.79699999897275
+            ],
+            "barrier_idle_ms": [
+              0.0
+            ],
+            "reply_transfer_and_receive_ms": [
+              0.6056000129319727
+            ],
+            "slowest_worker": 0,
+            "receive_order": [
+              0
+            ],
+            "shared_observations": false,
+            "note": "Synchronous on-policy barrier preserved. Idle/transfer intervals overlap; ordered receives include head-of-line waiting."
+          },
+          "vector_steps": 960,
+          "mean_worker_compute_ms": [
+            185.2440604165622
+          ],
+          "mean_worker_barrier_idle_ms": [
+            0.0
+          ],
+          "bottleneck_count_per_worker": [
+            960
+          ]
+        },
+        "learner_timings": {
+          "policy_forward": {
+            "count": 960,
+            "total_ms": 15261.136199929751,
+            "mean_ms": 15.897016874926825,
+            "recent_p50_ms": 12.381200001982506,
+            "recent_p95_ms": 29.1058949973376
+          },
+          "rollout_collection": {
+            "count": 7,
+            "total_ms": 189321.3063000294,
+            "mean_ms": 27045.9009000042,
+            "recent_p50_ms": 27028.932400004123,
+            "recent_p95_ms": 30305.14822000696
+          },
+          "ppo_update": {
+            "count": 7,
+            "total_ms": 9112.978699995438,
+            "mean_ms": 1301.8540999993481,
+            "recent_p50_ms": 1160.649099998409,
+            "recent_p95_ms": 2134.667540001101
+          },
+          "checkpoint": {
+            "count": 3,
+            "total_ms": 1162.6657000015257,
+            "mean_ms": 387.5552333338419,
+            "recent_p50_ms": 154.97880001203157,
+            "recent_p95_ms": 783.1016699914471
+          }
+        }
+      },
+      "owned_emulators": [
+        {
+          "pid": 44584,
+          "name": "Dolphin.exe"
+        }
+      ],
+      "verified_checkpoint_steps": 215487,
+      "verified_checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\smg1\\parallel-20261022-191244-766492\\model-215487.zip",
+      "recent_decisions_per_second": 5.085227747946444
+    }
+  ],
+  "gpu": "91 %, 38.86 W, 74",
+  "note": "Concurrent production observation, not a controlled renderer comparison; other user applications also use the GPU. Legacy paired checkpoints were resumed. Success requires audited full-start RAM evidence."
+}

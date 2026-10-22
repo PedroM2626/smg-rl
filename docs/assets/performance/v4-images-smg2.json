@@ -1,0 +1,42 @@
+[
+  {
+    "variation": "spinning",
+    "graphics_backend": "D3D",
+    "steps": 64,
+    "image_mean_error": 0.0,
+    "image_max_error": 0,
+    "position_max_error": 0.0,
+    "displacement_from_reset": 697.0357729704933,
+    "signals_equal": true
+  },
+  {
+    "variation": "double_time",
+    "graphics_backend": "D3D",
+    "steps": 64,
+    "image_mean_error": 0.0,
+    "image_max_error": 0,
+    "position_max_error": 0.0,
+    "displacement_from_reset": 697.0376551793474,
+    "signals_equal": true
+  },
+  {
+    "variation": "spinning",
+    "graphics_backend": "Vulkan",
+    "steps": 64,
+    "image_mean_error": 0.00025244472789115647,
+    "image_max_error": 1,
+    "position_max_error": 0.0,
+    "displacement_from_reset": 697.0357729704933,
+    "signals_equal": true
+  },
+  {
+    "variation": "double_time",
+    "graphics_backend": "Vulkan",
+    "steps": 64,
+    "image_mean_error": 0.0002458014455782313,
+    "image_max_error": 3,
+    "position_max_error": 0.0,
+    "displacement_from_reset": 697.0376551793474,
+    "signals_equal": true
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "injected_failure": {
+    "pid": 45196,
+    "checkpoint_steps": 64,
+    "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\.local\\native-recovery-check-d3b09004ff6f\\runs\\parallel-20261022-151326-271473\\model-64.zip",
+    "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\.local\\native-recovery-check-d3b09004ff6f\\runs\\parallel-20261022-151326-271473"
+  },
+  "supervisor": {
+    "pid": 46420,
+    "created_time": 1792692803.1392367,
+    "config": "C:\\Users\\Acer\\Downloads\\smg-rl\\.local\\native-recovery-config-d3b09004ff6f.yaml",
+    "target_timesteps": 256,
+    "state": "completed",
+    "attempts": 2,
+    "confirmed_checkpoint_timesteps": 256,
+    "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\.local\\native-recovery-check-d3b09004ff6f\\runs\\parallel-20261022-151342-382084\\model-256.zip",
+    "current_run": "C:\\Users\\Acer\\Downloads\\smg-rl\\.local\\native-recovery-check-d3b09004ff6f\\runs\\parallel-20261022-151342-382084",
+    "updated_at": 1792692839.8315628
+  },
+  "elapsed_seconds": 37.0,
+  "passed": true
+}

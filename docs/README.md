@@ -16,6 +16,7 @@ evidence rather than continuously updated dashboards.
 | Native build, shared-memory capture, exact frame stepping, profiling, and benchmarks | [Native backend](native-backend.md) |
 | Protocol v2, curiosity batches, bounded exploration, and the stagnation audit | [Optimization revision](optimization-v2.md) |
 | Current protocol v3, event wakeups, native preprocessing, and worker barrier profiling | [Native pipeline and collection](optimization-v3.md) |
+| Vulkan comparison, dependency audit, transactional checkpoint pairs and bounded recovery | [Renderer and security revision](optimization-v4.md), [security policy](../SECURITY.md) |
 | Hidden rendering, isolated inputs, CUDA, timing, and throughput | [Background training](background-training.md) |
 | Two learners, resource measurements, status, and cross-game reports | [Concurrent training](concurrent-training.md) |
 | Health penalties, checkpoint recovery, and measured damage evidence | [Damage and recovery](damage-and-recovery.md) |
