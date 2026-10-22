@@ -6,10 +6,11 @@ Dolphin on Windows. The canonical repository is
 request. Original project code and documentation use the [MIT License](LICENSE).
 All repository text and generated labels are in English.
 
-**Training is currently stopped at the owner's request.** The local training
-hold blocks both online training and offline model fitting until explicit resume
-authorization. Final PPO pairs are preserved at 824416 Galaxy 2 and 220891 Galaxy 1
-decisions. See [the world-model implementation and current status](docs/world-model.md).
+**The owner authorized Dreamer-inspired collection and training on October 22,
+2026.** Separate Galaxy 2 and Galaxy 1 world-model jobs are running with held-out
+prediction gates before imagined policy updates. Final PPO pairs remain preserved
+at 824416 Galaxy 2 and 220891 Galaxy 1 decisions. See
+[the world-model implementation and current status](docs/world-model.md).
 
 The baseline uses one scenario-conditioned recurrent PPO policy for the two Galaxy 2 missions.
 A separate policy targets Sweet Sweet Galaxy in Galaxy 1. Exploration combines
@@ -38,10 +39,12 @@ and [security policy](SECURITY.md). Full-course learning remains unproven.
 An experimental PyTorch visual world model now provides episode-separated pixel
 replay, recurrent dynamics, reward/continuation prediction, disagreement exploration,
 and quality-gated actor/critic updates in latent imagination. It is Dreamer-inspired,
-not a DreamerV3 reproduction. No real world-model training or speedup has been
-measured; old trajectory CSVs lack the required images. Experimental profiles are
-`config/world-model.yaml` and `config/smg1-world-model.yaml`; their training commands
-remain blocked during the hold. `inspect-replay` is read-only.
+not a DreamerV3 reproduction. Live collection now records new image sequences;
+old trajectory CSVs lack the required images. Experimental profiles are
+`config/world-model.yaml` and `config/smg1-world-model.yaml`. Model optimizer updates
+start after 4096 replay transitions; policy updates additionally require the
+prediction gates to pass. No learning-speed advantage has been established.
+`inspect-replay` is read-only.
 
 ## Supported tasks
 

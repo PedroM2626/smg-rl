@@ -1,30 +1,31 @@
 # Visual world-model experiment
 
-## Current status and training hold
+## Current status and authorization
 
-On October 22, 2026 the owner requested that **all training stop until explicitly
-authorized again**, while this implementation is prepared. Both supervised PPO
-jobs stopped gracefully. Their complete final policy/curiosity pairs remain local:
+On October 22, 2026 the owner first stopped training during implementation, then
+explicitly authorized continuing Dreamer-inspired collection and training. The
+hold was archived locally before launching the two world-model jobs. Both
+supervised PPO jobs remain stopped; their final policy/curiosity pairs remain local:
 
 | Agent | Confirmed real decisions | Retained final pair |
 | --- | ---: | --- |
 | Galaxy 2, both Twisty Trials variations | 824416 | `runs/parallel-20261022-191244-766492/model-final.zip` and `.intrinsic.pt` |
 | Galaxy 1, Sweet Sweet Galaxy | 220891 | `runs/smg1/parallel-20261022-191244-766492/model-final.zip` and `.intrinsic.pt` |
 
-The local `.local/training-hold.json` blocks `train`, `train-parallel`,
-`train-supervised`, `train-world-model` and `fit-world-model` before environment
-creation. `AGENTS.md` records the owner's instruction for future development.
-Do not remove this hold merely to run a command in this document. Resuming
-requires a later explicit instruction from the owner. Read-only replay inspection
-and synthetic software tests do not collect gameplay or fit actual game data.
+The local `.local/training-hold.json`, when present, blocks all training commands
+before environment creation. It is absent for this authorized experiment;
+`AGENTS.md` records the authorization. A future owner hold must still be honored.
 
-The implementation is present and portable tests pass. **No world model or
-imagined policy has been trained on real gameplay, and no speedup or learned
-mission completion has been measured.** Both visual replay roots currently
-contain zero compatible transitions. Earlier runs retained trajectories and
-metrics, but not the corresponding pixel sequences. RAM-coordinate CSVs cannot
-reconstruct these observations. Original PPO checkpoints remain usable by PPO;
-they cannot be resumed as this different agent architecture.
+Two online jobs started at approximately 20:01 America/Sao_Paulo with independent
+budgets of 1,000,000 new real decisions: four Galaxy 2 workers covering both
+variations, and one Galaxy 1 worker. Visual replay is being collected from the
+initial savestates. Model fitting starts after 4096 replay transitions; imagined
+actor updates require every held-out gate to pass. The
+[live experiment record](world-model-live.md) distinguishes those stages and
+records initial measured evidence. **No learning-speed advantage or learned
+mission completion has been established.** Earlier PPO runs retained trajectories
+and metrics, but not pixel sequences. Coordinate CSVs cannot reconstruct these
+observations, and PPO weights cannot resume this different architecture.
 
 ## Why a world model may help
 
@@ -228,15 +229,16 @@ The new profiles are `config/world-model.yaml` and `config/smg1-world-model.yaml
 They explicitly copy the current native settings and add the model parameters;
 they do not dynamically inherit later edits to the PPO profiles.
 
-Read-only commands are usable during the hold:
+Read-only replay inspection:
 
 ```powershell
 .\.venv\Scripts\python.exe -m smg_rl.cli --config config/world-model.yaml inspect-replay
 .\.venv\Scripts\python.exe -m smg_rl.cli --config config/smg1-world-model.yaml inspect-replay
 ```
 
-The following are implementation examples for a **later authorized experiment**.
-They are blocked by the current hold and were not executed on real data:
+Commands for an authorized experiment follow. Do not launch duplicate jobs while
+the existing jobs are running. The short budgets below are examples, whereas the
+current experiment uses 1,000,000 new real decisions per game:
 
 ```powershell
 .\.venv\Scripts\python.exe -m smg_rl.cli --config config/world-model.yaml train-world-model --steps 4096
@@ -282,7 +284,7 @@ format; world-model recovery is an explicit `--resume` command after diagnosis.
 `status`/`stop` recognize online/offline world-model run directories. Global user
 hold is checked before either online collection or offline fitting can start.
 
-## Validation and future experiment
+## Validation and experiment interpretation
 
 The implementation was validated with 115 portable tests, Ruff and `pip check`.
 New tests exercise transition alignment, terminal images before reset, padding,
@@ -294,7 +296,7 @@ synthetic forward check. Small synthetic optimizer steps verify software only;
 they are not game-model training, a learned dynamics benchmark or a mission result.
 See the [validation record](assets/performance/world-model-validation.json).
 
-After explicit authorization, a defensible first experiment is staged: collect
+The authorized first experiment is staged: collect
 a bounded visual dataset from full-start savestates; inspect coverage and disk
 cost; fit and validate predictions; inspect multi-step errors near landings and
 deaths; then enable gated imagination and evaluate its real behavior. Compare

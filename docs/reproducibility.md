@@ -296,5 +296,8 @@ checkpoints, replay and real/imagined counters. Preserve visual NPZ data alongsi
 its signature and model manifests; earlier coordinate CSVs cannot reproduce
 missing frames. Whole episodes remain in one training/validation split. A checkpoint
 saves Torch/CUDA and replay-sampler RNG states, but not exact game/acting hidden
-state. The current implementation has synthetic validation only and remains
-under an explicit owner hold, including offline fitting.
+state. Synthetic implementation validation predates the owner's explicit resume
+authorization. The current online experiment collects new visual replay and fits
+the model with separate counters and held-out policy gates; see the
+[live experiment record](world-model-live.md). Preserve dated synthetic evidence
+as synthetic evidence rather than relabeling it as gameplay validation.

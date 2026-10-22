@@ -167,13 +167,14 @@ Direct3D reference in the paired replay; small image rounding differences remain
 The installed-version advisory audit normalizes CUDA versions to avoid silently
 skipping Torch. See [the complete evidence and limits](optimization-v4.md).
 
-## World-model implementation under training hold
+## World-model implementation validation and subsequent live experiment
 
 The portable suite now includes synthetic recurrent-model, replay, imagination,
 checkpoint, mocked collection/resume and hold tests. No world-model experiment
-was run on real game data, no emulator was launched for this validation, and
-there is no measured sample-efficiency or wall-time advantage. Both PPO runs
+was run on real game data during that implementation validation; no emulator was
+launched for those tests. There is no measured sample-efficiency or wall-time advantage. Both PPO runs
 stopped at 824416 Galaxy 2 and 220891 Galaxy 1 decisions with verified final
-pairs. The current owner hold also blocks offline fitting. See the
+pairs. The owner subsequently authorized real collection and training. See the
+[live experiment record](world-model-live.md),
 [implementation specification](world-model.md) and
 [validation evidence](assets/performance/world-model-validation.json).

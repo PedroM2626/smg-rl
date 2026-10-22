@@ -126,7 +126,7 @@ new checkpoint (default 8). A permanent failure is published as `failed` and
 returns an error. Progress resets that consecutive-failure count. These options
 do not extend the requested total training budget.
 
-## Experimental visual world model and owner hold
+## Experimental visual world model and authorization
 
 `inspect-replay` reads compatible visual archive metadata/counts without starting
 Dolphin or fitting a model. `train-world-model [--steps N] [--resume world.pt]`
@@ -136,9 +136,10 @@ without an emulator. Use the explicit `config/world-model.yaml` or
 `config/smg1-world-model.yaml` profile. These models cannot resume PPO ZIP files.
 
 All training commands check `.local/training-hold.json` relative to the project
-root before creating an environment. The current owner instruction is to leave
-training stopped until explicitly authorized. No training example in these docs
-overrides that hold. `status` and `stop` also accept world-model run directories;
+root before creating an environment. The owner explicitly authorized the current
+world-model experiment; its preceding hold was archived locally. A future hold
+must still be honored. No training example in these docs overrides an active
+hold. `status` and `stop` also accept world-model run directories;
 when omitted, the run is selected by modification time across supported types.
 The existing `train-supervised` command remains a PPO-pair supervisor. It is not
 a supervisor for world-model `.pt` checkpoints. See [the full workflow](world-model.md).

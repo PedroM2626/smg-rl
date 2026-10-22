@@ -1,0 +1,225 @@
+{
+  "schema": 1,
+  "observed_utc": "2026-10-22T23:09:08.948649+00:00",
+  "experiment": "Authorized real visual collection and Gaussian RSSM fitting",
+  "evidence_scope": "Initial runtime check; not a learned completion or comparative speedup benchmark",
+  "portable_validation": "33 targeted tests passed; Ruff passed",
+  "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU, 2372 MiB, 8188 MiB, 59 %, 66",
+  "jobs": {
+    "SB4E01": {
+      "run": "runs/world-model-20261022-200121-619365",
+      "target_new_real_decisions": 1000000,
+      "status_snapshot": {
+        "state": "running",
+        "algorithm": "gaussian-rssm-imagination-v1",
+        "timesteps": 6912,
+        "real_decisions": 6912,
+        "model_updates": 80,
+        "actor_updates": 0,
+        "imagined_transitions": 0,
+        "elapsed_seconds": 465.7810000000027,
+        "decisions_per_second": 14.839591997097264,
+        "updated_at": "2026-10-22T23:09:07.394834+00:00",
+        "progress": [
+          0.0,
+          0.0055119857852997944,
+          0.0,
+          0.0
+        ],
+        "diagnostics": {
+          "replay": {
+            "chunks": 50,
+            "transitions": 6663,
+            "train_episodes": 41,
+            "validation_episodes": 6,
+            "scenarios": {
+              "spinning": 3327,
+              "double_time": 3336
+            },
+            "train_scenarios": {
+              "spinning": 3108,
+              "double_time": 2954
+            },
+            "validation_scenarios": {
+              "spinning": 219,
+              "double_time": 382
+            },
+            "rejected": []
+          },
+          "validation": {
+            "spinning": {
+              "reconstruction": 0.02498062187805772,
+              "reward": 0.03146599140018225,
+              "continuation": 0.476245641708374,
+              "dynamics_kl": 1.0,
+              "representation_kl": 1.0,
+              "ensemble": 0.014984623063355684,
+              "loss": 1.1476769149303436,
+              "posterior_image_mse": 0.02498062187805772,
+              "reward_mae": 0.0878734141588211,
+              "terminal_reward_mae": 1.9510900293077742,
+              "continuation_brier": 0.026436693500727415,
+              "terminal_brier": 0.922561777489526,
+              "terminal_examples": 14,
+              "validation_transitions": 517,
+              "open_loop_image_mse": 0.03248653607442975,
+              "persistence_image_mse": 0.02794040786102414,
+              "open_loop_reward_mae": 0.24136528000235558
+            },
+            "double_time": {
+              "reconstruction": 0.027076398488134146,
+              "reward": 0.03351906780153513,
+              "continuation": 0.5064829736948013,
+              "dynamics_kl": 1.0,
+              "representation_kl": 1.0,
+              "ensemble": 0.01984281255863607,
+              "loss": 1.1869212985038757,
+              "posterior_image_mse": 0.027076398488134146,
+              "reward_mae": 0.08739898912608624,
+              "terminal_reward_mae": 1.9587511335100447,
+              "continuation_brier": 0.02813695650547743,
+              "terminal_brier": 0.9229367971420288,
+              "terminal_examples": 14,
+              "validation_transitions": 495,
+              "open_loop_image_mse": 0.037776339799165726,
+              "persistence_image_mse": 0.03329192195087671,
+              "open_loop_reward_mae": 0.24274128302931786
+            }
+          },
+          "imagination_gate": {
+            "ready": false,
+            "reasons": [
+              "spinning: posterior_image_mse exceeds 0.02",
+              "spinning: terminal_reward_mae exceeds 0.5",
+              "spinning: terminal_brier exceeds 0.2",
+              "spinning: open-loop prediction does not beat image persistence",
+              "double_time: posterior_image_mse exceeds 0.02",
+              "double_time: terminal_reward_mae exceeds 0.5",
+              "double_time: terminal_brier exceeds 0.2",
+              "double_time: open-loop prediction does not beat image persistence"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          },
+          "losses": {
+            "reconstruction": 0.025936542078852654,
+            "reward": 0.02711758203804493,
+            "continuation": 0.3084421753883362,
+            "dynamics_kl": 1.0,
+            "representation_kl": 1.0,
+            "ensemble": 0.015042859129607677,
+            "loss": 0.9765391945838928,
+            "posterior_image_mse": 0.025936542078852654,
+            "reward_mae": 0.06513666361570358,
+            "terminal_reward_mae": 2.000638246536255,
+            "continuation_brier": 0.01676708646118641,
+            "terminal_brier": 0.924750566482544,
+            "terminal_examples": 3,
+            "validation_transitions": 181,
+            "model_gradient_norm": 0.36652931571006775
+          }
+        },
+        "note": "Only real RAM-verified episodes can establish mission completion. Imagined transitions are not real timesteps."
+      },
+      "learner_process_verified": true,
+      "owned_native_worker_count": 4,
+      "checkpoint": "runs/world-model-20261022-200121-619365/world-4096.pt",
+      "checkpoint_sha256_verified": "dbd351f2f6c221a568c9d3c42ecef400b00c50f50b257e0f93c7d3fa9be79b44",
+      "checkpoint_note": "Counters in this periodic checkpoint may precede the current status snapshot",
+      "error_file_present": false
+    },
+    "RMGE01": {
+      "run": "runs/smg1/world-model-20261022-200121-657138",
+      "target_new_real_decisions": 1000000,
+      "status_snapshot": {
+        "state": "running",
+        "algorithm": "gaussian-rssm-imagination-v1",
+        "timesteps": 4176,
+        "real_decisions": 4176,
+        "model_updates": 4,
+        "actor_updates": 0,
+        "imagined_transitions": 0,
+        "elapsed_seconds": 462.96800000000803,
+        "decisions_per_second": 9.020061861726788,
+        "updated_at": "2026-10-22T23:09:04.636658+00:00",
+        "progress": [
+          0.0
+        ],
+        "diagnostics": {
+          "replay": {
+            "chunks": 26,
+            "transitions": 4134,
+            "train_episodes": 16,
+            "validation_episodes": 4,
+            "scenarios": {
+              "sweet_sweet": 4134
+            },
+            "train_scenarios": {
+              "sweet_sweet": 2997
+            },
+            "validation_scenarios": {
+              "sweet_sweet": 1137
+            },
+            "rejected": []
+          },
+          "validation": {
+            "sweet_sweet": {
+              "reconstruction": 0.09698476456105709,
+              "reward": 0.04706213902682066,
+              "continuation": 0.6422675102949142,
+              "dynamics_kl": 1.1327609717845917,
+              "representation_kl": 1.1327609717845917,
+              "ensemble": 0.9195598810911179,
+              "loss": 2.385531008243561,
+              "posterior_image_mse": 0.09698476456105709,
+              "reward_mae": 0.13540460728108883,
+              "terminal_reward_mae": 1.966069221496582,
+              "continuation_brier": 0.159206822514534,
+              "terminal_brier": 0.376315997838974,
+              "terminal_examples": 25,
+              "validation_transitions": 744,
+              "open_loop_image_mse": 0.10250270925462246,
+              "persistence_image_mse": 0.05441034212708473,
+              "open_loop_reward_mae": 0.2913013808429241
+            }
+          },
+          "imagination_gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04",
+              "sweet_sweet: terminal_reward_mae exceeds 0.5",
+              "sweet_sweet: continuation_brier exceeds 0.1",
+              "sweet_sweet: terminal_brier exceeds 0.2",
+              "sweet_sweet: open-loop prediction does not beat image persistence"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          },
+          "losses": {
+            "reconstruction": 0.08996424823999405,
+            "reward": 0.022916845977306366,
+            "continuation": 0.5797439813613892,
+            "dynamics_kl": 1.0010621547698975,
+            "representation_kl": 1.0010621547698975,
+            "ensemble": 0.9379556775093079,
+            "loss": 2.231218099594116,
+            "posterior_image_mse": 0.08996424823999405,
+            "reward_mae": 0.1111411526799202,
+            "terminal_reward_mae": 1.9884254932403564,
+            "continuation_brier": 0.17939144372940063,
+            "terminal_brier": 0.330915629863739,
+            "terminal_examples": 2,
+            "validation_transitions": 235,
+            "model_gradient_norm": 1.1957112550735474
+          }
+        },
+        "note": "Only real RAM-verified episodes can establish mission completion. Imagined transitions are not real timesteps."
+      },
+      "learner_process_verified": true,
+      "owned_native_worker_count": 1,
+      "checkpoint": "runs/smg1/world-model-20261022-200121-657138/world-4096.pt",
+      "checkpoint_sha256_verified": "a3f5d9c9e36da12eb6e1658e0450a91c49f81c6c00a18ac52fc7850cfd54d8ac",
+      "checkpoint_note": "Counters in this periodic checkpoint may precede the current status snapshot",
+      "error_file_present": false
+    }
+  }
+}
