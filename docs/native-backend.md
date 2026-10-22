@@ -1,9 +1,11 @@
 # Native capture, frame control, profiling, and failure handling
 
-The current client uses **protocol v2**. The [optimization revision](optimization-v2.md)
-records the CPU-idle acknowledgment fix, optional presentation suppression,
-batched curiosity, reward audit, and newer measurements. The early measurements
-below remain historical evidence and should not be read as current live counters.
+The current client uses **protocol v3**. The [current pipeline audit](optimization-v3.md)
+records event notifications, native grayscale/area preparation, and per-worker
+collection profiling. The [preceding revision](optimization-v2.md) records the
+CPU-idle acknowledgment fix, presentation experiment, batched curiosity and
+reward audit. Early measurements below remain historical evidence rather than
+current live counters.
 
 ## Motivation and measured baseline
 
@@ -114,7 +116,7 @@ by storage for at most 1920 x 1080 x 4 RGBA bytes. The fields are defined in
 
 | Word | Meaning |
 | ---: | --- |
-| 0-2 | Magic `0x534D4752`, protocol version 2, owned Dolphin PID |
+| 0-2 | Magic `0x534D4752`, protocol version 3, owned Dolphin PID |
 | 3-4 | Request and acknowledged response sequence |
 | 5-7 | Command, argument, held-action bitmask |
 | 8-9 | Completed frame steps and renderer image sequence |
@@ -123,18 +125,30 @@ by storage for at most 1920 x 1080 x 4 RGBA bytes. The fields are defined in
 | 15 | CPU-thread completion barrier for asynchronous savestate loads |
 | 16 | Matching CPU completion sequence for the bounded action |
 | 17-18 | VI field count and field count at the preceding CPU-idle acknowledgment |
-| 19 | Options bit 0: skip host presentation, preserving game rendering/readback |
+| 19 | Bit 0: skip host presentation; bit 2: event wakeups; bit 3: quiet native Qt notifications |
 | 20-21 | Last readback and per-command accumulated queue-wait microseconds |
 | 22-24 | Skipped presentations, state reconciliations, last rejected Core state |
+| 25-29 | Observation size and left/top/right/bottom crop fractions in millionths |
+| 30 | Published pixel format: 0 RGBA, 1 grayscale |
+| 31-32 | CPU frame-batch and CPU-idle acknowledgment microseconds |
+| 33-34 | Raw Windows QPC request timestamp, low/high words |
+| 35-37 | Dispatch, presentation and experimental GPU-scale microseconds |
+| 38-40 | Published image bytes and readback source dimensions |
+| 41-43 | Queue-drain calls, preprocessing microseconds and capture mode |
 
-Protocol v2 acknowledges an advance only after its matching CPU completion
+Protocol v3 retains the v2 advance acknowledgment after its matching CPU completion
 sequence and requested frame count, then waits for CPU idle before publishing
 the response. A transient running flag is reconciled only with no intervening
 VI fields; unexpected advancement is error 4 and aborts the worker. Errors 1
 and 3 indicate invalid commands/arguments and a refused frame-step start.
-Diagnostics appear in worker infos and learner status. A v1 binary cannot be
-used with the v2 client. Upgrade from a fresh pinned source checkout; the patch
-script explicitly refuses the old v1 patch instead of overwriting source work.
+Diagnostics appear in worker infos and learner status. V1/v2 binaries cannot be
+used with the v3 client. Upgrade from a fresh pinned source checkout; the patch
+script refuses older patches instead of overwriting source work.
+
+Compact observations use tightly packed one-byte rows; the full reference path
+uses four RGBA bytes per pixel. The maximum mapping allocation remains unchanged.
+Three random-name auto-reset Windows events signal requests, CPU completion and
+replies. Their signaling does not replace sequence/state/frame validation.
 
 Commands are 1 (handshake/pause), 2 (bounded advance), 3 (load slot), and 4 (pause).
 An advance accepts 1-600 frames. A load accepts slots 1-4. The action bits, in

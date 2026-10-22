@@ -138,3 +138,21 @@ incentive arithmetic; production continuation verifies fresh paired checkpoints
 and capped novelty in real episode logs. Neither establishes course completion
 or a better learned policy. The latest audited full-start report at this
 revision still found zero successes in all three tasks.
+
+## Protocol v3 pipeline and collector, 2026-10-22
+
+The final revision passed 90 portable tests and Ruff, both games' refreshed
+detector calibration, 768 exact-frame stress commands, 21 resets and 48 paused
+stability waits. Replayed native CPU preprocessing matched all 144 reference
+images and coordinates exactly. GPU-linear reduction changed pixels and remains
+an explicit experiment. The measured collector matches SB3 reset/terminal/seed
+and ordering behavior, preserves owned observations, and identifies a deliberately
+slow environment. Controlled native emulator-exit recovery passed again with
+the selected collector, reaching 256 decisions on attempt two.
+
+The [pipeline audit](optimization-v3.md) retains build hashes, final and
+exploratory comparisons, and rejected transport settings. The final environment
+workload observed about 11.6% higher Galaxy 2 throughput and 6.6% higher Galaxy 1
+throughput over same-build poll/full references. Vector shared images did not
+establish an advantage. These are engineering results and do not establish
+faster sample-efficient learning or course success.

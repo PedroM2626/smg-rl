@@ -1,0 +1,525 @@
+{
+  "observed_utc": "2026-10-22T16:52:55.953607+00:00",
+  "games": [
+    {
+      "game": "smg2",
+      "manager": "runs/supervised-20261022-135017-25988",
+      "attempt": 1,
+      "initial_steps": 663248,
+      "paired_steps": 667344,
+      "paired_checkpoint": "runs\\parallel-20261022-135019-838027\\model-667344.zip",
+      "owned_emulators": [
+        {
+          "pid": 37592,
+          "profile": ".local\\parallel-profiles\\SB4E01\\parallel-20261022-135019-838027\\worker-00"
+        },
+        {
+          "pid": 29152,
+          "profile": ".local\\parallel-profiles\\SB4E01\\parallel-20261022-135019-838027\\worker-01"
+        },
+        {
+          "pid": 38124,
+          "profile": ".local\\parallel-profiles\\SB4E01\\parallel-20261022-135019-838027\\worker-02"
+        },
+        {
+          "pid": 41392,
+          "profile": ".local\\parallel-profiles\\SB4E01\\parallel-20261022-135019-838027\\worker-03"
+        }
+      ],
+      "learner_status": {
+        "state": "running",
+        "timesteps": 667408,
+        "updates": 5160,
+        "target_timesteps": 1001140,
+        "elapsed_seconds": 132.51600000000326,
+        "decisions_per_second": 31.39243563041367,
+        "device": "cuda",
+        "workers": 4,
+        "updated_at": "2026-10-22T16:52:54.675283+00:00",
+        "progress": [
+          0.012597142775798254,
+          0.007437735316926424,
+          0.015334913108615851,
+          0.0
+        ],
+        "worker_timing_ms": [
+          {
+            "environment_control_and_capture": 105.43880000477657,
+            "telemetry": 0.29630000062752515,
+            "curiosity": 17.97880000958685,
+            "logging": 2.842800007783808,
+            "episode_output": 9.314700000686571
+          },
+          {
+            "environment_control_and_capture": 112.84469999372959,
+            "telemetry": 0.1446999958716333,
+            "curiosity": 1.4832000015303493,
+            "logging": 0.0185999961104244,
+            "episode_output": 10.627700001350604
+          },
+          {
+            "environment_control_and_capture": 109.29450001276564,
+            "telemetry": 0.142400007462129,
+            "curiosity": 11.845100001664832,
+            "logging": 4.095399999641813,
+            "episode_output": 9.06220001343172
+          },
+          {
+            "environment_control_and_capture": 115.66490000404883,
+            "telemetry": 0.12870000500697643,
+            "curiosity": 2.4600000033387914,
+            "logging": 0.030000010156072676,
+            "episode_output": 16.332400002283975
+          }
+        ],
+        "backend_timing_ms": [
+          {
+            "pause": 1.0457000025780872,
+            "startup": 2377.7330000011716,
+            "capture": 0.20370000856928527,
+            "reset": 172.19150000892114,
+            "native_round_trip": 105.17490000347607,
+            "advance": 105.43139999208506
+          },
+          {
+            "pause": 26.023300000815652,
+            "startup": 2578.438800002914,
+            "capture": 0.13040000339969993,
+            "reset": 182.1815000002971,
+            "native_round_trip": 112.66840000462253,
+            "advance": 112.83660000481177
+          },
+          {
+            "pause": 82.33710000058636,
+            "startup": 2675.1896000059787,
+            "capture": 0.12450000212993473,
+            "reset": 178.0162999930326,
+            "native_round_trip": 109.12390000885352,
+            "advance": 109.28699999931268
+          },
+          {
+            "pause": 0.7069999992381781,
+            "startup": 2870.9569000056945,
+            "capture": 0.12000001152046025,
+            "reset": 162.69360001024324,
+            "native_round_trip": 115.50399998668581,
+            "advance": 115.65770000743214
+          }
+        ],
+        "advanced_frames": [
+          12,
+          12,
+          12,
+          12
+        ],
+        "native_diagnostics": [
+          {
+            "request": 1045,
+            "response": 1045,
+            "completed_frames": 12,
+            "step_complete_sequence": 1045,
+            "field_count": 12486,
+            "acknowledged_field": 12486,
+            "readback_us": 1433,
+            "frame_wait_us": 0,
+            "skipped_presents": 0,
+            "reconciliations": 0,
+            "rejected_state": 0,
+            "pixel_format": 1,
+            "cpu_batch_us": 102175,
+            "cpu_idle_us": 4,
+            "dispatch_us": 75,
+            "present_us": 1807,
+            "scale_us": 0,
+            "image_bytes": 7056,
+            "source_width": 834,
+            "source_height": 456,
+            "queue_drain_calls": 12,
+            "preprocess_us": 607,
+            "capture_mode": 1
+          },
+          {
+            "request": 1045,
+            "response": 1045,
+            "completed_frames": 12,
+            "step_complete_sequence": 1045,
+            "field_count": 12486,
+            "acknowledged_field": 12486,
+            "readback_us": 1306,
+            "frame_wait_us": 0,
+            "skipped_presents": 0,
+            "reconciliations": 0,
+            "rejected_state": 0,
+            "pixel_format": 1,
+            "cpu_batch_us": 112080,
+            "cpu_idle_us": 5,
+            "dispatch_us": 395,
+            "present_us": 1782,
+            "scale_us": 0,
+            "image_bytes": 7056,
+            "source_width": 834,
+            "source_height": 456,
+            "queue_drain_calls": 12,
+            "preprocess_us": 755,
+            "capture_mode": 1
+          },
+          {
+            "request": 1044,
+            "response": 1044,
+            "completed_frames": 12,
+            "step_complete_sequence": 1044,
+            "field_count": 12484,
+            "acknowledged_field": 12484,
+            "readback_us": 1950,
+            "frame_wait_us": 0,
+            "skipped_presents": 0,
+            "reconciliations": 0,
+            "rejected_state": 0,
+            "pixel_format": 1,
+            "cpu_batch_us": 108508,
+            "cpu_idle_us": 5,
+            "dispatch_us": 400,
+            "present_us": 2770,
+            "scale_us": 0,
+            "image_bytes": 7056,
+            "source_width": 834,
+            "source_height": 456,
+            "queue_drain_calls": 12,
+            "preprocess_us": 898,
+            "capture_mode": 1
+          },
+          {
+            "request": 1045,
+            "response": 1045,
+            "completed_frames": 12,
+            "step_complete_sequence": 1045,
+            "field_count": 12485,
+            "acknowledged_field": 12485,
+            "readback_us": 1554,
+            "frame_wait_us": 0,
+            "skipped_presents": 0,
+            "reconciliations": 0,
+            "rejected_state": 0,
+            "pixel_format": 1,
+            "cpu_batch_us": 114863,
+            "cpu_idle_us": 6,
+            "dispatch_us": 405,
+            "present_us": 1774,
+            "scale_us": 0,
+            "image_bytes": 7056,
+            "source_width": 834,
+            "source_height": 456,
+            "queue_drain_calls": 12,
+            "preprocess_us": 554,
+            "capture_mode": 1
+          }
+        ],
+        "collector_timings": {
+          "stages": {
+            "dispatch": {
+              "count": 1040,
+              "total_ms": 169.24779988767114,
+              "mean_ms": 0.1627382691227607,
+              "recent_p50_ms": 0.16060000052675605,
+              "recent_p95_ms": 0.19153499670210292
+            },
+            "receive": {
+              "count": 4160,
+              "total_ms": 113644.54959958675,
+              "mean_ms": 27.318401346054507,
+              "recent_p50_ms": 1.385149997076951,
+              "recent_p95_ms": 102.27804999667569
+            },
+            "barrier": {
+              "count": 1040,
+              "total_ms": 113696.7954999418,
+              "mean_ms": 109.32384182686711,
+              "recent_p50_ms": 102.35860000102548,
+              "recent_p95_ms": 127.54552999977021
+            }
+          },
+          "last_barrier": {
+            "compute_ms": [
+              130.2916999993613,
+              114.73600000317674,
+              129.49749999097548,
+              118.52760000328999
+            ],
+            "ready_after_dispatch_ms": [
+              130.44130000344012,
+              114.94470000616275,
+              129.7335999988718,
+              118.77830000594258
+            ],
+            "barrier_idle_ms": [
+              0.0,
+              15.496599997277372,
+              0.7077000045683235,
+              11.662999997497536
+            ],
+            "reply_transfer_and_receive_ms": [
+              0.26450000586919487,
+              15.83540000137873,
+              1.1051000037696213,
+              12.113199991290458
+            ],
+            "slowest_worker": 0,
+            "receive_order": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "shared_observations": false,
+            "note": "Synchronous on-policy barrier preserved. Idle/transfer intervals overlap; ordered receives include head-of-line waiting."
+          },
+          "vector_steps": 1040,
+          "mean_worker_compute_ms": [
+            93.934944038637,
+            98.03137788465112,
+            93.67886778836692,
+            98.69949221168869
+          ],
+          "mean_worker_barrier_idle_ms": [
+            15.03902057707959,
+            10.908396346321052,
+            15.233421827192965,
+            10.186720192415613
+          ],
+          "bottleneck_count_per_worker": [
+            146,
+            360,
+            152,
+            382
+          ]
+        },
+        "learner_timings": {
+          "policy_forward": {
+            "count": 1040,
+            "total_ms": 3556.9610997627024,
+            "mean_ms": 3.4201549036179832,
+            "recent_p50_ms": 2.9661000007763505,
+            "recent_p95_ms": 4.471040003409143
+          },
+          "rollout_collection": {
+            "count": 8,
+            "total_ms": 117961.17610001238,
+            "mean_ms": 14745.147012501548,
+            "recent_p50_ms": 14978.552250002394,
+            "recent_p95_ms": 15130.671750001056
+          },
+          "ppo_update": {
+            "count": 8,
+            "total_ms": 12601.830500003416,
+            "mean_ms": 1575.228812500427,
+            "recent_p50_ms": 1659.1426999948453,
+            "recent_p95_ms": 2283.866335003404
+          },
+          "checkpoint": {
+            "count": 4,
+            "total_ms": 311.4544999989448,
+            "mean_ms": 77.8636249997362,
+            "recent_p50_ms": 76.8298999973922,
+            "recent_p95_ms": 91.45668500932516
+          }
+        }
+      },
+      "selected_configuration": {
+        "startup_spacing_seconds": 5.0,
+        "workers": 4,
+        "emulation_speed": 0.0,
+        "frame_skip": 12,
+        "timeout": 30.0,
+        "hidden": true,
+        "plot_every": 20,
+        "backend": "native",
+        "skip_present": false,
+        "bridge_wakeup": "events",
+        "native_capture": "cpu",
+        "collector": "measured",
+        "shared_observations": false,
+        "receive_order": "ordered",
+        "quiet_ui": true
+      }
+    },
+    {
+      "game": "smg1",
+      "manager": "runs/smg1/supervised-20261022-135017-45172",
+      "attempt": 1,
+      "initial_steps": 174172,
+      "paired_steps": 175452,
+      "paired_checkpoint": "runs\\smg1\\parallel-20261022-135019-774889\\model-175452.zip",
+      "owned_emulators": [
+        {
+          "pid": 31108,
+          "profile": ".local\\parallel-profiles\\RMGE01\\parallel-20261022-135019-774889\\worker-00"
+        }
+      ],
+      "learner_status": {
+        "state": "running",
+        "timesteps": 175628,
+        "updates": 5448,
+        "target_timesteps": 1000000,
+        "elapsed_seconds": 149.42199999999139,
+        "decisions_per_second": 9.744214372716762,
+        "device": "cuda",
+        "workers": 1,
+        "updated_at": "2026-10-22T16:52:55.751302+00:00",
+        "progress": [
+          0.014805371694581638
+        ],
+        "worker_timing_ms": [
+          {
+            "environment_control_and_capture": 114.53289999917615,
+            "telemetry": 0.18139999883715063,
+            "curiosity": 1.8206999957328662,
+            "logging": 0.016999998479150236,
+            "episode_output": 17.703900011838414
+          }
+        ],
+        "backend_timing_ms": [
+          {
+            "pause": 16.947600001003593,
+            "startup": 2496.4840000029653,
+            "capture": 0.14220000593923032,
+            "reset": 198.8563999912003,
+            "native_round_trip": 114.34450000524521,
+            "advance": 114.52430000645109
+          }
+        ],
+        "advanced_frames": [
+          12
+        ],
+        "native_diagnostics": [
+          {
+            "request": 1463,
+            "response": 1463,
+            "completed_frames": 12,
+            "step_complete_sequence": 1463,
+            "field_count": 17473,
+            "acknowledged_field": 17473,
+            "readback_us": 2338,
+            "frame_wait_us": 0,
+            "skipped_presents": 0,
+            "reconciliations": 0,
+            "rejected_state": 0,
+            "pixel_format": 1,
+            "cpu_batch_us": 114039,
+            "cpu_idle_us": 5,
+            "dispatch_us": 150,
+            "present_us": 1913,
+            "scale_us": 0,
+            "image_bytes": 7056,
+            "source_width": 834,
+            "source_height": 456,
+            "queue_drain_calls": 12,
+            "preprocess_us": 599,
+            "capture_mode": 1
+          }
+        ],
+        "collector_timings": {
+          "stages": {
+            "dispatch": {
+              "count": 1456,
+              "total_ms": 127.38800040096976,
+              "mean_ms": 0.08749175851714956,
+              "recent_p50_ms": 0.09500001033302397,
+              "recent_p95_ms": 0.12370499607641249
+            },
+            "receive": {
+              "count": 1456,
+              "total_ms": 135682.80320006306,
+              "mean_ms": 93.18873846158178,
+              "recent_p50_ms": 101.75120000349125,
+              "recent_p95_ms": 122.86934999283402
+            },
+            "barrier": {
+              "count": 1456,
+              "total_ms": 135701.1781000183,
+              "mean_ms": 93.2013585851774,
+              "recent_p50_ms": 101.76605000015115,
+              "recent_p95_ms": 122.88783999902078
+            }
+          },
+          "last_barrier": {
+            "compute_ms": [
+              116.88180000055581
+            ],
+            "ready_after_dispatch_ms": [
+              117.05490000895225
+            ],
+            "barrier_idle_ms": [
+              0.0
+            ],
+            "reply_transfer_and_receive_ms": [
+              0.4042999935336411
+            ],
+            "slowest_worker": 0,
+            "receive_order": [
+              0
+            ],
+            "shared_observations": false,
+            "note": "Synchronous on-policy barrier preserved. Idle/transfer intervals overlap; ordered receives include head-of-line waiting."
+          },
+          "vector_steps": 1456,
+          "mean_worker_compute_ms": [
+            92.8522783655613
+          ],
+          "mean_worker_barrier_idle_ms": [
+            0.0
+          ],
+          "bottleneck_count_per_worker": [
+            1456
+          ]
+        },
+        "learner_timings": {
+          "policy_forward": {
+            "count": 1456,
+            "total_ms": 5089.262800043798,
+            "mean_ms": 3.4953728022278834,
+            "recent_p50_ms": 3.583400000934489,
+            "recent_p95_ms": 5.65013499581255
+          },
+          "rollout_collection": {
+            "count": 11,
+            "total_ms": 139251.23300000269,
+            "mean_ms": 12659.203000000243,
+            "recent_p50_ms": 13759.199799998896,
+            "recent_p95_ms": 14511.076200004027
+          },
+          "ppo_update": {
+            "count": 11,
+            "total_ms": 5407.950600012555,
+            "mean_ms": 491.63187272841407,
+            "recent_p50_ms": 522.4342000001343,
+            "recent_p95_ms": 884.78860000032
+          },
+          "checkpoint": {
+            "count": 5,
+            "total_ms": 287.13839998818,
+            "mean_ms": 57.427679997636005,
+            "recent_p50_ms": 55.69649999961257,
+            "recent_p95_ms": 66.9152599904919
+          }
+        }
+      },
+      "selected_configuration": {
+        "workers": 1,
+        "emulation_speed": 0.0,
+        "frame_skip": 12,
+        "timeout": 30.0,
+        "hidden": true,
+        "plot_every": 20,
+        "backend": "native",
+        "skip_present": false,
+        "bridge_wakeup": "events",
+        "native_capture": "cpu",
+        "collector": "measured",
+        "shared_observations": false,
+        "receive_order": "ordered",
+        "quiet_ui": true
+      }
+    }
+  ],
+  "note": "Early concurrent production continuation with PPO, reset and checkpoint costs. Not a controlled throughput comparison or evidence of course success."
+}

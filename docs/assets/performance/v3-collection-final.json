@@ -1,0 +1,902 @@
+[
+  {
+    "run": "runs\\benchmark-20261022-134153-193197",
+    "repeat": 0,
+    "workers": 4,
+    "vector_steps": 128,
+    "aggregate_decisions": 512,
+    "wall_seconds": 12.678583899891237,
+    "aggregate_decisions_per_second": 40.38305886861641,
+    "shared_observations": false,
+    "receive_order": "ordered",
+    "mean_worker_compute_ms": [
+      79.85024453159895,
+      90.08730078119243,
+      81.05367109328654,
+      91.94575000060468
+    ],
+    "mean_worker_barrier_idle_ms": [
+      18.673031249704763,
+      8.404470312484591,
+      17.41528906336498,
+      6.506397656607987
+    ],
+    "bottleneck_count_per_worker": [
+      8,
+      45,
+      18,
+      57
+    ],
+    "collector": {
+      "stages": {
+        "dispatch": {
+          "count": 128,
+          "total_ms": 15.152200008742511,
+          "mean_ms": 0.11837656256830087,
+          "recent_p50_ms": 0.11905000428669155,
+          "recent_p95_ms": 0.13873999923816882
+        },
+        "receive": {
+          "count": 512,
+          "total_ms": 12640.835100057302,
+          "mean_ms": 24.689131054799418,
+          "recent_p50_ms": 1.93425000179559,
+          "recent_p95_ms": 73.636304995307
+        },
+        "barrier": {
+          "count": 128,
+          "total_ms": 12645.837000076426,
+          "mean_ms": 98.79560156309708,
+          "recent_p50_ms": 75.04144999984419,
+          "recent_p95_ms": 246.44804999916232
+        }
+      },
+      "last_barrier": {
+        "compute_ms": [
+          72.39349999872502,
+          248.12060000840575,
+          74.25140000123065,
+          246.91250000614673
+        ],
+        "ready_after_dispatch_ms": [
+          72.50199999543838,
+          248.25390000478365,
+          74.40349999524187,
+          247.12790000194218
+        ],
+        "barrier_idle_ms": [
+          175.75190000934526,
+          0.0,
+          173.85040000954177,
+          1.1260000028414652
+        ],
+        "reply_transfer_and_receive_ms": [
+          0.251300007221289,
+          0.35339999885763973,
+          174.27889999817125,
+          1.607099999091588
+        ],
+        "slowest_worker": 1,
+        "receive_order": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "shared_observations": false,
+        "note": "Synchronous on-policy barrier preserved. Idle/transfer intervals overlap; ordered receives include head-of-line waiting."
+      },
+      "vector_steps": 128,
+      "mean_worker_compute_ms": [
+        79.85024453159895,
+        90.08730078119243,
+        81.05367109328654,
+        91.94575000060468
+      ],
+      "mean_worker_barrier_idle_ms": [
+        18.673031249704763,
+        8.404470312484591,
+        17.41528906336498,
+        6.506397656607987
+      ],
+      "bottleneck_count_per_worker": [
+        8,
+        45,
+        18,
+        57
+      ]
+    },
+    "note": "Fixed actions, no policy/optimization. Reset time included in vector-step wall time. Synchronous barrier retained."
+  },
+  {
+    "run": "runs\\benchmark-20261022-134227-555627",
+    "repeat": 0,
+    "workers": 4,
+    "vector_steps": 128,
+    "aggregate_decisions": 512,
+    "wall_seconds": 12.126317300018854,
+    "aggregate_decisions_per_second": 42.22221696270507,
+    "shared_observations": false,
+    "receive_order": "ready",
+    "mean_worker_compute_ms": [
+      74.93140937492626,
+      85.59413125112769,
+      76.15193281196753,
+      87.6982054689961
+    ],
+    "mean_worker_barrier_idle_ms": [
+      19.336462500291418,
+      8.634617968937164,
+      18.053621094509253,
+      6.490725000503517
+    ],
+    "bottleneck_count_per_worker": [
+      12,
+      54,
+      14,
+      48
+    ],
+    "collector": {
+      "stages": {
+        "dispatch": {
+          "count": 128,
+          "total_ms": 14.99509991845116,
+          "mean_ms": 0.11714921811289969,
+          "recent_p50_ms": 0.11229999654460698,
+          "recent_p95_ms": 0.14183000312186778
+        },
+        "wait_ready": {
+          "count": 496,
+          "total_ms": 12038.202000097954,
+          "mean_ms": 24.270568548584585,
+          "recent_p50_ms": 4.535799991572276,
+          "recent_p95_ms": 65.98864999614307
+        },
+        "receive": {
+          "count": 512,
+          "total_ms": 48.336900217691436,
+          "mean_ms": 0.09440800823767859,
+          "recent_p50_ms": 0.09280000085709617,
+          "recent_p95_ms": 0.1455150020774454
+        },
+        "barrier": {
+          "count": 128,
+          "total_ms": 12094.529799898737,
+          "mean_ms": 94.48851406170888,
+          "recent_p50_ms": 70.52349999867147,
+          "recent_p95_ms": 227.9007199947954
+        }
+      },
+      "last_barrier": {
+        "compute_ms": [
+          69.74750000517815,
+          241.6028000006918,
+          65.62759999360424,
+          241.2890999985393
+        ],
+        "ready_after_dispatch_ms": [
+          69.85160001204349,
+          241.74300000595395,
+          65.7742000039434,
+          241.4695000043139
+        ],
+        "barrier_idle_ms": [
+          171.89139999391045,
+          0.0,
+          175.96880000201054,
+          0.27350000164005905
+        ],
+        "reply_transfer_and_receive_ms": [
+          0.3791999915847555,
+          0.23750000400468707,
+          0.38270000368356705,
+          0.3215000033378601
+        ],
+        "slowest_worker": 1,
+        "receive_order": [
+          2,
+          0,
+          3,
+          1
+        ],
+        "shared_observations": false,
+        "note": "Synchronous on-policy barrier preserved. Idle/transfer intervals overlap; ordered receives include head-of-line waiting."
+      },
+      "vector_steps": 128,
+      "mean_worker_compute_ms": [
+        74.93140937492626,
+        85.59413125112769,
+        76.15193281196753,
+        87.6982054689961
+      ],
+      "mean_worker_barrier_idle_ms": [
+        19.336462500291418,
+        8.634617968937164,
+        18.053621094509253,
+        6.490725000503517
+      ],
+      "bottleneck_count_per_worker": [
+        12,
+        54,
+        14,
+        48
+      ]
+    },
+    "note": "Fixed actions, no policy/optimization. Reset time included in vector-step wall time. Synchronous barrier retained."
+  },
+  {
+    "run": "runs\\benchmark-20261022-134301-352431",
+    "repeat": 0,
+    "workers": 4,
+    "vector_steps": 128,
+    "aggregate_decisions": 512,
+    "wall_seconds": 13.218884199974127,
+    "aggregate_decisions_per_second": 38.732467298639484,
+    "shared_observations": true,
+    "receive_order": "ready",
+    "mean_worker_compute_ms": [
+      86.98961718766896,
+      96.31315000081031,
+      87.74948515645065,
+      96.6322468754015
+    ],
+    "mean_worker_barrier_idle_ms": [
+      15.785980469331662,
+      6.433501562582933,
+      14.97132031329329,
+      6.072485156778384
+    ],
+    "bottleneck_count_per_worker": [
+      11,
+      43,
+      17,
+      57
+    ],
+    "collector": {
+      "stages": {
+        "dispatch": {
+          "count": 128,
+          "total_ms": 16.33169999695383,
+          "mean_ms": 0.1275914062262018,
+          "recent_p50_ms": 0.12469999637687579,
+          "recent_p95_ms": 0.15119500167202204
+        },
+        "wait_ready": {
+          "count": 500,
+          "total_ms": 13123.497199994745,
+          "mean_ms": 26.24699439998949,
+          "recent_p50_ms": 2.927050009020604,
+          "recent_p95_ms": 79.45914999945671
+        },
+        "receive": {
+          "count": 512,
+          "total_ms": 51.39069980941713,
+          "mean_ms": 0.10037246056526783,
+          "recent_p50_ms": 0.09594999573891982,
+          "recent_p95_ms": 0.15754500636830926
+        },
+        "barrier": {
+          "count": 128,
+          "total_ms": 13183.843199920375,
+          "mean_ms": 102.99877499937793,
+          "recent_p50_ms": 80.1613500007079,
+          "recent_p95_ms": 233.8318499976594
+        }
+      },
+      "last_barrier": {
+        "compute_ms": [
+          75.79370000166818,
+          234.90359999414068,
+          74.26049999776296,
+          235.26380000112113
+        ],
+        "ready_after_dispatch_ms": [
+          75.88589999068063,
+          235.03499999060296,
+          74.4016999960877,
+          235.43879999488126
+        ],
+        "barrier_idle_ms": [
+          159.55290000420064,
+          0.40380000427830964,
+          161.03709999879356,
+          0.0
+        ],
+        "reply_transfer_and_receive_ms": [
+          0.38270000368356705,
+          0.3144000074826181,
+          0.2948000037577003,
+          0.2933000068878755
+        ],
+        "slowest_worker": 3,
+        "receive_order": [
+          2,
+          0,
+          1,
+          3
+        ],
+        "shared_observations": true,
+        "note": "Synchronous on-policy barrier preserved. Idle/transfer intervals overlap; ordered receives include head-of-line waiting."
+      },
+      "vector_steps": 128,
+      "mean_worker_compute_ms": [
+        86.98961718766896,
+        96.31315000081031,
+        87.74948515645065,
+        96.6322468754015
+      ],
+      "mean_worker_barrier_idle_ms": [
+        15.785980469331662,
+        6.433501562582933,
+        14.97132031329329,
+        6.072485156778384
+      ],
+      "bottleneck_count_per_worker": [
+        11,
+        43,
+        17,
+        57
+      ]
+    },
+    "note": "Fixed actions, no policy/optimization. Reset time included in vector-step wall time. Synchronous barrier retained."
+  },
+  {
+    "run": "runs\\benchmark-20261022-134336-475461",
+    "repeat": 0,
+    "workers": 4,
+    "vector_steps": 128,
+    "aggregate_decisions": 512,
+    "wall_seconds": 13.407388199979323,
+    "aggregate_decisions_per_second": 38.18790001178527,
+    "shared_observations": true,
+    "receive_order": "ordered",
+    "mean_worker_compute_ms": [
+      88.01109765568071,
+      96.94949453091795,
+      88.35150312484075,
+      97.79960937521537
+    ],
+    "mean_worker_barrier_idle_ms": [
+      16.176464062368723,
+      7.20948046898684,
+      15.77623828131891,
+      6.312784374699731
+    ],
+    "bottleneck_count_per_worker": [
+      13,
+      43,
+      14,
+      58
+    ],
+    "collector": {
+      "stages": {
+        "dispatch": {
+          "count": 128,
+          "total_ms": 16.928500015637837,
+          "mean_ms": 0.1322539063721706,
+          "recent_p50_ms": 0.12555000284919515,
+          "recent_p95_ms": 0.19696500166901348
+        },
+        "receive": {
+          "count": 512,
+          "total_ms": 13365.506299887784,
+          "mean_ms": 26.104504491968328,
+          "recent_p50_ms": 1.643550000153482,
+          "recent_p95_ms": 84.10960999317467
+        },
+        "barrier": {
+          "count": 128,
+          "total_ms": 13370.804599966505,
+          "mean_ms": 104.45941093723832,
+          "recent_p50_ms": 81.05104999413015,
+          "recent_p95_ms": 244.81422500975887
+        }
+      },
+      "last_barrier": {
+        "compute_ms": [
+          75.17290000396315,
+          237.98050000914373,
+          74.9705000052927,
+          236.65219999384135
+        ],
+        "ready_after_dispatch_ms": [
+          75.27100000879727,
+          238.15260000992566,
+          75.13660000404343,
+          236.84420000063255
+        ],
+        "barrier_idle_ms": [
+          162.8816000011284,
+          0.0,
+          163.01600000588223,
+          1.3084000092931092
+        ],
+        "reply_transfer_and_receive_ms": [
+          0.21600000036414713,
+          0.2945000014733523,
+          163.37189999467228,
+          1.7284000059589744
+        ],
+        "slowest_worker": 1,
+        "receive_order": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "shared_observations": true,
+        "note": "Synchronous on-policy barrier preserved. Idle/transfer intervals overlap; ordered receives include head-of-line waiting."
+      },
+      "vector_steps": 128,
+      "mean_worker_compute_ms": [
+        88.01109765568071,
+        96.94949453091795,
+        88.35150312484075,
+        97.79960937521537
+      ],
+      "mean_worker_barrier_idle_ms": [
+        16.176464062368723,
+        7.20948046898684,
+        15.77623828131891,
+        6.312784374699731
+      ],
+      "bottleneck_count_per_worker": [
+        13,
+        43,
+        14,
+        58
+      ]
+    },
+    "note": "Fixed actions, no policy/optimization. Reset time included in vector-step wall time. Synchronous barrier retained."
+  },
+  {
+    "run": "runs\\benchmark-20261022-134411-316435",
+    "repeat": 1,
+    "workers": 4,
+    "vector_steps": 128,
+    "aggregate_decisions": 512,
+    "wall_seconds": 12.384927800114383,
+    "aggregate_decisions_per_second": 41.340572045585226,
+    "shared_observations": true,
+    "receive_order": "ordered",
+    "mean_worker_compute_ms": [
+      76.47096484424765,
+      86.11150937463208,
+      75.67310234389879,
+      87.40908203139952
+    ],
+    "mean_worker_barrier_idle_ms": [
+      19.821639843371486,
+      10.151610156299284,
+      20.567151562545405,
+      8.818182812547093
+    ],
+    "bottleneck_count_per_worker": [
+      16,
+      44,
+      12,
+      56
+    ],
+    "collector": {
+      "stages": {
+        "dispatch": {
+          "count": 128,
+          "total_ms": 13.716799978283234,
+          "mean_ms": 0.10716249983033777,
+          "recent_p50_ms": 0.10604999988572672,
+          "recent_p95_ms": 0.1252450078027323
+        },
+        "receive": {
+          "count": 512,
+          "total_ms": 12351.495499868179,
+          "mean_ms": 24.124014648180037,
+          "recent_p50_ms": 1.8466999972588383,
+          "recent_p95_ms": 70.58819499216042
+        },
+        "barrier": {
+          "count": 128,
+          "total_ms": 12355.630699952599,
+          "mean_ms": 96.52836484337968,
+          "recent_p50_ms": 74.48580000345828,
+          "recent_p95_ms": 240.6981949985492
+        }
+      },
+      "last_barrier": {
+        "compute_ms": [
+          60.793799988459796,
+          225.20310000982136,
+          63.78150000819005,
+          247.8104999900097
+        ],
+        "ready_after_dispatch_ms": [
+          60.868999993545,
+          225.31500000332016,
+          63.90360000659712,
+          247.9581999941729
+        ],
+        "barrier_idle_ms": [
+          187.0892000006279,
+          22.643199990852736,
+          184.05459998757578,
+          0.0
+        ],
+        "reply_transfer_and_receive_ms": [
+          0.2069000038318336,
+          0.25599999935366213,
+          161.72089999599848,
+          0.24620001204311848
+        ],
+        "slowest_worker": 3,
+        "receive_order": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "shared_observations": true,
+        "note": "Synchronous on-policy barrier preserved. Idle/transfer intervals overlap; ordered receives include head-of-line waiting."
+      },
+      "vector_steps": 128,
+      "mean_worker_compute_ms": [
+        76.47096484424765,
+        86.11150937463208,
+        75.67310234389879,
+        87.40908203139952
+      ],
+      "mean_worker_barrier_idle_ms": [
+        19.821639843371486,
+        10.151610156299284,
+        20.567151562545405,
+        8.818182812547093
+      ],
+      "bottleneck_count_per_worker": [
+        16,
+        44,
+        12,
+        56
+      ]
+    },
+    "note": "Fixed actions, no policy/optimization. Reset time included in vector-step wall time. Synchronous barrier retained."
+  },
+  {
+    "run": "runs\\benchmark-20261022-134445-539505",
+    "repeat": 1,
+    "workers": 4,
+    "vector_steps": 128,
+    "aggregate_decisions": 512,
+    "wall_seconds": 14.033618099958403,
+    "aggregate_decisions_per_second": 36.48382023460633,
+    "shared_observations": true,
+    "receive_order": "ready",
+    "mean_worker_compute_ms": [
+      92.7832492180869,
+      101.07019843701437,
+      93.79951093740146,
+      102.30519765570989
+    ],
+    "mean_worker_barrier_idle_ms": [
+      16.302828906077593,
+      7.983265624716296,
+      15.223539062390046,
+      6.700382031340268
+    ],
+    "bottleneck_count_per_worker": [
+      13,
+      34,
+      19,
+      62
+    ],
+    "collector": {
+      "stages": {
+        "dispatch": {
+          "count": 128,
+          "total_ms": 18.525800056522712,
+          "mean_ms": 0.1447328129415837,
+          "recent_p50_ms": 0.13139999646227807,
+          "recent_p95_ms": 0.24450000491924578
+        },
+        "wait_ready": {
+          "count": 500,
+          "total_ms": 13928.431099688169,
+          "mean_ms": 27.856862199376337,
+          "recent_p50_ms": 3.097949993389193,
+          "recent_p95_ms": 89.04906999741796
+        },
+        "receive": {
+          "count": 512,
+          "total_ms": 56.04559996572789,
+          "mean_ms": 0.10946406243306228,
+          "recent_p50_ms": 0.10179999662796035,
+          "recent_p95_ms": 0.16969999705906957
+        },
+        "barrier": {
+          "count": 128,
+          "total_ms": 13994.582399987848,
+          "mean_ms": 109.33267499990507,
+          "recent_p50_ms": 84.71825000742683,
+          "recent_p95_ms": 262.74099000147515
+        }
+      },
+      "last_barrier": {
+        "compute_ms": [
+          83.12039999873377,
+          275.0699000025634,
+          90.2971999894362,
+          272.7318999968702
+        ],
+        "ready_after_dispatch_ms": [
+          83.28039999469183,
+          275.2182999975048,
+          90.46149998903275,
+          272.95079999021254
+        ],
+        "barrier_idle_ms": [
+          191.93790000281297,
+          0.0,
+          184.75680000847206,
+          2.2675000072922558
+        ],
+        "reply_transfer_and_receive_ms": [
+          0.40520000038668513,
+          0.3259999939473346,
+          0.4924000095343217,
+          0.3918000002158806
+        ],
+        "slowest_worker": 1,
+        "receive_order": [
+          0,
+          2,
+          3,
+          1
+        ],
+        "shared_observations": true,
+        "note": "Synchronous on-policy barrier preserved. Idle/transfer intervals overlap; ordered receives include head-of-line waiting."
+      },
+      "vector_steps": 128,
+      "mean_worker_compute_ms": [
+        92.7832492180869,
+        101.07019843701437,
+        93.79951093740146,
+        102.30519765570989
+      ],
+      "mean_worker_barrier_idle_ms": [
+        16.302828906077593,
+        7.983265624716296,
+        15.223539062390046,
+        6.700382031340268
+      ],
+      "bottleneck_count_per_worker": [
+        13,
+        34,
+        19,
+        62
+      ]
+    },
+    "note": "Fixed actions, no policy/optimization. Reset time included in vector-step wall time. Synchronous barrier retained."
+  },
+  {
+    "run": "runs\\benchmark-20261022-134521-432917",
+    "repeat": 1,
+    "workers": 4,
+    "vector_steps": 128,
+    "aggregate_decisions": 512,
+    "wall_seconds": 13.414251500085811,
+    "aggregate_decisions_per_second": 38.16836146219003,
+    "shared_observations": false,
+    "receive_order": "ready",
+    "mean_worker_compute_ms": [
+      88.09361640533098,
+      97.4146937489877,
+      87.20027265553654,
+      98.27317812516867
+    ],
+    "mean_worker_barrier_idle_ms": [
+      16.150395312479304,
+      6.796887500513549,
+      16.981454687424957,
+      5.892194531156747
+    ],
+    "bottleneck_count_per_worker": [
+      15,
+      37,
+      11,
+      65
+    ],
+    "collector": {
+      "stages": {
+        "dispatch": {
+          "count": 128,
+          "total_ms": 16.943599955993704,
+          "mean_ms": 0.13237187465620082,
+          "recent_p50_ms": 0.1265500031877309,
+          "recent_p95_ms": 0.1750249990436714
+        },
+        "wait_ready": {
+          "count": 502,
+          "total_ms": 13307.808600118733,
+          "mean_ms": 26.509578884698673,
+          "recent_p50_ms": 3.153300000121817,
+          "recent_p95_ms": 79.69113000726793
+        },
+        "receive": {
+          "count": 512,
+          "total_ms": 59.672499977750704,
+          "mean_ms": 0.11654785151904434,
+          "recent_p50_ms": 0.10869999823626131,
+          "recent_p95_ms": 0.18267000195919536
+        },
+        "barrier": {
+          "count": 128,
+          "total_ms": 13377.277899926412,
+          "mean_ms": 104.5099835931751,
+          "recent_p50_ms": 81.67284999944968,
+          "recent_p95_ms": 252.50118000476496
+        }
+      },
+      "last_barrier": {
+        "compute_ms": [
+          82.78529999370221,
+          255.83959999494255,
+          73.5625999950571,
+          255.1882999978261
+        ],
+        "ready_after_dispatch_ms": [
+          82.8726000036113,
+          255.96439999935683,
+          73.7171000073431,
+          255.3702000004705
+        ],
+        "barrier_idle_ms": [
+          173.09179999574553,
+          0.0,
+          182.24729999201372,
+          0.5941999988863245
+        ],
+        "reply_transfer_and_receive_ms": [
+          0.31820000731386244,
+          0.47080000513233244,
+          0.45479999971576035,
+          0.6108000088715926
+        ],
+        "slowest_worker": 1,
+        "receive_order": [
+          2,
+          0,
+          3,
+          1
+        ],
+        "shared_observations": false,
+        "note": "Synchronous on-policy barrier preserved. Idle/transfer intervals overlap; ordered receives include head-of-line waiting."
+      },
+      "vector_steps": 128,
+      "mean_worker_compute_ms": [
+        88.09361640533098,
+        97.4146937489877,
+        87.20027265553654,
+        98.27317812516867
+      ],
+      "mean_worker_barrier_idle_ms": [
+        16.150395312479304,
+        6.796887500513549,
+        16.981454687424957,
+        5.892194531156747
+      ],
+      "bottleneck_count_per_worker": [
+        15,
+        37,
+        11,
+        65
+      ]
+    },
+    "note": "Fixed actions, no policy/optimization. Reset time included in vector-step wall time. Synchronous barrier retained."
+  },
+  {
+    "run": "runs\\benchmark-20261022-134556-485985",
+    "repeat": 1,
+    "workers": 4,
+    "vector_steps": 128,
+    "aggregate_decisions": 512,
+    "wall_seconds": 12.74982969998382,
+    "aggregate_decisions_per_second": 40.157399122017274,
+    "shared_observations": false,
+    "receive_order": "ordered",
+    "mean_worker_compute_ms": [
+      83.94763906255776,
+      92.12884453143033,
+      84.32180859449545,
+      93.08130624992828
+    ],
+    "mean_worker_barrier_idle_ms": [
+      15.095165626007656,
+      6.878615625737439,
+      14.656152344059592,
+      5.877886718735681
+    ],
+    "bottleneck_count_per_worker": [
+      12,
+      49,
+      16,
+      51
+    ],
+    "collector": {
+      "stages": {
+        "dispatch": {
+          "count": 128,
+          "total_ms": 16.115299993543886,
+          "mean_ms": 0.1259007811995616,
+          "recent_p50_ms": 0.11955000081798062,
+          "recent_p95_ms": 0.16630500103929075
+        },
+        "receive": {
+          "count": 512,
+          "total_ms": 12710.456399829127,
+          "mean_ms": 24.825110155916263,
+          "recent_p50_ms": 1.4709500028402545,
+          "recent_p95_ms": 78.32335000639432
+        },
+        "barrier": {
+          "count": 128,
+          "total_ms": 12715.769900052692,
+          "mean_ms": 99.34195234416165,
+          "recent_p50_ms": 75.81855000171345,
+          "recent_p95_ms": 242.6987999970151
+        }
+      },
+      "last_barrier": {
+        "compute_ms": [
+          77.04499999817926,
+          251.82990000757854,
+          78.00969999516383,
+          249.07309999980498
+        ],
+        "ready_after_dispatch_ms": [
+          77.13649999641348,
+          251.9698999967659,
+          78.16979999188334,
+          249.26079998840578
+        ],
+        "barrier_idle_ms": [
+          174.8334000003524,
+          0.0,
+          173.80010000488255,
+          2.7091000083601102
+        ],
+        "reply_transfer_and_receive_ms": [
+          0.2747999969869852,
+          0.3299999953014776,
+          174.23830000916496,
+          3.20250001095701
+        ],
+        "slowest_worker": 1,
+        "receive_order": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "shared_observations": false,
+        "note": "Synchronous on-policy barrier preserved. Idle/transfer intervals overlap; ordered receives include head-of-line waiting."
+      },
+      "vector_steps": 128,
+      "mean_worker_compute_ms": [
+        83.94763906255776,
+        92.12884453143033,
+        84.32180859449545,
+        93.08130624992828
+      ],
+      "mean_worker_barrier_idle_ms": [
+        15.095165626007656,
+        6.878615625737439,
+        14.656152344059592,
+        5.877886718735681
+      ],
+      "bottleneck_count_per_worker": [
+        12,
+        49,
+        16,
+        51
+      ]
+    },
+    "note": "Fixed actions, no policy/optimization. Reset time included in vector-step wall time. Synchronous barrier retained."
+  }
+]

@@ -1,0 +1,442 @@
+{
+  "checks": [
+    {
+      "check": "calibration-smg2",
+      "exit_code": 0
+    },
+    {
+      "check": "calibration-smg1",
+      "exit_code": 0
+    },
+    {
+      "check": "images-smg2",
+      "exit_code": 0
+    },
+    {
+      "check": "images-smg1",
+      "exit_code": 0
+    },
+    {
+      "check": "protocol-smg2",
+      "exit_code": 0
+    },
+    {
+      "check": "protocol-smg1",
+      "exit_code": 0
+    },
+    {
+      "check": "pytest",
+      "exit_code": 0
+    },
+    {
+      "check": "ruff",
+      "exit_code": 0
+    },
+    {
+      "check": "recovery",
+      "exit_code": 0
+    }
+  ],
+  "protocols": {
+    "smg2": {
+      "passed": true,
+      "commands": 512,
+      "resets": 14,
+      "executable_sha256": "202a74aac54e41d24afe15d5a2f5b3b470752457cd1553a724533dab9388aeee",
+      "paused_wait_checks": 32,
+      "observation_digest": "5a001216e97de5f7135b386cd474075b73215d7f68202f789904c63c6507dc6c",
+      "elapsed_seconds": 33.930468300008215,
+      "native_diagnostics": {
+        "request": 529,
+        "response": 529,
+        "completed_frames": 1,
+        "step_complete_sequence": 529,
+        "field_count": 4406,
+        "acknowledged_field": 4406,
+        "readback_us": 1659,
+        "frame_wait_us": 0,
+        "skipped_presents": 0,
+        "reconciliations": 0,
+        "rejected_state": 0,
+        "pixel_format": 1,
+        "cpu_batch_us": 6875,
+        "cpu_idle_us": 2,
+        "dispatch_us": 1345,
+        "present_us": 85,
+        "scale_us": 0,
+        "image_bytes": 7056,
+        "source_width": 834,
+        "source_height": 456,
+        "queue_drain_calls": 1,
+        "preprocess_us": 407,
+        "capture_mode": 1
+      }
+    },
+    "smg1": {
+      "passed": true,
+      "commands": 256,
+      "resets": 7,
+      "executable_sha256": "202a74aac54e41d24afe15d5a2f5b3b470752457cd1553a724533dab9388aeee",
+      "paused_wait_checks": 16,
+      "observation_digest": "2f6802fd7aa97239cfcfd0d3823b4cee0c78368c6c2116bed07232948a20028f",
+      "elapsed_seconds": 20.907212200007052,
+      "native_diagnostics": {
+        "request": 265,
+        "response": 265,
+        "completed_frames": 1,
+        "step_complete_sequence": 265,
+        "field_count": 2195,
+        "acknowledged_field": 2195,
+        "readback_us": 2741,
+        "frame_wait_us": 0,
+        "skipped_presents": 0,
+        "reconciliations": 0,
+        "rejected_state": 0,
+        "pixel_format": 1,
+        "cpu_batch_us": 8963,
+        "cpu_idle_us": 4,
+        "dispatch_us": 1379,
+        "present_us": 119,
+        "scale_us": 0,
+        "image_bytes": 7056,
+        "source_width": 834,
+        "source_height": 456,
+        "queue_drain_calls": 1,
+        "preprocess_us": 441,
+        "capture_mode": 1
+      }
+    }
+  },
+  "calibration_smg2": {
+    "game_id": "SB4E01",
+    "backend": "native",
+    "emulator_sha256": "202a74aac54e41d24afe15d5a2f5b3b470752457cd1553a724533dab9388aeee",
+    "validated": true,
+    "created_utc": "2026-10-22T16:47:54.596800+00:00",
+    "variations": {
+      "spinning": {
+        "start": [
+          0.0,
+          -1150.0,
+          500.0
+        ],
+        "start_telemetry": {
+          "position": [
+            0.0,
+            -1150.0,
+            500.0
+          ],
+          "scenario": 1,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166529088,
+          "actor_nerve": 2155695668,
+          "scene_nerve": 2155696912,
+          "scene_frame": 108,
+          "dead": false,
+          "complete": false,
+          "health": null,
+          "max_health": null
+        },
+        "goal": [
+          -2834.5078125,
+          -450.0,
+          -37224.53515625
+        ],
+        "goal_telemetry": {
+          "position": [
+            -2834.5078125,
+            -450.0,
+            -37224.53515625
+          ],
+          "scenario": 1,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166529088,
+          "actor_nerve": 2155695668,
+          "scene_nerve": 2155696912,
+          "scene_frame": 4367,
+          "dead": false,
+          "complete": false,
+          "health": null,
+          "max_health": null
+        },
+        "completion_telemetry": {
+          "position": [
+            -2834.48828125,
+            -299.0,
+            -37249.53515625
+          ],
+          "scenario": 1,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166529088,
+          "actor_nerve": 2155695668,
+          "scene_nerve": 2155696920,
+          "scene_frame": 4,
+          "dead": false,
+          "complete": true,
+          "health": null,
+          "max_health": null
+        },
+        "death_telemetry": {
+          "position": [
+            -0.8862319588661194,
+            -3461.203857421875,
+            1655.5615234375
+          ],
+          "scenario": 1,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166529088,
+          "actor_nerve": 2155695676,
+          "scene_nerve": 2155696928,
+          "scene_frame": 2,
+          "dead": true,
+          "complete": false,
+          "health": null,
+          "max_health": null
+        },
+        "movement_telemetry": {
+          "position": [
+            0.0009331443579867482,
+            -1150.0,
+            498.78338623046875
+          ],
+          "scenario": 1,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166529088,
+          "actor_nerve": 2155695668,
+          "scene_nerve": 2155696912,
+          "scene_frame": 132,
+          "dead": false,
+          "complete": false,
+          "health": null,
+          "max_health": null
+        }
+      },
+      "double_time": {
+        "start": [
+          0.0,
+          -1150.0,
+          500.0
+        ],
+        "start_telemetry": {
+          "position": [
+            0.0,
+            -1150.0,
+            500.0
+          ],
+          "scenario": 2,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166530752,
+          "actor_nerve": 2155695668,
+          "scene_nerve": 2155696912,
+          "scene_frame": 45,
+          "dead": false,
+          "complete": false,
+          "health": null,
+          "max_health": null
+        },
+        "goal": [
+          -3094.63134765625,
+          -694.5638427734375,
+          -52697.125
+        ],
+        "goal_telemetry": {
+          "position": [
+            -3094.63134765625,
+            -694.5638427734375,
+            -52697.125
+          ],
+          "scenario": 2,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166530752,
+          "actor_nerve": 2155695668,
+          "scene_nerve": 2155696912,
+          "scene_frame": 6250,
+          "dead": false,
+          "complete": false,
+          "health": null,
+          "max_health": null
+        },
+        "completion_telemetry": {
+          "position": [
+            -2941.13232421875,
+            -302.5077819824219,
+            -52697.07421875
+          ],
+          "scenario": 2,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166530752,
+          "actor_nerve": 2155695668,
+          "scene_nerve": 2155696920,
+          "scene_frame": 9,
+          "dead": false,
+          "complete": true,
+          "health": null,
+          "max_health": null
+        },
+        "death_telemetry": {
+          "position": [
+            -0.886198878288269,
+            -3461.203857421875,
+            1655.5196533203125
+          ],
+          "scenario": 2,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166530752,
+          "actor_nerve": 2155695676,
+          "scene_nerve": 2155696928,
+          "scene_frame": 2,
+          "dead": true,
+          "complete": false,
+          "health": null,
+          "max_health": null
+        },
+        "movement_telemetry": {
+          "position": [
+            0.0009331442997790873,
+            -1150.0,
+            498.78338623046875
+          ],
+          "scenario": 2,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166530752,
+          "actor_nerve": 2155695668,
+          "scene_nerve": 2155696912,
+          "scene_frame": 69,
+          "dead": false,
+          "complete": false,
+          "health": null,
+          "max_health": null
+        }
+      }
+    }
+  },
+  "calibration_smg1": {
+    "game_id": "RMGE01",
+    "backend": "native",
+    "emulator_sha256": "202a74aac54e41d24afe15d5a2f5b3b470752457cd1553a724533dab9388aeee",
+    "validated": true,
+    "created_utc": "2026-10-22T16:47:54.653116+00:00",
+    "variations": {
+      "sweet_sweet": {
+        "start": [
+          -50.0,
+          45.0000114440918,
+          -50.0
+        ],
+        "start_telemetry": {
+          "position": [
+            -50.0,
+            45.0000114440918,
+            -50.0
+          ],
+          "scenario": 1,
+          "stage": "BeltConveyerExGalaxy",
+          "actor": 2164967084,
+          "actor_nerve": 2154426424,
+          "scene_nerve": 2154437584,
+          "scene_frame": 1323,
+          "dead": false,
+          "complete": false,
+          "health": 3,
+          "max_health": 3
+        },
+        "goal": [
+          26681.45703125,
+          950.0,
+          -11984.625
+        ],
+        "goal_telemetry": {
+          "position": [
+            26681.45703125,
+            950.0,
+            -11984.625
+          ],
+          "scenario": 1,
+          "stage": "BeltConveyerExGalaxy",
+          "actor": 2164967084,
+          "actor_nerve": 2154426424,
+          "scene_nerve": 2154437584,
+          "scene_frame": 9093,
+          "dead": false,
+          "complete": false,
+          "health": 3,
+          "max_health": 3
+        },
+        "completion_telemetry": {
+          "position": [
+            26681.45703125,
+            1068.5,
+            -11984.625
+          ],
+          "scenario": 1,
+          "stage": "BeltConveyerExGalaxy",
+          "actor": 2164967084,
+          "actor_nerve": 2154426424,
+          "scene_nerve": 2154437592,
+          "scene_frame": 3,
+          "dead": false,
+          "complete": true,
+          "health": 3,
+          "max_health": 3
+        },
+        "death_telemetry": {
+          "position": [
+            -39.37578201293945,
+            -2474.901123046875,
+            1796.874755859375
+          ],
+          "scenario": 1,
+          "stage": "BeltConveyerExGalaxy",
+          "actor": 2164967084,
+          "actor_nerve": 2154426432,
+          "scene_nerve": 2154437600,
+          "scene_frame": 4,
+          "dead": true,
+          "complete": false,
+          "health": 3,
+          "max_health": 3
+        },
+        "movement_telemetry": {
+          "position": [
+            -50.028629302978516,
+            45.0000114440918,
+            -54.97650909423828
+          ],
+          "scenario": 1,
+          "stage": "BeltConveyerExGalaxy",
+          "actor": 2164967084,
+          "actor_nerve": 2154426424,
+          "scene_nerve": 2154437584,
+          "scene_frame": 1335,
+          "dead": false,
+          "complete": false,
+          "health": 3,
+          "max_health": 3
+        }
+      }
+    }
+  },
+  "recovery": {
+    "injected_failure": {
+      "pid": 42628,
+      "checkpoint_steps": 64,
+      "checkpoint": ".local\\native-recovery-check-6567e67e7ae6\\runs\\parallel-20261022-134841-884679\\model-64.zip",
+      "run": ".local\\native-recovery-check-6567e67e7ae6\\runs\\parallel-20261022-134841-884679"
+    },
+    "supervisor": {
+      "pid": 46460,
+      "created_time": 1792687719.3951423,
+      "config": ".local\\native-recovery-config-6567e67e7ae6.yaml",
+      "target_timesteps": 256,
+      "state": "completed",
+      "attempts": 2,
+      "confirmed_checkpoint_timesteps": 256,
+      "checkpoint": ".local\\native-recovery-check-6567e67e7ae6\\runs\\parallel-20261022-134858-742755\\model-256.zip",
+      "current_run": ".local\\native-recovery-check-6567e67e7ae6\\runs\\parallel-20261022-134858-742755",
+      "updated_at": 1792687758.921052
+    },
+    "elapsed_seconds": 39.796999999991385,
+    "passed": true
+  },
+  "note": "Fixtures are excluded from training success. Detector calibrations and correctness checks may run concurrently; their elapsed times are not throughput benchmarks."
+}

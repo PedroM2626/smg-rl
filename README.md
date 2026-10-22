@@ -19,6 +19,12 @@ Near-star calibration success is a detector test, not evidence of learning.
 The [documentation index](docs/README.md) separates operating instructions,
 mathematical specification, measured evidence, and planned experiments.
 
+The current **protocol-v3** backend uses Windows event wakeups and sends
+already cropped 84 x 84 grayscale observations from Dolphin. The measured
+collector profiles each worker's barrier wait and can transfer frame stacks
+through shared memory while preserving synchronous recurrent PPO semantics.
+See [image equivalence, configuration and timing evidence](docs/optimization-v3.md).
+
 ## Supported tasks
 
 | Game / executable | Mission | Training start | Detector fixture | Recommended configuration |
@@ -288,13 +294,16 @@ optimization; it is excluded from training success reports. Workers publish
 policy-forward, rollout, PPO-update, and checkpoint timings. Nested stages overlap
 and must not be summed as exclusive costs.
 
-Current protocol-v2 repeated environment tests measured **15.64 decisions/s in
-Galaxy 1** and **17.45 in Galaxy 2** with batch-eight curiosity, excluding resets
-and PPO. Matched online-curiosity conditions measured 14.31 and 16.64,
-respectively. Curiosity itself fell from 4.19 to 1.82 ms in Galaxy 1 and 3.92 to
-1.94 ms in Galaxy 2. These are short one-worker engineering tests; five-worker
-production throughput includes contention, resets, and PPO updates. See the
-[current audit and raw measurements](docs/optimization-v2.md) and
+Current protocol-v3 repeated environment tests measured **16.34 decisions/s in
+Galaxy 1** and **20.07 in Galaxy 2**, excluding resets and PPO. Matched
+poll/full-image conditions on the same build measured 15.34 and 17.97,
+respectively: observed differences of about 6.6% and 11.6%. Native CPU image
+preparation matched the tested OpenCV images exactly while reducing bridge
+payload from 1521216 to 7056 bytes. Four-worker collection tests favored ordered
+pipes over the shared-vector alternatives; all modes retain the synchronous
+PPO barrier. These are short engineering tests, not five-worker training rates
+or proof of faster learning. See [current measurements](docs/optimization-v3.md),
+[curiosity/reward revision](docs/optimization-v2.md), and
 [historical backend comparison](docs/native-backend.md).
 
 ## Timing, performance, and research limits

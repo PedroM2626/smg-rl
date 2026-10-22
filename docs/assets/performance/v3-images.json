@@ -1,0 +1,133 @@
+{
+  "smg2": {
+    "passed": true,
+    "results": [
+      {
+        "variation": "spinning",
+        "capture_mode": 0,
+        "steps": 48,
+        "pixel_mean_absolute_error": 0.0,
+        "pixel_max_absolute_error": 0,
+        "coordinate_max_error": 0.0,
+        "mean_readback_us": 885.2916666666666,
+        "mean_preprocess_us": 180.52083333333334,
+        "image_bytes": 1521216,
+        "source_width": 834,
+        "source_height": 456
+      },
+      {
+        "variation": "spinning",
+        "capture_mode": 1,
+        "steps": 48,
+        "pixel_mean_absolute_error": 0.0,
+        "pixel_max_absolute_error": 0,
+        "coordinate_max_error": 0.0,
+        "mean_readback_us": 1288.7083333333333,
+        "mean_preprocess_us": 558.2291666666666,
+        "image_bytes": 7056,
+        "source_width": 834,
+        "source_height": 456
+      },
+      {
+        "variation": "spinning",
+        "capture_mode": 2,
+        "steps": 48,
+        "pixel_mean_absolute_error": 7.724212254346183,
+        "pixel_max_absolute_error": 112,
+        "coordinate_max_error": 0.0,
+        "mean_readback_us": 411.1666666666667,
+        "mean_preprocess_us": 12.395833333333334,
+        "image_bytes": 7056,
+        "source_width": 84,
+        "source_height": 84
+      },
+      {
+        "variation": "double_time",
+        "capture_mode": 0,
+        "steps": 48,
+        "pixel_mean_absolute_error": 0.0,
+        "pixel_max_absolute_error": 0,
+        "coordinate_max_error": 0.0,
+        "mean_readback_us": 765.9166666666666,
+        "mean_preprocess_us": 178.89583333333334,
+        "image_bytes": 1521216,
+        "source_width": 834,
+        "source_height": 456
+      },
+      {
+        "variation": "double_time",
+        "capture_mode": 1,
+        "steps": 48,
+        "pixel_mean_absolute_error": 0.0,
+        "pixel_max_absolute_error": 0,
+        "coordinate_max_error": 0.0,
+        "mean_readback_us": 1337.9166666666667,
+        "mean_preprocess_us": 511.2291666666667,
+        "image_bytes": 7056,
+        "source_width": 834,
+        "source_height": 456
+      },
+      {
+        "variation": "double_time",
+        "capture_mode": 2,
+        "steps": 48,
+        "pixel_mean_absolute_error": 7.800849159108088,
+        "pixel_max_absolute_error": 113,
+        "coordinate_max_error": 0.0,
+        "mean_readback_us": 315.9375,
+        "mean_preprocess_us": 10.125,
+        "image_bytes": 7056,
+        "source_width": 84,
+        "source_height": 84
+      }
+    ],
+    "executable_sha256": "202a74aac54e41d24afe15d5a2f5b3b470752457cd1553a724533dab9388aeee",
+    "note": "Full RGBA/OpenCV reference versus native area grayscale and experimental GPU-linear reduction. CPU compact must differ by at most one intensity level. GPU pixels are measured, not declared equivalent."
+  },
+  "smg1": {
+    "passed": true,
+    "results": [
+      {
+        "variation": "sweet_sweet",
+        "capture_mode": 0,
+        "steps": 48,
+        "pixel_mean_absolute_error": 0.0,
+        "pixel_max_absolute_error": 0,
+        "coordinate_max_error": 0.0,
+        "mean_readback_us": 1188.25,
+        "mean_preprocess_us": 204.95833333333334,
+        "image_bytes": 1521216,
+        "source_width": 834,
+        "source_height": 456
+      },
+      {
+        "variation": "sweet_sweet",
+        "capture_mode": 1,
+        "steps": 48,
+        "pixel_mean_absolute_error": 0.0,
+        "pixel_max_absolute_error": 0,
+        "coordinate_max_error": 0.0,
+        "mean_readback_us": 1681.3541666666667,
+        "mean_preprocess_us": 532.5833333333334,
+        "image_bytes": 7056,
+        "source_width": 834,
+        "source_height": 456
+      },
+      {
+        "variation": "sweet_sweet",
+        "capture_mode": 2,
+        "steps": 48,
+        "pixel_mean_absolute_error": 3.8894941657218443,
+        "pixel_max_absolute_error": 163,
+        "coordinate_max_error": 0.0,
+        "mean_readback_us": 688.6458333333334,
+        "mean_preprocess_us": 12.604166666666666,
+        "image_bytes": 7056,
+        "source_width": 84,
+        "source_height": 84
+      }
+    ],
+    "executable_sha256": "202a74aac54e41d24afe15d5a2f5b3b470752457cd1553a724533dab9388aeee",
+    "note": "Full RGBA/OpenCV reference versus native area grayscale and experimental GPU-linear reduction. CPU compact must differ by at most one intensity level. GPU pixels are measured, not declared equivalent."
+  }
+}

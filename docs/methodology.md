@@ -88,6 +88,16 @@ sample-efficiency superiority follows from the faster wall-clock rate. The
 [protocol, benchmarks, and limitations](native-backend.md) define this backend
 condition. Earlier asynchronous timing evidence in this report remains historical.
 
+Protocol v3 replaces polling with private Windows event wakeups, moves
+crop/grayscale/area preprocessing into Dolphin, and instruments each worker's
+synchronous rollout barrier. Native CPU images matched 144 OpenCV reference
+images exactly in the checked fixtures; experimental GPU-linear images did not.
+The measured collector preserves original environment ordering, automatic
+resets, terminal observations and recurrent PPO barriers. These engineering
+changes do not add coordinate observations or change the reward equations.
+See the [current pipeline audit](optimization-v3.md) for configuration, timing,
+image-equivalence bounds and remaining worker waiting.
+
 ## 3. Progress and extrinsic reward
 
 Let $p_t=(x_t,z_t)$, calibrated start $b_v$ and near-star point $g_v$. Define:

@@ -138,6 +138,15 @@ is claimed by this report.
 
 ## Threats to validity
 
+The [protocol-v3 experiments](optimization-v3.md) compare event wakeups, native
+CPU image preparation, optional quiet Qt notifications, and vector transport.
+Identical replayed coordinates and images check the CPU preprocessing path;
+the GPU-linear mode is explicitly excluded from image-equivalence claims.
+Collector regression tests compare SB3 reset/terminal/ordering semantics.
+Readiness, transfer and idle intervals overlap and do not establish that all
+waiting can be eliminated without changing the learning algorithm. Short local
+throughput tests are engineering evidence, not learning-curve improvements.
+
 The [protocol-v2 audit](optimization-v2.md) adds measured engineering evidence:
 CPU-completion/reset stress checks, controlled process-exit recovery, repeated
 fixed-action presentation/batching comparisons, and counterfactual replay of

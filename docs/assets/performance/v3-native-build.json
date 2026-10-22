@@ -1,0 +1,13 @@
+{
+  "upstream_revision": "409881c34357d0f105fd473167d15ab0bd9c1628",
+  "upstream_license": "GPL-2.0-or-later",
+  "bridge_license": "MIT",
+  "protocol_version": 3,
+  "built_utc": "2026-10-22T16:39:04.746045+00:00",
+  "executable_sha256": "202a74aac54e41d24afe15d5a2f5b3b470752457cd1553a724533dab9388aeee",
+  "patch_script_sha256": "c985ac7e5e04c55c85a54be3b79911a657b7719666b74a1eb0590e22bedb0d09",
+  "bridge_header_sha256": "296828fa049af2fa3c65cd7f73066b08bf29aa3a0cf3a57b8b21fd95673adbe3",
+  "bridge_host_sha256": "a2eca260a93773812e8bd828df0c344c63fd5db9714d5bdee0ad7e241422b128",
+  "image_preprocessor_sha256": "897448c95a0043d5a0c9cba0e67aaa158565ac50b09e794935cbe5f342debd99",
+  "implementation_commit": "0ac27ca892acb53e99ffb5454be78ec18ab3e511"
+}

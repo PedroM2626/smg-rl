@@ -7,6 +7,7 @@
 | Install and basic commands | [README](../README.md) |
 | Native frame bridge, profiling, build provenance, and measured acceleration | [Native backend](native-backend.md) |
 | Current protocol, batched optimizer, reward revision, and measured tradeoffs | [Optimization audit](optimization-v2.md) |
+| Event wakeups, native image kernel, and synchronous worker transport | [Native pipeline revision](optimization-v3.md) |
 | Complete documentation navigation | [Documentation index](README.md) |
 | Exact CLI arguments and backend selection | [Command reference](cli.md) |
 | Health penalties and supervised recovery | [Damage and recovery](damage-and-recovery.md) |
@@ -50,6 +51,7 @@ flowchart LR
 | `dolphin.py` | Owned profile preparation and visible desktop adapter |
 | `dsu.py` | Loopback controller protocol and per-worker input state |
 | `native.py` | Versioned shared-memory client, direct capture, bounded-frame commands, and backend selection |
+| `vector.py` | Worker barrier/transport profiling and selectable ready-order/shared observation collection |
 | `diagnostics.py` | Bounded timing statistics and resilient atomic diagnostic publication |
 | `timed_ppo.py` | PPO collection/inference/update timing with checkpoint-compatible policy persistence |
 | `benchmark.py` | Fixed-action environment measurements excluded from audited training success |
@@ -75,6 +77,15 @@ user directory. Native v2 diagnostics and the full effective reward/novelty
 configuration are retained in status/config snapshots. Batched curiosity pairs
 also retain pending transitions; a resumed episode still starts from its
 configured initial savestate rather than continuing exact game/recurrent state.
+
+Protocol v3 moves crop/grayscale/area preparation into the native renderer
+readback path and wakes the host/client with private Windows events. Its CPU
+kernel matched 144 reference images exactly in the retained live tests; GPU
+linear reduction is a separate changed-observation experiment. Shared vector
+image slots are distinct from Dolphin's shared renderer mapping: each worker
+publishes one frame stack and the learner takes an owned copy after its pipe
+reply. The synchronous PPO barrier and worker ordering remain. The pinned SB3
+worker protocol is exercised directly by collector equivalence tests.
 
 ## Environment and provenance
 
