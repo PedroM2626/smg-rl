@@ -41,6 +41,7 @@ class WorkerFactory:
                 Path(self.run_dir) / f"worker-{self.index:02d}",
                 memory=backend.memory,
                 variation=self.index % len(self.config["variations"]),
+                intrinsic=self.config.get("world_model", {}).get("use_legacy_curiosity", True),
             )
         except BaseException:
             backend.close()

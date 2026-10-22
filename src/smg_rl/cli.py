@@ -52,6 +52,14 @@ def main():
     supervised.add_argument("--workers", type=int)
     supervised.add_argument("--steps", type=int)
     supervised.add_argument("--resume")
+    for name in ("train-world-model", "fit-world-model"):
+        world = commands.add_parser(name, help="Guarded visual world-model workflow (experimental).")
+        world.add_argument("--resume")
+        if name == "train-world-model":
+            world.add_argument("--steps", type=int)
+        else:
+            world.add_argument("--cycles", type=int, default=100)
+    commands.add_parser("inspect-replay", help="Inspect visual replay without collecting or fitting.")
     for command in ("calibrate", "train", "evaluate"):
         sub = commands.add_parser(command)
         sub.add_argument(
@@ -74,6 +82,19 @@ def main():
         print(plot_trajectory(args.trajectory, args.output))
         return
     config = load_config(args.config)
+    if args.command == "inspect-replay":
+        from smg_rl.replay import SequenceReplay, replay_signature
+
+        dataset = SequenceReplay(config["paths"]["replay"], replay_signature(config))
+        print(json.dumps(dataset.refresh(), indent=2))
+        return
+    if args.command in ("train-world-model", "fit-world-model"):
+        require_training_enabled(config)
+        from smg_rl.world_training import fit_world_model, train_world_model
+
+        print(train_world_model(config, args.steps, args.resume) if args.command == "train-world-model"
+              else fit_world_model(config, args.cycles, args.resume))
+        return
     if args.command == "benchmark":
         if args.steps < 1:
             parser.error("--steps must be positive")
@@ -102,7 +123,7 @@ def main():
         return
     if args.command in ("status", "stop"):
         root = Path(config["paths"]["runs"]).resolve()
-        candidates = sorted(root.glob("parallel-*"))
+        candidates = sorted([*root.glob("parallel-*"), *root.glob("world-model-*")], key=lambda p: p.stat().st_mtime)
         run = Path(args.run).resolve() if args.run else candidates[-1] if candidates else None
         if run is None or run.parent != root or not (run / "controller.json").is_file():
             parser.error("Choose an existing parallel run in the configured runs directory.")

@@ -9,6 +9,11 @@ paths:
   assets: data
   runs: runs
   calibration: config/native-calibration.json
+  replay: runs/replay/SB4E01
+replay:
+  enabled: true
+  chunk_steps: 256
+  max_worker_bytes: 268435456
 environment:
   action_seconds: 0.25
   key_hold_seconds: 0.08

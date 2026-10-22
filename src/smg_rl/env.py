@@ -16,6 +16,7 @@ from smg_rl.diagnostics import StageProfiler, atomic_json, measured
 from smg_rl.memory import GameMemory, MemoryFault
 from smg_rl.plotting import plot_trajectory
 from smg_rl.profiles import game_id
+from smg_rl.replay import ReplayRecorder, replay_signature
 from smg_rl.rewards import DamageTracker, ExplorationBudget, ProgressReward
 
 
@@ -58,6 +59,20 @@ class GalaxyEnv(gym.Env):
         self.rows = []
         self.closed = False
         self.profiler = StageProfiler()
+        self.replay = None
+        replay = config.get("replay", {})
+        training_run = None
+        for parent in (self.run_dir, *self.run_dir.parents):
+            if parent.name.startswith(("benchmark-", "background-validation-", "damage-validation-", "eval-")):
+                break
+            if parent.name.startswith(("parallel-", "train-", "world-model-")):
+                training_run = parent
+                break
+        if replay.get("enabled", False) and training_run is not None:
+            root = Path(config["paths"]["replay"]) / training_run.name
+            folder = root / self.run_dir.relative_to(training_run)
+            self.replay = ReplayRecorder(folder, replay_signature(config),
+                                         replay.get("chunk_steps", 256), replay.get("max_worker_bytes", 268435456))
 
     def _observation(self):
         scenario = np.zeros(self.scenario_count, dtype=np.float32)
@@ -107,6 +122,8 @@ class GalaxyEnv(gym.Env):
         )
         self.episode += 1
         self.rows = []
+        if self.replay:
+            self.replay.begin(frame, index)
         if self.use_intrinsic:
             self.curiosity[self.variation["name"]].reset(frame)
         self._append(-1, 0.0, 0.0, "running", {})
@@ -169,6 +186,9 @@ class GalaxyEnv(gym.Env):
         )
         timeout_penalty = weights.get("timeout", 0.0) if truncated else 0.0
         reward += timeout_penalty
+        if self.replay:
+            with self.profiler.measure("replay_recording"):
+                self.replay.append(action, frame, reward, intrinsic_reward, terminated, truncated)
         self.total_reward += reward
         outcome = (
             "success"
@@ -325,7 +345,11 @@ class GalaxyEnv(gym.Env):
             if self.rows:
                 self._save_episode("interrupted")
         finally:
-            self.backend.close()
+            try:
+                if self.replay:
+                    self.replay.close()
+            finally:
+                self.backend.close()
 
     def intrinsic_state(self):
         return {name: module.state_dict() for name, module in self.curiosity.items()}

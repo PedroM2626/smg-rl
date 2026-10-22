@@ -1,0 +1,134 @@
+game:
+  id: SB4E01
+  title: Super Mario Galaxy 2
+paths:
+  dolphin: .local/native-dolphin/Dolphin.exe
+  source_user: '%APPDATA%\Dolphin Emulator'
+  user: .local/native-user
+  rom: data/Super Mario Galaxy 2 (USA) (En,Fr,Es).nkit.iso
+  assets: data
+  runs: runs
+  calibration: config/native-calibration.json
+  replay: runs/replay/SB4E01
+replay:
+  enabled: true
+  chunk_steps: 256
+  max_worker_bytes: 268435456
+environment:
+  action_seconds: 0.25
+  key_hold_seconds: 0.08
+  reset_timeout: 30.0
+  max_steps: 3000
+  idle_limit: 180
+  image_size: 84
+  frame_stack: 4
+  crop:
+  - 0.12
+  - 0.17
+  - 0.88
+  - 0.91
+  min_reward_y: -1800.0
+  max_step_distance: 2500.0
+rewards:
+  completion: 20.0
+  death: -2.0
+  progress: 5.0
+  intrinsic: 0.005
+  step: -0.001
+  revision: bounded-exploration-v2
+  timeout: -2.0
+  intrinsic_episode_budget: 0.5
+  intrinsic_decay_start: 30
+  intrinsic_decay_end: 120
+novelty:
+  neighbors: 10
+  capacity: 4000
+  embedding_size: 64
+  rnd_clip: 5.0
+  update_every: 8
+  device: cpu
+training:
+  seed: 42
+  steps: 1000000
+  rollout_steps: 128
+  batch_size: 256
+  epochs: 4
+  learning_rate: 0.0001
+  gamma: 0.997
+  gae_lambda: 0.95
+  entropy: 0.01
+  checkpoint_steps: 1024
+  device: cuda
+  torch_threads: 1
+  enabled: true
+parallel:
+  startup_spacing_seconds: 5.0
+  workers: 4
+  emulation_speed: 0.0
+  frame_skip: 12
+  timeout: 30.0
+  hidden: true
+  plot_every: 20
+  backend: native
+  skip_present: false
+  bridge_wakeup: events
+  native_capture: cpu
+  collector: measured
+  shared_observations: false
+  receive_order: ordered
+  quiet_ui: true
+  graphics_backend: Vulkan
+  cpu_affinity: auto
+  worker_timeout: 120.0
+  max_stalled_attempts: 8
+variations:
+- name: spinning
+  title: Spinning and Spinning and Spinning
+  scenario: 1
+  start_slot: 1
+  goal_slot: 2
+- name: double_time
+  title: Turning Turning Double Time
+  scenario: 2
+  start_slot: 3
+  goal_slot: 4
+world_model:
+  deterministic_size: 256
+  stochastic_size: 32
+  embedding_size: 128
+  hidden_size: 256
+  channels: 16
+  ensemble_size: 5
+  batch_size: 8
+  sequence_length: 32
+  burn_in: 8
+  model_lr: 0.0003
+  actor_lr: 8.0e-05
+  critic_lr: 8.0e-05
+  updates_per_cycle: 4
+  collect_vector_steps: 32
+  imagination_horizon: 8
+  imagination_batch: 128
+  checkpoint_steps: 4096
+  minimum_replay: 4096
+  minimum_train_episodes: 10
+  minimum_validation_episodes: 4
+  minimum_validation_terminals: 2
+  validation_batches: 4
+  maximum_reconstruction_mse: 0.02
+  maximum_open_loop_mse: 0.04
+  maximum_reward_mae: 0.5
+  maximum_continuation_brier: 0.1
+  maximum_terminal_brier: 0.2
+  persistence_ratio: 0.98
+  free_nats: 1.0
+  terminal_weight: 5.0
+  disagreement_scale: 0.01
+  gamma: 0.997
+  entropy: 0.003
+  epsilon: 0.05
+  use_legacy_curiosity: false
+  lambda: 0.95
+  minimum_scenario_train: 256
+  minimum_scenario_validation: 64
+  maximum_terminal_reward_mae: 0.5

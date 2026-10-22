@@ -89,6 +89,20 @@ def test_report_excludes_calibration_and_near_star_resets(tmp_path, validation_n
     assert report["warnings"]
 
 
+def test_report_separates_world_model_real_episodes_from_offline_imagination(tmp_path):
+    online = make_run(tmp_path, "world-model-online")
+    offline = make_run(tmp_path, "world-model-offline")
+    for run, kind in [(online, "online"), (offline, "offline")]:
+        path = run / "config.json"
+        config = json.loads(path.read_text())
+        config["world_model_run"] = kind
+        path.write_text(json.dumps(config))
+        trajectory(run / "worker-00/spinning/episode-000001.csv", progress=0.1, success=True)
+    report = training_report(tmp_path)
+    assert len(report["runs"]) == 1
+    assert report["tasks"][0]["successful_training_episodes"] == 1
+
+
 def test_success_requires_ram_completion_and_live_terminal_is_not_duplicated(tmp_path):
     run = make_run(tmp_path)
     trajectory(run / "worker-00/spinning/episode-000001.csv", success=True, progress=1)

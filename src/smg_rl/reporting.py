@@ -33,9 +33,11 @@ def training_report(root, output=None):
     tasks, runs, warnings, evidence = {}, [], [], {}
     for config_path in sorted(root.rglob("config.json")):
         run = config_path.parent
-        if not run.name.startswith(("train-", "parallel-")):
+        if not run.name.startswith(("train-", "parallel-", "world-model-")):
             continue
         config = read_json(config_path, {})
+        if run.name.startswith("world-model-") and config.get("world_model_run") != "online":
+            continue
         gid = game_id(config)
         if gid not in PROFILES or not config.get("variations"):
             continue

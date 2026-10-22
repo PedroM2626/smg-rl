@@ -158,3 +158,34 @@ def test_single_scenario_smg1_observation_has_its_own_shape(tmp_path):
         assert backend.slot == 1
     finally:
         env.close()
+
+
+def test_visual_replay_records_terminal_image_before_reset_and_ignores_benchmarks(tmp_path):
+    from smg_rl.replay import load_chunk, replay_signature
+
+    template, _ = make_env(tmp_path)
+    config = template.config
+    template.close()
+    config["replay"] = {"enabled": True, "chunk_steps": 8, "max_worker_bytes": 1000000}
+    config["paths"]["replay"] = str(tmp_path / "replay")
+    config["environment"]["max_steps"] = 1
+    config["parallel"] = {"frame_skip": 12, "plot_every": 1000}
+    backend = FakeDolphin()
+    env = GalaxyEnv(config, backend, tmp_path / "world-model-synthetic" / "worker-00", memory=backend, intrinsic=False)
+    try:
+        env.reset(options={"variation": 0})
+        _, reward, _, truncated, _ = env.step(1)
+        assert truncated
+        env.reset(options={"variation": 0})
+    finally:
+        env.close()
+    chunk = load_chunk(next((tmp_path / "replay").rglob("*.npz")), replay_signature(config))
+    assert chunk["images"][:, 0, 0].tolist() == [0, 1]
+    assert chunk["rewards"].tolist() == [np.float32(reward)]
+    assert chunk["truncated"].tolist() == [True] and not chunk["terminated"].any()
+    other = FakeDolphin()
+    benchmark = GalaxyEnv(config, other, tmp_path / "world-model-synthetic" / "benchmark-synthetic" / "worker-00", memory=other, intrinsic=False)
+    try:
+        assert benchmark.replay is None
+    finally:
+        benchmark.close()

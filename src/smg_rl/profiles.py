@@ -1,6 +1,7 @@
 """Executable-specific, read-only telemetry layouts. Addresses are Wii addresses."""
 
 from dataclasses import dataclass
+from pathlib import Path
 
 
 @dataclass(frozen=True)
@@ -80,3 +81,5 @@ def game_id(config):
 def require_training_enabled(config):
     if not config.get("training", {}).get("enabled", True):
         raise ValueError("This configuration is validation-only. Training is explicitly disabled.")
+    if (Path(config.get("root", ".")) / ".local" / "training-hold.json").exists():
+        raise ValueError("Training is on hold by explicit user request. Await authorization to resume.")

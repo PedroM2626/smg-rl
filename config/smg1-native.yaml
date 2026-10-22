@@ -6,6 +6,11 @@ paths:
   assets: data
   runs: runs/smg1
   calibration: config/smg1-native-calibration.json
+  replay: runs/replay/RMGE01
+replay:
+  enabled: true
+  chunk_steps: 256
+  max_worker_bytes: 268435456
 environment:
   action_seconds: 0.25
   key_hold_seconds: 0.08
