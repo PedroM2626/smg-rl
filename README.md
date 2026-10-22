@@ -41,12 +41,20 @@ the policy observation.
 
 | Signal | Source and interpretation | Default contribution |
 | --- | --- | --- |
-| Exploration | Per-worker, per-scenario episodic visual novelty multiplied by normalized RND novelty | `0.02 * intrinsic_bonus` |
+| Exploration | Per-worker, per-scenario visual novelty; fades after 30 stalled decisions and stops at 120 | `0.005 * intrinsic_bonus`, at most `+0.5` per episode |
 | Progress | New valid episode high-water projection of Mario's world X/Z position onto the calibrated start-to-star axis | `5 * increase` |
 | Completion | Game-specific star-collection scene nerve | `+20` |
 | Death | Game-specific actor/scene predicates; Galaxy 1 also checks zero HP | `-2` |
 | Nonfatal damage, Galaxy 1 | Decrease in RAM health since the preceding sample | `-0.25` per HP lost |
-| Time | Each decision | `-0.0001` |
+| Time | Each decision | `-0.001` |
+| Timeout | Decision limit or 180 decisions without valid progress | `-2`, separate from RAM death |
+
+These are the recommended native configurations' `bounded-exploration-v2`
+settings. Legacy configurations retain their historical rewards. Curiosity is
+scored every eligible decision and optimized in batches of eight; PPO still
+collects 128 decisions per worker per rollout. See the
+[optimization and stagnation audit](docs/optimization-v2.md) for measurements,
+reward equations, validation, and checkpoint migration.
 
 **Progress is a geometric proxy, not a native game completion percentage.** Height,
 displacement, and death gates reject invalid progress. Sweet Sweet Galaxy's
@@ -280,13 +288,14 @@ optimization; it is excluded from training success reports. Workers publish
 policy-forward, rollout, PPO-update, and checkpoint timings. Nested stages overlap
 and must not be summed as exclusive costs.
 
-Short native environment tests measured **9.69 decisions/s in Galaxy 1** and
-**12.56 in Galaxy 2**, one worker each, versus **1.06** in the Galaxy 1 legacy
-repeat. Native CUDA continuation smoke runs measured about **21.07 aggregate
-training decisions/s with four Galaxy 2 workers**, and **8.30 with one Galaxy 1
-worker**, including PPO updates/final save. These are different measurements;
-startup/reset load and action-duration differences limit direct comparisons.
-See [raw benchmarks and validation](docs/native-backend.md).
+Current protocol-v2 repeated environment tests measured **15.64 decisions/s in
+Galaxy 1** and **17.45 in Galaxy 2** with batch-eight curiosity, excluding resets
+and PPO. Matched online-curiosity conditions measured 14.31 and 16.64,
+respectively. Curiosity itself fell from 4.19 to 1.82 ms in Galaxy 1 and 3.92 to
+1.94 ms in Galaxy 2. These are short one-worker engineering tests; five-worker
+production throughput includes contention, resets, and PPO updates. See the
+[current audit and raw measurements](docs/optimization-v2.md) and
+[historical backend comparison](docs/native-backend.md).
 
 ## Timing, performance, and research limits
 

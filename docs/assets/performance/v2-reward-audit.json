@@ -1,0 +1,1790 @@
+{
+  "smg2": {
+    "observed_workers": [
+      {
+        "worker": "worker-00",
+        "episodes": 32,
+        "outcomes": {
+          "timeout": 17,
+          "death": 15
+        },
+        "median_steps": 594.5,
+        "mean_return": 12.283351175993793,
+        "median_best_progress": 0.017532520851045192,
+        "top_actions": [
+          [
+            "s+crouch",
+            1961
+          ],
+          [
+            "a+jump+spin",
+            994
+          ],
+          [
+            "s+d+crouch",
+            870
+          ],
+          [
+            "spin",
+            865
+          ],
+          [
+            "d+crouch",
+            813
+          ],
+          [
+            "jump+spin",
+            783
+          ]
+        ],
+        "mean_intrinsic_per_step": 0.019783648918612232,
+        "intrinsic_constant_fraction": 0.9291894353369763,
+        "median_episode_displacement": 1067.5121410195402
+      },
+      {
+        "worker": "worker-01",
+        "episodes": 36,
+        "outcomes": {
+          "death": 17,
+          "timeout": 19
+        },
+        "median_steps": 595.5,
+        "mean_return": 10.93408534082859,
+        "median_best_progress": 0.004647945422516384,
+        "top_actions": [
+          [
+            "s+crouch",
+            1897
+          ],
+          [
+            "a+jump+spin",
+            1006
+          ],
+          [
+            "spin",
+            878
+          ],
+          [
+            "s+d+crouch",
+            871
+          ],
+          [
+            "d+crouch",
+            845
+          ],
+          [
+            "jump+spin",
+            788
+          ]
+        ],
+        "mean_intrinsic_per_step": 0.01982924773924172,
+        "intrinsic_constant_fraction": 0.9430644919946132,
+        "median_episode_displacement": 950.1400039254327
+      },
+      {
+        "worker": "worker-02",
+        "episodes": 31,
+        "outcomes": {
+          "death": 19,
+          "timeout": 12
+        },
+        "median_steps": 696.0,
+        "mean_return": 12.330921011822463,
+        "median_best_progress": 0.013866461080863538,
+        "top_actions": [
+          [
+            "s+crouch",
+            2081
+          ],
+          [
+            "s+d+crouch",
+            961
+          ],
+          [
+            "a+jump+spin",
+            932
+          ],
+          [
+            "spin",
+            921
+          ],
+          [
+            "d+crouch",
+            905
+          ],
+          [
+            "jump+spin",
+            776
+          ]
+        ],
+        "mean_intrinsic_per_step": 0.01977618308777742,
+        "intrinsic_constant_fraction": 0.9390038762524684,
+        "median_episode_displacement": 2772.561506579831
+      },
+      {
+        "worker": "worker-03",
+        "episodes": 36,
+        "outcomes": {
+          "timeout": 18,
+          "death": 18
+        },
+        "median_steps": 525.5,
+        "mean_return": 11.007963707989369,
+        "median_best_progress": 0.009185836824354556,
+        "top_actions": [
+          [
+            "s+crouch",
+            1770
+          ],
+          [
+            "a+jump+spin",
+            868
+          ],
+          [
+            "s+d+crouch",
+            780
+          ],
+          [
+            "spin",
+            769
+          ],
+          [
+            "jump+spin",
+            661
+          ],
+          [
+            "s+d+jump+spin",
+            643
+          ]
+        ],
+        "mean_intrinsic_per_step": 0.019828321237975323,
+        "intrinsic_constant_fraction": 0.9422772799156564,
+        "median_episode_displacement": 1026.7152173589373
+      }
+    ],
+    "counterfactual": {
+      "config": "config/native.yaml",
+      "source_run": "runs/parallel-20261022-114639-309238",
+      "episodes": 146,
+      "mean_recorded_return": 11.415230636584807,
+      "mean_counterfactual_return": -1.8453830192910479,
+      "note": "Reuses legacy intrinsic bonuses divided by their 0.02 coefficient. Stops recorded prefixes at the new idle limit. Does not simulate changed policy actions, batched learning, or future outcomes.",
+      "traces": [
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000001.csv",
+          "recorded_return": 21.886517957416213,
+          "counterfactual_return": -2.2693379796693858,
+          "counterfactual_steps": 876,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000002.csv",
+          "recorded_return": 21.58144376268567,
+          "counterfactual_return": -1.818370984355216,
+          "counterfactual_steps": 180,
+          "intrinsic_paid": 0.3616290156447837,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000003.csv",
+          "recorded_return": 15.965282552440678,
+          "counterfactual_return": -1.9962511170155113,
+          "counterfactual_steps": 582,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000004.csv",
+          "recorded_return": 9.933837881950264,
+          "counterfactual_return": -1.7477807364095905,
+          "counterfactual_steps": 289,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000005.csv",
+          "recorded_return": 11.48826457839922,
+          "counterfactual_return": -1.7585432255223532,
+          "counterfactual_steps": 289,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000006.csv",
+          "recorded_return": 16.120118284526377,
+          "counterfactual_return": -2.0074981827471348,
+          "counterfactual_steps": 587,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000007.csv",
+          "recorded_return": 10.763774830047607,
+          "counterfactual_return": -1.758099361906538,
+          "counterfactual_steps": 322,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000008.csv",
+          "recorded_return": 9.596339308343204,
+          "counterfactual_return": -1.710154460599051,
+          "counterfactual_steps": 255,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000009.csv",
+          "recorded_return": 4.827320008679003,
+          "counterfactual_return": -1.7124806585141423,
+          "counterfactual_steps": 237,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000010.csv",
+          "recorded_return": 11.419966913617381,
+          "counterfactual_return": -2.071649865076595,
+          "counterfactual_steps": 684,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000011.csv",
+          "recorded_return": 10.099453003981804,
+          "counterfactual_return": -1.780292978190172,
+          "counterfactual_steps": 381,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000012.csv",
+          "recorded_return": 6.685960143544891,
+          "counterfactual_return": -1.7685134017662465,
+          "counterfactual_steps": 191,
+          "intrinsic_paid": 0.41488436370759646,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000013.csv",
+          "recorded_return": 9.192537817247402,
+          "counterfactual_return": -1.7312031930230973,
+          "counterfactual_steps": 244,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000014.csv",
+          "recorded_return": 23.477683638817357,
+          "counterfactual_return": -1.9086031969673276,
+          "counterfactual_steps": 436,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000015.csv",
+          "recorded_return": 7.520706882942283,
+          "counterfactual_return": -1.8569102721162238,
+          "counterfactual_steps": 180,
+          "intrinsic_paid": 0.32308972788377627,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000016.csv",
+          "recorded_return": 6.8006635988913455,
+          "counterfactual_return": -1.8500884353369225,
+          "counterfactual_steps": 180,
+          "intrinsic_paid": 0.3299115646630774,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000017.csv",
+          "recorded_return": 14.146436056532973,
+          "counterfactual_return": -1.899955932327858,
+          "counterfactual_steps": 489,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000018.csv",
+          "recorded_return": 12.036474886007756,
+          "counterfactual_return": -1.8860429096226974,
+          "counterfactual_steps": 403,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000019.csv",
+          "recorded_return": 20.12120818687989,
+          "counterfactual_return": -2.0039058186683767,
+          "counterfactual_steps": 542,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000020.csv",
+          "recorded_return": 8.845088631955653,
+          "counterfactual_return": -1.6956658990540014,
+          "counterfactual_steps": 224,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000021.csv",
+          "recorded_return": 14.61428648669057,
+          "counterfactual_return": -1.812405048855534,
+          "counterfactual_steps": 180,
+          "intrinsic_paid": 0.3675949511444659,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000022.csv",
+          "recorded_return": 4.131711917801489,
+          "counterfactual_return": -1.6827770152417343,
+          "counterfactual_steps": 306,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000023.csv",
+          "recorded_return": 23.779621965529355,
+          "counterfactual_return": -1.854257238878367,
+          "counterfactual_steps": 180,
+          "intrinsic_paid": 0.32574276112163286,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000024.csv",
+          "recorded_return": 6.3541173667914705,
+          "counterfactual_return": -1.7822139393776304,
+          "counterfactual_steps": 302,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000025.csv",
+          "recorded_return": -0.12683802578283765,
+          "counterfactual_return": -1.748199136723341,
+          "counterfactual_steps": 103,
+          "intrinsic_paid": 0.354800863276659,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000026.csv",
+          "recorded_return": 11.557106592241519,
+          "counterfactual_return": -1.837025022840273,
+          "counterfactual_steps": 360,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000027.csv",
+          "recorded_return": 18.156806470379383,
+          "counterfactual_return": -2.08285647366357,
+          "counterfactual_steps": 688,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000028.csv",
+          "recorded_return": 17.58237707360325,
+          "counterfactual_return": -2.0430841468030465,
+          "counterfactual_steps": 659,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000029.csv",
+          "recorded_return": 2.112583054698184,
+          "counterfactual_return": -1.8237129235986094,
+          "counterfactual_steps": 180,
+          "intrinsic_paid": 0.3562870764013906,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000030.csv",
+          "recorded_return": 25.70234284211759,
+          "counterfactual_return": -1.8055751199918522,
+          "counterfactual_steps": 181,
+          "intrinsic_paid": 0.3721697087688567,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000031.csv",
+          "recorded_return": 7.846008421490533,
+          "counterfactual_return": -1.8202220845575454,
+          "counterfactual_steps": 180,
+          "intrinsic_paid": 0.3597779154424545,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000032.csv",
+          "recorded_return": 8.84803454133392,
+          "counterfactual_return": -1.9393026807646192,
+          "counterfactual_steps": 549,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000033.csv",
+          "recorded_return": 11.26141067010931,
+          "counterfactual_return": -2.0673497132765832,
+          "counterfactual_steps": 670,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000034.csv",
+          "recorded_return": 0.16266658050170557,
+          "counterfactual_return": -1.5680866124492798,
+          "counterfactual_steps": 109,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000035.csv",
+          "recorded_return": 8.650215816300316,
+          "counterfactual_return": -1.6974335648328287,
+          "counterfactual_steps": 214,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-00\\spinning\\episode-000036.csv",
+          "recorded_return": 2.263229088397116,
+          "counterfactual_return": -1.6819326315426593,
+          "counterfactual_steps": 216,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000001.csv",
+          "recorded_return": 2.0986826748232024,
+          "counterfactual_return": -1.8250948282272565,
+          "counterfactual_steps": 183,
+          "intrinsic_paid": 0.35716712522130584,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000002.csv",
+          "recorded_return": 3.7821239555227675,
+          "counterfactual_return": -1.782026974592195,
+          "counterfactual_steps": 292,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000003.csv",
+          "recorded_return": 1.8767707834022906,
+          "counterfactual_return": -1.679031320259339,
+          "counterfactual_steps": 196,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000004.csv",
+          "recorded_return": 14.439043704109281,
+          "counterfactual_return": -1.8073348268443485,
+          "counterfactual_steps": 180,
+          "intrinsic_paid": 0.3726651731556515,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000005.csv",
+          "recorded_return": 3.4371558548924788,
+          "counterfactual_return": -1.7371043381414055,
+          "counterfactual_steps": 196,
+          "intrinsic_paid": 0.4521234772204701,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000006.csv",
+          "recorded_return": 3.6891690787488067,
+          "counterfactual_return": -1.7155222055255486,
+          "counterfactual_steps": 230,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000007.csv",
+          "recorded_return": 9.734061990968618,
+          "counterfactual_return": -2.0250205004444517,
+          "counterfactual_steps": 594,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000008.csv",
+          "recorded_return": 12.450379903097014,
+          "counterfactual_return": -1.9082869308180714,
+          "counterfactual_steps": 429,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000009.csv",
+          "recorded_return": 12.306251734741402,
+          "counterfactual_return": -1.8684017164956144,
+          "counterfactual_steps": 397,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000010.csv",
+          "recorded_return": 9.745842915173156,
+          "counterfactual_return": -1.757337825472662,
+          "counterfactual_steps": 269,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000011.csv",
+          "recorded_return": 10.173421532084596,
+          "counterfactual_return": -1.7683920918694573,
+          "counterfactual_steps": 290,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000012.csv",
+          "recorded_return": 9.855242509866564,
+          "counterfactual_return": -1.8074969225797004,
+          "counterfactual_steps": 180,
+          "intrinsic_paid": 0.3725030774202996,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000013.csv",
+          "recorded_return": 18.53287098163267,
+          "counterfactual_return": -1.7838673117970674,
+          "counterfactual_steps": 335,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000014.csv",
+          "recorded_return": 14.727016885546416,
+          "counterfactual_return": -1.7117871925624193,
+          "counterfactual_steps": 228,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000015.csv",
+          "recorded_return": 1.0735637237218576,
+          "counterfactual_return": -1.8573555717880155,
+          "counterfactual_steps": 173,
+          "intrinsic_paid": 0.31564442821198446,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000016.csv",
+          "recorded_return": 17.08149959944877,
+          "counterfactual_return": -2.0697507383580596,
+          "counterfactual_steps": 635,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000017.csv",
+          "recorded_return": 22.69378124205463,
+          "counterfactual_return": -1.7944624984629234,
+          "counterfactual_steps": 183,
+          "intrinsic_paid": 0.387633227424676,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000018.csv",
+          "recorded_return": 7.96044163315671,
+          "counterfactual_return": -1.8075235704224892,
+          "counterfactual_steps": 180,
+          "intrinsic_paid": 0.37247642957751076,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000019.csv",
+          "recorded_return": 13.87348614753242,
+          "counterfactual_return": -1.9242859102406493,
+          "counterfactual_steps": 475,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000020.csv",
+          "recorded_return": 16.10264118739984,
+          "counterfactual_return": -1.7480459336389835,
+          "counterfactual_steps": 284,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000021.csv",
+          "recorded_return": 8.534971014365716,
+          "counterfactual_return": -1.8110246957463378,
+          "counterfactual_steps": 180,
+          "intrinsic_paid": 0.368975304253662,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000022.csv",
+          "recorded_return": 7.959811077052077,
+          "counterfactual_return": -1.8075370080335365,
+          "counterfactual_steps": 180,
+          "intrinsic_paid": 0.37246299196646365,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000023.csv",
+          "recorded_return": 8.280725218058075,
+          "counterfactual_return": -1.7419868061691073,
+          "counterfactual_steps": 196,
+          "intrinsic_paid": 0.45242600604090816,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000024.csv",
+          "recorded_return": 27.39489715750738,
+          "counterfactual_return": -2.5863788560528174,
+          "counterfactual_steps": 1153,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000025.csv",
+          "recorded_return": 12.502663270266439,
+          "counterfactual_return": -2.1573442072707114,
+          "counterfactual_steps": 727,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000026.csv",
+          "recorded_return": 11.123616505654896,
+          "counterfactual_return": -1.9148688929824194,
+          "counterfactual_steps": 453,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000027.csv",
+          "recorded_return": 7.80799139231094,
+          "counterfactual_return": -1.8153086685034427,
+          "counterfactual_steps": 185,
+          "intrinsic_paid": 0.3610553129637017,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000028.csv",
+          "recorded_return": 10.986665739812292,
+          "counterfactual_return": -1.821128453905379,
+          "counterfactual_steps": 346,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000029.csv",
+          "recorded_return": 12.310588819461884,
+          "counterfactual_return": -2.0980448455572245,
+          "counterfactual_steps": 657,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000030.csv",
+          "recorded_return": 17.632190451830105,
+          "counterfactual_return": -2.096633102913841,
+          "counterfactual_steps": 663,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000031.csv",
+          "recorded_return": 14.92538038860858,
+          "counterfactual_return": -1.7352923657239203,
+          "counterfactual_steps": 255,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000032.csv",
+          "recorded_return": 15.653519482399666,
+          "counterfactual_return": -2.3178070727396975,
+          "counterfactual_steps": 901,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000033.csv",
+          "recorded_return": 3.41732896486956,
+          "counterfactual_return": -1.8449938956484304,
+          "counterfactual_steps": 180,
+          "intrinsic_paid": 0.3350061043515695,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000034.csv",
+          "recorded_return": 2.9542827702705723,
+          "counterfactual_return": -1.7534939746313247,
+          "counterfactual_steps": 257,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000035.csv",
+          "recorded_return": 24.36891881349804,
+          "counterfactual_return": -2.129408904993186,
+          "counterfactual_steps": 694,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000036.csv",
+          "recorded_return": 2.140073165939421,
+          "counterfactual_return": -1.607985737547432,
+          "counterfactual_steps": 205,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000037.csv",
+          "recorded_return": 2.6449167801392197,
+          "counterfactual_return": -1.650548461449353,
+          "counterfactual_steps": 231,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000038.csv",
+          "recorded_return": 13.14437947338989,
+          "counterfactual_return": -1.9008974675456136,
+          "counterfactual_steps": 439,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-01\\double_time\\episode-000039.csv",
+          "recorded_return": 6.884364647888745,
+          "counterfactual_return": -1.861168782521218,
+          "counterfactual_steps": 444,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000001.csv",
+          "recorded_return": 5.359526789733492,
+          "counterfactual_return": -1.8246676945956823,
+          "counterfactual_steps": 394,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000002.csv",
+          "recorded_return": 9.341315382305813,
+          "counterfactual_return": -1.7561759044019791,
+          "counterfactual_steps": 380,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000003.csv",
+          "recorded_return": 11.169366747519542,
+          "counterfactual_return": -1.7734395003155505,
+          "counterfactual_steps": 288,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000004.csv",
+          "recorded_return": 17.6254939830936,
+          "counterfactual_return": -1.7300368385829181,
+          "counterfactual_steps": 230,
+          "intrinsic_paid": 0.4810402289706185,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000005.csv",
+          "recorded_return": 11.645440209083752,
+          "counterfactual_return": -1.8637720283722632,
+          "counterfactual_steps": 391,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000006.csv",
+          "recorded_return": 13.645419652417242,
+          "counterfactual_return": -2.095296861284088,
+          "counterfactual_steps": 683,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000007.csv",
+          "recorded_return": 13.30619143143562,
+          "counterfactual_return": -2.030059535856889,
+          "counterfactual_steps": 631,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000008.csv",
+          "recorded_return": 23.16854827140159,
+          "counterfactual_return": -1.8002716911396104,
+          "counterfactual_steps": 182,
+          "intrinsic_paid": 0.38064594685109854,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000009.csv",
+          "recorded_return": 4.092210877548366,
+          "counterfactual_return": -1.698016631219956,
+          "counterfactual_steps": 307,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000010.csv",
+          "recorded_return": 13.80677552316031,
+          "counterfactual_return": -1.767283776180627,
+          "counterfactual_steps": 281,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000011.csv",
+          "recorded_return": 10.8893085685828,
+          "counterfactual_return": -1.8147179392420905,
+          "counterfactual_steps": 333,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000012.csv",
+          "recorded_return": 16.66837618329942,
+          "counterfactual_return": -1.9562086197841735,
+          "counterfactual_steps": 514,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000013.csv",
+          "recorded_return": 7.95969615835177,
+          "counterfactual_return": -1.8075290168282052,
+          "counterfactual_steps": 180,
+          "intrinsic_paid": 0.3724709831717949,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000014.csv",
+          "recorded_return": 13.038271405325599,
+          "counterfactual_return": -1.9851535422428044,
+          "counterfactual_steps": 546,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000015.csv",
+          "recorded_return": 13.869593225967776,
+          "counterfactual_return": -1.9222135845106274,
+          "counterfactual_steps": 476,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000016.csv",
+          "recorded_return": 9.741227016191425,
+          "counterfactual_return": -1.933934054226575,
+          "counterfactual_steps": 467,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000017.csv",
+          "recorded_return": 17.47157974357242,
+          "counterfactual_return": -1.81820587611781,
+          "counterfactual_steps": 180,
+          "intrinsic_paid": 0.36179412388219,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000018.csv",
+          "recorded_return": 10.646424630721372,
+          "counterfactual_return": -1.7809497170149513,
+          "counterfactual_steps": 314,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000019.csv",
+          "recorded_return": 14.599274829064706,
+          "counterfactual_return": -1.961462715178946,
+          "counterfactual_steps": 519,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000020.csv",
+          "recorded_return": 10.513787903596993,
+          "counterfactual_return": -1.790724359263641,
+          "counterfactual_steps": 309,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000021.csv",
+          "recorded_return": 19.80002374215365,
+          "counterfactual_return": -2.1539243584076906,
+          "counterfactual_steps": 714,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000022.csv",
+          "recorded_return": 17.509186552665863,
+          "counterfactual_return": -1.7646085125376716,
+          "counterfactual_steps": 275,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000023.csv",
+          "recorded_return": 15.450226280608373,
+          "counterfactual_return": -1.982867359261429,
+          "counterfactual_steps": 553,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000024.csv",
+          "recorded_return": 18.566700572705933,
+          "counterfactual_return": -1.7510891775295778,
+          "counterfactual_steps": 261,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000025.csv",
+          "recorded_return": 1.7404912945060054,
+          "counterfactual_return": -1.8075651398812633,
+          "counterfactual_steps": 180,
+          "intrinsic_paid": 0.3724348601187368,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000026.csv",
+          "recorded_return": 1.4918843063914484,
+          "counterfactual_return": -1.658407616832252,
+          "counterfactual_steps": 185,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000027.csv",
+          "recorded_return": 14.21950057360379,
+          "counterfactual_return": -1.8713145187353293,
+          "counterfactual_steps": 489,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000028.csv",
+          "recorded_return": 20.67829761996571,
+          "counterfactual_return": -1.7155227434614946,
+          "counterfactual_steps": 241,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000029.csv",
+          "recorded_return": 10.178584980254787,
+          "counterfactual_return": -1.760702907743267,
+          "counterfactual_steps": 290,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000030.csv",
+          "recorded_return": 9.099418932708645,
+          "counterfactual_return": -1.8416208085563113,
+          "counterfactual_steps": 374,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000031.csv",
+          "recorded_return": 4.9664079785585145,
+          "counterfactual_return": -1.8097351174084475,
+          "counterfactual_steps": 180,
+          "intrinsic_paid": 0.3702648825915525,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000032.csv",
+          "recorded_return": 9.540465868488722,
+          "counterfactual_return": -1.9579762640153486,
+          "counterfactual_steps": 576,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000033.csv",
+          "recorded_return": 17.749409024504864,
+          "counterfactual_return": -1.7550642444740008,
+          "counterfactual_steps": 326,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-02\\spinning\\episode-000034.csv",
+          "recorded_return": 8.474261311408256,
+          "counterfactual_return": -1.6864423318343909,
+          "counterfactual_steps": 205,
+          "intrinsic_paid": 0.49657319659608196,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000001.csv",
+          "recorded_return": 26.180717878454313,
+          "counterfactual_return": -2.3039425955436252,
+          "counterfactual_steps": 866,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000002.csv",
+          "recorded_return": 0.7776577174625818,
+          "counterfactual_return": -1.650105608484546,
+          "counterfactual_steps": 142,
+          "intrinsic_paid": 0.4901115733409485,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000003.csv",
+          "recorded_return": 6.377601068739834,
+          "counterfactual_return": -1.853941484064241,
+          "counterfactual_steps": 429,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000004.csv",
+          "recorded_return": 9.15048497195607,
+          "counterfactual_return": -1.9880079445988887,
+          "counterfactual_steps": 560,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000005.csv",
+          "recorded_return": 26.248297063492714,
+          "counterfactual_return": -1.9517813326795672,
+          "counterfactual_steps": 493,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000006.csv",
+          "recorded_return": 0.429646563551334,
+          "counterfactual_return": -1.7449605804072847,
+          "counterfactual_steps": 124,
+          "intrinsic_paid": 0.37741649632815677,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000007.csv",
+          "recorded_return": 1.4148714510153728,
+          "counterfactual_return": -1.5924125539379157,
+          "counterfactual_steps": 170,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000008.csv",
+          "recorded_return": 12.627157834757723,
+          "counterfactual_return": -1.8808456658873904,
+          "counterfactual_steps": 413,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000009.csv",
+          "recorded_return": 5.104791937576428,
+          "counterfactual_return": -1.7768469993180076,
+          "counterfactual_steps": 356,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000010.csv",
+          "recorded_return": 12.315320784057537,
+          "counterfactual_return": -1.8596960827379043,
+          "counterfactual_steps": 397,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000011.csv",
+          "recorded_return": 9.799457399514875,
+          "counterfactual_return": -1.7390781146586443,
+          "counterfactual_steps": 271,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000012.csv",
+          "recorded_return": 26.041509540885258,
+          "counterfactual_return": -1.766330557768691,
+          "counterfactual_steps": 190,
+          "intrinsic_paid": 0.4217551341627329,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000013.csv",
+          "recorded_return": 8.922076918601052,
+          "counterfactual_return": -1.7217687033131832,
+          "counterfactual_steps": 228,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000014.csv",
+          "recorded_return": 26.924758509007965,
+          "counterfactual_return": -1.8066323484662974,
+          "counterfactual_steps": 338,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000015.csv",
+          "recorded_return": 6.615032467536253,
+          "counterfactual_return": -1.738877516539557,
+          "counterfactual_steps": 265,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000016.csv",
+          "recorded_return": 10.01021279736527,
+          "counterfactual_return": -1.7263878359543587,
+          "counterfactual_steps": 198,
+          "intrinsic_paid": 0.462300684510002,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000017.csv",
+          "recorded_return": 11.41512440765423,
+          "counterfactual_return": -1.8498674250948977,
+          "counterfactual_steps": 381,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000018.csv",
+          "recorded_return": 4.276254266734947,
+          "counterfactual_return": -1.7502930260168235,
+          "counterfactual_steps": 333,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000019.csv",
+          "recorded_return": 3.4172338894578966,
+          "counterfactual_return": -1.8074386298558192,
+          "counterfactual_steps": 180,
+          "intrinsic_paid": 0.3725613701441808,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000020.csv",
+          "recorded_return": 4.121327881974256,
+          "counterfactual_return": -1.787729760868573,
+          "counterfactual_steps": 183,
+          "intrinsic_paid": 0.38749662469530566,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000021.csv",
+          "recorded_return": 11.559258843844935,
+          "counterfactual_return": -1.8154017054675287,
+          "counterfactual_steps": 359,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000022.csv",
+          "recorded_return": 23.05569652071113,
+          "counterfactual_return": -1.7010207546421003,
+          "counterfactual_steps": 209,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000023.csv",
+          "recorded_return": 2.3801810088038517,
+          "counterfactual_return": -1.743579038420628,
+          "counterfactual_steps": 196,
+          "intrinsic_paid": 0.45230394728495127,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000024.csv",
+          "recorded_return": 21.43774221615642,
+          "counterfactual_return": -1.962758456418861,
+          "counterfactual_steps": 495,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000025.csv",
+          "recorded_return": 22.807400895007426,
+          "counterfactual_return": -2.363916366587736,
+          "counterfactual_steps": 923,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000026.csv",
+          "recorded_return": 24.948615223148195,
+          "counterfactual_return": -1.808406383432573,
+          "counterfactual_steps": 180,
+          "intrinsic_paid": 0.37159361656742707,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000027.csv",
+          "recorded_return": 11.234420911674704,
+          "counterfactual_return": -1.7913397477941595,
+          "counterfactual_steps": 342,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000028.csv",
+          "recorded_return": 4.214520873831432,
+          "counterfactual_return": -1.8155717777339337,
+          "counterfactual_steps": 180,
+          "intrinsic_paid": 0.36442822226606625,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000029.csv",
+          "recorded_return": 8.108864034935005,
+          "counterfactual_return": -1.7732115898619019,
+          "counterfactual_steps": 187,
+          "intrinsic_paid": 0.4076593212809003,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000030.csv",
+          "recorded_return": 5.371863720081853,
+          "counterfactual_return": -1.7292465958630157,
+          "counterfactual_steps": 247,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000031.csv",
+          "recorded_return": 13.733589471743965,
+          "counterfactual_return": -1.9053604588681519,
+          "counterfactual_steps": 467,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000032.csv",
+          "recorded_return": 2.582648575635886,
+          "counterfactual_return": -1.645507371935335,
+          "counterfactual_steps": 228,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000033.csv",
+          "recorded_return": 7.961028213438253,
+          "counterfactual_return": -1.8075007397435419,
+          "counterfactual_steps": 180,
+          "intrinsic_paid": 0.3724992602564581,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000034.csv",
+          "recorded_return": 12.192467938743121,
+          "counterfactual_return": -1.8417399262889262,
+          "counterfactual_steps": 390,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000035.csv",
+          "recorded_return": 13.01656800062512,
+          "counterfactual_return": -1.8919385662961687,
+          "counterfactual_steps": 432,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000036.csv",
+          "recorded_return": -0.48770831055991426,
+          "counterfactual_return": -1.6702624198016924,
+          "counterfactual_steps": 77,
+          "intrinsic_paid": 0.3710847030805928,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\parallel-20261022-114639-309238\\worker-03\\double_time\\episode-000037.csv",
+          "recorded_return": 20.60879892450944,
+          "counterfactual_return": -1.727489793341129,
+          "counterfactual_steps": 237,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        }
+      ]
+    }
+  },
+  "smg1": {
+    "observed_workers": [
+      {
+        "worker": "worker-00",
+        "episodes": 50,
+        "outcomes": {
+          "timeout": 20,
+          "death": 30
+        },
+        "median_steps": 424.0,
+        "mean_return": 7.571310632886782,
+        "median_best_progress": 0.007515330641005324,
+        "top_actions": [
+          [
+            "s+d+jump+spin",
+            796
+          ],
+          [
+            "spin",
+            721
+          ],
+          [
+            "s+d+crouch",
+            688
+          ],
+          [
+            "d+w+crouch",
+            525
+          ],
+          [
+            "w+crouch",
+            515
+          ],
+          [
+            "a+crouch",
+            373
+          ]
+        ],
+        "mean_intrinsic_per_step": 0.019963943842742745,
+        "intrinsic_constant_fraction": 0.9737305178481649,
+        "median_episode_displacement": 3100.1788039105654
+      }
+    ],
+    "counterfactual": {
+      "config": "config/smg1-native.yaml",
+      "source_run": "runs/smg1/parallel-20261022-083713-478823",
+      "episodes": 49,
+      "mean_recorded_return": 7.613886438417665,
+      "mean_counterfactual_return": -1.74062704456378,
+      "note": "Reuses legacy intrinsic bonuses divided by their 0.02 coefficient. Stops recorded prefixes at the new idle limit. Does not simulate changed policy actions, batched learning, or future outcomes.",
+      "traces": [
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000262.csv",
+          "recorded_return": 1.0759878132509106,
+          "counterfactual_return": -1.5419605553849418,
+          "counterfactual_steps": 150,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000263.csv",
+          "recorded_return": 11.62559531604382,
+          "counterfactual_return": -1.8181366734666555,
+          "counterfactual_steps": 362,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000264.csv",
+          "recorded_return": 9.845455555334418,
+          "counterfactual_return": -1.707129558052975,
+          "counterfactual_steps": 204,
+          "intrinsic_paid": 0.4928491996960259,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000265.csv",
+          "recorded_return": 6.523118011720484,
+          "counterfactual_return": -1.8185432335660123,
+          "counterfactual_steps": 338,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000266.csv",
+          "recorded_return": 18.572138094894086,
+          "counterfactual_return": -1.8030210927358954,
+          "counterfactual_steps": 181,
+          "intrinsic_paid": 0.37628124025007065,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000267.csv",
+          "recorded_return": 5.151474481970231,
+          "counterfactual_return": -1.6728357704729415,
+          "counterfactual_steps": 204,
+          "intrinsic_paid": 0.49252911035347113,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000268.csv",
+          "recorded_return": 6.692123955222883,
+          "counterfactual_return": -1.7443447083043935,
+          "counterfactual_steps": 428,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000269.csv",
+          "recorded_return": 12.953863068142674,
+          "counterfactual_return": -1.7766001457911962,
+          "counterfactual_steps": 187,
+          "intrinsic_paid": 0.40754607922620617,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000270.csv",
+          "recorded_return": 7.961218474178634,
+          "counterfactual_return": -1.8074705285266242,
+          "counterfactual_steps": 180,
+          "intrinsic_paid": 0.37252947147337595,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000271.csv",
+          "recorded_return": 11.187381592203664,
+          "counterfactual_return": -1.817265815813785,
+          "counterfactual_steps": 400,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000272.csv",
+          "recorded_return": 10.548437268325491,
+          "counterfactual_return": -1.7714818127635341,
+          "counterfactual_steps": 308,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000273.csv",
+          "recorded_return": 8.181659915786433,
+          "counterfactual_return": -1.761336583919833,
+          "counterfactual_steps": 191,
+          "intrinsic_paid": 0.42769883323544094,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000274.csv",
+          "recorded_return": 1.0659166032364613,
+          "counterfactual_return": -1.7825214474706483,
+          "counterfactual_steps": 155,
+          "intrinsic_paid": 0.3724785525293517,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000275.csv",
+          "recorded_return": -0.6165802354618364,
+          "counterfactual_return": -1.7070544108008578,
+          "counterfactual_steps": 69,
+          "intrinsic_paid": 0.33271731770559954,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000276.csv",
+          "recorded_return": 8.029214748075091,
+          "counterfactual_return": -1.788105630392398,
+          "counterfactual_steps": 183,
+          "intrinsic_paid": 0.3881961741417394,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000277.csv",
+          "recorded_return": 8.079162182215805,
+          "counterfactual_return": -1.783327052505613,
+          "counterfactual_steps": 186,
+          "intrinsic_paid": 0.4023986854576932,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000278.csv",
+          "recorded_return": 13.202547965647888,
+          "counterfactual_return": -1.7116653070839625,
+          "counterfactual_steps": 269,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000279.csv",
+          "recorded_return": 7.9633562709023895,
+          "counterfactual_return": -1.806637218893737,
+          "counterfactual_steps": 180,
+          "intrinsic_paid": 0.373362781106263,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000280.csv",
+          "recorded_return": 11.145789412280658,
+          "counterfactual_return": -1.797100290476219,
+          "counterfactual_steps": 338,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000281.csv",
+          "recorded_return": 9.973941847153352,
+          "counterfactual_return": -1.756058152846574,
+          "counterfactual_steps": 280,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000282.csv",
+          "recorded_return": 10.7416798803976,
+          "counterfactual_return": -1.7198201196023213,
+          "counterfactual_steps": 315,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000283.csv",
+          "recorded_return": 8.000794954739497,
+          "counterfactual_return": -1.7986188378132713,
+          "counterfactual_steps": 182,
+          "intrinsic_paid": 0.3825000000000001,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000284.csv",
+          "recorded_return": 10.391552905013084,
+          "counterfactual_return": -1.7555318290894493,
+          "counterfactual_steps": 300,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000285.csv",
+          "recorded_return": 11.881425926250802,
+          "counterfactual_return": -1.763346648807326,
+          "counterfactual_steps": 191,
+          "intrinsic_paid": 0.4274136600456104,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000286.csv",
+          "recorded_return": 5.379169586809844,
+          "counterfactual_return": -1.6770001119496254,
+          "counterfactual_steps": 362,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000287.csv",
+          "recorded_return": 10.789204753386265,
+          "counterfactual_return": -1.8026805726734965,
+          "counterfactual_steps": 365,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000288.csv",
+          "recorded_return": 5.439576619317215,
+          "counterfactual_return": -1.7335615084837543,
+          "counterfactual_steps": 368,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000289.csv",
+          "recorded_return": 11.029260563092745,
+          "counterfactual_return": -1.722702209815595,
+          "counterfactual_steps": 329,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000290.csv",
+          "recorded_return": 9.562160134147863,
+          "counterfactual_return": -1.918560870243971,
+          "counterfactual_steps": 574,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000291.csv",
+          "recorded_return": 8.365499025875318,
+          "counterfactual_return": -1.7201479034073095,
+          "counterfactual_steps": 200,
+          "intrinsic_paid": 0.4725000000000001,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000292.csv",
+          "recorded_return": 0.38087330124918495,
+          "counterfactual_return": -1.595025480900456,
+          "counterfactual_steps": 119,
+          "intrinsic_paid": 0.4918218162721029,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000293.csv",
+          "recorded_return": 1.1903641328481376,
+          "counterfactual_return": -1.6408728648958462,
+          "counterfactual_steps": 161,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000294.csv",
+          "recorded_return": 1.8483930325991333,
+          "counterfactual_return": -1.6899224228006977,
+          "counterfactual_steps": 195,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000295.csv",
+          "recorded_return": 9.414468100698167,
+          "counterfactual_return": -1.8306965203409105,
+          "counterfactual_steps": 453,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000296.csv",
+          "recorded_return": 6.156138347057482,
+          "counterfactual_return": -1.7399990065789703,
+          "counterfactual_steps": 288,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000297.csv",
+          "recorded_return": 1.903379707566828,
+          "counterfactual_return": -1.5114455590102316,
+          "counterfactual_steps": 190,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000298.csv",
+          "recorded_return": 4.5911971652835675,
+          "counterfactual_return": -1.8022076677796088,
+          "counterfactual_steps": 330,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000299.csv",
+          "recorded_return": 0.8654614223080004,
+          "counterfactual_return": -1.4383741143185484,
+          "counterfactual_steps": 133,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000300.csv",
+          "recorded_return": 8.389780575478504,
+          "counterfactual_return": -1.7078792410232744,
+          "counterfactual_steps": 200,
+          "intrinsic_paid": 0.47639163428983,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000301.csv",
+          "recorded_return": 6.158241759359701,
+          "counterfactual_return": -1.61664279489664,
+          "counterfactual_steps": 241,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000302.csv",
+          "recorded_return": 0.35754808596931076,
+          "counterfactual_return": -1.718411405660249,
+          "counterfactual_steps": 119,
+          "intrinsic_paid": 0.3964344204224714,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000303.csv",
+          "recorded_return": 11.012893708514765,
+          "counterfactual_return": -1.7844010110984296,
+          "counterfactual_steps": 331,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000304.csv",
+          "recorded_return": 10.882273427611652,
+          "counterfactual_return": -1.8072102614769534,
+          "counterfactual_steps": 445,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000305.csv",
+          "recorded_return": 8.652989322637508,
+          "counterfactual_return": -1.7238074162394241,
+          "counterfactual_steps": 337,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000306.csv",
+          "recorded_return": 10.810433240690106,
+          "counterfactual_return": -1.8986218579806085,
+          "counterfactual_steps": 446,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000307.csv",
+          "recorded_return": 9.746998624145306,
+          "counterfactual_return": -1.7368697987777366,
+          "counterfactual_steps": 268,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000308.csv",
+          "recorded_return": 8.91094534917088,
+          "counterfactual_return": -1.715048544102012,
+          "counterfactual_steps": 227,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000309.csv",
+          "recorded_return": -0.33949124074713,
+          "counterfactual_return": -1.740198234445688,
+          "counterfactual_steps": 84,
+          "intrinsic_paid": 0.3421572512369563,
+          "recorded_outcome": "death"
+        },
+        {
+          "source": "runs\\smg1\\parallel-20261022-083713-478823\\worker-00\\sweet_sweet\\episode-000310.csv",
+          "recorded_return": 11.405420729870718,
+          "counterfactual_return": -1.8085243801440125,
+          "counterfactual_steps": 351,
+          "intrinsic_paid": 0.5,
+          "recorded_outcome": "timeout"
+        }
+      ]
+    }
+  }
+}

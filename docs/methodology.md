@@ -51,9 +51,11 @@ The action index is `9 * modifier_index + direction_index`; `actions.py` defines
 the exact order. Simultaneous controls do not encode an entire timed long-jump
 macro, so the agent must learn useful action sequences.
 
-The recommended backend sends controller state through an isolated loopback DSU
-server. Each worker has a separate process, user directory, DSU port and RAM
-reader. The main policy uses CUDA; each worker's small novelty networks use CPU.
+The native backend samples a shared-memory input mask inside Dolphin's input
+update. The legacy hidden backend sends controller state through an isolated
+loopback DSU server. Each worker has a separate process, game-namespaced user
+directory, DSU port and RAM reader. The main policy uses CUDA; each worker's
+small novelty networks use CPU.
 The desktop backend instead uses the configured W/A/S/D, Shift and mouse inputs.
 
 The hidden backend aims for 12 scene frames per action at 2x emulation speed.
@@ -109,7 +111,7 @@ no further progress reward within that episode. This is a geometric proxy,
 not a discovered native percentage. It is not guaranteed to be potential-based
 shaping or to preserve the optimal policy of a sparse-reward task.
 
-The Galaxy 2 scalar reward is below. Galaxy 1 adds the nonfatal HP-loss term
+The **legacy** Galaxy 2 scalar reward is below. Galaxy 1 adds the nonfatal HP-loss term
 specified in the final section, and suppresses novelty on HP-loss transitions:
 
 $$
@@ -126,14 +128,41 @@ the progress teleport gate does not automatically gate intrinsic reward.
 For an episode starting at zero progress, total progress reward is at most 5.
 Intrinsic novelty is bounded above by 5 per decision, giving at most 0.1 reward
 per decision. At the 3000-decision limit the loose intrinsic upper bound is 300,
-larger than the 20-point success bonus. Actual bonuses decay, but this reveals a
-real incentive-design risk: novelty can dominate completion. Weight tuning and
-evaluation success must decide whether the combination is useful.
+larger than the 20-point success bonus. The recorded native runs later showed
+near-constant bonuses on over 92% of sampled transitions. Novelty could dominate
+completion; decay cannot be assumed. The current revision below addresses this
+observed incentive risk.
 
 An episode terminates on death or star collection. It truncates at 3000
 decisions or 400 consecutive decisions without a progress increment above
 $10^{-5}$. Savestate resets restart the high-water mark and episodic memory.
 These limits are experimental choices, not game rules.
+
+### Bounded exploration revision
+
+The recommended native configurations now use `bounded-exploration-v2`. Let
+$j_t$ count consecutive decisions without a valid progress increment exceeding
+$10^{-5}$. Define $g_t=\operatorname{clip}_{[0,1]}((120-j_t)/90)$ and
+$B_0=0.5$. The paid intrinsic reward is
+$i_t=\min(B_{t-1},0.005g_tm_tn_t)$, with $B_t=B_{t-1}-i_t$.
+The reward becomes
+
+$$
+r_t=5\Delta_t+i_t+20\mathbf1[C_t]-2\mathbf1[D_t\land\neg C_t]
+-0.001-2\mathbf1[T_t].
+$$
+
+$T_t$ denotes truncation at 180 stalled decisions or 3000 total decisions,
+excluding death/completion. Galaxy 1 retains its nonfatal damage term. The
+intrinsic budget and stall counter reset per episode. Progress clears the stall
+counter but cannot replenish the budget. Thus total paid novelty is at most
+0.5 per episode; it cannot accumulate indefinitely by rotating, jumping in
+place, or waiting. Timeout is an environment penalty, not a fabricated RAM
+death. These gates use RAM progress only for reward calculation; the observation
+remains pixels and scenario. They may discourage temporarily unproductive but
+necessary detours, especially on curved routes, so full-start evaluation remains
+essential. The [audit](optimization-v2.md) reports counterfactual reward replay,
+not proof of improved policy learning.
 
 ## 4. Intrinsic reward implementation
 
@@ -202,8 +231,17 @@ the estimator is updated after computing the multiplier. The minimum multiplier
 is one, so learned familiarity cannot make it suppress episodic novelty below
 its baseline. A single Adam optimizer updates encoder, classifier and predictor
 on $L_{\rm inv}+e_t$, with learning rate $10^{-4}$ and gradient norm clipped to 1.
-Updates use one transition at a time. There is no replay buffer or shared global
-novelty model across parallel workers.
+Legacy settings update on one transition at a time. Native settings score each
+eligible transition immediately under no-grad, enqueue the two uint8 images,
+action and fixed RND target, then average both losses over eight transitions
+before one optimizer step. A partial batch flushes before the next episode's
+frozen encoder is refreshed. Pending samples and optimizer/update counters are
+checkpointed; old checkpoints default to an empty queue. No samples are dropped.
+This reduces optimizer frequency rather than reproducing eight sequential Adam
+steps, and is a changed learning condition. There is no replay sampling or
+shared global novelty model across workers. A preallocated circular array
+retains the same bounded kNN memory rule without rebuilding a Python-list stack
+on every decision.
 
 Inverse dynamics biases features toward action-related information, but does
 not prove invariance to rotating scenery, camera motion or animation. Action

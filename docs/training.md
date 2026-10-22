@@ -58,14 +58,21 @@ inverse-dynamics features do not guarantee its elimination.
 
 ```text
 reward = progress_weight * new_valid_high_water_progress
-       + intrinsic_weight * eligible_intrinsic_bonus
+       + bounded_and_stall_gated_intrinsic_reward
        + completion_bonus OR death_penalty
        + nonfatal_damage_penalty_if_applicable
        + step_cost
+       + timeout_penalty_if_truncated
 ```
 
-Defaults are progress 5, intrinsic 0.02, completion +20, death -2, and step
--0.0001. Galaxy 1 additionally charges -0.25 per nonfatal HP lost, once per
+Recommended native settings are progress 5, intrinsic 0.005 with an episode cap
+of 0.5, completion +20, death -2, step -0.001, and timeout -2. Novelty fades
+linearly between 30 and 120 consecutive decisions without valid progress; an
+episode truncates after 180 such decisions or 3000 total decisions. The
+[optimization audit](optimization-v2.md) explains this reward revision and the
+separate curiosity optimizer's batch of eight. Legacy configurations retain
+intrinsic 0.02, step -0.0001, and their previous limits.
+Galaxy 1 additionally charges -0.25 per nonfatal HP lost, once per
 sampled decrease. Healing/reset do not earn rewards, and a fatal transition uses
 only the death penalty. This is a net-health detector and can miss a hit followed
 by healing between samples. Galaxy 2 retains death-only penalties for the two

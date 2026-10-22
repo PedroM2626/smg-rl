@@ -14,6 +14,7 @@ evidence rather than continuously updated dashboards.
 | Exact command arguments, backend, and side effects | [CLI reference](cli.md) |
 | Local ROM and savestate filenames and roles | [Asset guide](../data/README.md) |
 | Native build, shared-memory capture, exact frame stepping, profiling, and benchmarks | [Native backend](native-backend.md) |
+| Protocol v2, curiosity batches, bounded exploration, and the stagnation audit | [Optimization revision](optimization-v2.md) |
 | Hidden rendering, isolated inputs, CUDA, timing, and throughput | [Background training](background-training.md) |
 | Two learners, resource measurements, status, and cross-game reports | [Concurrent training](concurrent-training.md) |
 | Health penalties, checkpoint recovery, and measured damage evidence | [Damage and recovery](damage-and-recovery.md) |

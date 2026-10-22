@@ -138,6 +138,14 @@ is claimed by this report.
 
 ## Threats to validity
 
+The [protocol-v2 audit](optimization-v2.md) adds measured engineering evidence:
+CPU-completion/reset stress checks, controlled process-exit recovery, repeated
+fixed-action presentation/batching comparisons, and counterfactual replay of
+stalled trajectories. The bounded reward and batch-eight optimizer change the
+experimental condition. Checkpoint continuations preserve learned weights but
+are neither fresh seeds nor evidence of improved course success. Runtime profile
+isolation now includes game ID after an observed cross-game timestamp collision.
+
 Novelty return can reward animation or camera changes; a high intrinsic return
 need not imply progress. The straight-line projection can reward shortcuts in
 coordinate space and undercount curved legal routes. Death detection covers

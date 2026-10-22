@@ -120,3 +120,21 @@ A controlled native recovery test terminated one test-owned emulator after its
 64-step pair was saved. The supervisor resumed that pair on attempt two and
 finished the original 256-step target. The isolated fixture and its records are
 separate from production course-success claims; see the native evidence guide.
+
+## Protocol v2 and exploration revision, 2026-10-22
+
+The current suite passes 84 portable tests and Ruff. Additional regressions
+cover premature CPU-frame acknowledgments, cross-game profile collisions with
+identical timestamp names, pending curiosity batch persistence/flush, circular
+kNN memory, bounded novelty/stall gates, and timeout costs distinct from RAM
+death. Both native games passed refreshed detector calibration, 768 bounded
+advance stress commands, 21 resets, and 48 paused stability checks. Controlled
+Galaxy 1 process-exit recovery passed again. These remain engineering tests.
+
+The [current audit](optimization-v2.md) retains repeated online-versus-batched
+timings and negative evidence from the rejected presentation optimization and
+the observed runtime profile collision. Counterfactual replay verifies the new
+incentive arithmetic; production continuation verifies fresh paired checkpoints
+and capped novelty in real episode logs. Neither establishes course completion
+or a better learned policy. The latest audited full-start report at this
+revision still found zero successes in all three tasks.

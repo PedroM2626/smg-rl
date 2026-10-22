@@ -1,0 +1,568 @@
+{
+  "observed_utc": "2026-10-22T16:02:01.393171+00:00",
+  "games": [
+    {
+      "game": "smg2",
+      "supervisor": "runs/supervised-20261022-125903-44960",
+      "attempt": 1,
+      "learner_status": {
+        "state": "running",
+        "timesteps": 638496,
+        "updates": 4932,
+        "target_timesteps": 1001140,
+        "elapsed_seconds": 152.63999999999942,
+        "decisions_per_second": 26.834381551362785,
+        "device": "cuda",
+        "workers": 4,
+        "updated_at": "2026-10-22T16:02:01.093483+00:00",
+        "progress": [
+          0.0009112198651096144,
+          0.006914350127407643,
+          0.005515946904066414,
+          0.0036301509924451464
+        ],
+        "worker_timing_ms": [
+          {
+            "environment_control_and_capture": 126.40799999644514,
+            "telemetry": 0.13689999468624592,
+            "curiosity": 1.9476000015856698,
+            "logging": 0.015099998563528061,
+            "episode_output": 17.153199994936585
+          },
+          {
+            "environment_control_and_capture": 124.58089999563526,
+            "telemetry": 0.5737000028602779,
+            "curiosity": 1.7797999898903072,
+            "logging": 0.015300000086426735,
+            "episode_output": 4.8322999937227
+          },
+          {
+            "environment_control_and_capture": 129.46609999926295,
+            "telemetry": 0.14689999807160348,
+            "curiosity": 1.7117999959737062,
+            "logging": 0.016299993149004877,
+            "episode_output": 4.595799997332506
+          },
+          {
+            "environment_control_and_capture": 118.0750000057742,
+            "telemetry": 0.14940000255592167,
+            "curiosity": 1.8161000043619424,
+            "logging": 0.02099999983329326,
+            "episode_output": 5.733099998906255
+          }
+        ],
+        "backend_timing_ms": [
+          {
+            "pause": 7.399699999950826,
+            "startup": 2541.0222000064095,
+            "capture": 3.2945999992080033,
+            "reset": 206.9504999963101,
+            "native_round_trip": 123.04970000695903,
+            "advance": 126.39990000752732
+          },
+          {
+            "pause": 85.7358000066597,
+            "startup": 2681.9537000119453,
+            "capture": 3.111500001978129,
+            "reset": 196.65370001166593,
+            "native_round_trip": 121.39949999982491,
+            "advance": 124.5716999983415
+          },
+          {
+            "pause": 3.875599999446422,
+            "startup": 2809.2969999997877,
+            "capture": 3.626400008215569,
+            "reset": 166.97230000863783,
+            "native_round_trip": 125.77850000525359,
+            "advance": 129.45809999655467
+          },
+          {
+            "pause": 6.730300010531209,
+            "startup": 3021.0690000094473,
+            "capture": 4.216500004986301,
+            "reset": 181.86539999442175,
+            "native_round_trip": 113.7726000015391,
+            "advance": 118.06640001304913
+          }
+        ],
+        "advanced_frames": [
+          12,
+          12,
+          12,
+          12
+        ],
+        "native_diagnostics": [
+          {
+            "request": 1029,
+            "response": 1029,
+            "completed_frames": 12,
+            "step_complete_sequence": 1029,
+            "field_count": 12293,
+            "acknowledged_field": 12293,
+            "readback_us": 1508,
+            "frame_wait_us": 0,
+            "skipped_presents": 0,
+            "reconciliations": 0,
+            "rejected_state": 0
+          },
+          {
+            "request": 1030,
+            "response": 1030,
+            "completed_frames": 12,
+            "step_complete_sequence": 1030,
+            "field_count": 12294,
+            "acknowledged_field": 12294,
+            "readback_us": 1610,
+            "frame_wait_us": 0,
+            "skipped_presents": 0,
+            "reconciliations": 0,
+            "rejected_state": 0
+          },
+          {
+            "request": 1029,
+            "response": 1029,
+            "completed_frames": 12,
+            "step_complete_sequence": 1029,
+            "field_count": 12293,
+            "acknowledged_field": 12293,
+            "readback_us": 924,
+            "frame_wait_us": 0,
+            "skipped_presents": 0,
+            "reconciliations": 0,
+            "rejected_state": 0
+          },
+          {
+            "request": 1030,
+            "response": 1030,
+            "completed_frames": 12,
+            "step_complete_sequence": 1030,
+            "field_count": 12294,
+            "acknowledged_field": 12294,
+            "readback_us": 1162,
+            "frame_wait_us": 0,
+            "skipped_presents": 0,
+            "reconciliations": 0,
+            "rejected_state": 0
+          }
+        ],
+        "learner_timings": {
+          "policy_forward": {
+            "count": 1024,
+            "total_ms": 3578.5391000972595,
+            "mean_ms": 3.49466708993873,
+            "recent_p50_ms": 3.0259500053944066,
+            "recent_p95_ms": 4.386895000789082
+          },
+          "rollout_collection": {
+            "count": 7,
+            "total_ms": 121833.30899997964,
+            "mean_ms": 17404.75842856852,
+            "recent_p50_ms": 17359.597599992412,
+            "recent_p95_ms": 18852.189339992765
+          },
+          "ppo_update": {
+            "count": 7,
+            "total_ms": 13999.591700005112,
+            "mean_ms": 1999.9416714293018,
+            "recent_p50_ms": 2105.2908999990905,
+            "recent_p95_ms": 3116.9996300028283
+          },
+          "checkpoint": {
+            "count": 3,
+            "total_ms": 246.4285000023665,
+            "mean_ms": 82.14283333412216,
+            "recent_p50_ms": 76.85420000052545,
+            "recent_p95_ms": 94.21177999756765
+          }
+        }
+      },
+      "paired_checkpoint": "runs\\parallel-20261022-125906-072979\\model-638496.zip",
+      "paired_steps": 638496,
+      "initial_steps": 634400,
+      "owned_emulators": [
+        {
+          "pid": 36508,
+          "profile": ".local\\parallel-profiles\\SB4E01\\parallel-20261022-125906-072979\\worker-00"
+        },
+        {
+          "pid": 30064,
+          "profile": ".local\\parallel-profiles\\SB4E01\\parallel-20261022-125906-072979\\worker-01"
+        },
+        {
+          "pid": 14756,
+          "profile": ".local\\parallel-profiles\\SB4E01\\parallel-20261022-125906-072979\\worker-02"
+        },
+        {
+          "pid": 31188,
+          "profile": ".local\\parallel-profiles\\SB4E01\\parallel-20261022-125906-072979\\worker-03"
+        }
+      ],
+      "pending_batch_lengths": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          6,
+          0
+        ],
+        [
+          0,
+          4
+        ]
+      ],
+      "observed_episodes": [
+        {
+          "worker": "worker-00",
+          "episode": 1,
+          "variation": "spinning",
+          "outcome": "timeout",
+          "reward": -1.749706787890361,
+          "steps": 189,
+          "best_progress": 0.004506739720203038,
+          "intrinsic_total": 0.4167595135086238,
+          "progress_total": 0.02253369860101519,
+          "timeout_total": -2.0,
+          "reward_revision": "bounded-exploration-v2"
+        },
+        {
+          "worker": "worker-00",
+          "episode": 2,
+          "variation": "spinning",
+          "outcome": "timeout",
+          "reward": -1.8166058987673144,
+          "steps": 371,
+          "best_progress": 0.010878820246537156,
+          "intrinsic_total": 0.5,
+          "progress_total": 0.05439410123268578,
+          "timeout_total": -2.0,
+          "reward_revision": "bounded-exploration-v2"
+        },
+        {
+          "worker": "worker-00",
+          "episode": 3,
+          "variation": "spinning",
+          "outcome": "timeout",
+          "reward": -1.8755758911842921,
+          "steps": 407,
+          "best_progress": 0.006284821763141573,
+          "intrinsic_total": 0.5,
+          "progress_total": 0.03142410881570786,
+          "timeout_total": -2.0,
+          "reward_revision": "bounded-exploration-v2"
+        },
+        {
+          "worker": "worker-01",
+          "episode": 1,
+          "variation": "double_time",
+          "outcome": "death",
+          "reward": -1.7703087599552387,
+          "steps": 159,
+          "best_progress": 0.00014760931028752938,
+          "intrinsic_total": 0.38795319349332363,
+          "progress_total": 0.0007380465514376469,
+          "timeout_total": 0.0,
+          "reward_revision": "bounded-exploration-v2"
+        },
+        {
+          "worker": "worker-01",
+          "episode": 2,
+          "variation": "double_time",
+          "outcome": "timeout",
+          "reward": -1.7261714362200804,
+          "steps": 200,
+          "best_progress": 0.00021450883636218583,
+          "intrinsic_total": 0.4727560195981087,
+          "progress_total": 0.001072544181810929,
+          "timeout_total": -2.0,
+          "reward_revision": "bounded-exploration-v2"
+        },
+        {
+          "worker": "worker-01",
+          "episode": 3,
+          "variation": "double_time",
+          "outcome": "death",
+          "reward": -1.6784966055713304,
+          "steps": 198,
+          "best_progress": 0.0039006788857338733,
+          "intrinsic_total": 0.5,
+          "progress_total": 0.019503394428669364,
+          "timeout_total": 0.0,
+          "reward_revision": "bounded-exploration-v2"
+        },
+        {
+          "worker": "worker-01",
+          "episode": 4,
+          "variation": "double_time",
+          "outcome": "timeout",
+          "reward": -1.705791024964691,
+          "steps": 209,
+          "best_progress": 0.0006417950070617865,
+          "intrinsic_total": 0.5,
+          "progress_total": 0.0032089750353089326,
+          "timeout_total": -2.0,
+          "reward_revision": "bounded-exploration-v2"
+        },
+        {
+          "worker": "worker-02",
+          "episode": 1,
+          "variation": "spinning",
+          "outcome": "timeout",
+          "reward": -1.7959542111563787,
+          "steps": 313,
+          "best_progress": 0.003409157768724317,
+          "intrinsic_total": 0.5,
+          "progress_total": 0.017045788843621585,
+          "timeout_total": -2.0,
+          "reward_revision": "bounded-exploration-v2"
+        },
+        {
+          "worker": "worker-02",
+          "episode": 2,
+          "variation": "spinning",
+          "outcome": "timeout",
+          "reward": -1.8739325728185983,
+          "steps": 409,
+          "best_progress": 0.007013485436280404,
+          "intrinsic_total": 0.5,
+          "progress_total": 0.03506742718140202,
+          "timeout_total": -2.0,
+          "reward_revision": "bounded-exploration-v2"
+        },
+        {
+          "worker": "worker-02",
+          "episode": 3,
+          "variation": "spinning",
+          "outcome": "death",
+          "reward": -1.7161972468064912,
+          "steps": 152,
+          "best_progress": 0.0016670592146344127,
+          "intrinsic_total": 0.42746745712033657,
+          "progress_total": 0.008335296073172063,
+          "timeout_total": 0.0,
+          "reward_revision": "bounded-exploration-v2"
+        },
+        {
+          "worker": "worker-03",
+          "episode": 1,
+          "variation": "double_time",
+          "outcome": "timeout",
+          "reward": -1.8070596599171898,
+          "steps": 180,
+          "best_progress": 0.0,
+          "intrinsic_total": 0.3729403400828102,
+          "progress_total": 0.0,
+          "timeout_total": -2.0,
+          "reward_revision": "bounded-exploration-v2"
+        },
+        {
+          "worker": "worker-03",
+          "episode": 2,
+          "variation": "double_time",
+          "outcome": "death",
+          "reward": -1.7463805121405647,
+          "steps": 119,
+          "best_progress": 0.0,
+          "intrinsic_total": 0.3726194878594352,
+          "progress_total": 0.0,
+          "timeout_total": 0.0,
+          "reward_revision": "bounded-exploration-v2"
+        },
+        {
+          "worker": "worker-03",
+          "episode": 3,
+          "variation": "double_time",
+          "outcome": "timeout",
+          "reward": -1.7107328446638659,
+          "steps": 227,
+          "best_progress": 0.0032534310672268207,
+          "intrinsic_total": 0.5,
+          "progress_total": 0.0162671553361341,
+          "timeout_total": -2.0,
+          "reward_revision": "bounded-exploration-v2"
+        },
+        {
+          "worker": "worker-03",
+          "episode": 4,
+          "variation": "double_time",
+          "outcome": "death",
+          "reward": -1.7685649049653969,
+          "steps": 278,
+          "best_progress": 0.001887019006920624,
+          "intrinsic_total": 0.5,
+          "progress_total": 0.00943509503460312,
+          "timeout_total": 0.0,
+          "reward_revision": "bounded-exploration-v2"
+        }
+      ],
+      "controller": {
+        "pid": 39472,
+        "created_time": 1792684743.991356,
+        "workers": 4,
+        "requested_steps": 366740,
+        "resume": "runs\\parallel-20261022-125705-842348\\model-final.zip",
+        "runtime": ".local\\parallel-profiles\\SB4E01\\parallel-20261022-125906-072979",
+        "supervisor": "runs\\supervised-20261022-125903-44960",
+        "supervisor_attempt": 1,
+        "started_at": "2026-10-22T15:59:06.073979+00:00"
+      }
+    },
+    {
+      "game": "smg1",
+      "supervisor": "runs/smg1/supervised-20261022-125903-23600",
+      "attempt": 1,
+      "learner_status": {
+        "state": "running",
+        "timesteps": 167040,
+        "updates": 5184,
+        "target_timesteps": 1000000,
+        "elapsed_seconds": 166.76600000000326,
+        "decisions_per_second": 8.538910809157574,
+        "device": "cuda",
+        "workers": 1,
+        "updated_at": "2026-10-22T16:01:59.402822+00:00",
+        "progress": [
+          0.0019405464955804766
+        ],
+        "worker_timing_ms": [
+          {
+            "environment_control_and_capture": 119.26569999195635,
+            "telemetry": 0.16080000204965472,
+            "curiosity": 1.809200010029599,
+            "logging": 0.01580000389367342,
+            "episode_output": 14.298800000688061
+          }
+        ],
+        "backend_timing_ms": [
+          {
+            "pause": 67.17619999835733,
+            "startup": 2596.305399987614,
+            "capture": 4.144899998209439,
+            "reset": 192.0008000015514,
+            "native_round_trip": 115.0595999934012,
+            "advance": 119.25950000295416
+          }
+        ],
+        "advanced_frames": [
+          12
+        ],
+        "native_diagnostics": [
+          {
+            "request": 1429,
+            "response": 1429,
+            "completed_frames": 12,
+            "step_complete_sequence": 1429,
+            "field_count": 17089,
+            "acknowledged_field": 17089,
+            "readback_us": 942,
+            "frame_wait_us": 0,
+            "skipped_presents": 0,
+            "reconciliations": 0,
+            "rejected_state": 0
+          }
+        ],
+        "learner_timings": {
+          "policy_forward": {
+            "count": 1424,
+            "total_ms": 5029.3192997487495,
+            "mean_ms": 3.5318253509471553,
+            "recent_p50_ms": 3.408950004086364,
+            "recent_p95_ms": 5.036990003281971
+          },
+          "rollout_collection": {
+            "count": 11,
+            "total_ms": 160365.5477999855,
+            "mean_ms": 14578.686163635046,
+            "recent_p50_ms": 15315.524799996638,
+            "recent_p95_ms": 16335.332249997009
+          },
+          "ppo_update": {
+            "count": 11,
+            "total_ms": 4091.417600007844,
+            "mean_ms": 371.94705454616764,
+            "recent_p50_ms": 218.0755000008503,
+            "recent_p95_ms": 762.6344500022242
+          },
+          "checkpoint": {
+            "count": 5,
+            "total_ms": 284.99930001271423,
+            "mean_ms": 56.999860002542846,
+            "recent_p50_ms": 57.22670000977814,
+            "recent_p95_ms": 58.09362000436522
+          }
+        }
+      },
+      "paired_checkpoint": "runs\\smg1\\parallel-20261022-125906-072979\\model-166896.zip",
+      "paired_steps": 166896,
+      "initial_steps": 165616,
+      "owned_emulators": [
+        {
+          "pid": 34388,
+          "profile": ".local\\parallel-profiles\\RMGE01\\parallel-20261022-125906-072979\\worker-00"
+        }
+      ],
+      "pending_batch_lengths": [
+        [
+          2
+        ]
+      ],
+      "observed_episodes": [
+        {
+          "worker": "worker-00",
+          "episode": 1,
+          "variation": "sweet_sweet",
+          "outcome": "death",
+          "reward": -1.9014521122391839,
+          "steps": 531,
+          "best_progress": 0.02590957755216329,
+          "intrinsic_total": 0.5,
+          "progress_total": 0.1295478877608165,
+          "timeout_total": 0.0,
+          "reward_revision": "bounded-exploration-v2"
+        },
+        {
+          "worker": "worker-00",
+          "episode": 2,
+          "variation": "sweet_sweet",
+          "outcome": "timeout",
+          "reward": -1.935191047053208,
+          "steps": 611,
+          "best_progress": 0.03516179058935845,
+          "intrinsic_total": 0.5,
+          "progress_total": 0.17580895294679227,
+          "timeout_total": -2.0,
+          "reward_revision": "bounded-exploration-v2"
+        },
+        {
+          "worker": "worker-00",
+          "episode": 3,
+          "variation": "sweet_sweet",
+          "outcome": "timeout",
+          "reward": -1.7841699236387911,
+          "steps": 185,
+          "best_progress": 0.00020175445254594227,
+          "intrinsic_total": 0.3998213040984792,
+          "progress_total": 0.0010087722627297115,
+          "timeout_total": -2.0,
+          "reward_revision": "bounded-exploration-v2"
+        }
+      ],
+      "controller": {
+        "pid": 14456,
+        "created_time": 1792684743.989387,
+        "workers": 1,
+        "requested_steps": 834384,
+        "resume": "runs\\smg1\\parallel-20261022-125718-780332\\model-final.zip",
+        "runtime": ".local\\parallel-profiles\\RMGE01\\parallel-20261022-125906-072979",
+        "supervisor": "runs\\smg1\\supervised-20261022-125903-23600",
+        "supervisor_attempt": 1,
+        "started_at": "2026-10-22T15:59:06.073979+00:00"
+      }
+    }
+  ],
+  "note": "Early production continuation snapshot, not a long-run reliability or learning-success claim."
+}

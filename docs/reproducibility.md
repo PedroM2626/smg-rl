@@ -6,6 +6,7 @@
 | --- | --- |
 | Install and basic commands | [README](../README.md) |
 | Native frame bridge, profiling, build provenance, and measured acceleration | [Native backend](native-backend.md) |
+| Current protocol, batched optimizer, reward revision, and measured tradeoffs | [Optimization audit](optimization-v2.md) |
 | Complete documentation navigation | [Documentation index](README.md) |
 | Exact CLI arguments and backend selection | [Command reference](cli.md) |
 | Health penalties and supervised recovery | [Damage and recovery](damage-and-recovery.md) |
@@ -25,9 +26,9 @@
 flowchart LR
   YAML[Game-specific YAML] --> CLI[CLI / validation / trainer]
   CLI --> Workers[Isolated worker processes]
-  Workers --> DSU[Private DSU server per worker]
-  DSU --> Dolphin[Owned Dolphin instance]
-  Dolphin --> PNG[Fresh renderer PNG]
+  Workers --> Input[Native input mask / legacy DSU]
+  Input --> Dolphin[Owned Dolphin instance]
+  Dolphin --> PNG[Shared RGBA / legacy PNG]
   Dolphin --> RAM[Read-only PID-scoped RAM]
   PNG --> Obs[Image stack + scenario]
   PNG --> Novelty[Local episodic novelty and RND]
@@ -55,7 +56,7 @@ flowchart LR
 | `background.py` | Hidden Dolphin lifecycle, pause handshake, fresh renderer capture |
 | `actions.py` | Stable 54-action enumeration |
 | `curiosity.py` | Inverse features, episodic kNN, RND, optimizer/statistics persistence |
-| `rewards.py` | Bounded high-water progress, displacement/height gates, and reset-aware HP-loss tracking |
+| `rewards.py` | High-water progress, episode novelty budgets, stall gates, and reset-aware HP-loss tracking |
 | `env.py` | Observation boundary, resets, episode limits, rewards and logs |
 | `train.py` | Desktop recurrent PPO, evaluation, run/config snapshots |
 | `parallel.py` | Spawned vector environments, CUDA learning, status and checkpoints |
@@ -67,6 +68,13 @@ flowchart LR
 
 There is no writable RAM interface, network gameplay service, cloud learner,
 external telemetry upload, multi-machine coordinator or in-game patch.
+
+Parallel runtime profiles are namespaced by verified game ID and then run name,
+so equal timestamp names under the two games' run roots cannot share a Dolphin
+user directory. Native v2 diagnostics and the full effective reward/novelty
+configuration are retained in status/config snapshots. Batched curiosity pairs
+also retain pending transitions; a resumed episode still starts from its
+configured initial savestate rather than continuing exact game/recurrent state.
 
 ## Environment and provenance
 

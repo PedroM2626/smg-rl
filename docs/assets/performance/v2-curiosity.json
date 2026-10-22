@@ -1,0 +1,56 @@
+[
+  {
+    "threads": 1,
+    "device": "cpu",
+    "update_every": 1,
+    "steps": 512,
+    "mean_ms_after_64_warmup": 2.8397118306721887,
+    "p95_ms_after_64_warmup": 3.2382649973442312,
+    "optimizer_updates": 512
+  },
+  {
+    "threads": 1,
+    "device": "cpu",
+    "update_every": 8,
+    "steps": 512,
+    "mean_ms_after_64_warmup": 1.3350388394753412,
+    "p95_ms_after_64_warmup": 6.204090001847362,
+    "optimizer_updates": 64
+  },
+  {
+    "threads": 1,
+    "device": "cpu",
+    "update_every": 16,
+    "steps": 512,
+    "mean_ms_after_64_warmup": 1.1681281253004272,
+    "p95_ms_after_64_warmup": 8.858420006436061,
+    "optimizer_updates": 32
+  },
+  {
+    "threads": 2,
+    "device": "cpu",
+    "update_every": 8,
+    "steps": 512,
+    "mean_ms_after_64_warmup": 1.8461473215601083,
+    "p95_ms_after_64_warmup": 7.0495950065378565,
+    "optimizer_updates": 64
+  },
+  {
+    "threads": 1,
+    "device": "cuda",
+    "update_every": 8,
+    "steps": 512,
+    "mean_ms_after_64_warmup": 1.2144125003357789,
+    "p95_ms_after_64_warmup": 3.7525199943047483,
+    "optimizer_updates": 64
+  },
+  {
+    "threads": 1,
+    "device": "cuda",
+    "update_every": 16,
+    "steps": 512,
+    "mean_ms_after_64_warmup": 1.018663392869712,
+    "p95_ms_after_64_warmup": 3.6371150075865444,
+    "optimizer_updates": 32
+  }
+]

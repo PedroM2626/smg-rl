@@ -1,5 +1,10 @@
 # Native capture, frame control, profiling, and failure handling
 
+The current client uses **protocol v2**. The [optimization revision](optimization-v2.md)
+records the CPU-idle acknowledgment fix, optional presentation suppression,
+batched curiosity, reward audit, and newer measurements. The early measurements
+below remain historical evidence and should not be read as current live counters.
+
 ## Motivation and measured baseline
 
 The legacy backend advances through DSU hotkeys, acknowledges pause through
@@ -109,13 +114,27 @@ by storage for at most 1920 x 1080 x 4 RGBA bytes. The fields are defined in
 
 | Word | Meaning |
 | ---: | --- |
-| 0-2 | Magic `0x534D4752`, protocol version 1, owned Dolphin PID |
+| 0-2 | Magic `0x534D4752`, protocol version 2, owned Dolphin PID |
 | 3-4 | Request and acknowledged response sequence |
 | 5-7 | Command, argument, held-action bitmask |
 | 8-9 | Completed frame steps and renderer image sequence |
 | 10-12 | Image width, height, tightly packed byte stride |
 | 13-14 | Error code and actual paused-state flag |
 | 15 | CPU-thread completion barrier for asynchronous savestate loads |
+| 16 | Matching CPU completion sequence for the bounded action |
+| 17-18 | VI field count and field count at the preceding CPU-idle acknowledgment |
+| 19 | Options bit 0: skip host presentation, preserving game rendering/readback |
+| 20-21 | Last readback and per-command accumulated queue-wait microseconds |
+| 22-24 | Skipped presentations, state reconciliations, last rejected Core state |
+
+Protocol v2 acknowledges an advance only after its matching CPU completion
+sequence and requested frame count, then waits for CPU idle before publishing
+the response. A transient running flag is reconciled only with no intervening
+VI fields; unexpected advancement is error 4 and aborts the worker. Errors 1
+and 3 indicate invalid commands/arguments and a refused frame-step start.
+Diagnostics appear in worker infos and learner status. A v1 binary cannot be
+used with the v2 client. Upgrade from a fresh pinned source checkout; the patch
+script explicitly refuses the old v1 patch instead of overwriting source work.
 
 Commands are 1 (handshake/pause), 2 (bounded advance), 3 (load slot), and 4 (pause).
 An advance accepts 1-600 frames. A load accepts slots 1-4. The action bits, in

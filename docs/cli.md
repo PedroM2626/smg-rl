@@ -46,6 +46,13 @@ intended Dolphin process is available. Use worker CSVs/status for parallel runs.
 | `config/smg1.yaml` | Galaxy 1 hidden detector validation; training disabled | `runs/smg1/` |
 | `config/smg1-training.yaml` | Separate Galaxy 1 hidden learner, CUDA | `runs/smg1/` |
 
+Native configurations require a protocol-v2 build and use bounded exploration
+rewards and CPU curiosity updates in batches of eight. `parallel.skip_present`
+is false after the measured comparison; changing it is an experiment, not a
+required hidden-mode switch. The [optimization guide](optimization-v2.md) lists
+standalone stress, batching, comparison, replay, and plotting script arguments.
+These scripts are development tools, not additional CLI subcommands.
+
 `report` scans both namespaces under project `runs/`, independent of the selected
 game configuration. In contrast, `status` and `stop` search only the selected
 configuration's immediate runs directory. Their explicit `RUN` must be a learner
