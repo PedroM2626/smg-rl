@@ -92,6 +92,70 @@ def test_reward_support_and_latent_reset_dont_invent_terminal_prizes(tmp_path):
     assert torch.equal(after["stoch"], after_again["stoch"])
 
 
+def test_real_prior_prediction_objective_has_gradients_and_respects_padding(tmp_path):
+    agent, _ = small_agent(tmp_path)
+    agent.settings.update(prior_prediction_weight=0.5, reconstruction_weight=5,
+                          terminal_reward_weight=5, open_loop_training_horizon=3)
+    batch = synthetic_batch()
+    loss, metrics, _, _ = agent.world.loss(agent.tensors(batch), sample=False)
+    assert metrics["prior_prediction"] > 0
+    assert metrics["open_loop_prediction"] > 0
+    loss.backward()
+    assert agent.world.prior_net[-1].weight.grad.abs().sum() > 0
+    changed = {key: value.copy() for key, value in batch.items()}
+    changed["rewards"][:, 0] = 1000  # Burn-in has zero supervised mask.
+    repeated, _, _, _ = agent.world.loss(agent.tensors(changed), sample=False)
+    assert torch.allclose(loss, repeated)
+    metrics, _, _ = agent.update_model(batch)
+    assert np.isfinite(list(metrics.values())).all()
+
+
+def test_terminal_reward_weight_changes_only_supervised_terminal_targets(tmp_path):
+    agent, _ = small_agent(tmp_path)
+    batch = agent.tensors(synthetic_batch())
+    _, original, _, _ = agent.world.loss(batch, sample=False)
+    agent.settings["terminal_reward_weight"] = 5
+    _, weighted, _, _ = agent.world.loss(batch, sample=False)
+    assert weighted["reward"] > original["reward"]
+    assert weighted["reconstruction"] == original["reconstruction"]
+    batch["mask"][batch["terminated"]] = 0
+    _, weighted, _, _ = agent.world.loss(batch, sample=False)
+    agent.settings["terminal_reward_weight"] = 1
+    _, original, _, _ = agent.world.loss(batch, sample=False)
+    assert weighted["reward"] == original["reward"]
+
+
+def test_prior_prediction_cannot_observe_its_target_image(tmp_path):
+    agent, _ = small_agent(tmp_path)
+    agent.settings["prior_prediction_weight"] = 0.5
+    outputs = []
+    handle = agent.world.decode_input.register_forward_hook(
+        lambda module, inputs, result: outputs.append(result.detach().clone()))
+    batch = synthetic_batch()
+    agent.world.loss(agent.tensors(batch), sample=False)
+    original = outputs[-1].reshape(2, 4, -1)[:, -1].clone()
+    batch["images"][:, -1] = 255 - batch["images"][:, -1]
+    agent.world.loss(agent.tensors(batch), sample=False)
+    changed = outputs[-1].reshape(2, 4, -1)[:, -1]
+    handle.remove()
+    assert torch.equal(original, changed)
+
+
+def test_open_loop_training_cannot_observe_future_target_images(tmp_path):
+    agent, _ = small_agent(tmp_path)
+    agent.settings["open_loop_training_horizon"] = 3
+    outputs = []
+    handle = agent.world.decode_input.register_forward_hook(
+        lambda module, inputs, result: outputs.append(result.detach().clone()))
+    batch = synthetic_batch()
+    agent.world.loss(agent.tensors(batch), sample=False)
+    original = outputs[-1].clone()
+    batch["images"][:, -1] = 255 - batch["images"][:, -1]
+    agent.world.loss(agent.tensors(batch), sample=False)
+    handle.remove()
+    assert torch.equal(original, outputs[-1])
+
+
 def test_lambda_returns_terminate_and_symlog_roundtrips():
     rewards = torch.tensor([[1.0], [2.0]])
     returns = lambda_returns(rewards, torch.tensor([[0.0], [0.9]]),

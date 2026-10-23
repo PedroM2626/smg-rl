@@ -88,6 +88,12 @@ game:
   id: RMGE01
   title: Super Mario Galaxy
 world_model:
+  reconstruction_weight: 3528.0
+  terminal_reward_weight: 5.0
+  prior_prediction_weight: 0.5
+  open_loop_training_horizon: 8
+  open_loop_training_weight: 0.5
+  training_terminal_fraction: 0.5
   deterministic_size: 256
   stochastic_size: 32
   embedding_size: 128

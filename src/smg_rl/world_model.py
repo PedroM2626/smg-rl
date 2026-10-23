@@ -123,18 +123,22 @@ class VisualWorldModel(nn.Module):
         # The model cannot invent a star-sized reward before seeing one in real data.
         return prediction.clamp(min=self.reward_low, max=self.reward_high)
 
-    def loss(self, batch, sample=True):
+    def loss(self, batch, sample=True, auxiliary=True):
         images, actions, scenario, mask = (batch[k] for k in ("images", "actions", "scenario", "mask"))
         b, frames = images.shape[:2]
         embeddings = self.encode(images.reshape(-1, 1, self.size, self.size)).reshape(b, frames, -1)
         state = self.initial(b)
         state, _, _ = self.observe(embeddings[:, 0], torch.zeros(b, dtype=torch.long, device=images.device),
                                     state, scenario, batch["is_first"][:, 0], sample)
-        prior_features, states, dynamics, representation = [], [], [], []
+        prior_features, context_states, predicted_states, states, dynamics, representation = [], [], [], [], [], []
         for t in range(frames - 1):
+            context_states.append(state)
             prior_features.append(self.feature(state, scenario))
             state, prior, posterior = self.observe(embeddings[:, t + 1], actions[:, t], state,
                                                    scenario, batch["is_first"][:, t + 1], sample)
+            if auxiliary and self.settings.get("prior_prediction_weight", 0) > 0:
+                predicted_states.append({"deter": state["deter"],
+                                         "stoch": prior.rsample() if sample else prior.mean})
             detached_posterior = Independent(Normal(posterior.base_dist.loc.detach(),
                                                     posterior.base_dist.scale.detach()), 1)
             detached_prior = Independent(Normal(prior.base_dist.loc.detach(), prior.base_dist.scale.detach()), 1)
@@ -151,6 +155,8 @@ class VisualWorldModel(nn.Module):
         reward_prediction = self.reward(flat).reshape(b, -1)
         reward_loss = (reward_prediction - symlog(batch["rewards"])).square()
         terminal = batch["terminated"].float()
+        reward_weights = 1 + terminal * (float(self.settings.get("terminal_reward_weight", 1)) - 1)
+        reward_loss = reward_loss * reward_weights
         continuation_logits = self.continuation(flat).reshape(b, -1)
         continuation_loss = F.binary_cross_entropy_with_logits(continuation_logits, 1 - terminal, reduction="none")
         continuation_loss *= 1 + terminal * (float(self.settings.get("terminal_weight", 5)) - 1)
@@ -167,8 +173,50 @@ class VisualWorldModel(nn.Module):
                  "dynamics_kl": weighted_mean(torch.stack(dynamics, 1), mask),
                  "representation_kl": weighted_mean(torch.stack(representation, 1), mask),
                  "ensemble": ensemble_loss}
-        loss = (terms["reconstruction"] + terms["reward"] + terms["continuation"]
+        image_weight = float(self.settings.get("reconstruction_weight", 1))
+        loss = (image_weight * terms["reconstruction"] + terms["reward"] + terms["continuation"]
                 + 0.5 * terms["dynamics_kl"] + 0.1 * terms["representation_kl"] + terms["ensemble"])
+        if predicted_states:
+            # Train the prior used in imagination against real next observations.
+            # Posterior-only reconstruction otherwise permits a teacher-forcing gap.
+            predicted = torch.stack([self.feature(s, scenario) for s in predicted_states], 1)
+            predicted = predicted.reshape(-1, self.features)
+            prior_images = self.decode(predicted).reshape_as(reconstruction)
+            prior_image_loss = (prior_images - target).square().mean((2, 3, 4))
+            prior_reward_loss = (self.reward(predicted).reshape(b, -1) - symlog(batch["rewards"])).square()
+            prior_continuation = F.binary_cross_entropy_with_logits(
+                self.continuation(predicted).reshape(b, -1), 1 - terminal, reduction="none")
+            prior_continuation *= 1 + terminal * (float(self.settings.get("terminal_weight", 5)) - 1)
+            terms["prior_prediction"] = weighted_mean(
+                image_weight * prior_image_loss + reward_weights * prior_reward_loss + prior_continuation, mask)
+            loss = loss + float(self.settings["prior_prediction_weight"]) * terms["prior_prediction"]
+        horizon = int(self.settings.get("open_loop_training_horizon", 0)) if auxiliary else 0
+        if horizon:
+            begin = mask.argmax(1)
+            indices = torch.arange(frames - 1, device=images.device)[None]
+            endings = batch["terminated"] & mask.bool()
+            last = (indices * endings).amax(1)
+            begin = torch.where(endings.any(1), torch.maximum(begin, last - horizon + 1), begin)
+            rows = torch.arange(b, device=images.device)
+            predicted_state = {key: torch.stack([s[key] for s in context_states], 1)[rows, begin]
+                               for key in state}
+            errors, weights = [], []
+            for offset in range(min(horizon, frames - 1)):
+                position = (begin + offset).clamp_max(frames - 2)
+                valid = (begin + offset < frames - 1).float() * mask[rows, position]
+                predicted_state = self.imagine_step(predicted_state, actions[rows, position], scenario, sample)
+                predicted = self.feature(predicted_state, scenario)
+                expected = images[rows, position + 1].float()[:, None] / 255
+                image_error = (self.decode(predicted) - expected).square().mean((1, 2, 3))
+                reward_error = (self.reward(predicted).squeeze(-1) - symlog(batch["rewards"][rows, position])).square()
+                continuation_error = F.binary_cross_entropy_with_logits(
+                    self.continuation(predicted).squeeze(-1), 1 - terminal[rows, position], reduction="none")
+                continuation_error *= 1 + terminal[rows, position] * (float(self.settings.get("terminal_weight", 5)) - 1)
+                errors.append(image_weight * image_error + reward_weights[rows, position] * reward_error
+                              + continuation_error)
+                weights.append(valid)
+            terms["open_loop_prediction"] = weighted_mean(torch.stack(errors, 1), torch.stack(weights, 1))
+            loss = loss + float(self.settings.get("open_loop_training_weight", 0.5)) * terms["open_loop_prediction"]
         seeds = {key: torch.stack([s[key] for s in states], 1).detach() for key in state}
         valid = mask.bool() & ~batch["terminated"]
         seeds = {key: value[valid] for key, value in seeds.items()}
@@ -189,7 +237,7 @@ class VisualWorldModel(nn.Module):
     def validation(self, batch, horizon=8, stochastic=True):
         # Validate sampled latent dynamics as used by imagination, not only a
         # potentially over-optimistic mean-latent reconstruction.
-        _, metrics, _, _ = self.loss(batch, sample=stochastic)
+        _, metrics, _, _ = self.loss(batch, sample=stochastic, auxiliary=False)
         images, scenario = batch["images"], batch["scenario"]
         b, frames = images.shape[:2]
         embeddings = self.encode(images.reshape(-1, 1, self.size, self.size)).reshape(b, frames, -1)

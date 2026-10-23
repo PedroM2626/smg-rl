@@ -86,10 +86,15 @@ def prepare(config, resume=None):
     integers = ("batch_size", "sequence_length", "updates_per_cycle", "collect_vector_steps", "imagination_horizon", "imagination_batch", "checkpoint_steps")
     if any(int(settings.get(key, 0)) < 1 for key in integers) or settings.get("burn_in", -1) < 0:
         raise ValueError("World-model batch, sequence, update, imagination and checkpoint settings must be positive.")
-    if settings["imagination_horizon"] > 32:
+    if settings["imagination_horizon"] > 32 or not 0 <= settings.get("open_loop_training_horizon", 0) <= 32:
         raise ValueError("This baseline bounds imagination at 32 steps to limit model-error compounding.")
     if settings["batch_size"] < len(config["variations"]):
         raise ValueError("The replay batch must cover every configured scenario.")
+    coefficients = [settings.get("reconstruction_weight", 1), settings.get("terminal_reward_weight", 1),
+                    settings.get("prior_prediction_weight", 0), settings.get("open_loop_training_weight", 0.5)]
+    if (not np.isfinite(coefficients).all() or min(coefficients) < 0
+            or not 0 <= settings.get("training_terminal_fraction", 0) <= 1):
+        raise ValueError("Invalid world-model prediction weights or terminal sampling fraction.")
     if (not 0 < settings.get("gamma", 0.997) <= 1 or not 0 <= settings.get("lambda", 0.95) <= 1
             or not 0 <= settings.get("epsilon", 0.05) <= 1
             or not np.isfinite([settings.get("entropy", 0.003), settings.get("disagreement_scale", 0.01)]).all()
@@ -117,7 +122,8 @@ def update_cycle(agent, replay, settings):
     if (summary["transitions"] >= settings.get("minimum_replay", 4096)
             and summary["train_episodes"] and summary["validation_episodes"]):
         for _ in range(settings["updates_per_cycle"]):
-            batch = replay.sample(settings["batch_size"], settings["sequence_length"], settings["burn_in"])
+            batch = replay.sample(settings["batch_size"], settings["sequence_length"], settings["burn_in"],
+                                  terminal_fraction=settings.get("training_terminal_fraction", 0))
             metrics, seeds, scenarios = agent.update_model(batch)
         validation = validate_agent(agent, replay, settings)
     gate = quality_gate(summary, validation, settings, replay.signature["scenario_names"])

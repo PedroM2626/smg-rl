@@ -94,6 +94,11 @@ to the initial savestate rather than restoring an exact in-flight emulator state
 
 ## Interpretation limits
 
+On October 23, Galaxy 1 received an objective and rollout-training repair after
+its visual and terminal quality gates remained blocked. Real online imagined
+actor updates were subsequently observed. See the
+[repair method and measured evidence](world-model-smg1-repair.md).
+
 Only a real full-start trajectory with the game's RAM star-completion predicate
 establishes success. Neither fitting a model, an imagined success, nor a near-star
 fixture counts. Actual RAM positions remain the basis of top-down trajectories

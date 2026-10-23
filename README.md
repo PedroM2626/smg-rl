@@ -45,6 +45,9 @@ old trajectory CSVs lack the required images. Experimental profiles are
 start after 4096 replay transitions; policy updates additionally require the
 prediction gates to pass. No learning-speed advantage has been established.
 `inspect-replay` is read-only.
+The Galaxy 1 objective repair balances pixel likelihood and terminal sampling
+and directly supervises prior predictions; see the
+[repair procedure and evidence](docs/world-model-smg1-repair.md).
 
 ## Supported tasks
 

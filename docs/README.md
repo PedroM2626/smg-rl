@@ -23,6 +23,7 @@ evidence rather than continuously updated dashboards.
 | Practical reward tuning, evaluation, and troubleshooting | [Training guide](training.md) |
 | Visual replay, recurrent world model, prediction gates and imagined actor/critic experiment | [World-model implementation](world-model.md) |
 | Authorized online world-model experiment, initial counters and recovery procedure | [Live world-model experiment](world-model-live.md) |
+| Galaxy 1 terminal sampling, visual-loss balance and prior prediction repair | [Galaxy 1 imagination repair](world-model-smg1-repair.md) |
 
 ## Understand and reproduce
 

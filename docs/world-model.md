@@ -119,6 +119,28 @@ the posterior; representation KL stops gradients through the prior. Their weight
 are 0.5 and 0.1, with one free nat after summing stochastic dimensions. Each
 ensemble head trains on its own randomly bootstrapped 80% subset of valid targets.
 
+The Galaxy 1 repair profile weights pixel-mean reconstruction by 3528 rather than
+1, terminal reward squared error by 5, and adds a 0.5-weight one-step prior
+prediction objective. The latter predicts the real next image, reward and
+continuation from the prior available without the next observation. Its image
+term uses the same reconstruction weight. These coefficients balance losses
+with different numerical scales; they do not change any held-out gate.
+For 84 x 84 images, 3528 is half the pixel count: this is the squared-error term
+of a unit-variance Gaussian image likelihood summed over pixels, with its
+parameter-independent constant omitted. Raw reported image MSE remains a mean.
+An additional 0.5-weight eight-step open-loop objective rolls the prior forward
+from a real posterior context and supervises real future images, rewards and
+continuation without feeding future images into that rollout. Terminal-tail
+windows include the terminal event when available. Supervised masks exclude
+burn-in and padded transitions. Auxiliary training losses are omitted from
+validation computation; the unchanged held-out prediction metrics are still
+computed directly on sampled dynamics.
+Galaxy 2 retains its original objective when these optional settings are absent.
+Galaxy 1 training draws terminal-tail fragments with probability 0.5 when true
+terminal examples exist in the training split; other fragments remain sampled
+normally. Timeout-only fragments are not classified as true terminals. The
+held-out sampler and whole-episode separation remain unchanged.
+
 `symlog(x)=sign(x) log(1+|x|)`. Reconstruction and prediction losses apply only
 to valid supervised transitions. Burn-in and padding receive no direct loss.
 The continuation target is \(1-terminated\): RAM death and star collection stop

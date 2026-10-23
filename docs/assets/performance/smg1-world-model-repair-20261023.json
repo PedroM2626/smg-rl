@@ -1,0 +1,1382 @@
+{
+  "created_utc": "2026-10-23T13:41:32.953806+00:00",
+  "scope": "Diagnostic development comparisons and first real online imagined policy update; no mission completion claim",
+  "portable_validation": "119 tests passed; Ruff passed",
+  "trials": [
+    {
+      "run": "runs/smg1/world-model-repair-20261023",
+      "source_checkpoint": "runs\\smg1\\world-model-20261023-005245-482560\\world-final.pt",
+      "source_sha256": "d4ea6731b0abcb9e13fca26e5c000f9673dd6f6ec6f98f5f216ce850a3c5af32",
+      "settings": {
+        "reconstruction_weight": 5.0,
+        "terminal_reward_weight": 5.0,
+        "prior_prediction_weight": 0.5,
+        "open_loop_training_horizon": 0,
+        "open_loop_training_weight": 0,
+        "training_terminal_fraction": 0.5
+      },
+      "checkpoint_sha256_verified": "74144859b8f5da77256a71b3e8763a25cb8bcdb44e9a340281ea68ebb0e4a844",
+      "evaluations": [
+        {
+          "additional_model_updates": 0,
+          "metrics": {
+            "posterior_image_mse": 0.02735360385850072,
+            "open_loop_image_mse": 0.04485005419701338,
+            "terminal_reward_mae": 0.630833298995577,
+            "terminal_brier": 0.15128075202991223,
+            "continuation_brier": 0.006937516969628632,
+            "reward_mae": 0.03282596403732896
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04",
+              "sweet_sweet: terminal_reward_mae exceeds 0.5"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 40,
+          "metrics": {
+            "posterior_image_mse": 0.02752130338922143,
+            "open_loop_image_mse": 0.04622747376561165,
+            "terminal_reward_mae": 0.37416437576557027,
+            "terminal_brier": 0.049542075833948006,
+            "continuation_brier": 0.009849328082054853,
+            "reward_mae": 0.03616443183273077
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 80,
+          "metrics": {
+            "posterior_image_mse": 0.02736982610076666,
+            "open_loop_image_mse": 0.04449755232781172,
+            "terminal_reward_mae": 0.2968468589001688,
+            "terminal_brier": 0.06216581564011245,
+            "continuation_brier": 0.0065816695569083095,
+            "reward_mae": 0.030168627854436636
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 120,
+          "metrics": {
+            "posterior_image_mse": 0.027138940524309874,
+            "open_loop_image_mse": 0.04384163022041321,
+            "terminal_reward_mae": 0.42216981793272085,
+            "terminal_brier": 0.11636856943368912,
+            "continuation_brier": 0.005441937246359885,
+            "reward_mae": 0.028046827297657728
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 160,
+          "metrics": {
+            "posterior_image_mse": 0.02709304913878441,
+            "open_loop_image_mse": 0.04565671179443598,
+            "terminal_reward_mae": 0.22207289471708494,
+            "terminal_brier": 0.018537828429794775,
+            "continuation_brier": 0.005323516117641702,
+            "reward_mae": 0.02850273111835122
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 200,
+          "metrics": {
+            "posterior_image_mse": 0.02660443214699626,
+            "open_loop_image_mse": 0.045161010697484016,
+            "terminal_reward_mae": 0.26372497862782973,
+            "terminal_brier": 0.03588500207868116,
+            "continuation_brier": 0.007542114704847336,
+            "reward_mae": 0.029458491131663322
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 240,
+          "metrics": {
+            "posterior_image_mse": 0.026685343123972416,
+            "open_loop_image_mse": 0.043426777236163616,
+            "terminal_reward_mae": 0.33114721446201717,
+            "terminal_brier": 0.05484088889226831,
+            "continuation_brier": 0.005012548121158034,
+            "reward_mae": 0.027018791064620018
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 280,
+          "metrics": {
+            "posterior_image_mse": 0.02624094532802701,
+            "open_loop_image_mse": 0.044265479780733585,
+            "terminal_reward_mae": 0.37855827294546984,
+            "terminal_brier": 0.08622970714651305,
+            "continuation_brier": 0.005040913092670962,
+            "reward_mae": 0.027236818801611662
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 320,
+          "metrics": {
+            "posterior_image_mse": 0.026373316999524832,
+            "open_loop_image_mse": 0.045308372005820274,
+            "terminal_reward_mae": 0.38275832143323174,
+            "terminal_brier": 0.09330424024113293,
+            "continuation_brier": 0.0045642610639333725,
+            "reward_mae": 0.024991949554532766
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        }
+      ],
+      "final_counters": {
+        "real_decisions": 174229,
+        "model_updates": 21580,
+        "actor_updates": 0,
+        "imagined_transitions": 0
+      }
+    },
+    {
+      "run": "runs/smg1/world-model-repair-scaled-20261023",
+      "source_checkpoint": "runs\\smg1\\world-model-repair-20261023\\world-repaired.pt",
+      "source_sha256": "74144859b8f5da77256a71b3e8763a25cb8bcdb44e9a340281ea68ebb0e4a844",
+      "settings": {
+        "reconstruction_weight": 100.0,
+        "terminal_reward_weight": 5.0,
+        "prior_prediction_weight": 0.5,
+        "open_loop_training_horizon": 0,
+        "open_loop_training_weight": 0,
+        "training_terminal_fraction": 0.5
+      },
+      "checkpoint_sha256_verified": "2ccc00fcba58d63bedd84b392537d78bb6c16486dc0d2006e451773fa09cd2d8",
+      "evaluations": [
+        {
+          "additional_model_updates": 0,
+          "metrics": {
+            "posterior_image_mse": 0.026373316999524832,
+            "open_loop_image_mse": 0.045308372005820274,
+            "terminal_reward_mae": 0.38275832143323174,
+            "terminal_brier": 0.09330424024113293,
+            "continuation_brier": 0.0045642610639333725,
+            "reward_mae": 0.024991949554532766
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 40,
+          "metrics": {
+            "posterior_image_mse": 0.026235871948301792,
+            "open_loop_image_mse": 0.04269007779657841,
+            "terminal_reward_mae": 0.29225010090860826,
+            "terminal_brier": 0.057446445132254984,
+            "continuation_brier": 0.006484015291789547,
+            "reward_mae": 0.02644310030154884
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 80,
+          "metrics": {
+            "posterior_image_mse": 0.025065817404538393,
+            "open_loop_image_mse": 0.04449794255197048,
+            "terminal_reward_mae": 0.4052835610406152,
+            "terminal_brier": 0.1227267837826291,
+            "continuation_brier": 0.006369806360453367,
+            "reward_mae": 0.024828058434650302
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 120,
+          "metrics": {
+            "posterior_image_mse": 0.024507669731974602,
+            "open_loop_image_mse": 0.04209044482558966,
+            "terminal_reward_mae": 0.5650562715941462,
+            "terminal_brier": 0.22384358120375666,
+            "continuation_brier": 0.008073164732195437,
+            "reward_mae": 0.027193966787308455
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04",
+              "sweet_sweet: terminal_reward_mae exceeds 0.5",
+              "sweet_sweet: terminal_brier exceeds 0.2"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 160,
+          "metrics": {
+            "posterior_image_mse": 0.024554940406233072,
+            "open_loop_image_mse": 0.04424811340868473,
+            "terminal_reward_mae": 0.5010130297521065,
+            "terminal_brier": 0.18807500665043964,
+            "continuation_brier": 0.008306563715450466,
+            "reward_mae": 0.028667607810348272
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04",
+              "sweet_sweet: terminal_reward_mae exceeds 0.5"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 200,
+          "metrics": {
+            "posterior_image_mse": 0.024409998673945665,
+            "open_loop_image_mse": 0.04362363647669554,
+            "terminal_reward_mae": 0.528074015317292,
+            "terminal_brier": 0.21264054240851565,
+            "continuation_brier": 0.008635386824607849,
+            "reward_mae": 0.02688862639479339
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04",
+              "sweet_sweet: terminal_reward_mae exceeds 0.5",
+              "sweet_sweet: terminal_brier exceeds 0.2"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 240,
+          "metrics": {
+            "posterior_image_mse": 0.024298911914229393,
+            "open_loop_image_mse": 0.043059163726866245,
+            "terminal_reward_mae": 0.4522370752589456,
+            "terminal_brier": 0.17258447106799174,
+            "continuation_brier": 0.007209723815321922,
+            "reward_mae": 0.023990083253011107
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 280,
+          "metrics": {
+            "posterior_image_mse": 0.0241671334952116,
+            "open_loop_image_mse": 0.0437663896009326,
+            "terminal_reward_mae": 0.49368490124570913,
+            "terminal_brier": 0.2167169721475963,
+            "continuation_brier": 0.009314338793046772,
+            "reward_mae": 0.028271031100302935
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04",
+              "sweet_sweet: terminal_brier exceeds 0.2"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 320,
+          "metrics": {
+            "posterior_image_mse": 0.024169394746422768,
+            "open_loop_image_mse": 0.04247987177222967,
+            "terminal_reward_mae": 0.5057274005536375,
+            "terminal_brier": 0.1920827663100148,
+            "continuation_brier": 0.007475646678358316,
+            "reward_mae": 0.026103967800736427
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04",
+              "sweet_sweet: terminal_reward_mae exceeds 0.5"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 360,
+          "metrics": {
+            "posterior_image_mse": 0.024465839378535748,
+            "open_loop_image_mse": 0.042978644371032715,
+            "terminal_reward_mae": 0.5949343782046745,
+            "terminal_brier": 0.22391014648922558,
+            "continuation_brier": 0.008647862472571433,
+            "reward_mae": 0.026485560461878777
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04",
+              "sweet_sweet: terminal_reward_mae exceeds 0.5",
+              "sweet_sweet: terminal_brier exceeds 0.2"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 400,
+          "metrics": {
+            "posterior_image_mse": 0.024059370160102844,
+            "open_loop_image_mse": 0.042365056462585926,
+            "terminal_reward_mae": 0.45546790186701147,
+            "terminal_brier": 0.16568139291785913,
+            "continuation_brier": 0.007577748969197273,
+            "reward_mae": 0.023475236725062132
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 440,
+          "metrics": {
+            "posterior_image_mse": 0.02398161869496107,
+            "open_loop_image_mse": 0.042944684624671936,
+            "terminal_reward_mae": 0.46817600418781413,
+            "terminal_brier": 0.19218129433434586,
+            "continuation_brier": 0.00821000651922077,
+            "reward_mae": 0.0244489589240402
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 480,
+          "metrics": {
+            "posterior_image_mse": 0.02390577271580696,
+            "open_loop_image_mse": 0.04305513668805361,
+            "terminal_reward_mae": 0.4610618383720003,
+            "terminal_brier": 0.15926160769551392,
+            "continuation_brier": 0.006995255593210459,
+            "reward_mae": 0.02281739772297442
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 520,
+          "metrics": {
+            "posterior_image_mse": 0.02410293323919177,
+            "open_loop_image_mse": 0.04357444308698177,
+            "terminal_reward_mae": 0.4754401388867148,
+            "terminal_brier": 0.15497545022982853,
+            "continuation_brier": 0.0063324375078082085,
+            "reward_mae": 0.022629183949902654
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 560,
+          "metrics": {
+            "posterior_image_mse": 0.0237886905670166,
+            "open_loop_image_mse": 0.043201297521591187,
+            "terminal_reward_mae": 0.5112148944673867,
+            "terminal_brier": 0.169110660786326,
+            "continuation_brier": 0.006235858774743974,
+            "reward_mae": 0.024173849262297153
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04",
+              "sweet_sweet: terminal_reward_mae exceeds 0.5"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 600,
+          "metrics": {
+            "posterior_image_mse": 0.02374029392376542,
+            "open_loop_image_mse": 0.04297318775206804,
+            "terminal_reward_mae": 0.4742486882826378,
+            "terminal_brier": 0.18297181172225652,
+            "continuation_brier": 0.006796827803555061,
+            "reward_mae": 0.022712503792718053
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 640,
+          "metrics": {
+            "posterior_image_mse": 0.023670829366892576,
+            "open_loop_image_mse": 0.0425005666911602,
+            "terminal_reward_mae": 0.39083868188077003,
+            "terminal_brier": 0.15656444997635838,
+            "continuation_brier": 0.006320232307189144,
+            "reward_mae": 0.02117045223712921
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        }
+      ],
+      "final_counters": {
+        "real_decisions": 174229,
+        "model_updates": 22220,
+        "actor_updates": 0,
+        "imagined_transitions": 0
+      }
+    },
+    {
+      "run": "runs/smg1/world-model-repair-likelihood-20261023",
+      "source_checkpoint": "runs\\smg1\\world-model-repair-scaled-20261023\\world-repaired.pt",
+      "source_sha256": "2ccc00fcba58d63bedd84b392537d78bb6c16486dc0d2006e451773fa09cd2d8",
+      "settings": {
+        "reconstruction_weight": 3528.0,
+        "terminal_reward_weight": 5.0,
+        "prior_prediction_weight": 0.5,
+        "open_loop_training_horizon": 0,
+        "open_loop_training_weight": 0,
+        "training_terminal_fraction": 0.5
+      },
+      "checkpoint_sha256_verified": "aad0c99e5cfa2b5044ec767e5057af8a77f1a682666c357fdaea1dd011fc1bc2",
+      "evaluations": [
+        {
+          "additional_model_updates": 0,
+          "metrics": {
+            "posterior_image_mse": 0.023670829366892576,
+            "open_loop_image_mse": 0.0425005666911602,
+            "terminal_reward_mae": 0.39083868188077003,
+            "terminal_brier": 0.15656444997635838,
+            "continuation_brier": 0.006320232307189144,
+            "reward_mae": 0.02117045223712921
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 40,
+          "metrics": {
+            "posterior_image_mse": 0.024252481292933226,
+            "open_loop_image_mse": 0.0440788920968771,
+            "terminal_reward_mae": 0.4340244351789869,
+            "terminal_brier": 0.17082454609395614,
+            "continuation_brier": 0.007377936912234873,
+            "reward_mae": 0.02374228509142995
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 80,
+          "metrics": {
+            "posterior_image_mse": 0.023704436607658863,
+            "open_loop_image_mse": 0.043190332129597664,
+            "terminal_reward_mae": 0.48830277909492625,
+            "terminal_brier": 0.15293719001307055,
+            "continuation_brier": 0.005773401786427712,
+            "reward_mae": 0.025001450441777706
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 120,
+          "metrics": {
+            "posterior_image_mse": 0.02270680759102106,
+            "open_loop_image_mse": 0.04221578501164913,
+            "terminal_reward_mae": 0.5064843964987787,
+            "terminal_brier": 0.1860363728302563,
+            "continuation_brier": 0.007557136945251841,
+            "reward_mae": 0.02592709776945412
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04",
+              "sweet_sweet: terminal_reward_mae exceeds 0.5"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 160,
+          "metrics": {
+            "posterior_image_mse": 0.022420855704694986,
+            "open_loop_image_mse": 0.04308620747178793,
+            "terminal_reward_mae": 0.40994520485401154,
+            "terminal_brier": 0.10998769953911161,
+            "continuation_brier": 0.005026798055041581,
+            "reward_mae": 0.024376571644097567
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 200,
+          "metrics": {
+            "posterior_image_mse": 0.0221013892441988,
+            "open_loop_image_mse": 0.04251059889793396,
+            "terminal_reward_mae": 0.457509259211606,
+            "terminal_brier": 0.11398450124623447,
+            "continuation_brier": 0.004890272713964805,
+            "reward_mae": 0.024062493350356817
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 240,
+          "metrics": {
+            "posterior_image_mse": 0.02202061703428626,
+            "open_loop_image_mse": 0.04201377835124731,
+            "terminal_reward_mae": 0.5168742141846953,
+            "terminal_brier": 0.16012501819380398,
+            "continuation_brier": 0.0064785216527525336,
+            "reward_mae": 0.025028490461409092
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04",
+              "sweet_sweet: terminal_reward_mae exceeds 0.5"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 280,
+          "metrics": {
+            "posterior_image_mse": 0.021904464345425367,
+            "open_loop_image_mse": 0.04287873860448599,
+            "terminal_reward_mae": 0.4209399284987614,
+            "terminal_brier": 0.10605520279756908,
+            "continuation_brier": 0.004924603344989009,
+            "reward_mae": 0.025485709309577942
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 320,
+          "metrics": {
+            "posterior_image_mse": 0.0216796244494617,
+            "open_loop_image_mse": 0.04179653339087963,
+            "terminal_reward_mae": 0.44810717578591974,
+            "terminal_brier": 0.12566682034782295,
+            "continuation_brier": 0.005687986049451865,
+            "reward_mae": 0.025690414942801
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 360,
+          "metrics": {
+            "posterior_image_mse": 0.021453402936458588,
+            "open_loop_image_mse": 0.04174810275435448,
+            "terminal_reward_mae": 0.4465167584090397,
+            "terminal_brier": 0.1011030363432806,
+            "continuation_brier": 0.004781488933076616,
+            "reward_mae": 0.024569699075073004
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 400,
+          "metrics": {
+            "posterior_image_mse": 0.021281900350004435,
+            "open_loop_image_mse": 0.042221225798130035,
+            "terminal_reward_mae": 0.4750264723753107,
+            "terminal_brier": 0.1526433303952217,
+            "continuation_brier": 0.006402466096915305,
+            "reward_mae": 0.02516629872843623
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 440,
+          "metrics": {
+            "posterior_image_mse": 0.021347967442125082,
+            "open_loop_image_mse": 0.04137781821191311,
+            "terminal_reward_mae": 0.4553992162490713,
+            "terminal_brier": 0.1865327401921667,
+            "continuation_brier": 0.007788739341776818,
+            "reward_mae": 0.024024568498134613
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 480,
+          "metrics": {
+            "posterior_image_mse": 0.020968608558177948,
+            "open_loop_image_mse": 0.04164196643978357,
+            "terminal_reward_mae": 0.42745479478918275,
+            "terminal_brier": 0.16576559308530955,
+            "continuation_brier": 0.006487163758720271,
+            "reward_mae": 0.02246690122410655
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 520,
+          "metrics": {
+            "posterior_image_mse": 0.021010758820921183,
+            "open_loop_image_mse": 0.042996641248464584,
+            "terminal_reward_mae": 0.440659629887548,
+            "terminal_brier": 0.1546821947819714,
+            "continuation_brier": 0.006259182846406475,
+            "reward_mae": 0.022096444386988878
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 560,
+          "metrics": {
+            "posterior_image_mse": 0.02076861448585987,
+            "open_loop_image_mse": 0.04209316335618496,
+            "terminal_reward_mae": 0.4506175184044345,
+            "terminal_brier": 0.11720750562782431,
+            "continuation_brier": 0.005165277270862134,
+            "reward_mae": 0.023139474214985967
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 600,
+          "metrics": {
+            "posterior_image_mse": 0.02064446685835719,
+            "open_loop_image_mse": 0.04151365626603365,
+            "terminal_reward_mae": 0.4195786324040643,
+            "terminal_brier": 0.13727556213190586,
+            "continuation_brier": 0.0060440191518864594,
+            "reward_mae": 0.02233101613819599
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 640,
+          "metrics": {
+            "posterior_image_mse": 0.020622653421014547,
+            "open_loop_image_mse": 0.042200000025331974,
+            "terminal_reward_mae": 0.4570790174706229,
+            "terminal_brier": 0.14893995948007394,
+            "continuation_brier": 0.006516812278277939,
+            "reward_mae": 0.023757994873449206
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 680,
+          "metrics": {
+            "posterior_image_mse": 0.020556216593831778,
+            "open_loop_image_mse": 0.041443029418587685,
+            "terminal_reward_mae": 0.42938557113039083,
+            "terminal_brier": 0.08917924695937283,
+            "continuation_brier": 0.004351227082224796,
+            "reward_mae": 0.023180715506896377
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 720,
+          "metrics": {
+            "posterior_image_mse": 0.020368766970932484,
+            "open_loop_image_mse": 0.042253428138792515,
+            "terminal_reward_mae": 0.4924780988487704,
+            "terminal_brier": 0.15967311080673646,
+            "continuation_brier": 0.006234118074644357,
+            "reward_mae": 0.025329456198960543
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 760,
+          "metrics": {
+            "posterior_image_mse": 0.020261764526367188,
+            "open_loop_image_mse": 0.04209732357412577,
+            "terminal_reward_mae": 0.5608044318084059,
+            "terminal_brier": 0.17710730086626678,
+            "continuation_brier": 0.006815068947616965,
+            "reward_mae": 0.028787717688828707
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04",
+              "sweet_sweet: terminal_reward_mae exceeds 0.5"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 800,
+          "metrics": {
+            "posterior_image_mse": 0.020198727026581764,
+            "open_loop_image_mse": 0.04112058971077204,
+            "terminal_reward_mae": 0.37062737242928867,
+            "terminal_brier": 0.10090705007314682,
+            "continuation_brier": 0.004466394253540784,
+            "reward_mae": 0.0199908462818712
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 840,
+          "metrics": {
+            "posterior_image_mse": 0.020076454151421785,
+            "open_loop_image_mse": 0.04142602067440748,
+            "terminal_reward_mae": 0.44030322545561296,
+            "terminal_brier": 0.0966293161839311,
+            "continuation_brier": 0.004835426167119294,
+            "reward_mae": 0.02651301957666874
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 880,
+          "metrics": {
+            "posterior_image_mse": 0.01994759915396571,
+            "open_loop_image_mse": 0.04132204223424196,
+            "terminal_reward_mae": 0.5508366329916592,
+            "terminal_brier": 0.14248548987610588,
+            "continuation_brier": 0.005738590989494696,
+            "reward_mae": 0.027712339535355568
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: open_loop_image_mse exceeds 0.04",
+              "sweet_sweet: terminal_reward_mae exceeds 0.5"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 920,
+          "metrics": {
+            "posterior_image_mse": 0.020003359764814377,
+            "open_loop_image_mse": 0.041819971054792404,
+            "terminal_reward_mae": 0.4792676393328042,
+            "terminal_brier": 0.137921284567083,
+            "continuation_brier": 0.005482387547090184,
+            "reward_mae": 0.024255379335954785
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 960,
+          "metrics": {
+            "posterior_image_mse": 0.019859439227730036,
+            "open_loop_image_mse": 0.04167079273611307,
+            "terminal_reward_mae": 0.4855871298189821,
+            "terminal_brier": 0.1527479450250494,
+            "continuation_brier": 0.006219070695806295,
+            "reward_mae": 0.026117125991731882
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 1000,
+          "metrics": {
+            "posterior_image_mse": 0.01967803156003356,
+            "open_loop_image_mse": 0.04139444325119257,
+            "terminal_reward_mae": 0.4608913064002991,
+            "terminal_brier": 0.12355930839890036,
+            "continuation_brier": 0.005231884642853402,
+            "reward_mae": 0.024228690192103386
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        }
+      ],
+      "final_counters": {
+        "real_decisions": 174229,
+        "model_updates": 23220,
+        "actor_updates": 0,
+        "imagined_transitions": 0
+      }
+    },
+    {
+      "run": "runs/smg1/world-model-repair-rollout-20261023",
+      "source_checkpoint": "runs\\smg1\\world-model-repair-likelihood-20261023\\world-repaired.pt",
+      "source_sha256": "aad0c99e5cfa2b5044ec767e5057af8a77f1a682666c357fdaea1dd011fc1bc2",
+      "settings": {
+        "reconstruction_weight": 3528.0,
+        "terminal_reward_weight": 5.0,
+        "prior_prediction_weight": 0.5,
+        "open_loop_training_horizon": 8,
+        "open_loop_training_weight": 0.5,
+        "training_terminal_fraction": 0.5
+      },
+      "checkpoint_sha256_verified": "8c7220272aa93021bad66147a70a647bbc8dc1ff6d9fc025ea967a3a91b6aa04",
+      "evaluations": [
+        {
+          "additional_model_updates": 0,
+          "metrics": {
+            "posterior_image_mse": 0.01966280722990632,
+            "open_loop_image_mse": 0.041426192969083786,
+            "terminal_reward_mae": 0.4371287278060255,
+            "terminal_brier": 0.10575916163687563,
+            "continuation_brier": 0.004485831765123294,
+            "reward_mae": 0.023293537786230445
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: open_loop_image_mse exceeds 0.04"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 40,
+          "metrics": {
+            "posterior_image_mse": 0.02054424211382866,
+            "open_loop_image_mse": 0.03636291343718767,
+            "terminal_reward_mae": 0.5529567609573233,
+            "terminal_brier": 0.07882018555116294,
+            "continuation_brier": 0.008358361897990108,
+            "reward_mae": 0.045157503336668015
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: terminal_reward_mae exceeds 0.5"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 80,
+          "metrics": {
+            "posterior_image_mse": 0.02065552119165659,
+            "open_loop_image_mse": 0.03808871190994978,
+            "terminal_reward_mae": 0.49075781887975234,
+            "terminal_brier": 0.1568359906046555,
+            "continuation_brier": 0.009880847646854818,
+            "reward_mae": 0.04071098659187555
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 120,
+          "metrics": {
+            "posterior_image_mse": 0.020426329225301743,
+            "open_loop_image_mse": 0.03934880439192057,
+            "terminal_reward_mae": 0.3534884448966076,
+            "terminal_brier": 0.12299849544170088,
+            "continuation_brier": 0.011310616042464972,
+            "reward_mae": 0.04128924710676074
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 160,
+          "metrics": {
+            "posterior_image_mse": 0.020374375861138105,
+            "open_loop_image_mse": 0.03901516832411289,
+            "terminal_reward_mae": 0.4014249477407028,
+            "terminal_brier": 0.09298532423643588,
+            "continuation_brier": 0.005896675254916772,
+            "reward_mae": 0.03423005621880293
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 200,
+          "metrics": {
+            "posterior_image_mse": 0.020017739851027727,
+            "open_loop_image_mse": 0.037795137614011765,
+            "terminal_reward_mae": 0.5045215294792734,
+            "terminal_brier": 0.20360335836122775,
+            "continuation_brier": 0.009577580320183188,
+            "reward_mae": 0.039898425340652466
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02",
+              "sweet_sweet: terminal_reward_mae exceeds 0.5",
+              "sweet_sweet: terminal_brier exceeds 0.2"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 240,
+          "metrics": {
+            "posterior_image_mse": 0.019920264836400747,
+            "open_loop_image_mse": 0.03573123272508383,
+            "terminal_reward_mae": 0.5129334993403534,
+            "terminal_brier": 0.15881483021176196,
+            "continuation_brier": 0.008097003650618717,
+            "reward_mae": 0.03389581199735403
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: terminal_reward_mae exceeds 0.5"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 280,
+          "metrics": {
+            "posterior_image_mse": 0.020040001720190048,
+            "open_loop_image_mse": 0.03934463672339916,
+            "terminal_reward_mae": 0.4814315875028742,
+            "terminal_brier": 0.16726137680836536,
+            "continuation_brier": 0.007207287329947576,
+            "reward_mae": 0.03828719723969698
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 320,
+          "metrics": {
+            "posterior_image_mse": 0.020024942699819803,
+            "open_loop_image_mse": 0.03781376872211695,
+            "terminal_reward_mae": 0.47335840967194787,
+            "terminal_brier": 0.0798004101560419,
+            "continuation_brier": 0.006016094179358333,
+            "reward_mae": 0.03356124088168144
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 360,
+          "metrics": {
+            "posterior_image_mse": 0.02000272274017334,
+            "open_loop_image_mse": 0.03637932799756527,
+            "terminal_reward_mae": 0.3110108462900951,
+            "terminal_brier": 0.06709126646104589,
+            "continuation_brier": 0.007998556218808517,
+            "reward_mae": 0.029114176984876394
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: posterior_image_mse exceeds 0.02"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "additional_model_updates": 400,
+          "metrics": {
+            "posterior_image_mse": 0.019749535247683525,
+            "open_loop_image_mse": 0.03838085290044546,
+            "terminal_reward_mae": 0.43959394097328186,
+            "terminal_brier": 0.11126556125437391,
+            "continuation_brier": 0.0049671486631268635,
+            "reward_mae": 0.02692435379140079
+          },
+          "gate": {
+            "ready": true,
+            "reasons": [],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        }
+      ],
+      "final_counters": {
+        "real_decisions": 174229,
+        "model_updates": 23620,
+        "actor_updates": 0,
+        "imagined_transitions": 0
+      }
+    }
+  ],
+  "online_run": "runs/smg1/world-model-20261023-104046-961482",
+  "online_status": {
+    "state": "running",
+    "algorithm": "gaussian-rssm-imagination-v1",
+    "timesteps": 174373,
+    "real_decisions": 174373,
+    "model_updates": 23636,
+    "actor_updates": 2,
+    "imagined_transitions": 2048,
+    "elapsed_seconds": 41.46799999999348,
+    "decisions_per_second": 3.472557152503681,
+    "updated_at": "2026-10-23T13:41:28.432131+00:00",
+    "progress": [
+      0.005597795748019242
+    ],
+    "diagnostics": {
+      "replay": {
+        "chunks": 396,
+        "transitions": 62038,
+        "train_episodes": 263,
+        "validation_episodes": 65,
+        "scenarios": {
+          "sweet_sweet": 62038
+        },
+        "train_scenarios": {
+          "sweet_sweet": 48642
+        },
+        "validation_scenarios": {
+          "sweet_sweet": 13396
+        },
+        "rejected": []
+      },
+      "validation": {
+        "sweet_sweet": {
+          "reconstruction": 0.020941648166626692,
+          "reward": 0.04614403308369219,
+          "continuation": 0.2539603067561984,
+          "dynamics_kl": 27.660802841186523,
+          "representation_kl": 27.660802841186523,
+          "ensemble": 0.13361099362373352,
+          "loss": 90.91232872009277,
+          "posterior_image_mse": 0.020941648166626692,
+          "reward_mae": 0.04101508762687445,
+          "terminal_reward_mae": 0.659201165725445,
+          "continuation_brier": 0.011542717576958239,
+          "terminal_brier": 0.260135378303199,
+          "terminal_examples": 29,
+          "validation_transitions": 882,
+          "open_loop_image_mse": 0.051986088976264,
+          "persistence_image_mse": 0.07180458679795265,
+          "open_loop_reward_mae": 0.30032771080732346
+        }
+      },
+      "imagination_gate": {
+        "ready": false,
+        "reasons": [
+          "sweet_sweet: posterior_image_mse exceeds 0.02",
+          "sweet_sweet: open_loop_image_mse exceeds 0.04",
+          "sweet_sweet: terminal_reward_mae exceeds 0.5",
+          "sweet_sweet: terminal_brier exceeds 0.2"
+        ],
+        "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+      },
+      "losses": {
+        "reconstruction": 0.015291135758161545,
+        "reward": 0.006102736573666334,
+        "continuation": 0.0009974054992198944,
+        "dynamics_kl": 15.76031494140625,
+        "representation_kl": 15.76031494140625,
+        "ensemble": 0.0643058642745018,
+        "prior_prediction": 60.21127700805664,
+        "open_loop_prediction": 78.22410583496094,
+        "loss": 132.69241333007812,
+        "posterior_image_mse": 0.015291135758161545,
+        "reward_mae": 0.01846708357334137,
+        "terminal_reward_mae": 0.04872908443212509,
+        "continuation_brier": 8.820384209684562e-06,
+        "terminal_brier": 1.454284938517958e-05,
+        "terminal_examples": 5,
+        "validation_transitions": 195,
+        "model_gradient_norm": 121.3755874633789
+      }
+    },
+    "note": "Only real RAM-verified episodes can establish mission completion. Imagined transitions are not real timesteps."
+  },
+  "online_process_verified": true,
+  "real_decisions_before_repair": 174229,
+  "note": "Offline fitting preserves real-decision counters; thresholds and episode splits were not relaxed."
+}
