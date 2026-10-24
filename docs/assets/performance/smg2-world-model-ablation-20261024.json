@@ -1,0 +1,4861 @@
+{
+  "schema": 1,
+  "experiment": "smg2-world-model-ablation",
+  "created_utc": "2026-10-24T22:43:26.468887+00:00",
+  "source_sha256": "7a5262e8613882e44feb588c2af11de6d7dcfb85ef503229353c578eb54f86c2",
+  "updates_per_arm": 128,
+  "seeds": [
+    11,
+    23,
+    47
+  ],
+  "arms": {
+    "continued_baseline": {},
+    "terminal_sampling": {
+      "training_terminal_fraction": 0.5
+    },
+    "terminal_reward_weight": {
+      "terminal_reward_weight": 5.0
+    },
+    "pixel_likelihood_scale": {
+      "reconstruction_weight": 3528.0
+    },
+    "one_step_prior": {
+      "prior_prediction_weight": 0.5
+    },
+    "eight_step_rollout": {
+      "open_loop_training_horizon": 8,
+      "open_loop_training_weight": 0.5
+    },
+    "full_smg1": {
+      "reconstruction_weight": 3528.0,
+      "terminal_reward_weight": 5.0,
+      "training_terminal_fraction": 0.5,
+      "prior_prediction_weight": 0.5,
+      "open_loop_training_horizon": 8,
+      "open_loop_training_weight": 0.5
+    },
+    "full_without_visual_scale": {
+      "terminal_reward_weight": 5.0,
+      "training_terminal_fraction": 0.5,
+      "prior_prediction_weight": 0.5,
+      "open_loop_training_horizon": 8,
+      "open_loop_training_weight": 0.5
+    },
+    "moderate_visual_scale": {
+      "reconstruction_weight": 100.0
+    },
+    "four_step_rollout": {
+      "open_loop_training_horizon": 4,
+      "open_loop_training_weight": 0.5
+    }
+  },
+  "validation_batches_per_partition": 8,
+  "replay": {
+    "chunks": 3293,
+    "transitions": 145346,
+    "train_episodes": 2601,
+    "validation_episodes": 692,
+    "scenarios": {
+      "spinning": 72848,
+      "double_time": 72498
+    },
+    "train_scenarios": {
+      "spinning": 56735,
+      "double_time": 58130
+    },
+    "validation_scenarios": {
+      "spinning": 16113,
+      "double_time": 14368
+    },
+    "rejected": []
+  },
+  "new_real_decisions": 0,
+  "new_actor_updates": 0,
+  "new_imagined_transitions": 0,
+  "scope": "Warm-start offline prediction screening; no real control or time-to-solution claims.",
+  "summary": {
+    "continued_baseline": {
+      "seeds": 3,
+      "scenarios": {
+        "spinning": {
+          "posterior_image_mse": {
+            "mean": 0.017705981231605012,
+            "std_across_seeds": 0.000346124692824591,
+            "paired_percent_change_mean": 0.0,
+            "paired_percent_change_by_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "open_loop_image_mse": {
+            "mean": 0.028129132464528084,
+            "std_across_seeds": 0.00037790120791050835,
+            "paired_percent_change_mean": 0.0,
+            "paired_percent_change_by_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "reward_mae": {
+            "mean": 0.04770535106460253,
+            "std_across_seeds": 0.0042340041874738285,
+            "paired_percent_change_mean": 0.0,
+            "paired_percent_change_by_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "terminal_reward_mae": {
+            "mean": 0.709115196906385,
+            "std_across_seeds": 0.1182662389734265,
+            "paired_percent_change_mean": 0.0,
+            "paired_percent_change_by_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "continuation_brier": {
+            "mean": 0.01263954897513031,
+            "std_across_seeds": 0.001366231960358256,
+            "paired_percent_change_mean": 0.0,
+            "paired_percent_change_by_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "terminal_brier": {
+            "mean": 0.08185148247007203,
+            "std_across_seeds": 0.025471804872110378,
+            "paired_percent_change_mean": 0.0,
+            "paired_percent_change_by_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "double_time": {
+          "posterior_image_mse": {
+            "mean": 0.01577822941665848,
+            "std_across_seeds": 2.9498437211868534e-05,
+            "paired_percent_change_mean": 0.0,
+            "paired_percent_change_by_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "open_loop_image_mse": {
+            "mean": 0.02690796321257949,
+            "std_across_seeds": 0.00045712478580494704,
+            "paired_percent_change_mean": 0.0,
+            "paired_percent_change_by_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "reward_mae": {
+            "mean": 0.03169663079703847,
+            "std_across_seeds": 0.0021816930994832,
+            "paired_percent_change_mean": 0.0,
+            "paired_percent_change_by_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "terminal_reward_mae": {
+            "mean": 0.5639604376422035,
+            "std_across_seeds": 0.03890469585853983,
+            "paired_percent_change_mean": 0.0,
+            "paired_percent_change_by_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "continuation_brier": {
+            "mean": 0.007635214062891767,
+            "std_across_seeds": 0.0011087134829997093,
+            "paired_percent_change_mean": 0.0,
+            "paired_percent_change_by_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "terminal_brier": {
+            "mean": 0.0712680067485457,
+            "std_across_seeds": 0.009007458858795631,
+            "paired_percent_change_mean": 0.0,
+            "paired_percent_change_by_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        }
+      },
+      "mean_fitting_seconds": 90.15965646666882,
+      "gate_passes": 0
+    },
+    "terminal_sampling": {
+      "seeds": 3,
+      "scenarios": {
+        "spinning": {
+          "posterior_image_mse": {
+            "mean": 0.01762901588032643,
+            "std_across_seeds": 0.00023593439382928354,
+            "paired_percent_change_mean": -0.41940670376307737,
+            "paired_percent_change_by_seed": [
+              0.739022777551912,
+              -0.30404242217708655,
+              -1.6932004666640577
+            ]
+          },
+          "open_loop_image_mse": {
+            "mean": 0.027965179178863764,
+            "std_across_seeds": 0.000549914196089112,
+            "paired_percent_change_mean": -0.5731815835520996,
+            "paired_percent_change_by_seed": [
+              2.1018769976210994,
+              -1.0894461834830116,
+              -2.7319755647943866
+            ]
+          },
+          "reward_mae": {
+            "mean": 0.049978071823716164,
+            "std_across_seeds": 0.0033697263704458927,
+            "paired_percent_change_mean": 5.507532740439352,
+            "paired_percent_change_by_seed": [
+              -8.987138047766251,
+              9.915159782859085,
+              15.59457648622522
+            ]
+          },
+          "terminal_reward_mae": {
+            "mean": 0.8395805067959285,
+            "std_across_seeds": 0.10426013725735354,
+            "paired_percent_change_mean": 20.376974019763956,
+            "paired_percent_change_by_seed": [
+              1.054146968991887,
+              20.146489704139903,
+              39.93028538616008
+            ]
+          },
+          "continuation_brier": {
+            "mean": 0.011434459564043209,
+            "std_across_seeds": 0.0006130837100685275,
+            "paired_percent_change_mean": -8.133005056543714,
+            "paired_percent_change_by_seed": [
+              -10.263333973861943,
+              9.625779208560026,
+              -23.761460404329227
+            ]
+          },
+          "terminal_brier": {
+            "mean": 0.10569296333761442,
+            "std_across_seeds": 0.029308399351025426,
+            "paired_percent_change_mean": 30.767738758550152,
+            "paired_percent_change_by_seed": [
+              50.47205766851066,
+              23.46367257956514,
+              18.367486027574653
+            ]
+          }
+        },
+        "double_time": {
+          "posterior_image_mse": {
+            "mean": 0.01571327067601184,
+            "std_across_seeds": 0.00011209538628487115,
+            "paired_percent_change_mean": -0.41262788881670787,
+            "paired_percent_change_by_seed": [
+              0.2835446545972786,
+              -0.5075580402376656,
+              -1.0138702808097366
+            ]
+          },
+          "open_loop_image_mse": {
+            "mean": 0.02678841903495292,
+            "std_across_seeds": 0.0007759695366221188,
+            "paired_percent_change_mean": -0.45248011298767804,
+            "paired_percent_change_by_seed": [
+              1.7816258523418282,
+              -2.908032138193828,
+              -0.23103405311103442
+            ]
+          },
+          "reward_mae": {
+            "mean": 0.03373371130631616,
+            "std_across_seeds": 0.0017334760508652825,
+            "paired_percent_change_mean": 7.263365008142508,
+            "paired_percent_change_by_seed": [
+              17.759492845561574,
+              13.885661953265394,
+              -9.855059774399443
+            ]
+          },
+          "terminal_reward_mae": {
+            "mean": 0.6228840344481998,
+            "std_across_seeds": 0.08453466675953476,
+            "paired_percent_change_mean": 11.030768732361883,
+            "paired_percent_change_by_seed": [
+              20.314500163894,
+              24.933796743958926,
+              -12.155990710767274
+            ]
+          },
+          "continuation_brier": {
+            "mean": 0.007837219240476164,
+            "std_across_seeds": 0.001289457751048467,
+            "paired_percent_change_mean": 2.3378047848775396,
+            "paired_percent_change_by_seed": [
+              1.3767384421290219,
+              -1.1694482732780398,
+              6.806124185781637
+            ]
+          },
+          "terminal_brier": {
+            "mean": 0.07301254688217239,
+            "std_across_seeds": 0.017489140618410462,
+            "paired_percent_change_mean": 2.137258223904071,
+            "paired_percent_change_by_seed": [
+              -9.745935287158524,
+              29.768117972478603,
+              -13.610408013607866
+            ]
+          }
+        }
+      },
+      "mean_fitting_seconds": 92.76772990000124,
+      "gate_passes": 0
+    },
+    "terminal_reward_weight": {
+      "seeds": 3,
+      "scenarios": {
+        "spinning": {
+          "posterior_image_mse": {
+            "mean": 0.017826596430192392,
+            "std_across_seeds": 0.0003037962654942814,
+            "paired_percent_change_mean": 0.6880224594645582,
+            "paired_percent_change_by_seed": [
+              1.2282107546113474,
+              1.0524571286119278,
+              -0.21660050482960047
+            ]
+          },
+          "open_loop_image_mse": {
+            "mean": 0.028205683610091608,
+            "std_across_seeds": 0.00031805868615773666,
+            "paired_percent_change_mean": 0.27503215434965994,
+            "paired_percent_change_by_seed": [
+              0.5024274709976018,
+              -0.016941545338866604,
+              0.3396105373902447
+            ]
+          },
+          "reward_mae": {
+            "mean": 0.051869360730051994,
+            "std_across_seeds": 0.0027485332947610156,
+            "paired_percent_change_mean": 10.180112564455785,
+            "paired_percent_change_by_seed": [
+              -2.974991297153584,
+              0.1648910139607107,
+              33.35043797656023
+            ]
+          },
+          "terminal_reward_mae": {
+            "mean": 0.44165400947843275,
+            "std_across_seeds": 0.06430827182686594,
+            "paired_percent_change_mean": -37.04104022196963,
+            "paired_percent_change_by_seed": [
+              -45.92715603951194,
+              -35.347201609988275,
+              -29.848763016408686
+            ]
+          },
+          "continuation_brier": {
+            "mean": 0.012067532746489936,
+            "std_across_seeds": 0.0025522773666920386,
+            "paired_percent_change_mean": -4.874746478577936,
+            "paired_percent_change_by_seed": [
+              -25.892819991124515,
+              5.689057452639568,
+              5.579523102751138
+            ]
+          },
+          "terminal_brier": {
+            "mean": 0.07837535265309183,
+            "std_across_seeds": 0.014635079419637154,
+            "paired_percent_change_mean": -0.9429772121968268,
+            "paired_percent_change_by_seed": [
+              7.308483173292268,
+              -15.950933373340991,
+              5.813518563458242
+            ]
+          }
+        },
+        "double_time": {
+          "posterior_image_mse": {
+            "mean": 0.015817967747959,
+            "std_across_seeds": 9.735332811298868e-05,
+            "paired_percent_change_mean": 0.2510543538721525,
+            "paired_percent_change_by_seed": [
+              0.6426952274885211,
+              0.4592449863362935,
+              -0.34877715220835714
+            ]
+          },
+          "open_loop_image_mse": {
+            "mean": 0.026889620581641793,
+            "std_across_seeds": 0.000499199708042501,
+            "paired_percent_change_mean": -0.07047349858238701,
+            "paired_percent_change_by_seed": [
+              -0.20949396469214232,
+              0.3933414652858236,
+              -0.3952679963408423
+            ]
+          },
+          "reward_mae": {
+            "mean": 0.03557321634919693,
+            "std_across_seeds": 0.0017987781899081075,
+            "paired_percent_change_mean": 12.379738834940833,
+            "paired_percent_change_by_seed": [
+              12.762725071291413,
+              15.506180581214156,
+              8.870310852316932
+            ]
+          },
+          "terminal_reward_mae": {
+            "mean": 0.36956478390428754,
+            "std_across_seeds": 0.09534251358090161,
+            "paired_percent_change_mean": -35.36772869202715,
+            "paired_percent_change_by_seed": [
+              -53.87827239976841,
+              -26.45397858916656,
+              -25.770935087146473
+            ]
+          },
+          "continuation_brier": {
+            "mean": 0.007641893862341931,
+            "std_across_seeds": 0.0007293661505644288,
+            "paired_percent_change_mean": 0.9366213556433524,
+            "paired_percent_change_by_seed": [
+              -6.310695325324412,
+              8.713549139308064,
+              0.4070102529464048
+            ]
+          },
+          "terminal_brier": {
+            "mean": 0.07216622867983663,
+            "std_across_seeds": 0.014890274112686154,
+            "paired_percent_change_mean": 0.539067373740909,
+            "paired_percent_change_by_seed": [
+              -3.4188310119189103,
+              -9.445482634258983,
+              14.481515767400621
+            ]
+          }
+        }
+      },
+      "mean_fitting_seconds": 34.804327833335265,
+      "gate_passes": 2
+    },
+    "pixel_likelihood_scale": {
+      "seeds": 3,
+      "scenarios": {
+        "spinning": {
+          "posterior_image_mse": {
+            "mean": 0.01495476447356244,
+            "std_across_seeds": 1.123812305854511e-05,
+            "paired_percent_change_mean": -15.505287533322345,
+            "paired_percent_change_by_seed": [
+              -13.112640674826714,
+              -16.753415604235133,
+              -16.649806320905192
+            ]
+          },
+          "open_loop_image_mse": {
+            "mean": 0.02781817177310586,
+            "std_across_seeds": 0.0006122469347614954,
+            "paired_percent_change_mean": -1.1115999863901511,
+            "paired_percent_change_by_seed": [
+              -2.8873712759185266,
+              -0.8048818497034316,
+              0.3574531664515046
+            ]
+          },
+          "reward_mae": {
+            "mean": 0.07870601234026253,
+            "std_across_seeds": 0.0024060955762135305,
+            "paired_percent_change_mean": 66.54638659681946,
+            "paired_percent_change_by_seed": [
+              55.942570488359934,
+              51.386687247290986,
+              92.3099020548075
+            ]
+          },
+          "terminal_reward_mae": {
+            "mean": 1.0622978834878831,
+            "std_across_seeds": 0.1330134929421913,
+            "paired_percent_change_mean": 57.06507567249323,
+            "paired_percent_change_by_seed": [
+              50.08762667193305,
+              6.51100512593521,
+              114.59659521961143
+            ]
+          },
+          "continuation_brier": {
+            "mean": 0.02198126564811294,
+            "std_across_seeds": 0.003764742935157868,
+            "paired_percent_change_mean": 78.9551609786682,
+            "paired_percent_change_by_seed": [
+              94.39067709795172,
+              126.83884148692322,
+              15.635964351129683
+            ]
+          },
+          "terminal_brier": {
+            "mean": 0.14321587447921047,
+            "std_across_seeds": 0.031019912134957063,
+            "paired_percent_change_mean": 100.52474468572127,
+            "paired_percent_change_by_seed": [
+              155.71350617605083,
+              -15.636404603711796,
+              161.49713248482485
+            ]
+          }
+        },
+        "double_time": {
+          "posterior_image_mse": {
+            "mean": 0.013038812476831177,
+            "std_across_seeds": 0.00010277835956361992,
+            "paired_percent_change_mean": -17.36285868735295,
+            "paired_percent_change_by_seed": [
+              -17.123378105362352,
+              -16.893303035632247,
+              -18.071894921064246
+            ]
+          },
+          "open_loop_image_mse": {
+            "mean": 0.026132044304783147,
+            "std_across_seeds": 0.0006711051509314429,
+            "paired_percent_change_mean": -2.8800004244473487,
+            "paired_percent_change_by_seed": [
+              -1.2500445623804257,
+              -5.730831591865271,
+              -1.6591251190963496
+            ]
+          },
+          "reward_mae": {
+            "mean": 0.05677194676051537,
+            "std_across_seeds": 0.004009019793119021,
+            "paired_percent_change_mean": 79.10442615127357,
+            "paired_percent_change_by_seed": [
+              81.22598951599898,
+              76.19797191372413,
+              79.88931702409761
+            ]
+          },
+          "terminal_reward_mae": {
+            "mean": 0.8979111717806921,
+            "std_across_seeds": 0.1238444340432919,
+            "paired_percent_change_mean": 59.61145789083529,
+            "paired_percent_change_by_seed": [
+              71.34114974793403,
+              29.94061866911619,
+              77.55260525545565
+            ]
+          },
+          "continuation_brier": {
+            "mean": 0.01597470522877605,
+            "std_across_seeds": 0.0022911313613246604,
+            "paired_percent_change_mean": 117.2800844035498,
+            "paired_percent_change_by_seed": [
+              95.34331972173189,
+              200.02884895388328,
+              56.468084535034244
+            ]
+          },
+          "terminal_brier": {
+            "mean": 0.09654926810051419,
+            "std_across_seeds": 0.029956699632180592,
+            "paired_percent_change_mean": 34.3320409620686,
+            "paired_percent_change_by_seed": [
+              35.190532148279964,
+              -3.810889799531181,
+              71.61648053745702
+            ]
+          }
+        }
+      },
+      "mean_fitting_seconds": 62.476984133332735,
+      "gate_passes": 0
+    },
+    "one_step_prior": {
+      "seeds": 3,
+      "scenarios": {
+        "spinning": {
+          "posterior_image_mse": {
+            "mean": 0.017745942653467257,
+            "std_across_seeds": 0.00022562623787075454,
+            "paired_percent_change_mean": 0.24244763853303505,
+            "paired_percent_change_by_seed": [
+              1.5065654168751275,
+              0.288856749515376,
+              -1.0680792507913983
+            ]
+          },
+          "open_loop_image_mse": {
+            "mean": 0.027959501060346763,
+            "std_across_seeds": 0.0009330807342074597,
+            "paired_percent_change_mean": -0.6293083761578259,
+            "paired_percent_change_by_seed": [
+              -2.156140569099718,
+              2.1538148171438065,
+              -1.885599376517566
+            ]
+          },
+          "reward_mae": {
+            "mean": 0.052397117406750716,
+            "std_across_seeds": 0.00708936432518119,
+            "paired_percent_change_mean": 9.548129399652526,
+            "paired_percent_change_by_seed": [
+              4.198161268514711,
+              21.30026934205422,
+              3.145957588388648
+            ]
+          },
+          "terminal_reward_mae": {
+            "mean": 0.7968433815098944,
+            "std_across_seeds": 0.16614029138501593,
+            "paired_percent_change_mean": 12.344920566210241,
+            "paired_percent_change_by_seed": [
+              -3.1814693825644835,
+              24.625937102004514,
+              15.590293979190694
+            ]
+          },
+          "continuation_brier": {
+            "mean": 0.012043227065684428,
+            "std_across_seeds": 0.0009368642506024101,
+            "paired_percent_change_mean": -2.865623196638834,
+            "paired_percent_change_by_seed": [
+              1.4948591326378935,
+              15.617298392048419,
+              -25.70902711460281
+            ]
+          },
+          "terminal_brier": {
+            "mean": 0.07609339759879473,
+            "std_across_seeds": 0.04189202394154389,
+            "paired_percent_change_mean": -13.066658748519187,
+            "paired_percent_change_by_seed": [
+              -38.61824352798552,
+              14.235212716444966,
+              -14.816945434017004
+            ]
+          }
+        },
+        "double_time": {
+          "posterior_image_mse": {
+            "mean": 0.015887064742855728,
+            "std_across_seeds": 2.4621280688199785e-05,
+            "paired_percent_change_mean": 0.6900049977807354,
+            "paired_percent_change_by_seed": [
+              0.706748830115389,
+              0.4567276906383144,
+              0.9065384725885028
+            ]
+          },
+          "open_loop_image_mse": {
+            "mean": 0.026309447828680277,
+            "std_across_seeds": 0.00045176886690314645,
+            "paired_percent_change_mean": -2.2242315450563432,
+            "paired_percent_change_by_seed": [
+              -2.494431030288613,
+              -1.82580170400245,
+              -2.352461900877967
+            ]
+          },
+          "reward_mae": {
+            "mean": 0.03620927408337593,
+            "std_across_seeds": 0.003608423318007142,
+            "paired_percent_change_mean": 15.331165599983754,
+            "paired_percent_change_by_seed": [
+              23.307987467980084,
+              31.482762950218792,
+              -8.797253618247613
+            ]
+          },
+          "terminal_reward_mae": {
+            "mean": 0.6994680239094628,
+            "std_across_seeds": 0.12477324741077067,
+            "paired_percent_change_mean": 24.488824831994375,
+            "paired_percent_change_by_seed": [
+              30.071391785268165,
+              48.225557572754575,
+              -4.830474862039624
+            ]
+          },
+          "continuation_brier": {
+            "mean": 0.007045930752913894,
+            "std_across_seeds": 0.001056632045376916,
+            "paired_percent_change_mean": -7.358315697843525,
+            "paired_percent_change_by_seed": [
+              -1.6787166270278098,
+              -2.388867600448552,
+              -18.007362866054212
+            ]
+          },
+          "terminal_brier": {
+            "mean": 0.0842242095955751,
+            "std_across_seeds": 0.0162029957887365,
+            "paired_percent_change_mean": 18.189463775868926,
+            "paired_percent_change_by_seed": [
+              10.654987503987945,
+              42.13264553166638,
+              1.7807582919524556
+            ]
+          }
+        }
+      },
+      "mean_fitting_seconds": 71.40583633333638,
+      "gate_passes": 0
+    },
+    "eight_step_rollout": {
+      "seeds": 3,
+      "scenarios": {
+        "spinning": {
+          "posterior_image_mse": {
+            "mean": 0.021927490597590804,
+            "std_across_seeds": 0.0017666717292291925,
+            "paired_percent_change_mean": 23.726406851623324,
+            "paired_percent_change_by_seed": [
+              15.850992985452784,
+              34.819269643357266,
+              20.508957926059914
+            ]
+          },
+          "open_loop_image_mse": {
+            "mean": 0.028717275864134233,
+            "std_across_seeds": 0.0011088695186542274,
+            "paired_percent_change_mean": 2.05752429005767,
+            "paired_percent_change_by_seed": [
+              0.5361247231445709,
+              5.691697822926911,
+              -0.055249675898472184
+            ]
+          },
+          "reward_mae": {
+            "mean": 0.07451697570892672,
+            "std_across_seeds": 0.006508716321336516,
+            "paired_percent_change_mean": 56.28908238668268,
+            "paired_percent_change_by_seed": [
+              50.61068257363455,
+              61.70970275979006,
+              56.54686182662343
+            ]
+          },
+          "terminal_reward_mae": {
+            "mean": 1.010976281904039,
+            "std_across_seeds": 0.14816227148636427,
+            "paired_percent_change_mean": 43.1194776580995,
+            "paired_percent_change_by_seed": [
+              41.416074270380676,
+              40.19672093799051,
+              47.745637765927306
+            ]
+          },
+          "continuation_brier": {
+            "mean": 0.013954667083453387,
+            "std_across_seeds": 0.0028786732530863583,
+            "paired_percent_change_mean": 13.97709185336236,
+            "paired_percent_change_by_seed": [
+              11.549390219782962,
+              57.161227344487386,
+              -26.77934200418327
+            ]
+          },
+          "terminal_brier": {
+            "mean": 0.07302751610889875,
+            "std_across_seeds": 0.026165829224726544,
+            "paired_percent_change_mean": -10.232556710167769,
+            "paired_percent_change_by_seed": [
+              20.29619072178861,
+              -12.449272963241354,
+              -38.54458788905056
+            ]
+          }
+        },
+        "double_time": {
+          "posterior_image_mse": {
+            "mean": 0.018881173882012565,
+            "std_across_seeds": 0.0010612454817353857,
+            "paired_percent_change_mean": 19.66449943791405,
+            "paired_percent_change_by_seed": [
+              13.922930817845259,
+              29.050239006313827,
+              16.020328489583058
+            ]
+          },
+          "open_loop_image_mse": {
+            "mean": 0.027134181077902515,
+            "std_across_seeds": 0.0013452387931014262,
+            "paired_percent_change_mean": 0.8332708450529026,
+            "paired_percent_change_by_seed": [
+              -2.862695816872518,
+              7.216913719187068,
+              -1.8544053671558425
+            ]
+          },
+          "reward_mae": {
+            "mean": 0.0549421408213675,
+            "std_across_seeds": 0.0036310847867317884,
+            "paired_percent_change_mean": 74.73021783555735,
+            "paired_percent_change_by_seed": [
+              87.43861817191971,
+              91.96161069193995,
+              44.790424642812376
+            ]
+          },
+          "terminal_reward_mae": {
+            "mean": 0.992734666665395,
+            "std_across_seeds": 0.12207486471406889,
+            "paired_percent_change_mean": 76.74472167041814,
+            "paired_percent_change_by_seed": [
+              87.60028775447451,
+              97.77687726770637,
+              44.85699998907356
+            ]
+          },
+          "continuation_brier": {
+            "mean": 0.010042935313928561,
+            "std_across_seeds": 0.0008922102637822614,
+            "paired_percent_change_mean": 35.107873971497824,
+            "paired_percent_change_by_seed": [
+              26.1157063914373,
+              71.95451671527329,
+              7.253398807782885
+            ]
+          },
+          "terminal_brier": {
+            "mean": 0.07727992886470424,
+            "std_across_seeds": 0.020199829262206603,
+            "paired_percent_change_mean": 7.428615035236118,
+            "paired_percent_change_by_seed": [
+              -12.077073655377536,
+              37.3419854839258,
+              -2.979066722839907
+            ]
+          }
+        }
+      },
+      "mean_fitting_seconds": 94.61997143333429,
+      "gate_passes": 0
+    },
+    "full_smg1": {
+      "seeds": 3,
+      "scenarios": {
+        "spinning": {
+          "posterior_image_mse": {
+            "mean": 0.015444217637802163,
+            "std_across_seeds": 0.0001804710018666557,
+            "paired_percent_change_mean": -12.738130494390239,
+            "paired_percent_change_by_seed": [
+              -10.057763200358515,
+              -12.991841596117936,
+              -15.164786686694265
+            ]
+          },
+          "open_loop_image_mse": {
+            "mean": 0.026177798630669713,
+            "std_across_seeds": 0.0004925420775413307,
+            "paired_percent_change_mean": -6.933154808308328,
+            "paired_percent_change_by_seed": [
+              -8.257781162998034,
+              -7.720679858607893,
+              -4.821003403319057
+            ]
+          },
+          "reward_mae": {
+            "mean": 0.10797176618749897,
+            "std_across_seeds": 0.006320141363965601,
+            "paired_percent_change_mean": 127.98866153070223,
+            "paired_percent_change_by_seed": [
+              124.82041413275971,
+              101.96560109155834,
+              157.17996936778863
+            ]
+          },
+          "terminal_reward_mae": {
+            "mean": 0.6621287010964894,
+            "std_across_seeds": 0.007108844468393485,
+            "paired_percent_change_mean": -3.7674896143139045,
+            "paired_percent_change_by_seed": [
+              -11.628378354935819,
+              -19.698809949175157,
+              20.024719461169262
+            ]
+          },
+          "continuation_brier": {
+            "mean": 0.02360123353234182,
+            "std_across_seeds": 0.00380711705546214,
+            "paired_percent_change_mean": 90.53665490756627,
+            "paired_percent_change_by_seed": [
+              133.70545168970708,
+              104.78256611388011,
+              33.12194691911161
+            ]
+          },
+          "terminal_brier": {
+            "mean": 0.09035595963221221,
+            "std_across_seeds": 0.030382984275254047,
+            "paired_percent_change_mean": 24.581470031542846,
+            "paired_percent_change_by_seed": [
+              6.155546456612271,
+              -40.38541432075936,
+              107.97427795877562
+            ]
+          }
+        },
+        "double_time": {
+          "posterior_image_mse": {
+            "mean": 0.013452565336289505,
+            "std_across_seeds": 7.326341691914299e-05,
+            "paired_percent_change_mean": -14.740160148774995,
+            "paired_percent_change_by_seed": [
+              -14.717981551599202,
+              -14.340841144403328,
+              -15.161657750322455
+            ]
+          },
+          "open_loop_image_mse": {
+            "mean": 0.023787718343858916,
+            "std_across_seeds": 0.0005570129817904381,
+            "paired_percent_change_mean": -11.558313564259045,
+            "paired_percent_change_by_seed": [
+              -15.693788992082869,
+              -9.495549378077229,
+              -9.485602322617037
+            ]
+          },
+          "reward_mae": {
+            "mean": 0.09294454598178466,
+            "std_across_seeds": 0.0012246696372202983,
+            "paired_percent_change_mean": 194.39999651777734,
+            "paired_percent_change_by_seed": [
+              214.20168555244615,
+              196.95236761669457,
+              172.04593638419118
+            ]
+          },
+          "terminal_reward_mae": {
+            "mean": 0.567047917842865,
+            "std_across_seeds": 0.03208113418848136,
+            "paired_percent_change_mean": 1.0106285684790361,
+            "paired_percent_change_by_seed": [
+              9.469057579133654,
+              4.278456575687151,
+              -10.715628449383697
+            ]
+          },
+          "continuation_brier": {
+            "mean": 0.02206346336364125,
+            "std_across_seeds": 0.0020274364613635833,
+            "paired_percent_change_mean": 197.48164380851722,
+            "paired_percent_change_by_seed": [
+              173.72765366643074,
+              284.80209822704995,
+              133.9151795320709
+            ]
+          },
+          "terminal_brier": {
+            "mean": 0.05942074749618768,
+            "std_across_seeds": 0.014847343310779583,
+            "paired_percent_change_mean": -18.000080824704245,
+            "paired_percent_change_by_seed": [
+              -32.22522341680033,
+              -16.12723993828391,
+              -5.647779119028495
+            ]
+          }
+        }
+      },
+      "mean_fitting_seconds": 88.49928620000235,
+      "gate_passes": 0
+    },
+    "full_without_visual_scale": {
+      "seeds": 3,
+      "scenarios": {
+        "spinning": {
+          "posterior_image_mse": {
+            "mean": 0.02142498455941677,
+            "std_across_seeds": 0.00086399703341588,
+            "paired_percent_change_mean": 21.032913178225794,
+            "paired_percent_change_by_seed": [
+              23.527916367161914,
+              25.45277394383614,
+              14.118049223679318
+            ]
+          },
+          "open_loop_image_mse": {
+            "mean": 0.02851867916372915,
+            "std_across_seeds": 0.0007571525463357054,
+            "paired_percent_change_mean": 1.3671832823507406,
+            "paired_percent_change_by_seed": [
+              0.2987069316424229,
+              3.229532254821277,
+              0.5733106605885219
+            ]
+          },
+          "reward_mae": {
+            "mean": 0.0984346242621541,
+            "std_across_seeds": 0.017511512731785688,
+            "paired_percent_change_mean": 110.87752641205175,
+            "paired_percent_change_by_seed": [
+              89.13380933307276,
+              55.71775608379414,
+              187.78101381928835
+            ]
+          },
+          "terminal_reward_mae": {
+            "mean": 0.5908826837937037,
+            "std_across_seeds": 0.1188625735023843,
+            "paired_percent_change_mean": -17.089249134622985,
+            "paired_percent_change_by_seed": [
+              -8.561328487277864,
+              -20.513839359639952,
+              -22.19257955695114
+            ]
+          },
+          "continuation_brier": {
+            "mean": 0.01835934551976,
+            "std_across_seeds": 0.0015534514391241081,
+            "paired_percent_change_mean": 45.61289270862767,
+            "paired_percent_change_by_seed": [
+              45.912553829861544,
+              49.58296426063562,
+              41.34316003538585
+            ]
+          },
+          "terminal_brier": {
+            "mean": 0.08826250895868898,
+            "std_across_seeds": 0.03057704503390621,
+            "paired_percent_change_mean": 7.257893909093938,
+            "paired_percent_change_by_seed": [
+              23.084075350337653,
+              10.029181630584683,
+              -11.339575253640522
+            ]
+          }
+        },
+        "double_time": {
+          "posterior_image_mse": {
+            "mean": 0.018528636700163286,
+            "std_across_seeds": 0.0005928470890364193,
+            "paired_percent_change_mean": 17.425050201450627,
+            "paired_percent_change_by_seed": [
+              20.801740869975617,
+              18.94053173528658,
+              12.532877999089687
+            ]
+          },
+          "open_loop_image_mse": {
+            "mean": 0.02604156096155445,
+            "std_across_seeds": 0.0007034626361459176,
+            "paired_percent_change_mean": -3.234621991349836,
+            "paired_percent_change_by_seed": [
+              -3.0181344987183722,
+              -1.9316387766746046,
+              -4.754092698656532
+            ]
+          },
+          "reward_mae": {
+            "mean": 0.08011958841234446,
+            "std_across_seeds": 0.019409353813462617,
+            "paired_percent_change_mean": 151.08839835737197,
+            "paired_percent_change_by_seed": [
+              172.78757446580767,
+              82.04334620084812,
+              198.43427440546014
+            ]
+          },
+          "terminal_reward_mae": {
+            "mean": 0.5182477672894795,
+            "std_across_seeds": 0.0990524877133136,
+            "paired_percent_change_mean": -6.502746936346412,
+            "paired_percent_change_by_seed": [
+              27.56120828172479,
+              -29.803297711674116,
+              -17.266151379089912
+            ]
+          },
+          "continuation_brier": {
+            "mean": 0.013511700051215788,
+            "std_across_seeds": 0.0018358877092800596,
+            "paired_percent_change_mean": 77.35327425947611,
+            "paired_percent_change_by_seed": [
+              68.21295222380348,
+              79.78739995617983,
+              84.05947059844503
+            ]
+          },
+          "terminal_brier": {
+            "mean": 0.07111859057719509,
+            "std_across_seeds": 0.00896862871288916,
+            "paired_percent_change_mean": -0.2099158572477481,
+            "paired_percent_change_by_seed": [
+              -0.6065217669121159,
+              1.0260831427624018,
+              -1.0493089475935302
+            ]
+          }
+        }
+      },
+      "mean_fitting_seconds": 104.95858110000457,
+      "gate_passes": 0
+    },
+    "moderate_visual_scale": {
+      "seeds": 3,
+      "scenarios": {
+        "spinning": {
+          "posterior_image_mse": {
+            "mean": 0.016422897616090875,
+            "std_across_seeds": 0.00012782086637255704,
+            "paired_percent_change_mean": -7.213990044202437,
+            "paired_percent_change_by_seed": [
+              -4.7964180189541405,
+              -7.700687633161185,
+              -9.144864480491988
+            ]
+          },
+          "open_loop_image_mse": {
+            "mean": 0.026927688779930275,
+            "std_across_seeds": 0.0003612653568384417,
+            "paired_percent_change_mean": -4.2710033204304,
+            "paired_percent_change_by_seed": [
+              -4.085232827915341,
+              -4.246477562239526,
+              -4.481299571136333
+            ]
+          },
+          "reward_mae": {
+            "mean": 0.047114109387621284,
+            "std_across_seeds": 0.004823519874699036,
+            "paired_percent_change_mean": -1.258470677851505,
+            "paired_percent_change_by_seed": [
+              3.453372182190728,
+              -6.70716044269275,
+              -0.5216237730524931
+            ]
+          },
+          "terminal_reward_mae": {
+            "mean": 0.7191284462099984,
+            "std_across_seeds": 0.045530957652832764,
+            "paired_percent_change_mean": 3.775391690909007,
+            "paired_percent_change_by_seed": [
+              2.3684547800569167,
+              -13.356150514861408,
+              22.31387080753151
+            ]
+          },
+          "continuation_brier": {
+            "mean": 0.010762403782185478,
+            "std_across_seeds": 0.0015888352947289349,
+            "paired_percent_change_mean": -13.290704805124813,
+            "paired_percent_change_by_seed": [
+              5.635921375715691,
+              -8.326921626004413,
+              -37.18111416508572
+            ]
+          },
+          "terminal_brier": {
+            "mean": 0.05456734239193056,
+            "std_across_seeds": 0.007628012907336224,
+            "paired_percent_change_mean": -28.342194122496682,
+            "paired_percent_change_by_seed": [
+              -2.814348919357268,
+              -50.89428705816893,
+              -31.317946389963858
+            ]
+          }
+        },
+        "double_time": {
+          "posterior_image_mse": {
+            "mean": 0.014391213927107552,
+            "std_across_seeds": 7.900987877653623e-05,
+            "paired_percent_change_mean": -8.791303014117704,
+            "paired_percent_change_by_seed": [
+              -8.518557682747607,
+              -8.596019910702957,
+              -9.259331448902552
+            ]
+          },
+          "open_loop_image_mse": {
+            "mean": 0.026423240546137094,
+            "std_across_seeds": 0.00015904058534705842,
+            "paired_percent_change_mean": -1.7648480624960605,
+            "paired_percent_change_by_seed": [
+              -3.7163601830085047,
+              -2.8656096162149924,
+              1.2874256117353156
+            ]
+          },
+          "reward_mae": {
+            "mean": 0.0335274349587659,
+            "std_across_seeds": 0.0014471962097490076,
+            "paired_percent_change_mean": 6.063339545500727,
+            "paired_percent_change_by_seed": [
+              13.84960290815127,
+              2.892743002861997,
+              1.4476727254889132
+            ]
+          },
+          "terminal_reward_mae": {
+            "mean": 0.5853550414244334,
+            "std_across_seeds": 0.03590081793461843,
+            "paired_percent_change_mean": 4.157570529255535,
+            "paired_percent_change_by_seed": [
+              12.60296263544658,
+              -6.270578306220276,
+              6.140327258540301
+            ]
+          },
+          "continuation_brier": {
+            "mean": 0.008440235415870726,
+            "std_across_seeds": 0.0005805326454131538,
+            "paired_percent_change_mean": 12.33925238224437,
+            "paired_percent_change_by_seed": [
+              7.467798708687723,
+              30.787794065186723,
+              -1.237835627141337
+            ]
+          },
+          "terminal_brier": {
+            "mean": 0.06573423277392672,
+            "std_across_seeds": 0.013888687434861621,
+            "paired_percent_change_mean": -8.309110850558621,
+            "paired_percent_change_by_seed": [
+              -9.7992947006998,
+              -20.540765948963603,
+              5.41272809798754
+            ]
+          }
+        }
+      },
+      "mean_fitting_seconds": 91.02091173333368,
+      "gate_passes": 0
+    },
+    "four_step_rollout": {
+      "seeds": 3,
+      "scenarios": {
+        "spinning": {
+          "posterior_image_mse": {
+            "mean": 0.018866567484413583,
+            "std_across_seeds": 0.0001169765011747093,
+            "paired_percent_change_mean": 6.584761426662297,
+            "paired_percent_change_by_seed": [
+              8.779848236200705,
+              5.773794789898679,
+              5.200641253887506
+            ]
+          },
+          "open_loop_image_mse": {
+            "mean": 0.02775086066685617,
+            "std_across_seeds": 0.0009126965374383946,
+            "paired_percent_change_mean": -1.369039031533174,
+            "paired_percent_change_by_seed": [
+              -2.1974776976536825,
+              1.343345101383031,
+              -3.2529844983288703
+            ]
+          },
+          "reward_mae": {
+            "mean": 0.06581100992237528,
+            "std_across_seeds": 0.004129881890619884,
+            "paired_percent_change_mean": 39.927580902896274,
+            "paired_percent_change_by_seed": [
+              21.683540454922046,
+              26.733340628724854,
+              71.36586162504193
+            ]
+          },
+          "terminal_reward_mae": {
+            "mean": 0.8337130603336153,
+            "std_across_seeds": 0.15179165202392852,
+            "paired_percent_change_mean": 21.7531755614454,
+            "paired_percent_change_by_seed": [
+              -17.56035447675699,
+              20.076598596991136,
+              62.743282564102046
+            ]
+          },
+          "continuation_brier": {
+            "mean": 0.016726709000067785,
+            "std_across_seeds": 0.0018592974450143854,
+            "paired_percent_change_mean": 32.306352027278386,
+            "paired_percent_change_by_seed": [
+              36.58826521049314,
+              28.980367503458183,
+              31.350423367883828
+            ]
+          },
+          "terminal_brier": {
+            "mean": 0.08076748045139193,
+            "std_across_seeds": 0.03841958639078211,
+            "paired_percent_change_mean": -1.7638383157292903,
+            "paired_percent_change_by_seed": [
+              -56.36625102850918,
+              -0.2667990040348789,
+              51.34153508535619
+            ]
+          }
+        },
+        "double_time": {
+          "posterior_image_mse": {
+            "mean": 0.016972441497879725,
+            "std_across_seeds": 9.340211017344017e-05,
+            "paired_percent_change_mean": 7.570088048304591,
+            "paired_percent_change_by_seed": [
+              7.109396099182064,
+              6.937383803190067,
+              8.663484242541642
+            ]
+          },
+          "open_loop_image_mse": {
+            "mean": 0.026967889396473765,
+            "std_across_seeds": 0.0006546939372272908,
+            "paired_percent_change_mean": 0.22578380067122353,
+            "paired_percent_change_by_seed": [
+              -1.721316751949542,
+              2.816344807557214,
+              -0.4176766535940013
+            ]
+          },
+          "reward_mae": {
+            "mean": 0.04245811444707215,
+            "std_across_seeds": 0.002328374206859178,
+            "paired_percent_change_mean": 34.430760318298276,
+            "paired_percent_change_by_seed": [
+              33.66983777941912,
+              47.045830743164906,
+              22.576612432310817
+            ]
+          },
+          "terminal_reward_mae": {
+            "mean": 0.6247216996219424,
+            "std_across_seeds": 0.12229337940061243,
+            "paired_percent_change_mean": 10.028003075216182,
+            "paired_percent_change_by_seed": [
+              -7.341835863874213,
+              31.821532483781013,
+              5.604312605741746
+            ]
+          },
+          "continuation_brier": {
+            "mean": 0.008242985979450168,
+            "std_across_seeds": 0.0010912918657268065,
+            "paired_percent_change_mean": 8.92147537159493,
+            "paired_percent_change_by_seed": [
+              13.477889249606555,
+              20.170145274478514,
+              -6.88360840930028
+            ]
+          },
+          "terminal_brier": {
+            "mean": 0.051179207757943206,
+            "std_across_seeds": 0.009437903993086564,
+            "paired_percent_change_mean": -28.534310065581124,
+            "paired_percent_change_by_seed": [
+              -35.3190401787852,
+              -18.01597923389394,
+              -32.26791078406423
+            ]
+          }
+        }
+      },
+      "mean_fitting_seconds": 68.07296156666901,
+      "gate_passes": 0
+    }
+  },
+  "completed_utc": "2026-10-24T23:30:26.750011+00:00",
+  "run": "runs/ablation-20261024-224325-075518",
+  "source_checkpoint": "runs/world-model-20261022-200121-619365/world-final.pt",
+  "source_unchanged_verified": true,
+  "global_hold_preserved": true,
+  "scoped_grant_consumed": true,
+  "portable_validation": "122 tests passed; Ruff passed",
+  "torch_version": "2.14.1+cu126",
+  "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU",
+  "timing_limitation": "Other training processes were active; cost observations are confounded by shared hardware load.",
+  "pilot": "Cancelled pilot runs/ablation-20261024-223508-997978 is retained and excluded; constructor-check execution was standardized before rerunning all arms.",
+  "replay_manifest_sha256": "04b41ef83219ca86ac1b9eb53bde4085b06ec4ed4e7f54cdca81a51bad9c55a3",
+  "development_episode_count": 354,
+  "final_episode_count": 338,
+  "rows": [
+    {
+      "seed": 11,
+      "arm": "continued_baseline",
+      "fitting_seconds": 150.66030350000074,
+      "peak_cuda_allocated_bytes": 305103360,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.018073405604809523,
+            "reward": 0.014658064697869122,
+            "continuation": 0.09384265542030334,
+            "dynamics_kl": 1.1201185882091522,
+            "representation_kl": 1.1201185882091522,
+            "ensemble": 0.20506673492491245,
+            "loss": 1.0037120208144188,
+            "posterior_image_mse": 0.018073405604809523,
+            "reward_mae": 0.04531498346477747,
+            "terminal_reward_mae": 0.8700247675180435,
+            "continuation_brier": 0.014943539688829333,
+            "terminal_brier": 0.09509965677862056,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.027113473042845726,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.23342850618064404
+          },
+          "double_time": {
+            "reconstruction": 0.015536676859483123,
+            "reward": 0.008450273839116562,
+            "continuation": 0.07993620750494301,
+            "dynamics_kl": 1.158103734254837,
+            "representation_kl": 1.158103734254837,
+            "ensemble": 0.19404512457549572,
+            "loss": 0.9928305149078369,
+            "posterior_image_mse": 0.015536676859483123,
+            "reward_mae": 0.02910296048503369,
+            "terminal_reward_mae": 0.26849361586159676,
+            "continuation_brier": 0.01374586345627904,
+            "terminal_brier": 0.03473747644705057,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.025189500069245696,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.22330340463668108
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.01721746870316565,
+            "reward": 0.015407858067192137,
+            "continuation": 0.08154853619635105,
+            "dynamics_kl": 1.1405251622200012,
+            "representation_kl": 1.1405251622200012,
+            "ensemble": 0.19290925562381744,
+            "loss": 0.9913982078433037,
+            "posterior_image_mse": 0.01721746870316565,
+            "reward_mae": 0.05156314605847001,
+            "terminal_reward_mae": 0.7601979779345649,
+            "continuation_brier": 0.01221395644461154,
+            "terminal_brier": 0.06358982671684187,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.02778165554627776,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.24747903179377317
+          },
+          "double_time": {
+            "reconstruction": 0.015808147960342467,
+            "reward": 0.007676242254092358,
+            "continuation": 0.07302727305795997,
+            "dynamics_kl": 1.1346758157014847,
+            "representation_kl": 1.1346758157014847,
+            "ensemble": 0.1988325770944357,
+            "loss": 0.976149745285511,
+            "posterior_image_mse": 0.015808147960342467,
+            "reward_mae": 0.02959991409443319,
+            "terminal_reward_mae": 0.509391705195109,
+            "continuation_brier": 0.00861357527810469,
+            "terminal_brier": 0.05916550867259503,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.027397676603868604,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.2831008853390813
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 11,
+      "arm": "terminal_sampling",
+      "fitting_seconds": 83.16363460000139,
+      "peak_cuda_allocated_bytes": 306168832,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.018189617665484548,
+            "reward": 0.01510483046877198,
+            "continuation": 0.07658544625155628,
+            "dynamics_kl": 1.1425708830356598,
+            "representation_kl": 1.1425708830356598,
+            "ensemble": 0.2054330725222826,
+            "loss": 1.0008554905653,
+            "posterior_image_mse": 0.018189617665484548,
+            "reward_mae": 0.048376482678577304,
+            "terminal_reward_mae": 1.0335703849792481,
+            "continuation_brier": 0.012489895336329937,
+            "terminal_brier": 0.08702713998965919,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.02729586116038263,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.25846049189567566
+          },
+          "double_time": {
+            "reconstruction": 0.01532096997834742,
+            "reward": 0.008315388404298574,
+            "continuation": 0.08536990685388446,
+            "dynamics_kl": 1.1646758317947388,
+            "representation_kl": 1.1646758317947388,
+            "ensemble": 0.18709224462509155,
+            "loss": 0.9949039965867996,
+            "posterior_image_mse": 0.01532096997834742,
+            "reward_mae": 0.032694778172299266,
+            "terminal_reward_mae": 0.31673226736742877,
+            "continuation_brier": 0.016467803507111967,
+            "terminal_brier": 0.03393656651188631,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.02476673317141831,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.24012559186667204
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.017344709718599916,
+            "reward": 0.01154943072469905,
+            "continuation": 0.09689902304671705,
+            "dynamics_kl": 1.1748909652233124,
+            "representation_kl": 1.1748909652233124,
+            "ensemble": 0.19275743141770363,
+            "loss": 1.0234851837158203,
+            "posterior_image_mse": 0.017344709718599916,
+            "reward_mae": 0.046929094940423965,
+            "terminal_reward_mae": 0.7682115818772998,
+            "continuation_brier": 0.010960397303279024,
+            "terminal_brier": 0.0956849207286723,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.0283655917737633,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.2556119319051504
+          },
+          "double_time": {
+            "reconstruction": 0.015852971118874848,
+            "reward": 0.008509952866006643,
+            "continuation": 0.05740511429030448,
+            "dynamics_kl": 1.1598780304193497,
+            "representation_kl": 1.1598780304193497,
+            "ensemble": 0.19947944674640894,
+            "loss": 0.9771742969751358,
+            "posterior_image_mse": 0.015852971118874848,
+            "reward_mae": 0.034856708720326424,
+            "terminal_reward_mae": 0.6128720839818319,
+            "continuation_brier": 0.008732161680200079,
+            "terminal_brier": 0.05339927648504575,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.027885800693184137,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.31026322580873966
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 11,
+      "arm": "terminal_reward_weight",
+      "fitting_seconds": 40.078263100003824,
+      "peak_cuda_allocated_bytes": 306127872,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.018412824254482985,
+            "reward": 0.03317037271335721,
+            "continuation": 0.09341865684837103,
+            "dynamics_kl": 1.1275871098041534,
+            "representation_kl": 1.1275871098041534,
+            "ensemble": 0.21120835281908512,
+            "loss": 1.0327624678611755,
+            "posterior_image_mse": 0.018412824254482985,
+            "reward_mae": 0.05360058741644025,
+            "terminal_reward_mae": 0.4831801652908325,
+            "continuation_brier": 0.015048306493554264,
+            "terminal_brier": 0.0969720376143232,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.027325558941811323,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.2891387306153774
+          },
+          "double_time": {
+            "reconstruction": 0.015655814087949693,
+            "reward": 0.023928638664074242,
+            "continuation": 0.07334404671564698,
+            "dynamics_kl": 1.1622436791658401,
+            "representation_kl": 1.1622436791658401,
+            "ensemble": 0.1973076183348894,
+            "loss": 1.007582314312458,
+            "posterior_image_mse": 0.015655814087949693,
+            "reward_mae": 0.04327790322713554,
+            "terminal_reward_mae": 0.14043022436892677,
+            "continuation_brier": 0.012788637395715341,
+            "terminal_brier": 0.03672067814038117,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.025357595179229975,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.28038350120186806
+          }
+        },
+        "gate": {
+          "ready": true,
+          "reasons": [],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.017428935505449772,
+            "reward": 0.03168917808216065,
+            "continuation": 0.07982944650575519,
+            "dynamics_kl": 1.1466193348169327,
+            "representation_kl": 1.1466193348169327,
+            "ensemble": 0.1962640881538391,
+            "loss": 1.0131832286715508,
+            "posterior_image_mse": 0.017428935505449772,
+            "reward_mae": 0.05002914695069194,
+            "terminal_reward_mae": 0.4110606663993427,
+            "continuation_brier": 0.009051418688613921,
+            "terminal_brier": 0.06823727850236797,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.027921238215640187,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.2758058160543442
+          },
+          "double_time": {
+            "reconstruction": 0.015909746172837913,
+            "reward": 0.021639085691276705,
+            "continuation": 0.07526743866037577,
+            "dynamics_kl": 1.1412876397371292,
+            "representation_kl": 1.1412876397371292,
+            "ensemble": 0.20313244499266148,
+            "loss": 1.00072131305933,
+            "posterior_image_mse": 0.015909746172837913,
+            "reward_mae": 0.033377669751644135,
+            "terminal_reward_mae": 0.23494025468826293,
+            "continuation_brier": 0.008069998785686039,
+            "terminal_brier": 0.05714273991373678,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.027340280124917626,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.3440149761736393
+          }
+        },
+        "gate": {
+          "ready": true,
+          "reasons": [],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 11,
+      "arm": "pixel_likelihood_scale",
+      "fitting_seconds": 56.104693000001134,
+      "peak_cuda_allocated_bytes": 306127872,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.014569239923730493,
+            "reward": 0.0183958510751836,
+            "continuation": 0.10583537863567472,
+            "dynamics_kl": 5.8145193457603455,
+            "representation_kl": 5.8145193457603455,
+            "ensemble": 0.11899574846029282,
+            "loss": 55.132216453552246,
+            "posterior_image_mse": 0.014569239923730493,
+            "reward_mae": 0.05916820093989372,
+            "terminal_reward_mae": 1.1745893478393554,
+            "continuation_brier": 0.017988070263527334,
+            "terminal_brier": 0.12210000198334456,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.026787018636241555,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.22824139706790447
+          },
+          "double_time": {
+            "reconstruction": 0.013210544479079545,
+            "reward": 0.015152983280131593,
+            "continuation": 0.10232568392530084,
+            "dynamics_kl": 5.970665276050568,
+            "representation_kl": 5.970665276050568,
+            "ensemble": 0.12748398538678885,
+            "loss": 50.434163093566895,
+            "posterior_image_mse": 0.013210544479079545,
+            "reward_mae": 0.0571562007535249,
+            "terminal_reward_mae": 0.7474561107569727,
+            "continuation_brier": 0.022265876177698374,
+            "terminal_brier": 0.06701813232625839,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.02405413519591093,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.21064593270421028
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.014959803898818791,
+            "reward": 0.028615585819352418,
+            "continuation": 0.2569842250086367,
+            "dynamics_kl": 5.931600868701935,
+            "representation_kl": 5.931600868701935,
+            "ensemble": 0.1400796566158533,
+            "loss": 56.762826919555664,
+            "posterior_image_mse": 0.014959803898818791,
+            "reward_mae": 0.08040889538824558,
+            "terminal_reward_mae": 1.1409631030900138,
+            "continuation_brier": 0.023742792633129284,
+            "terminal_brier": 0.16260777546891145,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.02697949600405991,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.2674804041162133
+          },
+          "double_time": {
+            "reconstruction": 0.0131012590136379,
+            "reward": 0.014205493789631873,
+            "continuation": 0.11148571502417326,
+            "dynamics_kl": 6.149760544300079,
+            "representation_kl": 6.149760544300079,
+            "ensemble": 0.12778722681105137,
+            "loss": 50.16457796096802,
+            "posterior_image_mse": 0.0131012590136379,
+            "reward_mae": 0.053642737213522196,
+            "terminal_reward_mae": 0.8727976044019063,
+            "continuation_brier": 0.016826043894980103,
+            "terminal_brier": 0.07998616602271795,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.02705519343726337,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.2891089115291834
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 11,
+      "arm": "one_step_prior",
+      "fitting_seconds": 69.6425154000026,
+      "peak_cuda_allocated_bytes": 372102144,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.018371125916019082,
+            "reward": 0.014285708894021809,
+            "continuation": 0.09728859039023519,
+            "dynamics_kl": 1.171296313405037,
+            "representation_kl": 1.171296313405037,
+            "ensemble": 0.20554086938500404,
+            "loss": 1.0382640734314919,
+            "posterior_image_mse": 0.018371125916019082,
+            "reward_mae": 0.045518919825553894,
+            "terminal_reward_mae": 0.8383945417404175,
+            "continuation_brier": 0.016427900234702975,
+            "terminal_brier": 0.10271468545310199,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.026972129475325346,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.25874606892466545
+          },
+          "double_time": {
+            "reconstruction": 0.015605665161274374,
+            "reward": 0.0086478762968909,
+            "continuation": 0.06362280528992414,
+            "dynamics_kl": 1.20911206305027,
+            "representation_kl": 1.20911206305027,
+            "ensemble": 0.19091159291565418,
+            "loss": 1.0042551904916763,
+            "posterior_image_mse": 0.015605665161274374,
+            "reward_mae": 0.03489589993841946,
+            "terminal_reward_mae": 0.3652936875306327,
+            "continuation_brier": 0.015029343543574214,
+            "terminal_brier": 0.029072845748695224,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.024569637142121792,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.23746609361842275
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.01747686113230884,
+            "reward": 0.01556607784004882,
+            "continuation": 0.07598541025072336,
+            "dynamics_kl": 1.2049300372600555,
+            "representation_kl": 1.2049300372600555,
+            "ensemble": 0.1933419443666935,
+            "loss": 1.025328315794468,
+            "posterior_image_mse": 0.01747686113230884,
+            "reward_mae": 0.05372785008512437,
+            "terminal_reward_mae": 0.7360125120197024,
+            "continuation_brier": 0.01239653788798023,
+            "terminal_brier": 0.039032552576307875,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.027182644000276923,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.2364263003692031
+          },
+          "double_time": {
+            "reconstruction": 0.015919871861115098,
+            "reward": 0.00963305021286942,
+            "continuation": 0.07996328175067902,
+            "dynamics_kl": 1.1950002163648605,
+            "representation_kl": 1.1950002163648605,
+            "ensemble": 0.1928462153300643,
+            "loss": 1.0153625458478928,
+            "posterior_image_mse": 0.015919871861115098,
+            "reward_mae": 0.03649905836209655,
+            "terminal_reward_mae": 0.6625728805859884,
+            "continuation_brier": 0.00846897775772959,
+            "terminal_brier": 0.06546958622833093,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.026714260457083583,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.28126223757863045
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 11,
+      "arm": "eight_step_rollout",
+      "fitting_seconds": 138.1001232999988,
+      "peak_cuda_allocated_bytes": 310860800,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.02039712993428111,
+            "reward": 0.016504358150996268,
+            "continuation": 0.10929254069924355,
+            "dynamics_kl": 1.3555911183357239,
+            "representation_kl": 1.3555911183357239,
+            "ensemble": 0.23905986733734608,
+            "loss": 1.1986085921525955,
+            "posterior_image_mse": 0.02039712993428111,
+            "reward_mae": 0.059518768452107906,
+            "terminal_reward_mae": 1.0884665548801422,
+            "continuation_brier": 0.018994104873854667,
+            "terminal_brier": 0.10705207463353872,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.028258414939045906,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.2252179216593504
+          },
+          "double_time": {
+            "reconstruction": 0.017462810617871583,
+            "reward": 0.0099783482728526,
+            "continuation": 0.08214757218956947,
+            "dynamics_kl": 1.319199115037918,
+            "representation_kl": 1.319199115037918,
+            "ensemble": 0.2285146526992321,
+            "loss": 1.129622869193554,
+            "posterior_image_mse": 0.017462810617871583,
+            "reward_mae": 0.05363698769360781,
+            "terminal_reward_mae": 0.7707338024829996,
+            "continuation_brier": 0.0166012043482624,
+            "terminal_brier": 0.037259881509114696,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.02529672160744667,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.24919171817600727
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: posterior_image_mse exceeds 0.02",
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.019946608459576964,
+            "reward": 0.020200206607114524,
+            "continuation": 0.10851941769942641,
+            "dynamics_kl": 1.418709009885788,
+            "representation_kl": 1.418709009885788,
+            "ensemble": 0.24949831888079643,
+            "loss": 1.2493899911642075,
+            "posterior_image_mse": 0.019946608459576964,
+            "reward_mae": 0.07765960623510182,
+            "terminal_reward_mae": 1.0750421370778764,
+            "continuation_brier": 0.013624593935674056,
+            "terminal_brier": 0.07649613922694698,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.027930599870160222,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.23739850986748934
+          },
+          "double_time": {
+            "reconstruction": 0.018009105464443564,
+            "reward": 0.012208244297653437,
+            "continuation": 0.07934162439778447,
+            "dynamics_kl": 1.2793008387088776,
+            "representation_kl": 1.2793008387088776,
+            "ensemble": 0.2402275800704956,
+            "loss": 1.117367073893547,
+            "posterior_image_mse": 0.018009105464443564,
+            "reward_mae": 0.05548166995868087,
+            "terminal_reward_mae": 0.955620304743449,
+            "continuation_brier": 0.01086307130753994,
+            "terminal_brier": 0.052020046611626944,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.026613364461809397,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.27443757466971874
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 11,
+      "arm": "full_smg1",
+      "fitting_seconds": 139.20155030000024,
+      "peak_cuda_allocated_bytes": 376876032,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.014895439497195184,
+            "reward": 0.043527906062081456,
+            "continuation": 0.12102940957993269,
+            "dynamics_kl": 10.406984686851501,
+            "representation_kl": 10.406984686851501,
+            "ensemble": 0.13374201953411102,
+            "loss": 59.09360122680664,
+            "posterior_image_mse": 0.014895439497195184,
+            "reward_mae": 0.09718457609415054,
+            "terminal_reward_mae": 0.7360788702964782,
+            "continuation_brier": 0.025737771415151656,
+            "terminal_brier": 0.08270362444221974,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.023466785671189427,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.3730999156832695
+          },
+          "double_time": {
+            "reconstruction": 0.013574927928857505,
+            "reward": 0.04786260845139623,
+            "continuation": 0.13640388031490147,
+            "dynamics_kl": 10.275270342826843,
+            "representation_kl": 10.275270342826843,
+            "ensemble": 0.1400380041450262,
+            "loss": 54.38181161880493,
+            "posterior_image_mse": 0.013574927928857505,
+            "reward_mae": 0.11057728575542569,
+            "terminal_reward_mae": 0.5558676740218853,
+            "continuation_brier": 0.032509030657820404,
+            "terminal_brier": 0.06272600750726896,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.023166851606220007,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.33542478643357754
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.01548577647190541,
+            "reward": 0.05079401098191738,
+            "continuation": 0.14761363342404366,
+            "dynamics_kl": 10.160432934761047,
+            "representation_kl": 10.160432934761047,
+            "ensemble": 0.15584522020071745,
+            "loss": 61.08433198928833,
+            "posterior_image_mse": 0.01548577647190541,
+            "reward_mae": 0.11592447850853205,
+            "terminal_reward_mae": 0.6717992808137622,
+            "continuation_brier": 0.028544682078063488,
+            "terminal_brier": 0.06750412804207631,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.025487507227808237,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.34388588927686214
+          },
+          "double_time": {
+            "reconstruction": 0.013481507659889758,
+            "reward": 0.036943602841347456,
+            "continuation": 0.1096647335216403,
+            "dynamics_kl": 9.886088013648987,
+            "representation_kl": 9.886088013648987,
+            "ensemble": 0.14205407723784447,
+            "loss": 53.78307580947876,
+            "posterior_image_mse": 0.013481507659889758,
+            "reward_mae": 0.09300342900678515,
+            "terminal_reward_mae": 0.5576262990633647,
+            "continuation_brier": 0.023577737505547702,
+            "terminal_brier": 0.0400992913171649,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.023097943048924208,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.37329602241516113
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 11,
+      "arm": "full_without_visual_scale",
+      "fitting_seconds": 195.4325847,
+      "peak_cuda_allocated_bytes": 376876032,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.02228455152362585,
+            "reward": 0.05040715076029301,
+            "continuation": 0.1246188348159194,
+            "dynamics_kl": 1.2888527363538742,
+            "representation_kl": 1.2888527363538742,
+            "ensemble": 0.30247081257402897,
+            "loss": 1.2730930000543594,
+            "posterior_image_mse": 0.02228455152362585,
+            "reward_mae": 0.09089418966323137,
+            "terminal_reward_mae": 0.8881882524490357,
+            "continuation_brier": 0.018943895236589015,
+            "terminal_brier": 0.13158935964107513,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.02855015080422163,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.2763202488422394
+          },
+          "double_time": {
+            "reconstruction": 0.01873392704874277,
+            "reward": 0.030721598188392818,
+            "continuation": 0.08838224597275257,
+            "dynamics_kl": 1.3560592979192734,
+            "representation_kl": 1.3560592979192734,
+            "ensemble": 0.263328118249774,
+            "loss": 1.2148015052080154,
+            "posterior_image_mse": 0.01873392704874277,
+            "reward_mae": 0.08823713287711143,
+            "terminal_reward_mae": 0.49700729703081065,
+            "continuation_brier": 0.01936863351147622,
+            "terminal_brier": 0.021489493821843945,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.025925826048478484,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.3275087531656027
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: posterior_image_mse exceeds 0.02",
+            "spinning: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.02126838034018874,
+            "reward": 0.0581012808252126,
+            "continuation": 0.15571088856086135,
+            "dynamics_kl": 1.3150309473276138,
+            "representation_kl": 1.3150309473276138,
+            "ensemble": 0.2740909792482853,
+            "loss": 1.2981900870800018,
+            "posterior_image_mse": 0.02126838034018874,
+            "reward_mae": 0.09752334235236049,
+            "terminal_reward_mae": 0.6951149318899427,
+            "continuation_brier": 0.017821695771999657,
+            "terminal_brier": 0.07826895023130678,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.027864641277119517,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.29254382476210594
+          },
+          "double_time": {
+            "reconstruction": 0.01909651793539524,
+            "reward": 0.031422841595485806,
+            "continuation": 0.0921336286701262,
+            "dynamics_kl": 1.332528904080391,
+            "representation_kl": 1.332528904080391,
+            "ensemble": 0.26684335619211197,
+            "loss": 1.209013670682907,
+            "posterior_image_mse": 0.01909651793539524,
+            "reward_mae": 0.08074488770216703,
+            "terminal_reward_mae": 0.6497862140337626,
+            "continuation_brier": 0.01448914926731959,
+            "terminal_brier": 0.058806656983991464,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.026570777874439955,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.34988086856901646
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: posterior_image_mse exceeds 0.02",
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 11,
+      "arm": "moderate_visual_scale",
+      "fitting_seconds": 163.77056699999957,
+      "peak_cuda_allocated_bytes": 306127872,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.016257132519967854,
+            "reward": 0.014106703223660588,
+            "continuation": 0.0815925111528486,
+            "dynamics_kl": 1.4616102129220963,
+            "representation_kl": 1.4616102129220963,
+            "ensemble": 0.16166863404214382,
+            "loss": 2.7600472271442413,
+            "posterior_image_mse": 0.016257132519967854,
+            "reward_mae": 0.045124708442017436,
+            "terminal_reward_mae": 0.8020791113376617,
+            "continuation_brier": 0.016269783838652074,
+            "terminal_brier": 0.07200290835869964,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.025792886968702078,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.24484878964722157
+          },
+          "double_time": {
+            "reconstruction": 0.014462908380664885,
+            "reward": 0.010851304112293292,
+            "continuation": 0.09334089525509626,
+            "dynamics_kl": 1.484732523560524,
+            "representation_kl": 1.484732523560524,
+            "ensemble": 0.16766407433897257,
+            "loss": 2.608986645936966,
+            "posterior_image_mse": 0.014462908380664885,
+            "reward_mae": 0.03318136616144329,
+            "terminal_reward_mae": 0.27412884804452287,
+            "continuation_brier": 0.017332016373984516,
+            "terminal_brier": 0.03626397060534978,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.025357523933053017,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.22541783563792706
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.016391646931879222,
+            "reward": 0.015141609532292932,
+            "continuation": 0.07780460547655821,
+            "dynamics_kl": 1.4108763486146927,
+            "representation_kl": 1.4108763486146927,
+            "ensemble": 0.1723226485773921,
+            "loss": 2.7509593963623047,
+            "posterior_image_mse": 0.016391646931879222,
+            "reward_mae": 0.05334381340071559,
+            "terminal_reward_mae": 0.7782029232808522,
+            "continuation_brier": 0.012902325426694006,
+            "terminal_brier": 0.06180018711581527,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.02664671023376286,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.25608569104224443
+          },
+          "double_time": {
+            "reconstruction": 0.014461521757766604,
+            "reward": 0.008877083309926093,
+            "continuation": 0.06996632018126547,
+            "dynamics_kl": 1.4345691204071045,
+            "representation_kl": 1.4345691204071045,
+            "ensemble": 0.164582010358572,
+            "loss": 2.5503190755844116,
+            "posterior_image_mse": 0.014461521757766604,
+            "reward_mae": 0.03369938465766609,
+            "terminal_reward_mae": 0.5735901514689128,
+            "continuation_brier": 0.009256819741494837,
+            "terminal_brier": 0.05336770611659934,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.026379480259492993,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.2842258121818304
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 11,
+      "arm": "four_step_rollout",
+      "fitting_seconds": 80.12340670000413,
+      "peak_cuda_allocated_bytes": 310860800,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.01924801431596279,
+            "reward": 0.016434734454378486,
+            "continuation": 0.09593587834388018,
+            "dynamics_kl": 1.3479772806167603,
+            "representation_kl": 1.3479772806167603,
+            "ensemble": 0.23073245771229267,
+            "loss": 1.1711374819278717,
+            "posterior_image_mse": 0.01924801431596279,
+            "reward_mae": 0.05774683319032192,
+            "terminal_reward_mae": 0.797446813583374,
+            "continuation_brier": 0.019741561613045633,
+            "terminal_brier": 0.06589880741201341,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.027498882496729493,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.3222057446837425
+          },
+          "double_time": {
+            "reconstruction": 0.016584127442911267,
+            "reward": 0.010549280734267086,
+            "continuation": 0.08368214243091643,
+            "dynamics_kl": 1.4012619704008102,
+            "representation_kl": 1.4012619704008102,
+            "ensemble": 0.2089729830622673,
+            "loss": 1.1605457216501236,
+            "posterior_image_mse": 0.016584127442911267,
+            "reward_mae": 0.041235100477933884,
+            "terminal_reward_mae": 0.20773764776772466,
+            "continuation_brier": 0.019361528276931494,
+            "terminal_brier": 0.02468952485525796,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.025584794348105788,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.3227692022919655
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.01872913632541895,
+            "reward": 0.013854233373422176,
+            "continuation": 0.08402136247605085,
+            "dynamics_kl": 1.3218709528446198,
+            "representation_kl": 1.3218709528446198,
+            "ensemble": 0.2214172650128603,
+            "loss": 1.131144568324089,
+            "posterior_image_mse": 0.01872913632541895,
+            "reward_mae": 0.0627438616938889,
+            "terminal_reward_mae": 0.6267045182841164,
+            "continuation_brier": 0.01668283122126013,
+            "terminal_brier": 0.027746625361032784,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.02717115986160934,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.27571634761989117
+          },
+          "double_time": {
+            "reconstruction": 0.016932011814787984,
+            "reward": 0.006984087027376518,
+            "continuation": 0.07509190938435495,
+            "dynamics_kl": 1.3995919525623322,
+            "representation_kl": 1.3995919525623322,
+            "ensemble": 0.21377689577639103,
+            "loss": 1.152540072798729,
+            "posterior_image_mse": 0.016932011814787984,
+            "reward_mae": 0.03956615715287626,
+            "terminal_reward_mae": 0.47199300229549407,
+            "continuation_brier": 0.009774503414519131,
+            "terminal_brier": 0.038268818892538546,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.026926075806841254,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.4064411222934723
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 23,
+      "arm": "continued_baseline",
+      "fitting_seconds": 95.90501170000061,
+      "peak_cuda_allocated_bytes": 306128896,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.01830684277229011,
+            "reward": 0.014952497091144323,
+            "continuation": 0.07300987606868148,
+            "dynamics_kl": 1.104599118232727,
+            "representation_kl": 1.104599118232727,
+            "ensemble": 0.206754794344306,
+            "loss": 0.9757834896445274,
+            "posterior_image_mse": 0.01830684277229011,
+            "reward_mae": 0.04887095862068236,
+            "terminal_reward_mae": 0.8280958211421967,
+            "continuation_brier": 0.015319663943955675,
+            "terminal_brier": 0.04509395349305123,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.027048431802541018,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.2678286526352167
+          },
+          "double_time": {
+            "reconstruction": 0.01583062415011227,
+            "reward": 0.007460037304554135,
+            "continuation": 0.0699611057061702,
+            "dynamics_kl": 1.170496791601181,
+            "representation_kl": 1.170496791601181,
+            "ensemble": 0.20103082805871964,
+            "loss": 0.9965806528925896,
+            "posterior_image_mse": 0.01583062415011227,
+            "reward_mae": 0.02939758391585201,
+            "terminal_reward_mae": 0.34242278555857725,
+            "continuation_brier": 0.012473751994548365,
+            "terminal_brier": 0.036875492026545026,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.02635611523874104,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.28472562273964286
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.017977071925997734,
+            "reward": 0.015809883712790906,
+            "continuation": 0.13996490999124944,
+            "dynamics_kl": 1.126854121685028,
+            "representation_kl": 1.126854121685028,
+            "ensemble": 0.21458983607590199,
+            "loss": 1.0644541680812836,
+            "posterior_image_mse": 0.017977071925997734,
+            "reward_mae": 0.049742339411750436,
+            "terminal_reward_mae": 0.8214986664908273,
+            "continuation_brier": 0.01122015716828173,
+            "terminal_brier": 0.11787288884599027,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.02865452249534428,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.2340160058811307
+          },
+          "double_time": {
+            "reconstruction": 0.015788447461090982,
+            "reward": 0.007902546916739084,
+            "continuation": 0.09716369700618088,
+            "dynamics_kl": 1.1090394407510757,
+            "representation_kl": 1.1090394407510757,
+            "ensemble": 0.19786246307194233,
+            "loss": 0.9841407984495163,
+            "posterior_image_mse": 0.015788447461090982,
+            "reward_mae": 0.03078475664369762,
+            "terminal_reward_mae": 0.5851576765378316,
+            "continuation_brier": 0.006084913584345486,
+            "terminal_brier": 0.07387707219459116,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.02702859276905656,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.22755087912082672
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 23,
+      "arm": "terminal_sampling",
+      "fitting_seconds": 165.67136530000425,
+      "peak_cuda_allocated_bytes": 306173440,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.018238059477880597,
+            "reward": 0.014178232580889016,
+            "continuation": 0.06831285543739796,
+            "dynamics_kl": 1.1025355160236359,
+            "representation_kl": 1.1025355160236359,
+            "ensemble": 0.20061436481773853,
+            "loss": 0.9628648236393929,
+            "posterior_image_mse": 0.018238059477880597,
+            "reward_mae": 0.04826361080631614,
+            "terminal_reward_mae": 1.045788893699646,
+            "continuation_brier": 0.011390302155632526,
+            "terminal_brier": 0.07857152692042291,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.02607382577843964,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.2670985646545887
+          },
+          "double_time": {
+            "reconstruction": 0.01573212875518948,
+            "reward": 0.0075141944325878285,
+            "continuation": 0.06674975727219135,
+            "dynamics_kl": 1.1463183015584946,
+            "representation_kl": 1.1463183015584946,
+            "ensemble": 0.19179642572999,
+            "loss": 0.9695834815502167,
+            "posterior_image_mse": 0.01573212875518948,
+            "reward_mae": 0.03311681770719588,
+            "terminal_reward_mae": 0.4773423322315874,
+            "continuation_brier": 0.01094325035228394,
+            "terminal_brier": 0.03667997513925218,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.026382985524833202,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.28375335317105055
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.017922414001077414,
+            "reward": 0.016907495126361027,
+            "continuation": 0.15871586580760777,
+            "dynamics_kl": 1.126102328300476,
+            "representation_kl": 1.126102328300476,
+            "ensemble": 0.20454269833862782,
+            "loss": 1.0737498626112938,
+            "posterior_image_mse": 0.017922414001077414,
+            "reward_mae": 0.05467437184415758,
+            "terminal_reward_mae": 0.9870018107550484,
+            "continuation_brier": 0.01230018472415395,
+            "terminal_brier": 0.1455301975448882,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.02834234689362347,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.2481960216537118
+          },
+          "double_time": {
+            "reconstruction": 0.015708311926573515,
+            "reward": 0.00957161356927827,
+            "continuation": 0.09347251488361508,
+            "dynamics_kl": 1.1103096306324005,
+            "representation_kl": 1.1103096306324005,
+            "ensemble": 0.18888249900192022,
+            "loss": 0.9738207310438156,
+            "posterior_image_mse": 0.015708311926573515,
+            "reward_mae": 0.035059423884376884,
+            "terminal_reward_mae": 0.7310597022374471,
+            "continuation_brier": 0.006013753667502897,
+            "terminal_brier": 0.09586888620009025,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.02624259260483086,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.2355425525456667
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 23,
+      "arm": "terminal_reward_weight",
+      "fitting_seconds": 23.461865999997826,
+      "peak_cuda_allocated_bytes": 306128896,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.018612621817737818,
+            "reward": 0.026533935335464776,
+            "continuation": 0.07215220527723432,
+            "dynamics_kl": 1.1100643575191498,
+            "representation_kl": 1.1100643575191498,
+            "ensemble": 0.21278724074363708,
+            "loss": 0.9961246028542519,
+            "posterior_image_mse": 0.018612621817737818,
+            "reward_mae": 0.05705958092585206,
+            "terminal_reward_mae": 0.4990601205825806,
+            "continuation_brier": 0.016233583126449957,
+            "terminal_brier": 0.03476737535558641,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.027253049658611417,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.3440510034561157
+          },
+          "double_time": {
+            "reconstruction": 0.01589290879201144,
+            "reward": 0.022370950027834624,
+            "continuation": 0.06480606226250529,
+            "dynamics_kl": 1.1887630969285965,
+            "representation_kl": 1.1887630969285965,
+            "ensemble": 0.20632684417068958,
+            "loss": 1.0226546078920364,
+            "posterior_image_mse": 0.01589290879201144,
+            "reward_mae": 0.04303163103759289,
+            "terminal_reward_mae": 0.26980174872381935,
+            "continuation_brier": 0.012942428409587592,
+            "terminal_brier": 0.03424339261146753,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.02643660851754248,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.3259783498942852
+          }
+        },
+        "gate": {
+          "ready": true,
+          "reasons": [],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.018166272900998592,
+            "reward": 0.04386495205108076,
+            "continuation": 0.15608966094441712,
+            "dynamics_kl": 1.1353581696748734,
+            "representation_kl": 1.1353581696748734,
+            "ensemble": 0.21961485967040062,
+            "loss": 1.1189506277441978,
+            "posterior_image_mse": 0.018166272900998592,
+            "reward_mae": 0.049824360059574246,
+            "terminal_reward_mae": 0.5311218766229493,
+            "continuation_brier": 0.011858478355861735,
+            "terminal_brier": 0.09907106288093408,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.028649667976424098,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.27943937852978706
+          },
+          "double_time": {
+            "reconstruction": 0.015860955114476383,
+            "reward": 0.024734532460570335,
+            "continuation": 0.09267055260716006,
+            "dynamics_kl": 1.1183507591485977,
+            "representation_kl": 1.1183507591485977,
+            "ensemble": 0.20160897728055716,
+            "loss": 1.0058854669332504,
+            "posterior_image_mse": 0.015860955114476383,
+            "reward_mae": 0.0355582966003567,
+            "terminal_reward_mae": 0.43036019007364906,
+            "continuation_brier": 0.006615125519601861,
+            "terminal_brier": 0.06689902616975209,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.0271349074319005,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.2779445182532072
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 23,
+      "arm": "pixel_likelihood_scale",
+      "fitting_seconds": 23.14263650000794,
+      "peak_cuda_allocated_bytes": 306128896,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.014744791202247143,
+            "reward": 0.018258551077451557,
+            "continuation": 0.11539590451866388,
+            "dynamics_kl": 6.388894021511078,
+            "representation_kl": 6.388894021511078,
+            "ensemble": 0.12477210629731417,
+            "loss": 56.11138439178467,
+            "posterior_image_mse": 0.014744791202247143,
+            "reward_mae": 0.058697594329714775,
+            "terminal_reward_mae": 0.8413528227806091,
+            "continuation_brier": 0.025117500917986035,
+            "terminal_brier": 0.08019877776561771,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.02642000699415803,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.2947876714169979
+          },
+          "double_time": {
+            "reconstruction": 0.013105243677273393,
+            "reward": 0.02123934926930815,
+            "continuation": 0.1372452722862363,
+            "dynamics_kl": 6.28264844417572,
+            "representation_kl": 6.28264844417572,
+            "ensemble": 0.12796984240412712,
+            "loss": 50.29134273529053,
+            "posterior_image_mse": 0.013105243677273393,
+            "reward_mae": 0.0645867835264653,
+            "terminal_reward_mae": 0.6448014584723217,
+            "continuation_brier": 0.031224963488057256,
+            "terminal_brier": 0.06883546586597529,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.025325339287519455,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.25521464832127094
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.014965298352763057,
+            "reward": 0.026194822625257075,
+            "continuation": 0.17927533923648298,
+            "dynamics_kl": 6.31598424911499,
+            "representation_kl": 6.31598424911499,
+            "ensemble": 0.14458450954407454,
+            "loss": 56.9372181892395,
+            "posterior_image_mse": 0.014965298352763057,
+            "reward_mae": 0.0753032797947526,
+            "terminal_reward_mae": 0.8749864867755345,
+            "continuation_brier": 0.025451674533542246,
+            "terminal_brier": 0.09944180702794776,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.028423887444660068,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.26505666598677635
+          },
+          "double_time": {
+            "reconstruction": 0.013121257186867297,
+            "reward": 0.017728752485709265,
+            "continuation": 0.09610629267990589,
+            "dynamics_kl": 6.303357362747192,
+            "representation_kl": 6.303357362747192,
+            "ensemble": 0.13129208981990814,
+            "loss": 50.318936824798584,
+            "posterior_image_mse": 0.013121257186867297,
+            "reward_mae": 0.05424211686477065,
+            "terminal_reward_mae": 0.7603575050830841,
+            "continuation_brier": 0.018256496186950244,
+            "terminal_brier": 0.0710616983861352,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.025479629635810852,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.2489774413406849
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 23,
+      "arm": "one_step_prior",
+      "fitting_seconds": 24.925918100008857,
+      "peak_cuda_allocated_bytes": 372103168,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.018407822586596012,
+            "reward": 0.014639706874731928,
+            "continuation": 0.07192358374595642,
+            "dynamics_kl": 1.1293020248413086,
+            "representation_kl": 1.1293020248413086,
+            "ensemble": 0.20213239826261997,
+            "loss": 0.9846847429871559,
+            "posterior_image_mse": 0.018407822586596012,
+            "reward_mae": 0.04840257274918258,
+            "terminal_reward_mae": 0.967040274143219,
+            "continuation_brier": 0.014361478970386088,
+            "terminal_brier": 0.06480114946141839,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.027190477354452014,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.2569175763055682
+          },
+          "double_time": {
+            "reconstruction": 0.015855886274948716,
+            "reward": 0.0076085290929768234,
+            "continuation": 0.0708562481449917,
+            "dynamics_kl": 1.231572300195694,
+            "representation_kl": 1.231572300195694,
+            "ensemble": 0.19877909123897552,
+            "loss": 1.0320431292057037,
+            "posterior_image_mse": 0.015855886274948716,
+            "reward_mae": 0.03166698064887896,
+            "terminal_reward_mae": 0.5314636611347568,
+            "continuation_brier": 0.008781315089436248,
+            "terminal_brier": 0.04784408860194121,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.02656180621124804,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.25186152197420597
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.018028999911621213,
+            "reward": 0.02287305969366571,
+            "continuation": 0.18745864881202579,
+            "dynamics_kl": 1.1484034657478333,
+            "representation_kl": 1.1484034657478333,
+            "ensemble": 0.20656599663197994,
+            "loss": 1.123968780040741,
+            "posterior_image_mse": 0.018028999911621213,
+            "reward_mae": 0.060337591683492064,
+            "terminal_reward_mae": 1.0238004113946642,
+            "continuation_brier": 0.012972442593309097,
+            "terminal_brier": 0.13465234530823572,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.02927168784663081,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.2213462544605136
+          },
+          "double_time": {
+            "reconstruction": 0.015860557672567666,
+            "reward": 0.012259310053195804,
+            "continuation": 0.09889598982408643,
+            "dynamics_kl": 1.150364339351654,
+            "representation_kl": 1.150364339351654,
+            "ensemble": 0.1946702767163515,
+            "loss": 1.0119047239422798,
+            "posterior_image_mse": 0.015860557672567666,
+            "reward_mae": 0.04047664860263467,
+            "terminal_reward_mae": 0.8673532287279765,
+            "continuation_brier": 0.005939553055213764,
+            "terminal_brier": 0.10500343715151152,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.02653510426171124,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.21643603593111038
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 23,
+      "arm": "eight_step_rollout",
+      "fitting_seconds": 28.65242310000758,
+      "peak_cuda_allocated_bytes": 310861824,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.024693159386515617,
+            "reward": 0.017921352642588317,
+            "continuation": 0.10898657236248255,
+            "dynamics_kl": 1.3187209069728851,
+            "representation_kl": 1.3187209069728851,
+            "ensemble": 0.2912409380078316,
+            "loss": 1.2340745776891708,
+            "posterior_image_mse": 0.024693159386515617,
+            "reward_mae": 0.0626430376432836,
+            "terminal_reward_mae": 1.1296579599380494,
+            "continuation_brier": 0.020156658720225096,
+            "terminal_brier": 0.09779999904334545,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.031140180304646492,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.22796267829835415
+          },
+          "double_time": {
+            "reconstruction": 0.020435732090845704,
+            "reward": 0.010061036824481562,
+            "continuation": 0.09060214273631573,
+            "dynamics_kl": 1.4349162578582764,
+            "representation_kl": 1.4349162578582764,
+            "ensemble": 0.29778621532022953,
+            "loss": 1.2798348665237427,
+            "posterior_image_mse": 0.020435732090845704,
+            "reward_mae": 0.049858689308166504,
+            "terminal_reward_mae": 0.8092140051825293,
+            "continuation_brier": 0.016986650007311255,
+            "terminal_brier": 0.049803745875171196,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.028515545185655355,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.20755526050925255
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: posterior_image_mse exceeds 0.02",
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: posterior_image_mse exceeds 0.02",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.024236557073891163,
+            "reward": 0.02547345228958875,
+            "continuation": 0.15786771476268768,
+            "dynamics_kl": 1.3200528472661972,
+            "representation_kl": 1.3200528472661972,
+            "ensemble": 0.2964664697647095,
+            "loss": 1.29607592523098,
+            "posterior_image_mse": 0.024236557073891163,
+            "reward_mae": 0.08043818920850754,
+            "terminal_reward_mae": 1.1517141929694585,
+            "continuation_brier": 0.01763373671565205,
+            "terminal_brier": 0.10319857116389487,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.030285451328381896,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.20878391712903976
+          },
+          "double_time": {
+            "reconstruction": 0.020375029183924198,
+            "reward": 0.017438176437281072,
+            "continuation": 0.10185376182198524,
+            "dynamics_kl": 1.3497572988271713,
+            "representation_kl": 1.3497572988271713,
+            "ensemble": 0.3009091205894947,
+            "loss": 1.250430479645729,
+            "posterior_image_mse": 0.020375029183924198,
+            "reward_mae": 0.05909491470083594,
+            "terminal_reward_mae": 1.1573065797487894,
+            "continuation_brier": 0.010463283746503294,
+            "terminal_brier": 0.10146423776944478,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.028979222988709807,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.23640313744544983
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: posterior_image_mse exceeds 0.02",
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: posterior_image_mse exceeds 0.02",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 23,
+      "arm": "full_smg1",
+      "fitting_seconds": 29.48078590001387,
+      "peak_cuda_allocated_bytes": 376880640,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.01535355974920094,
+            "reward": 0.053170276107266545,
+            "continuation": 0.1384261716157198,
+            "dynamics_kl": 9.077074885368347,
+            "representation_kl": 9.077074885368347,
+            "ensemble": 0.13039068598300219,
+            "loss": 59.93559122085571,
+            "posterior_image_mse": 0.01535355974920094,
+            "reward_mae": 0.10044432617723942,
+            "terminal_reward_mae": 0.7728666591644288,
+            "continuation_brier": 0.02615532255731523,
+            "terminal_brier": 0.11173876971006394,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.025238629430532455,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.38812545128166676
+          },
+          "double_time": {
+            "reconstruction": 0.013600514736026525,
+            "reward": 0.04733292607124895,
+            "continuation": 0.14099031500518322,
+            "dynamics_kl": 10.168153822422028,
+            "representation_kl": 10.168153822422028,
+            "ensemble": 0.13578726444393396,
+            "loss": 54.40761756896973,
+            "posterior_image_mse": 0.013600514736026525,
+            "reward_mae": 0.09951934404671192,
+            "terminal_reward_mae": 0.53103398557367,
+            "continuation_brier": 0.03181002230849117,
+            "terminal_brier": 0.07487991635119623,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.02381900022737682,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.39165842719376087
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.01564151921775192,
+            "reward": 0.0454561288934201,
+            "continuation": 0.13490647450089455,
+            "dynamics_kl": 9.342844903469086,
+            "representation_kl": 9.342844903469086,
+            "ensemble": 0.14504370652139187,
+            "loss": 61.11439323425293,
+            "posterior_image_mse": 0.01564151921775192,
+            "reward_mae": 0.10046241478994489,
+            "terminal_reward_mae": 0.6596732054437909,
+            "continuation_brier": 0.022976925771217793,
+            "terminal_brier": 0.07026943431368896,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.026442198548465967,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.3116905000060797
+          },
+          "double_time": {
+            "reconstruction": 0.013524251291528344,
+            "reward": 0.043833629228174686,
+            "continuation": 0.11733357328921556,
+            "dynamics_kl": 9.754501342773438,
+            "representation_kl": 9.754501342773438,
+            "ensemble": 0.1344996178522706,
+            "loss": 53.86192607879639,
+            "posterior_image_mse": 0.013524251291528344,
+            "reward_mae": 0.09141606371849775,
+            "terminal_reward_mae": 0.6101933936278026,
+            "continuation_brier": 0.023414875147864223,
+            "terminal_brier": 0.06196273950239022,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.02446207939647138,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.4071734957396984
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 23,
+      "arm": "full_without_visual_scale",
+      "fitting_seconds": 29.14768140000524,
+      "peak_cuda_allocated_bytes": 376880640,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.022998447995632887,
+            "reward": 0.03835841570980847,
+            "continuation": 0.11119106411933899,
+            "dynamics_kl": 1.4458216577768326,
+            "representation_kl": 1.4458216577768326,
+            "ensemble": 0.275069497525692,
+            "loss": 1.315110445022583,
+            "posterior_image_mse": 0.022998447995632887,
+            "reward_mae": 0.07441615080460906,
+            "terminal_reward_mae": 0.6508906185626984,
+            "continuation_brier": 0.01757429027929902,
+            "terminal_brier": 0.12103824242949486,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.02826253231614828,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.3312836308032274
+          },
+          "double_time": {
+            "reconstruction": 0.019254159415140748,
+            "reward": 0.033243134152144194,
+            "continuation": 0.09131299215368927,
+            "dynamics_kl": 1.5337666273117065,
+            "representation_kl": 1.5337666273117065,
+            "ensemble": 0.26067710667848587,
+            "loss": 1.3247473388910294,
+            "posterior_image_mse": 0.019254159415140748,
+            "reward_mae": 0.06703889556229115,
+            "terminal_reward_mae": 0.3296489750259909,
+            "continuation_brier": 0.016516111500095576,
+            "terminal_brier": 0.05815228002380724,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.027741496451199055,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.34881821274757385
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: posterior_image_mse exceeds 0.02",
+            "spinning: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.022552735405042768,
+            "reward": 0.06131733569782227,
+            "continuation": 0.16945355525240302,
+            "dynamics_kl": 1.513507753610611,
+            "representation_kl": 1.513507753610611,
+            "ensemble": 0.27264688163995743,
+            "loss": 1.4340751767158508,
+            "posterior_image_mse": 0.022552735405042768,
+            "reward_mae": 0.07745765475556254,
+            "terminal_reward_mae": 0.6529777497053146,
+            "continuation_brier": 0.016783443687018007,
+            "terminal_brier": 0.12969457496157183,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.029579929541796446,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.2716986257582903
+          },
+          "double_time": {
+            "reconstruction": 0.018778863362967968,
+            "reward": 0.03059336612932384,
+            "continuation": 0.08784245140850544,
+            "dynamics_kl": 1.4333099275827408,
+            "representation_kl": 1.4333099275827408,
+            "ensemble": 0.2529445420950651,
+            "loss": 1.2501451671123505,
+            "posterior_image_mse": 0.018778863362967968,
+            "reward_mae": 0.05604160111397505,
+            "terminal_reward_mae": 0.4107613921165466,
+            "continuation_brier": 0.010939907922875136,
+            "terminal_brier": 0.07463511237874627,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.026506497990339994,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.27061716094613075
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: posterior_image_mse exceeds 0.02",
+            "spinning: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 23,
+      "arm": "moderate_visual_scale",
+      "fitting_seconds": 23.326698500008206,
+      "peak_cuda_allocated_bytes": 306128896,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.0164878141367808,
+            "reward": 0.014025913638761267,
+            "continuation": 0.07514241524040699,
+            "dynamics_kl": 1.4923721998929977,
+            "representation_kl": 1.4923721998929977,
+            "ensemble": 0.16314338333904743,
+            "loss": 2.7965165078639984,
+            "posterior_image_mse": 0.0164878141367808,
+            "reward_mae": 0.04662908613681793,
+            "terminal_reward_mae": 0.670161589384079,
+            "continuation_brier": 0.017581989988684654,
+            "terminal_brier": 0.03126292064145673,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.02639697538688779,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.2621485013514757
+          },
+          "double_time": {
+            "reconstruction": 0.014424605760723352,
+            "reward": 0.009200698434142396,
+            "continuation": 0.08357951766811311,
+            "dynamics_kl": 1.5593941509723663,
+            "representation_kl": 1.5593941509723663,
+            "ensemble": 0.16292455792427063,
+            "loss": 2.633801817893982,
+            "posterior_image_mse": 0.014424605760723352,
+            "reward_mae": 0.029534003348089755,
+            "terminal_reward_mae": 0.2741957692236736,
+            "continuation_brier": 0.01507141109323129,
+            "terminal_brier": 0.04600852569100619,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.026107051642611623,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.26592658273875713
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.016592713771387935,
+            "reward": 0.01034161215648055,
+            "continuation": 0.07888681499753147,
+            "dynamics_kl": 1.4651506394147873,
+            "representation_kl": 1.4651506394147873,
+            "ensemble": 0.17941012792289257,
+            "loss": 2.8070003390312195,
+            "posterior_image_mse": 0.016592713771387935,
+            "reward_mae": 0.04640604089945555,
+            "terminal_reward_mae": 0.711778068116733,
+            "continuation_brier": 0.010285863474564394,
+            "terminal_brier": 0.057882322432955595,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.02743771462701261,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.2663238998502493
+          },
+          "double_time": {
+            "reconstruction": 0.014431269373744726,
+            "reward": 0.008901996414351743,
+            "continuation": 0.08398414228577167,
+            "dynamics_kl": 1.4319951683282852,
+            "representation_kl": 1.4319951683282852,
+            "ensemble": 0.16426136624068022,
+            "loss": 2.559471607208252,
+            "posterior_image_mse": 0.014431269373744726,
+            "reward_mae": 0.031675280537456274,
+            "terminal_reward_mae": 0.5484649062156677,
+            "continuation_brier": 0.007958324247738346,
+            "terminal_brier": 0.058702155705153324,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.026254058815538883,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.22364250011742115
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 23,
+      "arm": "four_step_rollout",
+      "fitting_seconds": 25.87393030000385,
+      "peak_cuda_allocated_bytes": 310861824,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.019812257029116154,
+            "reward": 0.015476156491786242,
+            "continuation": 0.09224325278773904,
+            "dynamics_kl": 1.2900854796171188,
+            "representation_kl": 1.2900854796171188,
+            "ensemble": 0.2169481161981821,
+            "loss": 1.1185310631990433,
+            "posterior_image_mse": 0.019812257029116154,
+            "reward_mae": 0.05538029666058719,
+            "terminal_reward_mae": 0.9710024952888489,
+            "continuation_brier": 0.016375971608795226,
+            "terminal_brier": 0.07915607954375446,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.0292497172486037,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.39318424835801125
+          },
+          "double_time": {
+            "reconstruction": 0.016645160736516118,
+            "reward": 0.011869284382555634,
+            "continuation": 0.08163654734380543,
+            "dynamics_kl": 1.3334624618291855,
+            "representation_kl": 1.3334624618291855,
+            "ensemble": 0.20548752136528492,
+            "loss": 1.115716002881527,
+            "posterior_image_mse": 0.016645160736516118,
+            "reward_mae": 0.04492653510533273,
+            "terminal_reward_mae": 0.5091887836119738,
+            "continuation_brier": 0.014856257475912571,
+            "terminal_brier": 0.03953096308436968,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.02790536847896874,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.37601185217499733
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.01901503116823733,
+            "reward": 0.020943713461747393,
+            "continuation": 0.18749591242522,
+            "dynamics_kl": 1.3157602548599243,
+            "representation_kl": 1.3157602548599243,
+            "ensemble": 0.2214712668210268,
+            "loss": 1.2383820712566376,
+            "posterior_image_mse": 0.01901503116823733,
+            "reward_mae": 0.06304012844339013,
+            "terminal_reward_mae": 0.9864276562418256,
+            "continuation_brier": 0.014471799950115383,
+            "terminal_brier": 0.11755840515252203,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.02903945161961019,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.3012503031641245
+          },
+          "double_time": {
+            "reconstruction": 0.01688375265803188,
+            "reward": 0.01039901451440528,
+            "continuation": 0.06504120538011193,
+            "dynamics_kl": 1.33583302795887,
+            "representation_kl": 1.33583302795887,
+            "ensemble": 0.20460746344178915,
+            "loss": 1.0984312668442726,
+            "posterior_image_mse": 0.01688375265803188,
+            "reward_mae": 0.045267701148986816,
+            "terminal_reward_mae": 0.7713638166586558,
+            "continuation_brier": 0.0073122494941344485,
+            "terminal_brier": 0.06056739420940479,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.02778981113806367,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.33384186401963234
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 47,
+      "arm": "continued_baseline",
+      "fitting_seconds": 23.913654200005112,
+      "peak_cuda_allocated_bytes": 306140672,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.017646939028054476,
+            "reward": 0.013342638354515657,
+            "continuation": 0.0696442793123424,
+            "dynamics_kl": 1.1301894187927246,
+            "representation_kl": 1.1301894187927246,
+            "ensemble": 0.22269203886389732,
+            "loss": 1.0014395490288734,
+            "posterior_image_mse": 0.017646939028054476,
+            "reward_mae": 0.04495498817414045,
+            "terminal_reward_mae": 0.8180047345161437,
+            "continuation_brier": 0.012950026255566627,
+            "terminal_brier": 0.052890103708487006,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.025988866109400988,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.23838935885578394
+          },
+          "double_time": {
+            "reconstruction": 0.015770002035424113,
+            "reward": 0.011215667967917398,
+            "continuation": 0.09009525901637971,
+            "dynamics_kl": 1.1749760657548904,
+            "representation_kl": 1.1749760657548904,
+            "ensemble": 0.2031440418213606,
+            "loss": 1.025210589170456,
+            "posterior_image_mse": 0.015770002035424113,
+            "reward_mae": 0.03432966396212578,
+            "terminal_reward_mae": 0.22339654315648408,
+            "continuation_brier": 0.017177906061988324,
+            "terminal_brier": 0.03276935740920903,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.026734364917501807,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.2541801631450653
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.017923403065651655,
+            "reward": 0.010958346858387813,
+            "continuation": 0.15604743908625096,
+            "dynamics_kl": 1.1751991957426071,
+            "representation_kl": 1.1751991957426071,
+            "ensemble": 0.22489913552999496,
+            "loss": 1.114947833120823,
+            "posterior_image_mse": 0.017923403065651655,
+            "reward_mae": 0.041810567723587155,
+            "terminal_reward_mae": 0.5456489462937627,
+            "continuation_brier": 0.01448453331249766,
+            "terminal_brier": 0.06409173184738393,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.02795121935196221,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.3067713975906372
+          },
+          "double_time": {
+            "reconstruction": 0.015738092828541994,
+            "reward": 0.009971983614377677,
+            "continuation": 0.059971330396365374,
+            "dynamics_kl": 1.1426746994256973,
+            "representation_kl": 1.1426746994256973,
+            "ensemble": 0.2045939890667796,
+            "loss": 0.9758801981806755,
+            "posterior_image_mse": 0.015738092828541994,
+            "reward_mae": 0.03470522165298462,
+            "terminal_reward_mae": 0.5973319311936697,
+            "continuation_brier": 0.008207153326225125,
+            "terminal_brier": 0.08076143937845094,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.026297620264813304,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.2571719642728567
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 47,
+      "arm": "terminal_sampling",
+      "fitting_seconds": 29.468189799998072,
+      "peak_cuda_allocated_bytes": 306167808,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.01743592822458595,
+            "reward": 0.012702760170213878,
+            "continuation": 0.06730048730969429,
+            "dynamics_kl": 1.1204598248004913,
+            "representation_kl": 1.1204598248004913,
+            "ensemble": 0.20102929696440697,
+            "loss": 0.9707443490624428,
+            "posterior_image_mse": 0.01743592822458595,
+            "reward_mae": 0.04553671577014029,
+            "terminal_reward_mae": 0.8905936074256897,
+            "continuation_brier": 0.012227538245497271,
+            "terminal_brier": 0.06019158700713888,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.02714435593225062,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.23691345006227493
+          },
+          "double_time": {
+            "reconstruction": 0.015485408250242472,
+            "reward": 0.011642263882094994,
+            "continuation": 0.08179713692516088,
+            "dynamics_kl": 1.1695842891931534,
+            "representation_kl": 1.1695842891931534,
+            "ensemble": 0.18925290554761887,
+            "loss": 0.9999282956123352,
+            "posterior_image_mse": 0.015485408250242472,
+            "reward_mae": 0.03725170157849789,
+            "terminal_reward_mae": 0.3313320178923936,
+            "continuation_brier": 0.017021135427057743,
+            "terminal_brier": 0.03191764185343646,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.026534061413258314,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.23580389842391014
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.01761992392130196,
+            "reward": 0.013235729013103992,
+            "continuation": 0.12439571949653327,
+            "dynamics_kl": 1.141874983906746,
+            "representation_kl": 1.141874983906746,
+            "ensemble": 0.20404737815260887,
+            "loss": 1.0444237515330315,
+            "posterior_image_mse": 0.01761992392130196,
+            "reward_mae": 0.04833074868656695,
+            "terminal_reward_mae": 0.7635281277554375,
+            "continuation_brier": 0.011042796664696652,
+            "terminal_brier": 0.07586377173928278,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.02718759886920452,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.27389460802078247
+          },
+          "double_time": {
+            "reconstruction": 0.015578528982587159,
+            "reward": 0.008678094056449481,
+            "continuation": 0.06319097601226531,
+            "dynamics_kl": 1.1357995867729187,
+            "representation_kl": 1.1357995867729187,
+            "ensemble": 0.19633881747722626,
+            "loss": 0.9652661830186844,
+            "posterior_image_mse": 0.015578528982587159,
+            "reward_mae": 0.031285001314245164,
+            "terminal_reward_mae": 0.5247203171253204,
+            "continuation_brier": 0.008765742373725516,
+            "terminal_brier": 0.0697694779613812,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.026236863806843758,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.24618275556713343
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 47,
+      "arm": "terminal_reward_weight",
+      "fitting_seconds": 40.872854400004144,
+      "peak_cuda_allocated_bytes": 306140672,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.01772445417009294,
+            "reward": 0.029926437186077237,
+            "continuation": 0.07661551190540195,
+            "dynamics_kl": 1.1458536237478256,
+            "representation_kl": 1.1458536237478256,
+            "ensemble": 0.22450392320752144,
+            "loss": 1.0362825021147728,
+            "posterior_image_mse": 0.01772445417009294,
+            "reward_mae": 0.05303467204794288,
+            "terminal_reward_mae": 0.4995464038848877,
+            "continuation_brier": 0.014892654202412814,
+            "terminal_brier": 0.05541246114764362,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.026066452264785767,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.26827507838606834
+          },
+          "double_time": {
+            "reconstruction": 0.015737942070700228,
+            "reward": 0.027500876632984728,
+            "continuation": 0.09228530596010387,
+            "dynamics_kl": 1.19581738114357,
+            "representation_kl": 1.19581738114357,
+            "ensemble": 0.20196750946342945,
+            "loss": 1.05498206615448,
+            "posterior_image_mse": 0.015737942070700228,
+            "reward_mae": 0.05083679361268878,
+            "terminal_reward_mae": 0.2305304754910798,
+            "continuation_brier": 0.016343132592737675,
+            "terminal_brier": 0.03344927578999099,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.026591554284095764,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.2724295649677515
+          }
+        },
+        "gate": {
+          "ready": true,
+          "reasons": [],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.01788458088412881,
+            "reward": 0.038246443145908415,
+            "continuation": 0.15921543317381293,
+            "dynamics_kl": 1.202968493103981,
+            "representation_kl": 1.202968493103981,
+            "ensemble": 0.2263263650238514,
+            "loss": 1.163453921675682,
+            "posterior_image_mse": 0.01788458088412881,
+            "reward_mae": 0.0557545751798898,
+            "terminal_reward_mae": 0.3827794854130064,
+            "continuation_brier": 0.015292701194994152,
+            "terminal_brier": 0.06781771657597346,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.028046144638210535,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.3398800063878298
+          },
+          "double_time": {
+            "reconstruction": 0.015683201956562698,
+            "reward": 0.023909301256935578,
+            "continuation": 0.06468828543438576,
+            "dynamics_kl": 1.1578809022903442,
+            "representation_kl": 1.1578809022903442,
+            "ensemble": 0.20278690941631794,
+            "loss": 1.00179623067379,
+            "posterior_image_mse": 0.015683201956562698,
+            "reward_mae": 0.03778368269558996,
+            "terminal_reward_mae": 0.4433939069509506,
+            "continuation_brier": 0.008240557281737892,
+            "terminal_brier": 0.09245691995602101,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.026193674188107252,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.2714182287454605
+          }
+        },
+        "gate": {
+          "ready": true,
+          "reasons": [],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 47,
+      "arm": "pixel_likelihood_scale",
+      "fitting_seconds": 108.18362289998913,
+      "peak_cuda_allocated_bytes": 306140672,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.014637973974458873,
+            "reward": 0.020347938290797174,
+            "continuation": 0.11836982611566782,
+            "dynamics_kl": 6.150430202484131,
+            "representation_kl": 6.150430202484131,
+            "ensemble": 0.12923119962215424,
+            "loss": 55.60098171234131,
+            "posterior_image_mse": 0.014637973974458873,
+            "reward_mae": 0.06521458318457007,
+            "terminal_reward_mae": 1.2521086502075196,
+            "continuation_brier": 0.015875805402174592,
+            "terminal_brier": 0.13782037168741226,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.023735325317829847,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.21942315436899662
+          },
+          "double_time": {
+            "reconstruction": 0.013081503449939191,
+            "reward": 0.015742498711915687,
+            "continuation": 0.1135833493899554,
+            "dynamics_kl": 6.252114772796631,
+            "representation_kl": 6.252114772796631,
+            "ensemble": 0.1309782611206174,
+            "loss": 50.16311550140381,
+            "posterior_image_mse": 0.013081503449939191,
+            "reward_mae": 0.05830053496174514,
+            "terminal_reward_mae": 0.7671820028074856,
+            "continuation_brier": 0.017886686837300658,
+            "terminal_brier": 0.08497513681794054,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.026612219167873263,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.22443605214357376
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.01493919116910547,
+            "reward": 0.026689940452342853,
+            "continuation": 0.2475392702035606,
+            "dynamics_kl": 6.218418002128601,
+            "representation_kl": 6.218418002128601,
+            "ensemble": 0.14204365853220224,
+            "loss": 56.8527889251709,
+            "posterior_image_mse": 0.01493919116910547,
+            "reward_mae": 0.08040586183778942,
+            "terminal_reward_mae": 1.170944060598101,
+            "continuation_brier": 0.0167493297776673,
+            "terminal_brier": 0.1675980409407722,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.0280511318705976,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.26832148898392916
+          },
+          "double_time": {
+            "reconstruction": 0.012893921229988337,
+            "reward": 0.01910072669852525,
+            "continuation": 0.125610223505646,
+            "dynamics_kl": 6.490772068500519,
+            "representation_kl": 6.490772068500519,
+            "ensemble": 0.1285428497940302,
+            "loss": 49.657469749450684,
+            "posterior_image_mse": 0.012893921229988337,
+            "reward_mae": 0.06243098620325327,
+            "terminal_reward_mae": 1.0605784058570862,
+            "continuation_brier": 0.012841575604397804,
+            "terminal_brier": 0.1385999398926894,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.025861309841275215,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.2552439924329519
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 47,
+      "arm": "one_step_prior",
+      "fitting_seconds": 119.6490754999977,
+      "peak_cuda_allocated_bytes": 372114944,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.01765792618971318,
+            "reward": 0.012650813441723585,
+            "continuation": 0.07013294845819473,
+            "dynamics_kl": 1.1647166162729263,
+            "representation_kl": 1.1647166162729263,
+            "ensemble": 0.20097623206675053,
+            "loss": 1.0002479329705238,
+            "posterior_image_mse": 0.01765792618971318,
+            "reward_mae": 0.04480041074566543,
+            "terminal_reward_mae": 0.7173806405067444,
+            "continuation_brier": 0.013994162960443646,
+            "terminal_brier": 0.04555889685987495,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.026275660376995802,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.25906722620129585
+          },
+          "double_time": {
+            "reconstruction": 0.01573115645442158,
+            "reward": 0.008889851567801088,
+            "continuation": 0.06935593578964472,
+            "dynamics_kl": 1.2267719954252243,
+            "representation_kl": 1.2267719954252243,
+            "ensemble": 0.18600115273147821,
+            "loss": 1.0160412937402725,
+            "posterior_image_mse": 0.01573115645442158,
+            "reward_mae": 0.032839941093698144,
+            "terminal_reward_mae": 0.31543846659619235,
+            "continuation_brier": 0.013337003299966455,
+            "terminal_brier": 0.031609843752548765,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.026200591353699565,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.23022369109094143
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.01773196691647172,
+            "reward": 0.009176892082905397,
+            "continuation": 0.07775695179589093,
+            "dynamics_kl": 1.2064300924539566,
+            "representation_kl": 1.2064300924539566,
+            "ensemble": 0.19825091026723385,
+            "loss": 1.0267747938632965,
+            "posterior_image_mse": 0.01773196691647172,
+            "reward_mae": 0.04312591045163572,
+            "terminal_reward_mae": 0.6307172211153167,
+            "continuation_brier": 0.01076070071576396,
+            "terminal_brier": 0.05459529491184055,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.027424171334132552,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.27444541826844215
+          },
+          "double_time": {
+            "reconstruction": 0.01588076469488442,
+            "reward": 0.008803761840681545,
+            "continuation": 0.0697298136074096,
+            "dynamics_kl": 1.1823382079601288,
+            "representation_kl": 1.1823382079601288,
+            "ensemble": 0.18761402368545532,
+            "loss": 0.9914312735199928,
+            "posterior_image_mse": 0.01588076469488442,
+            "reward_mae": 0.031652115285396576,
+            "terminal_reward_mae": 0.5684779624144236,
+            "continuation_brier": 0.006729261445798329,
+            "terminal_brier": 0.08219960540688286,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.025678978767246008,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.22271098382771015
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 47,
+      "arm": "eight_step_rollout",
+      "fitting_seconds": 117.10736789999646,
+      "peak_cuda_allocated_bytes": 310873600,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.021096973912790418,
+            "reward": 0.016384726157411933,
+            "continuation": 0.09779893141239882,
+            "dynamics_kl": 1.3912764489650726,
+            "representation_kl": 1.3912764489650726,
+            "ensemble": 0.2466933112591505,
+            "loss": 1.21673983335495,
+            "posterior_image_mse": 0.021096973912790418,
+            "reward_mae": 0.06198311550542712,
+            "terminal_reward_mae": 0.9690502190589905,
+            "continuation_brier": 0.017865380039438605,
+            "terminal_brier": 0.0735377780161798,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.028276280499994755,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.23566919472068548
+          },
+          "double_time": {
+            "reconstruction": 0.01813953393138945,
+            "reward": 0.009520032093860209,
+            "continuation": 0.06921182060614228,
+            "dynamics_kl": 1.3742960393428802,
+            "representation_kl": 1.3742960393428802,
+            "ensemble": 0.23818630538880825,
+            "loss": 1.159635305404663,
+            "posterior_image_mse": 0.01813953393138945,
+            "reward_mae": 0.04663388570770621,
+            "terminal_reward_mae": 0.5918898001827043,
+            "continuation_brier": 0.013239501684438437,
+            "terminal_brier": 0.0307020923217602,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.02528669568710029,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.1938080731779337
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: posterior_image_mse exceeds 0.02",
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.021599306259304285,
+            "reward": 0.01302748333546333,
+            "continuation": 0.08013707539066672,
+            "dynamics_kl": 1.4007330238819122,
+            "representation_kl": 1.4007330238819122,
+            "ensemble": 0.25811287574470043,
+            "loss": 1.2133165448904037,
+            "posterior_image_mse": 0.021599306259304285,
+            "reward_mae": 0.0654531316831708,
+            "terminal_reward_mae": 0.8061725156647819,
+            "continuation_brier": 0.010605670599034056,
+            "terminal_brier": 0.03938783793585442,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.02793577639386058,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.23369668610394
+          },
+          "double_time": {
+            "reconstruction": 0.018259386997669935,
+            "reward": 0.011546277848538011,
+            "continuation": 0.07635505823418498,
+            "dynamics_kl": 1.2919787019491196,
+            "representation_kl": 1.2919787019491196,
+            "ensemble": 0.2359692882746458,
+            "loss": 1.1173172369599342,
+            "posterior_image_mse": 0.018259386997669935,
+            "reward_mae": 0.050249837804585695,
+            "terminal_reward_mae": 0.8652771155039469,
+            "continuation_brier": 0.008802450887742452,
+            "terminal_brier": 0.07835550221304098,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.025809955783188343,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.22892165184020996
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: posterior_image_mse exceeds 0.02",
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 47,
+      "arm": "full_smg1",
+      "fitting_seconds": 96.81552239999291,
+      "peak_cuda_allocated_bytes": 376875008,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.01485407236032188,
+            "reward": 0.047619296004995704,
+            "continuation": 0.12857180321589112,
+            "dynamics_kl": 10.098403334617615,
+            "representation_kl": 10.098403334617615,
+            "ensemble": 0.13434647303074598,
+            "loss": 58.77474546432495,
+            "posterior_image_mse": 0.01485407236032188,
+            "reward_mae": 0.09672370739281178,
+            "terminal_reward_mae": 0.7842524719238281,
+            "continuation_brier": 0.019644819665700197,
+            "terminal_brier": 0.14599834352731705,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.023055143421515822,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.3294018544256687
+          },
+          "double_time": {
+            "reconstruction": 0.013446513330563903,
+            "reward": 0.0520868597086519,
+            "continuation": 0.15738076157867908,
+            "dynamics_kl": 10.438472628593445,
+            "representation_kl": 10.438472628593445,
+            "ensemble": 0.13622920401394367,
+            "loss": 54.04807996749878,
+            "posterior_image_mse": 0.013446513330563903,
+            "reward_mae": 0.10280779702588916,
+            "terminal_reward_mae": 0.42189432622800616,
+            "continuation_brier": 0.026495747617445886,
+            "terminal_brier": 0.10689768923550909,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.022948925849050283,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.3176261130720377
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.01520535722374916,
+            "reward": 0.05221238289959729,
+            "continuation": 0.1526474440470338,
+            "dynamics_kl": 10.0230051279068,
+            "representation_kl": 10.0230051279068,
+            "ensemble": 0.1544150346890092,
+            "loss": 60.01757621765137,
+            "posterior_image_mse": 0.01520535722374916,
+            "reward_mae": 0.10752840526401997,
+            "terminal_reward_mae": 0.6549136170319149,
+            "continuation_brier": 0.019282092747744173,
+            "terminal_brier": 0.13329431654087134,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.026603690115734935,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.3226499017328024
+          },
+          "double_time": {
+            "reconstruction": 0.013351937057450414,
+            "reward": 0.0416407153243199,
+            "continuation": 0.11684252368286252,
+            "dynamics_kl": 10.07136607170105,
+            "representation_kl": 10.07136607170105,
+            "ensemble": 0.13798646815121174,
+            "loss": 53.444923877716064,
+            "posterior_image_mse": 0.013351937057450414,
+            "reward_mae": 0.09441414522007108,
+            "terminal_reward_mae": 0.5333240608374278,
+            "continuation_brier": 0.01919777743751183,
+            "terminal_brier": 0.07620021166900794,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.023803132586181164,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.3495737947523594
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 47,
+      "arm": "full_without_visual_scale",
+      "fitting_seconds": 90.29547720000846,
+      "peak_cuda_allocated_bytes": 376875008,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.021824453258886933,
+            "reward": 0.043185354210436344,
+            "continuation": 0.15643381047993898,
+            "dynamics_kl": 1.5338372588157654,
+            "representation_kl": 1.5338372588157654,
+            "ensemble": 0.2641185875982046,
+            "loss": 1.40586456656456,
+            "posterior_image_mse": 0.021824453258886933,
+            "reward_mae": 0.13058082573115826,
+            "terminal_reward_mae": 0.5261457008123398,
+            "continuation_brier": 0.028657547081820667,
+            "terminal_brier": 0.09511215467005968,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.02765409927815199,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.3723256103694439
+          },
+          "double_time": {
+            "reconstruction": 0.017724996199831367,
+            "reward": 0.042505730176344514,
+            "continuation": 0.12263040104880929,
+            "dynamics_kl": 1.7341053485870361,
+            "representation_kl": 1.7341053485870361,
+            "ensemble": 0.23121303878724575,
+            "loss": 1.4545374065637589,
+            "posterior_image_mse": 0.017724996199831367,
+            "reward_mae": 0.1233498752117157,
+            "terminal_reward_mae": 0.28543936821294885,
+            "continuation_brier": 0.024635274545289576,
+            "terminal_brier": 0.05085880869541895,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.024728669552132487,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.35770908556878567
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: posterior_image_mse exceeds 0.02",
+            "spinning: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.020453837933018804,
+            "reward": 0.031059693195857108,
+            "continuation": 0.13746464904397726,
+            "dynamics_kl": 1.6264800131320953,
+            "representation_kl": 1.6264800131320953,
+            "ensemble": 0.24258232489228249,
+            "loss": 1.4074485152959824,
+            "posterior_image_mse": 0.020453837933018804,
+            "reward_mae": 0.12032287567853928,
+            "terminal_reward_mae": 0.4245553697858538,
+            "continuation_brier": 0.020472897100262344,
+            "terminal_brier": 0.05682400168318834,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.02811146667227149,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.32289562560617924
+          },
+          "double_time": {
+            "reconstruction": 0.017710528802126646,
+            "reward": 0.03205838717985898,
+            "continuation": 0.11331148259341717,
+            "dynamics_kl": 1.6485306769609451,
+            "representation_kl": 1.6485306769609451,
+            "ensemble": 0.23513150960206985,
+            "loss": 1.3873303085565567,
+            "posterior_image_mse": 0.017710528802126646,
+            "reward_mae": 0.10357227642089128,
+            "terminal_reward_mae": 0.4941956957181295,
+            "continuation_brier": 0.015106042963452637,
+            "terminal_brier": 0.07991400236884753,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.025047407019883394,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.35809906385838985
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: posterior_image_mse exceeds 0.02"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 47,
+      "arm": "moderate_visual_scale",
+      "fitting_seconds": 85.96546969999326,
+      "peak_cuda_allocated_bytes": 306140672,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.01599521515890956,
+            "reward": 0.013187871285481378,
+            "continuation": 0.07882418716326356,
+            "dynamics_kl": 1.5087934881448746,
+            "representation_kl": 1.5087934881448746,
+            "ensemble": 0.16498056892305613,
+            "loss": 2.761790245771408,
+            "posterior_image_mse": 0.01599521515890956,
+            "reward_mae": 0.0440134652890265,
+            "terminal_reward_mae": 0.8502716660499573,
+            "continuation_brier": 0.01221151917707175,
+            "terminal_brier": 0.07541323443409055,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.02418111078441143,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.22424738388508558
+          },
+          "double_time": {
+            "reconstruction": 0.014171576942317188,
+            "reward": 0.011302019134745933,
+            "continuation": 0.09552124328911304,
+            "dynamics_kl": 1.5770351737737656,
+            "representation_kl": 1.5770351737737656,
+            "ensemble": 0.15968259144574404,
+            "loss": 2.629884660243988,
+            "posterior_image_mse": 0.014171576942317188,
+            "reward_mae": 0.03728716797195375,
+            "terminal_reward_mae": 0.3291337698184211,
+            "continuation_brier": 0.017051301372703165,
+            "terminal_brier": 0.03747804210141053,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.025671153562143445,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.23299806378781796
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.016284332145005465,
+            "reward": 0.008303918642923236,
+            "continuation": 0.049577110912650824,
+            "dynamics_kl": 1.5194744765758514,
+            "representation_kl": 1.5194744765758514,
+            "ensemble": 0.17664201464504004,
+            "loss": 2.7746409475803375,
+            "posterior_image_mse": 0.016284332145005465,
+            "reward_mae": 0.041592473862692714,
+            "terminal_reward_mae": 0.6674043472324099,
+            "continuation_brier": 0.009099022445298033,
+            "terminal_brier": 0.04401951762702083,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.02669864147901535,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.2670547794550657
+          },
+          "double_time": {
+            "reconstruction": 0.014280850649811327,
+            "reward": 0.00986905388708692,
+            "continuation": 0.07603073643986136,
+            "dynamics_kl": 1.5405497401952744,
+            "representation_kl": 1.5405497401952744,
+            "ensemble": 0.1611310625448823,
+            "loss": 2.599445730447769,
+            "posterior_image_mse": 0.014280850649811327,
+            "reward_mae": 0.03520763968117535,
+            "terminal_reward_mae": 0.6340100665887197,
+            "continuation_brier": 0.008105562258378995,
+            "terminal_brier": 0.08513283650002752,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.026636182563379407,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.25416447781026363
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 47,
+      "arm": "four_step_rollout",
+      "fitting_seconds": 98.22154769999906,
+      "peak_cuda_allocated_bytes": 310873600,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.01884484151378274,
+            "reward": 0.015266461297869682,
+            "continuation": 0.08126554265618324,
+            "dynamics_kl": 1.408391758799553,
+            "representation_kl": 1.408391758799553,
+            "ensemble": 0.2144900280982256,
+            "loss": 1.1749019175767899,
+            "posterior_image_mse": 0.01884484151378274,
+            "reward_mae": 0.05974740535020828,
+            "terminal_reward_mae": 0.8296485662460327,
+            "continuation_brier": 0.016621008282527328,
+            "terminal_brier": 0.056323027522303164,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.02712423913180828,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.3283635228872299
+          },
+          "double_time": {
+            "reconstruction": 0.01674315403215587,
+            "reward": 0.010176638723351061,
+            "continuation": 0.06604623980820179,
+            "dynamics_kl": 1.4455487877130508,
+            "representation_kl": 1.4455487877130508,
+            "ensemble": 0.19994431547820568,
+            "loss": 1.1602395921945572,
+            "posterior_image_mse": 0.01674315403215587,
+            "reward_mae": 0.04667884297668934,
+            "terminal_reward_mae": 0.4565367868234371,
+            "continuation_brier": 0.015073308139108121,
+            "terminal_brier": 0.023257488210972576,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.02587045240215957,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.25753965973854065
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.018855534959584475,
+            "reward": 0.02152593230130151,
+            "continuation": 0.18211271055042744,
+            "dynamics_kl": 1.4711288064718246,
+            "representation_kl": 1.4711288064718246,
+            "ensemble": 0.21677282266318798,
+            "loss": 1.3219442963600159,
+            "posterior_image_mse": 0.018855534959584475,
+            "reward_mae": 0.07164903962984681,
+            "terminal_reward_mae": 0.8880070064749036,
+            "continuation_brier": 0.019025495828827843,
+            "terminal_brier": 0.09699741084062095,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.02704197051934898,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.2977580074220896
+          },
+          "double_time": {
+            "reconstruction": 0.017101560020819306,
+            "reward": 0.008650718533317558,
+            "continuation": 0.06512470555026084,
+            "dynamics_kl": 1.3925437480211258,
+            "representation_kl": 1.3925437480211258,
+            "ensemble": 0.21024056896567345,
+            "loss": 1.1366438195109367,
+            "posterior_image_mse": 0.017101560020819306,
+            "reward_mae": 0.04254048503935337,
+            "terminal_reward_mae": 0.6308082799116771,
+            "continuation_brier": 0.007642205029696925,
+            "terminal_brier": 0.05470141017188628,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.026187781244516373,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.32105379179120064
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    }
+  ],
+  "frozen_actor_drift": {
+    "scope": "Deterministic mean-posterior diagnostic on two reserved batches; not real behavior or a policy-quality score",
+    "actor_weights_unchanged_verified": true,
+    "rows": [
+      {
+        "arm": "continued_baseline",
+        "seed": 11,
+        "nonterminal_states": 387,
+        "source_to_candidate_kl_nats": 0.024388406425714493,
+        "greedy_action_agreement": 0.9586563110351562,
+        "candidate_entropy_nats": 1.6351656913757324
+      },
+      {
+        "arm": "terminal_sampling",
+        "seed": 11,
+        "nonterminal_states": 387,
+        "source_to_candidate_kl_nats": 0.01683787815272808,
+        "greedy_action_agreement": 0.9560723304748535,
+        "candidate_entropy_nats": 1.6492401361465454
+      },
+      {
+        "arm": "terminal_reward_weight",
+        "seed": 11,
+        "nonterminal_states": 387,
+        "source_to_candidate_kl_nats": 0.023836012929677963,
+        "greedy_action_agreement": 0.9586563110351562,
+        "candidate_entropy_nats": 1.6357421875
+      },
+      {
+        "arm": "pixel_likelihood_scale",
+        "seed": 11,
+        "nonterminal_states": 387,
+        "source_to_candidate_kl_nats": 0.06553073972463608,
+        "greedy_action_agreement": 0.842377245426178,
+        "candidate_entropy_nats": 1.7944550514221191
+      },
+      {
+        "arm": "one_step_prior",
+        "seed": 11,
+        "nonterminal_states": 387,
+        "source_to_candidate_kl_nats": 0.02749899961054325,
+        "greedy_action_agreement": 0.9405684471130371,
+        "candidate_entropy_nats": 1.6449476480484009
+      },
+      {
+        "arm": "eight_step_rollout",
+        "seed": 11,
+        "nonterminal_states": 387,
+        "source_to_candidate_kl_nats": 0.04425381124019623,
+        "greedy_action_agreement": 0.9328165650367737,
+        "candidate_entropy_nats": 1.5599786043167114
+      },
+      {
+        "arm": "full_smg1",
+        "seed": 11,
+        "nonterminal_states": 387,
+        "source_to_candidate_kl_nats": 0.07008451223373413,
+        "greedy_action_agreement": 0.8268733620643616,
+        "candidate_entropy_nats": 1.787010908126831
+      },
+      {
+        "arm": "full_without_visual_scale",
+        "seed": 11,
+        "nonterminal_states": 387,
+        "source_to_candidate_kl_nats": 0.04515712335705757,
+        "greedy_action_agreement": 0.8708010315895081,
+        "candidate_entropy_nats": 1.4933656454086304
+      },
+      {
+        "arm": "moderate_visual_scale",
+        "seed": 11,
+        "nonterminal_states": 387,
+        "source_to_candidate_kl_nats": 0.01896427385509014,
+        "greedy_action_agreement": 0.9354005455970764,
+        "candidate_entropy_nats": 1.6598314046859741
+      },
+      {
+        "arm": "four_step_rollout",
+        "seed": 11,
+        "nonterminal_states": 387,
+        "source_to_candidate_kl_nats": 0.041776739060878754,
+        "greedy_action_agreement": 0.9018087983131409,
+        "candidate_entropy_nats": 1.4863262176513672
+      },
+      {
+        "arm": "continued_baseline",
+        "seed": 23,
+        "nonterminal_states": 387,
+        "source_to_candidate_kl_nats": 0.015508954413235188,
+        "greedy_action_agreement": 0.9431524276733398,
+        "candidate_entropy_nats": 1.5282918214797974
+      },
+      {
+        "arm": "terminal_sampling",
+        "seed": 23,
+        "nonterminal_states": 387,
+        "source_to_candidate_kl_nats": 0.018333686515688896,
+        "greedy_action_agreement": 0.9379844665527344,
+        "candidate_entropy_nats": 1.581215500831604
+      },
+      {
+        "arm": "terminal_reward_weight",
+        "seed": 23,
+        "nonterminal_states": 387,
+        "source_to_candidate_kl_nats": 0.012628983706235886,
+        "greedy_action_agreement": 0.9483203887939453,
+        "candidate_entropy_nats": 1.5144814252853394
+      },
+      {
+        "arm": "pixel_likelihood_scale",
+        "seed": 23,
+        "nonterminal_states": 387,
+        "source_to_candidate_kl_nats": 0.06720775365829468,
+        "greedy_action_agreement": 0.8656330704689026,
+        "candidate_entropy_nats": 1.7687383890151978
+      },
+      {
+        "arm": "one_step_prior",
+        "seed": 23,
+        "nonterminal_states": 387,
+        "source_to_candidate_kl_nats": 0.020076129585504532,
+        "greedy_action_agreement": 0.961240291595459,
+        "candidate_entropy_nats": 1.551222324371338
+      },
+      {
+        "arm": "eight_step_rollout",
+        "seed": 23,
+        "nonterminal_states": 387,
+        "source_to_candidate_kl_nats": 0.06764066219329834,
+        "greedy_action_agreement": 0.8604651093482971,
+        "candidate_entropy_nats": 1.8381627798080444
+      },
+      {
+        "arm": "full_smg1",
+        "seed": 23,
+        "nonterminal_states": 387,
+        "source_to_candidate_kl_nats": 0.08210413157939911,
+        "greedy_action_agreement": 0.8372092843055725,
+        "candidate_entropy_nats": 1.7627555131912231
+      },
+      {
+        "arm": "full_without_visual_scale",
+        "seed": 23,
+        "nonterminal_states": 387,
+        "source_to_candidate_kl_nats": 0.04868922010064125,
+        "greedy_action_agreement": 0.8966408371925354,
+        "candidate_entropy_nats": 1.7046682834625244
+      },
+      {
+        "arm": "moderate_visual_scale",
+        "seed": 23,
+        "nonterminal_states": 387,
+        "source_to_candidate_kl_nats": 0.012089332565665245,
+        "greedy_action_agreement": 0.9560723304748535,
+        "candidate_entropy_nats": 1.6503819227218628
+      },
+      {
+        "arm": "four_step_rollout",
+        "seed": 23,
+        "nonterminal_states": 387,
+        "source_to_candidate_kl_nats": 0.05668747425079346,
+        "greedy_action_agreement": 0.7571059465408325,
+        "candidate_entropy_nats": 1.4339754581451416
+      },
+      {
+        "arm": "continued_baseline",
+        "seed": 47,
+        "nonterminal_states": 387,
+        "source_to_candidate_kl_nats": 0.02994685247540474,
+        "greedy_action_agreement": 0.950904369354248,
+        "candidate_entropy_nats": 1.5961449146270752
+      },
+      {
+        "arm": "terminal_sampling",
+        "seed": 47,
+        "nonterminal_states": 387,
+        "source_to_candidate_kl_nats": 0.01087102945894003,
+        "greedy_action_agreement": 0.961240291595459,
+        "candidate_entropy_nats": 1.589699625968933
+      },
+      {
+        "arm": "terminal_reward_weight",
+        "seed": 47,
+        "nonterminal_states": 387,
+        "source_to_candidate_kl_nats": 0.03861185535788536,
+        "greedy_action_agreement": 0.9431524276733398,
+        "candidate_entropy_nats": 1.6013779640197754
+      },
+      {
+        "arm": "pixel_likelihood_scale",
+        "seed": 47,
+        "nonterminal_states": 387,
+        "source_to_candidate_kl_nats": 0.06429293006658554,
+        "greedy_action_agreement": 0.8682170510292053,
+        "candidate_entropy_nats": 1.7476502656936646
+      },
+      {
+        "arm": "one_step_prior",
+        "seed": 47,
+        "nonterminal_states": 387,
+        "source_to_candidate_kl_nats": 0.014926780015230179,
+        "greedy_action_agreement": 0.9689922332763672,
+        "candidate_entropy_nats": 1.590525507926941
+      },
+      {
+        "arm": "eight_step_rollout",
+        "seed": 47,
+        "nonterminal_states": 387,
+        "source_to_candidate_kl_nats": 0.024769948795437813,
+        "greedy_action_agreement": 0.91989666223526,
+        "candidate_entropy_nats": 1.5780571699142456
+      },
+      {
+        "arm": "full_smg1",
+        "seed": 47,
+        "nonterminal_states": 387,
+        "source_to_candidate_kl_nats": 0.0896737352013588,
+        "greedy_action_agreement": 0.8372092843055725,
+        "candidate_entropy_nats": 1.7473320960998535
+      },
+      {
+        "arm": "full_without_visual_scale",
+        "seed": 47,
+        "nonterminal_states": 387,
+        "source_to_candidate_kl_nats": 0.037985045462846756,
+        "greedy_action_agreement": 0.9250646233558655,
+        "candidate_entropy_nats": 1.7273168563842773
+      },
+      {
+        "arm": "moderate_visual_scale",
+        "seed": 47,
+        "nonterminal_states": 387,
+        "source_to_candidate_kl_nats": 0.02747179940342903,
+        "greedy_action_agreement": 0.9250646233558655,
+        "candidate_entropy_nats": 1.6955392360687256
+      },
+      {
+        "arm": "four_step_rollout",
+        "seed": 47,
+        "nonterminal_states": 387,
+        "source_to_candidate_kl_nats": 0.022367455065250397,
+        "greedy_action_agreement": 0.9250646233558655,
+        "candidate_entropy_nats": 1.5837905406951904
+      }
+    ],
+    "summary": {
+      "continued_baseline": {
+        "source_to_candidate_kl_nats": 0.02328140443811814,
+        "greedy_action_agreement": 0.950904369354248,
+        "candidate_entropy_nats": 1.5865341424942017
+      },
+      "terminal_sampling": {
+        "source_to_candidate_kl_nats": 0.01534753137578567,
+        "greedy_action_agreement": 0.9517656962076823,
+        "candidate_entropy_nats": 1.6067184209823608
+      },
+      "terminal_reward_weight": {
+        "source_to_candidate_kl_nats": 0.025025617331266403,
+        "greedy_action_agreement": 0.9500430425008138,
+        "candidate_entropy_nats": 1.5838671922683716
+      },
+      "pixel_likelihood_scale": {
+        "source_to_candidate_kl_nats": 0.06567714114983876,
+        "greedy_action_agreement": 0.8587424556414286,
+        "candidate_entropy_nats": 1.770281235376994
+      },
+      "one_step_prior": {
+        "source_to_candidate_kl_nats": 0.020833969737092655,
+        "greedy_action_agreement": 0.9569336573282877,
+        "candidate_entropy_nats": 1.5955651601155598
+      },
+      "eight_step_rollout": {
+        "source_to_candidate_kl_nats": 0.04555480740964413,
+        "greedy_action_agreement": 0.9043927788734436,
+        "candidate_entropy_nats": 1.6587328513463337
+      },
+      "full_smg1": {
+        "source_to_candidate_kl_nats": 0.08062079300483067,
+        "greedy_action_agreement": 0.8337639768918356,
+        "candidate_entropy_nats": 1.7656995058059692
+      },
+      "full_without_visual_scale": {
+        "source_to_candidate_kl_nats": 0.043943796306848526,
+        "greedy_action_agreement": 0.8975021640459696,
+        "candidate_entropy_nats": 1.641783595085144
+      },
+      "moderate_visual_scale": {
+        "source_to_candidate_kl_nats": 0.019508468608061474,
+        "greedy_action_agreement": 0.9388458331425985,
+        "candidate_entropy_nats": 1.6685841878255208
+      },
+      "four_step_rollout": {
+        "source_to_candidate_kl_nats": 0.040277222792307533,
+        "greedy_action_agreement": 0.8613264560699463,
+        "candidate_entropy_nats": 1.5013640721638997
+      }
+    }
+  },
+  "fit_implementation_commit": "fd42e2f588f639130fed6e8c69c574efa42a017f",
+  "evaluation_module_sha256": "cf54acfec5797ba3136828c97660f4efa675ed12f28838243994363fb9bcf3c5"
+}

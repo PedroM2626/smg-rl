@@ -8,7 +8,15 @@ import torch
 from smg_rl.config import load_config
 from smg_rl.profiles import require_training_enabled
 from smg_rl.replay import ReplayRecorder, replay_signature
-from smg_rl.world_ablation import ARMS, EXPERIMENT, audit_partition, authorize, run_ablation
+from smg_rl.world_ablation import (
+    ARMS,
+    EXPERIMENT,
+    audit_partition,
+    authorize,
+    policy_drift,
+    policy_trace,
+    run_ablation,
+)
 from smg_rl.world_model import ImaginedAgent
 
 
@@ -85,3 +93,24 @@ def test_offline_paired_experiment_keeps_actors_and_real_counts(tmp_path, monkey
     assert result["summary"]["continued_baseline"]["scenarios"]["spinning"]["reward_mae"]["paired_percent_change_mean"] == 0
     assert not json.loads((folder / "world-ablation-authorization.json").read_text())["active"]
     assert (folder / "training-hold.json").exists()
+
+
+def test_policy_drift_excludes_burn_in_and_terminal_states():
+    config = load_config("config/world-model.yaml")
+    config["environment"]["image_size"] = 16
+    settings = dict(deterministic_size=8, stochastic_size=2, embedding_size=4,
+                    hidden_size=8, channels=2, ensemble_size=2)
+    agent = ImaginedAgent(replay_signature(config), settings)
+    batch = {"images": np.zeros((1, 4, 16, 16), np.uint8),
+             "scenario": np.array([[1, 0]], np.float32), "actions": np.zeros((1, 3), np.int64),
+             "is_first": np.array([[True, False, False, False]]),
+             "mask": np.array([[0, 1, 1]], np.float32),
+             "terminated": np.array([[False, False, True]])}
+    original = policy_trace(agent, batch)
+    assert original.shape[0] == 1
+    equal = policy_drift(original, policy_trace(agent, batch))
+    assert equal["source_to_candidate_kl_nats"] == 0
+    assert equal["greedy_action_agreement"] == 1
+    with torch.no_grad():
+        agent.actor[-1].bias[0] += 10
+    assert policy_drift(original, policy_trace(agent, batch))["source_to_candidate_kl_nats"] > 0

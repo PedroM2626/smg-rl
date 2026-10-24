@@ -116,6 +116,40 @@ def summarize(rows, scenarios):
     return output
 
 
+@torch.no_grad()
+def policy_trace(agent, batch):
+    """Mean-posterior frozen-actor diagnostic; omit terminal/padded states."""
+    data = agent.tensors(batch)
+    images, scenario = data["images"], data["scenario"]
+    count, frames = images.shape[:2]
+    world = agent.world
+    embedding = world.encode(images.reshape(-1, 1, world.size, world.size)).reshape(count, frames, -1)
+    state, _, _ = world.observe(embedding[:, 0], torch.zeros(count, dtype=torch.long, device=agent.device),
+                                world.initial(count), scenario, data["is_first"][:, 0], sample=False)
+    values = []
+    for step in range(frames - 1):
+        state, _, _ = world.observe(embedding[:, step + 1], data["actions"][:, step], state,
+                                    scenario, data["is_first"][:, step + 1], sample=False)
+        logits = agent.actor(world.feature(state, scenario))
+        valid = data["mask"][:, step].bool() & ~data["terminated"][:, step]
+        values.append(logits.log_softmax(-1)[valid].cpu())
+    trace = torch.cat(values)
+    if not len(trace) or not torch.isfinite(trace).all():
+        raise ValueError("Policy drift needs finite nonterminal real posterior states.")
+    return trace
+
+
+def policy_drift(reference, candidate):
+    """Drift is an action-distribution change, not an improvement/degradation score."""
+    if reference.shape != candidate.shape:
+        raise ValueError("Policy traces must use identical real observations and masks.")
+    probability = reference.exp()
+    return {"nonterminal_states": len(reference),
+            "source_to_candidate_kl_nats": float((probability * (reference - candidate)).sum(-1).mean()),
+            "greedy_action_agreement": float((reference.argmax(-1) == candidate.argmax(-1)).float().mean()),
+            "candidate_entropy_nats": float(-(candidate.exp() * candidate).sum(-1).mean())}
+
+
 def run_ablation(config, checkpoint, updates=128, seeds=(11, 23, 47), validation_batches=8):
     checkpoint = Path(checkpoint).resolve()
     grant_path, grant = authorize(config, checkpoint, updates, seeds)

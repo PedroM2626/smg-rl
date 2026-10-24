@@ -1,5 +1,10 @@
 # Galaxy 2 offline world-model ablation
 
+**Completed October 24, 2026:** all 30 predeclared fits and reserved final audits
+finished. All 122 portable tests and Ruff passed. Original checkpoints and the
+global hold were verified unchanged; the narrow experiment grant is inactive.
+No candidate was deployed and no emulator or actor training was started.
+
 ## Question and scope
 
 On October 24, 2026 the owner authorized testing whether the Galaxy 1 objective
@@ -87,6 +92,16 @@ care; absolute errors remain available.
 
 ## Cost and interpretation
 
+An additional read-only diagnostic, declared before the final audit was inspected,
+measures frozen-actor action-distribution drift. It feeds the same real sequences
+through the source and candidate worlds with deterministic posterior means, then
+compares the unchanged actor's action probabilities using source-to-candidate KL
+and greedy-action agreement. It excludes burn-in, padding and true terminal
+states. Two final-partition batches are used, one ordinary and one terminal-biased.
+This is a proxy for representation compatibility, not a sampled acting rollout
+or a policy-quality score: a large drift can indicate the need for actor
+readaptation, but is not by itself positive or negative behavior.
+
 Fitting time includes replay sampling, tensor transfer, forward/backward passes
 and optimizer steps, with CUDA synchronization at the timing boundary. It
 excludes checkpoint I/O and development/final audits. Peak allocated CUDA
@@ -133,3 +148,81 @@ Portable tests verify the scoped grant cannot release the general hold,
 episode-level audit separation, unchanged real/actor counters, paired control
 deltas, finite metrics and grant deactivation. They do not count synthetic data
 or prediction improvements as real mission completions.
+
+## Measured screening results
+
+[Full dated evidence](assets/performance/smg2-world-model-ablation-20261024.json) retains raw per-seed metrics and all-scenario gate outcomes.
+
+| Arm | Spinning future MSE change | Double Time future MSE change | Spinning terminal MAE change | Double Time terminal MAE change | Gate passes / 3 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| `continued_baseline` | +0.0% | +0.0% | +0.0% | +0.0% | 0 |
+| `terminal_sampling` | -0.6% | -0.5% | +20.4% | +11.0% | 0 |
+| `terminal_reward_weight` | +0.3% | -0.1% | -37.0% | -35.4% | 2 |
+| `pixel_likelihood_scale` | -1.1% | -2.9% | +57.1% | +59.6% | 0 |
+| `one_step_prior` | -0.6% | -2.2% | +12.3% | +24.5% | 0 |
+| `eight_step_rollout` | +2.1% | +0.8% | +43.1% | +76.7% | 0 |
+| `full_smg1` | -6.9% | -11.6% | -3.8% | +1.0% | 0 |
+| `full_without_visual_scale` | +1.4% | -3.2% | -17.1% | -6.5% | 0 |
+| `moderate_visual_scale` | -4.3% | -1.8% | +3.8% | +4.2% | 0 |
+| `four_step_rollout` | -1.4% | +0.2% | +21.8% | +10.0% | 0 |
+
+Negative values mean lower error than the equal-update control. These are exploratory seed means, not evidence of statistical significance or real-game improvement.
+
+![Paired prediction changes](assets/performance/smg2-world-model-ablation-20261024.png)
+
+The original checkpoint and global hold were verified unchanged; the scoped grant was consumed. All candidates remain isolated. Other training jobs shared the hardware, so fitting times are retained as observations without attributing their differences solely to an objective change. A cancelled pilot was excluded before this consistent full rerun.
+
+
+## Frozen-actor representation compatibility
+
+This read-only diagnostic uses identical actor weights and deterministic posterior means on two fixed final-partition batches. It excludes true terminal/padded states. Larger KL and lower agreement mean a larger action-distribution change, not necessarily worse real control.
+
+| Arm | Source-to-candidate KL (nats) | Greedy action agreement |
+| --- | ---: | ---: |
+| `continued_baseline` | 0.02328 | 95.1% |
+| `terminal_sampling` | 0.01535 | 95.2% |
+| `terminal_reward_weight` | 0.02503 | 95.0% |
+| `pixel_likelihood_scale` | 0.06568 | 85.9% |
+| `one_step_prior` | 0.02083 | 95.7% |
+| `eight_step_rollout` | 0.04555 | 90.4% |
+| `full_smg1` | 0.08062 | 83.4% |
+| `full_without_visual_scale` | 0.04394 | 89.8% |
+| `moderate_visual_scale` | 0.01951 | 93.9% |
+| `four_step_rollout` | 0.04028 | 86.1% |
+
+## Interpretation of the observed effects
+
+- **Terminal reward weight 5 is the strongest actionable screening signal.**
+  Relative terminal reward MAE fell by 37.0% in Spinning and 35.4% in Double
+  Time. Every paired seed improved in both scenarios. Two of three candidates
+  passed the original combined gate, versus zero of three controls. Eight-step
+  image error stayed approximately unchanged. Frozen-actor greedy agreement was
+  95.0%, close to the continued control's 95.1%. This motivates a longer
+  controlled follow-up; it does not establish better real navigation.
+- **The full SMG1 package had the largest mean improvement in future images:**
+  6.9% and 11.6% lower eight-step MSE, respectively, with all paired seeds
+  improving both scenarios. Terminal reward effects were mixed across seeds,
+  and none passed every gate. Frozen-actor agreement fell to 83.4%, so improved
+  prediction should not be confused with compatibility with the trained actor.
+- **Large visual weighting alone produced a trade-off:** posterior image MSE
+  improved by 15.5% and 17.4%, while terminal reward MAE worsened by 57.1% and
+  59.6%. All paired seeds showed the terminal regression in both scenarios.
+  The full-package interaction differs from this isolated effect.
+- **Eight-step rollout supervision alone regressed in this short adaptation:**
+  terminal reward MAE rose by 43.1% and 76.7%, across all paired seeds, while
+  future image MSE showed no consistent benefit. This differs from the Galaxy 1
+  repair and cannot establish its eventual-convergence behavior.
+- **Additional hypotheses had no clear all-metric winner.** Moderate visual
+  scaling reduced mean future MSE by 4.3% and 1.8%, but terminal effects varied.
+  Four-step supervision and one-step prior supervision had small/inconsistent
+  image effects with higher mean terminal error. Sampling terminal tails alone
+  worsened terminal MAE by 20.4% and 11.0%; increasing exposure is different from
+  changing the loss coefficient.
+
+These directions describe this checkpoint, fixed data and 128-update warm-start
+screen. Three seeds and a reused historical replay are not evidence of
+statistical significance, convergence, real mission improvement or reduced time
+to completion. The prediction/cost/drift metrics remain separate; no arbitrary
+weighted score was used to declare a universal winner. Further offline
+hypotheses include longer matched fitting budgets and a terminal-weight sweep,
+but no additional fitting or online experiment is scheduled by this report.
