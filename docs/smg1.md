@@ -1,5 +1,11 @@
 # Super Mario Galaxy: Sweet Sweet Galaxy
 
+**Status note (2026-10-23):** the Galaxy 1 PPO learner is stopped and its final
+pair is preserved. The Galaxy 1 world-model run recorded in
+[the live world-model record](world-model-live.md) was also stopped at the
+owner's request on October 23, 2026; its final checkpoint is preserved and all
+training remains stopped until the owner explicitly authorizes resuming.
+
 ## Scope and status
 
 Super Mario Galaxy (USA, `RMGE01`) has independently validated telemetry and a

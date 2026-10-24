@@ -142,4 +142,5 @@ must still be honored. No training example in these docs overrides an active
 hold. `status` and `stop` also accept world-model run directories;
 when omitted, the run is selected by modification time across supported types.
 The existing `train-supervised` command remains a PPO-pair supervisor. It is not
-a supervisor for world-model `.pt` checkpoints. See [the full workflow](world-model.md).
+a supervisor for world-model `.pt` checkpoints. See [the full workflow](world-model.md)
+and [the dated live record](world-model-live.md).

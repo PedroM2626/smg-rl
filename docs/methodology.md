@@ -1,5 +1,13 @@
 # Methodology and mathematical specification
 
+**Status note (2026-10-23):** the supervised PPO jobs described by these
+equations are stopped; their final pairs are preserved. The separate visual
+world-model experiment specified in [the world-model implementation](world-model.md)
+and recorded in [the live world-model record](world-model-live.md) was also
+stopped at the owner's request on October 23, 2026; its final checkpoints are
+preserved and all training remains stopped until the owner explicitly authorizes
+resuming.
+
 ## Abstract
 
 This project implements visual, recurrent on-policy reinforcement learning for

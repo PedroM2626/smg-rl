@@ -4,7 +4,9 @@ Documentation describes the checked implementation, measured engineering
 validation, and an experimental protocol. A method being specified here does
 not mean its ablations or full-course learning results have been obtained.
 Use run artifacts for live status; historical observations below are dated
-evidence rather than continuously updated dashboards.
+evidence rather than continuously updated dashboards. The dated world-model
+snapshots and final stop are in the [live experiment record](world-model-live.md);
+each run's `status.json` remains the live source.
 
 ## Start and operate
 
@@ -22,8 +24,9 @@ evidence rather than continuously updated dashboards.
 | Health penalties, checkpoint recovery, and measured damage evidence | [Damage and recovery](damage-and-recovery.md) |
 | Practical reward tuning, evaluation, and troubleshooting | [Training guide](training.md) |
 | Visual replay, recurrent world model, prediction gates and imagined actor/critic experiment | [World-model implementation](world-model.md) |
-| Authorized online world-model experiment, initial counters and recovery procedure | [Live world-model experiment](world-model-live.md) |
+| Authorized online world-model experiment, dated snapshots, final stop, gates and recovery procedure | [Live world-model experiment](world-model-live.md) |
 | Galaxy 1 terminal sampling, visual-loss balance and prior prediction repair | [Galaxy 1 imagination repair](world-model-smg1-repair.md) |
+| Measured throughput and 1M-decision wall-clock projections | [Main README timing section](../README.md#decision-budgets-and-measured-wall-clock) |
 
 ## Understand and reproduce
 
@@ -53,5 +56,6 @@ evidence rather than continuously updated dashboards.
 
 When changing behavior, update the relevant specification, command reference,
 configuration example, and validation record together. Keep live counters in
-reports rather than hardcoding them into the README. Preserve negative evidence
-and timing revisions when reporting performance.
+reports and each run's `status.json`; any counters summarized in the README must
+be explicitly dated snapshots. Preserve negative evidence and timing revisions
+when reporting performance.

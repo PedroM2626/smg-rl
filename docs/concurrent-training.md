@@ -1,5 +1,13 @@
 # Concurrent Galaxy 1 and Galaxy 2 training
 
+**Status note (2026-10-23):** the supervised PPO jobs described here are stopped;
+their final pairs are preserved. The separate world-model experiment recorded in
+[the live world-model record](world-model-live.md) was also stopped at the
+owner's request on October 23, 2026; its final checkpoints are preserved and
+all training remains stopped until the owner explicitly authorizes resuming.
+The commands below are retained for reproducibility and intentional replacement
+runs.
+
 **Native backend update (2026-10-22):** the local learners now use
 `config/native.yaml` and `config/smg1-native.yaml`, with shared-memory RGBA
 capture and bounded frame stepping. The stock hotkey/PNG backend remains a

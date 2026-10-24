@@ -13,19 +13,42 @@ supervised PPO jobs remain stopped; their final policy/curiosity pairs remain lo
 | Galaxy 1, Sweet Sweet Galaxy | 220891 | `runs/smg1/parallel-20261022-191244-766492/model-final.zip` and `.intrinsic.pt` |
 
 The local `.local/training-hold.json`, when present, blocks all training commands
-before environment creation. It is absent for this authorized experiment;
-`AGENTS.md` records the authorization. A future owner hold must still be honored.
+before environment creation. It was absent while the authorized October 22-23
+experiment ran; it is present again for the current owner hold, and `AGENTS.md`
+records that all training remains stopped until the owner explicitly authorizes
+resuming.
 
-Two online jobs started at approximately 20:01 America/Sao_Paulo with independent
-budgets of 1,000,000 new real decisions: four Galaxy 2 workers covering both
-variations, and one Galaxy 1 worker. Visual replay is being collected from the
-initial savestates. Model fitting starts after 4096 replay transitions; imagined
-actor updates require every held-out gate to pass. The
-[live experiment record](world-model-live.md) distinguishes those stages and
-records initial measured evidence. **No learning-speed advantage or learned
-mission completion has been established.** Earlier PPO runs retained trajectories
-and metrics, but not pixel sequences. Coordinate CSVs cannot reconstruct these
-observations, and PPO weights cannot resume this different architecture.
+Two online jobs started at approximately 20:01 America/Sao_Paulo on October 22
+with independent budgets of 1,000,000 new real decisions: four Galaxy 2 workers
+covering both variations, and one Galaxy 1 worker. Galaxy 1 was stopped for the
+objective repair described below and resumed on October 23 from its repaired
+checkpoint. Model fitting starts after 4096 replay transitions; imagined actor
+updates require every held-out scenario gate to pass.
+
+At the dated snapshot of **October 23, 2026, 17:48 UTC**, Galaxy 2 had 732,288
+real decisions, 22,748 model updates, 1,182 imagined actor updates and 1,192,992
+imagined transitions. Galaxy 1 had 229,349 real decisions, 30,508 model updates,
+421 imagined actor updates and 431,104 imagined transitions. The best verified
+geometric progress was 19.53% (`spinning`), 13.76% (`double_time`) and 5.06%
+(Galaxy 1); the Galaxy 1 world model remains below the preserved PPO record of
+7.15%. Both gates were blocked only by terminal-reward prediction at that
+snapshot; earlier and later validation cycles can differ. No full-start mission
+has been completed.
+
+At the owner's request, both jobs were stopped on October 23, 2026 before the
+PC was shut down, and the local training hold is active again. Their final
+checkpoints are retained at 870,272 Galaxy 2 and 278,773 Galaxy 1 real decisions,
+with 27,060/36,688 model updates, 1,291/1,017 imagined actor updates and
+1,302,360/1,041,408 imagined transitions respectively. At the final stop the
+Galaxy 1 gate passed, while both Galaxy 2 scenarios remained blocked by
+terminal-reward prediction only.
+
+The [live experiment record](world-model-live.md) keeps the dated counters,
+per-scenario metrics and best-evidence paths; `status.json` is the live source.
+**No learning-speed advantage or learned mission completion has been
+established.** Earlier PPO runs retained trajectories and metrics, but not pixel
+sequences. Coordinate CSVs cannot reconstruct these observations, and PPO
+weights cannot resume this different architecture.
 
 ## Why a world model may help
 
@@ -259,8 +282,9 @@ Read-only replay inspection:
 ```
 
 Commands for an authorized experiment follow. Do not launch duplicate jobs while
-the existing jobs are running. The short budgets below are examples, whereas the
-current experiment uses 1,000,000 new real decisions per game:
+a learner for the same game is still running. The short budgets below are
+examples; the October 22-23 experiment used 1,000,000 new real decisions per
+game:
 
 ```powershell
 .\.venv\Scripts\python.exe -m smg_rl.cli --config config/world-model.yaml train-world-model --steps 4096
@@ -308,8 +332,10 @@ hold is checked before either online collection or offline fitting can start.
 
 ## Validation and experiment interpretation
 
-The implementation was validated with 115 portable tests, Ruff and `pip check`.
-New tests exercise transition alignment, terminal images before reset, padding,
+The original implementation was validated with 115 portable tests, Ruff and
+`pip check`; the Galaxy 1 repair added tests, and the current suite collects 119
+tests. New
+tests exercise transition alignment, terminal images before reset, padding,
 episode-level partitioning, retention, rejected imaginary data, finite model
 gradients, model-frozen actor updates, real/imagined counters, model checkpoint
 round-trips, mocked online collection/resume, policy input exclusion, quality-gate
@@ -318,12 +344,14 @@ synthetic forward check. Small synthetic optimizer steps verify software only;
 they are not game-model training, a learned dynamics benchmark or a mission result.
 See the [validation record](assets/performance/world-model-validation.json).
 
-The authorized first experiment is staged: collect
+The authorized first experiment is being run in stages: collect
 a bounded visual dataset from full-start savestates; inspect coverage and disk
 cost; fit and validate predictions; inspect multi-step errors near landings and
-deaths; then enable gated imagination and evaluate its real behavior. Compare
-against the preserved PPO baseline under matched hardware load, real interaction
-budgets and total wall-clock budgets, separately for all three missions. Include
-multiple seeds and an ensemble-bonus ablation. Report time to the same verified
-progress/success criterion, real decisions, GPU time, fitting time and imagined
-transitions separately. No 10x/100x acceleration estimate is justified yet.
+deaths; then enable gated imagination and evaluate its real behavior. The dated
+snapshot above shows collection, fitting and gated imagination active; it does
+not show a controlled comparison. Compare against the preserved PPO baseline
+under matched hardware load, real interaction budgets and total wall-clock
+budgets, separately for all three missions. Include multiple seeds and an
+ensemble-bonus ablation. Report time to the same verified progress/success
+criterion, real decisions, GPU time, fitting time and imagined transitions
+separately. No 10x/100x acceleration estimate is justified yet.

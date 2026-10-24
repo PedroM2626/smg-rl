@@ -10,7 +10,10 @@
    startup, screenshot synchronization, learning, failures and checkpoint I/O?
 
 These are proposed experiments. The short engineering tests reported below do
-not answer the learning questions.
+not answer the learning questions. The separately authorized world-model
+experiment is tracked in the [live world-model record](world-model-live.md); its
+dated progress and gates are not a controlled multi-seed comparison with the PPO
+conditions below.
 
 ## Task definition and leakage prevention
 

@@ -259,12 +259,11 @@ not mean a hosted GitHub Actions run has executed.
 ## Repository and artifact policy
 
 The canonical remote is [PedroM2626/smg-rl](https://github.com/PedroM2626/smg-rl).
-It is private at the owner's request. Source, documentation, small measured
-fixtures, tests and calibration are versioned. `data/`, `.local/`, `runs/`,
-checkpoints, copied profiles and virtual environments are ignored, except for
-the explanatory `data/README.md`. Check staged files before every push. Access
-to a private repository requires the owner's GitHub authorization; a 404 for an
-unauthenticated visitor does not imply the repository is absent.
+Source, documentation, small measured fixtures, tests and calibration are
+versioned. `data/`, `.local/`, `runs/`, checkpoints, copied profiles and virtual
+environments are ignored, except for the explanatory `data/README.md`. Check
+staged files before every push. Access requires the owner's GitHub authorization;
+a 404 for an unauthenticated visitor does not imply the repository is absent.
 
 Supervised-run metadata and logs live under `supervised-*`; reports expose their
 state separately from learner attempts. The report schedule configured for the
@@ -297,7 +296,17 @@ its signature and model manifests; earlier coordinate CSVs cannot reproduce
 missing frames. Whole episodes remain in one training/validation split. A checkpoint
 saves Torch/CUDA and replay-sampler RNG states, but not exact game/acting hidden
 state. Synthetic implementation validation predates the owner's explicit resume
-authorization. The current online experiment collects new visual replay and fits
-the model with separate counters and held-out policy gates; see the
-[live experiment record](world-model-live.md). Preserve dated synthetic evidence
-as synthetic evidence rather than relabeling it as gameplay validation.
+authorization. The authorized online experiment collected new visual replay and
+fitted the model with separate counters and held-out policy gates; see the
+[live experiment record](world-model-live.md). It was stopped at the owner's
+request on October 23, 2026, and all training remains stopped until the owner
+explicitly authorizes resuming. At the dated snapshot of
+**October 23, 2026, 17:48 UTC**, Galaxy 2 had 732288 real decisions, 1182
+imagined actor updates and 1192992 imagined transitions; Galaxy 1 had 229349
+real decisions, 421 imagined actor updates and 431104 imagined transitions. The
+best verified geometric progress was 19.5304% (`spinning`), 13.7609%
+(`double_time`) and 5.0624% (Galaxy 1); no full-start mission has been
+completed. The Galaxy 1 learner resumed from the repaired checkpoint
+`runs/smg1/world-model-repair-rollout-20261023/world-repaired.pt`. Preserve
+dated synthetic evidence as synthetic evidence rather than relabeling it as
+gameplay validation.

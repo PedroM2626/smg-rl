@@ -77,13 +77,26 @@ new real decisions. Comparing the original diagnostic with the final one:
 | Eight-step open-loop image MSE | 0.04485 | 0.03838 | 0.04000 |
 | Terminal reward MAE | 0.63083 | 0.43959 | 0.50000 |
 
-At approximately 10:42 America/Sao_Paulo, online run
-`runs/smg1/world-model-20261023-104046-961482` had 174373 real decisions, 23636
-model updates, **2 imagined actor updates and 2048 imagined transitions**.
-The learner process identity, checksum manifests and absence of a run error
-were verified. Online updates use newly sampled held-out batches and remain
+At approximately 10:42 America/Sao_Paulo, the first post-repair online reading
+of `runs/smg1/world-model-20261023-104046-961482` showed 174373 real decisions,
+23636 model updates, **2 imagined actor updates and 2048 imagined transitions**.
+The learner process identity, checksum manifests and absence of a run error were
+verified. Online updates use newly sampled held-out batches and remain
 conditional: a subsequent failing batch pauses further imagined updates without
-discarding the actor or stopping collection. Both games were left running.
+discarding the actor or stopping collection.
+
+At the later dated snapshot of **October 23, 2026, 17:48 UTC**, the same online
+run had 229349 real decisions, 30508 model updates, **421 imagined actor updates
+and 431104 imagined transitions**. Its last validation reported posterior image
+MSE 0.01580, open-loop MSE 0.03635, terminal reward MAE 0.55039 (limit 0.5) and
+terminal Brier 0.17255 (limit 0.2); only terminal reward blocked the gate in that
+cycle. The best verified geometric progress was 5.0624% from a completed
+full-start training episode, still below the preserved PPO record of 7.152%; no
+full-start mission has been completed. The learner PID was alive, no `error.txt`
+was present, and the latest periodic checkpoint SHA-256 matched its manifest.
+Gates are re-evaluated on fresh held-out batches, so the specific failing metric
+can change between cycles. Both games were still running at that snapshot and
+were stopped later that day at the owner's request.
 
 See the [dated evidence and trial curves](assets/performance/smg1-world-model-repair-20261023.json).
 The curve includes the unsuccessful intermediate coefficients rather than

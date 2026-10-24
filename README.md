@@ -1,16 +1,24 @@
 # SMG RL
 
 Visual recurrent reinforcement learning for **Super Mario Galaxy 1 and 2** in
-Dolphin on Windows. The canonical repository is
-[PedroM2626/smg-rl](https://github.com/PedroM2626/smg-rl), private at the owner's
-request. Original project code and documentation use the [MIT License](LICENSE).
-All repository text and generated labels are in English.
+Dolphin on Windows.
 
 **The owner authorized Dreamer-inspired collection and training on October 22,
-2026.** Separate Galaxy 2 and Galaxy 1 world-model jobs are running with held-out
-prediction gates before imagined policy updates. Final PPO pairs remain preserved
-at 824416 Galaxy 2 and 220891 Galaxy 1 decisions. See
-[the world-model implementation and current status](docs/world-model.md).
+2026.** At the dated snapshot of **October 23, 2026, 17:48 UTC**, both
+world-model jobs were running. Galaxy 2 had 732,288 real decisions, 22,748 model
+updates, 1,182 imagined actor updates and 1,192,992 imagined transitions;
+Galaxy 1 had 229,349 real decisions, 30,508 model updates, 421 imagined actor
+updates and 431,104 imagined transitions. The best verified geometric progress
+was 19.53% (`spinning`) and 13.76% (`double_time`) for Galaxy 2, and 5.06% for
+Galaxy 1; no full-start mission has been completed. At the owner's request,
+both jobs were stopped later that day before the PC was shut down; their final
+checkpoints are retained at 870,272 Galaxy 2 and 278,773 Galaxy 1 real
+decisions, and all training remains stopped until the owner explicitly
+authorizes resuming. The preserved PPO pairs remain at 824,416 Galaxy 2 and
+220,891 Galaxy 1 decisions. Live counters remain in each run's `status.json`;
+this paragraph is a dated snapshot. See
+[the world-model implementation](docs/world-model.md) and the
+[dated live record](docs/world-model-live.md).
 
 The baseline uses one scenario-conditioned recurrent PPO policy for the two Galaxy 2 missions.
 A separate policy targets Sweet Sweet Galaxy in Galaxy 1. Exploration combines
@@ -42,8 +50,10 @@ and quality-gated actor/critic updates in latent imagination. It is Dreamer-insp
 not a DreamerV3 reproduction. Live collection now records new image sequences;
 old trajectory CSVs lack the required images. Experimental profiles are
 `config/world-model.yaml` and `config/smg1-world-model.yaml`. Model optimizer updates
-start after 4096 replay transitions; policy updates additionally require the
-prediction gates to pass. No learning-speed advantage has been established.
+start after 4096 replay transitions; policy updates additionally require every
+held-out scenario gate to pass. A failing cycle pauses new imagined actor
+updates without stopping collection or discarding the model. No learning-speed
+advantage or learned full-course completion has been established.
 `inspect-replay` is read-only.
 The Galaxy 1 objective repair balances pixel likelihood and terminal sampling
 and directly supervises prior predictions; see the
@@ -353,6 +363,32 @@ the control-duration distribution. It preserves weights, not an identical
 experimental condition. More decisions per second do not prove better learning.
 Long runs, independent seeds, reward ablations, and full-start success evaluation
 remain necessary.
+
+### Decision budgets and measured wall-clock
+
+A decision is one environment step (12 emulated frame boundaries), not one
+rendered frame or one imagined transition. The measured cumulative rates at the
+October 23, 2026, 17:48 UTC snapshot imply the following wall-clock budgets for
+a fresh 1,000,000-decision run. These are projections for consuming the budget, not for
+learning or completing a mission:
+
+| Mode | Galaxy 2 | Galaxy 1 | Basis |
+| --- | ---: | ---: | --- |
+| World model (collection + fitting + validation) | about 25.6 h | about 75 h (range 63-86 h) | 10.83 and 3.71 decisions/s |
+| PPO, recent concurrent measurement | 17-18 h | 55-61 h | 15.4-16.4 and 4.5-5.1 decisions/s |
+| PPO, earlier native production snapshot | about 11 h | about 38 h | 25.0 and 7.3 decisions/s |
+
+The recent PPO row comes from the [v4 runtime snapshot](docs/optimization-v4.md);
+the earlier row comes from the [native production snapshot](docs/native-backend.md).
+
+The world-model rate includes fitting and held-out validation, so it is lower
+per real decision than the PPO collection rate. The tradeoff is favorable only
+if fewer real decisions are needed; that has not been established. The Galaxy 2
+world-model run started from zero, while the Galaxy 1 estimate is extrapolated
+from a resumed run and earlier measurements. GPU load, emulator speed, resets,
+recoveries and failures change the actual result. The `decisions_per_second`
+field in a stopped PPO status file can describe only the last resume interval,
+not the whole run.
 
 ## Development and license
 
