@@ -26,6 +26,7 @@ each run's `status.json` remains the live source.
 | Visual replay, recurrent world model, prediction gates and imagined actor/critic experiment | [World-model implementation](world-model.md) |
 | Authorized online world-model experiment, dated snapshots, final stop, gates and recovery procedure | [Live world-model experiment](world-model-live.md) |
 | Galaxy 1 terminal sampling, visual-loss balance and prior prediction repair | [Galaxy 1 imagination repair](world-model-smg1-repair.md) |
+| Isolated Galaxy 2 objective transfer tests, paired seeds and offline audit boundaries | [Galaxy 2 world-model ablation](world-model-ablation.md) |
 | Measured throughput and 1M-decision wall-clock projections | [Main README timing section](../README.md#decision-budgets-and-measured-wall-clock) |
 
 ## Understand and reproduce

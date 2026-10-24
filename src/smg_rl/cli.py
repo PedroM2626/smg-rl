@@ -60,6 +60,11 @@ def main():
         else:
             world.add_argument("--cycles", type=int, default=100)
     commands.add_parser("inspect-replay", help="Inspect visual replay without collecting or fitting.")
+    ablation = commands.add_parser("ablate-world-model", help="Authorized offline SMG2 objective screening; no emulator.")
+    ablation.add_argument("--checkpoint", required=True)
+    ablation.add_argument("--updates", type=int, default=128)
+    ablation.add_argument("--seeds", type=int, nargs="+", default=[11, 23, 47])
+    ablation.add_argument("--validation-batches", type=int, default=8)
     for command in ("calibrate", "train", "evaluate"):
         sub = commands.add_parser(command)
         sub.add_argument(
@@ -82,6 +87,11 @@ def main():
         print(plot_trajectory(args.trajectory, args.output))
         return
     config = load_config(args.config)
+    if args.command == "ablate-world-model":
+        from smg_rl.world_ablation import run_ablation
+
+        print(run_ablation(config, args.checkpoint, args.updates, args.seeds, args.validation_batches))
+        return
     if args.command == "inspect-replay":
         from smg_rl.replay import SequenceReplay, replay_signature
 

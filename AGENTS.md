@@ -6,6 +6,10 @@
 - The owner requested stopping all training on October 23, 2026 before shutting down
   the PC. Online collection, offline fitting and policy training must remain stopped
   until the owner explicitly authorizes resuming. The local training hold is active.
+- On October 24 the owner authorized bounded offline Galaxy 2 world-model ablations
+  using copies of the retained checkpoint and existing replay. Only that experiment
+  may fit models under its scoped local grant. Keep online collection and policy
+  training stopped; preserve the original checkpoint and unchanged quality gates.
 - Final world-model checkpoints are retained at 870272 Galaxy 2 and 278773 Galaxy 1
   real decisions. Preserve held-out validation gates and real/imagined accounting.
 - Existing PPO final pairs are retained at 824416 Galaxy 2 and 220891 Galaxy 1 decisions.

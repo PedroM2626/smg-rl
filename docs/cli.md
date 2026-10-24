@@ -128,6 +128,12 @@ do not extend the requested total training budget.
 
 ## Experimental visual world model and authorization
 
+`ablate-world-model --checkpoint FILE [--updates 128] [--seeds 11 23 47]
+[--validation-batches 8]` runs the narrowly authorized offline Galaxy 2 screening
+experiment. It requires its own scoped local authorization grant; it does not
+release the global hold or create an emulator. It never updates the actor or
+replaces the production checkpoint. See the [paired ablation protocol](world-model-ablation.md).
+
 `inspect-replay` reads compatible visual archive metadata/counts without starting
 Dolphin or fitting a model. `train-world-model [--steps N] [--resume world.pt]`
 collects real experience and performs gated imagined actor/critic updates;
