@@ -242,3 +242,49 @@ retain exact run paths, checksums, replay coverage and separate counters.
 The summary can be regenerated with
 `.venv\Scripts\python.exe scripts/summarize_motor8_bootstrap.py`; it excludes
 offline, evaluation and later runs whose real counter exceeds 4096.
+
+## First offline-fit review, October 25
+
+Both finite fits completed 128 cycles and 512 world-model updates with 4096
+real decisions unchanged. SMG1 performed zero actor updates because terminal
+prediction checks never supported imagination. SMG2 performed 108 actor updates
+and 103592 imagined training transitions on eligible cycles. Neither count
+establishes navigation improvement or real star collection.
+
+A read-only paired audit used eight frozen reused held-out batches and the
+predeclared validation seeds 11, 23 and 47. The bootstrap and fitted models see
+identical batches/random seeds; these are not independent training seeds or an
+unseen test set. The script verifies checkpoint hashes and unchanged counters.
+
+| Fitted model, mean over three validation draws | SMG1 | SMG2 Spinning | SMG2 Double Time |
+| --- | ---: | ---: | ---: |
+| Terminal reward MAE; limit 0.5 | 1.118 | 0.158 | 0.367 |
+| Terminal continuation Brier; limit 0.2 | 0.351 | 0.069 | 0.118 |
+| Sampled open-loop image MSE; limit 0.04 | 0.0383 | 0.0278 | 0.0244 |
+| Complete unchanged gates across validation seeds | 0/3 | 3/3 jointly | 3/3 jointly |
+
+For SMG1, terminal reward MAE improved from 2.001 to 1.118, terminal Brier from
+0.3847 to 0.3510, and open-loop image MSE from 0.0502 to 0.0383 relative to the
+same bootstrap model on the fixed audit. Ordinary reward MAE worsened from
+0.0531 to 0.0861, and critical terminal gates still fail. These mixed results
+justify only the single previously permitted extra 128-cycle offline block,
+with no new real collection. That extra allocation is now used; if calibration
+still fails afterward, stop and diagnose rather than granting further fits or
+relaxing thresholds. No SMG1 policy learning or route improvement is claimed.
+
+SMG2's final live four-batch draw failed Double Time terminal MAE. Its larger,
+predeclared fixed audit passes every original gate in both scenarios on all
+three seeds. Both observations are retained; this does not erase the failing
+draw or demonstrate out-of-distribution safety. The recorded review authorizes
+only the final 2000 real decisions across the two mission workers, reaching
+6096 aggregate. The resulting real trajectories must be inspected before any
+learning-benefit claim. No extra SMG2 fitting block or training beyond 6096 was
+granted here.
+
+Raw evidence:
+[SMG1 paired audit](assets/performance/motor8-smg1-fit-audit-20261025.json),
+[SMG2 paired audit](assets/performance/motor8-smg2-fit-audit-20261025.json),
+[completed-fit decisions](assets/performance/motor8-first-fit-review-20261025.json).
+The reusable command is `scripts/audit_motor8_fit.py --game smg1 --baseline FILE
+--candidate FILE --output NEW_JSON` under the project Python; choose `smg2` for
+the corresponding profile. It runs no emulator, optimizer or new collection.

@@ -1,0 +1,279 @@
+{
+  "scope": "Paired read-only comparison on reused held-out episodes; no new real or imagined training, optimizer or counter updates. Seeds are validation draws, not independent training replications.",
+  "game": "smg1",
+  "seeds": [
+    11,
+    23,
+    47
+  ],
+  "audit_episodes": [
+    "06d570e87bb94083a7e025923d6e1579",
+    "11bf95b134c043c1b6263d16f5a3ee35",
+    "707ed62082454cb793b1d94be642632b",
+    "79369f711b0d4d0ba630e4395b528f65",
+    "98494e866f0545a8a1ce682270c6d902",
+    "9a2b093116cb4a688031c41f7fb6e016"
+  ],
+  "replay": {
+    "chunks": 52,
+    "transitions": 4096,
+    "train_episodes": 39,
+    "validation_episodes": 13,
+    "scenarios": {
+      "sweet_sweet": 4096
+    },
+    "train_scenarios": {
+      "sweet_sweet": 2989
+    },
+    "validation_scenarios": {
+      "sweet_sweet": 1107
+    },
+    "rejected": []
+  },
+  "rows": [
+    {
+      "name": "bootstrap",
+      "checkpoint": "runs/m8-smg1/world-model-20261025-132157-406146/world-final.pt",
+      "sha256": "abc327d6af0bc54d2aa023878d915d3dea53d3255bb36458e629738d9c13194b",
+      "counters": {
+        "real_decisions": 4096,
+        "model_updates": 0,
+        "actor_updates": 0,
+        "imagined_transitions": 0
+      },
+      "audits": [
+        {
+          "seed": 11,
+          "metrics": {
+            "sweet_sweet": {
+              "reconstruction": 0.014946584007702768,
+              "reward": 0.16487760189920664,
+              "continuation": 0.3110676466021687,
+              "dynamics_kl": 54.19275760650635,
+              "representation_kl": 54.19275760650635,
+              "ensemble": 0.08402084466069937,
+              "loss": 85.80717086791992,
+              "posterior_image_mse": 0.014946584007702768,
+              "reward_mae": 0.05305133364163339,
+              "terminal_reward_mae": 2.000999927520752,
+              "continuation_brier": 0.03226236876798794,
+              "terminal_brier": 0.39376134652463535,
+              "terminal_examples": 42,
+              "validation_transitions": 1776,
+              "open_loop_image_mse": 0.05129935313016176,
+              "persistence_image_mse": 0.07287104753777385,
+              "open_loop_reward_mae": 0.1799947051331401
+            }
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: open_loop_image_mse exceeds 0.04",
+              "sweet_sweet: terminal_reward_mae exceeds 0.5",
+              "sweet_sweet: terminal_brier exceeds 0.2"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "seed": 23,
+          "metrics": {
+            "sweet_sweet": {
+              "reconstruction": 0.014990832540206611,
+              "reward": 0.16443656757473946,
+              "continuation": 0.3051562129985541,
+              "dynamics_kl": 53.76100206375122,
+              "representation_kl": 53.76100206375122,
+              "ensemble": 0.08383024949580431,
+              "loss": 85.69768238067627,
+              "posterior_image_mse": 0.014990832540206611,
+              "reward_mae": 0.05305133364163339,
+              "terminal_reward_mae": 2.000999927520752,
+              "continuation_brier": 0.032821171858813614,
+              "terminal_brier": 0.3881399475713005,
+              "terminal_examples": 42,
+              "validation_transitions": 1776,
+              "open_loop_image_mse": 0.049244130961596966,
+              "persistence_image_mse": 0.07287104753777385,
+              "open_loop_reward_mae": 0.1799947051331401
+            }
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: open_loop_image_mse exceeds 0.04",
+              "sweet_sweet: terminal_reward_mae exceeds 0.5",
+              "sweet_sweet: terminal_brier exceeds 0.2"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "seed": 47,
+          "metrics": {
+            "sweet_sweet": {
+              "reconstruction": 0.01500052073970437,
+              "reward": 0.16313881194218993,
+              "continuation": 0.28340767708141357,
+              "dynamics_kl": 53.85792350769043,
+              "representation_kl": 53.85792350769043,
+              "ensemble": 0.08345221215859056,
+              "loss": 85.76658916473389,
+              "posterior_image_mse": 0.01500052073970437,
+              "reward_mae": 0.05305133364163339,
+              "terminal_reward_mae": 2.000999927520752,
+              "continuation_brier": 0.03152320487424731,
+              "terminal_brier": 0.37220997771648745,
+              "terminal_examples": 42,
+              "validation_transitions": 1776,
+              "open_loop_image_mse": 0.05004109349101782,
+              "persistence_image_mse": 0.07287104753777385,
+              "open_loop_reward_mae": 0.1799947051331401
+            }
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: open_loop_image_mse exceeds 0.04",
+              "sweet_sweet: terminal_reward_mae exceeds 0.5",
+              "sweet_sweet: terminal_brier exceeds 0.2"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        }
+      ],
+      "gate_passes": 0,
+      "mean_metrics": {
+        "sweet_sweet": {
+          "posterior_image_mse": 0.014979312429204583,
+          "open_loop_image_mse": 0.050194859194258847,
+          "reward_mae": 0.05305133364163339,
+          "terminal_reward_mae": 2.000999927520752,
+          "continuation_brier": 0.03220224850034962,
+          "terminal_brier": 0.3847037572708077
+        }
+      }
+    },
+    {
+      "name": "fitted",
+      "checkpoint": "runs/m8-smg1/world-model-offline-20261025-132558-093766/world-final.pt",
+      "sha256": "8cc4163001b2a202e48efa02d9f4bae9ab6af60fad63ee2aa5e713eeccb888e3",
+      "counters": {
+        "real_decisions": 4096,
+        "model_updates": 512,
+        "actor_updates": 0,
+        "imagined_transitions": 0
+      },
+      "audits": [
+        {
+          "seed": 11,
+          "metrics": {
+            "sweet_sweet": {
+              "reconstruction": 0.014218631316907704,
+              "reward": 0.06359268806409091,
+              "continuation": 0.17876042309217155,
+              "dynamics_kl": 38.81161069869995,
+              "representation_kl": 38.81161069869995,
+              "ensemble": 0.07173074362799525,
+              "loss": 73.76438045501709,
+              "posterior_image_mse": 0.014218631316907704,
+              "reward_mae": 0.08628773177042603,
+              "terminal_reward_mae": 1.1336575405938285,
+              "continuation_brier": 0.017015653880662285,
+              "terminal_brier": 0.3696398033717719,
+              "terminal_examples": 42,
+              "validation_transitions": 1776,
+              "open_loop_image_mse": 0.0382002186961472,
+              "persistence_image_mse": 0.07287104753777385,
+              "open_loop_reward_mae": 0.24593661725521088
+            }
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: terminal_reward_mae exceeds 0.5",
+              "sweet_sweet: terminal_brier exceeds 0.2"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "seed": 23,
+          "metrics": {
+            "sweet_sweet": {
+              "reconstruction": 0.014249671716243029,
+              "reward": 0.06069781177211553,
+              "continuation": 0.17080446402542293,
+              "dynamics_kl": 38.75891828536987,
+              "representation_kl": 38.75891828536987,
+              "ensemble": 0.07223189948126674,
+              "loss": 73.83192729949951,
+              "posterior_image_mse": 0.014249671716243029,
+              "reward_mae": 0.08644634718075395,
+              "terminal_reward_mae": 1.1114612164951505,
+              "continuation_brier": 0.01745311846025288,
+              "terminal_brier": 0.3417884955840735,
+              "terminal_examples": 42,
+              "validation_transitions": 1776,
+              "open_loop_image_mse": 0.03837492549791932,
+              "persistence_image_mse": 0.07287104753777385,
+              "open_loop_reward_mae": 0.24144716188311577
+            }
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: terminal_reward_mae exceeds 0.5",
+              "sweet_sweet: terminal_brier exceeds 0.2"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "seed": 47,
+          "metrics": {
+            "sweet_sweet": {
+              "reconstruction": 0.014254752546548843,
+              "reward": 0.06036583799868822,
+              "continuation": 0.16084240283817053,
+              "dynamics_kl": 38.57792377471924,
+              "representation_kl": 38.57792377471924,
+              "ensemble": 0.0710286945104599,
+              "loss": 73.72976112365723,
+              "posterior_image_mse": 0.014254752546548843,
+              "reward_mae": 0.08550335699692369,
+              "terminal_reward_mae": 1.1080684463183086,
+              "continuation_brier": 0.015852868440560997,
+              "terminal_brier": 0.3415921511157593,
+              "terminal_examples": 42,
+              "validation_transitions": 1776,
+              "open_loop_image_mse": 0.03842741507105529,
+              "persistence_image_mse": 0.07287104753777385,
+              "open_loop_reward_mae": 0.24905545450747013
+            }
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: terminal_reward_mae exceeds 0.5",
+              "sweet_sweet: terminal_brier exceeds 0.2"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        }
+      ],
+      "gate_passes": 0,
+      "mean_metrics": {
+        "sweet_sweet": {
+          "posterior_image_mse": 0.014241018526566526,
+          "open_loop_image_mse": 0.03833418642170727,
+          "reward_mae": 0.08607914531603456,
+          "terminal_reward_mae": 1.1177290678024292,
+          "continuation_brier": 0.016773880260492053,
+          "terminal_brier": 0.3510068166905349
+        }
+      }
+    }
+  ],
+  "state": "completed"
+}

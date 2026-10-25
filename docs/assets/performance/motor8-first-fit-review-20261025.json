@@ -1,0 +1,215 @@
+{
+  "scope": "Completed first128-cycle fits and paired reused-held-out validation, not real-game improvement",
+  "seeds": [
+    11,
+    23,
+    47
+  ],
+  "jobs": {
+    "smg1": {
+      "stage": "first_offline_128_cycles",
+      "final_status": {
+        "state": "completed",
+        "algorithm": "gaussian-rssm-imagination-v1",
+        "timesteps": 4096,
+        "real_decisions": 4096,
+        "model_updates": 512,
+        "actor_updates": 0,
+        "imagined_transitions": 0,
+        "elapsed_seconds": 401.46900000000005,
+        "decisions_per_second": 0.0,
+        "updated_at": "2026-10-25T16:32:39.558135+00:00",
+        "progress": [],
+        "start_kinds": [],
+        "route_prefix_progress": [],
+        "route_prefix_exited": [],
+        "real_validation_decisions": 0,
+        "physical_decisions_this_run": 0,
+        "diagnostics": {
+          "replay": {
+            "chunks": 52,
+            "transitions": 4096,
+            "train_episodes": 39,
+            "validation_episodes": 13,
+            "scenarios": {
+              "sweet_sweet": 4096
+            },
+            "train_scenarios": {
+              "sweet_sweet": 2989
+            },
+            "validation_scenarios": {
+              "sweet_sweet": 1107
+            },
+            "rejected": []
+          },
+          "validation": {
+            "sweet_sweet": {
+              "reconstruction": 0.013550358358770609,
+              "reward": 0.07590513955801725,
+              "continuation": 0.2959139160811901,
+              "dynamics_kl": 32.59869337081909,
+              "representation_kl": 32.59869337081909,
+              "ensemble": 0.062274265103042126,
+              "loss": 67.7989730834961,
+              "posterior_image_mse": 0.013550358358770609,
+              "reward_mae": 0.07934628054499626,
+              "terminal_reward_mae": 1.2624026174130647,
+              "continuation_brier": 0.013390260515734553,
+              "terminal_brier": 0.5145985004694565,
+              "terminal_examples": 23,
+              "validation_transitions": 963,
+              "open_loop_image_mse": 0.035060272552073,
+              "persistence_image_mse": 0.07948651537299156,
+              "open_loop_reward_mae": 0.18255070596933365
+            }
+          },
+          "imagination_gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: terminal_reward_mae exceeds 0.5",
+              "sweet_sweet: terminal_brier exceeds 0.2"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          },
+          "losses": {
+            "reconstruction": 0.009381924755871296,
+            "reward": 0.005767498165369034,
+            "continuation": 0.009684278629720211,
+            "dynamics_kl": 18.696699142456055,
+            "representation_kl": 18.696699142456055,
+            "ensemble": 0.021966442465782166,
+            "prior_prediction": 36.30881881713867,
+            "open_loop_prediction": 48.817481994628906,
+            "loss": 86.91801452636719,
+            "posterior_image_mse": 0.009381924755871296,
+            "reward_mae": 0.04752353951334953,
+            "terminal_reward_mae": 0.19605545699596405,
+            "continuation_brier": 0.0029524783603847027,
+            "terminal_brier": 0.0005349175771698356,
+            "terminal_examples": 5,
+            "validation_transitions": 250,
+            "model_gradient_norm": 277.4851379394531
+          }
+        },
+        "note": "Only real RAM-verified episodes can establish mission completion. Imagined transitions are not real timesteps."
+      },
+      "checkpoint_sha256": "8cc4163001b2a202e48efa02d9f4bae9ab6af60fad63ee2aa5e713eeccb888e3",
+      "fixed_audit": "docs\\assets\\performance\\motor8-smg1-fit-audit-20261025.json",
+      "audit_gate_passes": 0,
+      "decision": "Use the single permitted extra128-cycle offline fit, with no new real collection.",
+      "reason": "All three reused held-out validation draws still reject terminal reward/continuation calibration. Relative to the same bootstrap on fixed batches, terminal MAE improved2.001 to1.118, terminal Brier0.3847 to0.3510, and open-loop image MSE0.0502 to0.0383. These documented gains justify the one extra bounded fit. Ordinary reward MAE worsened0.0531 to0.0861; this risk is retained. No actor updates or navigation benefit are claimed. Stop and diagnose if the extra fit still cannot meet unchanged gates."
+    },
+    "smg2": {
+      "stage": "first_offline_128_cycles",
+      "final_status": {
+        "state": "completed",
+        "algorithm": "gaussian-rssm-imagination-v1",
+        "timesteps": 4096,
+        "real_decisions": 4096,
+        "model_updates": 512,
+        "actor_updates": 108,
+        "imagined_transitions": 103592,
+        "elapsed_seconds": 359.328,
+        "decisions_per_second": 0.0,
+        "updated_at": "2026-10-25T16:35:15.515836+00:00",
+        "progress": [],
+        "start_kinds": [],
+        "route_prefix_progress": [],
+        "route_prefix_exited": [],
+        "real_validation_decisions": 0,
+        "physical_decisions_this_run": 0,
+        "diagnostics": {
+          "replay": {
+            "chunks": 77,
+            "transitions": 4096,
+            "train_episodes": 54,
+            "validation_episodes": 23,
+            "scenarios": {
+              "spinning": 2048,
+              "double_time": 2048
+            },
+            "train_scenarios": {
+              "spinning": 1237,
+              "double_time": 1445
+            },
+            "validation_scenarios": {
+              "spinning": 811,
+              "double_time": 603
+            },
+            "rejected": []
+          },
+          "validation": {
+            "spinning": {
+              "reconstruction": 0.017046619672328234,
+              "reward": 0.02272535942029208,
+              "continuation": 0.22723811228206614,
+              "dynamics_kl": 1.2489965856075287,
+              "representation_kl": 1.2489965856075287,
+              "ensemble": 0.22629110887646675,
+              "loss": 1.2426991760730743,
+              "posterior_image_mse": 0.017046619672328234,
+              "reward_mae": 0.034808682510629296,
+              "terminal_reward_mae": 0.17204584181308746,
+              "continuation_brier": 0.011487500001294393,
+              "terminal_brier": 0.06251876717590665,
+              "terminal_examples": 16,
+              "validation_transitions": 474,
+              "open_loop_image_mse": 0.02676711091771722,
+              "persistence_image_mse": 0.040743811056017876,
+              "open_loop_reward_mae": 0.3198237828910351
+            },
+            "double_time": {
+              "reconstruction": 0.016501512145623565,
+              "reward": 0.02741401773528196,
+              "continuation": 0.11126148951188952,
+              "dynamics_kl": 1.2040628492832184,
+              "representation_kl": 1.2040628492832184,
+              "ensemble": 0.2162850685417652,
+              "loss": 1.093899816274643,
+              "posterior_image_mse": 0.016501512145623565,
+              "reward_mae": 0.024885411374270916,
+              "terminal_reward_mae": 0.5147567987442017,
+              "continuation_brier": 0.005224557881970959,
+              "terminal_brier": 0.18790222517233296,
+              "terminal_examples": 14,
+              "validation_transitions": 500,
+              "open_loop_image_mse": 0.027972549200057983,
+              "persistence_image_mse": 0.04182567493990064,
+              "open_loop_reward_mae": 0.21733750775456429
+            }
+          },
+          "imagination_gate": {
+            "ready": false,
+            "reasons": [
+              "double_time: terminal_reward_mae exceeds 0.5"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          },
+          "losses": {
+            "reconstruction": 0.015458443202078342,
+            "reward": 0.0009120794711634517,
+            "continuation": 0.0005884515703655779,
+            "dynamics_kl": 1.1207237243652344,
+            "representation_kl": 1.1207237243652344,
+            "ensemble": 0.1685798019170761,
+            "loss": 0.8579729795455933,
+            "posterior_image_mse": 0.015458443202078342,
+            "reward_mae": 0.01619555614888668,
+            "terminal_reward_mae": 0.01905672624707222,
+            "continuation_brier": 2.415966491753352e-06,
+            "terminal_brier": 9.227436385117471e-05,
+            "terminal_examples": 5,
+            "validation_transitions": 191,
+            "model_gradient_norm": 0.5243788957595825
+          }
+        },
+        "note": "Only real RAM-verified episodes can establish mission completion. Imagined transitions are not real timesteps."
+      },
+      "checkpoint_sha256": "c276c4d30a70b5ab41f5b27f263ab5588dd8ea5839300bdcc6bd3f85e1370ca6",
+      "fixed_audit": "docs\\assets\\performance\\motor8-smg2-fit-audit-20261025.json",
+      "audit_gate_passes": 3,
+      "decision": "Collect only2000 additional real decisions across both missions, reaching the6096 maximum.",
+      "reason": "The final live four-batch draw failed Double Time terminal MAE. The predeclared fixed eight-batch audit with seeds11/23/47 passes every unchanged gate in both scenarios on all three draws. This audit reuses held-out data and is not an unseen test. The fit performed108 actor updates and103592 imagined transitions; no real decisions were added. This supports a bounded real-game check, not a navigation benefit claim."
+    }
+  }
+}
