@@ -1,5 +1,11 @@
 # Eight exclusive actions, visible policy inputs and algorithm comparison
 
+**Subsequent owner-requested repair:** [SMG1 prediction gates now pass a fresh
+confirmation and a gated actor smoke](smg1-boundary-repair.md). This does not
+reopen the closed pilot or silently change its reward/action identity. The
+[BTR source review](btr-research-review.md) records the next environmental
+hypotheses; no Rainbow/BTR replacement or six-instance run is active.
+
 **Pilot closed:** [the final trained-policy evaluations](motor8-evaluation-results.md)
 completed all six SMG2 attempts, with zero stars. No further jobs are allocated;
 the hourly follow-up is retired. [The reward audit](motor8-reward-review.md)

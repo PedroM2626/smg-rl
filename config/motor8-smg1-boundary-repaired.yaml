@@ -1,0 +1,148 @@
+# Prediction repair profile; historical reward-v1 retained for compatibility.
+# See docs/smg1-boundary-repair.md before any new online allocation.
+environment:
+  action_seconds: 0.25
+  crop:
+  - 0.12
+  - 0.17
+  - 0.88
+  - 0.91
+  frame_stack: 4
+  idle_limit: 180
+  image_size: 84
+  key_hold_seconds: 0.08
+  max_step_distance: 2500.0
+  max_steps: 3000
+  min_reward_y: -1800.0
+  reset_timeout: 30.0
+game:
+  id: RMGE01
+  title: Super Mario Galaxy
+novelty:
+  capacity: 4000
+  device: cpu
+  embedding_size: 64
+  neighbors: 10
+  rnd_clip: 5.0
+  update_every: 8
+parallel:
+  backend: native
+  bridge_wakeup: events
+  collector: measured
+  cpu_affinity: auto
+  emulation_speed: 0.0
+  frame_skip: 12
+  graphics_backend: Vulkan
+  hidden: true
+  max_stalled_attempts: 8
+  native_capture: cpu
+  plot_every: 20
+  quiet_ui: true
+  receive_order: ordered
+  shared_observations: false
+  skip_present: false
+  timeout: 30.0
+  worker_timeout: 120.0
+  workers: 1
+paths:
+  assets: data
+  calibration: config/smg1-native-calibration.json
+  dolphin: .local/native-dolphin-frontier/Dolphin.exe
+  replay: runs/m8-smg1/replay
+  rom: data/Super Mario Galaxy (USA) (En,Fr,Es).nkit.iso
+  runs: runs/m8-smg1
+  source_user: '%APPDATA%\Dolphin Emulator'
+  user: .local/m8-smg1/template
+  route: config/routes/smg1-initial-exit.json
+replay:
+  chunk_steps: 256
+  enabled: true
+  max_worker_bytes: 268435456
+rewards:
+  completion: 20.0
+  damage: -0.25
+  death: -2.0
+  intrinsic: 0.005
+  intrinsic_decay_end: 120
+  intrinsic_decay_start: 30
+  intrinsic_episode_budget: 0.5
+  progress: 0.0
+  revision: grounded-initial-route-v1
+  step: -0.001
+  timeout: -2.0
+training:
+  batch_size: 64
+  checkpoint_steps: 256
+  device: cuda
+  enabled: true
+  entropy: 0.01
+  epochs: 4
+  gae_lambda: 0.95
+  gamma: 0.997
+  learning_rate: 0.0001
+  rollout_steps: 128
+  seed: 142
+  steps: 256
+  torch_threads: 1
+variations:
+- goal_slot: 2
+  name: sweet_sweet
+  scenario: 1
+  start_slot: 1
+  title: Rocky Road
+world_model:
+  actor_lr: 8.0e-05
+  batch_size: 8
+  burn_in: 8
+  channels: 16
+  checkpoint_steps: 4096
+  collect_vector_steps: 32
+  critic_lr: 8.0e-05
+  deterministic_size: 256
+  disagreement_scale: 0.0
+  embedding_size: 128
+  ensemble_size: 5
+  entropy: 0.0003
+  epsilon: 0.05
+  free_nats: 1.0
+  gamma: 0.997
+  hidden_size: 256
+  imagination_batch: 128
+  imagination_horizon: 8
+  lambda: 0.95
+  maximum_continuation_brier: 0.1
+  maximum_open_loop_mse: 0.04
+  maximum_reconstruction_mse: 0.02
+  maximum_reward_mae: 0.5
+  maximum_terminal_brier: 0.2
+  maximum_terminal_reward_mae: 0.5
+  minimum_replay: 4096
+  minimum_scenario_train: 256
+  minimum_scenario_validation: 64
+  minimum_train_episodes: 10
+  minimum_validation_episodes: 4
+  minimum_validation_terminals: 2
+  model_lr: 0.0003
+  open_loop_training_horizon: 8
+  open_loop_training_weight: 0.5
+  persistence_ratio: 0.98
+  prior_prediction_weight: 0.5
+  reconstruction_weight: 3528.0
+  sequence_length: 32
+  stochastic_size: 32
+  terminal_reward_weight: 40.0
+  terminal_weight: 40.0
+  training_terminal_fraction: 0.5
+  updates_per_cycle: 4
+  use_legacy_curiosity: false
+  validation_batches: 4
+  warmup_epsilon: 0.15
+  balance_terminal_losses: true
+actions:
+  profile: motor8-v1
+frontier:
+  enabled: false
+route_reward:
+  enabled: true
+  weight: 5.0
+  spec_sha256: 65cbbf0f3a7fc9b7fa792299c5bf2773313a4354fa430cde8edeb27201a0732e

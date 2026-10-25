@@ -35,6 +35,23 @@ def weighted_mean(values, mask):
     return (values * mask).sum() / mask.sum().clamp_min(1)
 
 
+def prediction_mean(values, mask, terminal, balanced=False):
+    """Optionally normalize boundary classes before averaging prediction losses.
+
+    Oversampling terminal tails still supplies only one death in a long sequence.
+    Class normalization prevents those labels being diluted by live transitions.
+    Missing classes and padding contribute neither loss nor gradient.
+    """
+    if not balanced:
+        return weighted_mean(values, mask)
+    classes = torch.stack([mask * (1 - terminal), mask * terminal])
+    dimensions = tuple(range(1, classes.ndim))
+    counts = classes.sum(dimensions)
+    means = (classes * values).sum(dimensions) / counts.clamp_min(1)
+    present = (counts > 0).to(values.dtype)
+    return (means * present).sum() / present.sum().clamp_min(1)
+
+
 def lambda_returns(rewards, discounts, next_values, bootstrap, mixing=0.95):
     """Time-major returns; padding/terminal masking belongs in discounts/weights."""
     result, value = [], bootstrap
@@ -76,6 +93,8 @@ class VisualWorldModel(nn.Module):
         self.ensemble = nn.ModuleList([mlp(self.features + actions, self.embed, hidden)
                                        for _ in range(ensemble_size)])
         self.settings = settings
+        if type(settings.get("balance_terminal_losses", False)) is not bool:
+            raise ValueError("Terminal-loss class balancing must be a boolean.")
         self.channels = channels
         self.register_buffer("reward_low", torch.tensor(0.0))
         self.register_buffer("reward_high", torch.tensor(0.0))
@@ -123,6 +142,21 @@ class VisualWorldModel(nn.Module):
         # The model cannot invent a star-sized reward before seeing one in real data.
         return prediction.clamp(min=self.reward_low, max=self.reward_high)
 
+    @torch.no_grad()
+    def posterior_features(self, batch):
+        """Frozen visual/recurrent features for train-split head calibration."""
+        images, scenario = batch["images"], batch["scenario"]
+        count, frames = images.shape[:2]
+        embedding = self.encode(images.reshape(-1, 1, self.size, self.size)).reshape(count, frames, -1)
+        state, _, _ = self.observe(embedding[:, 0], torch.zeros(count, dtype=torch.long, device=images.device),
+                                    self.initial(count), scenario, batch["is_first"][:, 0])
+        features = []
+        for step in range(frames - 1):
+            state, _, _ = self.observe(embedding[:, step + 1], batch["actions"][:, step], state,
+                                        scenario, batch["is_first"][:, step + 1])
+            features.append(self.feature(state, scenario))
+        return torch.stack(features, 1)
+
     def loss(self, batch, sample=True, auxiliary=True):
         images, actions, scenario, mask = (batch[k] for k in ("images", "actions", "scenario", "mask"))
         b, frames = images.shape[:2]
@@ -155,6 +189,7 @@ class VisualWorldModel(nn.Module):
         reward_prediction = self.reward(flat).reshape(b, -1)
         reward_loss = (reward_prediction - symlog(batch["rewards"])).square()
         terminal = batch["terminated"].float()
+        balanced = self.settings.get("balance_terminal_losses", False)
         reward_weights = 1 + terminal * (float(self.settings.get("terminal_reward_weight", 1)) - 1)
         reward_loss = reward_loss * reward_weights
         continuation_logits = self.continuation(flat).reshape(b, -1)
@@ -168,8 +203,8 @@ class VisualWorldModel(nn.Module):
             ensemble_loss = ensemble_loss + weighted_mean(error, mask * bootstrap)
         ensemble_loss = ensemble_loss / len(self.ensemble)
         terms = {"reconstruction": weighted_mean(reconstruction_loss, mask),
-                 "reward": weighted_mean(reward_loss, mask),
-                 "continuation": weighted_mean(continuation_loss, mask),
+                 "reward": prediction_mean(reward_loss, mask, terminal, balanced),
+                 "continuation": prediction_mean(continuation_loss, mask, terminal, balanced),
                  "dynamics_kl": weighted_mean(torch.stack(dynamics, 1), mask),
                  "representation_kl": weighted_mean(torch.stack(representation, 1), mask),
                  "ensemble": ensemble_loss}
@@ -187,8 +222,10 @@ class VisualWorldModel(nn.Module):
             prior_continuation = F.binary_cross_entropy_with_logits(
                 self.continuation(predicted).reshape(b, -1), 1 - terminal, reduction="none")
             prior_continuation *= 1 + terminal * (float(self.settings.get("terminal_weight", 5)) - 1)
-            terms["prior_prediction"] = weighted_mean(
-                image_weight * prior_image_loss + reward_weights * prior_reward_loss + prior_continuation, mask)
+            terms["prior_prediction"] = (
+                weighted_mean(image_weight * prior_image_loss, mask)
+                + prediction_mean(reward_weights * prior_reward_loss + prior_continuation,
+                                  mask, terminal, balanced))
             loss = loss + float(self.settings["prior_prediction_weight"]) * terms["prior_prediction"]
         horizon = int(self.settings.get("open_loop_training_horizon", 0)) if auxiliary else 0
         if horizon:
@@ -200,7 +237,7 @@ class VisualWorldModel(nn.Module):
             rows = torch.arange(b, device=images.device)
             predicted_state = {key: torch.stack([s[key] for s in context_states], 1)[rows, begin]
                                for key in state}
-            errors, weights = [], []
+            errors, prediction_errors, weights, boundaries = [], [], [], []
             for offset in range(min(horizon, frames - 1)):
                 position = (begin + offset).clamp_max(frames - 2)
                 valid = (begin + offset < frames - 1).float() * mask[rows, position]
@@ -212,10 +249,15 @@ class VisualWorldModel(nn.Module):
                 continuation_error = F.binary_cross_entropy_with_logits(
                     self.continuation(predicted).squeeze(-1), 1 - terminal[rows, position], reduction="none")
                 continuation_error *= 1 + terminal[rows, position] * (float(self.settings.get("terminal_weight", 5)) - 1)
-                errors.append(image_weight * image_error + reward_weights[rows, position] * reward_error
-                              + continuation_error)
+                errors.append(image_weight * image_error)
+                prediction_errors.append(reward_weights[rows, position] * reward_error + continuation_error)
                 weights.append(valid)
-            terms["open_loop_prediction"] = weighted_mean(torch.stack(errors, 1), torch.stack(weights, 1))
+                boundaries.append(terminal[rows, position])
+            rollout_mask = torch.stack(weights, 1)
+            terms["open_loop_prediction"] = (
+                weighted_mean(torch.stack(errors, 1), rollout_mask)
+                + prediction_mean(torch.stack(prediction_errors, 1), rollout_mask,
+                                  torch.stack(boundaries, 1), balanced))
             loss = loss + float(self.settings.get("open_loop_training_weight", 0.5)) * terms["open_loop_prediction"]
         seeds = {key: torch.stack([s[key] for s in states], 1).detach() for key in state}
         valid = mask.bool() & ~batch["terminated"]
@@ -307,6 +349,72 @@ class ImaginedAgent:
         self.model_updates += 1
         metrics["model_gradient_norm"] = float(norm)
         return metrics, seeds, scenarios
+
+    def update_prediction_heads(self, batch):
+        """Fit only reward/continuation on resampled real train sequences.
+
+        This deliberate offline repair preserves visual dynamics and actor/value
+        parameters. It counts as a model update, never as an imagined/real step.
+        The caller must enforce replay split and finite experiment allocation.
+        """
+        batch = self.tensors(batch)
+        mask = batch["mask"]
+        if not mask.bool().any():
+            raise ValueError("Prediction-head fitting needs supervised real transitions.")
+        self.model_optimizer.zero_grad(set_to_none=True)
+        features = self.world.posterior_features(batch)
+        flat = features.flatten(0, 1)
+        terminal = batch["terminated"].float()
+        reward_error = (self.world.reward(flat).reshape_as(mask) - symlog(batch["rewards"])).square()
+        continuation_error = F.binary_cross_entropy_with_logits(
+            self.world.continuation(flat).reshape_as(mask), 1 - terminal, reduction="none")
+        balanced = self.settings.get("balance_terminal_losses", False)
+        reward_loss = prediction_mean(reward_error * (1 + terminal *
+            (self.settings.get("terminal_reward_weight", 1) - 1)), mask, terminal, balanced)
+        continuation_loss = prediction_mean(continuation_error * (1 + terminal *
+            (self.settings.get("terminal_weight", 5) - 1)), mask, terminal, balanced)
+        loss = reward_loss + continuation_loss
+        if not torch.isfinite(loss):
+            raise FloatingPointError("Nonfinite prediction-head loss.")
+        loss.backward()
+        heads = list(self.world.reward.parameters()) + list(self.world.continuation.parameters())
+        norm = nn.utils.clip_grad_norm_(heads, 100, error_if_nonfinite=True)
+        self.model_optimizer.step()
+        self.model_updates += 1
+        return {"reward_head_loss": float(reward_loss.detach()),
+                "continuation_head_loss": float(continuation_loss.detach()),
+                "head_gradient_norm": float(norm)}
+
+    def update_visual_decoder(self, batch):
+        """Fit visual predictions without drifting latent dynamics or reward heads."""
+        parameters = list(self.world.decode_input.parameters()) + list(self.world.decoder.parameters())
+        return self._update_component(batch, parameters)
+
+    def update_prior_dynamics(self, batch):
+        """Repair imagined transitions while preserving observed-state features."""
+        return self._update_component(batch, list(self.world.prior_net.parameters()))
+
+    def _update_component(self, batch, parameters):
+        batch = self.tensors(batch)
+        if not batch['mask'].bool().any():
+            raise ValueError('Component fitting needs supervised real transitions.')
+        flags = {parameter: parameter.requires_grad for parameter in self.world.parameters()}
+        try:
+            self.world.requires_grad_(False)
+            for parameter in parameters:
+                parameter.requires_grad_(True)
+            self.model_optimizer.zero_grad(set_to_none=True)
+            loss, metrics, _, _ = self.world.loss(batch)
+            if not torch.isfinite(loss):
+                raise FloatingPointError('Nonfinite component repair loss.')
+            loss.backward()
+            nn.utils.clip_grad_norm_(parameters, 100, error_if_nonfinite=True)
+            self.model_optimizer.step()
+            self.model_updates += 1
+            return metrics
+        finally:
+            for parameter, flag in flags.items():
+                parameter.requires_grad_(flag)
 
     def update_imagination(self, seeds, scenarios, train_actor=True):
         maximum = int(self.settings.get("imagination_batch", 128))

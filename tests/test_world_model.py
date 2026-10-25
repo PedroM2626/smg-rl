@@ -92,9 +92,10 @@ def test_reward_support_and_latent_reset_dont_invent_terminal_prizes(tmp_path):
     assert torch.equal(after["stoch"], after_again["stoch"])
 
 
-def test_real_prior_prediction_objective_has_gradients_and_respects_padding(tmp_path):
+@pytest.mark.parametrize("balanced", [False, True])
+def test_real_prior_prediction_objective_has_gradients_and_respects_padding(tmp_path, balanced):
     agent, _ = small_agent(tmp_path)
-    agent.settings.update(prior_prediction_weight=0.5, reconstruction_weight=5,
+    agent.settings.update(balance_terminal_losses=balanced, prior_prediction_weight=0.5, reconstruction_weight=5,
                           terminal_reward_weight=5, open_loop_training_horizon=3)
     batch = synthetic_batch()
     loss, metrics, _, _ = agent.world.loss(agent.tensors(batch), sample=False)
@@ -125,9 +126,62 @@ def test_terminal_reward_weight_changes_only_supervised_terminal_targets(tmp_pat
     assert weighted["reward"] == original["reward"]
 
 
-def test_prior_prediction_cannot_observe_its_target_image(tmp_path):
+def test_prediction_head_repair_preserves_visual_dynamics_actor_and_real_counts(tmp_path):
+    agent, _ = small_agent(tmp_path)
+    agent.settings.update(balance_terminal_losses=True, terminal_reward_weight=20, terminal_weight=20)
+    world = {k: v.clone() for k, v in agent.world.state_dict().items()
+             if not k.startswith(('reward.', 'continuation.'))}
+    actor = {k: v.clone() for k, v in agent.actor.state_dict().items()}
+    metrics = agent.update_prediction_heads(synthetic_batch())
+    assert np.isfinite(list(metrics.values())).all()
+    assert agent.model_updates == 1
+    assert agent.real_decisions == agent.actor_updates == agent.imagined_transitions == 0
+    assert all(torch.equal(v, agent.world.state_dict()[k]) for k, v in world.items())
+    assert all(torch.equal(v, agent.actor.state_dict()[k]) for k, v in actor.items())
+    assert all(p.grad is None for p in agent.world.encoder.parameters())
+    empty = synthetic_batch()
+    empty['mask'][:] = 0
+    with pytest.raises(ValueError, match='supervised'):
+        agent.update_prediction_heads(empty)
+
+
+def test_decoder_repair_preserves_latent_dynamics_heads_and_gradient_flags(tmp_path):
+    agent, _ = small_agent(tmp_path)
+    agent.settings.update(prior_prediction_weight=.5, open_loop_training_horizon=3)
+    protected = {k: v.clone() for k, v in agent.world.state_dict().items()
+                 if not k.startswith(('decoder.', 'decode_input.'))}
+    decoder = {k: v.clone() for k, v in agent.world.decoder.state_dict().items()}
+    metrics = agent.update_visual_decoder(synthetic_batch())
+    assert np.isfinite(list(metrics.values())).all()
+    assert all(torch.equal(v, agent.world.state_dict()[k]) for k, v in protected.items())
+    assert any(not torch.equal(v, agent.world.decoder.state_dict()[k]) for k, v in decoder.items())
+    assert all(p.requires_grad for p in agent.world.parameters())
+    assert agent.model_updates == 1
+    assert agent.real_decisions == agent.actor_updates == agent.imagined_transitions == 0
+
+
+def test_prior_repair_changes_forecast_without_changing_observed_features(tmp_path):
+    agent, _ = small_agent(tmp_path)
+    agent.settings.update(prior_prediction_weight=.5, open_loop_training_horizon=3)
+    protected = {k: v.clone() for k, v in agent.world.state_dict().items()
+                 if not k.startswith('prior_net.')}
+    batch = synthetic_batch()
+    torch.manual_seed(81)
+    features = agent.world.posterior_features(agent.tensors(batch))
+    metrics = agent.update_prior_dynamics(batch)
+    torch.manual_seed(81)
+    assert torch.equal(features, agent.world.posterior_features(agent.tensors(batch)))
+    assert all(torch.equal(v, agent.world.state_dict()[k]) for k, v in protected.items())
+    assert np.isfinite(list(metrics.values())).all()
+    assert all(p.requires_grad for p in agent.world.parameters())
+    assert agent.model_updates == 1 and agent.actor_updates == agent.real_decisions == 0
+
+
+@pytest.mark.parametrize("balanced", [False, True])
+def test_prior_prediction_cannot_observe_its_target_image(tmp_path, balanced):
     agent, _ = small_agent(tmp_path)
     agent.settings["prior_prediction_weight"] = 0.5
+    agent.settings["balance_terminal_losses"] = balanced
     outputs = []
     handle = agent.world.decode_input.register_forward_hook(
         lambda module, inputs, result: outputs.append(result.detach().clone()))
@@ -141,9 +195,11 @@ def test_prior_prediction_cannot_observe_its_target_image(tmp_path):
     assert torch.equal(original, changed)
 
 
-def test_open_loop_training_cannot_observe_future_target_images(tmp_path):
+@pytest.mark.parametrize("balanced", [False, True])
+def test_open_loop_training_cannot_observe_future_target_images(tmp_path, balanced):
     agent, _ = small_agent(tmp_path)
     agent.settings["open_loop_training_horizon"] = 3
+    agent.settings["balance_terminal_losses"] = balanced
     outputs = []
     handle = agent.world.decode_input.register_forward_hook(
         lambda module, inputs, result: outputs.append(result.detach().clone()))

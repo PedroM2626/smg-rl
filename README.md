@@ -3,6 +3,13 @@
 Visual recurrent reinforcement learning for **Super Mario Galaxy 1 and 2** in
 Dolphin on Windows.
 
+**SMG1 prediction block repaired:** [component-isolated repair and fresh confirmation](docs/smg1-boundary-repair.md)
+pass unchanged gates in all three draws on four new episodes, followed by one
+actual gated actor update. Known reward geometry/scale defects remain a separate
+reason to revise the online experiment. [The BTR appendix/code review](docs/btr-research-review.md)
+checks regional rewards, intermediate starts, temporal control and the absence
+of a validated published SMG progress address in the inspected code.
+
 **Finite motor8 pilot closed:** [all six trained SMG2 evaluations](docs/motor8-evaluation-results.md)
 ended in death with zero RAM-confirmed stars. Videos retain the actual policy
 image and applied controls. No training or evaluation remains running under this
@@ -18,7 +25,9 @@ still failed; SMG2 reached its 6096-decision cap and completed bounded evaluatio
 with a video inset of the actual policy image and live applied-button indicators.
 The new bounded motor8 pilot supersedes the remaining legacy54/motor16 stages;
 old checkpoints and their historical profiles are retained. The CLI defaults to
-`config/motor8-smg2.yaml`; Galaxy 1 uses `config/motor8-smg1.yaml`. Rainbow DQN is
+`config/motor8-smg2.yaml`; the historical Galaxy 1 pilot uses
+`config/motor8-smg1.yaml`, while the new repaired checkpoint requires
+`config/motor8-smg1-boundary-repaired.yaml`. Rainbow DQN is
 assessed as a separate future baseline, not an unverified replacement of the
 active world-model learner.
 

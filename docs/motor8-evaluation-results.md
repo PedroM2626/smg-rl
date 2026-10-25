@@ -1,5 +1,10 @@
 # Final motor8 evaluations and finite-pilot closure
 
+**Later repair:** the owner subsequently requested [correcting the SMG1 prediction
+block](smg1-boundary-repair.md). That separate bounded repair passed fresh
+prediction gates and one actor smoke. The pilot results and failures below
+remain unchanged; reward redesign is still required before a long allocation.
+
 Date: October 25, 2026. This records the six predeclared full-start SMG2 policy
 evaluations after its final bounded training block. All six attempts ended in
 RAM-confirmed death; none collected a star. No navigation benefit has been

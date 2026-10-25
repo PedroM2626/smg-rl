@@ -1,5 +1,12 @@
 # Concurrent Galaxy 1 and Galaxy 2 training
 
+**Latest status (October 25, 2026):** the finite motor8 pilot has closed. A
+separately requested [SMG1 prediction repair](smg1-boundary-repair.md) passed
+fresh gates and one actor smoke; no long online or six-emulator run is active.
+The [BTR/code and parallelism review](btr-research-review.md) distinguishes
+collectors from independent agents. The older configurations and measurements
+below are historical; do not dispatch their million-step commands automatically.
+
 **Status note (2026-10-23):** the supervised PPO jobs described here are stopped;
 their final pairs are preserved. The separate world-model experiment recorded in
 [the live world-model record](world-model-live.md) was also stopped at the
