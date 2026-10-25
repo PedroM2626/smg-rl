@@ -1,0 +1,405 @@
+{
+  "scope": "One online seed, paired 10000-real-decision curiosity arms; same initial weights and replay; no significance claim. Validation draws are reused and not independent training seeds.",
+  "new_decisions_per_trial_arm": 10000,
+  "total_smg1_new_real_decisions_across_main_and_both_trial_branches": 30000,
+  "rows": {
+    "control": {
+      "runs": [
+        "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg1-exploration\\control\\world-model-20261025-001806-732244",
+        "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg1-exploration\\control\\world-model-20261025-004551-267957"
+      ],
+      "checkpoint_sha256": "53f8cf5a74b0783f9cfb82503e790e629c33db2400fd405696dad1f7c59c3d39",
+      "final_status": {
+        "state": "completed",
+        "algorithm": "gaussian-rssm-imagination-v1",
+        "timesteps": 298773,
+        "real_decisions": 298773,
+        "model_updates": 39184,
+        "actor_updates": 1231,
+        "imagined_transitions": 1260544,
+        "elapsed_seconds": 1816.4689999999973,
+        "decisions_per_second": 4.404148928498098,
+        "updated_at": "2026-10-25T04:16:07.752432+00:00",
+        "progress": [
+          0.019436620791826693
+        ],
+        "diagnostics": {
+          "replay": {
+            "chunks": 704,
+            "transitions": 119351,
+            "train_episodes": 410,
+            "validation_episodes": 108,
+            "scenarios": {
+              "sweet_sweet": 119351
+            },
+            "train_scenarios": {
+              "sweet_sweet": 92844
+            },
+            "validation_scenarios": {
+              "sweet_sweet": 26507
+            },
+            "rejected": []
+          },
+          "validation": {
+            "sweet_sweet": {
+              "reconstruction": 0.014361068839207292,
+              "reward": 0.01259272382594645,
+              "continuation": 0.06061636820049898,
+              "dynamics_kl": 45.80341911315918,
+              "representation_kl": 45.80341911315918,
+              "ensemble": 0.07580828107893467,
+              "loss": 78.29692077636719,
+              "posterior_image_mse": 0.014361068839207292,
+              "reward_mae": 0.01870876783505082,
+              "terminal_reward_mae": 0.2615292489528656,
+              "continuation_brier": 0.0038511817926050185,
+              "terminal_brier": 0.055857730989118864,
+              "terminal_examples": 25,
+              "validation_transitions": 964,
+              "open_loop_image_mse": 0.03413529600948095,
+              "persistence_image_mse": 0.05707000941038132,
+              "open_loop_reward_mae": 0.18800142966210842
+            }
+          },
+          "imagination_gate": {
+            "ready": true,
+            "reasons": [],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          },
+          "losses": {
+            "reconstruction": 0.010345812886953354,
+            "reward": 0.00026948738377541304,
+            "continuation": 6.524982836708659e-06,
+            "dynamics_kl": 20.150615692138672,
+            "representation_kl": 20.150615692138672,
+            "ensemble": 0.03184263035655022,
+            "prior_prediction": 41.79264831542969,
+            "open_loop_prediction": 62.02423095703125,
+            "loss": 100.53096008300781,
+            "posterior_image_mse": 0.010345812886953354,
+            "reward_mae": 0.006461613811552525,
+            "terminal_reward_mae": 0.01132047176361084,
+            "continuation_brier": 1.3002595666833372e-09,
+            "terminal_brier": 2.0138892723592372e-13,
+            "terminal_examples": 2,
+            "validation_transitions": 256,
+            "model_gradient_norm": 304.7619323730469,
+            "actor_loss": -0.04304559528827667,
+            "critic_loss": 0.004265900701284409,
+            "imagined_reward": -0.045158516615629196,
+            "imagined_transitions": 1260544
+          }
+        },
+        "note": "Only real RAM-verified episodes can establish mission completion. Imagined transitions are not real timesteps."
+      },
+      "outcomes": {
+        "death": 1,
+        "timeout": 24,
+        "interrupted": 2
+      },
+      "ram_completion_rows": 0,
+      "health_lost": 0.0,
+      "maximum_geometric_percent": 2.9692568798312813,
+      "median_completed_episode_geometric_percent": 2.1509613628232676,
+      "q25": 1.8043856440709278,
+      "q75": 2.515876986505666,
+      "new_actor_updates": 113,
+      "new_model_updates": 1248,
+      "new_imagined_transitions": 115712,
+      "best_trajectory": {
+        "csv": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg1-exploration\\control\\world-model-20261025-004551-267957\\worker-00\\sweet_sweet\\episode-000003.csv",
+        "plot": "docs\\assets\\performance\\smg1-curiosity-control-best-20261025.png"
+      },
+      "paired_frozen_audits": [
+        {
+          "seed": 11,
+          "metrics": {
+            "sweet_sweet": {
+              "reconstruction": 0.014149945811368525,
+              "reward": 0.017123843645094894,
+              "continuation": 0.14435518985726503,
+              "dynamics_kl": 39.65924024581909,
+              "representation_kl": 39.65924024581909,
+              "ensemble": 0.07755572814494371,
+              "loss": 73.95558595657349,
+              "posterior_image_mse": 0.014149945811368525,
+              "reward_mae": 0.019257692038081586,
+              "terminal_reward_mae": 0.3765385739248374,
+              "continuation_brier": 0.004001714794454668,
+              "terminal_brier": 0.17601506299891376,
+              "terminal_examples": 29,
+              "validation_transitions": 1829,
+              "open_loop_image_mse": 0.03348777862265706,
+              "persistence_image_mse": 0.05022986698895693,
+              "open_loop_reward_mae": 0.11050036631058902
+            }
+          },
+          "gate": {
+            "ready": true,
+            "reasons": [],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "seed": 23,
+          "metrics": {
+            "sweet_sweet": {
+              "reconstruction": 0.014178193872794509,
+              "reward": 0.016826101038986963,
+              "continuation": 0.13809753927500878,
+              "dynamics_kl": 40.113094329833984,
+              "representation_kl": 40.113094329833984,
+              "ensemble": 0.07662071730010211,
+              "loss": 74.32007074356079,
+              "posterior_image_mse": 0.014178193872794509,
+              "reward_mae": 0.018897254893090576,
+              "terminal_reward_mae": 0.35877743979980203,
+              "continuation_brier": 0.003768604958119835,
+              "terminal_brier": 0.16181476479569684,
+              "terminal_examples": 29,
+              "validation_transitions": 1829,
+              "open_loop_image_mse": 0.032905108062550426,
+              "persistence_image_mse": 0.05022986698895693,
+              "open_loop_reward_mae": 0.1132811865536496
+            }
+          },
+          "gate": {
+            "ready": true,
+            "reasons": [],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "seed": 47,
+          "metrics": {
+            "sweet_sweet": {
+              "reconstruction": 0.014181915787048638,
+              "reward": 0.017098125196753244,
+              "continuation": 0.14410148667337808,
+              "dynamics_kl": 39.69196629524231,
+              "representation_kl": 39.69196629524231,
+              "ensemble": 0.07863382040522993,
+              "loss": 74.08881187438965,
+              "posterior_image_mse": 0.014181915787048638,
+              "reward_mae": 0.0190770203480497,
+              "terminal_reward_mae": 0.3752062364385046,
+              "continuation_brier": 0.003915865631089578,
+              "terminal_brier": 0.1709881888845507,
+              "terminal_examples": 29,
+              "validation_transitions": 1829,
+              "open_loop_image_mse": 0.03394389804452658,
+              "persistence_image_mse": 0.05022986698895693,
+              "open_loop_reward_mae": 0.11816937039839104
+            }
+          },
+          "gate": {
+            "ready": true,
+            "reasons": [],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        }
+      ]
+    },
+    "curiosity_10x": {
+      "runs": [
+        "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg1-exploration\\curiosity_10x\\world-model-20261025-003020-180024",
+        "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg1-exploration\\curiosity_10x\\world-model-20261025-013015-684847"
+      ],
+      "checkpoint_sha256": "2b3e955c03223ea9ebc450e807158073d1c09a768a240f66d359333e5d1d1c32",
+      "final_status": {
+        "state": "completed",
+        "algorithm": "gaussian-rssm-imagination-v1",
+        "timesteps": 298773,
+        "real_decisions": 298773,
+        "model_updates": 39184,
+        "actor_updates": 1233,
+        "imagined_transitions": 1262592,
+        "elapsed_seconds": 1664.078999999998,
+        "decisions_per_second": 4.80746406871309,
+        "updated_at": "2026-10-25T04:57:59.767057+00:00",
+        "progress": [
+          0.01739857969899337
+        ],
+        "diagnostics": {
+          "replay": {
+            "chunks": 704,
+            "transitions": 119222,
+            "train_episodes": 411,
+            "validation_episodes": 109,
+            "scenarios": {
+              "sweet_sweet": 119222
+            },
+            "train_scenarios": {
+              "sweet_sweet": 92852
+            },
+            "validation_scenarios": {
+              "sweet_sweet": 26370
+            },
+            "rejected": []
+          },
+          "validation": {
+            "sweet_sweet": {
+              "reconstruction": 0.015372913563624024,
+              "reward": 0.019623616244643927,
+              "continuation": 0.08494269353104755,
+              "dynamics_kl": 48.70616149902344,
+              "representation_kl": 48.70616149902344,
+              "ensemble": 0.09298824518918991,
+              "loss": 83.65688896179199,
+              "posterior_image_mse": 0.015372913563624024,
+              "reward_mae": 0.022868767147883773,
+              "terminal_reward_mae": 0.4021660659624183,
+              "continuation_brier": 0.002525852139115159,
+              "terminal_brier": 0.10311557382405938,
+              "terminal_examples": 23,
+              "validation_transitions": 943,
+              "open_loop_image_mse": 0.037535395473241806,
+              "persistence_image_mse": 0.058757394552230835,
+              "open_loop_reward_mae": 0.18112019449472427
+            }
+          },
+          "imagination_gate": {
+            "ready": true,
+            "reasons": [],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          },
+          "losses": {
+            "reconstruction": 0.011079058982431889,
+            "reward": 0.00010937777551589534,
+            "continuation": 2.2249201720114797e-05,
+            "dynamics_kl": 18.989782333374023,
+            "representation_kl": 18.989782333374023,
+            "ensemble": 0.030271334573626518,
+            "prior_prediction": 43.508277893066406,
+            "open_loop_prediction": 52.02349090576172,
+            "loss": 98.27708435058594,
+            "posterior_image_mse": 0.011079058982431889,
+            "reward_mae": 0.004415907897055149,
+            "terminal_reward_mae": 0.09779596328735352,
+            "continuation_brier": 1.793362081059513e-08,
+            "terminal_brier": 2.4663869169216923e-08,
+            "terminal_examples": 2,
+            "validation_transitions": 260,
+            "model_gradient_norm": 233.77398681640625,
+            "actor_loss": 0.15574431419372559,
+            "critic_loss": 0.010507405735552311,
+            "imagined_reward": -0.042821258306503296,
+            "imagined_transitions": 1262592
+          }
+        },
+        "note": "Only real RAM-verified episodes can establish mission completion. Imagined transitions are not real timesteps."
+      },
+      "outcomes": {
+        "death": 2,
+        "timeout": 26,
+        "interrupted": 2
+      },
+      "ram_completion_rows": 0,
+      "health_lost": 0.0,
+      "maximum_geometric_percent": 2.826197038655916,
+      "median_completed_episode_geometric_percent": 2.25647660678898,
+      "q25": 1.877352858433504,
+      "q75": 2.4491554840818557,
+      "new_actor_updates": 115,
+      "new_model_updates": 1248,
+      "new_imagined_transitions": 117760,
+      "best_trajectory": {
+        "csv": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg1-exploration\\curiosity_10x\\world-model-20261025-003020-180024\\worker-00\\sweet_sweet\\episode-000003.csv",
+        "plot": "docs\\assets\\performance\\smg1-curiosity-curiosity_10x-best-20261025.png"
+      },
+      "paired_frozen_audits": [
+        {
+          "seed": 11,
+          "metrics": {
+            "sweet_sweet": {
+              "reconstruction": 0.014113583485595882,
+              "reward": 0.020401239232796797,
+              "continuation": 0.16429514204628504,
+              "dynamics_kl": 39.01375102996826,
+              "representation_kl": 39.01375102996826,
+              "ensemble": 0.07553220400586724,
+              "loss": 73.46120071411133,
+              "posterior_image_mse": 0.014113583485595882,
+              "reward_mae": 0.021302580076735467,
+              "terminal_reward_mae": 0.49245811279477747,
+              "continuation_brier": 0.005298660105544473,
+              "terminal_brier": 0.2551965190154803,
+              "terminal_examples": 29,
+              "validation_transitions": 1829,
+              "open_loop_image_mse": 0.034072497859597206,
+              "persistence_image_mse": 0.05022986698895693,
+              "open_loop_reward_mae": 0.10982645966578275
+            }
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: terminal_brier exceeds 0.2"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "seed": 23,
+          "metrics": {
+            "sweet_sweet": {
+              "reconstruction": 0.014123268774710596,
+              "reward": 0.018238208110233245,
+              "continuation": 0.1397557247948953,
+              "dynamics_kl": 39.4573118686676,
+              "representation_kl": 39.4573118686676,
+              "ensemble": 0.07487841136753559,
+              "loss": 73.73415231704712,
+              "posterior_image_mse": 0.014123268774710596,
+              "reward_mae": 0.020461166044697165,
+              "terminal_reward_mae": 0.43563133478164673,
+              "continuation_brier": 0.004090693709190851,
+              "terminal_brier": 0.18089339693627546,
+              "terminal_examples": 29,
+              "validation_transitions": 1829,
+              "open_loop_image_mse": 0.03384464979171753,
+              "persistence_image_mse": 0.05022986698895693,
+              "open_loop_reward_mae": 0.10975251341005787
+            }
+          },
+          "gate": {
+            "ready": true,
+            "reasons": [],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        },
+        {
+          "seed": 47,
+          "metrics": {
+            "sweet_sweet": {
+              "reconstruction": 0.014130630181171,
+              "reward": 0.019029980109280586,
+              "continuation": 0.15856769728861764,
+              "dynamics_kl": 39.00491523742676,
+              "representation_kl": 39.00491523742676,
+              "ensemble": 0.07679642806760967,
+              "loss": 73.51020622253418,
+              "posterior_image_mse": 0.014130630181171,
+              "reward_mae": 0.02099053392885253,
+              "terminal_reward_mae": 0.4738591829764432,
+              "continuation_brier": 0.004902592488116753,
+              "terminal_brier": 0.23098391109228775,
+              "terminal_examples": 29,
+              "validation_transitions": 1829,
+              "open_loop_image_mse": 0.034981437027454376,
+              "persistence_image_mse": 0.05022986698895693,
+              "open_loop_reward_mae": 0.12376330653205514
+            }
+          },
+          "gate": {
+            "ready": false,
+            "reasons": [
+              "sweet_sweet: terminal_brier exceeds 0.2"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          }
+        }
+      ]
+    }
+  }
+}

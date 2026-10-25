@@ -324,3 +324,56 @@ Galaxy 1's already bounded final candidate trial continues.
 
 Full accounting, checkpoint hashes, trajectory coordinates, quartiles and paired
 audits are in [the 25000-decision comparison](assets/performance/smg2-online-paired-25000-20261025.json).
+
+## Final Galaxy 1 result and staged experiment completion
+
+Both curiosity arms completed exactly 10000 new real decisions from their common
+288773-decision source, ending at branch counter 298773. Neither collected the
+star. The coefficient-0.1 arm's final extension took 1664.079 seconds and ended
+with 22 timeouts, one death and one budget interruption. No execution errors,
+rejected replay archives or health loss were observed. Final checkpoint hashes
+were verified for both arms, and the live final gates passed for both.
+
+| Measure across health check and extension | Coefficient 0.01 | Coefficient 0.1 |
+| --- | ---: | ---: |
+| New model updates | 1248 | 1248 |
+| New actor updates | 113 | 115 |
+| New imagined transitions | 115712 | 117760 |
+| Death episodes | 1 | 2 |
+| Timeout episodes | 24 | 26 |
+| Median completed-episode projection | 2.15% | 2.26% |
+| Maximum geometric projection | 2.97% | 2.83% |
+| RAM-confirmed mission completions | 0 | 0 |
+
+A common-replay read-only audit used eight fixed held-out batches and Torch
+seeds 11, 23 and 47. Control passed all original gates on three draws; candidate
+passed one, failing terminal Brier on seeds 11 and 47. These are reused
+validation samples and not independent training replications. A small median
+projection increase alongside a lower maximum, another death and less robust
+terminal calibration is not a clear benefit. Keep coefficient 0.01 as the
+unchanged default and retain 0.1 only as an experimental checkpoint/configuration.
+Do not declare significant harm or benefit from one online seed.
+
+![Galaxy 1 episode projection distributions](assets/performance/smg1-curiosity-paired-10000-20261025.png)
+
+![Galaxy 1 control best trajectory](assets/performance/smg1-curiosity-control-best-20261025.png)
+
+![Galaxy 1 candidate best trajectory](assets/performance/smg1-curiosity-curiosity_10x-best-20261025.png)
+
+The [full paired result](assets/performance/smg1-curiosity-paired-10000-20261025.json)
+includes raw audits, counters, hashes, outcomes and trajectory provenance.
+The earlier 10000-decision main continuation and two 10000-decision trial arms
+consume the entire 30000 aggregate new Galaxy 1 decisions allocated here.
+Galaxy 2 consumed 50000 aggregate new online decisions across its two branches;
+offline fitting and imagined transitions are accounted separately.
+
+All online controllers and Dolphin processes were confirmed closed at the
+final audit. Original world-model/PPO checkpoint pairs, ROMs, savestates and
+emulator profiles are retained. No further collection, fitting or actor update
+is scheduled by this completed staged experiment. Retire its periodic follow-up
+after saving this report; do not continue polling completed runs.
+
+The next useful development work is progress/contact validation for Galaxy 2
+and a controlled test of temporal control or curriculum for Galaxy 1, with
+fresh budgets and explicit experiment design. More model updates or stronger
+curiosity alone have not established reduced time to mission completion.

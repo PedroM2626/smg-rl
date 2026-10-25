@@ -3,12 +3,19 @@
 Visual recurrent reinforcement learning for **Super Mario Galaxy 1 and 2** in
 Dolphin on Windows.
 
+**Latest staged result (October 25, 2026):** all bounded experiments finished
+and training is stopped. Galaxy 2 terminal reward weight 5 improved prediction
+gates and enabled more actor updates, without observed navigation improvement
+over 25000 new real decisions per arm. Galaxy 1 curiosity coefficient 0.1 showed
+no clear benefit over 0.01 in 10000 decisions per arm. No full-start mission
+completion was observed. See [the staged results, plots and limitations](docs/staged-training.md).
+
 **The owner authorized Dreamer-inspired collection and training on October 22,
 2026.** At the dated snapshot of **October 23, 2026, 17:48 UTC**, both
 world-model jobs were running. Galaxy 2 had 732,288 real decisions, 22,748 model
 updates, 1,182 imagined actor updates and 1,192,992 imagined transitions;
 Galaxy 1 had 229,349 real decisions, 30,508 model updates, 421 imagined actor
-updates and 431,104 imagined transitions. The best verified geometric progress
+updates and 431,104 imagined transitions. The maximum recorded geometric projection
 was 19.53% (`spinning`) and 13.76% (`double_time`) for Galaxy 2, and 5.06% for
 Galaxy 1; no full-start mission has been completed. At the owner's request,
 both jobs were stopped later that day before the PC was shut down; their final

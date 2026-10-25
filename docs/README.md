@@ -27,6 +27,7 @@ each run's `status.json` remains the live source.
 | Authorized online world-model experiment, dated snapshots, final stop, gates and recovery procedure | [Live world-model experiment](world-model-live.md) |
 | Galaxy 1 terminal sampling, visual-loss balance and prior prediction repair | [Galaxy 1 imagination repair](world-model-smg1-repair.md) |
 | Isolated Galaxy 2 objective transfer tests, paired seeds and offline audit boundaries | [Galaxy 2 world-model ablation](world-model-ablation.md) |
+| Reviewed continuation budgets, paired online results, curiosity trial and final stop | [Staged training results](staged-training.md) |
 | Measured throughput and 1M-decision wall-clock projections | [Main README timing section](../README.md#decision-budgets-and-measured-wall-clock) |
 
 ## Understand and reproduce
@@ -52,8 +53,9 @@ each run's `status.json` remains the live source.
 - Recovery observations verify continuation after an infrastructure failure.
 - Full-course success requires a full-start trajectory and the game-specific
   completion event. Geometric progress and novelty returns alone do not prove it.
-- The multi-seed comparative study and ablations are a protocol, not reported
-  completed experiments.
+- Multi-seed online policy comparisons remain a protocol. Completed paired
+  offline objective ablations and single-seed bounded online comparisons are
+  reported in the ablation and staged-results documents linked above.
 
 When changing behavior, update the relevant specification, command reference,
 configuration example, and validation record together. Keep live counters in
