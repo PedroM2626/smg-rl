@@ -1,0 +1,196 @@
+{
+  "scope": "Read-only paired validation on reused held-out episodes, no fitting and no gate changes",
+  "validation_batches": 16,
+  "rows": [
+    {
+      "checkpoint": "runs/smg1/world-model-20261023-104046-961482/world-final.pt",
+      "sha256": "c99b44d62c347f92ea3f47102c49142821002696eb80168b2f13d135e8313751",
+      "seed": 11,
+      "metrics": {
+        "sweet_sweet": {
+          "reconstruction": 0.014668187184724957,
+          "reward": 0.015912334583845222,
+          "continuation": 0.0878121088453554,
+          "dynamics_kl": 44.34706509113312,
+          "representation_kl": 44.34706509113312,
+          "ensemble": 0.08382235141471028,
+          "loss": 78.5451488494873,
+          "posterior_image_mse": 0.014668187184724957,
+          "reward_mae": 0.020954205945599824,
+          "terminal_reward_mae": 0.3243200081852403,
+          "continuation_brier": 0.00429851132748249,
+          "terminal_brier": 0.10251136484706197,
+          "terminal_examples": 101,
+          "validation_transitions": 3835,
+          "open_loop_image_mse": 0.03485606506001204,
+          "persistence_image_mse": 0.057339595165103674,
+          "open_loop_reward_mae": 0.20757470140233636
+        }
+      },
+      "gate": {
+        "ready": true,
+        "reasons": [],
+        "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+      }
+    },
+    {
+      "checkpoint": "runs/smg1/world-model-20261023-104046-961482/world-final.pt",
+      "sha256": "c99b44d62c347f92ea3f47102c49142821002696eb80168b2f13d135e8313751",
+      "seed": 23,
+      "metrics": {
+        "sweet_sweet": {
+          "reconstruction": 0.015151168045122176,
+          "reward": 0.0320482295792317,
+          "continuation": 0.19287238064134726,
+          "dynamics_kl": 46.3931450843811,
+          "representation_kl": 46.3931450843811,
+          "ensemble": 0.09309320896863937,
+          "loss": 81.60722160339355,
+          "posterior_image_mse": 0.015151168045122176,
+          "reward_mae": 0.03168129624100402,
+          "terminal_reward_mae": 0.5146995655754033,
+          "continuation_brier": 0.007825441049155724,
+          "terminal_brier": 0.18979716053893844,
+          "terminal_examples": 102,
+          "validation_transitions": 3784,
+          "open_loop_image_mse": 0.0384565657004714,
+          "persistence_image_mse": 0.05805268045514822,
+          "open_loop_reward_mae": 0.24373864848166704
+        }
+      },
+      "gate": {
+        "ready": false,
+        "reasons": [
+          "sweet_sweet: terminal_reward_mae exceeds 0.5"
+        ],
+        "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+      }
+    },
+    {
+      "checkpoint": "runs/smg1/world-model-20261023-104046-961482/world-final.pt",
+      "sha256": "c99b44d62c347f92ea3f47102c49142821002696eb80168b2f13d135e8313751",
+      "seed": 47,
+      "metrics": {
+        "sweet_sweet": {
+          "reconstruction": 0.015058430668432266,
+          "reward": 0.023892612181953155,
+          "continuation": 0.11459798143368971,
+          "dynamics_kl": 47.333077907562256,
+          "representation_kl": 47.333077907562256,
+          "ensemble": 0.09495878638699651,
+          "loss": 81.75944018363953,
+          "posterior_image_mse": 0.015058430668432266,
+          "reward_mae": 0.026071110973134637,
+          "terminal_reward_mae": 0.45857491799928607,
+          "continuation_brier": 0.004412509280950161,
+          "terminal_brier": 0.12968401719155015,
+          "terminal_examples": 103,
+          "validation_transitions": 3716,
+          "open_loop_image_mse": 0.03905663336627185,
+          "persistence_image_mse": 0.058618197217583656,
+          "open_loop_reward_mae": 0.24385681748390198
+        }
+      },
+      "gate": {
+        "ready": true,
+        "reasons": [],
+        "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+      }
+    },
+    {
+      "checkpoint": "runs/smg1/world-model-20261024-225907-822079/world-final.pt",
+      "sha256": "c9becebc882d8c98cb68317b78535d50adaaafe5f959ad3b5a5a6bf33cb37120",
+      "seed": 11,
+      "metrics": {
+        "sweet_sweet": {
+          "reconstruction": 0.014676084101665765,
+          "reward": 0.016714916459932283,
+          "continuation": 0.09029662871330402,
+          "dynamics_kl": 44.53906524181366,
+          "representation_kl": 44.53906524181366,
+          "ensemble": 0.08325777319259942,
+          "loss": 78.69093346595764,
+          "posterior_image_mse": 0.014676084101665765,
+          "reward_mae": 0.020676959597039968,
+          "terminal_reward_mae": 0.35302668507441437,
+          "continuation_brier": 0.004300350026008565,
+          "terminal_brier": 0.10548941992460904,
+          "terminal_examples": 101,
+          "validation_transitions": 3835,
+          "open_loop_image_mse": 0.03534700465388596,
+          "persistence_image_mse": 0.057339595165103674,
+          "open_loop_reward_mae": 0.19986967463046312
+        }
+      },
+      "gate": {
+        "ready": true,
+        "reasons": [],
+        "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+      }
+    },
+    {
+      "checkpoint": "runs/smg1/world-model-20261024-225907-822079/world-final.pt",
+      "sha256": "c9becebc882d8c98cb68317b78535d50adaaafe5f959ad3b5a5a6bf33cb37120",
+      "seed": 23,
+      "metrics": {
+        "sweet_sweet": {
+          "reconstruction": 0.015145117591600865,
+          "reward": 0.03183256596275896,
+          "continuation": 0.1947386685797028,
+          "dynamics_kl": 46.03615045547485,
+          "representation_kl": 46.03615045547485,
+          "ensemble": 0.0909956619143486,
+          "loss": 81.37123155593872,
+          "posterior_image_mse": 0.015145117591600865,
+          "reward_mae": 0.03052166145062074,
+          "terminal_reward_mae": 0.519207566392188,
+          "continuation_brier": 0.007492156515032544,
+          "terminal_brier": 0.1796899679954742,
+          "terminal_examples": 102,
+          "validation_transitions": 3784,
+          "open_loop_image_mse": 0.03876801615115255,
+          "persistence_image_mse": 0.05805268045514822,
+          "open_loop_reward_mae": 0.23906663618981838
+        }
+      },
+      "gate": {
+        "ready": false,
+        "reasons": [
+          "sweet_sweet: terminal_reward_mae exceeds 0.5"
+        ],
+        "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+      }
+    },
+    {
+      "checkpoint": "runs/smg1/world-model-20261024-225907-822079/world-final.pt",
+      "sha256": "c9becebc882d8c98cb68317b78535d50adaaafe5f959ad3b5a5a6bf33cb37120",
+      "seed": 47,
+      "metrics": {
+        "sweet_sweet": {
+          "reconstruction": 0.015066912106703967,
+          "reward": 0.025596345047233626,
+          "continuation": 0.12942871508130338,
+          "dynamics_kl": 47.57045245170593,
+          "representation_kl": 47.57045245170593,
+          "ensemble": 0.09386638691648841,
+          "loss": 81.94722819328308,
+          "posterior_image_mse": 0.015066912106703967,
+          "reward_mae": 0.026933387271128595,
+          "terminal_reward_mae": 0.4923855629794806,
+          "continuation_brier": 0.004989286528470416,
+          "terminal_brier": 0.1501046382967013,
+          "terminal_examples": 103,
+          "validation_transitions": 3716,
+          "open_loop_image_mse": 0.038811473990790546,
+          "persistence_image_mse": 0.058618197217583656,
+          "open_loop_reward_mae": 0.24019224848598242
+        }
+      },
+      "gate": {
+        "ready": true,
+        "reasons": [],
+        "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+      }
+    }
+  ]
+}

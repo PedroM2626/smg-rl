@@ -56,3 +56,31 @@ Use the run's `STOP` marker to request an orderly stop and checkpoint save.
 Never stop unrelated jobs. Pause the follow-up once this staged experiment ends
 or if the owner asks to stop. Log stage decisions and publish results in English;
 communicate with the owner in Portuguese.
+
+## Initial Galaxy 1 review (October 24 local time)
+
+Run `runs/smg1/world-model-20261024-225907-822079` completed its exact
+2000-decision budget at 280773 lifetime real decisions in 344.766 seconds
+(5.80 decisions/s). It added 248 model updates, 15 actor updates and 15360
+imagined transitions. The owned emulator closed, stderr was empty and replay
+reported no rejected archives. Five episodes timed out; the sixth was interrupted
+at the budget boundary. All 2000 logged actions had health 3, with no damage,
+death or RAM-confirmed completion. Maximum geometric progress was 2.68%, below
+the historical record; this is not evidence of improved navigation.
+
+The last stochastic four-batch gate failed terminal reward MAE (0.570 > 0.5)
+and terminal Brier (0.226 > 0.2). Before proceeding, a read-only paired audit
+compared the retained source and new checkpoint on identical held-out draws and
+Torch seeds 11, 23 and 47, with 16 batches per seed. Both checkpoints passed
+two of three audits, failing the same seed on terminal reward MAE. Source
+terminal MAE was 0.324/0.515/0.459; current MAE was 0.353/0.519/0.492.
+Current terminal Brier was 0.105/0.180/0.150, all below 0.2. The weak terminal
+prediction is pre-existing and sampling-sensitive; the small MAE regression in
+all three paired draws remains a risk. These are validation seeds, not three
+independently trained policies, and no gate threshold was changed.
+
+Decision: allow a bounded 8000 additional decisions, reaching 10000 new
+decisions in total, with another review before any extension. Actor updates
+continue only on cycles passing every existing quality gate. The diagnostic
+is recorded in [the paired audit](assets/performance/smg1-staged-initial-audit-20261024.json).
+Galaxy 2 offline fitting remains in progress and no online arm has started.
