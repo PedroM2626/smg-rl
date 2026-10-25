@@ -6,6 +6,9 @@ import numpy as np
 class RouteProgress:
     def __init__(self, specification):
         self.specification = specification
+        self.schema = specification.get("schema", 1)
+        if self.schema not in (1, 2):
+            raise ValueError("Unsupported route schema.")
         self.points = np.asarray(specification["waypoints"], dtype=float)
         if (self.points.ndim != 2 or self.points.shape[1] != 3 or len(self.points) < 2
                 or not np.isfinite(self.points).all()):
@@ -36,6 +39,8 @@ class RouteProgress:
                 or (self.initial_health is not None and (telemetry.health is None or telemetry.health < self.initial_health))):
             self.confirmations = 0
             return 0.0
+        if self.schema == 2:
+            return self._update_endpoint_crossing(point)
         start, end = self.points[self.segment:self.segment + 2]
         axis = (end - start)[[0, 2]]
         t = float(np.clip((point - start)[[0, 2]] @ axis / (axis @ axis), 0, 1))
@@ -55,4 +60,35 @@ class RouteProgress:
             self.exited |= self.confirmations >= self.specification["exit_confirmations"]
         else:
             self.confirmations = 0
+        return delta
+
+    def _update_endpoint_crossing(self, point):
+        """Resolve crossings now; proximity must not manufacture later progress.
+
+        Schema 1 is retained for historical reward/checkpoint reproducibility.
+        Schema 2 is an isolated candidate, not enabled in the live motor8 profile.
+        """
+        segment = self.segment
+        while True:
+            start, end = self.points[segment:segment + 2]
+            axis = (end - start)[[0, 2]]
+            raw = float((point - start)[[0, 2]] @ axis / (axis @ axis))
+            t = float(np.clip(raw, 0, 1))
+            nearest = start + t * (end - start)
+            reached = raw >= 1 and np.linalg.norm(point - end) <= self.specification["waypoint_radius"]
+            if (np.linalg.norm((point - nearest)[[0, 2]]) > self.specification["corridor_radius"]
+                    or abs(point[1] - nearest[1]) > self.specification["height_tolerance"]
+                    or (raw >= 1 and not reached)):
+                self.confirmations = 0
+                return 0.0
+            if reached and segment < len(self.lengths) - 1:
+                segment += 1
+                continue
+            break
+        self.segment = segment
+        value = float((self.lengths[:segment].sum() + t * self.lengths[segment]) / self.total_length)
+        delta = max(0.0, value - self.best)
+        self.best = max(self.best, value)
+        self.confirmations = self.confirmations + 1 if reached else 0
+        self.exited |= self.confirmations >= self.specification["exit_confirmations"]
         return delta

@@ -33,6 +33,7 @@ each run's `status.json` remains the live source.
 | Intrinsic reward hypothesis, actor-gradient attribution, stationary visual bonus and control/reward fixtures | [Exploration failure analysis](exploration-failure-analysis.md) |
 | Reviewed curiosity/entropy factorial, sixteen motor actions, grounded route prefix and compatible replay pilots | [Exploration interventions](exploration-interventions.md) |
 | Current eight exclusive actions, actual-input videos, game-specific transfer boundaries and Rainbow assessment | [Motor8 and algorithms](motor8-and-algorithms.md) |
+| Hourly reviews, actual reward-label audit, stationary waypoint credit and isolated route correction | [Motor8 reward review](motor8-reward-review.md) |
 | Measured throughput and 1M-decision wall-clock projections | [Main README timing section](../README.md#decision-budgets-and-measured-wall-clock) |
 
 ## Understand and reproduce

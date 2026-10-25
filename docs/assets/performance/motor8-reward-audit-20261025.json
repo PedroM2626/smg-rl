@@ -1,0 +1,1041 @@
+{
+  "scope": "Read-only actual bootstrap labels, plus offline counterfactual route replay. No optimizer, emulator or training counters changed; all policies were fixed priors. Positive returns alone do not establish learned exploitation.",
+  "gamma": 0.997,
+  "route_specs": [
+    {
+      "file": "config\\routes\\smg1-initial-exit.json",
+      "sha256": "65cbbf0f3a7fc9b7fa792299c5bf2773313a4354fa430cde8edeb27201a0732e"
+    },
+    {
+      "file": "config\\routes\\smg1-initial-exit-v2-candidate.json",
+      "sha256": "99eb4fae04bbb925045d521e6543935a8aa9f14b82d026ee14c1f4d276fa7f09"
+    }
+  ],
+  "episodes": [
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-130607-976206\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "sha256": "98ba1297b46402f8c4f7e691c80185f4b89e2413924e815f49ab01d4b4dbcfce",
+      "decisions": 110,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -2.0757899717998707,
+        "discounted": -1.5011176872122265
+      },
+      "route_payout": 0.03421002820012912,
+      "candidate_route_payout": 0.03421002820012912,
+      "candidate_returns_same_weight": {
+        "undiscounted": -2.0757899717998707,
+        "discounted": -1.5011176872122265
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-130607-976206\\worker-00\\sweet_sweet\\episode-000002.csv",
+      "sha256": "77caa9f66cfa5de8998d3ef1edec5b80f53cd9a10d44946582190fcd4dc85bb9",
+      "decisions": 55,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -2.0549999999999997,
+        "discounted": -1.7512404979724174
+      },
+      "route_payout": 0.0,
+      "candidate_route_payout": 0.0,
+      "candidate_returns_same_weight": {
+        "undiscounted": -2.0549999999999997,
+        "discounted": -1.7512404979724174
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-130607-976206\\worker-00\\sweet_sweet\\episode-000003.csv",
+      "sha256": "e7a59bacd4070a628f79890490ddeeb8a7a901de40030464cf7731a8a934ea5d",
+      "decisions": 91,
+      "outcome": "interrupted",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": 0.02982801252796846,
+        "discounted": 0.036111202868943884
+      },
+      "route_payout": 0.12082801252796854,
+      "candidate_route_payout": 0.12082801252796854,
+      "candidate_returns_same_weight": {
+        "undiscounted": 0.02982801252796846,
+        "discounted": 0.036111202868943884
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "sha256": "69455b1b0b78d8c64be08a62f996fbbb8bc75a56459aa141cb1fa39911fd2b1e",
+      "decisions": 67,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -1.343933857131821,
+        "discounted": -1.0126346021989718
+      },
+      "route_payout": 0.723066142868179,
+      "candidate_route_payout": 0.723066142868179,
+      "candidate_returns_same_weight": {
+        "undiscounted": -1.343933857131821,
+        "discounted": -1.0126346021989718
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000002.csv",
+      "sha256": "6870d0919ce6df77042e28ec586b3b637f005f257bbbc1d46efdd21c035f9b4f",
+      "decisions": 67,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -2.014737427581404,
+        "discounted": -1.64935404717373
+      },
+      "route_payout": 0.052262572418596304,
+      "candidate_route_payout": 0.052262572418596304,
+      "candidate_returns_same_weight": {
+        "undiscounted": -2.014737427581404,
+        "discounted": -1.64935404717373
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000003.csv",
+      "sha256": "abd799e16c572b5d3b1bb01441672cff21aa21300be7b8f3ceddf16c4ec4169f",
+      "decisions": 148,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": 0.7963820447625563,
+        "discounted": 1.2961228734727943
+      },
+      "route_payout": 2.944382044762543,
+      "candidate_route_payout": 2.944382044762542,
+      "candidate_returns_same_weight": {
+        "undiscounted": 0.7963820447625563,
+        "discounted": 1.2946020333147865
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000004.csv",
+      "sha256": "c2508bb45dd5efb4d7c26413d3d590eb0e812df09653885d522b231f2f53e095",
+      "decisions": 139,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -0.4127165248537581,
+        "discounted": 0.22759316013038022
+      },
+      "route_payout": 1.726283475146228,
+      "candidate_route_payout": 1.5999792832509925,
+      "candidate_returns_same_weight": {
+        "undiscounted": -0.5390207167489933,
+        "discounted": 0.12797574438481063
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000005.csv",
+      "sha256": "4b72bf35064ce61853720332d075aeeac9181ea71dbf582b3b7a890bcd14f8b1",
+      "decisions": 43,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -2.0429999999999997,
+        "discounted": -1.8032946202094136
+      },
+      "route_payout": 0.0,
+      "candidate_route_payout": 0.0,
+      "candidate_returns_same_weight": {
+        "undiscounted": -2.0429999999999997,
+        "discounted": -1.8032946202094136
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000006.csv",
+      "sha256": "3d0e9c19145c078e4a16ac52bdcecc57b43d00dfcd6099786ca2bd57645c3c71",
+      "decisions": 26,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": 0.6631412765738105,
+        "discounted": 0.7653518070148453
+      },
+      "route_payout": 2.689141276573808,
+      "candidate_route_payout": 2.513018928850522,
+      "candidate_returns_same_weight": {
+        "undiscounted": 0.48701892885052445,
+        "discounted": 0.5932020894440557
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000007.csv",
+      "sha256": "198e8c1855997b413f39d565d8de2c361387bea41d321830aa2efd4a9b3169e5",
+      "decisions": 136,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -2.136,
+        "discounted": -1.4449514605773484
+      },
+      "route_payout": 0.0,
+      "candidate_route_payout": 0.0,
+      "candidate_returns_same_weight": {
+        "undiscounted": -2.136,
+        "discounted": -1.4449514605773484
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000008.csv",
+      "sha256": "7f2a17bd15384b83572dfa4d223434105f15086d5d7a4e109b2003a50988e999",
+      "decisions": 71,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -2.0709999999999997,
+        "discounted": -1.684691062582338
+      },
+      "route_payout": 0.0,
+      "candidate_route_payout": 0.0,
+      "candidate_returns_same_weight": {
+        "undiscounted": -2.0709999999999997,
+        "discounted": -1.684691062582338
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000009.csv",
+      "sha256": "8909d368ecdcbb145774ccfe5d2b15f03c9d566e8b33ae0e03685130c18f19e8",
+      "decisions": 27,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -0.6930828511362439,
+        "discounted": -0.5947402652412097
+      },
+      "route_payout": 1.333917148863755,
+      "candidate_route_payout": 1.333917148863755,
+      "candidate_returns_same_weight": {
+        "undiscounted": -0.6930828511362439,
+        "discounted": -0.5947402652412097
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000010.csv",
+      "sha256": "4dc64edbbc528daae49a10a53ebec15c43a05664e7e52ff2a1eb002aff127892",
+      "decisions": 45,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -0.561006645127855,
+        "discounted": -0.36369065722823857
+      },
+      "route_payout": 1.4839933548721416,
+      "candidate_route_payout": 1.4839933548721416,
+      "candidate_returns_same_weight": {
+        "undiscounted": -0.561006645127855,
+        "discounted": -0.36369065722823857
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000011.csv",
+      "sha256": "b17a216339282e973d2b74e5eb6cc7ce3cd935a6595a1e291938574aa17248c6",
+      "decisions": 41,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": 0.6536116535017933,
+        "discounted": 0.6908501444722608
+      },
+      "route_payout": 2.6946116535017914,
+      "candidate_route_payout": 2.6946116535017914,
+      "candidate_returns_same_weight": {
+        "undiscounted": 0.6536116535017933,
+        "discounted": 0.6843170561368741
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000012.csv",
+      "sha256": "5e652004a833951b38b24d07631ab8a8fb9b9006c03ff064936fa3f674bdcff4",
+      "decisions": 98,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -1.6664522874264807,
+        "discounted": -1.163911289447247
+      },
+      "route_payout": 0.43154771257351937,
+      "candidate_route_payout": 0.43154771257351937,
+      "candidate_returns_same_weight": {
+        "undiscounted": -1.6664522874264807,
+        "discounted": -1.163911289447247
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000013.csv",
+      "sha256": "480382b70b3548dc4deaaf4af928257caa78ad3c6e94a5869d2f213309be07a5",
+      "decisions": 34,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": 0.21769988571757226,
+        "discounted": 0.35151035005484665
+      },
+      "route_payout": 2.25169988571757,
+      "candidate_route_payout": 1.6671746118573771,
+      "candidate_returns_same_weight": {
+        "undiscounted": -0.3668253881426202,
+        "discounted": -0.2164625307135224
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000014.csv",
+      "sha256": "d6e3b76fbc0cdbfc4cc0138aafe5162fb21a5fe10cad18e0601a934db0e442c0",
+      "decisions": 207,
+      "outcome": "timeout",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": 0.6415769883024027,
+        "discounted": 1.4359713628614237
+      },
+      "route_payout": 2.8485769883023826,
+      "candidate_route_payout": 2.694611653501792,
+      "candidate_returns_same_weight": {
+        "undiscounted": 0.48761165350181157,
+        "discounted": 1.0988840344084114
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000015.csv",
+      "sha256": "a9135223f4dc2445efd27c511ec2158b5900f373598cb22b4a7b828517ccf847",
+      "decisions": 68,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -1.7921594777766794,
+        "discounted": -1.4282303300040484
+      },
+      "route_payout": 0.27584052222332056,
+      "candidate_route_payout": 0.27584052222332056,
+      "candidate_returns_same_weight": {
+        "undiscounted": -1.7921594777766794,
+        "discounted": -1.4282303300040484
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000016.csv",
+      "sha256": "41607d4de1aaf24abee8937c61061633f9ac337455b3aeed734d65a8abdd63c8",
+      "decisions": 67,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -2.011955312526327,
+        "discounted": -1.6461261876332582
+      },
+      "route_payout": 0.05504468747367302,
+      "candidate_route_payout": 0.05504468747367302,
+      "candidate_returns_same_weight": {
+        "undiscounted": -2.011955312526327,
+        "discounted": -1.6461261876332582
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000017.csv",
+      "sha256": "36c05f24c1e0e71223b08d1e31274fefc1bc6aea0cdefae7b0e89116fb38189a",
+      "decisions": 29,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -1.6230938697503916,
+        "discounted": -1.4690008109456714
+      },
+      "route_payout": 0.40590613024960825,
+      "candidate_route_payout": 0.40590613024960825,
+      "candidate_returns_same_weight": {
+        "undiscounted": -1.6230938697503916,
+        "discounted": -1.4690008109456714
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000018.csv",
+      "sha256": "d7aed2f8f32fa2b75c3f1a7b8dff22c51fbb4bfa256e2adb6673bc004545bba6",
+      "decisions": 109,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -0.08199823846413334,
+        "discounted": 0.1595467315137351
+      },
+      "route_payout": 2.0270017615358618,
+      "candidate_route_payout": 2.0270017615358618,
+      "candidate_returns_same_weight": {
+        "undiscounted": -0.08199823846413334,
+        "discounted": 0.1595467315137351
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000019.csv",
+      "sha256": "8b32f18bed067ad78454cd69b5fa618c012c9eb74a909524a9c5d1b2e83134f3",
+      "decisions": 31,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -2.0309999999999997,
+        "discounted": -1.8572597502397539
+      },
+      "route_payout": 0.0,
+      "candidate_route_payout": 0.0,
+      "candidate_returns_same_weight": {
+        "undiscounted": -2.0309999999999997,
+        "discounted": -1.8572597502397539
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000020.csv",
+      "sha256": "5081b3b3170d47cae754b35c27c1788c1b098a83fd5a9f5fbf03fd77f6e464a0",
+      "decisions": 155,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -0.9048384423248121,
+        "discounted": -0.16285005719035417
+      },
+      "route_payout": 1.2501615576751721,
+      "candidate_route_payout": 1.2501615576751721,
+      "candidate_returns_same_weight": {
+        "undiscounted": -0.9048384423248121,
+        "discounted": -0.16285005719035417
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000021.csv",
+      "sha256": "06ecf6d357805d90de2e25e64a67dc2e8d912caf5337c4c7afe95ee053b186f1",
+      "decisions": 41,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -2.041,
+        "discounted": -1.8121542362387197
+      },
+      "route_payout": 0.0,
+      "candidate_route_payout": 0.0,
+      "candidate_returns_same_weight": {
+        "undiscounted": -2.041,
+        "discounted": -1.8121542362387197
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000022.csv",
+      "sha256": "d08109c9ad5ac64100df855163f16cc7f6ae84d1118027a36f7715345dfcdc6f",
+      "decisions": 41,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": 0.6536104781382686,
+        "discounted": 0.7762499087838453
+      },
+      "route_payout": 2.6946104781382645,
+      "candidate_route_payout": 1.6638118304385587,
+      "candidate_returns_same_weight": {
+        "undiscounted": -0.3771881695614372,
+        "discounted": -0.17144350363987293
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000023.csv",
+      "sha256": "5a9b6a472acaf75536ae508d8f17bce6909c0446e0cc4cf466417fcf36c3b0c4",
+      "decisions": 50,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -2.05,
+        "discounted": -1.7727018709146658
+      },
+      "route_payout": 0.0,
+      "candidate_route_payout": 0.0,
+      "candidate_returns_same_weight": {
+        "undiscounted": -2.05,
+        "discounted": -1.7727018709146658
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000024.csv",
+      "sha256": "ef39cfa8d6f250fb77a6ef1d20eec975fbe29df51838ed4bf90a3b578935c640",
+      "decisions": 4,
+      "outcome": "interrupted",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": 0.030210028200129115,
+        "discounted": 0.030170055492245742
+      },
+      "route_payout": 0.03421002820012912,
+      "candidate_route_payout": 0.03421002820012912,
+      "candidate_returns_same_weight": {
+        "undiscounted": 0.030210028200129115,
+        "discounted": 0.030170055492245742
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "sha256": "1be3487f0eaf555c5689e61585946ba11afe4f74a7fa33a9de0bac85da08f9ac",
+      "decisions": 68,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -2.068,
+        "discounted": -1.6969266219783685
+      },
+      "route_payout": 0.0,
+      "candidate_route_payout": 0.0,
+      "candidate_returns_same_weight": {
+        "undiscounted": -2.068,
+        "discounted": -1.6969266219783685
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000002.csv",
+      "sha256": "8c6bdc1619495b6d11c132ec85b07586982987879ea9c0ef586cdcd7f1ece0b6",
+      "decisions": 39,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -1.5900681757951785,
+        "discounted": -1.383964451805293
+      },
+      "route_payout": 0.4489318242048214,
+      "candidate_route_payout": 0.4489318242048214,
+      "candidate_returns_same_weight": {
+        "undiscounted": -1.5900681757951785,
+        "discounted": -1.383964451805293
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000003.csv",
+      "sha256": "377e779e93681977b9048d6c7eb883f645d55ccc3f7a8cbe78b19b32ef4470e6",
+      "decisions": 67,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -0.999069028005011,
+        "discounted": -0.7496939649981501
+      },
+      "route_payout": 1.0679309719949865,
+      "candidate_route_payout": 1.0679309719949865,
+      "candidate_returns_same_weight": {
+        "undiscounted": -0.999069028005011,
+        "discounted": -0.7496939649981501
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000004.csv",
+      "sha256": "8bf9dea933c4af932179f0df9d821502d1c040df9d03be875ce800544a826844",
+      "decisions": 145,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -1.112469673786668,
+        "discounted": -0.6475592496435585
+      },
+      "route_payout": 1.032530326213332,
+      "candidate_route_payout": 1.032530326213332,
+      "candidate_returns_same_weight": {
+        "undiscounted": -1.112469673786668,
+        "discounted": -0.6475592496435585
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000005.csv",
+      "sha256": "c2316ccde10eca189e5ca37dead0d1f061fbeb8587a0bf275381c76343287ffb",
+      "decisions": 142,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -1.2253743764479674,
+        "discounted": -0.5311893043677492
+      },
+      "route_payout": 0.9166256235520327,
+      "candidate_route_payout": 0.9166256235520327,
+      "candidate_returns_same_weight": {
+        "undiscounted": -1.2253743764479674,
+        "discounted": -0.5311893043677492
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000006.csv",
+      "sha256": "a526721048e40e1d1f28e0779afdf88aed6d3da2fa09da1a116da415c211ced1",
+      "decisions": 74,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": 0.6206111833563877,
+        "discounted": 0.9528189859034584
+      },
+      "route_payout": 2.694611183356381,
+      "candidate_route_payout": 2.6946111833563804,
+      "candidate_returns_same_weight": {
+        "undiscounted": 0.6206111833563877,
+        "discounted": 0.9603401740649715
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000007.csv",
+      "sha256": "4690b53e0b1128155a6e25aaf941db50650ddd5a231bc61c6a0908a2775586a9",
+      "decisions": 104,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -2.0210848609478713,
+        "discounted": -1.474422543366025
+      },
+      "route_payout": 0.08291513905212845,
+      "candidate_route_payout": 0.08291513905212845,
+      "candidate_returns_same_weight": {
+        "undiscounted": -2.0210848609478713,
+        "discounted": -1.474422543366025
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000008.csv",
+      "sha256": "78d47344c712cf30bcfd7985c2a55d82726cf5675ff00c0fa5d63e246626cb20",
+      "decisions": 26,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -1.8376653337689892,
+        "discounted": -1.6956024282717213
+      },
+      "route_payout": 0.18833466623101058,
+      "candidate_route_payout": 0.18833466623101058,
+      "candidate_returns_same_weight": {
+        "undiscounted": -1.8376653337689892,
+        "discounted": -1.6956024282717213
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000009.csv",
+      "sha256": "d836ef9cad6e6f36aaeba90bf72fb3ff8b68954b185485fc2755b12cad742746",
+      "decisions": 129,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -1.9548935669935852,
+        "discounted": -1.318595981673349
+      },
+      "route_payout": 0.17410643300641482,
+      "candidate_route_payout": 0.17410643300641482,
+      "candidate_returns_same_weight": {
+        "undiscounted": -1.9548935669935852,
+        "discounted": -1.318595981673349
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000010.csv",
+      "sha256": "f2349c1d4b92a178a179cc45ee465da940b4a54e6da409d70115c11fdf2d4881",
+      "decisions": 27,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": 0.4923061834298652,
+        "discounted": 0.578046240960238
+      },
+      "route_payout": 2.5193061834298636,
+      "candidate_route_payout": 2.5193061834298636,
+      "candidate_returns_same_weight": {
+        "undiscounted": 0.49230618342986565,
+        "discounted": 0.5788460528855683
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000011.csv",
+      "sha256": "8c3465a0a200a53f525ea6370ef535a7cdd95052c349da7559fdb62c9a3c9507",
+      "decisions": 137,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": 0.5521412765738174,
+        "discounted": 0.8682266137452379
+      },
+      "route_payout": 2.689141276573808,
+      "candidate_route_payout": 2.6946100079928534,
+      "candidate_returns_same_weight": {
+        "undiscounted": 0.5576100079928623,
+        "discounted": 0.8717437774604988
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000012.csv",
+      "sha256": "2358fefb8dec013da303c9f67e7534484aa67614cf5cb1239f03bc7c667aba3d",
+      "decisions": 57,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": 0.8034751932875568,
+        "discounted": 0.971331062541597
+      },
+      "route_payout": 2.8604751932875527,
+      "candidate_route_payout": 2.8604751932875527,
+      "candidate_returns_same_weight": {
+        "undiscounted": 0.8034751932875568,
+        "discounted": 0.9723421894751856
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000013.csv",
+      "sha256": "dfbd15e790cd5c5a0f6bb94ba22d80f8d45d67e3fbbdd71eae1347995ba09e24",
+      "decisions": 139,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -1.4228423981070804,
+        "discounted": -0.7326854200555084
+      },
+      "route_payout": 0.7161576018929197,
+      "candidate_route_payout": 0.7161576018929197,
+      "candidate_returns_same_weight": {
+        "undiscounted": -1.4228423981070804,
+        "discounted": -0.7326854200555084
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000014.csv",
+      "sha256": "5669bff09f44df62033f9ef10c6dfa9b4f30b6e9753cb08d61213e063b76b78a",
+      "decisions": 80,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -1.0111798771502127,
+        "discounted": -0.652578632432734
+      },
+      "route_payout": 1.0688201228497833,
+      "candidate_route_payout": 1.0688201228497833,
+      "candidate_returns_same_weight": {
+        "undiscounted": -1.0111798771502127,
+        "discounted": -0.652578632432734
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000015.csv",
+      "sha256": "ec378bdea2cffce6977badb9270b2b29c47dbe6b287fd23498b83229b541877e",
+      "decisions": 70,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -1.66930051625884,
+        "discounted": -1.2931393515888874
+      },
+      "route_payout": 0.40069948374116005,
+      "candidate_route_payout": 0.40069948374116005,
+      "candidate_returns_same_weight": {
+        "undiscounted": -1.66930051625884,
+        "discounted": -1.2931393515888874
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000016.csv",
+      "sha256": "23af2e3e90ead53bad0505644ef5e1ffb2c331ec660b4ba78c50710f74732c27",
+      "decisions": 58,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -1.8189491659308883,
+        "discounted": -1.5037375165795024
+      },
+      "route_payout": 0.23905083406911168,
+      "candidate_route_payout": 0.23905083406911168,
+      "candidate_returns_same_weight": {
+        "undiscounted": -1.8189491659308883,
+        "discounted": -1.5037375165795024
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000017.csv",
+      "sha256": "5467681d56bdc66a15e2af3c761e74e10131f23559c9eaf3763978230f0b5bb7",
+      "decisions": 78,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -1.6076829220294817,
+        "discounted": -1.2089383200393293
+      },
+      "route_payout": 0.47031707797051836,
+      "candidate_route_payout": 0.47031707797051836,
+      "candidate_returns_same_weight": {
+        "undiscounted": -1.6076829220294817,
+        "discounted": -1.2089383200393293
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000018.csv",
+      "sha256": "5335b9c6e134a27ca5542d09df1bb5337c80781cbd6d9a5055aa07c505bdaf83",
+      "decisions": 155,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -2.155,
+        "discounted": -1.383271270237258
+      },
+      "route_payout": 0.0,
+      "candidate_route_payout": 0.0,
+      "candidate_returns_same_weight": {
+        "undiscounted": -2.155,
+        "discounted": -1.383271270237258
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000019.csv",
+      "sha256": "fac616cdd0a623bc598b39ea055bbafd7adace7b7b58e516c4c96e8efb234247",
+      "decisions": 80,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -0.8632826863913383,
+        "discounted": -0.49361361592767783
+      },
+      "route_payout": 1.2167173136086564,
+      "candidate_route_payout": 1.2167173136086564,
+      "candidate_returns_same_weight": {
+        "undiscounted": -0.8632826863913383,
+        "discounted": -0.49361361592767783
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000020.csv",
+      "sha256": "d73e3aa8f1039846a054a2bb505b757edd70ee7a17b4d1dbd7f5448cbc4ace46",
+      "decisions": 93,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -2.093,
+        "discounted": -1.598255527841801
+      },
+      "route_payout": 0.0,
+      "candidate_route_payout": 0.0,
+      "candidate_returns_same_weight": {
+        "undiscounted": -2.093,
+        "discounted": -1.598255527841801
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000021.csv",
+      "sha256": "5d330bf49e3d1447d0928e9d08a19d2906c113ed2653c4369ce65864317cf076",
+      "decisions": 73,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -1.9417403934290565,
+        "discounted": -1.5465890517607
+      },
+      "route_payout": 0.13125960657094354,
+      "candidate_route_payout": 0.13125960657094354,
+      "candidate_returns_same_weight": {
+        "undiscounted": -1.9417403934290565,
+        "discounted": -1.5465890517607
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000022.csv",
+      "sha256": "5364cdbd7b02ad1c9b57194f9d93ed4996dadb2fc74bc8630c45c20840d2273d",
+      "decisions": 102,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -1.4810853203387921,
+        "discounted": -0.9474686249810569
+      },
+      "route_payout": 0.6209146796612077,
+      "candidate_route_payout": 0.6209146796612077,
+      "candidate_returns_same_weight": {
+        "undiscounted": -1.4810853203387921,
+        "discounted": -0.9474686249810569
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000023.csv",
+      "sha256": "086b9665ba0422718706e1d2a37c6f7289268d3c651f293ab86791d6ddce14a5",
+      "decisions": 73,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -1.3514701979835821,
+        "discounted": -0.9594782177457736
+      },
+      "route_payout": 0.7215298020164178,
+      "candidate_route_payout": 0.7215298020164178,
+      "candidate_returns_same_weight": {
+        "undiscounted": -1.3514701979835821,
+        "discounted": -0.9594782177457736
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000024.csv",
+      "sha256": "a2d6a58298f113749d72cdc99f229baba19bf4305b93c866a7599ad9020a593b",
+      "decisions": 61,
+      "outcome": "death",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": -2.0267899717998707,
+        "discounted": -1.6917567310617165
+      },
+      "route_payout": 0.03421002820012912,
+      "candidate_route_payout": 0.03421002820012912,
+      "candidate_returns_same_weight": {
+        "undiscounted": -2.0267899717998707,
+        "discounted": -1.6917567310617165
+      }
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000025.csv",
+      "sha256": "49cb7d883a3dbffb613267e6b80fad256e76678d2b00ec718f0b8bbf6aa521fa",
+      "decisions": 19,
+      "outcome": "interrupted",
+      "complete": false,
+      "prefix_exit": false,
+      "intrinsic_total": 0.0,
+      "observed_returns": {
+        "undiscounted": 0.17083791333914916,
+        "discounted": 0.16963887533382188
+      },
+      "route_payout": 0.18983791333914918,
+      "candidate_route_payout": 0.18983791333914918,
+      "candidate_returns_same_weight": {
+        "undiscounted": 0.17083791333914916,
+        "discounted": 0.16963887533382188
+      }
+    }
+  ],
+  "fixture": {
+    "1": {
+      "position": [
+        146,
+        45,
+        -295
+      ],
+      "first_delta": 0.2416796865204719,
+      "stationary_delta": 0.10357700850877366,
+      "stationary_reward_at_weight_5": 0.5178850425438684,
+      "scope": "Synthetic regression fixture, not game play or learned progress."
+    },
+    "2": {
+      "position": [
+        146,
+        45,
+        -295
+      ],
+      "first_delta": 0.2416796865204719,
+      "stationary_delta": 0.0,
+      "stationary_reward_at_weight_5": 0.0,
+      "scope": "Synthetic regression fixture, not game play or learned progress."
+    }
+  },
+  "summary": {
+    "real_decisions": 4096,
+    "episodes": 52,
+    "deaths": 48,
+    "positive_death_returns": {
+      "undiscounted": 9,
+      "discounted": 11
+    },
+    "candidate_positive_death_returns_same_weight": {
+      "undiscounted": 7,
+      "discounted": 9
+    }
+  }
+}

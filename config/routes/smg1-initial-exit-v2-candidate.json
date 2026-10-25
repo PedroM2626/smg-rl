@@ -1,0 +1,13 @@
+{
+  "schema": 2,
+  "game_id": "RMGE01",
+  "variation": "sweet_sweet",
+  "name": "Endpoint-crossing initial route candidate",
+  "scope": "Offline-tested candidate only; requires live validation and a distinct reward signature before training. Initial prefix is not mission completion.",
+  "waypoints": [[-50, 45, -50], [230, 45, -400], [230, -50, -650], [230, -50, -1250]],
+  "waypoint_radius": 180,
+  "corridor_radius": 200,
+  "height_tolerance": 110,
+  "exit_confirmations": 2,
+  "requires_grounded": true
+}

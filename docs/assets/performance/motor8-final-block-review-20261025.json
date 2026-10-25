@@ -1,0 +1,135 @@
+{
+  "scope": "Completed bounded blocks, reviewed after controller exit. No new training dispatched.",
+  "jobs": [
+    {
+      "game": "smg1",
+      "review": {
+        "run": "runs\\m8-smg1\\world-model-offline-20261025-133915-533209",
+        "state": "completed",
+        "counters": {
+          "real_decisions": 4096,
+          "model_updates": 1024,
+          "actor_updates": 0,
+          "imagined_transitions": 0
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "sweet_sweet: terminal_reward_mae exceeds 0.5",
+            "sweet_sweet: terminal_brier exceeds 0.2"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        },
+        "replay_rejected": [],
+        "deaths": 0,
+        "episodes": 0,
+        "successes": 0,
+        "health_lost": 0,
+        "route_measurement_available": false,
+        "route_prefix_exited": null,
+        "maximum_route_prefix_progress": null,
+        "maximum_geometric_projection": 0,
+        "special_action_fraction": 0.0,
+        "decisions_per_second": 0.0
+      },
+      "checkpoint": "runs\\m8-smg1\\world-model-offline-20261025-133915-533209\\world-final.pt",
+      "checkpoint_sha256": "cfcbf7a86706b227ebe12fc2ea6b5b6b8888fdbff568b11a22193c1f9d1fdd7a",
+      "validation": {
+        "sweet_sweet": {
+          "reconstruction": 0.013988356571644545,
+          "reward": 0.08494006749242544,
+          "continuation": 0.39166694693267345,
+          "dynamics_kl": 46.95421028137207,
+          "representation_kl": 46.95421028137207,
+          "ensemble": 0.06592042744159698,
+          "loss": 78.06597328186035,
+          "posterior_image_mse": 0.013988356571644545,
+          "reward_mae": 0.07658185996115208,
+          "terminal_reward_mae": 1.1813069880008698,
+          "continuation_brier": 0.015127306571230292,
+          "terminal_brier": 0.5255249016560041,
+          "terminal_examples": 26,
+          "validation_transitions": 917,
+          "open_loop_image_mse": 0.036860437132418156,
+          "persistence_image_mse": 0.0815325528383255,
+          "open_loop_reward_mae": 0.20183215290308
+        }
+      },
+      "decision": "Stop SMG1 continuation and diagnose reward plus terminal calibration. No further offline fit is allocated.",
+      "reason": "The single extra 128-cycle fit is exhausted:1024 model updates, zero actor/imagined updates; original terminal reward/continuation gates still fail. Route-v1 reward audit also establishes stationary segment credit and positive partial-prefix death returns. Schema2 is an offline-only candidate; do not silently change profiles, replay or reward scales."
+    },
+    {
+      "game": "smg2",
+      "review": {
+        "run": "runs\\m8-smg2\\world-model-20261025-133915-837384",
+        "state": "completed",
+        "counters": {
+          "real_decisions": 6096,
+          "model_updates": 636,
+          "actor_updates": 134,
+          "imagined_transitions": 129552
+        },
+        "gate": {
+          "ready": true,
+          "reasons": [],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        },
+        "replay_rejected": [],
+        "deaths": 29,
+        "episodes": 31,
+        "successes": 0,
+        "health_lost": 0,
+        "route_measurement_available": false,
+        "route_prefix_exited": null,
+        "maximum_route_prefix_progress": null,
+        "maximum_geometric_projection": 0.028260587945689877,
+        "special_action_fraction": 0.242,
+        "decisions_per_second": 8.840365107078934
+      },
+      "checkpoint": "runs\\m8-smg2\\world-model-20261025-133915-837384\\world-final.pt",
+      "checkpoint_sha256": "81d9c99ab880759f744a29b7094e3317869c0098c30fa001b3681c6a61b245d7",
+      "validation": {
+        "spinning": {
+          "reconstruction": 0.015289579518139362,
+          "reward": 0.029469346161931753,
+          "continuation": 0.08953461004421115,
+          "dynamics_kl": 1.1296333968639374,
+          "representation_kl": 1.1296333968639374,
+          "ensemble": 0.1601262018084526,
+          "loss": 0.9721997976303101,
+          "posterior_image_mse": 0.015289579518139362,
+          "reward_mae": 0.047838018741458654,
+          "terminal_reward_mae": 0.39972657759984337,
+          "continuation_brier": 0.016335271880961955,
+          "terminal_brier": 0.05833245664834976,
+          "terminal_examples": 15,
+          "validation_transitions": 457,
+          "open_loop_image_mse": 0.02589572872966528,
+          "persistence_image_mse": 0.04027770832180977,
+          "open_loop_reward_mae": 0.27641303464770317
+        },
+        "double_time": {
+          "reconstruction": 0.015229304321110249,
+          "reward": 0.00529759781784378,
+          "continuation": 0.008537945861462504,
+          "dynamics_kl": 1.1527468860149384,
+          "representation_kl": 1.1527468860149384,
+          "ensemble": 0.1955779865384102,
+          "loss": 0.9162909835577011,
+          "posterior_image_mse": 0.015229304321110249,
+          "reward_mae": 0.026228595292195678,
+          "terminal_reward_mae": 0.41324598448617117,
+          "continuation_brier": 0.00043314090316926013,
+          "terminal_brier": 0.0024874051118136515,
+          "terminal_examples": 14,
+          "validation_transitions": 419,
+          "open_loop_image_mse": 0.025880086235702038,
+          "persistence_image_mse": 0.03983386419713497,
+          "open_loop_reward_mae": 0.16697833128273487
+        }
+      },
+      "decision": "Real-training cap reached; only the predeclared bounded policy evaluations remain.",
+      "reason": "6096 aggregate real decisions,636 model updates,134 actor updates and129552 imagined transitions. Final gates pass, but the final block has no RAM star success. No further real training allocation; review the three-seed videos for both missions, at most600 decisions per attempt."
+    }
+  ]
+}
