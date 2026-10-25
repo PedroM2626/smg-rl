@@ -1,6 +1,7 @@
 import json
 from dataclasses import replace
 from pathlib import Path
+from types import SimpleNamespace
 
 import numpy as np
 
@@ -52,6 +53,29 @@ def make_env(tmp_path):
     backend = FakeDolphin()
     env = GalaxyEnv(config, backend, tmp_path / "run", memory=backend, intrinsic=False)
     return env, backend
+
+
+def test_frontier_reset_preserves_observation_context_and_gives_no_teleport_reward(tmp_path):
+    env, backend = make_env(tmp_path)
+    backend.steps = 6
+    saved = backend.sample()
+    entry = {"position": saved.position, "health": saved.health, "scene_frame": saved.scene_frame,
+             "file": "fixture.state"}
+    env.config["frontier"] = {"enabled": True}
+    env.archives["spinning"] = SimpleNamespace(
+        choose=lambda rng: entry, state_path=lambda item: "fixture", consider=lambda *args: (None, 0))
+    backend.load_state = lambda path: None
+    backend.advance = lambda names: None
+    try:
+        observation, _ = env.reset(options={"variation": 0})
+        assert env.start_kind == "frontier"
+        assert env.rows[0]["progress"] == env.progress.best > 0
+        assert all(np.array_equal(frame, observation["image"][0]) for frame in observation["image"])
+        _, reward, _, _, info = env.step(0)
+        assert reward == env.config["rewards"]["step"]
+        assert info["progress_reward"] == 0 and info["start_kind"] == "frontier"
+    finally:
+        env.close()
 
 
 def test_policy_observation_excludes_memory_and_encodes_scenario(tmp_path):

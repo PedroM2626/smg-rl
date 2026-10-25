@@ -143,6 +143,10 @@ def publish(run, agent, started, state, diagnostics=None, infos=(), start_real=0
             "imagined_transitions": agent.imagined_transitions,
             "elapsed_seconds": elapsed, "decisions_per_second": (agent.real_decisions - start_real) / max(elapsed, 1e-6),
             "updated_at": datetime.now(timezone.utc).isoformat(), "progress": [info.get("best_progress", 0) for info in infos],
+            "start_kinds": [info.get("start_kind", "full_start") for info in infos],
+            "real_validation_decisions": sum(info.get("frontier_validation_decisions", 0) for info in infos),
+            "physical_decisions_this_run": agent.real_decisions - start_real + sum(
+                info.get("frontier_validation_decisions", 0) for info in infos),
             "diagnostics": diagnostics or {},
             "note": "Only real RAM-verified episodes can establish mission completion. Imagined transitions are not real timesteps."}
     atomic_json(run / "status.json", data)

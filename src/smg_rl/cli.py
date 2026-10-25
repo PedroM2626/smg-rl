@@ -60,6 +60,14 @@ def main():
         else:
             world.add_argument("--cycles", type=int, default=100)
     commands.add_parser("inspect-replay", help="Inspect visual replay without collecting or fitting.")
+    horizon = commands.add_parser("test-world-horizon", help="Paired horizon prediction audit and guarded offline actor trial.")
+    horizon.add_argument("--checkpoint", required=True)
+    horizon.add_argument("--updates", type=int, default=64)
+    video = commands.add_parser("record-world-policy", help="Record full-start episodes without learning (ffmpeg required).")
+    video.add_argument("--checkpoint", required=True)
+    video.add_argument("--variation", type=int, default=0)
+    video.add_argument("--seeds", nargs="+", type=int, default=[11, 23, 47])
+    video.add_argument("--max-steps", type=int, default=600)
     ablation = commands.add_parser("ablate-world-model", help="Authorized offline SMG2 objective screening; no emulator.")
     ablation.add_argument("--checkpoint", required=True)
     ablation.add_argument("--updates", type=int, default=128)
@@ -88,6 +96,16 @@ def main():
         print(plot_trajectory(args.trajectory, args.output))
         return
     config = load_config(args.config)
+    if args.command == "test-world-horizon":
+        from smg_rl.horizon_trial import horizon_trial
+
+        print(horizon_trial(config, args.checkpoint, args.updates))
+        return
+    if args.command == "record-world-policy":
+        from smg_rl.policy_video import record_policy
+
+        print(record_policy(args.config, args.checkpoint, args.variation, args.seeds, args.max_steps))
+        return
     if args.command == "ablate-world-model":
         from smg_rl.world_ablation import run_ablation
 

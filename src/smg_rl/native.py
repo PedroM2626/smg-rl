@@ -3,9 +3,11 @@
 import ctypes
 import mmap
 import os
+import shutil
 import struct
 import time
 import uuid
+from pathlib import Path
 
 import cv2
 import numpy as np
@@ -193,11 +195,44 @@ class NativeDolphin(BackgroundDolphin):
 
     @measured("reset")
     def load_slot(self, slot):
+        if not 1 <= slot <= 10 or (slot > 4 and not self.bridge.get(44) & 1):
+            raise ValueError("This slot needs a frontier-capable native build.")
         self.release()
         previous = self.bridge.get(9)
         self.bridge.command(3, slot, process=self.process)
         self._fresh_image(previous)
         self.paused = True
+
+    def save_state(self, destination):
+        """Save only to reserved slot 8 in this owned profile, then retain a copy."""
+        if not self.bridge.get(44) & 1:
+            raise RuntimeError("This native build does not support frontier savestates.")
+        destination = Path(destination)
+        if destination.exists():
+            raise FileExistsError("Frontier savestates are immutable.")
+        source = self.root / "StateSaves" / f"{self.memory.profile.game_id}.s08"
+        if source.exists():
+            source.rename(source.with_name(source.name + ".retained-" + uuid.uuid4().hex))
+        self.release()
+        self.bridge.command(5, 8, process=self.process)
+        deadline = time.monotonic() + self.config["parallel"]["timeout"]
+        # Dolphin compresses asynchronously and atomically renames its finished file.
+        while not source.exists():
+            if time.monotonic() > deadline or self.process.poll() is not None:
+                raise TimeoutError("Frontier state serialization did not finish.")
+            time.sleep(0.01)
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, destination)
+
+    def load_state(self, source):
+        """Stage an immutable archive file into reserved slot 9 of this profile."""
+        if not self.bridge.get(44) & 1:
+            raise RuntimeError("This native build does not support frontier savestates.")
+        destination = self.root / "StateSaves" / f"{self.memory.profile.game_id}.s09"
+        if destination.exists():
+            destination.rename(destination.with_name(destination.name + ".retained-" + uuid.uuid4().hex))
+        shutil.copy2(source, destination)
+        self.load_slot(9)
 
     @measured("advance")
     def advance(self, names):

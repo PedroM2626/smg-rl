@@ -20,12 +20,14 @@ void Start(QObject* parent, Core::System& system)
 {
   auto* f = Fields();
   if (!f) return;
+  // Optional capabilities preserve protocol-v3 compatibility with older clients.
+  f[44] = 1;  // Private slot-8 save and slot-9 restore for frontier archives.
   auto process = std::make_shared<std::function<void()>>();
   *process = [f, &system, pending = LONG{0}, command = LONG{0}, argument = LONG{0}]() mutable {
     f[Paused] = Core::GetState(system) == Core::State::Paused;
     auto complete = [&] {
       if (!pending || Core::GetState(system) != Core::State::Paused) return;
-      if (command == 3 && f[LoadComplete] != pending) return;
+      if ((command == 3 || command == 5) && f[LoadComplete] != pending) return;
       if (command == 2 && (f[StepComplete] != pending || f[CompletedFrames] != argument)) return;
       const auto started = Ticks();
       Core::SetState(system, Core::State::Paused, false);
@@ -74,7 +76,7 @@ void Start(QObject* parent, Core::System& system)
     }
     else if (command == 3)
     {
-      if (argument < 1 || argument > 4) { f[Error] = 1; Reply(request); return; }
+      if (argument < 1 || argument > 10) { f[Error] = 1; Reply(request); return; }
       Core::SetState(system, Core::State::Paused);
       State::Load(system, static_cast<unsigned int>(argument));
       Core::RunOnCPUThread(system, [f, request] {
@@ -83,6 +85,18 @@ void Start(QObject* parent, Core::System& system)
         SignalCpu();
       });
       Core::SetState(system, Core::State::Paused);
+      pending = request;
+    }
+    else if (command == 5)
+    {
+      if (argument != 8) { f[Error] = 1; Reply(request); return; }
+      Core::SetState(system, Core::State::Paused);
+      State::Save(system, 8);
+      Core::RunOnCPUThread(system, [f, request] {
+        MemoryBarrier();
+        InterlockedExchange(&f[LoadComplete], request);
+        SignalCpu();
+      });
       pending = request;
     }
     else { f[Error] = 1; Reply(request); return; }

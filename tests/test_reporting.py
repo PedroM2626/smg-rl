@@ -35,6 +35,22 @@ def make_run(root, name="parallel-example"):
     return run
 
 
+def test_assisted_start_success_and_status_are_excluded_even_near_initial_state(tmp_path):
+    run = make_run(tmp_path)
+    path = run / "worker-00/spinning/episode-000001.csv"
+    trajectory(path, success=True, progress=1, start=(0, 0, 0))
+    with path.open(newline="") as stream:
+        rows = [{**row, "start_kind": "frontier"} for row in csv.DictReader(stream)]
+    with path.open("w", newline="") as stream:
+        writer = csv.DictWriter(stream, fieldnames=rows[0])
+        writer.writeheader()
+        writer.writerows(rows)
+    (run / "status.json").write_text(json.dumps({"progress": [1], "start_kinds": ["frontier"]}))
+    task = training_report(tmp_path)["tasks"][0]
+    assert task["successful_training_episodes"] == task["recorded_training_episodes"] == 0
+    assert task["maximum_valid_progress_percent"] is None
+
+
 def trajectory(path, progress=0.4, success=False, start=(0, 0, 0), nerve=None):
     path.parent.mkdir(parents=True, exist_ok=True)
     rows = [

@@ -94,6 +94,8 @@ def training_report(root, output=None):
                         continue
                     if rows[0].get("action") != "reset":
                         continue
+                    if rows[0].get("start_kind", "full_start") != "full_start":
+                        continue  # Assisted starts never establish full-start success.
                     start = [float(rows[0][axis]) for axis in ("x", "y", "z")]
                     if not all(math.isfinite(x) for x in start) or math.dist(start, baseline) > 500:
                         warnings.append(f"Rejected non-start trajectory: {path}")
@@ -132,6 +134,9 @@ def training_report(root, output=None):
             # Older workers have no live.csv. Their cached RAM-valid episode high
             # water is useful, but cannot supply an unrecorded trajectory.
             for index, progress in enumerate(status.get("progress", [])):
+                starts = status.get("start_kinds", [])
+                if index < len(starts) and starts[index] != "full_start":
+                    continue
                 if index % len(config["variations"]) != config["variations"].index(variation):
                     continue
                 if (

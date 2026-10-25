@@ -11,8 +11,10 @@ import numpy as np
 from gymnasium import spaces
 
 from smg_rl.actions import ACTIONS, action_name
+from smg_rl.checkpoints import digest
 from smg_rl.curiosity import IntrinsicReward
 from smg_rl.diagnostics import StageProfiler, atomic_json, measured
+from smg_rl.frontier import FrontierArchive
 from smg_rl.memory import GameMemory, MemoryFault
 from smg_rl.plotting import plot_trajectory
 from smg_rl.profiles import game_id
@@ -60,6 +62,9 @@ class GalaxyEnv(gym.Env):
         self.closed = False
         self.profiler = StageProfiler()
         self.replay = None
+        self.archives = {}
+        self.frontier_history = deque(maxlen=6)
+        self.frontier_validation_decisions = 0
         replay = config.get("replay", {})
         training_run = None
         for parent in (self.run_dir, *self.run_dir.parents):
@@ -91,7 +96,25 @@ class GalaxyEnv(gym.Env):
         if index not in range(self.scenario_count):
             raise ValueError("Variation index is outside the configured scenarios.")
         self.variation = self.config["variations"][index]
-        self.backend.load_slot(self.variation["start_slot"])
+        self.start_kind, self.start_state_id = "full_start", ""
+        self.archive = None
+        settings = self.config.get("frontier", {})
+        if settings.get("enabled", False):
+            name = self.variation["name"]
+            if name not in self.archives:
+                identity = {"game_id": game_id(self.config), "scenario": self.variation["scenario"],
+                            "emulator_sha256": digest(self.config["paths"]["dolphin"])}
+                minimum = self.calibration[name]["start"][1] - 50
+                self.archives[name] = FrontierArchive(
+                    Path(self.config["paths"]["frontier"]) / self.run_dir.name / name,
+                    identity, {"minimum_height": minimum, **settings})
+            self.archive = self.archives[name]
+        entry = self.archive.choose(self.np_random) if self.archive else None
+        if entry:
+            self.backend.load_state(self.archive.state_path(entry))
+            self.start_kind, self.start_state_id = "frontier", entry["file"]
+        else:
+            self.backend.load_slot(self.variation["start_slot"])
         self.telemetry = self.memory.sample()
         if (
             self.telemetry.scenario != self.variation["scenario"]
@@ -100,8 +123,14 @@ class GalaxyEnv(gym.Env):
         ):
             raise MemoryFault("Reset did not restore the requested live starting state.")
         expected = self.calibration[self.variation["name"]]
-        if np.linalg.norm(np.asarray(self.telemetry.position) - expected["start"]) > 500:
+        target = entry["position"] if entry else expected["start"]
+        if np.linalg.norm(np.asarray(self.telemetry.position) - target) > (0.01 if entry else 500):
             raise MemoryFault("Reset position does not match the calibrated start.")
+        if entry and (self.telemetry.scene_frame != entry["scene_frame"]
+                      or self.telemetry.health != entry["health"]):
+            raise MemoryFault("Frontier reset did not restore time/health context.")
+        self.frontier_history.clear()
+        self.frontier_history.append(self.telemetry)
         frame = self.backend.image()
         self.frames.clear()
         self.frames.extend(frame.copy() for _ in range(self.frames.maxlen))
@@ -126,7 +155,7 @@ class GalaxyEnv(gym.Env):
             self.replay.begin(frame, index)
         if self.use_intrinsic:
             self.curiosity[self.variation["name"]].reset(frame)
-        self._append(-1, 0.0, 0.0, "running", {})
+        self._append(-1, 0.0, self.progress.best, "running", {})
         return self._observation(), self.telemetry.to_dict()
 
     @measured("step")
@@ -184,6 +213,13 @@ class GalaxyEnv(gym.Env):
             self.steps >= self.config["environment"]["max_steps"]
             or self.idle_steps >= self.config["environment"]["idle_limit"]
         )
+        self.frontier_history.append(self.telemetry)
+        if self.archive and not terminated and not truncated:
+            _, probes = self.archive.consider(
+                self.backend, self.telemetry, self.frontier_history, fraction,
+                {"episode": self.episode, "step": self.steps, "start_kind": self.start_kind,
+                 "parent_state": self.start_state_id, "run": str(self.run_dir)})
+            self.frontier_validation_decisions += probes
         timeout_penalty = weights.get("timeout", 0.0) if truncated else 0.0
         reward += timeout_penalty
         if self.replay:
@@ -200,6 +236,9 @@ class GalaxyEnv(gym.Env):
             else "running"
         )
         metrics.update(
+            start_kind=self.start_kind,
+            frontier_state=self.start_state_id,
+            frontier_validation_decisions=self.frontier_validation_decisions,
             progress=fraction,
             best_progress=self.progress.best,
             progress_reward=weights["progress"] * delta,
@@ -252,6 +291,9 @@ class GalaxyEnv(gym.Env):
                 step=self.steps,
                 time=time.time(),
                 variation=self.variation["name"],
+                start_kind=self.start_kind,
+                frontier_state=self.start_state_id,
+                frontier_validation_decisions=self.frontier_validation_decisions,
                 action=action_name(action) if action >= 0 else "reset",
                 x=t.position[0],
                 y=t.position[1],
@@ -331,6 +373,8 @@ class GalaxyEnv(gym.Env):
                         "progress_total": sum(r["progress_reward"] for r in self.rows),
                         "timeout_total": sum(r["timeout_penalty"] for r in self.rows),
                         "reward_revision": self.config["rewards"].get("revision", "legacy"),
+                        "start_kind": self.start_kind,
+                        "frontier_state": self.start_state_id,
                     }
                 )
                 + "\n"
@@ -349,7 +393,12 @@ class GalaxyEnv(gym.Env):
                 if self.replay:
                     self.replay.close()
             finally:
-                self.backend.close()
+                try:
+                    for archive in self.archives.values():
+                        if hasattr(archive, "close"):
+                            archive.close()
+                finally:
+                    self.backend.close()
 
     def intrinsic_state(self):
         return {name: module.state_dict() for name, module in self.curiosity.items()}
