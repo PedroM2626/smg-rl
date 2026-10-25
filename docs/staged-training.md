@@ -236,3 +236,26 @@ counters overlap and must not be summed as unique training history. Stop the
 Galaxy 1 experiment after these budgets and report the comparison, without an
 automatic further extension. The Galaxy 2 control first block remains active
 within its previously reviewed 23000-decision extension budget.
+
+## Galaxy 2 continued-control first block complete
+
+The control reached 895272 branch-lifetime real decisions, exactly 25000 new
+decisions including its health check. Its 23000-decision extension took
+2012.625 seconds (11.43 aggregate decisions/s), added 716 model updates and
+31 actor updates, and ended with 536 deaths and four budget interruptions.
+There were no RAM-confirmed completions, stderr errors or rejected replay
+archives. The final checkpoint SHA-256 was verified. Final terminal reward MAE
+was 0.8074 in Spinning and 0.7440 in Double Time, so the original gate blocked
+imagination at the end; no thresholds were relaxed.
+
+Extension maximum/median completed-episode projection was 14.45%/6.28% for
+Spinning and 10.43%/3.43% for Double Time. These remain geometric measurements,
+including the previously documented airborne/falling ambiguity. A higher
+isolated projection is not evidence of successful platform navigation.
+See [the control block record](assets/performance/smg2-control-first-block-20261025.json).
+
+Decision: start the candidate's matched 23000-decision extension from its own
+health-check final checkpoint, with its own replay. Stop at the same 895272
+branch counter (25000 new decisions per arm), then review before any longer
+budget. Galaxy 1's bounded curiosity-control extension is still running and
+has not received any additional allocation.
