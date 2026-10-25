@@ -1,5 +1,10 @@
 # Motor8 reward review, October 25, 2026
 
+**Subsequent closure:** [all six remaining SMG2 evaluations](motor8-evaluation-results.md)
+are complete, with zero stars. The finite pilot has closed and its hourly
+follow-up is retired. Statements about pending evaluations below describe the
+earlier reward-review boundary.
+
 The owner changed experiment reviews from every ten minutes to once per hour.
 Finite subprocess budgets and reviews before successors remain unchanged.
 A short block may finish and wait almost an hour; hourly scheduling reduces

@@ -1,10 +1,12 @@
 # Eight exclusive actions, visible policy inputs and algorithm comparison
 
-**Latest review:** [the reward audit and hourly cadence](motor8-reward-review.md)
-supersede pending dispatch permissions below. SMG1 stopped after its one extra
+**Pilot closed:** [the final trained-policy evaluations](motor8-evaluation-results.md)
+completed all six SMG2 attempts, with zero stars. No further jobs are allocated;
+the hourly follow-up is retired. [The reward audit](motor8-reward-review.md)
+supersedes historical dispatch permissions below. SMG1 stopped after its one extra
 offline fit failed terminal gates, with a separately identified route-reward
-bug and offline-only schema-2 candidate. SMG2 reached its 6096-real cap; only
-its already declared bounded evaluations remain. Historical prefix percentages
+bug and offline-only schema-2 candidate. SMG2 reached its 6096-real cap and
+finished its bounded evaluations. Historical prefix percentages
 can include schema-1 waypoint bookkeeping credit and require that qualification.
 
 Date: October 25, 2026. This is the current owner-authorized intervention,

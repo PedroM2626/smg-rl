@@ -16,6 +16,8 @@ def main():
     for game in ('smg1','smg2'):
         for manifest in sorted(Path(f'runs/m8-{game}').glob('eval-world-video-*/recording.json')):
             data = json.loads(manifest.read_text())
+            if data.get('source_actor_updates') != 0 or data.get('seeds') != [11]:
+                continue  # Later trained evaluations must never be labelled as prior previews.
             movie = Path(data['video'])
             trace = [json.loads(line) for line in movie.with_suffix('.inputs.jsonl').read_text().splitlines()]
             assert len(trace) == data['frames_written']

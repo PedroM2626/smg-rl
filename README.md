@@ -3,11 +3,16 @@
 Visual recurrent reinforcement learning for **Super Mario Galaxy 1 and 2** in
 Dolphin on Windows.
 
-**Latest reward review:** [hourly reviews and the motor8 reward audit](docs/motor8-reward-review.md)
+**Finite motor8 pilot closed:** [all six trained SMG2 evaluations](docs/motor8-evaluation-results.md)
+ended in death with zero RAM-confirmed stars. Videos retain the actual policy
+image and applied controls. No training or evaluation remains running under this
+pilot, and its follow-up is retired; SMG1 remains blocked for diagnosis.
+
+**Reward review:** [hourly reviews and the motor8 reward audit](docs/motor8-reward-review.md)
 identify stationary waypoint credit and an overweighted SMG1 initial-prefix
 reward. An isolated schema-2 correction is tested but not enabled in training.
 SMG1 continuation stopped at 4096 new real decisions after prediction gates
-still failed; SMG2 reached its 6096-decision cap and awaits bounded evaluation.
+still failed; SMG2 reached its 6096-decision cap and completed bounded evaluation.
 
 **Current owner-selected controls:** [exactly eight exclusive actions in both games](docs/motor8-and-algorithms.md),
 with a video inset of the actual policy image and live applied-button indicators.

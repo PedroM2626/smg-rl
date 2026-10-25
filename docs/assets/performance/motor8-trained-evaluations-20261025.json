@@ -1,0 +1,225 @@
+{
+  "scope": "Predeclared full-start policy evaluations, seeds11/23/47, maximum600 decisions per attempt. No optimizer or replay recording. Validation seeds are not independent training replications. Geometric projection is not verified safe traversal or native mission percentage.",
+  "missions": [
+    {
+      "variation": "spinning",
+      "run": "runs\\m8-smg2\\eval-world-video-20261025-144959-506962",
+      "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\m8-smg2\\world-model-20261025-133915-837384\\world-final.pt",
+      "checkpoint_sha256": "81d9c99ab880759f744a29b7094e3317869c0098c30fa001b3681c6a61b245d7",
+      "actor_updates": 134,
+      "episodes": [
+        {
+          "seed": 11,
+          "decisions": 73,
+          "outcome": "death",
+          "geometric_projection_percent": 3.0890323081212565,
+          "final_telemetry": {
+            "position": [
+              -1600.5439453125,
+              -3408.954833984375,
+              -532.0519409179688
+            ],
+            "scenario": 1,
+            "stage": "SecretAthleticGalaxy",
+            "actor": 2166529088,
+            "actor_nerve": 2155695676,
+            "scene_nerve": 2155696928,
+            "scene_frame": 1,
+            "dead": true,
+            "complete": false,
+            "health": null,
+            "max_health": null,
+            "grounded": null
+          }
+        },
+        {
+          "seed": 23,
+          "decisions": 75,
+          "outcome": "death",
+          "geometric_projection_percent": 0.21092359868495292,
+          "final_telemetry": {
+            "position": [
+              -530.9188842773438,
+              -3391.689697265625,
+              541.3154907226562
+            ],
+            "scenario": 1,
+            "stage": "SecretAthleticGalaxy",
+            "actor": 2166529088,
+            "actor_nerve": 2155695676,
+            "scene_nerve": 2155696928,
+            "scene_frame": 0,
+            "dead": true,
+            "complete": false,
+            "health": null,
+            "max_health": null,
+            "grounded": null
+          }
+        },
+        {
+          "seed": 47,
+          "decisions": 24,
+          "outcome": "death",
+          "geometric_projection_percent": 0.15754870922135458,
+          "final_telemetry": {
+            "position": [
+              -1154.73681640625,
+              -3436.281005859375,
+              787.228515625
+            ],
+            "scenario": 1,
+            "stage": "SecretAthleticGalaxy",
+            "actor": 2166529088,
+            "actor_nerve": 2155695676,
+            "scene_nerve": 2155696928,
+            "scene_frame": 1,
+            "dead": true,
+            "complete": false,
+            "health": null,
+            "max_health": null,
+            "grounded": null
+          }
+        }
+      ],
+      "physical_evaluation_decisions": 172,
+      "outcomes": {
+        "death": 3
+      },
+      "ram_full_start_stars": 0,
+      "maximum_geometric_projection_percent": 3.0890323081212565,
+      "video": "runs\\motor8-evaluations-20261025\\smg2-spinning-trained.mp4",
+      "video_sha256": "f6a1788ed6bf2772643f2b8a2e43d42072a913412fb5f872232a2853f4a772eb",
+      "sidecar_sha256": "36d67531dba78fe77eef7f0a3d3328c6004d673f570cbbd3197e751ba7b87400",
+      "frames": 1035,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "width": 1174,
+            "height": 660,
+            "avg_frame_rate": "30/1",
+            "nb_frames": "1035"
+          }
+        ],
+        "format": {
+          "duration": "34.500000"
+        }
+      },
+      "best_trace": "runs\\m8-smg2\\eval-world-video-20261025-144959-506962\\worker-00\\spinning\\episode-000001.csv",
+      "trajectory": "docs\\assets\\performance\\motor8-smg2-spinning-evaluation-20261025.png",
+      "sidecar_checks": "Exact per-decision input digest retained, exclusive applied controls, correct8-on/4-off jump/spin samples and all declared attempts retained."
+    },
+    {
+      "variation": "double_time",
+      "run": "runs\\m8-smg2\\eval-world-video-20261025-145022-205988",
+      "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\m8-smg2\\world-model-20261025-133915-837384\\world-final.pt",
+      "checkpoint_sha256": "81d9c99ab880759f744a29b7094e3317869c0098c30fa001b3681c6a61b245d7",
+      "actor_updates": 134,
+      "episodes": [
+        {
+          "seed": 11,
+          "decisions": 97,
+          "outcome": "death",
+          "geometric_projection_percent": 2.1428350847527073,
+          "final_telemetry": {
+            "position": [
+              499.0538635253906,
+              -3696.8740234375,
+              -334.01947021484375
+            ],
+            "scenario": 2,
+            "stage": "SecretAthleticGalaxy",
+            "actor": 2166530752,
+            "actor_nerve": 2155695676,
+            "scene_nerve": 2155696928,
+            "scene_frame": 9,
+            "dead": true,
+            "complete": false,
+            "health": null,
+            "max_health": null,
+            "grounded": null
+          }
+        },
+        {
+          "seed": 23,
+          "decisions": 75,
+          "outcome": "death",
+          "geometric_projection_percent": 0.1848496297172176,
+          "final_telemetry": {
+            "position": [
+              -532.2444458007812,
+              -3426.48095703125,
+              517.5997314453125
+            ],
+            "scenario": 2,
+            "stage": "SecretAthleticGalaxy",
+            "actor": 2166530752,
+            "actor_nerve": 2155695676,
+            "scene_nerve": 2155696928,
+            "scene_frame": 1,
+            "dead": true,
+            "complete": false,
+            "health": null,
+            "max_health": null,
+            "grounded": null
+          }
+        },
+        {
+          "seed": 47,
+          "decisions": 24,
+          "outcome": "death",
+          "geometric_projection_percent": 0.1146317416114222,
+          "final_telemetry": {
+            "position": [
+              -1154.73681640625,
+              -3436.281005859375,
+              787.228515625
+            ],
+            "scenario": 2,
+            "stage": "SecretAthleticGalaxy",
+            "actor": 2166530752,
+            "actor_nerve": 2155695676,
+            "scene_nerve": 2155696928,
+            "scene_frame": 1,
+            "dead": true,
+            "complete": false,
+            "health": null,
+            "max_health": null,
+            "grounded": null
+          }
+        }
+      ],
+      "physical_evaluation_decisions": 196,
+      "outcomes": {
+        "death": 3
+      },
+      "ram_full_start_stars": 0,
+      "maximum_geometric_projection_percent": 2.1428350847527073,
+      "video": "runs\\motor8-evaluations-20261025\\smg2-double_time-trained.mp4",
+      "video_sha256": "98a2073c1e73cfa05eb9591457b2be71ab3581c093b5d2059d1c1c3dbcc36f01",
+      "sidecar_sha256": "626d14393974ac37a0e9da60924d1d844b80b58b8aae56daa3d3ae3d122a982e",
+      "frames": 1179,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "width": 1174,
+            "height": 660,
+            "avg_frame_rate": "30/1",
+            "nb_frames": "1179"
+          }
+        ],
+        "format": {
+          "duration": "39.300000"
+        }
+      },
+      "best_trace": "runs\\m8-smg2\\eval-world-video-20261025-145022-205988\\worker-00\\double_time\\episode-000001.csv",
+      "trajectory": "docs\\assets\\performance\\motor8-smg2-double_time-evaluation-20261025.png",
+      "sidecar_checks": "Exact per-decision input digest retained, exclusive applied controls, correct8-on/4-off jump/spin samples and all declared attempts retained."
+    }
+  ]
+}
