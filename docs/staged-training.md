@@ -158,3 +158,45 @@ improvement; preserve reward settings throughout the paired health checks.
 ![Galaxy 2 control Spinning trajectory](assets/performance/staged-smg2-control-spinning-20261025.png)
 
 ![Galaxy 2 control Double Time trajectory](assets/performance/staged-smg2-control-double_time-20261025.png)
+
+## Paired health-check decision and Galaxy 1 exploration hypothesis
+
+The Galaxy 2 candidate completed 2000 real decisions in 205.547 seconds, with
+42 deaths, four budget interruptions and zero mission completions. Spinning
+maximum/median episode projection was 11.97%/6.79%; Double Time was 7.86%/3.48%.
+These small differences from control do not demonstrate better navigation,
+especially given falling-motion contamination and one training seed. Both
+arms added 60 model updates; candidate added 11 actor updates versus control's
+one. The candidate's last gate passed. Its final checkpoint hash was verified;
+stderr was empty. Proceed to a bounded 23000 additional control decisions
+(25000 total), then review before giving the candidate the matched extension.
+Do not alter real rewards or thresholds during this comparison.
+The [candidate health record](assets/performance/smg2-candidate-health-20261025.json)
+retains its raw metrics, counters and episode summary.
+
+A read-only Galaxy 1 diagnostic used eight shared ordinary held-out batches,
+deterministic real posterior seeds and stochastic eight-step imagined rollouts
+(seed 11, 8192 transition samples per checkpoint). No optimizer, game collection
+or checkpoint write was performed. Mean actor entropy remained 3.44 nats out
+of a 3.99-nat maximum, with mean maximum-action probability 0.143. This argues
+against deterministic action collapse on these sampled states. Mean imagined
+extrinsic reward was -0.0191, while the weighted disagreement bonus was only
+0.000422. These predictions do not establish the cause of poor real navigation,
+but motivate testing curiosity strength instead of increasing random action
+probability for an already diffuse policy. The source checkpoint's corresponding
+entropy was 3.43 and bonus 0.000422. Raw diagnostics are in
+[the exploration audit](assets/performance/smg1-exploration-diagnostic-20261025.json).
+
+Predeclared exploratory trial: resume two copies of the 288773-decision Galaxy 1
+checkpoint for 2000 real decisions each, sequentially. Control retains imagined
+disagreement coefficient 0.01; the sole candidate change is coefficient 0.1.
+Both receive the same original actor/model/optimizer, same online seed 42,
+separate initially identical replay copies, and unchanged model quality gates.
+The candidate uses an explicitly migrated checkpoint with its own settings and
+integrity manifest; its payload is a byte-identical source copy, preserving
+optimizer and Torch/CUDA/replay RNG states while changing only the settings
+manifest. Retained originals are immutable. Real reward labels and
+the action space are unchanged. The first arm is the control, with review before
+the candidate. Count all 4000 decisions against the 30000-new-decision ceiling,
+leaving at most 16000 for a later reviewed extension. This short single-seed
+screen cannot establish a general improvement or reward-coefficient optimum.

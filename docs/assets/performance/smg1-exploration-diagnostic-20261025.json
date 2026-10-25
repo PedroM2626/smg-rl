@@ -1,0 +1,71 @@
+{
+  "scope": "Read-only imagined diagnostic from shared real held-out posterior seeds; no optimizer or collection; predictions are not actual game returns",
+  "seed": 11,
+  "held_out_batches": 8,
+  "horizon": 8,
+  "maximum_entropy_nats": 3.9889840465642745,
+  "rows": [
+    {
+      "checkpoint": "runs/smg1/world-model-20261023-104046-961482/world-final.pt",
+      "rollout_samples": 8192,
+      "metrics": {
+        "entropy_nats": {
+          "mean": 3.430488650992629,
+          "p10": 3.1090584278106688,
+          "p90": 3.6297696590423585
+        },
+        "maximum_action_probability": {
+          "mean": 0.13978663462262375,
+          "p10": 0.08628007546067237,
+          "p90": 0.22474149316549302
+        },
+        "extrinsic_prediction": {
+          "mean": -0.012280450467490121,
+          "p10": -0.014062149915844202,
+          "p90": 0.0023564964998513483
+        },
+        "curiosity_bonus": {
+          "mean": 0.00042242768548739207,
+          "p10": 0.00029180917190387847,
+          "p90": 0.0005613955203443765
+        },
+        "continuation_probability": {
+          "mean": 0.9965478760934136,
+          "p10": 0.999905276298523,
+          "p90": 0.9999994039535522
+        }
+      }
+    },
+    {
+      "checkpoint": "runs/smg1/world-model-20261024-231605-678304/world-final.pt",
+      "rollout_samples": 8192,
+      "metrics": {
+        "entropy_nats": {
+          "mean": 3.4360129687847802,
+          "p10": 2.940690350532532,
+          "p90": 3.6642947435379027
+        },
+        "maximum_action_probability": {
+          "mean": 0.14285111692834107,
+          "p10": 0.08198549672961235,
+          "p90": 0.2652035832405091
+        },
+        "extrinsic_prediction": {
+          "mean": -0.019069265865831124,
+          "p10": -0.027421672269701956,
+          "p90": 0.0011102871154435074
+        },
+        "curiosity_bonus": {
+          "mean": 0.0004224855583174758,
+          "p10": 0.00029413898300845176,
+          "p90": 0.000555756245739758
+        },
+        "continuation_probability": {
+          "mean": 0.9965425756574872,
+          "p10": 0.9999868869781494,
+          "p90": 0.9999998807907104
+        }
+      }
+    }
+  ]
+}
