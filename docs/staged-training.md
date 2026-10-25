@@ -259,3 +259,19 @@ health-check final checkpoint, with its own replay. Stop at the same 895272
 branch counter (25000 new decisions per arm), then review before any longer
 budget. Galaxy 1's bounded curiosity-control extension is still running and
 has not received any additional allocation.
+
+## Galaxy 1 control extension review
+
+The curiosity control finished its 8000-decision extension at 298773 branch
+lifetime decisions, reaching 10000 trial decisions from the common source.
+The extension took 1816.469 seconds (4.40 decisions/s), added 1000 model and
+83 actor updates, and produced 20 timeout episodes plus one budget interruption.
+There were no deaths, health loss or RAM-confirmed completions in this extension.
+Maximum geometric projection was 2.97%, with completed-episode median 2.13%.
+Neither establishes improved course navigation or exceeds the historical record.
+Final quality gates passed; replay, stderr and checkpoint integrity checks were
+clean. See [the final control record](assets/performance/smg1-curiosity-control-final-20261025.json).
+
+Decision: run only the matched candidate's final 8000 decisions, then end the
+Galaxy 1 trial and compare both complete 10000-decision arms. This is the final
+previously allocated Galaxy 1 budget; no additional training is scheduled.
