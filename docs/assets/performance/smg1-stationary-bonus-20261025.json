@@ -1,0 +1,2303 @@
+{
+  "scope": "Fixed-input visual/RAM fixture, deterministic posterior, no optimizer or training evidence",
+  "physical_decisions": 96,
+  "sequences": [
+    {
+      "input": "idle",
+      "initial": {
+        "position": [
+          -50.0,
+          45.0000114440918,
+          -50.0
+        ],
+        "scenario": 1,
+        "stage": "BeltConveyerExGalaxy",
+        "actor": 2164967084,
+        "actor_nerve": 2154426424,
+        "scene_nerve": 2154437584,
+        "scene_frame": 1323,
+        "dead": false,
+        "complete": false,
+        "health": 3,
+        "max_health": 3
+      },
+      "trace": [
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1335,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.04563486576080322,
+          "weighted_bonus": 0.00045634865760803224,
+          "successive_image_mse": 0.005053509421197673,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1347,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.04108569025993347,
+          "weighted_bonus": 0.0004108569025993347,
+          "successive_image_mse": 0.0034236483264329697,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1359,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.03498326241970062,
+          "weighted_bonus": 0.0003498326241970062,
+          "successive_image_mse": 0.003477711345976299,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1371,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.03255995362997055,
+          "weighted_bonus": 0.00032559953629970553,
+          "successive_image_mse": 0.0034857864714513257,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1383,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.03432939201593399,
+          "weighted_bonus": 0.0003432939201593399,
+          "successive_image_mse": 0.003951654735968462,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1395,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.032798632979393005,
+          "weighted_bonus": 0.00032798632979393007,
+          "successive_image_mse": 0.004177760428790252,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1407,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.029502663761377335,
+          "weighted_bonus": 0.00029502663761377335,
+          "successive_image_mse": 0.005043544650975858,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1419,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.026729382574558258,
+          "weighted_bonus": 0.0002672938257455826,
+          "successive_image_mse": 0.005612286308859056,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1431,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.026186656206846237,
+          "weighted_bonus": 0.0002618665620684624,
+          "successive_image_mse": 0.005623434559008788,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1443,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.026921574026346207,
+          "weighted_bonus": 0.0002692157402634621,
+          "successive_image_mse": 0.0042037141654047245,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1455,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.027730155736207962,
+          "weighted_bonus": 0.00027730155736207965,
+          "successive_image_mse": 0.004388581140517209,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1467,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.027538875117897987,
+          "weighted_bonus": 0.00027538875117897986,
+          "successive_image_mse": 0.004172961123447201,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1479,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.028633516281843185,
+          "weighted_bonus": 0.00028633516281843183,
+          "successive_image_mse": 0.0038175488060147806,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1491,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.029677584767341614,
+          "weighted_bonus": 0.00029677584767341615,
+          "successive_image_mse": 0.004550515195184829,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1503,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.029705116525292397,
+          "weighted_bonus": 0.000297051165252924,
+          "successive_image_mse": 0.0057995355004747,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1515,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.02862783893942833,
+          "weighted_bonus": 0.0002862783893942833,
+          "successive_image_mse": 0.006267108150449723,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1527,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.02929629385471344,
+          "weighted_bonus": 0.0002929629385471344,
+          "successive_image_mse": 0.007064908752171893,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1539,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.030948827043175697,
+          "weighted_bonus": 0.000309488270431757,
+          "successive_image_mse": 0.006560508735084448,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1551,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.03132415562868118,
+          "weighted_bonus": 0.0003132415562868118,
+          "successive_image_mse": 0.006139719504359478,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1563,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.031286031007766724,
+          "weighted_bonus": 0.00031286031007766725,
+          "successive_image_mse": 0.0064106514065321125,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1575,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.03142344951629639,
+          "weighted_bonus": 0.0003142344951629639,
+          "successive_image_mse": 0.0064645051920550365,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1587,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.033375322818756104,
+          "weighted_bonus": 0.000333753228187561,
+          "successive_image_mse": 0.007482154081676244,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1599,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.03333150967955589,
+          "weighted_bonus": 0.0003333150967955589,
+          "successive_image_mse": 0.008707921076927505,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1611,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.03233732283115387,
+          "weighted_bonus": 0.0003233732283115387,
+          "successive_image_mse": 0.008754778599893117,
+          "xz_distance_from_start": 0.0
+        }
+      ]
+    },
+    {
+      "input": "jump",
+      "initial": {
+        "position": [
+          -50.0,
+          45.0000114440918,
+          -50.0
+        ],
+        "scenario": 1,
+        "stage": "BeltConveyerExGalaxy",
+        "actor": 2164967084,
+        "actor_nerve": 2154426424,
+        "scene_nerve": 2154437584,
+        "scene_frame": 1323,
+        "dead": false,
+        "complete": false,
+        "health": 3,
+        "max_health": 3
+      },
+      "trace": [
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              237.5,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1335,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.046037573367357254,
+          "weighted_bonus": 0.00046037573367357253,
+          "successive_image_mse": 0.007461466067908646,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              323.3000793457031,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1347,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.03756168484687805,
+          "weighted_bonus": 0.00037561684846878053,
+          "successive_image_mse": 0.0045093614787963116,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              279.5001525878906,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1359,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.029166851192712784,
+          "weighted_bonus": 0.00029166851192712783,
+          "successive_image_mse": 0.0033975747161609743,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              106.10022735595703,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1371,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.027403205633163452,
+          "weighted_bonus": 0.0002740320563316345,
+          "successive_image_mse": 0.004956483682797737,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1383,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.030867956578731537,
+          "weighted_bonus": 0.0003086795657873154,
+          "successive_image_mse": 0.006166464407113608,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1395,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.030146852135658264,
+          "weighted_bonus": 0.00030146852135658263,
+          "successive_image_mse": 0.004542762638824593,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1407,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.030908282846212387,
+          "weighted_bonus": 0.0003090828284621239,
+          "successive_image_mse": 0.005051427978598848,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1419,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.02842613495886326,
+          "weighted_bonus": 0.00028426134958863257,
+          "successive_image_mse": 0.005606599938450326,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1431,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.026941217482089996,
+          "weighted_bonus": 0.00026941217482089996,
+          "successive_image_mse": 0.005618885898586015,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1443,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.027708876878023148,
+          "weighted_bonus": 0.00027708876878023146,
+          "successive_image_mse": 0.004207242809978022,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1455,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.027126982808113098,
+          "weighted_bonus": 0.000271269828081131,
+          "successive_image_mse": 0.004384594796524274,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1467,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.026075465604662895,
+          "weighted_bonus": 0.00026075465604662895,
+          "successive_image_mse": 0.004184327325701524,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1479,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.027715250849723816,
+          "weighted_bonus": 0.00027715250849723815,
+          "successive_image_mse": 0.0038102474105110454,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1491,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.029502756893634796,
+          "weighted_bonus": 0.00029502756893634796,
+          "successive_image_mse": 0.004564004250937848,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1503,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.030250588431954384,
+          "weighted_bonus": 0.00030250588431954387,
+          "successive_image_mse": 0.005817287699393482,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1515,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.029769131913781166,
+          "weighted_bonus": 0.00029769131913781166,
+          "successive_image_mse": 0.006266811735587482,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1527,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.02970336191356182,
+          "weighted_bonus": 0.0002970336191356182,
+          "successive_image_mse": 0.007057236838090356,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1539,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.029518479481339455,
+          "weighted_bonus": 0.00029518479481339456,
+          "successive_image_mse": 0.006558268187449271,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1551,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.02893240563571453,
+          "weighted_bonus": 0.00028932405635714533,
+          "successive_image_mse": 0.0061443008575979416,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1563,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.029107021167874336,
+          "weighted_bonus": 0.00029107021167874337,
+          "successive_image_mse": 0.006383721244489082,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1575,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.02980850636959076,
+          "weighted_bonus": 0.0002980850636959076,
+          "successive_image_mse": 0.0064513779367956344,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1587,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.032092586159706116,
+          "weighted_bonus": 0.0003209258615970612,
+          "successive_image_mse": 0.007465759724369051,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1599,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.03212925046682358,
+          "weighted_bonus": 0.0003212925046682358,
+          "successive_image_mse": 0.008700297112308977,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1611,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.03116120770573616,
+          "weighted_bonus": 0.0003116120770573616,
+          "successive_image_mse": 0.00875611900533634,
+          "xz_distance_from_start": 0.0
+        }
+      ]
+    },
+    {
+      "input": "spin",
+      "initial": {
+        "position": [
+          -50.0,
+          45.0000114440918,
+          -50.0
+        ],
+        "scenario": 1,
+        "stage": "BeltConveyerExGalaxy",
+        "actor": 2164967084,
+        "actor_nerve": 2154426424,
+        "scene_nerve": 2154437584,
+        "scene_frame": 1323,
+        "dead": false,
+        "complete": false,
+        "health": 3,
+        "max_health": 3
+      },
+      "trace": [
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1335,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.0448080450296402,
+          "weighted_bonus": 0.000448080450296402,
+          "successive_image_mse": 0.006094374568999712,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1347,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.03662410378456116,
+          "weighted_bonus": 0.0003662410378456116,
+          "successive_image_mse": 0.00492431613168143,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1359,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.02941206656396389,
+          "weighted_bonus": 0.00029412066563963893,
+          "successive_image_mse": 0.00487432227793078,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1371,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.029155615717172623,
+          "weighted_bonus": 0.0002915561571717262,
+          "successive_image_mse": 0.003888263366348718,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1383,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.029839884489774704,
+          "weighted_bonus": 0.00029839884489774705,
+          "successive_image_mse": 0.00432863559367102,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1395,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.02936050295829773,
+          "weighted_bonus": 0.0002936050295829773,
+          "successive_image_mse": 0.004436506628795309,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1407,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.027820317074656487,
+          "weighted_bonus": 0.00027820317074656487,
+          "successive_image_mse": 0.005534048041874701,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1419,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.027268532663583755,
+          "weighted_bonus": 0.00027268532663583757,
+          "successive_image_mse": 0.006355186954956275,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1431,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.026368241757154465,
+          "weighted_bonus": 0.00026368241757154467,
+          "successive_image_mse": 0.0062597370102725185,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1443,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.02595675364136696,
+          "weighted_bonus": 0.0002595675364136696,
+          "successive_image_mse": 0.004921083901970375,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1455,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.028148509562015533,
+          "weighted_bonus": 0.00028148509562015534,
+          "successive_image_mse": 0.0047490673829444635,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1467,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.028755690902471542,
+          "weighted_bonus": 0.00028755690902471543,
+          "successive_image_mse": 0.004701447027612788,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1479,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.029218677431344986,
+          "weighted_bonus": 0.0002921867743134499,
+          "successive_image_mse": 0.004307694755462097,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1491,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.03079548291862011,
+          "weighted_bonus": 0.0003079548291862011,
+          "successive_image_mse": 0.0055865069339282565,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1503,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.02945195697247982,
+          "weighted_bonus": 0.0002945195697247982,
+          "successive_image_mse": 0.00701062996004502,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1515,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.02789781242609024,
+          "weighted_bonus": 0.0002789781242609024,
+          "successive_image_mse": 0.006925255941156419,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1527,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.025946322828531265,
+          "weighted_bonus": 0.00025946322828531267,
+          "successive_image_mse": 0.007705044980955346,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1539,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.026774466037750244,
+          "weighted_bonus": 0.00026774466037750245,
+          "successive_image_mse": 0.006766597706620774,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1551,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.025410780683159828,
+          "weighted_bonus": 0.0002541078068315983,
+          "successive_image_mse": 0.006669728893736146,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1563,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.025896262377500534,
+          "weighted_bonus": 0.00025896262377500534,
+          "successive_image_mse": 0.006433941768428504,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1575,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.02760820835828781,
+          "weighted_bonus": 0.0002760820835828781,
+          "successive_image_mse": 0.007936032800919932,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1587,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.025456007570028305,
+          "weighted_bonus": 0.00025456007570028304,
+          "successive_image_mse": 0.009714393382625383,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1599,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.02975236438214779,
+          "weighted_bonus": 0.0002975236438214779,
+          "successive_image_mse": 0.00976653188508519,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0000114440918,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1611,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.024117743596434593,
+          "weighted_bonus": 0.00024117743596434595,
+          "successive_image_mse": 0.009518770471151423,
+          "xz_distance_from_start": 0.0
+        }
+      ]
+    },
+    {
+      "input": "crouch",
+      "initial": {
+        "position": [
+          -50.0,
+          45.0000114440918,
+          -50.0
+        ],
+        "scenario": 1,
+        "stage": "BeltConveyerExGalaxy",
+        "actor": 2164967084,
+        "actor_nerve": 2154426424,
+        "scene_nerve": 2154437584,
+        "scene_frame": 1323,
+        "dead": false,
+        "complete": false,
+        "health": 3,
+        "max_health": 3
+      },
+      "trace": [
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1335,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.04452671855688095,
+          "weighted_bonus": 0.0004452671855688095,
+          "successive_image_mse": 0.006570597738005879,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1347,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.03618362918496132,
+          "weighted_bonus": 0.0003618362918496132,
+          "successive_image_mse": 0.00359363353184411,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1359,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.028453122824430466,
+          "weighted_bonus": 0.00028453122824430467,
+          "successive_image_mse": 0.003456338962600291,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1371,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.02861778810620308,
+          "weighted_bonus": 0.0002861778810620308,
+          "successive_image_mse": 0.003471512788121785,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1383,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.02785768359899521,
+          "weighted_bonus": 0.0002785768359899521,
+          "successive_image_mse": 0.003957378158234972,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1395,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.025839751586318016,
+          "weighted_bonus": 0.0002583975158631802,
+          "successive_image_mse": 0.004160587982469676,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1407,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.02394093945622444,
+          "weighted_bonus": 0.00023940939456224442,
+          "successive_image_mse": 0.005020938658687876,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1419,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.02290160581469536,
+          "weighted_bonus": 0.00022901605814695358,
+          "successive_image_mse": 0.005594776036776368,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1431,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.022536903619766235,
+          "weighted_bonus": 0.00022536903619766236,
+          "successive_image_mse": 0.00560467760088785,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1443,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.023860979825258255,
+          "weighted_bonus": 0.00023860979825258256,
+          "successive_image_mse": 0.004192687968433561,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1455,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.02590114250779152,
+          "weighted_bonus": 0.0002590114250779152,
+          "successive_image_mse": 0.004370964071903271,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1467,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.027131743729114532,
+          "weighted_bonus": 0.00027131743729114533,
+          "successive_image_mse": 0.004155847524194864,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1479,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.02688133530318737,
+          "weighted_bonus": 0.0002688133530318737,
+          "successive_image_mse": 0.003798530305368335,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1491,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.024784639477729797,
+          "weighted_bonus": 0.00024784639477729795,
+          "successive_image_mse": 0.004546417695618553,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1503,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.024167977273464203,
+          "weighted_bonus": 0.00024167977273464202,
+          "successive_image_mse": 0.005794261059543644,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1515,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.023826964199543,
+          "weighted_bonus": 0.00023826964199543,
+          "successive_image_mse": 0.0062557768205321355,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1527,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.025303838774561882,
+          "weighted_bonus": 0.00025303838774561884,
+          "successive_image_mse": 0.007046881933601328,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1539,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.029532741755247116,
+          "weighted_bonus": 0.0002953274175524712,
+          "successive_image_mse": 0.006542346786209036,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1551,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.030257564038038254,
+          "weighted_bonus": 0.00030257564038038253,
+          "successive_image_mse": 0.006124096697502531,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1563,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.02803129144012928,
+          "weighted_bonus": 0.0002803129144012928,
+          "successive_image_mse": 0.006369619743322166,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1575,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.025756102055311203,
+          "weighted_bonus": 0.000257561020553112,
+          "successive_image_mse": 0.00644517937894112,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1587,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.025156710296869278,
+          "weighted_bonus": 0.0002515671029686928,
+          "successive_image_mse": 0.0074643038043103955,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1599,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.023636948317289352,
+          "weighted_bonus": 0.00023636948317289354,
+          "successive_image_mse": 0.008691047224990216,
+          "xz_distance_from_start": 0.0
+        },
+        {
+          "telemetry": {
+            "position": [
+              -50.0,
+              45.0,
+              -50.0
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426424,
+            "scene_nerve": 2154437584,
+            "scene_frame": 1611,
+            "dead": false,
+            "complete": false,
+            "health": 3,
+            "max_health": 3
+          },
+          "disagreement": 0.022873826324939728,
+          "weighted_bonus": 0.00022873826324939727,
+          "successive_image_mse": 0.008739040278420736,
+          "xz_distance_from_start": 0.0
+        }
+      ]
+    }
+  ],
+  "state": "completed"
+}

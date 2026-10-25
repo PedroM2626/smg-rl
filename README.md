@@ -3,6 +3,13 @@
 Visual recurrent reinforcement learning for **Super Mario Galaxy 1 and 2** in
 Dolphin on Windows.
 
+**October 25 failure analysis:** [the intrinsic-reward and control audit](docs/exploration-failure-analysis.md)
+confirms positive calculated novelty without horizontal movement, but finds
+small immediate gradient effects at coefficient 0.01 and substantial action,
+entropy and progress-target concerns. A trained zero-intrinsic comparison is
+still needed. Read-only diagnostics and 731 actual-game fixture decisions added
+no training steps or learned completions; training remains stopped.
+
 **October 25 follow-up:** [actual policy videos and frontier savestate exploration](docs/frontier-exploration.md)
 are implemented and checked in bounded live pilots. A paired
 [8-versus-16 imagination trial](docs/horizon-trial.md) passed prediction gates but

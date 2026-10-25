@@ -1,0 +1,540 @@
+{
+  "scope": "Read-only attribution on reused held-out data; no optimizer, emulator or counter updates. Fixed-critic gradient changes are not trained-policy ablations.",
+  "checkpoint": "runs\\staged-smg1-exploration\\control\\world-model-20261025-004551-267957\\world-final.pt",
+  "sha256": "53f8cf5a74b0783f9cfb82503e790e629c33db2400fd405696dad1f7c59c3d39",
+  "settings": {
+    "actor_lr": 8e-05,
+    "batch_size": 8,
+    "burn_in": 8,
+    "channels": 16,
+    "checkpoint_steps": 4096,
+    "collect_vector_steps": 32,
+    "critic_lr": 8e-05,
+    "deterministic_size": 256,
+    "disagreement_scale": 0.01,
+    "embedding_size": 128,
+    "ensemble_size": 5,
+    "entropy": 0.003,
+    "epsilon": 0.05,
+    "free_nats": 1.0,
+    "gamma": 0.997,
+    "hidden_size": 256,
+    "imagination_batch": 128,
+    "imagination_horizon": 8,
+    "lambda": 0.95,
+    "maximum_continuation_brier": 0.1,
+    "maximum_open_loop_mse": 0.04,
+    "maximum_reconstruction_mse": 0.02,
+    "maximum_reward_mae": 0.5,
+    "maximum_terminal_brier": 0.2,
+    "maximum_terminal_reward_mae": 0.5,
+    "minimum_replay": 4096,
+    "minimum_scenario_train": 256,
+    "minimum_scenario_validation": 64,
+    "minimum_train_episodes": 10,
+    "minimum_validation_episodes": 4,
+    "minimum_validation_terminals": 2,
+    "model_lr": 0.0003,
+    "open_loop_training_horizon": 8,
+    "open_loop_training_weight": 0.5,
+    "persistence_ratio": 0.98,
+    "prior_prediction_weight": 0.5,
+    "reconstruction_weight": 3528.0,
+    "sequence_length": 32,
+    "stochastic_size": 32,
+    "terminal_reward_weight": 5.0,
+    "terminal_weight": 5.0,
+    "training_terminal_fraction": 0.5,
+    "updates_per_cycle": 4,
+    "use_legacy_curiosity": false,
+    "validation_batches": 4
+  },
+  "seeds": [
+    11,
+    23,
+    47
+  ],
+  "batches_per_seed": 4,
+  "rows": [
+    {
+      "seed": 11,
+      "batch": 0,
+      "transitions": 1024,
+      "posterior_seeds": 128,
+      "scenario_seed_counts": [
+        128
+      ],
+      "entropy_nats": 3.570671558380127,
+      "special_action_probability": 0.9271169900894165,
+      "predicted_extrinsic_mean": -0.0030038203112781048,
+      "weighted_bonus_mean": 0.00040885419002734125,
+      "action_bonus_range_mean": 0.0064734164625406265,
+      "full_gradient_norm": 0.023339485749602318,
+      "extrinsic_gradient_norm": 0.027089696377515793,
+      "remove_intrinsic_gradient_change_fraction": 0.02864755317568779,
+      "remove_intrinsic_gradient_cosine": 0.9996029734611511,
+      "entropy_gradient_over_extrinsic": 0.2943950891494751,
+      "lower_entropy_gradient_change_fraction": 0.30752885341644287,
+      "intrinsic_return_increment_mean": 0.001649593934416771,
+      "bonus_by_modifier": {
+        "none": 0.0378127284348011,
+        "jump": 0.03766661137342453,
+        "spin": 0.03751077502965927,
+        "crouch": 0.037745874375104904,
+        "crouch+jump": 0.038066376000642776,
+        "jump+spin": 0.037722792476415634
+      }
+    },
+    {
+      "seed": 11,
+      "batch": 1,
+      "transitions": 1024,
+      "posterior_seeds": 128,
+      "scenario_seed_counts": [
+        128
+      ],
+      "entropy_nats": 3.4612624645233154,
+      "special_action_probability": 0.928829550743103,
+      "predicted_extrinsic_mean": -0.0069122351706027985,
+      "weighted_bonus_mean": 0.0004097212222404778,
+      "action_bonus_range_mean": 0.0071438890881836414,
+      "full_gradient_norm": 0.023434938862919807,
+      "extrinsic_gradient_norm": 0.021441951394081116,
+      "remove_intrinsic_gradient_change_fraction": 0.028557714074850082,
+      "remove_intrinsic_gradient_cosine": 0.9996347427368164,
+      "entropy_gradient_over_extrinsic": 0.44524452090263367,
+      "lower_entropy_gradient_change_fraction": 0.36664149165153503,
+      "intrinsic_return_increment_mean": 0.0016383868642151356,
+      "bonus_by_modifier": {
+        "none": 0.040249887853860855,
+        "jump": 0.040269143879413605,
+        "spin": 0.039849553257226944,
+        "crouch": 0.04004024714231491,
+        "crouch+jump": 0.040476713329553604,
+        "jump+spin": 0.039948463439941406
+      }
+    },
+    {
+      "seed": 11,
+      "batch": 2,
+      "transitions": 1024,
+      "posterior_seeds": 128,
+      "scenario_seed_counts": [
+        128
+      ],
+      "entropy_nats": 3.472217559814453,
+      "special_action_probability": 0.9266384840011597,
+      "predicted_extrinsic_mean": -0.009485450573265553,
+      "weighted_bonus_mean": 0.0004973782924935222,
+      "action_bonus_range_mean": 0.00899243913590908,
+      "full_gradient_norm": 0.031237052753567696,
+      "extrinsic_gradient_norm": 0.03253423795104027,
+      "remove_intrinsic_gradient_change_fraction": 0.03166656196117401,
+      "remove_intrinsic_gradient_cosine": 0.9995245933532715,
+      "entropy_gradient_over_extrinsic": 0.29966965317726135,
+      "lower_entropy_gradient_change_fraction": 0.2809026837348938,
+      "intrinsic_return_increment_mean": 0.001953823957592249,
+      "bonus_by_modifier": {
+        "none": 0.05049663782119751,
+        "jump": 0.049872491508722305,
+        "spin": 0.05002102628350258,
+        "crouch": 0.05004763975739479,
+        "crouch+jump": 0.050629422068595886,
+        "jump+spin": 0.0501440092921257
+      }
+    },
+    {
+      "seed": 11,
+      "batch": 3,
+      "transitions": 1024,
+      "posterior_seeds": 128,
+      "scenario_seed_counts": [
+        128
+      ],
+      "entropy_nats": 3.607646942138672,
+      "special_action_probability": 0.9226809740066528,
+      "predicted_extrinsic_mean": -0.004938556347042322,
+      "weighted_bonus_mean": 0.0004329738731030375,
+      "action_bonus_range_mean": 0.007741071749478579,
+      "full_gradient_norm": 0.03626648709177971,
+      "extrinsic_gradient_norm": 0.035723019391298294,
+      "remove_intrinsic_gradient_change_fraction": 0.017059169709682465,
+      "remove_intrinsic_gradient_cosine": 0.9998742341995239,
+      "entropy_gradient_over_extrinsic": 0.2263270616531372,
+      "lower_entropy_gradient_change_fraction": 0.2006419599056244,
+      "intrinsic_return_increment_mean": 0.001699357759207487,
+      "bonus_by_modifier": {
+        "none": 0.0444558821618557,
+        "jump": 0.04415716230869293,
+        "spin": 0.04393463209271431,
+        "crouch": 0.044092755764722824,
+        "crouch+jump": 0.04434589669108391,
+        "jump+spin": 0.0440857820212841
+      }
+    },
+    {
+      "seed": 23,
+      "batch": 0,
+      "transitions": 1024,
+      "posterior_seeds": 128,
+      "scenario_seed_counts": [
+        128
+      ],
+      "entropy_nats": 3.6573266983032227,
+      "special_action_probability": 0.9220002889633179,
+      "predicted_extrinsic_mean": -0.011092320084571838,
+      "weighted_bonus_mean": 0.00037419653381220996,
+      "action_bonus_range_mean": 0.006120272912085056,
+      "full_gradient_norm": 0.032273780554533005,
+      "extrinsic_gradient_norm": 0.03177415579557419,
+      "remove_intrinsic_gradient_change_fraction": 0.02496141567826271,
+      "remove_intrinsic_gradient_cosine": 0.9997143745422363,
+      "entropy_gradient_over_extrinsic": 0.2124445140361786,
+      "lower_entropy_gradient_change_fraction": 0.18824009597301483,
+      "intrinsic_return_increment_mean": 0.0015149553073570132,
+      "bonus_by_modifier": {
+        "none": 0.03399762138724327,
+        "jump": 0.033681564033031464,
+        "spin": 0.03355281427502632,
+        "crouch": 0.033721402287483215,
+        "crouch+jump": 0.034074630588293076,
+        "jump+spin": 0.03376861289143562
+      }
+    },
+    {
+      "seed": 23,
+      "batch": 1,
+      "transitions": 1024,
+      "posterior_seeds": 128,
+      "scenario_seed_counts": [
+        128
+      ],
+      "entropy_nats": 3.405907154083252,
+      "special_action_probability": 0.9294214844703674,
+      "predicted_extrinsic_mean": -0.005479166284203529,
+      "weighted_bonus_mean": 0.00044016935862600803,
+      "action_bonus_range_mean": 0.0081571564078331,
+      "full_gradient_norm": 0.03051873855292797,
+      "extrinsic_gradient_norm": 0.029411396011710167,
+      "remove_intrinsic_gradient_change_fraction": 0.022316401824355125,
+      "remove_intrinsic_gradient_cosine": 0.9997633695602417,
+      "entropy_gradient_over_extrinsic": 0.38278189301490784,
+      "lower_entropy_gradient_change_fraction": 0.33200377225875854,
+      "intrinsic_return_increment_mean": 0.0017686702776700258,
+      "bonus_by_modifier": {
+        "none": 0.042514245957136154,
+        "jump": 0.04219681769609451,
+        "spin": 0.042069174349308014,
+        "crouch": 0.042373690754175186,
+        "crouch+jump": 0.04259712994098663,
+        "jump+spin": 0.0422440841794014
+      }
+    },
+    {
+      "seed": 23,
+      "batch": 2,
+      "transitions": 1024,
+      "posterior_seeds": 128,
+      "scenario_seed_counts": [
+        128
+      ],
+      "entropy_nats": 3.5574746131896973,
+      "special_action_probability": 0.9251255989074707,
+      "predicted_extrinsic_mean": -0.014694344252347946,
+      "weighted_bonus_mean": 0.00044771679677069187,
+      "action_bonus_range_mean": 0.007811456918716431,
+      "full_gradient_norm": 0.03282344713807106,
+      "extrinsic_gradient_norm": 0.036598145961761475,
+      "remove_intrinsic_gradient_change_fraction": 0.020367976278066635,
+      "remove_intrinsic_gradient_cosine": 0.9997930526733398,
+      "entropy_gradient_over_extrinsic": 0.24600434303283691,
+      "lower_entropy_gradient_change_fraction": 0.24686545133590698,
+      "intrinsic_return_increment_mean": 0.0017602603184059262,
+      "bonus_by_modifier": {
+        "none": 0.0430385060608387,
+        "jump": 0.042674411088228226,
+        "spin": 0.04253775626420975,
+        "crouch": 0.04258738085627556,
+        "crouch+jump": 0.04321320354938507,
+        "jump+spin": 0.042562492191791534
+      }
+    },
+    {
+      "seed": 23,
+      "batch": 3,
+      "transitions": 1024,
+      "posterior_seeds": 128,
+      "scenario_seed_counts": [
+        128
+      ],
+      "entropy_nats": 3.545405387878418,
+      "special_action_probability": 0.9243700504302979,
+      "predicted_extrinsic_mean": -0.005385229364037514,
+      "weighted_bonus_mean": 0.0003878214047290385,
+      "action_bonus_range_mean": 0.0071701607666909695,
+      "full_gradient_norm": 0.03044847585260868,
+      "extrinsic_gradient_norm": 0.02599584497511387,
+      "remove_intrinsic_gradient_change_fraction": 0.022731829434633255,
+      "remove_intrinsic_gradient_cosine": 0.9997839331626892,
+      "entropy_gradient_over_extrinsic": 0.36178529262542725,
+      "lower_entropy_gradient_change_fraction": 0.2779916822910309,
+      "intrinsic_return_increment_mean": 0.0015394645743072033,
+      "bonus_by_modifier": {
+        "none": 0.03873847424983978,
+        "jump": 0.03827986493706703,
+        "spin": 0.038026828318834305,
+        "crouch": 0.038447149097919464,
+        "crouch+jump": 0.03879418596625328,
+        "jump+spin": 0.03819084167480469
+      }
+    },
+    {
+      "seed": 47,
+      "batch": 0,
+      "transitions": 1024,
+      "posterior_seeds": 128,
+      "scenario_seed_counts": [
+        128
+      ],
+      "entropy_nats": 3.5135223865509033,
+      "special_action_probability": 0.9244648218154907,
+      "predicted_extrinsic_mean": -0.032714057713747025,
+      "weighted_bonus_mean": 0.00046490205568261445,
+      "action_bonus_range_mean": 0.007947532460093498,
+      "full_gradient_norm": 0.056574251502752304,
+      "extrinsic_gradient_norm": 0.05683598294854164,
+      "remove_intrinsic_gradient_change_fraction": 0.012798392213881016,
+      "remove_intrinsic_gradient_cosine": 0.9999184608459473,
+      "entropy_gradient_over_extrinsic": 0.13840626180171967,
+      "lower_entropy_gradient_change_fraction": 0.125141903758049,
+      "intrinsic_return_increment_mean": 0.0018004353623837233,
+      "bonus_by_modifier": {
+        "none": 0.04337948560714722,
+        "jump": 0.04299839213490486,
+        "spin": 0.04260777309536934,
+        "crouch": 0.04284560680389404,
+        "crouch+jump": 0.043355558067560196,
+        "jump+spin": 0.04281413182616234
+      }
+    },
+    {
+      "seed": 47,
+      "batch": 1,
+      "transitions": 1024,
+      "posterior_seeds": 128,
+      "scenario_seed_counts": [
+        128
+      ],
+      "entropy_nats": 3.587744951248169,
+      "special_action_probability": 0.9229404926300049,
+      "predicted_extrinsic_mean": -0.0032176519744098186,
+      "weighted_bonus_mean": 0.00038205701275728643,
+      "action_bonus_range_mean": 0.006599717773497105,
+      "full_gradient_norm": 0.025672990828752518,
+      "extrinsic_gradient_norm": 0.01990031637251377,
+      "remove_intrinsic_gradient_change_fraction": 0.02840818278491497,
+      "remove_intrinsic_gradient_cosine": 0.9995982646942139,
+      "entropy_gradient_over_extrinsic": 0.4724610447883606,
+      "lower_entropy_gradient_change_fraction": 0.3296036720275879,
+      "intrinsic_return_increment_mean": 0.0015209271805360913,
+      "bonus_by_modifier": {
+        "none": 0.03781113401055336,
+        "jump": 0.037508774548769,
+        "spin": 0.037381358444690704,
+        "crouch": 0.037571363151073456,
+        "crouch+jump": 0.03790749981999397,
+        "jump+spin": 0.03759067505598068
+      }
+    },
+    {
+      "seed": 47,
+      "batch": 2,
+      "transitions": 1024,
+      "posterior_seeds": 128,
+      "scenario_seed_counts": [
+        128
+      ],
+      "entropy_nats": 3.2986690998077393,
+      "special_action_probability": 0.9307424426078796,
+      "predicted_extrinsic_mean": -0.04001306742429733,
+      "weighted_bonus_mean": 0.0005535982199944556,
+      "action_bonus_range_mean": 0.010470487177371979,
+      "full_gradient_norm": 0.06484703719615936,
+      "extrinsic_gradient_norm": 0.06715815514326096,
+      "remove_intrinsic_gradient_change_fraction": 0.01448668260127306,
+      "remove_intrinsic_gradient_cosine": 0.9999139308929443,
+      "entropy_gradient_over_extrinsic": 0.10638297349214554,
+      "lower_entropy_gradient_change_fraction": 0.09915696084499359,
+      "intrinsic_return_increment_mean": 0.002067842986434698,
+      "bonus_by_modifier": {
+        "none": 0.05421410873532295,
+        "jump": 0.05373820662498474,
+        "spin": 0.05363093689084053,
+        "crouch": 0.053982414305210114,
+        "crouch+jump": 0.05444777384400368,
+        "jump+spin": 0.05375330522656441
+      }
+    },
+    {
+      "seed": 47,
+      "batch": 3,
+      "transitions": 1024,
+      "posterior_seeds": 128,
+      "scenario_seed_counts": [
+        128
+      ],
+      "entropy_nats": 3.495786190032959,
+      "special_action_probability": 0.9262055158615112,
+      "predicted_extrinsic_mean": -0.0033183027990162373,
+      "weighted_bonus_mean": 0.00043269668822176754,
+      "action_bonus_range_mean": 0.007483355235308409,
+      "full_gradient_norm": 0.026591939851641655,
+      "extrinsic_gradient_norm": 0.02944081462919712,
+      "remove_intrinsic_gradient_change_fraction": 0.030259212478995323,
+      "remove_intrinsic_gradient_cosine": 0.9995647668838501,
+      "entropy_gradient_over_extrinsic": 0.31587308645248413,
+      "lower_entropy_gradient_change_fraction": 0.31474223732948303,
+      "intrinsic_return_increment_mean": 0.0017139025731012225,
+      "bonus_by_modifier": {
+        "none": 0.043417878448963165,
+        "jump": 0.04298708215355873,
+        "spin": 0.04294753074645996,
+        "crouch": 0.043244097381830215,
+        "crouch+jump": 0.04346570372581482,
+        "jump+spin": 0.043132007122039795
+      }
+    }
+  ],
+  "summary": {
+    "entropy_nats": {
+      "mean": 3.514469583829244,
+      "min": 3.2986690998077393,
+      "max": 3.6573266983032227
+    },
+    "special_action_probability": {
+      "mean": 0.9258780578772227,
+      "min": 0.9220002889633179,
+      "max": 0.9307424426078796
+    },
+    "predicted_extrinsic_mean": {
+      "mean": -0.011687850191568335,
+      "min": -0.04001306742429733,
+      "max": -0.0030038203112781048
+    },
+    "weighted_bonus_mean": {
+      "mean": 0.00043600713737153757,
+      "min": 0.00037419653381220996,
+      "max": 0.0005535982199944556
+    },
+    "action_bonus_range_mean": {
+      "mean": 0.007675913007309039,
+      "min": 0.006120272912085056,
+      "max": 0.010470487177371979
+    },
+    "full_gradient_norm": {
+      "mean": 0.034502385494609676,
+      "min": 0.023339485749602318,
+      "max": 0.06484703719615936
+    },
+    "extrinsic_gradient_norm": {
+      "mean": 0.03449197641263405,
+      "min": 0.01990031637251377,
+      "max": 0.06715815514326096
+    },
+    "remove_intrinsic_gradient_change_fraction": {
+      "mean": 0.023521757684648037,
+      "min": 0.012798392213881016,
+      "max": 0.03166656196117401
+    },
+    "remove_intrinsic_gradient_cosine": {
+      "mean": 0.9997238914171854,
+      "min": 0.9995245933532715,
+      "max": 0.9999184608459473
+    },
+    "entropy_gradient_over_extrinsic": {
+      "mean": 0.29181464451054734,
+      "min": 0.10638297349214554,
+      "max": 0.4724610447883606
+    },
+    "lower_entropy_gradient_change_fraction": {
+      "mean": 0.2557883970439434,
+      "min": 0.09915696084499359,
+      "max": 0.36664149165153503
+    },
+    "intrinsic_return_increment_mean": {
+      "mean": 0.001718968424635629,
+      "min": 0.0015149553073570132,
+      "max": 0.002067842986434698
+    }
+  },
+  "recordings": [
+    {
+      "run": "runs\\staged-smg1-exploration\\control\\eval-world-video-20261025-092135-321386",
+      "checkpoint_sha256": "53f8cf5a74b0783f9cfb82503e790e629c33db2400fd405696dad1f7c59c3d39",
+      "decisions": 1045,
+      "episodes": [
+        {
+          "file": "runs\\staged-smg1-exploration\\control\\eval-world-video-20261025-092135-321386\\worker-00\\sweet_sweet\\episode-000001.csv",
+          "decisions": 246,
+          "longest_same_direction_decisions": 4,
+          "progress_reward_total": 0.10440662658995235,
+          "reward_total": -2.1415933734100476
+        },
+        {
+          "file": "runs\\staged-smg1-exploration\\control\\eval-world-video-20261025-092135-321386\\worker-00\\sweet_sweet\\episode-000002.csv",
+          "decisions": 340,
+          "longest_same_direction_decisions": 6,
+          "progress_reward_total": 0.14497608162409664,
+          "reward_total": -2.1950239183759033
+        },
+        {
+          "file": "runs\\staged-smg1-exploration\\control\\eval-world-video-20261025-092135-321386\\worker-00\\sweet_sweet\\episode-000003.csv",
+          "decisions": 459,
+          "longest_same_direction_decisions": 4,
+          "progress_reward_total": 0.14376411291687807,
+          "reward_total": -2.315235887083122
+        }
+      ],
+      "modifier_fractions": {
+        "jump": 0.5244019138755981,
+        "spin": 0.3770334928229665,
+        "crouch": 0.3799043062200957
+      },
+      "special_action_fraction": 0.9148325358851674
+    },
+    {
+      "run": "runs\\staged-smg1-exploration\\curiosity_10x\\eval-world-video-20261025-092324-491383",
+      "checkpoint_sha256": "2b3e955c03223ea9ebc450e807158073d1c09a768a240f66d359333e5d1d1c32",
+      "decisions": 1263,
+      "episodes": [
+        {
+          "file": "runs\\staged-smg1-exploration\\curiosity_10x\\eval-world-video-20261025-092324-491383\\worker-00\\sweet_sweet\\episode-000001.csv",
+          "decisions": 531,
+          "longest_same_direction_decisions": 4,
+          "progress_reward_total": 0.1584540521833731,
+          "reward_total": -2.372545947816627
+        },
+        {
+          "file": "runs\\staged-smg1-exploration\\curiosity_10x\\eval-world-video-20261025-092324-491383\\worker-00\\sweet_sweet\\episode-000002.csv",
+          "decisions": 341,
+          "longest_same_direction_decisions": 6,
+          "progress_reward_total": 0.14780015842203942,
+          "reward_total": -2.1931998415779606
+        },
+        {
+          "file": "runs\\staged-smg1-exploration\\curiosity_10x\\eval-world-video-20261025-092324-491383\\worker-00\\sweet_sweet\\episode-000003.csv",
+          "decisions": 391,
+          "longest_same_direction_decisions": 4,
+          "progress_reward_total": 0.11183398598745573,
+          "reward_total": -2.2791660140125445
+        }
+      ],
+      "modifier_fractions": {
+        "jump": 0.5304829770387965,
+        "spin": 0.388756927949327,
+        "crouch": 0.3903404592240697
+      },
+      "special_action_fraction": 0.9239904988123515
+    }
+  ]
+}

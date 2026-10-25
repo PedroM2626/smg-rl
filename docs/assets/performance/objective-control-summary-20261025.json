@@ -1,0 +1,211 @@
+{
+  "physical_fixture_decisions": 731,
+  "optimizer_updates": 0,
+  "new_training_decisions": 0,
+  "scenarios": [
+    {
+      "game": "RMGE01",
+      "scenario": "sweet_sweet",
+      "one_step_actual_reward_min_max": [
+        -0.001,
+        0.0028620020008742514
+      ],
+      "cold_mean_latent_reward_mae": 0.0019427958431653884,
+      "maximum_action_reward_contrast": 0.0038620020008742514,
+      "positive_progress_steps_below_initial_y_minus_50": 22,
+      "positive_progress_reward_below_initial_y_minus_50": 0.217933098092845,
+      "held_directions": [
+        {
+          "direction": "idle",
+          "decisions": 24,
+          "maximum_xz_distance": 0.0,
+          "ended_dead": false
+        },
+        {
+          "direction": "w",
+          "decisions": 12,
+          "maximum_xz_distance": 1071.7049873736107,
+          "ended_dead": true
+        },
+        {
+          "direction": "w+a",
+          "decisions": 17,
+          "maximum_xz_distance": 1612.0120644381805,
+          "ended_dead": true
+        },
+        {
+          "direction": "a",
+          "decisions": 16,
+          "maximum_xz_distance": 1539.9122067622382,
+          "ended_dead": true
+        },
+        {
+          "direction": "a+s",
+          "decisions": 20,
+          "maximum_xz_distance": 2166.5608482199723,
+          "ended_dead": true
+        },
+        {
+          "direction": "s",
+          "decisions": 18,
+          "maximum_xz_distance": 1846.9053137176422,
+          "ended_dead": true
+        },
+        {
+          "direction": "s+d",
+          "decisions": 20,
+          "maximum_xz_distance": 2135.4982073586757,
+          "ended_dead": true
+        },
+        {
+          "direction": "d",
+          "decisions": 16,
+          "maximum_xz_distance": 1546.2598853885584,
+          "ended_dead": true
+        },
+        {
+          "direction": "d+w",
+          "decisions": 17,
+          "maximum_xz_distance": 1604.928973865468,
+          "ended_dead": true
+        }
+      ]
+    },
+    {
+      "game": "SB4E01",
+      "scenario": "spinning",
+      "one_step_actual_reward_min_max": [
+        -0.001,
+        0.002255171239291354
+      ],
+      "cold_mean_latent_reward_mae": 0.005396968211436206,
+      "maximum_action_reward_contrast": 0.003255171239291354,
+      "positive_progress_steps_below_initial_y_minus_50": 7,
+      "positive_progress_reward_below_initial_y_minus_50": 0.024304846463647597,
+      "held_directions": [
+        {
+          "direction": "idle",
+          "decisions": 24,
+          "maximum_xz_distance": 0.0,
+          "ended_dead": false
+        },
+        {
+          "direction": "w",
+          "decisions": 24,
+          "maximum_xz_distance": 1946.7878060527803,
+          "ended_dead": false
+        },
+        {
+          "direction": "w+a",
+          "decisions": 16,
+          "maximum_xz_distance": 1500.3889891699168,
+          "ended_dead": true
+        },
+        {
+          "direction": "a",
+          "decisions": 14,
+          "maximum_xz_distance": 1251.3639288046875,
+          "ended_dead": true
+        },
+        {
+          "direction": "a+s",
+          "decisions": 15,
+          "maximum_xz_distance": 1388.4264745782496,
+          "ended_dead": true
+        },
+        {
+          "direction": "s",
+          "decisions": 14,
+          "maximum_xz_distance": 1155.561863275299,
+          "ended_dead": true
+        },
+        {
+          "direction": "s+d",
+          "decisions": 15,
+          "maximum_xz_distance": 1388.3885090466335,
+          "ended_dead": true
+        },
+        {
+          "direction": "d",
+          "decisions": 14,
+          "maximum_xz_distance": 1251.363907812175,
+          "ended_dead": true
+        },
+        {
+          "direction": "d+w",
+          "decisions": 16,
+          "maximum_xz_distance": 1500.3890426935388,
+          "ended_dead": true
+        }
+      ]
+    },
+    {
+      "game": "SB4E01",
+      "scenario": "double_time",
+      "one_step_actual_reward_min_max": [
+        -0.001,
+        0.001313624955891774
+      ],
+      "cold_mean_latent_reward_mae": 0.006467353821910738,
+      "maximum_action_reward_contrast": 0.002313624955891774,
+      "positive_progress_steps_below_initial_y_minus_50": 15,
+      "positive_progress_reward_below_initial_y_minus_50": 0.1033783785470141,
+      "held_directions": [
+        {
+          "direction": "idle",
+          "decisions": 24,
+          "maximum_xz_distance": 0.0,
+          "ended_dead": false
+        },
+        {
+          "direction": "w",
+          "decisions": 24,
+          "maximum_xz_distance": 2418.6399336881827,
+          "ended_dead": true
+        },
+        {
+          "direction": "w+a",
+          "decisions": 16,
+          "maximum_xz_distance": 1500.4627290221072,
+          "ended_dead": true
+        },
+        {
+          "direction": "a",
+          "decisions": 14,
+          "maximum_xz_distance": 1251.3639288046875,
+          "ended_dead": true
+        },
+        {
+          "direction": "a+s",
+          "decisions": 15,
+          "maximum_xz_distance": 1388.5016180654916,
+          "ended_dead": true
+        },
+        {
+          "direction": "s",
+          "decisions": 14,
+          "maximum_xz_distance": 1155.5199931450547,
+          "ended_dead": true
+        },
+        {
+          "direction": "s+d",
+          "decisions": 24,
+          "maximum_xz_distance": 411.39378546103825,
+          "ended_dead": false
+        },
+        {
+          "direction": "d",
+          "decisions": 14,
+          "maximum_xz_distance": 1251.363907812175,
+          "ended_dead": true
+        },
+        {
+          "direction": "d+w",
+          "decisions": 16,
+          "maximum_xz_distance": 1500.4635371601826,
+          "ended_dead": true
+        }
+      ]
+    }
+  ]
+}

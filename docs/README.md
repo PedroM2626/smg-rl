@@ -30,6 +30,7 @@ each run's `status.json` remains the live source.
 | Reviewed continuation budgets, paired online results, curiosity trial and final stop | [Staged training results](staged-training.md) |
 | Full-start policy videos, stability-screened savestates and assisted-reset accounting | [Frontier exploration](frontier-exploration.md) |
 | Paired horizon-8/16 audits, frozen-world actor fitting and real-game evaluation | [Horizon trial](horizon-trial.md) |
+| Intrinsic reward hypothesis, actor-gradient attribution, stationary visual bonus and control/reward fixtures | [Exploration failure analysis](exploration-failure-analysis.md) |
 | Measured throughput and 1M-decision wall-clock projections | [Main README timing section](../README.md#decision-budgets-and-measured-wall-clock) |
 
 ## Understand and reproduce
