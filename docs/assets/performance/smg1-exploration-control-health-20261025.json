@@ -1,0 +1,97 @@
+{
+  "status": {
+    "state": "completed",
+    "algorithm": "gaussian-rssm-imagination-v1",
+    "timesteps": 290773,
+    "real_decisions": 290773,
+    "model_updates": 38184,
+    "actor_updates": 1148,
+    "imagined_transitions": 1175552,
+    "elapsed_seconds": 544.5,
+    "decisions_per_second": 3.6730945821854912,
+    "updated_at": "2026-10-25T03:27:11.236684+00:00",
+    "progress": [
+      0.01485799687206385
+    ],
+    "diagnostics": {
+      "replay": {
+        "chunks": 663,
+        "transitions": 111164,
+        "train_episodes": 393,
+        "validation_episodes": 103,
+        "scenarios": {
+          "sweet_sweet": 111164
+        },
+        "train_scenarios": {
+          "sweet_sweet": 86735
+        },
+        "validation_scenarios": {
+          "sweet_sweet": 24429
+        },
+        "rejected": []
+      },
+      "validation": {
+        "sweet_sweet": {
+          "reconstruction": 0.014638794120401144,
+          "reward": 0.018968600081279874,
+          "continuation": 0.08168523639324121,
+          "dynamics_kl": 46.23000526428223,
+          "representation_kl": 46.23000526428223,
+          "ensemble": 0.08008961100131273,
+          "loss": 79.56440925598145,
+          "posterior_image_mse": 0.014638794120401144,
+          "reward_mae": 0.021893908269703388,
+          "terminal_reward_mae": 0.43171985030174254,
+          "continuation_brier": 0.003299733348455902,
+          "terminal_brier": 0.11205917548997604,
+          "terminal_examples": 25,
+          "validation_transitions": 895,
+          "open_loop_image_mse": 0.03915643226355314,
+          "persistence_image_mse": 0.05767409410327673,
+          "open_loop_reward_mae": 0.2121322639286518
+        }
+      },
+      "imagination_gate": {
+        "ready": true,
+        "reasons": [],
+        "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+      },
+      "losses": {
+        "reconstruction": 0.011486523784697056,
+        "reward": 0.0001644636649871245,
+        "continuation": 0.00013619819947052747,
+        "dynamics_kl": 20.79867172241211,
+        "representation_kl": 20.79867172241211,
+        "ensemble": 0.03005412220954895,
+        "prior_prediction": 45.1391487121582,
+        "open_loop_prediction": 51.83964157104492,
+        "loss": 101.5234146118164,
+        "posterior_image_mse": 0.011486523784697056,
+        "reward_mae": 0.007013220340013504,
+        "terminal_reward_mae": 0.043229054659605026,
+        "continuation_brier": 2.2814467115495063e-07,
+        "terminal_brier": 5.178509354664129e-08,
+        "terminal_examples": 5,
+        "validation_transitions": 230,
+        "model_gradient_norm": 194.27867126464844,
+        "actor_loss": 0.0480339489877224,
+        "critic_loss": 0.011069389060139656,
+        "imagined_reward": -0.07942046225070953,
+        "imagined_transitions": 1175552
+      }
+    },
+    "note": "Only real RAM-verified episodes can establish mission completion. Imagined transitions are not real timesteps."
+  },
+  "episodes": 6,
+  "outcomes": {
+    "death": 1,
+    "timeout": 4,
+    "interrupted": 1
+  },
+  "maximum_episode_geometric_percent": 2.826197038655916,
+  "decisions_in_csv": 2000,
+  "complete_rows": 0,
+  "health_lost": 0.0,
+  "median_completed_geometric_percent": 2.1966890668304755,
+  "checkpoint_sha256": "567c9ee799a817bfd71d9e4360a2009c5073409b8d8c52a1fa18845efc5d993a"
+}

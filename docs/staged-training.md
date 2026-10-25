@@ -200,3 +200,15 @@ the action space are unchanged. The first arm is the control, with review before
 the candidate. Count all 4000 decisions against the 30000-new-decision ceiling,
 leaving at most 16000 for a later reviewed extension. This short single-seed
 screen cannot establish a general improvement or reward-coefficient optimum.
+
+The curiosity trial control completed its exact 2000 decisions at 290773
+branch-lifetime decisions in 544.5 seconds (3.67 decisions/s). Four episodes
+timed out, one ended in death, and one was interrupted at the budget boundary.
+No star collection or health loss was observed. Maximum geometric projection
+was 2.83% and median completed-episode projection was 2.20%, which is not a
+historical record or evidence of a curiosity effect. It added 248 model updates
+and 30 actor updates; the last quality gate passed. Replay had no rejected
+archives and checkpoint SHA-256 was verified. The matched coefficient-0.1
+candidate may now run its bounded 2000 decisions. The original Galaxy 2
+23000-decision extension remains in progress without an additional budget.
+See [control health evidence](assets/performance/smg1-exploration-control-health-20261025.json).
