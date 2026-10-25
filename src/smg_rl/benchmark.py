@@ -7,7 +7,7 @@ from pathlib import Path
 import numpy as np
 import torch
 
-from smg_rl.actions import ACTIONS
+from smg_rl.actions import action_set
 from smg_rl.diagnostics import atomic_json
 from smg_rl.env import GalaxyEnv
 from smg_rl.native import background_backend
@@ -29,7 +29,9 @@ def benchmark(config, steps=64):
     except BaseException:
         backend.close()
         raise
-    actions = [ACTIONS.index(names) for names in ((), ("w",), ("jump",), ("s",), ("w", "jump"))]
+    available = action_set(config)
+    actions = [available.index(names) for names in ((), ("w",), ("jump",), ("s",), ("w", "jump"))
+               if names in available]
     durations, frames, scene_frames, native_samples = [], [], [], []
     try:
         env.reset(seed=42)
@@ -63,7 +65,8 @@ def benchmark(config, steps=64):
                       "p95": float(np.percentile([s[key] for s in native_samples], 95))}
                 for key in native_samples[0] if key.endswith("_us") or key == "image_bytes"
             } if native_samples else {},
-            "action_cycle": [list(ACTIONS[index]) for index in actions],
+            "action_profile":config.get('actions',{}).get('profile','legacy54'),
+            "action_cycle": [list(available[index]) for index in actions],
             "step_wall_seconds": sum(durations),
             "decisions_per_second_excluding_resets": steps / sum(durations),
             "step_p50_ms": float(np.percentile(durations, 50) * 1000),

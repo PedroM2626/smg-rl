@@ -10,7 +10,7 @@ import gymnasium as gym
 import numpy as np
 from gymnasium import spaces
 
-from smg_rl.actions import ACTIONS, action_name
+from smg_rl.actions import action_name, action_set, advance_action
 from smg_rl.checkpoints import digest
 from smg_rl.curiosity import IntrinsicReward
 from smg_rl.diagnostics import StageProfiler, atomic_json, measured
@@ -20,6 +20,7 @@ from smg_rl.plotting import plot_trajectory
 from smg_rl.profiles import game_id
 from smg_rl.replay import ReplayRecorder, replay_signature
 from smg_rl.rewards import DamageTracker, ExplorationBudget, ProgressReward
+from smg_rl.route import RouteProgress
 
 
 class GalaxyEnv(gym.Env):
@@ -45,12 +46,13 @@ class GalaxyEnv(gym.Env):
                 "scenario": spaces.Box(0, 1, (self.scenario_count,), np.float32),
             }
         )
-        self.action_space = spaces.Discrete(len(ACTIONS))
+        self.actions = action_set(config)
+        self.action_space = spaces.Discrete(len(self.actions))
         self.frames = deque(maxlen=stack)
         self.use_intrinsic = intrinsic
         self.curiosity = (
             {
-                v["name"]: IntrinsicReward(len(ACTIONS), config["novelty"])
+                v["name"]: IntrinsicReward(len(self.actions), config["novelty"])
                 for v in config["variations"]
             }
             if intrinsic
@@ -62,6 +64,15 @@ class GalaxyEnv(gym.Env):
         self.closed = False
         self.profiler = StageProfiler()
         self.replay = None
+        self.route = None
+        if config.get("paths", {}).get("route"):
+            route_path = Path(config["paths"]["route"])
+            spec = json.loads(route_path.read_text(encoding="utf-8"))
+            if spec["game_id"] != game_id(config):
+                raise ValueError("Route belongs to another game.")
+            if config.get("route_reward", {}).get("enabled") and digest(route_path) != config["route_reward"]["spec_sha256"]:
+                raise ValueError("Route reward specification integrity mismatch.")
+            self.route = RouteProgress(spec)
         self.archives = {}
         self.frontier_history = deque(maxlen=6)
         self.frontier_validation_decisions = 0
@@ -141,6 +152,8 @@ class GalaxyEnv(gym.Env):
             self.config["environment"]["max_step_distance"],
         )
         self.progress.reset(self.telemetry.position)
+        if self.route:
+            self.route.reset(self.telemetry)
         self.damage = DamageTracker()
         self.damage.reset(self.telemetry.health)
         self.steps, self.idle_steps, self.total_reward = 0, 0, 0.0
@@ -168,7 +181,7 @@ class GalaxyEnv(gym.Env):
         before = self.frames[-1]
         previous_telemetry = self.telemetry
         with self.profiler.measure("environment_control_and_capture"):
-            self.backend.advance(ACTIONS[action])
+            advance_action(self.backend, self.actions[action], self.config)
         with self.profiler.measure("telemetry"):
             self.telemetry = self.memory.sample()
         health_lost = self.damage.update(self.telemetry.health)
@@ -179,7 +192,10 @@ class GalaxyEnv(gym.Env):
         delta, fraction = self.progress.update(
             self.telemetry.position, self.telemetry.dead, self.telemetry.complete
         )
-        self.idle_steps = 0 if delta > 1e-5 else self.idle_steps + 1
+        route_delta = self.route.update(self.telemetry) if self.route else 0.0
+        route_settings = self.config.get("route_reward", {})
+        advance = route_delta if route_settings.get("enabled") else delta
+        self.idle_steps = 0 if advance > 1e-5 else self.idle_steps + 1
         weights = self.config["rewards"]
         curiosity, metrics = 0.0, {}
         # Terminal cinematics and falls cannot earn visual novelty rewards.
@@ -197,6 +213,8 @@ class GalaxyEnv(gym.Env):
         raw_intrinsic = weights["intrinsic"] * curiosity
         intrinsic_reward, intrinsic_gate = self.exploration_budget.pay(raw_intrinsic, self.idle_steps)
         reward = weights["step"] + weights["progress"] * delta + intrinsic_reward
+        route_reward = route_settings.get("weight", 0.0) * route_delta if route_settings.get("enabled") else 0.0
+        reward += route_reward
         if self.telemetry.complete:
             reward += weights["completion"]
         elif self.telemetry.dead:
@@ -251,6 +269,9 @@ class GalaxyEnv(gym.Env):
             variation=self.variation["name"],
             health_lost=health_lost,
             damage_penalty=damage_penalty,
+            route_prefix_progress=self.route.best if self.route else None,
+            route_prefix_exited=self.route.exited if self.route else False,
+            route_reward=route_reward,
         )
         with self.profiler.measure("logging"):
             self._append(action, reward, fraction, outcome, metrics)
@@ -294,7 +315,7 @@ class GalaxyEnv(gym.Env):
                 start_kind=self.start_kind,
                 frontier_state=self.start_state_id,
                 frontier_validation_decisions=self.frontier_validation_decisions,
-                action=action_name(action) if action >= 0 else "reset",
+                action=action_name(action, self.config) if action >= 0 else "reset",
                 x=t.position[0],
                 y=t.position[1],
                 z=t.position[2],
@@ -321,6 +342,10 @@ class GalaxyEnv(gym.Env):
                 curiosity_batch_size=metrics.get("curiosity_batch_size", 0),
                 health=t.health,
                 max_health=t.max_health,
+                grounded=t.grounded,
+                route_prefix_progress=metrics.get("route_prefix_progress"),
+                route_prefix_exited=metrics.get("route_prefix_exited", False),
+                route_reward=metrics.get("route_reward", 0.0),
                 health_lost=metrics.get("health_lost", 0),
                 damage_penalty=metrics.get("damage_penalty", 0.0),
             )
@@ -375,6 +400,9 @@ class GalaxyEnv(gym.Env):
                         "reward_revision": self.config["rewards"].get("revision", "legacy"),
                         "start_kind": self.start_kind,
                         "frontier_state": self.start_state_id,
+                        "route_prefix_progress": self.route.best if self.route else None,
+                        "route_prefix_exited": self.route.exited if self.route else False,
+                        "route_reward_total": sum(r["route_reward"] for r in self.rows),
                     }
                 )
                 + "\n"

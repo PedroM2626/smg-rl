@@ -13,7 +13,7 @@ from pathlib import Path
 
 import numpy as np
 
-from smg_rl.actions import ACTIONS, action_name
+from smg_rl.actions import action_name, action_set
 from smg_rl.profiles import game_id
 
 SCHEMA = 1
@@ -23,15 +23,20 @@ MAX_ARCHIVE_BYTES = 64 * 1024 * 1024
 
 
 def replay_signature(config):
-    return {"schema": SCHEMA, "game_id": game_id(config),
+    result = {"schema": SCHEMA, "game_id": game_id(config),
             "scenario_names": [v["name"] for v in config["variations"]],
-            "action_names": [action_name(i) for i in range(len(ACTIONS))],
+            "action_names": [action_name(i, config) for i in range(len(action_set(config)))],
             "image_size": config["environment"]["image_size"],
             "crop": config["environment"]["crop"],
             "frame_skip": config["parallel"]["frame_skip"],
             "reward_revision": config["rewards"].get("revision", "legacy"),
             "reward_weights": {k: v for k, v in config["rewards"].items()
                                if k in ("completion", "death", "damage", "progress", "step", "timeout")}}
+    if config.get("actions", {}).get("profile", "legacy54") != "legacy54":
+        result["action_execution"] = config["actions"]["profile"] + ":12-frames:jump-spin-8-on-4-off"
+    if config.get("route_reward", {}).get("enabled"):
+        result["route_reward"] = config["route_reward"]
+    return result
 
 
 class ReplayRecorder:

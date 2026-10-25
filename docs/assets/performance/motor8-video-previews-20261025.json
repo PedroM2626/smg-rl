@@ -1,0 +1,164 @@
+{
+  "scope": "Untrained motor8 policy-prior previews, no learning or trained mission-success evidence",
+  "rows": [
+    {
+      "game": "smg1",
+      "variation": "sweet_sweet",
+      "run": "runs\\m8-smg1\\eval-world-video-20261025-130555-360115",
+      "video": "runs\\motor8-previews-20261025\\smg1-sweet_sweet-prior.mp4",
+      "sha256": "5c5702201ae2430910990559995547821a30b8f44e2c68814023abc008afb37c",
+      "source_checkpoint_sha256": "e188be7cab81f920f791635a918d39523cf9288c3d26469e502ec3a6c412694f",
+      "source_actor_updates": 0,
+      "episodes": [
+        {
+          "seed": 11,
+          "decisions": 92,
+          "outcome": "death",
+          "geometric_projection_percent": 1.5413688787656403,
+          "final_telemetry": {
+            "position": [
+              -1516.348388671875,
+              -2444.9345703125,
+              -408.1065979003906
+            ],
+            "scenario": 1,
+            "stage": "BeltConveyerExGalaxy",
+            "actor": 2164967084,
+            "actor_nerve": 2154426432,
+            "scene_nerve": 2154437600,
+            "scene_frame": 4,
+            "dead": true,
+            "complete": false,
+            "health": 3,
+            "max_health": 3,
+            "grounded": false
+          }
+        }
+      ],
+      "frames": 553,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "width": 1174,
+            "height": 660,
+            "avg_frame_rate": "30/1",
+            "nb_frames": "553"
+          }
+        ],
+        "format": {
+          "duration": "18.433333"
+        }
+      },
+      "sidecar_checks": "Exclusive controls; stable input digest per decision; correct8-on/4-off jump/spin samples"
+    },
+    {
+      "game": "smg2",
+      "variation": "spinning",
+      "run": "runs\\m8-smg2\\eval-world-video-20261025-130925-186707",
+      "video": "runs\\motor8-previews-20261025\\smg2-spinning-prior.mp4",
+      "sha256": "385faf4bd4ad3e8ce42301fe5e08ebbdc8e4fdd23d1171f5bf1d6abe3c17a01b",
+      "source_checkpoint_sha256": "b27b6043773cee015bf81de8c7c050b81ba1b7e8b1c9b62845c12b3d4ed7cfc9",
+      "source_actor_updates": 0,
+      "episodes": [
+        {
+          "seed": 11,
+          "decisions": 58,
+          "outcome": "death",
+          "geometric_projection_percent": 0.6688381070947811,
+          "final_telemetry": {
+            "position": [
+              -1485.1787109375,
+              -3535.948486328125,
+              230.95486450195312
+            ],
+            "scenario": 1,
+            "stage": "SecretAthleticGalaxy",
+            "actor": 2166529088,
+            "actor_nerve": 2155695676,
+            "scene_nerve": 2155696928,
+            "scene_frame": 4,
+            "dead": true,
+            "complete": false,
+            "health": null,
+            "max_health": null,
+            "grounded": null
+          }
+        }
+      ],
+      "frames": 349,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "width": 1174,
+            "height": 660,
+            "avg_frame_rate": "30/1",
+            "nb_frames": "349"
+          }
+        ],
+        "format": {
+          "duration": "11.633333"
+        }
+      },
+      "sidecar_checks": "Exclusive controls; stable input digest per decision; correct8-on/4-off jump/spin samples"
+    },
+    {
+      "game": "smg2",
+      "variation": "double_time",
+      "run": "runs\\m8-smg2\\eval-world-video-20261025-131140-766590",
+      "video": "runs\\motor8-previews-20261025\\smg2-double_time-prior.mp4",
+      "sha256": "6a59abc83fa064bea9228d8cbaad0831e3eb4c52ace87b76d02d964f45d9783e",
+      "source_checkpoint_sha256": "b27b6043773cee015bf81de8c7c050b81ba1b7e8b1c9b62845c12b3d4ed7cfc9",
+      "source_actor_updates": 0,
+      "episodes": [
+        {
+          "seed": 11,
+          "decisions": 58,
+          "outcome": "death",
+          "geometric_projection_percent": 0.434298422801658,
+          "final_telemetry": {
+            "position": [
+              -1485.1787109375,
+              -3535.948486328125,
+              230.95486450195312
+            ],
+            "scenario": 2,
+            "stage": "SecretAthleticGalaxy",
+            "actor": 2166530752,
+            "actor_nerve": 2155695676,
+            "scene_nerve": 2155696928,
+            "scene_frame": 4,
+            "dead": true,
+            "complete": false,
+            "health": null,
+            "max_health": null,
+            "grounded": null
+          }
+        }
+      ],
+      "frames": 349,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "width": 1174,
+            "height": 660,
+            "avg_frame_rate": "30/1",
+            "nb_frames": "349"
+          }
+        ],
+        "format": {
+          "duration": "11.633333"
+        }
+      },
+      "sidecar_checks": "Exclusive controls; stable input digest per decision; correct8-on/4-off jump/spin samples"
+    }
+  ]
+}

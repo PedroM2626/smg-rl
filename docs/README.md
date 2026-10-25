@@ -31,6 +31,8 @@ each run's `status.json` remains the live source.
 | Full-start policy videos, stability-screened savestates and assisted-reset accounting | [Frontier exploration](frontier-exploration.md) |
 | Paired horizon-8/16 audits, frozen-world actor fitting and real-game evaluation | [Horizon trial](horizon-trial.md) |
 | Intrinsic reward hypothesis, actor-gradient attribution, stationary visual bonus and control/reward fixtures | [Exploration failure analysis](exploration-failure-analysis.md) |
+| Reviewed curiosity/entropy factorial, sixteen motor actions, grounded route prefix and compatible replay pilots | [Exploration interventions](exploration-interventions.md) |
+| Current eight exclusive actions, actual-input videos, game-specific transfer boundaries and Rainbow assessment | [Motor8 and algorithms](motor8-and-algorithms.md) |
 | Measured throughput and 1M-decision wall-clock projections | [Main README timing section](../README.md#decision-budgets-and-measured-wall-clock) |
 
 ## Understand and reproduce

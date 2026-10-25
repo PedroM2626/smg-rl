@@ -16,7 +16,7 @@ def main():
     parser = argparse.ArgumentParser(
         description="Visual reinforcement learning and game telemetry validation in Dolphin."
     )
-    parser.add_argument("--config", default="config/default.yaml")
+    parser.add_argument("--config", default="config/motor8-smg2.yaml")
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser(
         "prepare", help="Create an isolated Dolphin profile and copy local savestates."

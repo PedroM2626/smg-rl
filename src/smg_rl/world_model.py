@@ -308,7 +308,7 @@ class ImaginedAgent:
         metrics["model_gradient_norm"] = float(norm)
         return metrics, seeds, scenarios
 
-    def update_imagination(self, seeds, scenarios):
+    def update_imagination(self, seeds, scenarios, train_actor=True):
         maximum = int(self.settings.get("imagination_batch", 128))
         selection = torch.randperm(len(scenarios), device=self.device)[:maximum]
         state = {key: value[selection].detach() for key, value in seeds.items()}
@@ -340,13 +340,15 @@ class ImaginedAgent:
             weights = torch.cat([torch.ones_like(discounts[:1]), discounts[:-1]]).cumprod(0)
             advantage = returns - values
             advantage = (advantage / advantage.std(unbiased=False).clamp_min(1)).clamp(-10, 10)
-        distribution = Categorical(logits=self.actor(features.detach()))
-        actor_loss = -weighted_mean(distribution.log_prob(actions) * advantage
-                                    + self.settings.get("entropy", 0.003) * distribution.entropy(), weights)
-        self.actor_optimizer.zero_grad(set_to_none=True)
-        actor_loss.backward()
-        nn.utils.clip_grad_norm_(self.actor.parameters(), 100, error_if_nonfinite=True)
-        self.actor_optimizer.step()
+        actor_loss = torch.zeros((), device=self.device)
+        if train_actor:
+            distribution = Categorical(logits=self.actor(features.detach()))
+            actor_loss = -weighted_mean(distribution.log_prob(actions) * advantage
+                                        + self.settings.get("entropy", 0.003) * distribution.entropy(), weights)
+            self.actor_optimizer.zero_grad(set_to_none=True)
+            actor_loss.backward()
+            nn.utils.clip_grad_norm_(self.actor.parameters(), 100, error_if_nonfinite=True)
+            self.actor_optimizer.step()
         predictions = self.critic(features.detach()).squeeze(-1)
         critic_loss = weighted_mean(F.smooth_l1_loss(predictions, returns, reduction="none"), weights)
         self.critic_optimizer.zero_grad(set_to_none=True)
@@ -356,7 +358,7 @@ class ImaginedAgent:
         with torch.no_grad():
             for target, current in zip(self.target_critic.parameters(), self.critic.parameters()):
                 target.lerp_(current, 0.01)
-        self.actor_updates += 1
+        self.actor_updates += int(train_actor)
         self.imagined_transitions += horizon * len(scenario)
         return {"actor_loss": float(actor_loss.detach()), "critic_loss": float(critic_loss.detach()),
                 "imagined_reward": float(rewards.mean()), "imagined_transitions": self.imagined_transitions}

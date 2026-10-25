@@ -34,6 +34,7 @@ class Telemetry:
     complete: bool
     health: int | None = None
     max_health: int | None = None
+    grounded: bool | None = None
 
     def to_dict(self):
         return asdict(self)
@@ -111,6 +112,11 @@ class GameMemory:
             )
             if health is not None and (maximum not in (1, 3, 6) or not 0 <= health <= maximum):
                 raise MemoryFault(f"Invalid health telemetry: {health}/{maximum}")
+            grounded = None
+            if p.mario_offset is not None:
+                mario = self.pointer(actor + p.mario_offset)
+                flags = self.u32(mario + p.movement_flags_offset)
+                grounded = bool(flags & p.grounded_mask)
             return Telemetry(
                 position,
                 scenario,
@@ -123,6 +129,7 @@ class GameMemory:
                 scene_nerve in p.complete,
                 health,
                 maximum,
+                grounded,
             )
         except MemoryFault:
             raise

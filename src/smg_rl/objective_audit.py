@@ -9,7 +9,7 @@ import numpy as np
 import torch
 from torch.distributions import Categorical
 
-from smg_rl.actions import ACTIONS, MODIFIERS
+from smg_rl.actions import MODIFIERS
 from smg_rl.checkpoints import digest
 from smg_rl.config import load_config
 from smg_rl.replay import SequenceReplay, replay_signature
@@ -77,7 +77,8 @@ def audit_batch(agent, batch, seed):
     zero, zero_returns = _gradient(agent, *args, 0.0, entropy)
     external, _ = _gradient(agent, *args, 0.0, 0.0)
     lower_entropy, _ = _gradient(agent, *args, scale, entropy / 10)
-    special = torch.tensor([bool(set(a) & {"jump", "spin", "crouch"}) for a in ACTIONS], device=agent.device)
+    modifiers = [set(name.split('+')) & {'jump','spin','crouch'} for name in agent.signature['action_names']]
+    special = torch.tensor([bool(m) for m in modifiers], device=agent.device)
     distribution = Categorical(logits=agent.actor(features.detach()))
     result = {
         "transitions": actions.numel(), "posterior_seeds": len(scenario),
@@ -94,8 +95,8 @@ def audit_batch(agent, batch, seed):
         "entropy_gradient_over_extrinsic": float((zero - external).norm() / external.norm().clamp_min(1e-12)),
         "lower_entropy_gradient_change_fraction": float((full - lower_entropy).norm() / full.norm().clamp_min(1e-12)),
         "intrinsic_return_increment_mean": float((returns - zero_returns).mean()),
-        "bonus_by_modifier": {"+".join(m) or "none": float(all_bonus[:, i * 9:(i + 1) * 9].mean())
-                              for i, m in enumerate(MODIFIERS)},
+        "bonus_by_modifier": {"+".join(m) or "none": float(all_bonus[:, [v == set(m) for v in modifiers]].mean())
+                              for m in MODIFIERS if any(v == set(m) for v in modifiers)},
     }
     if not all(np.isfinite(v) for v in result.values() if isinstance(v, (float, int))):
         raise FloatingPointError("Nonfinite objective attribution.")

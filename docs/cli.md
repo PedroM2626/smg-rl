@@ -2,12 +2,20 @@
 
 Run from the repository root using `.\.venv\Scripts\smg-rl.exe` or
 `.\.venv\Scripts\python.exe -m smg_rl.cli`. The optional global argument
-`--config PATH` goes before the subcommand and defaults to `config/default.yaml`.
+`--config PATH` goes before the subcommand and defaults to `config/motor8-smg2.yaml`.
+Use `config/motor8-smg1.yaml` for the current Galaxy 1 pilot. Historical
+`config/default.yaml` and staged profiles retain legacy action semantics for
+checkpoint reproduction; they are not the owner-selected eight-action default.
 Configuration files should live directly under `config/`: the loader treats the
 configuration's grandparent directory as the project root. YAML files are complete
 configurations, not overlays.
 
 `--help` and `<command> --help` display parser help without starting an emulator.
+Current motor profiles require the native backend for exact button pulses;
+desktop `train`, `launch` and visible calibration need an explicitly selected
+legacy desktop-compatible profile. Old 54-action models cannot resume as eight
+actions without the recorded explicit transfer described in
+[the motor8 protocol](motor8-and-algorithms.md).
 Example paths containing `EXAMPLE` below must be replaced with real local paths.
 
 ## Commands

@@ -26,6 +26,9 @@ class MemoryProfile:
     scenarios: tuple[int, ...]
     health_offset: int | None = None
     max_health_offset: int | None = None
+    mario_offset: int | None = None
+    movement_flags_offset: int | None = None
+    grounded_mask: int | None = None
 
 
 PROFILES = {
@@ -70,6 +73,9 @@ PROFILES = {
         (1,),
         health_offset=0x380,
         max_health_offset=0x3E0,
+        mario_offset=0x230,
+        movement_flags_offset=8,
+        grounded_mask=0x40000000,
     ),
 }
 

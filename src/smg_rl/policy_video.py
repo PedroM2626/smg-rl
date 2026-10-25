@@ -1,5 +1,6 @@
 """Bounded full-start visual policy recordings, without any optimizer updates."""
 
+import hashlib
 import json
 import shutil
 import subprocess
@@ -33,26 +34,58 @@ class VideoBackend:
         self.frames_written = 0
         self.telemetry = None
         self.last_action = "reset"
+        self.last_controls = ()
+        self.policy_image = None
+        self.policy_probabilities = None
+        self.input_log = None
 
     def __getattr__(self, name):
         return getattr(self.backend, name)
 
-    def frame(self):
+    def compose_frame(self):
         rgba = self.backend.bridge.image()
         if rgba.ndim != 3:
             raise RuntimeError("Video recording needs full RGBA capture.")
         rgb = cv2.cvtColor(rgba, cv2.COLOR_RGBA2RGB)
         h, w = rgb.shape[:2]
-        canvas = np.zeros((h + 100 + h % 2, w + w % 2, 3), np.uint8)
+        body_height = max(h, 560)
+        canvas = np.zeros((body_height + 100 + body_height % 2, w + 340 + w % 2, 3), np.uint8)
         canvas[:h, :w] = rgb
+        x = w + 14
+        cv2.putText(canvas, "Actual policy input", (x, 22), cv2.FONT_HERSHEY_SIMPLEX,
+                    0.6, (235,235,235), 1, cv2.LINE_AA)
+        if self.policy_image is not None:
+            tile = cv2.resize(self.policy_image, (252,252), interpolation=cv2.INTER_NEAREST)
+            canvas[36:288, x:x+252] = cv2.cvtColor(tile, cv2.COLOR_GRAY2RGB)
+        shape = self.policy_image.shape if self.policy_image is not None else (0,0)
+        input_label = f"{shape[1]}x{shape[0]} grayscale; held for this decision" if shape[0] else "No policy sample (control fixture)"
+        cv2.putText(canvas, input_label, (x, 308),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.39, (190,190,190), 1, cv2.LINE_AA)
+        labels = ((None,"None"),("d","Right (D)"),("a","Left (A)"),("w","Forward (W)"),
+                  ("s","Backward (S)"),("jump","Jump (LMB)"),("spin","Spin (MMB)"),("crouch","Crouch (Shift)"))
+        for i,(control,label) in enumerate(labels):
+            y = 329 + 27*i
+            pressed = not self.last_controls if control is None else control in self.last_controls
+            color = (238,187,46) if pressed else (70,68,90)
+            cv2.rectangle(canvas, (x,y), (x+310,y+22), color, -1)
+            if self.policy_probabilities is not None and len(self.policy_probabilities) == 8:
+                probability = float(self.policy_probabilities[i])
+                cv2.rectangle(canvas, (x,y+19), (x+round(310*probability),y+22), (90,210,160), -1)
+                label += f"  {100*probability:.1f}%"
+            cv2.putText(canvas, label, (x+6,y+16), cv2.FONT_HERSHEY_SIMPLEX,
+                        0.45, (12,12,12) if pressed else (235,235,235), 1, cv2.LINE_AA)
         lines = [self.label, f"Episode {self.episode} | decision {self.step} | {self.last_action}"]
         if self.telemetry:
             t = self.telemetry
             lines.append(f"XYZ: {t.position[0]:.1f}, {t.position[1]:.1f}, {t.position[2]:.1f} | HP: {t.health}")
             lines.append(f"Dead: {t.dead} | RAM completion: {t.complete} | 1x game time; no audio")
         for i, line in enumerate(lines):
-            cv2.putText(canvas, line, (8, h + 19 + 22 * i), cv2.FONT_HERSHEY_SIMPLEX,
+            cv2.putText(canvas, line, (8, body_height + 19 + 22 * i), cv2.FONT_HERSHEY_SIMPLEX,
                         0.45, (235, 235, 235), 1, cv2.LINE_AA)
+        return canvas
+
+    def frame(self):
+        canvas = self.compose_frame()
         if self.writer is None:
             encoder = shutil.which("ffmpeg")
             if not encoder:
@@ -64,15 +97,35 @@ class VideoBackend:
                 "-crf", "20", "-pix_fmt", "yuv420p", "-movflags", "+faststart", str(self.destination)],
                 stdin=subprocess.PIPE)
         self.writer.stdin.write(canvas.tobytes())
+        if self.input_log is None:
+            self.input_log = self.destination.with_suffix('.inputs.jsonl').open('x', encoding='utf-8')
+        self.input_log.write(json.dumps({'frame':self.frames_written, 'episode':self.episode, 'decision':self.step,
+            'selected_action':self.last_action, 'applied_controls':self.last_controls,
+            'policy_input_sha256':hashlib.sha256(self.policy_image.tobytes()).hexdigest()
+                if self.policy_image is not None else None})+'\n')
         self.frames_written += 1
 
     def advance(self, names):
-        self.last_action = "+".join(names) or "idle"
+        self.last_action = "+".join(names) or "none"
         self.step += 1
         for _ in range(6):
             self.backend.advance(names)
+            self.last_controls = tuple(names)
             self.telemetry = self.backend.memory.sample()
             self.frame()
+        self.last_frame_count = 12
+
+    def advance_pulse(self, names, pressed, released):
+        if pressed + released != 12 or pressed % 2 or released % 2:
+            raise ValueError("Video pulses must cover twelve frames in two-frame chunks.")
+        self.last_action = "+".join(names)
+        self.step += 1
+        for controls, count in ((names, pressed), (tuple(n for n in names if n not in ("jump", "spin")), released)):
+            for _ in range(count // 2):
+                self.backend.advance(controls)
+                self.last_controls = tuple(controls)
+                self.telemetry = self.backend.memory.sample()
+                self.frame()
         self.last_frame_count = 12
 
     def close(self):
@@ -82,7 +135,11 @@ class VideoBackend:
                 if self.writer.wait(timeout=60) != 0:
                     raise RuntimeError("Video encoder failed.")
         finally:
-            self.backend.close()
+            try:
+                if self.input_log:
+                    self.input_log.close()
+            finally:
+                self.backend.close()
 
 
 def record_policy(config_path, checkpoint, variation, seeds=(11, 23, 47), maximum_steps=600):
@@ -109,13 +166,18 @@ def record_policy(config_path, checkpoint, variation, seeds=(11, 23, 47), maximu
     native_config["parallel"].update(native_capture="full", frame_skip=2)
     backend = NativeDolphin(native_config)
     name = config["variations"][variation]["name"]
-    video = VideoBackend(backend, run / "policy.mp4", f"{config['game']['id']} | {name} | {checkpoint.parent.parent.name}")
+    policy_stage = 'UNTRAINED POLICY PRIOR' if agent.actor_updates == 0 else 'POLICY EVALUATION'
+    video = VideoBackend(backend, run / "policy.mp4",
+                         f"{config['game']['id']} | {name} | {policy_stage} | real {agent.real_decisions} | actor updates {agent.actor_updates}")
     env = None
     result = {"scope": "Full-start policy evaluation; no learning; no training-success accounting",
               "checkpoint": str(checkpoint), "checkpoint_sha256": digest(checkpoint),
               "variation": name, "seeds": list(seeds), "episodes": [],
               "capture": "Native full RGBA, 30 samples/s, policy every 12 frames; silent 1x game time",
               "observation_note": "Full RGBA capture uses the existing OpenCV gray/crop/resize path.",
+              "policy_input_overlay": "Exact cropped grayscale frame used by the actor, held for each twelve-frame decision; recurrent latent memory is not visualized.",
+              "button_overlay": "Applied controls per two-frame sample; policy probabilities are epsilon-mixture probabilities, not Q values.",
+              "source_actor_updates":agent.actor_updates,
               "video": str((run / "policy.mp4").resolve())}
     try:
         env = GalaxyEnv(config, video, run / "worker-00", memory=backend.memory,
@@ -125,11 +187,18 @@ def record_policy(config_path, checkpoint, variation, seeds=(11, 23, 47), maximu
             observation, _ = env.reset(seed=seed)
             latent, previous, first = None, None, np.ones(1, dtype=bool)
             video.episode, video.step, video.last_action = episode, 0, "reset"
+            video.policy_image = observation['image'][-1].copy()
+            video.last_controls, video.policy_probabilities = (), None
             video.telemetry = env.telemetry
             video.frame()
             for step in range(maximum_steps):
                 batch = {key: value[None] for key, value in observation.items()}
+                video.policy_image = observation['image'][-1].copy()
                 actions, latent, previous = agent.act(batch, latent, previous, first, epsilon=0.05)
+                with torch.no_grad():
+                    scene = torch.as_tensor(batch['scenario'], device=agent.device)
+                    probabilities = agent.actor(agent.world.feature(latent,scene)).softmax(-1)[0]
+                    video.policy_probabilities = (0.95*probabilities + 0.05/len(probabilities)).cpu().numpy()
                 observation, _, terminated, truncated, info = env.step(int(actions[0]))
                 first[:] = False
                 if terminated or truncated:

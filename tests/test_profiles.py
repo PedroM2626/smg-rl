@@ -30,6 +30,8 @@ def smg1_ram():
         (0x80002040, 1),
         (0x80006380, 3),
         (0x800063E0, 3),
+        (0x80006230, 0x80009000),
+        (0x80009008, 0x40000000),
     ]:
         ram.word(address, value)
     ram.put(0x80002020, b"BeltConveyerExGalaxy\0")
@@ -43,8 +45,20 @@ def test_smg1_independent_layout_and_completion():
     first = memory.sample()
     assert first.position == (-50, 45, -50)
     assert not first.dead and not first.complete
+    assert first.grounded is True
     ram.word(0x80008008, 0x806A1BD8)
     assert memory.sample().complete
+
+
+def test_smg1_ground_flag_uses_big_endian_second_bit_and_refreshes():
+    ram = smg1_ram()
+    memory = GameMemory(ram, "RMGE01")
+    assert memory.sample().grounded is True
+    ram.word(0x80009008, 0x80000000)  # Jumping is a different bit.
+    assert memory.sample().grounded is False
+    ram.word(0x80006230, 0x90001000)
+    ram.word(0x90001008, 0x40000000)
+    assert memory.sample().grounded is True
     # The other game's completion address must not satisfy this profile.
     ram.word(0x80008008, 0x807D5318)
     assert not memory.sample().complete

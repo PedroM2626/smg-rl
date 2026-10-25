@@ -3,12 +3,29 @@
 Visual recurrent reinforcement learning for **Super Mario Galaxy 1 and 2** in
 Dolphin on Windows.
 
+**Current owner-selected controls:** [exactly eight exclusive actions in both games](docs/motor8-and-algorithms.md),
+with a video inset of the actual policy image and live applied-button indicators.
+The new bounded motor8 pilot supersedes the remaining legacy54/motor16 stages;
+old checkpoints and their historical profiles are retained. The CLI defaults to
+`config/motor8-smg2.yaml`; Galaxy 1 uses `config/motor8-smg1.yaml`. Rainbow DQN is
+assessed as a separate future baseline, not an unverified replacement of the
+active world-model learner.
+
+**Earlier October 25 intervention (superseded):** [reviewed motor and exploration experiments](docs/exploration-interventions.md)
+implement a versioned 16-action profile, exact button releases, RAM ground contact
+for SMG1 and a validated initial-route prefix. A four-arm, three-seed curiosity/
+entropy comparison and separate motor/reward pilots use finite reviewed budgets.
+The scripted platform exit is a control fixture, not learned mission completion.
+Remaining legacy54/motor16 stages were superseded by the owner's eight-action
+request; their data and checkpoints remain retained.
+
 **October 25 failure analysis:** [the intrinsic-reward and control audit](docs/exploration-failure-analysis.md)
 confirms positive calculated novelty without horizontal movement, but finds
 small immediate gradient effects at coefficient 0.01 and substantial action,
 entropy and progress-target concerns. A trained zero-intrinsic comparison is
 still needed. Read-only diagnostics and 731 actual-game fixture decisions added
-no training steps or learned completions; training remains stopped.
+no training steps or learned completions. The owner subsequently authorized the
+bounded intervention linked above; older stop statements are dated snapshots.
 
 **October 25 follow-up:** [actual policy videos and frontier savestate exploration](docs/frontier-exploration.md)
 are implemented and checked in bounded live pilots. A paired
@@ -16,7 +33,7 @@ are implemented and checked in bounded live pilots. A paired
 showed no clear navigation benefit; horizon 8 remains the default. Experiments
 are stopped after their budgets, with local videos and checkpoints retained.
 
-**Latest staged result (October 25, 2026):** all bounded experiments finished
+**Earlier staged result (October 25, 2026, before the current motor8 pilot):** all bounded experiments finished
 and training is stopped. Galaxy 2 terminal reward weight 5 improved prediction
 gates and enabled more actor updates, without observed navigation improvement
 over 25000 new real decisions per arm. Galaxy 1 curiosity coefficient 0.1 showed

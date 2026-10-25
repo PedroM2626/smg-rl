@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "game_id": "RMGE01",
+  "variation": "sweet_sweet",
+  "name": "Initial platform to first pink belt",
+  "scope": "Validated initial route prefix only; not full-course percentage or native mission progress",
+  "waypoints": [[-50, 45, -50], [230, 45, -400], [230, -50, -650], [230, -50, -1250]],
+  "waypoint_radius": 180,
+  "corridor_radius": 200,
+  "height_tolerance": 110,
+  "exit_confirmations": 2,
+  "requires_grounded": true
+}

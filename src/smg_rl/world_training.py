@@ -97,6 +97,7 @@ def prepare(config, resume=None):
         raise ValueError("Invalid world-model prediction weights or terminal sampling fraction.")
     if (not 0 < settings.get("gamma", 0.997) <= 1 or not 0 <= settings.get("lambda", 0.95) <= 1
             or not 0 <= settings.get("epsilon", 0.05) <= 1
+            or not 0 <= settings.get("warmup_epsilon", 1.0) <= 1
             or not np.isfinite([settings.get("entropy", 0.003), settings.get("disagreement_scale", 0.01)]).all()
             or min(settings.get("entropy", 0.003), settings.get("disagreement_scale", 0.01)) < 0):
         raise ValueError("Invalid world-model discount, exploration or entropy settings.")
@@ -144,6 +145,8 @@ def publish(run, agent, started, state, diagnostics=None, infos=(), start_real=0
             "elapsed_seconds": elapsed, "decisions_per_second": (agent.real_decisions - start_real) / max(elapsed, 1e-6),
             "updated_at": datetime.now(timezone.utc).isoformat(), "progress": [info.get("best_progress", 0) for info in infos],
             "start_kinds": [info.get("start_kind", "full_start") for info in infos],
+            "route_prefix_progress": [info.get("route_prefix_progress") for info in infos],
+            "route_prefix_exited": [info.get("route_prefix_exited", False) for info in infos],
             "real_validation_decisions": sum(info.get("frontier_validation_decisions", 0) for info in infos),
             "physical_decisions_this_run": agent.real_decisions - start_real + sum(
                 info.get("frontier_validation_decisions", 0) for info in infos),
@@ -182,7 +185,7 @@ def train_world_model(config, steps=None, resume=None):
         latent, previous, first, vector_steps = None, None, np.ones(workers, dtype=bool), 0
         while agent.real_decisions < target and not (run / "STOP").exists():
             actions, latent, previous = agent.act(observation, latent, previous, first,
-                                                  epsilon=1.0 if agent.actor_updates == 0 else settings.get("epsilon", 0.05))
+                                                  epsilon=settings.get("warmup_epsilon", 1.0) if agent.actor_updates == 0 else settings.get("epsilon", 0.05))
             observation, _, first, infos = environments.step(actions)
             agent.real_decisions += workers
             vector_steps += 1
