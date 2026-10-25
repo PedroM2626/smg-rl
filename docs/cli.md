@@ -129,7 +129,7 @@ do not extend the requested total training budget.
 ## Experimental visual world model and authorization
 
 `ablate-world-model --checkpoint FILE [--updates 128] [--seeds 11 23 47]
-[--validation-batches 8]` runs the narrowly authorized offline Galaxy 2 screening
+[--validation-batches 8] [--arms continued_baseline terminal_reward_weight]` runs the narrowly authorized offline Galaxy 2 screening
 experiment. It requires its own scoped local authorization grant; it does not
 release the global hold or create an emulator. It never updates the actor or
 replaces the production checkpoint. See the [paired ablation protocol](world-model-ablation.md).
@@ -150,3 +150,25 @@ when omitted, the run is selected by modification time across supported types.
 The existing `train-supervised` command remains a PPO-pair supervisor. It is not
 a supervisor for world-model `.pt` checkpoints. See [the full workflow](world-model.md)
 and [the dated live record](world-model-live.md).
+
+## Policy videos, frontier resets and horizon trials
+
+`record-world-policy --checkpoint FILE [--variation 0] [--seeds 11 23 47]
+[--max-steps 600]` records every requested attempt as local silent H.264 MP4,
+with RAM telemetry overlays and CSV trajectories. It requires ffmpeg, forces
+full starts, disables replay/frontier selection and never updates a learner.
+The checkpoint manifest supplies the exact world-model settings. See
+[the recording and archive guide](frontier-exploration.md).
+
+Frontier resets are opt-in through `config/frontier-smg1.yaml` or
+`config/frontier-smg2.yaml`, used with the existing bounded `train-world-model`
+command. They require the frontier-capable native build and isolated archive
+paths. Real probe decisions are separately accounted, and assisted starts are
+excluded from full-start report evidence. Pilot configurations are capped;
+they are not instructions to resume an indefinite training job.
+
+`test-world-horizon --checkpoint FILE [--updates 64]` audits horizons 8 and 16
+against the original prediction gates, then fits paired offline actor-only copies
+at seeds 11, 23, 47 only if every audit passes. It never starts an emulator or
+updates the world model. Real-game evaluation is a separate bounded recording
+step. See [the protocol and observed results](horizon-trial.md).

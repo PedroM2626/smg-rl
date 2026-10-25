@@ -1,0 +1,640 @@
+[
+  {
+    "game": "SB4E01",
+    "source": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg2\\terminal_reward_weight\\world-model-20261025-010019-701413\\world-final.pt",
+    "source_sha256": "b0c9afcc7ce4e474709d3e4e86930ca8c6aadd8ae1a030c10f2603e241e8a959",
+    "scope": "Fixed world model; paired offline actor updates only after every horizon audit passes. No new real decisions.",
+    "seeds": [
+      11,
+      23,
+      47
+    ],
+    "updates_per_arm": 64,
+    "rows": [
+      {
+        "horizon": 8,
+        "audits": [
+          {
+            "seed": 11,
+            "metrics": {
+              "spinning": {
+                "reconstruction": 0.01758170989342034,
+                "reward": 0.030795335536822677,
+                "continuation": 0.08306947373785079,
+                "dynamics_kl": 1.1460768282413483,
+                "representation_kl": 1.1460768282413483,
+                "ensemble": 0.19437927566468716,
+                "loss": 1.0134719088673592,
+                "posterior_image_mse": 0.01758170989342034,
+                "reward_mae": 0.030825199326500297,
+                "terminal_reward_mae": 0.3452307768166065,
+                "continuation_brier": 0.006772689062927384,
+                "terminal_brier": 0.0873996264334502,
+                "terminal_examples": 28,
+                "validation_transitions": 754,
+                "open_loop_image_mse": 0.02745787240564823,
+                "persistence_image_mse": 0.050114449579268694,
+                "open_loop_reward_mae": 0.24902769178152084
+              },
+              "double_time": {
+                "reconstruction": 0.016112237703055143,
+                "reward": 0.017862807639176026,
+                "continuation": 0.06988175550941378,
+                "dynamics_kl": 1.1462587863206863,
+                "representation_kl": 1.1462587863206863,
+                "ensemble": 0.20080303214490414,
+                "loss": 0.9924151077866554,
+                "posterior_image_mse": 0.016112237703055143,
+                "reward_mae": 0.025888313306495547,
+                "terminal_reward_mae": 0.20501178552707036,
+                "continuation_brier": 0.006071814204915427,
+                "terminal_brier": 0.041789859114214775,
+                "terminal_examples": 30,
+                "validation_transitions": 758,
+                "open_loop_image_mse": 0.027691050432622433,
+                "persistence_image_mse": 0.04441898036748171,
+                "open_loop_reward_mae": 0.29547033086419106
+              }
+            },
+            "gate": {
+              "ready": true,
+              "reasons": [],
+              "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+            }
+          },
+          {
+            "seed": 23,
+            "metrics": {
+              "spinning": {
+                "reconstruction": 0.01768094697035849,
+                "reward": 0.016529608954442665,
+                "continuation": 0.055166006088256836,
+                "dynamics_kl": 1.1404748260974884,
+                "representation_kl": 1.1404748260974884,
+                "ensemble": 0.20077400654554367,
+                "loss": 0.9744354784488678,
+                "posterior_image_mse": 0.01768094697035849,
+                "reward_mae": 0.026832149014808238,
+                "terminal_reward_mae": 0.32749268040060997,
+                "continuation_brier": 0.004243454401148483,
+                "terminal_brier": 0.06810917503753444,
+                "terminal_examples": 28,
+                "validation_transitions": 754,
+                "open_loop_image_mse": 0.02804998285137117,
+                "persistence_image_mse": 0.050114449579268694,
+                "open_loop_reward_mae": 0.28215688094496727
+              },
+              "double_time": {
+                "reconstruction": 0.01564398594200611,
+                "reward": 0.017627841778448783,
+                "continuation": 0.0754758944385685,
+                "dynamics_kl": 1.1296948790550232,
+                "representation_kl": 1.1296948790550232,
+                "ensemble": 0.18520180135965347,
+                "loss": 0.97176643460989,
+                "posterior_image_mse": 0.01564398594200611,
+                "reward_mae": 0.02391072199679911,
+                "terminal_reward_mae": 0.19713468501965206,
+                "continuation_brier": 0.005689750755664136,
+                "terminal_brier": 0.04365639115373294,
+                "terminal_examples": 30,
+                "validation_transitions": 758,
+                "open_loop_image_mse": 0.027182099176570773,
+                "persistence_image_mse": 0.04441898036748171,
+                "open_loop_reward_mae": 0.2685307264328003
+              }
+            },
+            "gate": {
+              "ready": true,
+              "reasons": [],
+              "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+            }
+          },
+          {
+            "seed": 47,
+            "metrics": {
+              "spinning": {
+                "reconstruction": 0.017925107153132558,
+                "reward": 0.013697164133191109,
+                "continuation": 0.04303935403004289,
+                "dynamics_kl": 1.1360395699739456,
+                "representation_kl": 1.1360395699739456,
+                "ensemble": 0.20421206206083298,
+                "loss": 0.9604974314570427,
+                "posterior_image_mse": 0.017925107153132558,
+                "reward_mae": 0.026673819171264768,
+                "terminal_reward_mae": 0.30806215506579193,
+                "continuation_brier": 0.004055766989040421,
+                "terminal_brier": 0.05186018446901081,
+                "terminal_examples": 28,
+                "validation_transitions": 754,
+                "open_loop_image_mse": 0.027218760224059224,
+                "persistence_image_mse": 0.050114449579268694,
+                "open_loop_reward_mae": 0.28310302272439003
+              },
+              "double_time": {
+                "reconstruction": 0.015736549627035856,
+                "reward": 0.017609932445338927,
+                "continuation": 0.07040202937787399,
+                "dynamics_kl": 1.1388452351093292,
+                "representation_kl": 1.1388452351093292,
+                "ensemble": 0.19019359908998013,
+                "loss": 0.977249264717102,
+                "posterior_image_mse": 0.015736549627035856,
+                "reward_mae": 0.022831664886325598,
+                "terminal_reward_mae": 0.23926525724430878,
+                "continuation_brier": 0.0051636799462357885,
+                "terminal_brier": 0.05393430660090719,
+                "terminal_examples": 30,
+                "validation_transitions": 758,
+                "open_loop_image_mse": 0.025828678160905838,
+                "persistence_image_mse": 0.04441898036748171,
+                "open_loop_reward_mae": 0.2744639292359352
+              }
+            },
+            "gate": {
+              "ready": true,
+              "reasons": [],
+              "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+            }
+          }
+        ],
+        "gate_passes": 3,
+        "fits": [
+          {
+            "seed": 11,
+            "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg2\\terminal_reward_weight\\horizon-trial-20261025-092800-882181\\horizon-8-seed-11.pt",
+            "seconds": 6.4210000000020955,
+            "actor_updates": 1505,
+            "imagined_transitions": 1518256,
+            "new_actor_updates": 64,
+            "new_imagined_transitions": 64056
+          },
+          {
+            "seed": 23,
+            "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg2\\terminal_reward_weight\\horizon-trial-20261025-092800-882181\\horizon-8-seed-23.pt",
+            "seconds": 6.452999999979511,
+            "actor_updates": 1505,
+            "imagined_transitions": 1517280,
+            "new_actor_updates": 64,
+            "new_imagined_transitions": 63080
+          },
+          {
+            "seed": 47,
+            "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg2\\terminal_reward_weight\\horizon-trial-20261025-092800-882181\\horizon-8-seed-47.pt",
+            "seconds": 6.952999999979511,
+            "actor_updates": 1505,
+            "imagined_transitions": 1517488,
+            "new_actor_updates": 64,
+            "new_imagined_transitions": 63288
+          }
+        ]
+      },
+      {
+        "horizon": 16,
+        "audits": [
+          {
+            "seed": 11,
+            "metrics": {
+              "spinning": {
+                "reconstruction": 0.017599815735593438,
+                "reward": 0.028199856373248622,
+                "continuation": 0.07421978516504169,
+                "dynamics_kl": 1.1546173989772797,
+                "representation_kl": 1.1546173989772797,
+                "ensemble": 0.19410896860063076,
+                "loss": 1.006898894906044,
+                "posterior_image_mse": 0.017599815735593438,
+                "reward_mae": 0.03475558909121901,
+                "terminal_reward_mae": 0.3523808776267937,
+                "continuation_brier": 0.007393886016870965,
+                "terminal_brier": 0.06160644739741526,
+                "terminal_examples": 28,
+                "validation_transitions": 754,
+                "open_loop_image_mse": 0.030213293386623263,
+                "persistence_image_mse": 0.045110981445759535,
+                "open_loop_reward_mae": 0.32734405994415283
+              },
+              "double_time": {
+                "reconstruction": 0.016068410710431635,
+                "reward": 0.01837147721380461,
+                "continuation": 0.07277706044260412,
+                "dynamics_kl": 1.1397440135478973,
+                "representation_kl": 1.1397440135478973,
+                "ensemble": 0.19815850630402565,
+                "loss": 0.9892218858003616,
+                "posterior_image_mse": 0.016068410710431635,
+                "reward_mae": 0.025552193983457983,
+                "terminal_reward_mae": 0.27508163899183274,
+                "continuation_brier": 0.005455400962091517,
+                "terminal_brier": 0.05409477289552645,
+                "terminal_examples": 30,
+                "validation_transitions": 758,
+                "open_loop_image_mse": 0.029743376187980175,
+                "persistence_image_mse": 0.044253597036004066,
+                "open_loop_reward_mae": 0.32675337232649326
+              }
+            },
+            "gate": {
+              "ready": true,
+              "reasons": [],
+              "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+            }
+          },
+          {
+            "seed": 23,
+            "metrics": {
+              "spinning": {
+                "reconstruction": 0.01787749188952148,
+                "reward": 0.019995645503513515,
+                "continuation": 0.06714416923932731,
+                "dynamics_kl": 1.155591920018196,
+                "representation_kl": 1.155591920018196,
+                "ensemble": 0.20520223304629326,
+                "loss": 1.0035746842622757,
+                "posterior_image_mse": 0.01787749188952148,
+                "reward_mae": 0.02893575932830572,
+                "terminal_reward_mae": 0.35926598949091776,
+                "continuation_brier": 0.0057549171142454725,
+                "terminal_brier": 0.08916388145839196,
+                "terminal_examples": 28,
+                "validation_transitions": 754,
+                "open_loop_image_mse": 0.02950559207238257,
+                "persistence_image_mse": 0.045110981445759535,
+                "open_loop_reward_mae": 0.32480015978217125
+              },
+              "double_time": {
+                "reconstruction": 0.01567400898784399,
+                "reward": 0.01808606181293726,
+                "continuation": 0.08005045587196946,
+                "dynamics_kl": 1.1273158937692642,
+                "representation_kl": 1.1273158937692642,
+                "ensemble": 0.18956632632762194,
+                "loss": 0.9797663912177086,
+                "posterior_image_mse": 0.01567400898784399,
+                "reward_mae": 0.025335062528029084,
+                "terminal_reward_mae": 0.23556748827298482,
+                "continuation_brier": 0.006215538709511748,
+                "terminal_brier": 0.04590020696632564,
+                "terminal_examples": 30,
+                "validation_transitions": 758,
+                "open_loop_image_mse": 0.028211258118972182,
+                "persistence_image_mse": 0.044253597036004066,
+                "open_loop_reward_mae": 0.26556744053959846
+              }
+            },
+            "gate": {
+              "ready": true,
+              "reasons": [],
+              "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+            }
+          },
+          {
+            "seed": 47,
+            "metrics": {
+              "spinning": {
+                "reconstruction": 0.017925068968907,
+                "reward": 0.0171617919113487,
+                "continuation": 0.05047154997009784,
+                "dynamics_kl": 1.142794892191887,
+                "representation_kl": 1.142794892191887,
+                "ensemble": 0.20748313330113888,
+                "loss": 0.9787184968590736,
+                "posterior_image_mse": 0.017925068968907,
+                "reward_mae": 0.02854246145579964,
+                "terminal_reward_mae": 0.33358451298304964,
+                "continuation_brier": 0.004926801306282869,
+                "terminal_brier": 0.06736554801838272,
+                "terminal_examples": 28,
+                "validation_transitions": 754,
+                "open_loop_image_mse": 0.028953255619853735,
+                "persistence_image_mse": 0.045110981445759535,
+                "open_loop_reward_mae": 0.3215364459902048
+              },
+              "double_time": {
+                "reconstruction": 0.015612763003446162,
+                "reward": 0.017189292717375793,
+                "continuation": 0.06985088449437171,
+                "dynamics_kl": 1.1348329037427902,
+                "representation_kl": 1.1348329037427902,
+                "ensemble": 0.1890266388654709,
+                "loss": 0.9725793302059174,
+                "posterior_image_mse": 0.015612763003446162,
+                "reward_mae": 0.02411493193358183,
+                "terminal_reward_mae": 0.2330070788661639,
+                "continuation_brier": 0.005455682508909376,
+                "terminal_brier": 0.044715229778861006,
+                "terminal_examples": 30,
+                "validation_transitions": 758,
+                "open_loop_image_mse": 0.02781042642891407,
+                "persistence_image_mse": 0.044253597036004066,
+                "open_loop_reward_mae": 0.33396962843835354
+              }
+            },
+            "gate": {
+              "ready": true,
+              "reasons": [],
+              "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+            }
+          }
+        ],
+        "gate_passes": 3,
+        "fits": [
+          {
+            "seed": 11,
+            "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg2\\terminal_reward_weight\\horizon-trial-20261025-092800-882181\\horizon-16-seed-11.pt",
+            "seconds": 8.21899999998277,
+            "actor_updates": 1505,
+            "imagined_transitions": 1582312,
+            "new_actor_updates": 64,
+            "new_imagined_transitions": 128112
+          },
+          {
+            "seed": 23,
+            "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg2\\terminal_reward_weight\\horizon-trial-20261025-092800-882181\\horizon-16-seed-23.pt",
+            "seconds": 8.125,
+            "actor_updates": 1505,
+            "imagined_transitions": 1580360,
+            "new_actor_updates": 64,
+            "new_imagined_transitions": 126160
+          },
+          {
+            "seed": 47,
+            "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg2\\terminal_reward_weight\\horizon-trial-20261025-092800-882181\\horizon-16-seed-47.pt",
+            "seconds": 8.264999999984866,
+            "actor_updates": 1505,
+            "imagined_transitions": 1580776,
+            "new_actor_updates": 64,
+            "new_imagined_transitions": 126576
+          }
+        ]
+      }
+    ],
+    "joint_comparison_eligible": true,
+    "state": "completed",
+    "new_actor_updates_total": 384,
+    "new_imagined_transitions_total": 571272
+  },
+  {
+    "game": "RMGE01",
+    "source": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg1-exploration\\control\\world-model-20261025-004551-267957\\world-final.pt",
+    "source_sha256": "53f8cf5a74b0783f9cfb82503e790e629c33db2400fd405696dad1f7c59c3d39",
+    "scope": "Fixed world model; paired offline actor updates only after every horizon audit passes. No new real decisions.",
+    "seeds": [
+      11,
+      23,
+      47
+    ],
+    "updates_per_arm": 64,
+    "rows": [
+      {
+        "horizon": 8,
+        "audits": [
+          {
+            "seed": 11,
+            "metrics": {
+              "sweet_sweet": {
+                "reconstruction": 0.014149945694953203,
+                "reward": 0.017123843645094894,
+                "continuation": 0.14435518985726503,
+                "dynamics_kl": 39.65924024581909,
+                "representation_kl": 39.65924024581909,
+                "ensemble": 0.07755572814494371,
+                "loss": 73.95558547973633,
+                "posterior_image_mse": 0.014149945694953203,
+                "reward_mae": 0.019257692038081586,
+                "terminal_reward_mae": 0.3765385739248374,
+                "continuation_brier": 0.004001714794454668,
+                "terminal_brier": 0.17601506299891376,
+                "terminal_examples": 29,
+                "validation_transitions": 1829,
+                "open_loop_image_mse": 0.03348777862265706,
+                "persistence_image_mse": 0.05022986698895693,
+                "open_loop_reward_mae": 0.11050036631058902
+              }
+            },
+            "gate": {
+              "ready": true,
+              "reasons": [],
+              "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+            }
+          },
+          {
+            "seed": 23,
+            "metrics": {
+              "sweet_sweet": {
+                "reconstruction": 0.01417819398920983,
+                "reward": 0.016826101038986963,
+                "continuation": 0.13809753927500878,
+                "dynamics_kl": 40.113094329833984,
+                "representation_kl": 40.113094329833984,
+                "ensemble": 0.07662071730010211,
+                "loss": 74.32007074356079,
+                "posterior_image_mse": 0.01417819398920983,
+                "reward_mae": 0.018897254893090576,
+                "terminal_reward_mae": 0.35877743979980203,
+                "continuation_brier": 0.003768604958119835,
+                "terminal_brier": 0.16181476479569684,
+                "terminal_examples": 29,
+                "validation_transitions": 1829,
+                "open_loop_image_mse": 0.032905108062550426,
+                "persistence_image_mse": 0.05022986698895693,
+                "open_loop_reward_mae": 0.1132811865536496
+              }
+            },
+            "gate": {
+              "ready": true,
+              "reasons": [],
+              "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+            }
+          },
+          {
+            "seed": 47,
+            "metrics": {
+              "sweet_sweet": {
+                "reconstruction": 0.014181915787048638,
+                "reward": 0.017098125196753244,
+                "continuation": 0.14410148667337808,
+                "dynamics_kl": 39.69196629524231,
+                "representation_kl": 39.69196629524231,
+                "ensemble": 0.07863382040522993,
+                "loss": 74.0888123512268,
+                "posterior_image_mse": 0.014181915787048638,
+                "reward_mae": 0.0190770203480497,
+                "terminal_reward_mae": 0.3752062364385046,
+                "continuation_brier": 0.003915865631089578,
+                "terminal_brier": 0.1709881888845507,
+                "terminal_examples": 29,
+                "validation_transitions": 1829,
+                "open_loop_image_mse": 0.03394389804452658,
+                "persistence_image_mse": 0.05022986698895693,
+                "open_loop_reward_mae": 0.11816937039839104
+              }
+            },
+            "gate": {
+              "ready": true,
+              "reasons": [],
+              "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+            }
+          }
+        ],
+        "gate_passes": 3,
+        "fits": [
+          {
+            "seed": 11,
+            "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg1-exploration\\control\\horizon-trial-20261025-092902-419977\\horizon-8-seed-11.pt",
+            "seconds": 7.48499999998603,
+            "actor_updates": 1295,
+            "imagined_transitions": 1326080,
+            "new_actor_updates": 64,
+            "new_imagined_transitions": 65536
+          },
+          {
+            "seed": 23,
+            "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg1-exploration\\control\\horizon-trial-20261025-092902-419977\\horizon-8-seed-23.pt",
+            "seconds": 7.405999999988126,
+            "actor_updates": 1295,
+            "imagined_transitions": 1326008,
+            "new_actor_updates": 64,
+            "new_imagined_transitions": 65464
+          },
+          {
+            "seed": 47,
+            "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg1-exploration\\control\\horizon-trial-20261025-092902-419977\\horizon-8-seed-47.pt",
+            "seconds": 7.187999999994645,
+            "actor_updates": 1295,
+            "imagined_transitions": 1326080,
+            "new_actor_updates": 64,
+            "new_imagined_transitions": 65536
+          }
+        ]
+      },
+      {
+        "horizon": 16,
+        "audits": [
+          {
+            "seed": 11,
+            "metrics": {
+              "sweet_sweet": {
+                "reconstruction": 0.014187683584168553,
+                "reward": 0.017032239957188722,
+                "continuation": 0.14071770781254145,
+                "dynamics_kl": 39.5137505531311,
+                "representation_kl": 39.5137505531311,
+                "ensemble": 0.07497577229514718,
+                "loss": 73.99512481689453,
+                "posterior_image_mse": 0.014187683584168553,
+                "reward_mae": 0.01913786685327068,
+                "terminal_reward_mae": 0.38332031102016056,
+                "continuation_brier": 0.004094674854378446,
+                "terminal_brier": 0.18219317192876713,
+                "terminal_examples": 29,
+                "validation_transitions": 1829,
+                "open_loop_image_mse": 0.035764184314757586,
+                "persistence_image_mse": 0.05219026282429695,
+                "open_loop_reward_mae": 0.106279740575701
+              }
+            },
+            "gate": {
+              "ready": true,
+              "reasons": [],
+              "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+            }
+          },
+          {
+            "seed": 23,
+            "metrics": {
+              "sweet_sweet": {
+                "reconstruction": 0.014189516077749431,
+                "reward": 0.01740861149619377,
+                "continuation": 0.14279213133033863,
+                "dynamics_kl": 39.933987617492676,
+                "representation_kl": 39.933987617492676,
+                "ensemble": 0.0775104456115514,
+                "loss": 74.25871706008911,
+                "posterior_image_mse": 0.014189516077749431,
+                "reward_mae": 0.01920951745705679,
+                "terminal_reward_mae": 0.38508506902846795,
+                "continuation_brier": 0.003955399868598856,
+                "terminal_brier": 0.17323115278702875,
+                "terminal_examples": 29,
+                "validation_transitions": 1829,
+                "open_loop_image_mse": 0.03507739491760731,
+                "persistence_image_mse": 0.05219026282429695,
+                "open_loop_reward_mae": 0.09807016397826374
+              }
+            },
+            "gate": {
+              "ready": true,
+              "reasons": [],
+              "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+            }
+          },
+          {
+            "seed": 47,
+            "metrics": {
+              "sweet_sweet": {
+                "reconstruction": 0.014172095921821892,
+                "reward": 0.017375047229961638,
+                "continuation": 0.1445855131058238,
+                "dynamics_kl": 40.09784460067749,
+                "representation_kl": 40.09784460067749,
+                "ensemble": 0.07778704748488963,
+                "loss": 74.297607421875,
+                "posterior_image_mse": 0.014172095921821892,
+                "reward_mae": 0.0191000392078422,
+                "terminal_reward_mae": 0.3761746382405018,
+                "continuation_brier": 0.0038905100774580138,
+                "terminal_brier": 0.16938851744979963,
+                "terminal_examples": 29,
+                "validation_transitions": 1829,
+                "open_loop_image_mse": 0.03558885399252176,
+                "persistence_image_mse": 0.05219026282429695,
+                "open_loop_reward_mae": 0.08709584886673838
+              }
+            },
+            "gate": {
+              "ready": true,
+              "reasons": [],
+              "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+            }
+          }
+        ],
+        "gate_passes": 3,
+        "fits": [
+          {
+            "seed": 11,
+            "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg1-exploration\\control\\horizon-trial-20261025-092902-419977\\horizon-16-seed-11.pt",
+            "seconds": 8.344000000011874,
+            "actor_updates": 1295,
+            "imagined_transitions": 1391616,
+            "new_actor_updates": 64,
+            "new_imagined_transitions": 131072
+          },
+          {
+            "seed": 23,
+            "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg1-exploration\\control\\horizon-trial-20261025-092902-419977\\horizon-16-seed-23.pt",
+            "seconds": 8.34299999999348,
+            "actor_updates": 1295,
+            "imagined_transitions": 1391472,
+            "new_actor_updates": 64,
+            "new_imagined_transitions": 130928
+          },
+          {
+            "seed": 47,
+            "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg1-exploration\\control\\horizon-trial-20261025-092902-419977\\horizon-16-seed-47.pt",
+            "seconds": 8.312999999994645,
+            "actor_updates": 1295,
+            "imagined_transitions": 1391616,
+            "new_actor_updates": 64,
+            "new_imagined_transitions": 131072
+          }
+        ]
+      }
+    ],
+    "joint_comparison_eligible": true,
+    "state": "completed",
+    "new_actor_updates_total": 384,
+    "new_imagined_transitions_total": 589608
+  }
+]

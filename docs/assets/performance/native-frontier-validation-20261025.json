@@ -1,0 +1,58 @@
+{
+  "scope": "Native save/restore detector fixture, no learning or mission-completion claim",
+  "game": "RMGE01",
+  "emulator_sha256": "b9f2131c647bdcd82d3846a4a820d978316ca55b517493d51503ea9f4b016fc4",
+  "saved_state_sha256": "06d2fb0081f650d11bb567077517000d5a9d4868038a5a77476a4c08b4317d88",
+  "real_validation_decisions": 2,
+  "start": {
+    "position": [
+      -50.0,
+      45.0000114440918,
+      -50.0
+    ],
+    "scenario": 1,
+    "stage": "BeltConveyerExGalaxy",
+    "actor": 2164967084,
+    "actor_nerve": 2154426424,
+    "scene_nerve": 2154437584,
+    "scene_frame": 1323,
+    "dead": false,
+    "complete": false,
+    "health": 3,
+    "max_health": 3
+  },
+  "after_actions": {
+    "position": [
+      5.3160271644592285,
+      45.0000114440918,
+      -50.31821060180664
+    ],
+    "scenario": 1,
+    "stage": "BeltConveyerExGalaxy",
+    "actor": 2164967084,
+    "actor_nerve": 2154426424,
+    "scene_nerve": 2154437584,
+    "scene_frame": 1347,
+    "dead": false,
+    "complete": false,
+    "health": 3,
+    "max_health": 3
+  },
+  "restored": {
+    "position": [
+      -50.0,
+      45.0000114440918,
+      -50.0
+    ],
+    "scenario": 1,
+    "stage": "BeltConveyerExGalaxy",
+    "actor": 2164967084,
+    "actor_nerve": 2154426424,
+    "scene_nerve": 2154437584,
+    "scene_frame": 1323,
+    "dead": false,
+    "complete": false,
+    "health": 3,
+    "max_health": 3
+  }
+}

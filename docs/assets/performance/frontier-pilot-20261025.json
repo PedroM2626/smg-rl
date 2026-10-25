@@ -1,0 +1,516 @@
+[
+  {
+    "game": "smg1",
+    "run": "runs\\frontier-smg1\\world-model-20261025-093241-455842",
+    "status": {
+      "state": "completed",
+      "algorithm": "gaussian-rssm-imagination-v1",
+      "timesteps": 299773,
+      "real_decisions": 299773,
+      "model_updates": 39308,
+      "actor_updates": 1239,
+      "imagined_transitions": 1268736,
+      "elapsed_seconds": 264.125,
+      "decisions_per_second": 3.7860861334595364,
+      "updated_at": "2026-10-25T12:37:05.593369+00:00",
+      "progress": [
+        0.016948757892054342
+      ],
+      "start_kinds": [
+        "full_start"
+      ],
+      "real_validation_decisions": 25,
+      "physical_decisions_this_run": 1025,
+      "diagnostics": {
+        "replay": {
+          "chunks": 658,
+          "transitions": 110136,
+          "train_episodes": 390,
+          "validation_episodes": 103,
+          "scenarios": {
+            "sweet_sweet": 110136
+          },
+          "train_scenarios": {
+            "sweet_sweet": 85707
+          },
+          "validation_scenarios": {
+            "sweet_sweet": 24429
+          },
+          "rejected": []
+        },
+        "validation": {
+          "sweet_sweet": {
+            "reconstruction": 0.014238203875720501,
+            "reward": 0.026711926562711596,
+            "continuation": 0.1646292372024618,
+            "dynamics_kl": 44.58736515045166,
+            "representation_kl": 44.58736515045166,
+            "ensemble": 0.07656538113951683,
+            "loss": 77.25271034240723,
+            "posterior_image_mse": 0.014238203875720501,
+            "reward_mae": 0.028973008738830686,
+            "terminal_reward_mae": 0.40984514976541203,
+            "continuation_brier": 0.008068045310210437,
+            "terminal_brier": 0.12561327968918098,
+            "terminal_examples": 24,
+            "validation_transitions": 974,
+            "open_loop_image_mse": 0.03291131462901831,
+            "persistence_image_mse": 0.057406432926654816,
+            "open_loop_reward_mae": 0.1966767031699419
+          }
+        },
+        "imagination_gate": {
+          "ready": true,
+          "reasons": [],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        },
+        "losses": {
+          "reconstruction": 0.00994515884667635,
+          "reward": 0.000524144503287971,
+          "continuation": 0.0002032840420724824,
+          "dynamics_kl": 16.80176544189453,
+          "representation_kl": 16.80176544189453,
+          "ensemble": 0.025777125731110573,
+          "prior_prediction": 39.028873443603516,
+          "open_loop_prediction": 43.98393249511719,
+          "loss": 86.70048522949219,
+          "posterior_image_mse": 0.00994515884667635,
+          "reward_mae": 0.008270736783742905,
+          "terminal_reward_mae": 0.006767650600522757,
+          "continuation_brier": 8.514376531820744e-06,
+          "terminal_brier": 3.4673394710971195e-10,
+          "terminal_examples": 6,
+          "validation_transitions": 233,
+          "model_gradient_norm": 124.16226959228516,
+          "actor_loss": -0.009156360290944576,
+          "critic_loss": 0.029513411223888397,
+          "imagined_reward": -0.15501481294631958,
+          "imagined_transitions": 1268736
+        }
+      },
+      "note": "Only real RAM-verified episodes can establish mission completion. Imagined transitions are not real timesteps."
+    },
+    "start_kinds": {
+      "full_start": 2,
+      "frontier": 1
+    },
+    "outcomes": {
+      "timeout": 2,
+      "interrupted": 1
+    },
+    "archive_candidates": 5,
+    "archive_accepted": 5,
+    "archive_visits": 1,
+    "highest_accepted_geometric_projection": 0.018394859852691448,
+    "entries": [
+      {
+        "file": "56d78cce7f2c44f89dddfdc9af4bee0d.state",
+        "sha256": "a1785e7f2e1f719f751fd65c14ef6e7bcce2a5324afd2ce9713658e9f18a92b2",
+        "cell": [
+          1,
+          0
+        ],
+        "position": [
+          469.73480224609375,
+          45.0,
+          275.82696533203125
+        ],
+        "scenario": 1,
+        "projection": 0.011673949871269065,
+        "health": 3,
+        "source": {
+          "episode": 1,
+          "step": 128,
+          "start_kind": "full_start",
+          "parent_state": "",
+          "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\frontier-smg1\\world-model-20261025-093241-455842\\worker-00"
+        },
+        "scene_frame": 2859,
+        "accepted": true,
+        "visits": 1,
+        "probe_decisions": 5,
+        "screen": "Six-observation vertical stability and bounded idle probe; not native contact verification"
+      },
+      {
+        "file": "351e12f75e094d9f81bb540821a5c219.state",
+        "sha256": "d680345ddaec10ccba8e18f7cf440dd3da0a2ba021f5196d76b3e8a678b3bfc7",
+        "cell": [
+          1,
+          1
+        ],
+        "position": [
+          536.8738403320312,
+          44.99999237060547,
+          330.6125793457031
+        ],
+        "scenario": 1,
+        "projection": 0.013005187297072316,
+        "health": 3,
+        "source": {
+          "episode": 1,
+          "step": 154,
+          "start_kind": "full_start",
+          "parent_state": "",
+          "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\frontier-smg1\\world-model-20261025-093241-455842\\worker-00"
+        },
+        "scene_frame": 3171,
+        "accepted": true,
+        "visits": 0,
+        "probe_decisions": 5,
+        "screen": "Six-observation vertical stability and bounded idle probe; not native contact verification"
+      },
+      {
+        "file": "7e32019f62ea4151a93054787874f72b.state",
+        "sha256": "e3b73809812e6c0f158147af58a5d5ef99d8dca598ba9ea034a906ba5d91c3dd",
+        "cell": [
+          0,
+          -1
+        ],
+        "position": [
+          263.7458801269531,
+          45.00000762939453,
+          -285.2000427246094
+        ],
+        "scenario": 1,
+        "projection": 0.013061644753065323,
+        "health": 3,
+        "source": {
+          "episode": 2,
+          "step": 52,
+          "start_kind": "frontier",
+          "parent_state": "56d78cce7f2c44f89dddfdc9af4bee0d.state",
+          "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\frontier-smg1\\world-model-20261025-093241-455842\\worker-00"
+        },
+        "scene_frame": 3483,
+        "accepted": true,
+        "visits": 0,
+        "probe_decisions": 5,
+        "screen": "Six-observation vertical stability and bounded idle probe; not native contact verification"
+      },
+      {
+        "file": "4f528bb6bc6c4b4192295710b2cec583.state",
+        "sha256": "0507368bd4144f0555258169921ee311431417e3a9d7f00f5f6f9df99c96e0bd",
+        "cell": [
+          1,
+          -1
+        ],
+        "position": [
+          538.8966674804688,
+          45.0,
+          -51.88029098510742
+        ],
+        "scenario": 1,
+        "projection": 0.018394859852691448,
+        "health": 3,
+        "source": {
+          "episode": 2,
+          "step": 106,
+          "start_kind": "frontier",
+          "parent_state": "56d78cce7f2c44f89dddfdc9af4bee0d.state",
+          "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\frontier-smg1\\world-model-20261025-093241-455842\\worker-00"
+        },
+        "scene_frame": 4131,
+        "accepted": true,
+        "visits": 0,
+        "probe_decisions": 5,
+        "screen": "Six-observation vertical stability and bounded idle probe; not native contact verification"
+      },
+      {
+        "file": "d978e931eda844ce89c67887cabc1006.state",
+        "sha256": "3cb26b1da6d149e35fc12a9fb34cdd8049251b4f8c71c96ccdfa2280222cf16d",
+        "cell": [
+          0,
+          0
+        ],
+        "position": [
+          179.84622192382812,
+          45.00000762939453,
+          6.1895222663879395
+        ],
+        "scenario": 1,
+        "projection": 0.006386796694418032,
+        "health": 3,
+        "source": {
+          "episode": 3,
+          "step": 128,
+          "start_kind": "full_start",
+          "parent_state": "",
+          "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\frontier-smg1\\world-model-20261025-093241-455842\\worker-00"
+        },
+        "scene_frame": 2859,
+        "accepted": true,
+        "visits": 0,
+        "probe_decisions": 5,
+        "screen": "Six-observation vertical stability and bounded idle probe; not native contact verification"
+      }
+    ]
+  },
+  {
+    "game": "smg2",
+    "run": "runs\\frontier-smg2\\world-model-20261025-093243-291363",
+    "status": {
+      "state": "completed",
+      "algorithm": "gaussian-rssm-imagination-v1",
+      "timesteps": 896272,
+      "real_decisions": 896272,
+      "model_updates": 28920,
+      "actor_updates": 1454,
+      "imagined_transitions": 1467296,
+      "elapsed_seconds": 204.60900000002584,
+      "decisions_per_second": 4.887370545772051,
+      "updated_at": "2026-10-25T12:36:07.908415+00:00",
+      "progress": [
+        0.06153944406070908,
+        0.025013819687999834
+      ],
+      "start_kinds": [
+        "full_start",
+        "full_start"
+      ],
+      "real_validation_decisions": 25,
+      "physical_decisions_this_run": 1025,
+      "diagnostics": {
+        "replay": {
+          "chunks": 3319,
+          "transitions": 146274,
+          "train_episodes": 2624,
+          "validation_episodes": 695,
+          "scenarios": {
+            "spinning": 73311,
+            "double_time": 72963
+          },
+          "train_scenarios": {
+            "spinning": 57198,
+            "double_time": 58537
+          },
+          "validation_scenarios": {
+            "spinning": 16113,
+            "double_time": 14426
+          },
+          "rejected": []
+        },
+        "validation": {
+          "spinning": {
+            "reconstruction": 0.01716843107715249,
+            "reward": 0.02431661542505026,
+            "continuation": 0.06422734819352627,
+            "dynamics_kl": 1.1416121423244476,
+            "representation_kl": 1.1416121423244476,
+            "ensemble": 0.21697504445910454,
+            "loss": 1.0076547116041183,
+            "posterior_image_mse": 0.01716843107715249,
+            "reward_mae": 0.0455658077262342,
+            "terminal_reward_mae": 0.2590319812297821,
+            "continuation_brier": 0.013065868522971869,
+            "terminal_brier": 0.03534362243954092,
+            "terminal_examples": 16,
+            "validation_transitions": 440,
+            "open_loop_image_mse": 0.028407858684659004,
+            "persistence_image_mse": 0.049463278613984585,
+            "open_loop_reward_mae": 0.42345836758613586
+          },
+          "double_time": {
+            "reconstruction": 0.014075927436351776,
+            "reward": 0.02178576958249323,
+            "continuation": 0.0827292655594647,
+            "dynamics_kl": 1.1345603466033936,
+            "representation_kl": 1.1345603466033936,
+            "ensemble": 0.15136364102363586,
+            "loss": 0.9506908059120178,
+            "posterior_image_mse": 0.014075927436351776,
+            "reward_mae": 0.023190671112388372,
+            "terminal_reward_mae": 0.29697665572166443,
+            "continuation_brier": 0.005789758957689628,
+            "terminal_brier": 0.08229951350222109,
+            "terminal_examples": 16,
+            "validation_transitions": 490,
+            "open_loop_image_mse": 0.025019405409693718,
+            "persistence_image_mse": 0.04096594359725714,
+            "open_loop_reward_mae": 0.3438303843140602
+          }
+        },
+        "imagination_gate": {
+          "ready": true,
+          "reasons": [],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        },
+        "losses": {
+          "reconstruction": 0.019975055009126663,
+          "reward": 0.011215335689485073,
+          "continuation": 0.03085768222808838,
+          "dynamics_kl": 1.2302616834640503,
+          "representation_kl": 1.2302616834640503,
+          "ensemble": 0.3306022584438324,
+          "loss": 1.1308073997497559,
+          "posterior_image_mse": 0.019975055009126663,
+          "reward_mae": 0.030625181272625923,
+          "terminal_reward_mae": 0.007361888885498047,
+          "continuation_brier": 0.009648331440985203,
+          "terminal_brier": 7.970181468408555e-05,
+          "terminal_examples": 7,
+          "validation_transitions": 136,
+          "model_gradient_norm": 1.045414686203003,
+          "actor_loss": -0.23540917038917542,
+          "critic_loss": 0.013196730054914951,
+          "imagined_reward": -0.343062162399292,
+          "imagined_transitions": 1467296
+        }
+      },
+      "note": "Only real RAM-verified episodes can establish mission completion. Imagined transitions are not real timesteps."
+    },
+    "start_kinds": {
+      "full_start": 16,
+      "frontier": 12
+    },
+    "outcomes": {
+      "death": 26,
+      "interrupted": 2
+    },
+    "archive_candidates": 5,
+    "archive_accepted": 5,
+    "archive_visits": 12,
+    "highest_accepted_geometric_projection": 0.015078557978922612,
+    "entries": [
+      {
+        "file": "f9ba1e5d459f4cab93a560d787f7edea.state",
+        "sha256": "93d326dc838b981d854f02c146ed1e72e4c0c7700755363122fc280ffa14ae6c",
+        "cell": [
+          1,
+          0
+        ],
+        "position": [
+          394.18072509765625,
+          -1150.0,
+          129.242919921875
+        ],
+        "scenario": 1,
+        "projection": 0.008992143009248612,
+        "health": null,
+        "source": {
+          "episode": 5,
+          "step": 13,
+          "start_kind": "full_start",
+          "parent_state": "",
+          "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\frontier-smg2\\world-model-20261025-093243-291363\\worker-00"
+        },
+        "scene_frame": 264,
+        "accepted": true,
+        "visits": 3,
+        "probe_decisions": 5,
+        "screen": "Six-observation vertical stability and bounded idle probe; not native contact verification"
+      },
+      {
+        "file": "e94db5c0d345458e9319522f6a66cea1.state",
+        "sha256": "b6f4d0205193838b6d91d9ba37a24c25f218c064d5ccf7dd998c11baf2db8572",
+        "cell": [
+          0,
+          -1
+        ],
+        "position": [
+          61.06443405151367,
+          -1150.0,
+          -76.63116455078125
+        ],
+        "scenario": 1,
+        "projection": 0.015078557978922612,
+        "health": null,
+        "source": {
+          "episode": 9,
+          "step": 10,
+          "start_kind": "full_start",
+          "parent_state": "",
+          "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\frontier-smg2\\world-model-20261025-093243-291363\\worker-00"
+        },
+        "scene_frame": 228,
+        "accepted": true,
+        "visits": 0,
+        "probe_decisions": 5,
+        "screen": "Six-observation vertical stability and bounded idle probe; not native contact verification"
+      },
+      {
+        "file": "470a469022a54a00a9838e2fbc8815d1.state",
+        "sha256": "43269473e47a8be18f40beee04105ad5f2bb06def53533c1a743d07d40c715ce",
+        "cell": [
+          0,
+          0
+        ],
+        "position": [
+          65.62142181396484,
+          -1150.0,
+          227.46383666992188
+        ],
+        "scenario": 2,
+        "projection": 0.005034341119492512,
+        "health": null,
+        "source": {
+          "episode": 3,
+          "step": 5,
+          "start_kind": "full_start",
+          "parent_state": "",
+          "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\frontier-smg2\\world-model-20261025-093243-291363\\worker-01"
+        },
+        "scene_frame": 105,
+        "accepted": true,
+        "visits": 4,
+        "probe_decisions": 5,
+        "screen": "Six-observation vertical stability and bounded idle probe; not native contact verification"
+      },
+      {
+        "file": "348794283f6b4335b4dd283ca7fe56a8.state",
+        "sha256": "aede9e55c2a3f4145d2f606bbbc2262b352f2e5eb2ed737a1284bacee68dfd32",
+        "cell": [
+          0,
+          -1
+        ],
+        "position": [
+          240.1448516845703,
+          -1150.0,
+          -5.780585289001465
+        ],
+        "scenario": 2,
+        "projection": 0.00921388034805023,
+        "health": null,
+        "source": {
+          "episode": 3,
+          "step": 7,
+          "start_kind": "full_start",
+          "parent_state": "",
+          "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\frontier-smg2\\world-model-20261025-093243-291363\\worker-01"
+        },
+        "scene_frame": 129,
+        "accepted": true,
+        "visits": 3,
+        "probe_decisions": 5,
+        "screen": "Six-observation vertical stability and bounded idle probe; not native contact verification"
+      },
+      {
+        "file": "2543a4a111404dec8c39feb83e89e645.state",
+        "sha256": "5bb356e60198b477430f48e2e2cb39bc6262939d1a276c40e8a46132ea04ccd0",
+        "cell": [
+          -1,
+          -1
+        ],
+        "position": [
+          -34.25236892700195,
+          -1150.0,
+          -92.76167297363281
+        ],
+        "scenario": 2,
+        "projection": 0.01114248788692462,
+        "health": null,
+        "source": {
+          "episode": 7,
+          "step": 11,
+          "start_kind": "full_start",
+          "parent_state": "",
+          "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\frontier-smg2\\world-model-20261025-093243-291363\\worker-01"
+        },
+        "scene_frame": 177,
+        "accepted": true,
+        "visits": 2,
+        "probe_decisions": 5,
+        "screen": "Six-observation vertical stability and bounded idle probe; not native contact verification"
+      }
+    ]
+  }
+]

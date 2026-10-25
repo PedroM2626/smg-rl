@@ -1,0 +1,464 @@
+[
+  {
+    "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg2\\continued_baseline\\eval-world-video-20261025-092031-598856\\policy.mp4",
+    "seconds": 30.3,
+    "frames": 909,
+    "episodes": [
+      {
+        "seed": 11,
+        "decisions": 61,
+        "outcome": "death",
+        "geometric_projection_percent": 6.7573757147999025,
+        "final_telemetry": {
+          "position": [
+            448.4255676269531,
+            -3431.0732421875,
+            -2443.87548828125
+          ],
+          "scenario": 1,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166529088,
+          "actor_nerve": 2155695676,
+          "scene_nerve": 2155696928,
+          "scene_frame": 1,
+          "dead": true,
+          "complete": false,
+          "health": null,
+          "max_health": null
+        }
+      },
+      {
+        "seed": 23,
+        "decisions": 59,
+        "outcome": "death",
+        "geometric_projection_percent": 7.186215586453894,
+        "final_telemetry": {
+          "position": [
+            736.5687866210938,
+            -4483.7021484375,
+            -2289.0185546875
+          ],
+          "scenario": 1,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166529088,
+          "actor_nerve": 2155695676,
+          "scene_nerve": 2155696928,
+          "scene_frame": 6,
+          "dead": true,
+          "complete": false,
+          "health": null,
+          "max_health": null
+        }
+      },
+      {
+        "seed": 47,
+        "decisions": 31,
+        "outcome": "death",
+        "geometric_projection_percent": 6.539311087804543,
+        "final_telemetry": {
+          "position": [
+            -831.8961181640625,
+            -3319.63818359375,
+            -2445.32421875
+          ],
+          "scenario": 1,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166529088,
+          "actor_nerve": 2155695676,
+          "scene_nerve": 2155696912,
+          "scene_frame": 480,
+          "dead": true,
+          "complete": false,
+          "health": null,
+          "max_health": null
+        }
+      }
+    ],
+    "sha256": "3e3bc96caa183b3f2386b085d7f1668c1471ea2320fffd49677f333c206be417"
+  },
+  {
+    "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg2\\continued_baseline\\eval-world-video-20261025-092054-740255\\policy.mp4",
+    "seconds": 19.7,
+    "frames": 591,
+    "episodes": [
+      {
+        "seed": 11,
+        "decisions": 38,
+        "outcome": "death",
+        "geometric_projection_percent": 3.1624351402380393,
+        "final_telemetry": {
+          "position": [
+            962.08447265625,
+            -3321.51171875,
+            -1673.8199462890625
+          ],
+          "scenario": 2,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166530752,
+          "actor_nerve": 2155695676,
+          "scene_nerve": 2155696912,
+          "scene_frame": 501,
+          "dead": true,
+          "complete": false,
+          "health": null,
+          "max_health": null
+        }
+      },
+      {
+        "seed": 23,
+        "decisions": 35,
+        "outcome": "death",
+        "geometric_projection_percent": 4.296305522342065,
+        "final_telemetry": {
+          "position": [
+            170.2098388671875,
+            -3429.145751953125,
+            -2389.22705078125
+          ],
+          "scenario": 2,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166530752,
+          "actor_nerve": 2155695676,
+          "scene_nerve": 2155696928,
+          "scene_frame": 1,
+          "dead": true,
+          "complete": false,
+          "health": null,
+          "max_health": null
+        }
+      },
+      {
+        "seed": 47,
+        "decisions": 25,
+        "outcome": "death",
+        "geometric_projection_percent": 3.654415569207887,
+        "final_telemetry": {
+          "position": [
+            307.54266357421875,
+            -3662.0615234375,
+            -1659.85205078125
+          ],
+          "scenario": 2,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166530752,
+          "actor_nerve": 2155695676,
+          "scene_nerve": 2155696928,
+          "scene_frame": 8,
+          "dead": true,
+          "complete": false,
+          "health": null,
+          "max_health": null
+        }
+      }
+    ],
+    "sha256": "f13d0729cb79cf8dad6ee9f818e4a0f597f374eca2554647072aabd3b9209ce5"
+  },
+  {
+    "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg2\\terminal_reward_weight\\eval-world-video-20261025-092106-474351\\policy.mp4",
+    "seconds": 29.1,
+    "frames": 873,
+    "episodes": [
+      {
+        "seed": 11,
+        "decisions": 54,
+        "outcome": "death",
+        "geometric_projection_percent": 6.327615869521443,
+        "final_telemetry": {
+          "position": [
+            617.5282592773438,
+            -3499.879150390625,
+            -2184.744873046875
+          ],
+          "scenario": 1,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166529088,
+          "actor_nerve": 2155695676,
+          "scene_nerve": 2155696928,
+          "scene_frame": 3,
+          "dead": true,
+          "complete": false,
+          "health": null,
+          "max_health": null
+        }
+      },
+      {
+        "seed": 23,
+        "decisions": 45,
+        "outcome": "death",
+        "geometric_projection_percent": 7.228806717969198,
+        "final_telemetry": {
+          "position": [
+            1019.5818481445312,
+            -3543.406494140625,
+            -2262.107177734375
+          ],
+          "scenario": 1,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166529088,
+          "actor_nerve": 2155695676,
+          "scene_nerve": 2155696928,
+          "scene_frame": 4,
+          "dead": true,
+          "complete": false,
+          "health": null,
+          "max_health": null
+        }
+      },
+      {
+        "seed": 47,
+        "decisions": 46,
+        "outcome": "death",
+        "geometric_projection_percent": 7.810023042563237,
+        "final_telemetry": {
+          "position": [
+            580.3202514648438,
+            -3400.896240234375,
+            -2762.26806640625
+          ],
+          "scenario": 1,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166529088,
+          "actor_nerve": 2155695676,
+          "scene_nerve": 2155696928,
+          "scene_frame": 0,
+          "dead": true,
+          "complete": false,
+          "health": null,
+          "max_health": null
+        }
+      }
+    ],
+    "sha256": "315de60147607b972ced85fe20b6980caa1d53641a3b3443460199610a60f87a"
+  },
+  {
+    "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg2\\terminal_reward_weight\\eval-world-video-20261025-092122-196960\\policy.mp4",
+    "seconds": 19.5,
+    "frames": 585,
+    "episodes": [
+      {
+        "seed": 11,
+        "decisions": 35,
+        "outcome": "death",
+        "geometric_projection_percent": 2.0911644951017823,
+        "final_telemetry": {
+          "position": [
+            621.6278076171875,
+            -3321.229736328125,
+            -825.4501342773438
+          ],
+          "scenario": 2,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166530752,
+          "actor_nerve": 2155695676,
+          "scene_nerve": 2155696912,
+          "scene_frame": 465,
+          "dead": true,
+          "complete": false,
+          "health": null,
+          "max_health": null
+        }
+      },
+      {
+        "seed": 23,
+        "decisions": 35,
+        "outcome": "death",
+        "geometric_projection_percent": 4.296305522342065,
+        "final_telemetry": {
+          "position": [
+            170.2098388671875,
+            -3429.145751953125,
+            -2389.22705078125
+          ],
+          "scenario": 2,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166530752,
+          "actor_nerve": 2155695676,
+          "scene_nerve": 2155696928,
+          "scene_frame": 1,
+          "dead": true,
+          "complete": false,
+          "health": null,
+          "max_health": null
+        }
+      },
+      {
+        "seed": 47,
+        "decisions": 27,
+        "outcome": "death",
+        "geometric_projection_percent": 1.9779202714356934,
+        "final_telemetry": {
+          "position": [
+            349.2575988769531,
+            -3309.743408203125,
+            -802.3765869140625
+          ],
+          "scenario": 2,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166530752,
+          "actor_nerve": 2155695676,
+          "scene_nerve": 2155696912,
+          "scene_frame": 369,
+          "dead": true,
+          "complete": false,
+          "health": null,
+          "max_health": null
+        }
+      }
+    ],
+    "sha256": "bcd0882911a14a8e6c45d4299a8c16aee0146834161bcf9548fb31b36cd09813"
+  },
+  {
+    "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg1-exploration\\control\\eval-world-video-20261025-092135-321386\\policy.mp4",
+    "seconds": 209.1,
+    "frames": 6273,
+    "episodes": [
+      {
+        "seed": 11,
+        "decisions": 246,
+        "outcome": "timeout",
+        "geometric_projection_percent": 2.088132531799047,
+        "final_telemetry": {
+          "position": [
+            187.8994140625,
+            44.99999237060547,
+            -189.60302734375
+          ],
+          "scenario": 1,
+          "stage": "BeltConveyerExGalaxy",
+          "actor": 2164967084,
+          "actor_nerve": 2154426424,
+          "scene_nerve": 2154437584,
+          "scene_frame": 4275,
+          "dead": false,
+          "complete": false,
+          "health": 3,
+          "max_health": 3
+        }
+      },
+      {
+        "seed": 23,
+        "decisions": 340,
+        "outcome": "timeout",
+        "geometric_projection_percent": 2.899521632481933,
+        "final_telemetry": {
+          "position": [
+            614.7392578125,
+            44.99999237060547,
+            185.2685546875
+          ],
+          "scenario": 1,
+          "stage": "BeltConveyerExGalaxy",
+          "actor": 2164967084,
+          "actor_nerve": 2154426424,
+          "scene_nerve": 2154437584,
+          "scene_frame": 5403,
+          "dead": false,
+          "complete": false,
+          "health": 3,
+          "max_health": 3
+        }
+      },
+      {
+        "seed": 47,
+        "decisions": 459,
+        "outcome": "timeout",
+        "geometric_projection_percent": 2.87528225833756,
+        "final_telemetry": {
+          "position": [
+            288.331298828125,
+            237.5,
+            117.58450317382812
+          ],
+          "scenario": 1,
+          "stage": "BeltConveyerExGalaxy",
+          "actor": 2164967084,
+          "actor_nerve": 2154426424,
+          "scene_nerve": 2154437584,
+          "scene_frame": 6831,
+          "dead": false,
+          "complete": false,
+          "health": 3,
+          "max_health": 3
+        }
+      }
+    ],
+    "sha256": "268f38d17f9cd99cdb169ab11287743021fd40f68758f5774123d11559bcab50"
+  },
+  {
+    "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg1-exploration\\curiosity_10x\\eval-world-video-20261025-092324-491383\\policy.mp4",
+    "seconds": 252.7,
+    "frames": 7581,
+    "episodes": [
+      {
+        "seed": 11,
+        "decisions": 531,
+        "outcome": "timeout",
+        "geometric_projection_percent": 3.1690810436674615,
+        "final_telemetry": {
+          "position": [
+            600.39990234375,
+            486.4749755859375,
+            89.14855194091797
+          ],
+          "scenario": 1,
+          "stage": "BeltConveyerExGalaxy",
+          "actor": 2164967084,
+          "actor_nerve": 2154426424,
+          "scene_nerve": 2154437584,
+          "scene_frame": 7695,
+          "dead": false,
+          "complete": false,
+          "health": 3,
+          "max_health": 3
+        }
+      },
+      {
+        "seed": 23,
+        "decisions": 341,
+        "outcome": "timeout",
+        "geometric_projection_percent": 2.9560031684407884,
+        "final_telemetry": {
+          "position": [
+            649.4376220703125,
+            194.09934997558594,
+            -153.73150634765625
+          ],
+          "scenario": 1,
+          "stage": "BeltConveyerExGalaxy",
+          "actor": 2164967084,
+          "actor_nerve": 2154426424,
+          "scene_nerve": 2154437584,
+          "scene_frame": 5415,
+          "dead": false,
+          "complete": false,
+          "health": 3,
+          "max_health": 3
+        }
+      },
+      {
+        "seed": 47,
+        "decisions": 391,
+        "outcome": "timeout",
+        "geometric_projection_percent": 2.2366797197491137,
+        "final_telemetry": {
+          "position": [
+            85.34504699707031,
+            45.0,
+            131.0058135986328
+          ],
+          "scenario": 1,
+          "stage": "BeltConveyerExGalaxy",
+          "actor": 2164967084,
+          "actor_nerve": 2154426424,
+          "scene_nerve": 2154437584,
+          "scene_frame": 6015,
+          "dead": false,
+          "complete": false,
+          "health": 3,
+          "max_health": 3
+        }
+      }
+    ],
+    "sha256": "0bda9acc2b6b3f90d92f5bb48061fc05c123696df5405eb02d6756941b1d9091"
+  }
+]

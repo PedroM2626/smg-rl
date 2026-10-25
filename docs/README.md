@@ -28,6 +28,8 @@ each run's `status.json` remains the live source.
 | Galaxy 1 terminal sampling, visual-loss balance and prior prediction repair | [Galaxy 1 imagination repair](world-model-smg1-repair.md) |
 | Isolated Galaxy 2 objective transfer tests, paired seeds and offline audit boundaries | [Galaxy 2 world-model ablation](world-model-ablation.md) |
 | Reviewed continuation budgets, paired online results, curiosity trial and final stop | [Staged training results](staged-training.md) |
+| Full-start policy videos, stability-screened savestates and assisted-reset accounting | [Frontier exploration](frontier-exploration.md) |
+| Paired horizon-8/16 audits, frozen-world actor fitting and real-game evaluation | [Horizon trial](horizon-trial.md) |
 | Measured throughput and 1M-decision wall-clock projections | [Main README timing section](../README.md#decision-budgets-and-measured-wall-clock) |
 
 ## Understand and reproduce

@@ -3,6 +3,12 @@
 Visual recurrent reinforcement learning for **Super Mario Galaxy 1 and 2** in
 Dolphin on Windows.
 
+**October 25 follow-up:** [actual policy videos and frontier savestate exploration](docs/frontier-exploration.md)
+are implemented and checked in bounded live pilots. A paired
+[8-versus-16 imagination trial](docs/horizon-trial.md) passed prediction gates but
+showed no clear navigation benefit; horizon 8 remains the default. Experiments
+are stopped after their budgets, with local videos and checkpoints retained.
+
 **Latest staged result (October 25, 2026):** all bounded experiments finished
 and training is stopped. Galaxy 2 terminal reward weight 5 improved prediction
 gates and enabled more actor updates, without observed navigation improvement

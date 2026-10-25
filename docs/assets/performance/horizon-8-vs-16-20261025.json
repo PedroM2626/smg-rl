@@ -1,0 +1,700 @@
+{
+  "scope": "Fixed-world 64 offline actor updates per horizon and paired seed, followed by one full-start evaluation per seed/scenario; exploratory, no significance claim",
+  "rows": [
+    {
+      "game": "SB4E01",
+      "horizon": 8,
+      "seed": 11,
+      "variation": 0,
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg2\\terminal_reward_weight\\eval-world-video-20261025-093317-076311",
+      "episode": {
+        "seed": 11,
+        "decisions": 79,
+        "outcome": "death",
+        "geometric_projection_percent": 10.618425043355247,
+        "final_telemetry": {
+          "position": [
+            -424.9222106933594,
+            -3437.022216796875,
+            -4129.6357421875
+          ],
+          "scenario": 1,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166529088,
+          "actor_nerve": 2155695676,
+          "scene_nerve": 2155696928,
+          "scene_frame": 1,
+          "dead": true,
+          "complete": false,
+          "health": null,
+          "max_health": null
+        }
+      },
+      "checkpoint_sha256": "73f7000c4bcc209e2e630404ee5fc607fc254c7f92e6d9c8ee49446933564a1b"
+    },
+    {
+      "game": "SB4E01",
+      "horizon": 8,
+      "seed": 11,
+      "variation": 1,
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg2\\terminal_reward_weight\\eval-world-video-20261025-093334-875374",
+      "episode": {
+        "seed": 11,
+        "decisions": 55,
+        "outcome": "death",
+        "geometric_projection_percent": 3.4169357849927957,
+        "final_telemetry": {
+          "position": [
+            1029.368896484375,
+            -3700.4931640625,
+            -1450.677978515625
+          ],
+          "scenario": 2,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166530752,
+          "actor_nerve": 2155695676,
+          "scene_nerve": 2155696928,
+          "scene_frame": 9,
+          "dead": true,
+          "complete": false,
+          "health": null,
+          "max_health": null
+        }
+      },
+      "checkpoint_sha256": "73f7000c4bcc209e2e630404ee5fc607fc254c7f92e6d9c8ee49446933564a1b"
+    },
+    {
+      "game": "SB4E01",
+      "horizon": 8,
+      "seed": 23,
+      "variation": 0,
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg2\\terminal_reward_weight\\eval-world-video-20261025-093348-889597",
+      "episode": {
+        "seed": 23,
+        "decisions": 52,
+        "outcome": "death",
+        "geometric_projection_percent": 6.386145690588195,
+        "final_telemetry": {
+          "position": [
+            326.75848388671875,
+            -3573.71875,
+            -2312.94873046875
+          ],
+          "scenario": 1,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166529088,
+          "actor_nerve": 2155695676,
+          "scene_nerve": 2155696928,
+          "scene_frame": 5,
+          "dead": true,
+          "complete": false,
+          "health": null,
+          "max_health": null
+        }
+      },
+      "checkpoint_sha256": "cd860d2b9d8fa6e34e980d3d07e2f0fd83983516bf8f2e7abd831fa054c93b5b"
+    },
+    {
+      "game": "SB4E01",
+      "horizon": 8,
+      "seed": 23,
+      "variation": 1,
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg2\\terminal_reward_weight\\eval-world-video-20261025-093402-730127",
+      "episode": {
+        "seed": 23,
+        "decisions": 35,
+        "outcome": "death",
+        "geometric_projection_percent": 3.269261422403353,
+        "final_telemetry": {
+          "position": [
+            280.87457275390625,
+            -3391.452392578125,
+            -1767.0567626953125
+          ],
+          "scenario": 2,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166530752,
+          "actor_nerve": 2155695676,
+          "scene_nerve": 2155696928,
+          "scene_frame": 0,
+          "dead": true,
+          "complete": false,
+          "health": null,
+          "max_health": null
+        }
+      },
+      "checkpoint_sha256": "cd860d2b9d8fa6e34e980d3d07e2f0fd83983516bf8f2e7abd831fa054c93b5b"
+    },
+    {
+      "game": "SB4E01",
+      "horizon": 8,
+      "seed": 47,
+      "variation": 0,
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg2\\terminal_reward_weight\\eval-world-video-20261025-093413-740020",
+      "episode": {
+        "seed": 47,
+        "decisions": 41,
+        "outcome": "death",
+        "geometric_projection_percent": 8.104402784923884,
+        "final_telemetry": {
+          "position": [
+            677.4630126953125,
+            -4676.10986328125,
+            -2638.93505859375
+          ],
+          "scenario": 1,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166529088,
+          "actor_nerve": 2155695676,
+          "scene_nerve": 2155696928,
+          "scene_frame": 9,
+          "dead": true,
+          "complete": false,
+          "health": null,
+          "max_health": null
+        }
+      },
+      "checkpoint_sha256": "7db34a2aca8970524c9a74eb6be92a332acd973ee25250c6763b7d79429d55a0"
+    },
+    {
+      "game": "SB4E01",
+      "horizon": 8,
+      "seed": 47,
+      "variation": 1,
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg2\\terminal_reward_weight\\eval-world-video-20261025-093430-683473",
+      "episode": {
+        "seed": 47,
+        "decisions": 25,
+        "outcome": "death",
+        "geometric_projection_percent": 2.0907838172947484,
+        "final_telemetry": {
+          "position": [
+            722.215087890625,
+            -3479.0458984375,
+            -634.6490478515625
+          ],
+          "scenario": 2,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166530752,
+          "actor_nerve": 2155695676,
+          "scene_nerve": 2155696928,
+          "scene_frame": 3,
+          "dead": true,
+          "complete": false,
+          "health": null,
+          "max_health": null
+        }
+      },
+      "checkpoint_sha256": "7db34a2aca8970524c9a74eb6be92a332acd973ee25250c6763b7d79429d55a0"
+    },
+    {
+      "game": "SB4E01",
+      "horizon": 16,
+      "seed": 11,
+      "variation": 0,
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg2\\terminal_reward_weight\\eval-world-video-20261025-093440-243534",
+      "episode": {
+        "seed": 11,
+        "decisions": 85,
+        "outcome": "death",
+        "geometric_projection_percent": 11.249466642216367,
+        "final_telemetry": {
+          "position": [
+            -65.08466339111328,
+            -3647.225830078125,
+            -4093.7744140625
+          ],
+          "scenario": 1,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166529088,
+          "actor_nerve": 2155695676,
+          "scene_nerve": 2155696928,
+          "scene_frame": 8,
+          "dead": true,
+          "complete": false,
+          "health": null,
+          "max_health": null
+        }
+      },
+      "checkpoint_sha256": "dd4b23284ed089daeedbd5fff99904df08b7430a48ed9540f38aad0a86ea79fd"
+    },
+    {
+      "game": "SB4E01",
+      "horizon": 16,
+      "seed": 11,
+      "variation": 1,
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg2\\terminal_reward_weight\\eval-world-video-20261025-093457-993154",
+      "episode": {
+        "seed": 11,
+        "decisions": 36,
+        "outcome": "death",
+        "geometric_projection_percent": 1.7165991896144341,
+        "final_telemetry": {
+          "position": [
+            337.233154296875,
+            -3647.759765625,
+            -654.5695190429688
+          ],
+          "scenario": 2,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166530752,
+          "actor_nerve": 2155695676,
+          "scene_nerve": 2155696928,
+          "scene_frame": 8,
+          "dead": true,
+          "complete": false,
+          "health": null,
+          "max_health": null
+        }
+      },
+      "checkpoint_sha256": "dd4b23284ed089daeedbd5fff99904df08b7430a48ed9540f38aad0a86ea79fd"
+    },
+    {
+      "game": "SB4E01",
+      "horizon": 16,
+      "seed": 23,
+      "variation": 0,
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg2\\terminal_reward_weight\\eval-world-video-20261025-093508-104240",
+      "episode": {
+        "seed": 23,
+        "decisions": 49,
+        "outcome": "death",
+        "geometric_projection_percent": 7.092130442079752,
+        "final_telemetry": {
+          "position": [
+            -21.542564392089844,
+            -3448.166015625,
+            -3181.23681640625
+          ],
+          "scenario": 1,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166529088,
+          "actor_nerve": 2155695676,
+          "scene_nerve": 2155696928,
+          "scene_frame": 2,
+          "dead": true,
+          "complete": false,
+          "health": null,
+          "max_health": null
+        }
+      },
+      "checkpoint_sha256": "216cd713b7718a1c6c03ba793b23f01f179f6183715d1b3cd7c65de579ac6357"
+    },
+    {
+      "game": "SB4E01",
+      "horizon": 16,
+      "seed": 23,
+      "variation": 1,
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg2\\terminal_reward_weight\\eval-world-video-20261025-093519-874960",
+      "episode": {
+        "seed": 23,
+        "decisions": 35,
+        "outcome": "death",
+        "geometric_projection_percent": 3.2101470811914266,
+        "final_telemetry": {
+          "position": [
+            293.4811096191406,
+            -3387.98193359375,
+            -1647.4012451171875
+          ],
+          "scenario": 2,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166530752,
+          "actor_nerve": 2155695676,
+          "scene_nerve": 2155696928,
+          "scene_frame": 0,
+          "dead": true,
+          "complete": false,
+          "health": null,
+          "max_health": null
+        }
+      },
+      "checkpoint_sha256": "216cd713b7718a1c6c03ba793b23f01f179f6183715d1b3cd7c65de579ac6357"
+    },
+    {
+      "game": "SB4E01",
+      "horizon": 16,
+      "seed": 47,
+      "variation": 0,
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg2\\terminal_reward_weight\\eval-world-video-20261025-093530-480223",
+      "episode": {
+        "seed": 47,
+        "decisions": 46,
+        "outcome": "death",
+        "geometric_projection_percent": 7.965870668249911,
+        "final_telemetry": {
+          "position": [
+            1113.6588134765625,
+            -3367.27978515625,
+            -2896.562255859375
+          ],
+          "scenario": 1,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166529088,
+          "actor_nerve": 2155695676,
+          "scene_nerve": 2155696912,
+          "scene_frame": 660,
+          "dead": true,
+          "complete": false,
+          "health": null,
+          "max_health": null
+        }
+      },
+      "checkpoint_sha256": "501951d9d9c1123aaa79af9e8b98f0ae5d5800c9dd7d60b65a0d571ec9e26aac"
+    },
+    {
+      "game": "SB4E01",
+      "horizon": 16,
+      "seed": 47,
+      "variation": 1,
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg2\\terminal_reward_weight\\eval-world-video-20261025-093542-194262",
+      "episode": {
+        "seed": 47,
+        "decisions": 25,
+        "outcome": "death",
+        "geometric_projection_percent": 2.9986076704790046,
+        "final_telemetry": {
+          "position": [
+            649.9654541015625,
+            -3388.696044921875,
+            -1587.2984619140625
+          ],
+          "scenario": 2,
+          "stage": "SecretAthleticGalaxy",
+          "actor": 2166530752,
+          "actor_nerve": 2155695676,
+          "scene_nerve": 2155696928,
+          "scene_frame": 1,
+          "dead": true,
+          "complete": false,
+          "health": null,
+          "max_health": null
+        }
+      },
+      "checkpoint_sha256": "501951d9d9c1123aaa79af9e8b98f0ae5d5800c9dd7d60b65a0d571ec9e26aac"
+    },
+    {
+      "game": "RMGE01",
+      "horizon": 8,
+      "seed": 11,
+      "variation": 0,
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg1-exploration\\control\\eval-world-video-20261025-093551-127622",
+      "episode": {
+        "seed": 11,
+        "decisions": 263,
+        "outcome": "timeout",
+        "geometric_projection_percent": 2.152625429159463,
+        "final_telemetry": {
+          "position": [
+            381.15301513671875,
+            141.54385375976562,
+            -100.0877685546875
+          ],
+          "scenario": 1,
+          "stage": "BeltConveyerExGalaxy",
+          "actor": 2164967084,
+          "actor_nerve": 2154426424,
+          "scene_nerve": 2154437584,
+          "scene_frame": 4479,
+          "dead": false,
+          "complete": false,
+          "health": 3,
+          "max_health": 3
+        }
+      },
+      "checkpoint_sha256": "9090ed28abf85a4456c221e0ad23d00719b4fc0d047e571470d3faf5d587b3d2"
+    },
+    {
+      "game": "RMGE01",
+      "horizon": 8,
+      "seed": 23,
+      "variation": 0,
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg1-exploration\\control\\eval-world-video-20261025-093634-241206",
+      "episode": {
+        "seed": 23,
+        "decisions": 340,
+        "outcome": "timeout",
+        "geometric_projection_percent": 2.9000799474303625,
+        "final_telemetry": {
+          "position": [
+            630.185546875,
+            44.99999237060547,
+            -27.39892578125
+          ],
+          "scenario": 1,
+          "stage": "BeltConveyerExGalaxy",
+          "actor": 2164967084,
+          "actor_nerve": 2154426424,
+          "scene_nerve": 2154437584,
+          "scene_frame": 5403,
+          "dead": false,
+          "complete": false,
+          "health": 3,
+          "max_health": 3
+        }
+      },
+      "checkpoint_sha256": "1f315c22f8c2b8a94a18065625ea6ae5208c00b684851279369047cfa9db1a2c"
+    },
+    {
+      "game": "RMGE01",
+      "horizon": 8,
+      "seed": 47,
+      "variation": 0,
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg1-exploration\\control\\eval-world-video-20261025-093719-448814",
+      "episode": {
+        "seed": 47,
+        "decisions": 280,
+        "outcome": "timeout",
+        "geometric_projection_percent": 2.211796195351368,
+        "final_telemetry": {
+          "position": [
+            543.400146484375,
+            382.125,
+            -115.99357604980469
+          ],
+          "scenario": 1,
+          "stage": "BeltConveyerExGalaxy",
+          "actor": 2164967084,
+          "actor_nerve": 2154426424,
+          "scene_nerve": 2154437584,
+          "scene_frame": 4683,
+          "dead": false,
+          "complete": false,
+          "health": 3,
+          "max_health": 3
+        }
+      },
+      "checkpoint_sha256": "3a8dc031e9c18d3c7f3302e3a27dbd95f9c41fc82cb31fe83c8c87533b349364"
+    },
+    {
+      "game": "RMGE01",
+      "horizon": 16,
+      "seed": 11,
+      "variation": 0,
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg1-exploration\\control\\eval-world-video-20261025-093751-113583",
+      "episode": {
+        "seed": 11,
+        "decisions": 331,
+        "outcome": "timeout",
+        "geometric_projection_percent": 2.598831291559269,
+        "final_telemetry": {
+          "position": [
+            655.9867553710938,
+            87.37529754638672,
+            31.40880012512207
+          ],
+          "scenario": 1,
+          "stage": "BeltConveyerExGalaxy",
+          "actor": 2164967084,
+          "actor_nerve": 2154426424,
+          "scene_nerve": 2154437584,
+          "scene_frame": 5295,
+          "dead": false,
+          "complete": false,
+          "health": 3,
+          "max_health": 3
+        }
+      },
+      "checkpoint_sha256": "142e6e11d806793f9810d5e5392c34af161909841c87ad11320059cdf9269082"
+    },
+    {
+      "game": "RMGE01",
+      "horizon": 16,
+      "seed": 23,
+      "variation": 0,
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg1-exploration\\control\\eval-world-video-20261025-093827-684588",
+      "episode": {
+        "seed": 23,
+        "decisions": 234,
+        "outcome": "timeout",
+        "geometric_projection_percent": 2.4284906901221746,
+        "final_telemetry": {
+          "position": [
+            539.1394653320312,
+            464.3000183105469,
+            -269.5160827636719
+          ],
+          "scenario": 1,
+          "stage": "BeltConveyerExGalaxy",
+          "actor": 2164967084,
+          "actor_nerve": 2154426424,
+          "scene_nerve": 2154437584,
+          "scene_frame": 4131,
+          "dead": false,
+          "complete": false,
+          "health": 3,
+          "max_health": 3
+        }
+      },
+      "checkpoint_sha256": "589f79dbee5d5f6e4390035f1697ace019a819e882c2e67924d20b62d0f4a0b0"
+    },
+    {
+      "game": "RMGE01",
+      "horizon": 16,
+      "seed": 47,
+      "variation": 0,
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\staged-smg1-exploration\\control\\eval-world-video-20261025-093854-624504",
+      "episode": {
+        "seed": 47,
+        "decisions": 367,
+        "outcome": "timeout",
+        "geometric_projection_percent": 2.4235669121557217,
+        "final_telemetry": {
+          "position": [
+            576.3306274414062,
+            323.3000793457031,
+            -275.1513671875
+          ],
+          "scenario": 1,
+          "stage": "BeltConveyerExGalaxy",
+          "actor": 2164967084,
+          "actor_nerve": 2154426424,
+          "scene_nerve": 2154437584,
+          "scene_frame": 5727,
+          "dead": false,
+          "complete": false,
+          "health": 3,
+          "max_health": 3
+        }
+      },
+      "checkpoint_sha256": "9686991d060d41a371f00964f19085e0fc7503d456e1259568d9c8b1307ec96d"
+    }
+  ],
+  "summary": [
+    {
+      "game": "SB4E01",
+      "variation": 0,
+      "horizon": 8,
+      "seeds": [
+        11,
+        23,
+        47
+      ],
+      "projection_values": [
+        10.618425043355247,
+        6.386145690588195,
+        8.104402784923884
+      ],
+      "mean_geometric_percent": 8.369657839622441,
+      "outcomes": [
+        "death",
+        "death",
+        "death"
+      ],
+      "evaluation_decisions": 172
+    },
+    {
+      "game": "SB4E01",
+      "variation": 0,
+      "horizon": 16,
+      "seeds": [
+        11,
+        23,
+        47
+      ],
+      "projection_values": [
+        11.249466642216367,
+        7.092130442079752,
+        7.965870668249911
+      ],
+      "mean_geometric_percent": 8.769155917515343,
+      "outcomes": [
+        "death",
+        "death",
+        "death"
+      ],
+      "evaluation_decisions": 180
+    },
+    {
+      "game": "SB4E01",
+      "variation": 1,
+      "horizon": 8,
+      "seeds": [
+        11,
+        23,
+        47
+      ],
+      "projection_values": [
+        3.4169357849927957,
+        3.269261422403353,
+        2.0907838172947484
+      ],
+      "mean_geometric_percent": 2.925660341563632,
+      "outcomes": [
+        "death",
+        "death",
+        "death"
+      ],
+      "evaluation_decisions": 115
+    },
+    {
+      "game": "SB4E01",
+      "variation": 1,
+      "horizon": 16,
+      "seeds": [
+        11,
+        23,
+        47
+      ],
+      "projection_values": [
+        1.7165991896144341,
+        3.2101470811914266,
+        2.9986076704790046
+      ],
+      "mean_geometric_percent": 2.641784647094955,
+      "outcomes": [
+        "death",
+        "death",
+        "death"
+      ],
+      "evaluation_decisions": 96
+    },
+    {
+      "game": "RMGE01",
+      "variation": 0,
+      "horizon": 8,
+      "seeds": [
+        11,
+        23,
+        47
+      ],
+      "projection_values": [
+        2.152625429159463,
+        2.9000799474303625,
+        2.211796195351368
+      ],
+      "mean_geometric_percent": 2.4215005239803977,
+      "outcomes": [
+        "timeout",
+        "timeout",
+        "timeout"
+      ],
+      "evaluation_decisions": 883
+    },
+    {
+      "game": "RMGE01",
+      "variation": 0,
+      "horizon": 16,
+      "seeds": [
+        11,
+        23,
+        47
+      ],
+      "projection_values": [
+        2.598831291559269,
+        2.4284906901221746,
+        2.4235669121557217
+      ],
+      "mean_geometric_percent": 2.483629631279055,
+      "outcomes": [
+        "timeout",
+        "timeout",
+        "timeout"
+      ],
+      "evaluation_decisions": 932
+    }
+  ],
+  "new_real_evaluation_decisions": 2378,
+  "new_real_training_decisions": 0,
+  "no_completed_mission": true
+}
