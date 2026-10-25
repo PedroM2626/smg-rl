@@ -41,7 +41,7 @@ def plot_trajectory(csv_path, output=None):
     )
     chart.plot(
         best,
-        label="Best valid progress" if "best_progress" in rows[0] else "Running max projection",
+        label="Reward-gated max projection" if "best_progress" in rows[0] else "Running max projection",
     )
     chart.set(
         xlabel="Decision step",

@@ -1,0 +1,279 @@
+[
+  {
+    "run": "runs/smg1/world-model-20261024-231605-678304",
+    "status": {
+      "state": "completed",
+      "algorithm": "gaussian-rssm-imagination-v1",
+      "timesteps": 288773,
+      "real_decisions": 288773,
+      "model_updates": 37936,
+      "actor_updates": 1118,
+      "imagined_transitions": 1144832,
+      "elapsed_seconds": 1940.7660000000033,
+      "decisions_per_second": 4.12208375455876,
+      "updated_at": "2026-10-25T02:48:26.457454+00:00",
+      "progress": [
+        0.006835842218252072
+      ],
+      "diagnostics": {
+        "replay": {
+          "chunks": 653,
+          "transitions": 109198,
+          "train_episodes": 387,
+          "validation_episodes": 103,
+          "scenarios": {
+            "sweet_sweet": 109198
+          },
+          "train_scenarios": {
+            "sweet_sweet": 84769
+          },
+          "validation_scenarios": {
+            "sweet_sweet": 24429
+          },
+          "rejected": []
+        },
+        "validation": {
+          "sweet_sweet": {
+            "reconstruction": 0.013796816347166896,
+            "reward": 0.02220255054999143,
+            "continuation": 0.13926088996231556,
+            "dynamics_kl": 40.44257736206055,
+            "representation_kl": 40.44257736206055,
+            "ensemble": 0.08102202042937279,
+            "loss": 73.18320083618164,
+            "posterior_image_mse": 0.013796816347166896,
+            "reward_mae": 0.02783962106332183,
+            "terminal_reward_mae": 0.5047677035133044,
+            "continuation_brier": 0.0056899418123066425,
+            "terminal_brier": 0.16276675711075464,
+            "terminal_examples": 24,
+            "validation_transitions": 918,
+            "open_loop_image_mse": 0.03728589601814747,
+            "persistence_image_mse": 0.06142055708914995,
+            "open_loop_reward_mae": 0.3170815035700798
+          }
+        },
+        "imagination_gate": {
+          "ready": false,
+          "reasons": [
+            "sweet_sweet: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        },
+        "losses": {
+          "reconstruction": 0.010918951593339443,
+          "reward": 0.00033943381276912987,
+          "continuation": 2.2454494683188386e-05,
+          "dynamics_kl": 18.21565055847168,
+          "representation_kl": 18.21565055847168,
+          "ensemble": 0.02712435834109783,
+          "prior_prediction": 42.73873519897461,
+          "open_loop_prediction": 51.153289794921875,
+          "loss": 96.4249496459961,
+          "posterior_image_mse": 0.010918951593339443,
+          "reward_mae": 0.011932755820453167,
+          "terminal_reward_mae": 0.0018978914013132453,
+          "continuation_brier": 2.6279460385580933e-08,
+          "terminal_brier": 5.030372299263952e-11,
+          "terminal_examples": 3,
+          "validation_transitions": 248,
+          "model_gradient_norm": 423.55792236328125
+        }
+      },
+      "note": "Only real RAM-verified episodes can establish mission completion. Imagined transitions are not real timesteps."
+    },
+    "checkpoint_sha256": "98a1a0f0f78709f237b7dacc8dd01197b7fdb0730f5a76338428a72fd390eaed",
+    "decisions_in_csv": 8000,
+    "episodes": 20,
+    "outcomes": {
+      "timeout": 18,
+      "death": 1,
+      "interrupted": 1
+    },
+    "health_lost": 0.0,
+    "dead_rows": 1,
+    "complete_rows": 0,
+    "scenarios": {
+      "sweet_sweet": {
+        "completed_episodes": 19,
+        "best_geometric_percent": 2.3598194804190955,
+        "median_completed_episode_progress_percent": 1.7764013657302777,
+        "actions": {
+          "s+d+jump+spin": 714,
+          "s+crouch": 658,
+          "s+d+crouch": 522,
+          "w+a+crouch+jump": 514,
+          "s+d+crouch+jump": 369,
+          "d+w+crouch": 249,
+          "d+w+crouch+jump": 223,
+          "w+a+crouch": 205
+        }
+      }
+    },
+    "plots": {
+      "sweet_sweet": {
+        "source_csv": "runs\\smg1\\world-model-20261024-231605-678304\\worker-00\\sweet_sweet\\episode-000015.csv",
+        "plot": "docs\\assets\\performance\\staged-smg1-sweet_sweet-20261025.png"
+      }
+    }
+  },
+  {
+    "run": "runs/staged-smg2/continued_baseline/world-model-20261024-234623-454077",
+    "status": {
+      "state": "completed",
+      "algorithm": "gaussian-rssm-imagination-v1",
+      "timesteps": 872272,
+      "real_decisions": 872272,
+      "model_updates": 28144,
+      "actor_updates": 1292,
+      "imagined_transitions": 1303384,
+      "elapsed_seconds": 238.06200000000536,
+      "decisions_per_second": 8.401172803723211,
+      "updated_at": "2026-10-25T02:50:21.534550+00:00",
+      "progress": [
+        0.04448973275465843,
+        0.0079082667636957,
+        0.07504498221580441,
+        0.011621078039141856
+      ],
+      "diagnostics": {
+        "replay": {
+          "chunks": 3336,
+          "transitions": 147171,
+          "train_episodes": 2640,
+          "validation_episodes": 696,
+          "scenarios": {
+            "spinning": 73757,
+            "double_time": 73414
+          },
+          "train_scenarios": {
+            "spinning": 57553,
+            "double_time": 58990
+          },
+          "validation_scenarios": {
+            "spinning": 16204,
+            "double_time": 14424
+          },
+          "rejected": []
+        },
+        "validation": {
+          "spinning": {
+            "reconstruction": 0.01750584109686315,
+            "reward": 0.014551622560247779,
+            "continuation": 0.10415703058242798,
+            "dynamics_kl": 1.0801445245742798,
+            "representation_kl": 1.0801445245742798,
+            "ensemble": 0.2106213364750147,
+            "loss": 0.994922548532486,
+            "posterior_image_mse": 0.01750584109686315,
+            "reward_mae": 0.04069853574037552,
+            "terminal_reward_mae": 0.8013300577799479,
+            "continuation_brier": 0.013259654166176915,
+            "terminal_brier": 0.1585246265499639,
+            "terminal_examples": 15,
+            "validation_transitions": 465,
+            "open_loop_image_mse": 0.03370403312146664,
+            "persistence_image_mse": 0.048961127176880836,
+            "open_loop_reward_mae": 0.2771662808954716
+          },
+          "double_time": {
+            "reconstruction": 0.015905060106888413,
+            "reward": 0.007823556021321565,
+            "continuation": 0.043099921429529786,
+            "dynamics_kl": 1.1395127177238464,
+            "representation_kl": 1.1395127177238464,
+            "ensemble": 0.18697818741202354,
+            "loss": 0.9375143498182297,
+            "posterior_image_mse": 0.015905060106888413,
+            "reward_mae": 0.031204042956233025,
+            "terminal_reward_mae": 0.43248426814874014,
+            "continuation_brier": 0.009386026602442143,
+            "terminal_brier": 0.006303425163544792,
+            "terminal_examples": 15,
+            "validation_transitions": 452,
+            "open_loop_image_mse": 0.028999163769185543,
+            "persistence_image_mse": 0.05049610882997513,
+            "open_loop_reward_mae": 0.26632123067975044
+          }
+        },
+        "imagination_gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        },
+        "losses": {
+          "reconstruction": 0.017594851553440094,
+          "reward": 0.006929831113666296,
+          "continuation": 0.03247056156396866,
+          "dynamics_kl": 1.1243236064910889,
+          "representation_kl": 1.1243236064910889,
+          "ensemble": 0.24300722777843475,
+          "loss": 0.9745966792106628,
+          "posterior_image_mse": 0.017594851553440094,
+          "reward_mae": 0.022392911836504936,
+          "terminal_reward_mae": 0.1350126564502716,
+          "continuation_brier": 0.010039661079645157,
+          "terminal_brier": 3.880384610965848e-05,
+          "terminal_examples": 4,
+          "validation_transitions": 195,
+          "model_gradient_norm": 0.5308390259742737
+        }
+      },
+      "note": "Only real RAM-verified episodes can establish mission completion. Imagined transitions are not real timesteps."
+    },
+    "checkpoint_sha256": "6a881adc162059d68ca88be4d2166c71d6b530a1b208ffb7451539445ec09b13",
+    "decisions_in_csv": 2000,
+    "episodes": 48,
+    "outcomes": {
+      "death": 44,
+      "interrupted": 4
+    },
+    "health_lost": 0.0,
+    "dead_rows": 44,
+    "complete_rows": 0,
+    "scenarios": {
+      "double_time": {
+        "completed_episodes": 24,
+        "best_geometric_percent": 7.91675577110068,
+        "median_completed_episode_progress_percent": 3.5991874599363682,
+        "actions": {
+          "w+a+jump": 405,
+          "w": 248,
+          "d+w": 95,
+          "w+a": 53,
+          "jump": 28,
+          "w+a+spin": 24,
+          "d+jump": 13,
+          "w+jump+spin": 10
+        }
+      },
+      "spinning": {
+        "completed_episodes": 20,
+        "best_geometric_percent": 11.897151984350812,
+        "median_completed_episode_progress_percent": 6.184964445741901,
+        "actions": {
+          "w+a+jump": 384,
+          "w": 290,
+          "d+w": 109,
+          "w+a": 54,
+          "w+a+spin": 24,
+          "jump": 16,
+          "d+w+jump+spin": 12,
+          "d+jump": 12
+        }
+      }
+    },
+    "plots": {
+      "double_time": {
+        "source_csv": "runs\\staged-smg2\\continued_baseline\\world-model-20261024-234623-454077\\worker-03\\double_time\\episode-000009.csv",
+        "plot": "docs\\assets\\performance\\staged-smg2-control-double_time-20261025.png"
+      },
+      "spinning": {
+        "source_csv": "runs\\staged-smg2\\continued_baseline\\world-model-20261024-234623-454077\\worker-02\\spinning\\episode-000002.csv",
+        "plot": "docs\\assets\\performance\\staged-smg2-control-spinning-20261025.png"
+      }
+    }
+  }
+]

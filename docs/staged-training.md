@@ -108,3 +108,53 @@ new episodes stay within its own replay. The original replay and final source
 checkpoint are preserved. Additional data, gate behavior and policy adaptation
 will diverge naturally; this is a small adaptive online comparison, not a
 three-seed real-control study or proof of reduced time to completion.
+
+## First-block and control-health review (October 25 local time)
+
+Galaxy 1 completed the additional 8000 decisions at 288773 lifetime decisions,
+reaching 10000 new decisions across the two stages. The extension took 1940.766
+seconds (4.12 decisions/s), added 1000 model updates and 86 actor updates, and
+ended with 18 timeout episodes, one death and one budget interruption. Maximum
+geometric progress in the extension was 2.36%; the median across 19 completed
+episodes was 1.78%. No RAM-confirmed completion or health loss was logged.
+The first health check's 2.68% remains the best across these 10000 new decisions;
+neither block exceeds the historical record. Replay had no rejected archives,
+stderr was empty, and the saved checkpoint digest was verified. The final gate
+blocked imagination on terminal MAE 0.5048, keeping the original limit 0.5.
+
+Decision: keep Galaxy 1 stopped at this boundary and diagnose exploration,
+reward balance and action behavior before spending the optional 20000-decision
+extension. Frequent timeouts indicate a navigation/exploration limitation;
+additional elapsed time alone is not evidence of useful learning. The zero
+legacy intrinsic reward column is expected when the world-model disagreement
+bonus is used only in imagination; it does not mean that bonus was disabled.
+
+The Galaxy 2 continued-control health check completed 2000 decisions in 238.062
+seconds (8.40 aggregate decisions/s), ending at 872272 lifetime decisions. It
+added 60 model updates and one actor update. Forty-four episodes ended in death,
+four were interrupted at the budget boundary, and none completed the mission.
+Best geometric progress was 11.90% in Spinning and 7.92% in Double Time; median
+completed-episode progress was 6.18% and 3.60%, respectively. The final gate
+blocked imagination on Spinning terminal reward MAE. No stderr error or replay
+rejection was reported, and the final checkpoint digest was verified.
+
+Decision: start the matching 2000-decision candidate health check; do not extend
+either arm until both results have been reviewed. Aggregate speed measurements
+include startup and shared hardware contention, so they are not isolated
+algorithm benchmarks. Detailed counters and trajectory provenance are in
+[the block review](assets/performance/staged-first-block-review-20261025.json).
+
+Trajectory inspection also highlights a measurement limitation: the Spinning
+high-water sample is at Y=-1740.68, below the initial Y=-1150, shortly before
+death; the Double Time maximum is at Y=-1428.96. The existing minimum reward
+height (-1800) does not prove platform contact. These projections can include
+airborne/falling motion and must not be interpreted as verified traversed course
+segments. Plot legends therefore say "Reward-gated max projection". Review
+support/contact or course geometry before treating a geometric gain as navigation
+improvement; preserve reward settings throughout the paired health checks.
+
+![Galaxy 1 extension best trajectory](assets/performance/staged-smg1-sweet_sweet-20261025.png)
+
+![Galaxy 2 control Spinning trajectory](assets/performance/staged-smg2-control-spinning-20261025.png)
+
+![Galaxy 2 control Double Time trajectory](assets/performance/staged-smg2-control-double_time-20261025.png)
