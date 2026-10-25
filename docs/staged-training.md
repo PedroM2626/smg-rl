@@ -275,3 +275,52 @@ clean. See [the final control record](assets/performance/smg1-curiosity-control-
 Decision: run only the matched candidate's final 8000 decisions, then end the
 Galaxy 1 trial and compare both complete 10000-decision arms. This is the final
 previously allocated Galaxy 1 budget; no additional training is scheduled.
+
+## Galaxy 2 online comparison: model benefit without navigation benefit
+
+Both arms completed exactly 25000 new real decisions at branch counter 895272.
+Each received 776 online model updates after its equal 1024-update offline fit.
+No RAM-confirmed mission completion occurred in either scenario for either arm.
+Final checkpoints were verified against their manifests, and both runs closed
+without stderr errors or rejected replay archives.
+
+| Measure across health check and extension | Control | Terminal reward weight 5 |
+| --- | ---: | ---: |
+| New actor updates | 32 | 150 |
+| New imagined transitions | 32200 | 151840 |
+| Death episodes | 580 | 564 |
+| Spinning median episode projection | 6.28% | 6.10% |
+| Double Time median episode projection | 3.43% | 3.39% |
+| Spinning maximum projection | 14.45% | 13.84% |
+| Double Time maximum projection | 10.43% | 12.12% |
+
+The candidate allowed about 4.7 times as many actor updates, but this is not
+4.7 times faster learning or evidence of better navigation. Episode projection
+distributions overlap closely, with slightly lower candidate medians in both
+scenarios. Death counts differ descriptively, without an independent-seed
+uncertainty estimate; episodes from one evolving policy are correlated.
+Maxima remain susceptible to airborne/falling motion and are not verified
+traversal percentages. No synthetic/imagined success is counted.
+
+A read-only audit compared the final models on the same frozen original replay,
+eight fixed held-out batches and Torch seeds 11, 23, 47. The candidate passed
+the original combined gate on all three draws, versus zero for control. Mean
+terminal reward MAE was 0.327 versus 0.716 for Spinning and 0.214 versus 0.780
+for Double Time. Mean future-image MSE was 0.02758 versus 0.02832 for Spinning
+and 0.02690 versus 0.02577 for Double Time. This supports the terminal-prediction
+benefit while documenting a mixed visual trade-off. Reused held-out episodes
+are not an independent unseen test set; these audit seeds are not three online
+training seeds. Live final metrics used different evolving replay distributions,
+so the common-replay audit is reported separately.
+
+Decision: keep Galaxy 2 stopped after this first comparison. No additional
+75000 decisions per arm are allocated. Prioritize trustworthy progress/contact
+validation and control/exploration diagnostics before a larger budget. Retain
+both arms as experimental checkpoints and keep the original default unchanged;
+the prediction improvement alone does not justify declaring a winning policy.
+Galaxy 1's already bounded final candidate trial continues.
+
+![Paired episode projection distributions](assets/performance/smg2-online-paired-25000-20261025.png)
+
+Full accounting, checkpoint hashes, trajectory coordinates, quartiles and paired
+audits are in [the 25000-decision comparison](assets/performance/smg2-online-paired-25000-20261025.json).
