@@ -212,3 +212,27 @@ archives and checkpoint SHA-256 was verified. The matched coefficient-0.1
 candidate may now run its bounded 2000 decisions. The original Galaxy 2
 23000-decision extension remains in progress without an additional budget.
 See [control health evidence](assets/performance/smg1-exploration-control-health-20261025.json).
+
+## Galaxy 1 curiosity screen review and final bounded extension
+
+The coefficient-0.1 candidate completed 2000 decisions in 564.329 seconds
+(3.54 decisions/s). Both arms ended with one death, four timeouts, one budget
+interruption, zero health loss and zero mission completions. Both maxima were
+2.8262% geometric projection; completed-episode medians were 2.1967% for control
+and 2.1462% for candidate. Both added 248 model and 30 actor updates, and their
+final gates passed. Candidate checkpoint integrity was verified, with no stderr
+errors or rejected replay archives. The intervention changed 94 of 2000 logged
+actions, starting at decision 941. It is not a no-op, but this short adaptation
+does not show better real navigation. No statistical significance is claimed.
+See [the paired screen](assets/performance/smg1-curiosity-paired-screen-20261025.json).
+
+Decision: spend the remaining 16000 aggregate Galaxy 1 decisions on matched
+sequential extensions of 8000 per arm, beginning with control. Review control
+before candidate; keep the original rewards, action space and quality gates.
+Each trial arm will then have 10000 new decisions from the shared 288773 source.
+Across the earlier 10000-decision main continuation and both 10000-decision
+trial arms, this consumes the entire 30000-new-decision ceiling. Branch lifetime
+counters overlap and must not be summed as unique training history. Stop the
+Galaxy 1 experiment after these budgets and report the comparison, without an
+automatic further extension. The Galaxy 2 control first block remains active
+within its previously reviewed 23000-decision extension budget.
