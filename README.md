@@ -13,8 +13,10 @@ was 19.53% (`spinning`) and 13.76% (`double_time`) for Galaxy 2, and 5.06% for
 Galaxy 1; no full-start mission has been completed. At the owner's request,
 both jobs were stopped later that day before the PC was shut down; their final
 checkpoints are retained at 870,272 Galaxy 2 and 278,773 Galaxy 1 real
-decisions, and all training remains stopped until the owner explicitly
-authorizes resuming. The preserved PPO pairs remain at 824,416 Galaxy 2 and
+decisions. On October 24 the owner authorized resuming with
+[bounded stages and reviews](docs/staged-training.md), starting with a longer
+Galaxy 2 offline comparison and a Galaxy 1 online health check.
+The preserved PPO pairs remain at 824,416 Galaxy 2 and
 220,891 Galaxy 1 decisions. Live counters remain in each run's `status.json`;
 this paragraph is a dated snapshot. See
 [the world-model implementation](docs/world-model.md) and the

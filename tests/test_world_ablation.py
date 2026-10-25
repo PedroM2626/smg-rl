@@ -83,13 +83,19 @@ def test_offline_paired_experiment_keeps_actors_and_real_counts(tmp_path, monkey
     (folder / "world-ablation-authorization.json").write_text(json.dumps(grant))
     monkeypatch.setattr("smg_rl.world_ablation.ARMS", {key: ARMS[key] for key in ("continued_baseline", "terminal_sampling")})
     original_validation = torch.distributions.Distribution._validate_args
-    run = run_ablation(config, checkpoint, 1, [11], 4)
+    with pytest.raises(ValueError, match="unique known arms"):
+        run_ablation(config, checkpoint, 1, [11], 4, ["terminal_sampling"])
+    with pytest.raises(ValueError, match="unique known arms"):
+        run_ablation(config, checkpoint, 1, [11], 4, ["continued_baseline", "unknown"])
+    run = run_ablation(config, checkpoint, 1, [11], 4, ["continued_baseline"])
     assert torch.distributions.Distribution._validate_args == original_validation
     result = json.loads((run / "results.json").read_text())
     assert result["state"] == "completed"
     assert result["new_real_decisions"] == result["new_actor_updates"] == 0
     assert not set(result["development_episodes"]) & set(result["final_audit_episodes"])
-    assert len(result["rows"]) == 2
+    assert len(result["rows"]) == 1
+    assert list(result["arms"]) == ["continued_baseline"]
+    assert json.loads((run / "progress.json").read_text())["state"] == "completed"
     assert result["summary"]["continued_baseline"]["scenarios"]["spinning"]["reward_mae"]["paired_percent_change_mean"] == 0
     assert not json.loads((folder / "world-ablation-authorization.json").read_text())["active"]
     assert (folder / "training-hold.json").exists()

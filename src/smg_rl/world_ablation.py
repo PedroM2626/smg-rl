@@ -97,7 +97,7 @@ def summarize(rows, scenarios):
     """Report signed paired changes against equal-update control; lower is better."""
     output = {}
     controls = {row["seed"]: row for row in rows if row["arm"] == "continued_baseline"}
-    for arm in ARMS:
+    for arm in dict.fromkeys(row["arm"] for row in rows):
         group = [row for row in rows if row["arm"] == arm]
         result = {"seeds": len(group), "scenarios": {},
                   "mean_fitting_seconds": float(np.mean([row["fitting_seconds"] for row in group])),
@@ -150,7 +150,12 @@ def policy_drift(reference, candidate):
             "candidate_entropy_nats": float(-(candidate.exp() * candidate).sum(-1).mean())}
 
 
-def run_ablation(config, checkpoint, updates=128, seeds=(11, 23, 47), validation_batches=8):
+def run_ablation(config, checkpoint, updates=128, seeds=(11, 23, 47), validation_batches=8, arms=None):
+    names = list(ARMS) if arms is None else list(arms)
+    if (not names or len(set(names)) != len(names)
+            or "continued_baseline" not in names or any(name not in ARMS for name in names)):
+        raise ValueError("Select unique known arms including continued_baseline.")
+    selected = {name: ARMS[name] for name in names}
     checkpoint = Path(checkpoint).resolve()
     grant_path, grant = authorize(config, checkpoint, updates, seeds)
     if validation_batches < 4 or validation_batches % 2:
@@ -175,7 +180,7 @@ def run_ablation(config, checkpoint, updates=128, seeds=(11, 23, 47), validation
     atomic_json(run / "replay-manifest.json", manifest)
     result = {"schema": 1, "experiment": EXPERIMENT, "created_utc": datetime.now(timezone.utc).isoformat(),
               "source_checkpoint": str(checkpoint), "source_sha256": metadata["sha256"],
-              "updates_per_arm": updates, "seeds": list(seeds), "arms": ARMS,
+              "updates_per_arm": updates, "seeds": list(seeds), "arms": selected,
               "validation_batches_per_partition": validation_batches, "replay": summary,
               "development_episodes": dev_episodes, "final_audit_episodes": final_episodes,
               "new_real_decisions": 0, "new_actor_updates": 0, "new_imagined_transitions": 0,
@@ -189,7 +194,7 @@ def run_ablation(config, checkpoint, updates=128, seeds=(11, 23, 47), validation
         # audit metrics are explicitly checked; no model equation is changed.
         torch.distributions.Distribution.set_default_validate_args(False)
         for seed in seeds:
-            for arm, changes in ARMS.items():
+            for arm, changes in selected.items():
                 if (run / "STOP").exists():
                     raise InterruptedError("Offline ablation stopped by marker.")
                 agent = ImaginedAgent.load(checkpoint, signature, settings, device)
@@ -209,6 +214,13 @@ def run_ablation(config, checkpoint, updates=128, seeds=(11, 23, 47), validation
                     batch = replay.sample(variant["batch_size"], variant["sequence_length"], variant["burn_in"],
                                           terminal_fraction=variant.get("training_terminal_fraction", 0))
                     agent.update_model(batch)
+                    if (step + 1) % 32 == 0 or step + 1 == updates:
+                        atomic_json(run / "progress.json", {
+                            "state": "fitting", "updated_utc": datetime.now(timezone.utc).isoformat(),
+                            "seed": seed, "arm": arm, "updates_completed": step + 1,
+                            "updates_per_arm": updates, "completed_fits": len(result["rows"]),
+                            "total_fits": len(seeds) * len(selected),
+                            "elapsed_fit_seconds": time.perf_counter() - before})
                 if agent.device.type == "cuda":
                     torch.cuda.synchronize()
                 elapsed = time.perf_counter() - before
@@ -238,8 +250,10 @@ def run_ablation(config, checkpoint, updates=128, seeds=(11, 23, 47), validation
         result["summary"] = summarize(result["rows"], signature["scenario_names"])
         result["state"] = "completed"
         atomic_json(run / "results.json", result)
+        atomic_json(run / "progress.json", {"state": "completed", "completed_fits": len(result["rows"])})
     except BaseException as exc:
         atomic_json(run / "error.json", {"error": repr(exc)})
+        atomic_json(run / "progress.json", {"state": "failed", "error": repr(exc)})
         raise
     finally:
         torch.distributions.Distribution.set_default_validate_args(distribution_validation)
