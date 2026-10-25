@@ -84,3 +84,27 @@ decisions in total, with another review before any extension. Actor updates
 continue only on cycles passing every existing quality gate. The diagnostic
 is recorded in [the paired audit](assets/performance/smg1-staged-initial-audit-20261024.json).
 Galaxy 2 offline fitting remains in progress and no online arm has started.
+
+## Galaxy 2 longer offline comparison review
+
+The 1024-update, three-seed comparison completed all six fits and final audits in
+`runs/ablation-20261025-015911-220971`. Relative to the equal-update control,
+terminal reward weight 5 reduced terminal reward MAE by a paired mean of 52.34%
+for Spinning and 49.81% for Double Time. All three candidate seeds passed every
+original gate, compared with zero of three controls. Future-image error changed
+by -0.62% and +0.31%, respectively, which does not establish an improvement in
+visual prediction or navigation. Continuation Brier increased by 14.41% in
+Spinning but remained small in absolute terms (0.00704). Full metrics and
+per-seed results are in [the follow-up record](assets/performance/smg2-world-model-followup-20261024.json).
+
+Decision: advance to paired real-control health checks. Use offline seed 11
+(the first predeclared seed, rather than the best measured seed) for both arms.
+Both checkpoints received exactly 1024 offline model updates from the same
+source and retain identical actor weights and real-decision counters. Use
+online seed 11 and four workers per arm, with sequential 2000-real-decision
+health checks before any longer budget. Each arm receives a separate copy of
+the same initial replay, verified with per-file SHA-256 and sizes. Each arm's
+new episodes stay within its own replay. The original replay and final source
+checkpoint are preserved. Additional data, gate behavior and policy adaptation
+will diverge naturally; this is a small adaptive online comparison, not a
+three-seed real-control study or proof of reduced time to completion.

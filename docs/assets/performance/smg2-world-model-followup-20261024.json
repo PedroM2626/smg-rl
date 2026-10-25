@@ -1,0 +1,912 @@
+{
+  "schema": 1,
+  "experiment": "smg2-world-model-ablation",
+  "created_utc": "2026-10-25T01:59:11.433906+00:00",
+  "source_checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\world-model-20261022-200121-619365\\world-final.pt",
+  "source_sha256": "7a5262e8613882e44feb588c2af11de6d7dcfb85ef503229353c578eb54f86c2",
+  "updates_per_arm": 1024,
+  "seeds": [
+    11,
+    23,
+    47
+  ],
+  "arms": {
+    "continued_baseline": {},
+    "terminal_reward_weight": {
+      "terminal_reward_weight": 5.0
+    }
+  },
+  "validation_batches_per_partition": 8,
+  "new_real_decisions": 0,
+  "new_actor_updates": 0,
+  "new_imagined_transitions": 0,
+  "scope": "Warm-start offline prediction screening; no real control or time-to-solution claims.",
+  "rows": [
+    {
+      "seed": 11,
+      "arm": "continued_baseline",
+      "fitting_seconds": 266.18718290000106,
+      "peak_cuda_allocated_bytes": 305125376,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.018531901645474136,
+            "reward": 0.011699730152031407,
+            "continuation": 0.07706000027246773,
+            "dynamics_kl": 1.1380101591348648,
+            "representation_kl": 1.1380101591348648,
+            "ensemble": 0.20846203714609146,
+            "loss": 0.9985597729682922,
+            "posterior_image_mse": 0.018531901645474136,
+            "reward_mae": 0.043086254969239235,
+            "terminal_reward_mae": 0.6977021205425262,
+            "continuation_brier": 0.014085766815696843,
+            "terminal_brier": 0.05300079944427125,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.02710393350571394,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.2666789833456278
+          },
+          "double_time": {
+            "reconstruction": 0.015306451474316418,
+            "reward": 0.007973961739480728,
+            "continuation": 0.058396441221702844,
+            "dynamics_kl": 1.1700386255979538,
+            "representation_kl": 1.1700386255979538,
+            "ensemble": 0.19291174784302711,
+            "loss": 0.9766117706894875,
+            "posterior_image_mse": 0.015306451474316418,
+            "reward_mae": 0.02988003328209743,
+            "terminal_reward_mae": 0.21643769304300176,
+            "continuation_brier": 0.015579279002849944,
+            "terminal_brier": 0.020451107586216637,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.024992360034957528,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.23267061077058315
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\ablation-20261025-015911-220971\\continued_baseline-11.pt",
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.017353605944663286,
+            "reward": 0.011560389364603907,
+            "continuation": 0.0628477253485471,
+            "dynamics_kl": 1.175109013915062,
+            "representation_kl": 1.175109013915062,
+            "ensemble": 0.1920026671141386,
+            "loss": 0.9888297989964485,
+            "posterior_image_mse": 0.017353605944663286,
+            "reward_mae": 0.0455093146301806,
+            "terminal_reward_mae": 0.6780735637460437,
+            "continuation_brier": 0.006966453889617696,
+            "terminal_brier": 0.04006598257469055,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.028100252151489258,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.25300121773034334
+          },
+          "double_time": {
+            "reconstruction": 0.01583973236847669,
+            "reward": 0.0073636108136270195,
+            "continuation": 0.058370462618768215,
+            "dynamics_kl": 1.1335273683071136,
+            "representation_kl": 1.1335273683071136,
+            "ensemble": 0.1977669419720769,
+            "loss": 0.9594571888446808,
+            "posterior_image_mse": 0.01583973236847669,
+            "reward_mae": 0.031238734256476164,
+            "terminal_reward_mae": 0.47950244744618736,
+            "continuation_brier": 0.007998385463906743,
+            "terminal_brier": 0.04209405063302256,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.02812751568853855,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.288139408454299
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 11,
+      "arm": "terminal_reward_weight",
+      "fitting_seconds": 280.5398253000021,
+      "peak_cuda_allocated_bytes": 306149888,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.018531815614551306,
+            "reward": 0.02462185057811439,
+            "continuation": 0.07763048680499196,
+            "dynamics_kl": 1.143760323524475,
+            "representation_kl": 1.143760323524475,
+            "ensemble": 0.21029661037027836,
+            "loss": 1.017336942255497,
+            "posterior_image_mse": 0.018531815614551306,
+            "reward_mae": 0.04539747815579176,
+            "terminal_reward_mae": 0.3317872142791748,
+            "continuation_brier": 0.013627046399051324,
+            "terminal_brier": 0.061729015081655236,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.02719385316595435,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.30436134338378906
+          },
+          "double_time": {
+            "reconstruction": 0.015393846668303013,
+            "reward": 0.02233021636493504,
+            "continuation": 0.056522166181821376,
+            "dynamics_kl": 1.1825623512268066,
+            "representation_kl": 1.1825623512268066,
+            "ensemble": 0.19603095389902592,
+            "loss": 0.9998145997524261,
+            "posterior_image_mse": 0.015393846668303013,
+            "reward_mae": 0.04714960127603263,
+            "terminal_reward_mae": 0.08104463279696889,
+            "continuation_brier": 0.01580257750902092,
+            "terminal_brier": 0.01713533402346971,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.024934726068750024,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.2811987705063075
+          }
+        },
+        "gate": {
+          "ready": true,
+          "reasons": [],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\ablation-20261025-015911-220971\\terminal_reward_weight-11.pt",
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.01736880512908101,
+            "reward": 0.01929243086487986,
+            "continuation": 0.05068128532730043,
+            "dynamics_kl": 1.1873834282159805,
+            "representation_kl": 1.1873834282159805,
+            "ensemble": 0.19280073419213295,
+            "loss": 0.9925733208656311,
+            "posterior_image_mse": 0.01736880512908101,
+            "reward_mae": 0.038623533910140395,
+            "terminal_reward_mae": 0.3471428601603423,
+            "continuation_brier": 0.005815516502480023,
+            "terminal_brier": 0.03742861177306622,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.028096595779061317,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.2520433505997062
+          },
+          "double_time": {
+            "reconstruction": 0.015934495953842998,
+            "reward": 0.020335009452537633,
+            "continuation": 0.05358173989225179,
+            "dynamics_kl": 1.1440518349409103,
+            "representation_kl": 1.1440518349409103,
+            "ensemble": 0.19905211217701435,
+            "loss": 0.9753344655036926,
+            "posterior_image_mse": 0.015934495953842998,
+            "reward_mae": 0.03183684020768851,
+            "terminal_reward_mae": 0.2068354735771815,
+            "continuation_brier": 0.008461681260087062,
+            "terminal_brier": 0.04196573548251763,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.028333666268736124,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.32198668643832207
+          }
+        },
+        "gate": {
+          "ready": true,
+          "reasons": [],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 23,
+      "arm": "continued_baseline",
+      "fitting_seconds": 234.69588590000058,
+      "peak_cuda_allocated_bytes": 306149888,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.01774599519558251,
+            "reward": 0.01653716858709231,
+            "continuation": 0.08457629685290158,
+            "dynamics_kl": 1.1327481716871262,
+            "representation_kl": 1.1327481716871262,
+            "ensemble": 0.2014953326433897,
+            "loss": 1.0000037029385567,
+            "posterior_image_mse": 0.01774599519558251,
+            "reward_mae": 0.050425773952156305,
+            "terminal_reward_mae": 0.9845607018470764,
+            "continuation_brier": 0.01475734414998442,
+            "terminal_brier": 0.09257259982347023,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.025594164850190282,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.27637980319559574
+          },
+          "double_time": {
+            "reconstruction": 0.015359829412773252,
+            "reward": 0.011000778176821768,
+            "continuation": 0.0794190273154527,
+            "dynamics_kl": 1.1648314893245697,
+            "representation_kl": 1.1648314893245697,
+            "ensemble": 0.19213511887937784,
+            "loss": 0.996813639998436,
+            "posterior_image_mse": 0.015359829412773252,
+            "reward_mae": 0.03579737967811525,
+            "terminal_reward_mae": 0.3822140586401882,
+            "continuation_brier": 0.01481737126596272,
+            "terminal_brier": 0.03770324923055729,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.027095769299194217,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.26429131301119924
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\ablation-20261025-015911-220971\\continued_baseline-23.pt",
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.0175878896843642,
+            "reward": 0.013713529289816506,
+            "continuation": 0.06966647284571081,
+            "dynamics_kl": 1.1428129225969315,
+            "representation_kl": 1.1428129225969315,
+            "ensemble": 0.1992265935987234,
+            "loss": 0.9858822301030159,
+            "posterior_image_mse": 0.0175878896843642,
+            "reward_mae": 0.04920712020248175,
+            "terminal_reward_mae": 0.8441661894321442,
+            "continuation_brier": 0.006439774559112266,
+            "terminal_brier": 0.07966234066822965,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.02890701126307249,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.23914876021444798
+          },
+          "double_time": {
+            "reconstruction": 0.015562522923573852,
+            "reward": 0.00821192045987118,
+            "continuation": 0.06921181187499315,
+            "dynamics_kl": 1.122619092464447,
+            "representation_kl": 1.122619092464447,
+            "ensemble": 0.1878845077008009,
+            "loss": 0.9544422253966331,
+            "posterior_image_mse": 0.015562522923573852,
+            "reward_mae": 0.031684176181443036,
+            "terminal_reward_mae": 0.5689270635445912,
+            "continuation_brier": 0.006878935409986298,
+            "terminal_brier": 0.06981529068240586,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.026184140238910913,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.23887893371284008
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5",
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 23,
+      "arm": "terminal_reward_weight",
+      "fitting_seconds": 316.9880327999999,
+      "peak_cuda_allocated_bytes": 306149888,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.017635056050494313,
+            "reward": 0.027810731844510883,
+            "continuation": 0.07547520380467176,
+            "dynamics_kl": 1.1373015940189362,
+            "representation_kl": 1.1373015940189362,
+            "ensemble": 0.20952784083783627,
+            "loss": 1.012829802930355,
+            "posterior_image_mse": 0.017635056050494313,
+            "reward_mae": 0.04992271191440523,
+            "terminal_reward_mae": 0.4884147119522095,
+            "continuation_brier": 0.0131132073875051,
+            "terminal_brier": 0.07765916127478704,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.025792234810069203,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.3143341075628996
+          },
+          "double_time": {
+            "reconstruction": 0.015159911359660327,
+            "reward": 0.023755240777973086,
+            "continuation": 0.06890511536039412,
+            "dynamics_kl": 1.2137082815170288,
+            "representation_kl": 1.2137082815170288,
+            "ensemble": 0.19208196736872196,
+            "loss": 1.0281271860003471,
+            "posterior_image_mse": 0.015159911359660327,
+            "reward_mae": 0.041809402871876955,
+            "terminal_reward_mae": 0.11255724689569967,
+            "continuation_brier": 0.012819325318560004,
+            "terminal_brier": 0.03611582406812627,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.026921221055090427,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.2856121764052659
+          }
+        },
+        "gate": {
+          "ready": true,
+          "reasons": [],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\ablation-20261025-015911-220971\\terminal_reward_weight-23.pt",
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.017127701081335545,
+            "reward": 0.026011825480964035,
+            "continuation": 0.11306778690777719,
+            "dynamics_kl": 1.1587190330028534,
+            "representation_kl": 1.1587190330028534,
+            "ensemble": 0.19791560992598534,
+            "loss": 1.0493543669581413,
+            "posterior_image_mse": 0.017127701081335545,
+            "reward_mae": 0.037809183122590184,
+            "terminal_reward_mae": 0.4088669696024486,
+            "continuation_brier": 0.009354431764222682,
+            "terminal_brier": 0.0921629809724566,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.028228453593328595,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.27619029209017754
+          },
+          "double_time": {
+            "reconstruction": 0.015396454255096614,
+            "reward": 0.022364078962709755,
+            "continuation": 0.06924902310129255,
+            "dynamics_kl": 1.139963835477829,
+            "representation_kl": 1.139963835477829,
+            "ensemble": 0.1866754200309515,
+            "loss": 0.9776632636785507,
+            "posterior_image_mse": 0.015396454255096614,
+            "reward_mae": 0.03236141137313098,
+            "terminal_reward_mae": 0.28915686706701915,
+            "continuation_brier": 0.006607373503356939,
+            "terminal_brier": 0.06619232234855493,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.02614036714658141,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.26178703270852566
+          }
+        },
+        "gate": {
+          "ready": true,
+          "reasons": [],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 47,
+      "arm": "continued_baseline",
+      "fitting_seconds": 341.8239759999997,
+      "peak_cuda_allocated_bytes": 306153472,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.01819774671457708,
+            "reward": 0.014357800362631679,
+            "continuation": 0.07869745814241469,
+            "dynamics_kl": 1.1433971226215363,
+            "representation_kl": 1.1433971226215363,
+            "ensemble": 0.20344995893537998,
+            "loss": 1.0007412135601044,
+            "posterior_image_mse": 0.01819774671457708,
+            "reward_mae": 0.04612935287877917,
+            "terminal_reward_mae": 0.7798949098587036,
+            "continuation_brier": 0.013908119828556664,
+            "terminal_brier": 0.07143535416165832,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.02696730475872755,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.2438375148922205
+          },
+          "double_time": {
+            "reconstruction": 0.015446802950464189,
+            "reward": 0.009819250117288902,
+            "continuation": 0.09139554970897734,
+            "dynamics_kl": 1.166788399219513,
+            "representation_kl": 1.166788399219513,
+            "ensemble": 0.1858692318201065,
+            "loss": 1.0026038736104965,
+            "posterior_image_mse": 0.015446802950464189,
+            "reward_mae": 0.030242356471717358,
+            "terminal_reward_mae": 0.24006029245732674,
+            "continuation_brier": 0.01439179282169789,
+            "terminal_brier": 0.034722593356596096,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.026030838722363114,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.25790393725037575
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "spinning: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\ablation-20261025-015911-220971\\continued_baseline-47.pt",
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.017760756192728877,
+            "reward": 0.0048775176401250064,
+            "continuation": 0.029625487921293825,
+            "dynamics_kl": 1.1688118875026703,
+            "representation_kl": 1.1688118875026703,
+            "ensemble": 0.2007717415690422,
+            "loss": 0.9543226435780525,
+            "posterior_image_mse": 0.017760756192728877,
+            "reward_mae": 0.02867936948314309,
+            "terminal_reward_mae": 0.4928869732788631,
+            "continuation_brier": 0.005205729516092106,
+            "terminal_brier": 0.03331171545557611,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.02755197766236961,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.25981310941278934
+          },
+          "double_time": {
+            "reconstruction": 0.015611005132086575,
+            "reward": 0.011389482548111118,
+            "continuation": 0.11078046710463241,
+            "dynamics_kl": 1.1262848526239395,
+            "representation_kl": 1.1262848526239395,
+            "ensemble": 0.190250008367002,
+            "loss": 1.0038018822669983,
+            "posterior_image_mse": 0.015611005132086575,
+            "reward_mae": 0.03454092633910477,
+            "terminal_reward_mae": 0.5878539780775706,
+            "continuation_brier": 0.00842387167222114,
+            "terminal_brier": 0.09535581351956353,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.02524769213050604,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.2726005371659994
+          }
+        },
+        "gate": {
+          "ready": false,
+          "reasons": [
+            "double_time: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    },
+    {
+      "seed": 47,
+      "arm": "terminal_reward_weight",
+      "fitting_seconds": 349.3175576000067,
+      "peak_cuda_allocated_bytes": 306153472,
+      "development": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.018403663765639067,
+            "reward": 0.026803393848240376,
+            "continuation": 0.07167653017677367,
+            "dynamics_kl": 1.1557336747646332,
+            "representation_kl": 1.1557336747646332,
+            "ensemble": 0.20705555751919746,
+            "loss": 1.017379343509674,
+            "posterior_image_mse": 0.018403663765639067,
+            "reward_mae": 0.044682950247079134,
+            "terminal_reward_mae": 0.3980331039428711,
+            "continuation_brier": 0.013076973460556474,
+            "terminal_brier": 0.07118956418256857,
+            "terminal_examples": 25,
+            "validation_transitions": 851,
+            "open_loop_image_mse": 0.02694261958822608,
+            "persistence_image_mse": 0.04105228278785944,
+            "open_loop_reward_mae": 0.2878190651535988
+          },
+          "double_time": {
+            "reconstruction": 0.015535719925537705,
+            "reward": 0.026290251757018268,
+            "continuation": 0.09323887689970434,
+            "dynamics_kl": 1.1853730827569962,
+            "representation_kl": 1.1853730827569962,
+            "ensemble": 0.18948929570615292,
+            "loss": 1.035777971148491,
+            "posterior_image_mse": 0.015535719925537705,
+            "reward_mae": 0.040478537790477276,
+            "terminal_reward_mae": 0.10223259991998303,
+            "continuation_brier": 0.015722467098385096,
+            "terminal_brier": 0.03429342710449513,
+            "terminal_examples": 29,
+            "validation_transitions": 747,
+            "open_loop_image_mse": 0.02595986658707261,
+            "persistence_image_mse": 0.041991441044956446,
+            "open_loop_reward_mae": 0.2794882543385029
+          }
+        },
+        "gate": {
+          "ready": true,
+          "reasons": [],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      },
+      "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\ablation-20261025-015911-220971\\terminal_reward_weight-47.pt",
+      "final_audit": {
+        "metrics": {
+          "spinning": {
+            "reconstruction": 0.017928737215697765,
+            "reward": 0.011641800942015834,
+            "continuation": 0.030403799493797123,
+            "dynamics_kl": 1.187321975827217,
+            "representation_kl": 1.187321975827217,
+            "ensemble": 0.20533351972699165,
+            "loss": 0.9777010381221771,
+            "posterior_image_mse": 0.017928737215697765,
+            "reward_mae": 0.0278133659157902,
+            "terminal_reward_mae": 0.21373476779886655,
+            "continuation_brier": 0.00595977690682048,
+            "terminal_brier": 0.025723998798639514,
+            "terminal_examples": 28,
+            "validation_transitions": 754,
+            "open_loop_image_mse": 0.027693757321685553,
+            "persistence_image_mse": 0.050114449579268694,
+            "open_loop_reward_mae": 0.2808056864887476
+          },
+          "double_time": {
+            "reconstruction": 0.01565642759669572,
+            "reward": 0.02845844824332744,
+            "continuation": 0.09418232322786935,
+            "dynamics_kl": 1.1425427943468094,
+            "representation_kl": 1.1425427943468094,
+            "ensemble": 0.1924283728003502,
+            "loss": 1.0162512436509132,
+            "posterior_image_mse": 0.01565642759669572,
+            "reward_mae": 0.0301819471642375,
+            "terminal_reward_mae": 0.33285233775774636,
+            "continuation_brier": 0.00799347553959251,
+            "terminal_brier": 0.09153001294083273,
+            "terminal_examples": 30,
+            "validation_transitions": 758,
+            "open_loop_image_mse": 0.02534001343883574,
+            "persistence_image_mse": 0.04441898036748171,
+            "open_loop_reward_mae": 0.29508055560290813
+          }
+        },
+        "gate": {
+          "ready": true,
+          "reasons": [],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        }
+      }
+    }
+  ],
+  "summary": {
+    "continued_baseline": {
+      "seeds": 3,
+      "scenarios": {
+        "spinning": {
+          "posterior_image_mse": {
+            "mean": 0.01756741727391879,
+            "std_across_seeds": 0.000166847576782028,
+            "paired_percent_change_mean": 0.0,
+            "paired_percent_change_by_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "open_loop_image_mse": {
+            "mean": 0.028186413692310452,
+            "std_across_seeds": 0.0005565350381877533,
+            "paired_percent_change_mean": 0.0,
+            "paired_percent_change_by_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "reward_mae": {
+            "mean": 0.04113193477193514,
+            "std_across_seeds": 0.00893376472402525,
+            "paired_percent_change_mean": 0.0,
+            "paired_percent_change_by_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "terminal_reward_mae": {
+            "mean": 0.671708908819017,
+            "std_across_seeds": 0.14347973968374067,
+            "paired_percent_change_mean": 0.0,
+            "paired_percent_change_by_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "continuation_brier": {
+            "mean": 0.006203985988274023,
+            "std_across_seeds": 0.0007378955515451703,
+            "paired_percent_change_mean": 0.0,
+            "paired_percent_change_by_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "terminal_brier": {
+            "mean": 0.0510133462328321,
+            "std_across_seeds": 0.020444700905918014,
+            "paired_percent_change_mean": 0.0,
+            "paired_percent_change_by_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "double_time": {
+          "posterior_image_mse": {
+            "mean": 0.015671086808045704,
+            "std_across_seeds": 0.00012088182914284024,
+            "paired_percent_change_mean": 0.0,
+            "paired_percent_change_by_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "open_loop_image_mse": {
+            "mean": 0.026519782685985167,
+            "std_across_seeds": 0.0011993992442213882,
+            "paired_percent_change_mean": 0.0,
+            "paired_percent_change_by_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "reward_mae": {
+            "mean": 0.032487945592341326,
+            "std_across_seeds": 0.0014630224621346047,
+            "paired_percent_change_mean": 0.0,
+            "paired_percent_change_by_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "terminal_reward_mae": {
+            "mean": 0.5454278296894497,
+            "std_across_seeds": 0.047252330040431965,
+            "paired_percent_change_mean": 0.0,
+            "paired_percent_change_by_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "continuation_brier": {
+            "mean": 0.00776706418203806,
+            "std_across_seeds": 0.0006515822614610627,
+            "paired_percent_change_mean": 0.0,
+            "paired_percent_change_by_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "terminal_brier": {
+            "mean": 0.06908838494499732,
+            "std_across_seeds": 0.021750097937079677,
+            "paired_percent_change_mean": 0.0,
+            "paired_percent_change_by_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        }
+      },
+      "mean_fitting_seconds": 280.9023482666671,
+      "gate_passes": 0
+    },
+    "terminal_reward_weight": {
+      "seeds": 3,
+      "scenarios": {
+        "spinning": {
+          "posterior_image_mse": {
+            "mean": 0.017475081142038107,
+            "std_across_seeds": 0.00033554499483281927,
+            "paired_percent_change_mean": -0.5277081223494055,
+            "paired_percent_change_by_seed": [
+              0.0875851651016557,
+              -2.6165083548242096,
+              0.9457988226743375
+            ]
+          },
+          "open_loop_image_mse": {
+            "mean": 0.028006268898025155,
+            "std_across_seeds": 0.00022744117892403647,
+            "paired_percent_change_mean": -0.6152676804896581,
+            "paired_percent_change_by_seed": [
+              -0.013011884762559323,
+              -2.347380929728715,
+              0.5145897730223004
+            ]
+          },
+          "reward_mae": {
+            "mean": 0.03474869431617359,
+            "std_across_seeds": 0.004915273937240207,
+            "paired_percent_change_mean": -13.771092589717881,
+            "paired_percent_change_by_seed": [
+              -15.130486530055832,
+              -23.16318661403134,
+              -3.0196046250664743
+            ]
+          },
+          "terminal_reward_mae": {
+            "mean": 0.32324819918721914,
+            "std_across_seeds": 0.0814344732998822,
+            "paired_percent_change_mean": -52.33542541996263,
+            "paired_percent_change_by_seed": [
+              -48.80454294036504,
+              -51.56558332696477,
+              -56.63614999255808
+            ]
+          },
+          "continuation_brier": {
+            "mean": 0.007043241724507728,
+            "std_across_seeds": 0.0016353189935143795,
+            "paired_percent_change_mean": 14.408017037445589,
+            "paired_percent_change_by_seed": [
+              -16.52113694246865,
+              45.2602366489085,
+              14.484951405896918
+            ]
+          },
+          "terminal_brier": {
+            "mean": 0.05177186384805412,
+            "std_across_seeds": 0.028957799733844648,
+            "paired_percent_change_mean": -4.556152839816596,
+            "paired_percent_change_by_seed": [
+              -6.5825686333981,
+              15.692032394941124,
+              -22.77792228099281
+            ]
+          }
+        },
+        "double_time": {
+          "posterior_image_mse": {
+            "mean": 0.01566245926854511,
+            "std_across_seeds": 0.00021969600693753704,
+            "paired_percent_change_mean": -0.05929229655463608,
+            "paired_percent_change_by_seed": [
+              0.5982650663650224,
+              -1.067106338045476,
+              0.2909643820165453
+            ]
+          },
+          "open_loop_image_mse": {
+            "mean": 0.026604682284717757,
+            "std_across_seeds": 0.0012654856056390832,
+            "paired_percent_change_mean": 0.3104675273129705,
+            "paired_percent_change_by_seed": [
+              0.7329142839357594,
+              -0.1671740676993938,
+              0.36566236570254596
+            ]
+          },
+          "reward_mae": {
+            "mean": 0.03146006624835233,
+            "std_across_seeds": 0.0009287931315376657,
+            "paired_percent_change_mean": -2.855888983152525,
+            "paired_percent_change_by_seed": [
+              1.9146292749948834,
+              2.137455579749581,
+              -12.61975180420204
+            ]
+          },
+          "terminal_reward_mae": {
+            "mean": 0.27628155946731564,
+            "std_across_seeds": 0.052245527233221734,
+            "paired_percent_change_mean": -49.80600563125855,
+            "paired_percent_change_by_seed": [
+              -56.864563532724446,
+              -49.175055012239596,
+              -43.37839834881161
+            ]
+          },
+          "continuation_brier": {
+            "mean": 0.00768751010101217,
+            "std_across_seeds": 0.0007873268916071304,
+            "paired_percent_change_mean": -1.0882029481420956,
+            "paired_percent_change_by_seed": [
+              5.792366450341424,
+              -3.9477315957223036,
+              -5.1092436990454075
+            ]
+          },
+          "terminal_brier": {
+            "mean": 0.06656269025730176,
+            "std_across_seeds": 0.020236226250334367,
+            "paired_percent_change_mean": -3.1687744482454705,
+            "paired_percent_change_by_seed": [
+              -0.30482965781456484,
+              -5.1893622420510095,
+              -4.012131444870837
+            ]
+          }
+        }
+      },
+      "mean_fitting_seconds": 315.6151385666696,
+      "gate_passes": 3
+    }
+  },
+  "state": "completed",
+  "selection_limitation": "Audit episodes reused after short-screen hypothesis selection; not an independent unseen test.",
+  "online_design": "Seed 11 preselected as first listed seed, not selected by metrics. Paired 1024-update checkpoints retain identical actors and real counters. Four workers per arm, sequential health checks of 2000 real decisions; separate byte-identical replay snapshots."
+}
