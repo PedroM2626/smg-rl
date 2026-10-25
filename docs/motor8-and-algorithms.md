@@ -202,3 +202,43 @@ At this implementation checkpoint, 139 portable tests and Ruff passed. Original
 checkpoint hashes remain intact. The first SMG1 256/2000-decision collection
 boundaries completed with zero model/actor updates, as expected below minimum
 replay coverage; current progress remains prior-driven rather than learned.
+
+## Reviewed bootstrap completion, October 25
+
+Both new motor8 branches reached 4096 actual training decisions and closed their
+emulators at their boundaries. SMG2 is evenly split into 2048 decisions per
+mission. Fresh post-closure replay inspection confirmed all transitions, with
+39/13 train/held-out episodes for SMG1 and 54/23 for SMG2; there were no rejected
+archives. Final online diagnostics were written before the last recorder flush
+and still said insufficient replay. That stale coverage message was checked
+against the now-complete replay instead of lowering the 4096 requirement.
+
+Across SMG1's three collection blocks there were 52 episodes, 48 deaths, zero
+HP loss, zero confirmed initial exits and zero RAM star completions. The largest
+grounded progress within the short validated prefix was 58.89%; this is not a
+full-course percentage. All of these data came from the unchanged initial actor
+prior: both branches finished collection with zero model, actor and imagined
+updates, so these trajectories are not evidence of learned improvement.
+
+| Mission | Real decisions | Episodes | Deaths | RAM-confirmed stars |
+| --- | ---: | ---: | ---: | ---: |
+| SMG1 Sweet Sweet Galaxy | 4096 | 52 | 48 | 0 |
+| SMG2 Spinning | 2048 | 40 | 37 | 0 |
+| SMG2 Double Time | 2048 | 37 | 34 | 0 |
+
+SMG2's maximum geometric projections were 3.25% and 2.18%, respectively.
+These are not verified route traversal or native mission percentages. No
+ground-contact or safe-initial-exit measurement is available for SMG2 here.
+
+![Best SMG1 initial-prefix trace during bootstrap](assets/performance/motor8-smg1-bootstrap-best-prefix-20261025.png)
+
+Each branch was reviewed and given one finite 128-cycle offline fit, with no
+additional emulator collection during fitting. Actor updates remain blocked
+while the original prediction checks fail. The two fits can overlap; at this
+stage no emulator instances are needed. Fit completion must be reviewed before
+the optional final 2000 real decisions per game. The
+[bootstrap review and job provenance](assets/performance/motor8-bootstrap-review-20261025.json)
+retain exact run paths, checksums, replay coverage and separate counters.
+The summary can be regenerated with
+`.venv\Scripts\python.exe scripts/summarize_motor8_bootstrap.py`; it excludes
+offline, evaluation and later runs whose real counter exceeds 4096.

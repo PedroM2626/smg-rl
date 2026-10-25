@@ -1,0 +1,437 @@
+{
+  "scope": "Reviewed collection under the transferred fixed policy prior; not learned mission completion",
+  "smg1": {
+    "stage": "bootstrap_4096",
+    "decision": "Fit at most128 offline cycles before any further real collection.",
+    "reason": "All4096 compatible transitions are now flushed with39 training and13 held-out episodes. No rejected replay, runtime error, HP loss, confirmed prefix exit or star. The final online diagnostics predate the closure flush and therefore show insufficient replay; fresh replay refresh verifies4096. No model/actor updates occurred, so behavior remains a fixed prior.",
+    "evidence": {
+      "run": "runs\\m8-smg1\\world-model-20261025-132157-406146",
+      "state": "completed",
+      "counters": {
+        "real_decisions": 4096,
+        "model_updates": 0,
+        "actor_updates": 0,
+        "imagined_transitions": 0
+      },
+      "gate": {
+        "ready": false,
+        "reasons": [
+          "Insufficient real visual transitions",
+          "sweet_sweet: no held-out prediction metrics"
+        ],
+        "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+      },
+      "replay_rejected": [],
+      "deaths": 24,
+      "episodes": 25,
+      "successes": 0,
+      "health_lost": 0,
+      "route_measurement_available": true,
+      "route_prefix_exited": false,
+      "maximum_route_prefix_progress": 0.5720950386575105,
+      "maximum_geometric_projection": 0.05368429146177666,
+      "special_action_fraction": 0.23043893129770993,
+      "decisions_per_second": 15.40474195587307
+    },
+    "flushed_replay": {
+      "chunks": 52,
+      "transitions": 4096,
+      "train_episodes": 39,
+      "validation_episodes": 13,
+      "scenarios": {
+        "sweet_sweet": 4096
+      },
+      "train_scenarios": {
+        "sweet_sweet": 2989
+      },
+      "validation_scenarios": {
+        "sweet_sweet": 1107
+      },
+      "rejected": []
+    },
+    "checkpoint_sha256": "abc327d6af0bc54d2aa023878d915d3dea53d3255bb36458e629738d9c13194b"
+  },
+  "smg2_previous_stage": {
+    "stage": "first_2000",
+    "decision": "After the SMG1 worker closes, collect only2096 further real decisions to4096 aggregate.",
+    "reason": "Both missions produced compatible real transitions without execution or replay errors. No actor/model updates yet below replay threshold. Grounded route measurement is unavailable for SMG2 and is not invented. Do not claim learned navigation from fixed-prior collection.",
+    "evidence": {
+      "run": "runs\\m8-smg2\\world-model-20261025-131857-280695",
+      "state": "completed",
+      "counters": {
+        "real_decisions": 2000,
+        "model_updates": 0,
+        "actor_updates": 0,
+        "imagined_transitions": 0
+      },
+      "gate": {
+        "ready": false,
+        "reasons": [
+          "Insufficient real visual transitions",
+          "spinning: no held-out prediction metrics",
+          "double_time: no held-out prediction metrics"
+        ],
+        "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+      },
+      "replay_rejected": [],
+      "deaths": 29,
+      "episodes": 31,
+      "successes": 0,
+      "health_lost": 0,
+      "route_measurement_available": false,
+      "route_prefix_exited": null,
+      "maximum_route_prefix_progress": null,
+      "maximum_geometric_projection": 0.029049294504428332,
+      "special_action_fraction": 0.22190366972477063,
+      "decisions_per_second": 18.33974803878267
+    }
+  },
+  "next_bounded_jobs": {
+    "smg1_offline_cycles": 128,
+    "smg2_offline_cycles": 128
+  },
+  "smg1_aggregate": {
+    "new_real_decisions": 4096,
+    "episodes": 52,
+    "deaths": 48,
+    "damage_hp_lost": 0,
+    "confirmed_initial_exits": 0,
+    "ram_mission_completions": 0,
+    "model_updates": 0,
+    "actor_updates": 0,
+    "maximum_initial_prefix_fraction": 0.5888764089525086,
+    "best_prefix_episode": {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000003.csv",
+      "steps": 148,
+      "outcome": "death",
+      "prefix": 0.5888764089525086,
+      "geometry": 0.025442770030202372
+    },
+    "trajectory": "docs/assets/performance/motor8-smg1-bootstrap-best-prefix-20261025.png",
+    "maximum_geometric_projection": 0.05368429146177666,
+    "interpretation": "Fixed-prior collection, not trained navigation. Initial-prefix fraction is not full mission percentage."
+  },
+  "dispatched_jobs": {
+    "smg1": {
+      "run": "runs\\m8-smg1\\world-model-offline-20261025-132558-093766",
+      "cycles": 128,
+      "controller": {
+        "pid": 25424,
+        "created_time": 1792945554.8976057,
+        "workers": 0,
+        "algorithm": "gaussian-rssm-offline-v1"
+      }
+    },
+    "smg2": {
+      "run": "runs\\m8-smg2\\world-model-offline-20261025-132916-186628",
+      "cycles": 128,
+      "controller": {
+        "pid": 9780,
+        "created_time": 1792945752.0313623,
+        "workers": 0,
+        "algorithm": "gaussian-rssm-offline-v1"
+      }
+    }
+  },
+  "smg2": {
+    "stage": "bootstrap_4096",
+    "decision": "Fit only128 offline cycles, then inspect the unchanged prediction gates before any more collection.",
+    "reason": "Both mission workers closed cleanly;4096 compatible real transitions are flushed, split equally2048 per mission. There are54 training and23 held-out episodes and no replay rejection. No model/actor updates or mission successes occurred; this is fixed-prior collection. No route/contact percentage is invented for SMG2. End-of-run diagnostics predate the last replay flush.",
+    "evidence": {
+      "run": "runs\\m8-smg2\\world-model-20261025-132558-315738",
+      "state": "completed",
+      "counters": {
+        "real_decisions": 4096,
+        "model_updates": 0,
+        "actor_updates": 0,
+        "imagined_transitions": 0
+      },
+      "gate": {
+        "ready": false,
+        "reasons": [
+          "Insufficient real visual transitions",
+          "spinning: no held-out prediction metrics",
+          "double_time: no held-out prediction metrics"
+        ],
+        "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+      },
+      "replay_rejected": [],
+      "deaths": 38,
+      "episodes": 40,
+      "successes": 0,
+      "health_lost": 0,
+      "route_measurement_available": false,
+      "route_prefix_exited": null,
+      "maximum_route_prefix_progress": null,
+      "maximum_geometric_projection": 0.03248088643130927,
+      "special_action_fraction": 0.21135496183206107,
+      "decisions_per_second": 18.433990308083345
+    },
+    "flushed_replay": {
+      "chunks": 77,
+      "transitions": 4096,
+      "train_episodes": 54,
+      "validation_episodes": 23,
+      "scenarios": {
+        "spinning": 2048,
+        "double_time": 2048
+      },
+      "train_scenarios": {
+        "spinning": 1237,
+        "double_time": 1445
+      },
+      "validation_scenarios": {
+        "spinning": 811,
+        "double_time": 603
+      },
+      "rejected": []
+    },
+    "checkpoint_sha256": "979457012ddde566c25810fb91b877b2ef9a9b61917f20c79308320da060260b"
+  },
+  "per_mission_collection": {
+    "smg1": {
+      "sweet_sweet": {
+        "real_decisions": 4096,
+        "episodes": 52,
+        "outcomes": {
+          "death": 48,
+          "interrupted": 3,
+          "timeout": 1
+        },
+        "ram_mission_completions": 0,
+        "hp_lost": 0,
+        "maximum_geometric_projection": 0.05368429146177666,
+        "maximum_initial_prefix_fraction": 0.5888764089525086,
+        "best_geometric_csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000016.csv",
+        "confirmed_initial_exit_episodes": 0,
+        "interpretation": "Fixed-prior real collection, no actor/model updates during bootstrap. Projection is geometric, not native mission or verified traversal percentage."
+      }
+    },
+    "smg2": {
+      "spinning": {
+        "real_decisions": 2048,
+        "episodes": 40,
+        "outcomes": {
+          "death": 37,
+          "interrupted": 3
+        },
+        "ram_mission_completions": 0,
+        "hp_lost": null,
+        "maximum_geometric_projection": 0.03248088643130927,
+        "maximum_initial_prefix_fraction": null,
+        "best_geometric_csv": "runs\\m8-smg2\\world-model-20261025-132558-315738\\worker-00\\spinning\\episode-000005.csv",
+        "confirmed_initial_exit_episodes": null,
+        "interpretation": "Fixed-prior real collection, no actor/model updates during bootstrap. Projection is geometric, not native mission or verified traversal percentage.",
+        "trajectory": "docs/assets/performance/motor8-smg2-spinning-bootstrap-20261025.png"
+      },
+      "double_time": {
+        "real_decisions": 2048,
+        "episodes": 37,
+        "outcomes": {
+          "death": 34,
+          "interrupted": 3
+        },
+        "ram_mission_completions": 0,
+        "hp_lost": null,
+        "maximum_geometric_projection": 0.02183592660225917,
+        "maximum_initial_prefix_fraction": null,
+        "best_geometric_csv": "runs\\m8-smg2\\world-model-20261025-132558-315738\\worker-01\\double_time\\episode-000012.csv",
+        "confirmed_initial_exit_episodes": null,
+        "interpretation": "Fixed-prior real collection, no actor/model updates during bootstrap. Projection is geometric, not native mission or verified traversal percentage.",
+        "trajectory": "docs/assets/performance/motor8-smg2-double_time-bootstrap-20261025.png"
+      }
+    }
+  },
+  "early_offline_snapshots": {
+    "smg1": {
+      "state": "running",
+      "algorithm": "gaussian-rssm-imagination-v1",
+      "timesteps": 4096,
+      "real_decisions": 4096,
+      "model_updates": 48,
+      "actor_updates": 0,
+      "imagined_transitions": 0,
+      "elapsed_seconds": 68.11000000000013,
+      "decisions_per_second": 0.0,
+      "updated_at": "2026-10-25T16:27:06.199069+00:00",
+      "progress": [],
+      "start_kinds": [],
+      "route_prefix_progress": [],
+      "route_prefix_exited": [],
+      "real_validation_decisions": 0,
+      "physical_decisions_this_run": 0,
+      "diagnostics": {
+        "replay": {
+          "chunks": 52,
+          "transitions": 4096,
+          "train_episodes": 39,
+          "validation_episodes": 13,
+          "scenarios": {
+            "sweet_sweet": 4096
+          },
+          "train_scenarios": {
+            "sweet_sweet": 2989
+          },
+          "validation_scenarios": {
+            "sweet_sweet": 1107
+          },
+          "rejected": []
+        },
+        "validation": {
+          "sweet_sweet": {
+            "reconstruction": 0.014730888651683927,
+            "reward": 0.05181800574064255,
+            "continuation": 0.12297743558883667,
+            "dynamics_kl": 28.637757778167725,
+            "representation_kl": 28.637757778167725,
+            "ensemble": 0.07394951768219471,
+            "loss": 69.40197563171387,
+            "posterior_image_mse": 0.014730888651683927,
+            "reward_mae": 0.12281190976500511,
+            "terminal_reward_mae": 1.0916935086250306,
+            "continuation_brier": 0.01908672833815217,
+            "terminal_brier": 0.1894014229377111,
+            "terminal_examples": 30,
+            "validation_transitions": 994,
+            "open_loop_image_mse": 0.039695472456514835,
+            "persistence_image_mse": 0.08596105501055717,
+            "open_loop_reward_mae": 0.3167664259672165
+          }
+        },
+        "imagination_gate": {
+          "ready": false,
+          "reasons": [
+            "sweet_sweet: terminal_reward_mae exceeds 0.5"
+          ],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        },
+        "losses": {
+          "reconstruction": 0.014676602557301521,
+          "reward": 0.04070897400379181,
+          "continuation": 0.08195168524980545,
+          "dynamics_kl": 26.50473403930664,
+          "representation_kl": 26.50473403930664,
+          "ensemble": 0.06556067615747452,
+          "prior_prediction": 60.42301940917969,
+          "open_loop_prediction": 84.93323516845703,
+          "loss": 140.54824829101562,
+          "posterior_image_mse": 0.014676602557301521,
+          "reward_mae": 0.12989197671413422,
+          "terminal_reward_mae": 0.7110419273376465,
+          "continuation_brier": 0.012770288623869419,
+          "terminal_brier": 0.07881081104278564,
+          "terminal_examples": 6,
+          "validation_transitions": 197,
+          "model_gradient_norm": 422.1881408691406
+        }
+      },
+      "note": "Only real RAM-verified episodes can establish mission completion. Imagined transitions are not real timesteps."
+    },
+    "smg2": {
+      "state": "running",
+      "algorithm": "gaussian-rssm-imagination-v1",
+      "timesteps": 4096,
+      "real_decisions": 4096,
+      "model_updates": 116,
+      "actor_updates": 22,
+      "imagined_transitions": 20552,
+      "elapsed_seconds": 122.17200000000003,
+      "decisions_per_second": 0.0,
+      "updated_at": "2026-10-25T16:31:18.366386+00:00",
+      "progress": [],
+      "start_kinds": [],
+      "route_prefix_progress": [],
+      "route_prefix_exited": [],
+      "real_validation_decisions": 0,
+      "physical_decisions_this_run": 0,
+      "diagnostics": {
+        "replay": {
+          "chunks": 77,
+          "transitions": 4096,
+          "train_episodes": 54,
+          "validation_episodes": 23,
+          "scenarios": {
+            "spinning": 2048,
+            "double_time": 2048
+          },
+          "train_scenarios": {
+            "spinning": 1237,
+            "double_time": 1445
+          },
+          "validation_scenarios": {
+            "spinning": 811,
+            "double_time": 603
+          },
+          "rejected": []
+        },
+        "validation": {
+          "spinning": {
+            "reconstruction": 0.015666669234633446,
+            "reward": 0.015532397432252765,
+            "continuation": 0.07721133033192018,
+            "dynamics_kl": 1.0906405448913574,
+            "representation_kl": 1.0906405448913574,
+            "ensemble": 0.17111621424555779,
+            "loss": 0.9339109510183334,
+            "posterior_image_mse": 0.015666669234633446,
+            "reward_mae": 0.03637334890663624,
+            "terminal_reward_mae": 0.18193201507840837,
+            "continuation_brier": 0.007237324540824375,
+            "terminal_brier": 0.07076095663992353,
+            "terminal_examples": 14,
+            "validation_transitions": 510,
+            "open_loop_image_mse": 0.024276894982904196,
+            "persistence_image_mse": 0.03750732075423002,
+            "open_loop_reward_mae": 0.21457798406481743
+          },
+          "double_time": {
+            "reconstruction": 0.018068974371999502,
+            "reward": 0.006609939271584153,
+            "continuation": 0.0140328282432165,
+            "dynamics_kl": 1.1218477189540863,
+            "representation_kl": 1.1218477189540863,
+            "ensemble": 0.22691823169589043,
+            "loss": 0.9387386292219162,
+            "posterior_image_mse": 0.018068974371999502,
+            "reward_mae": 0.02761719236150384,
+            "terminal_reward_mae": 0.31638798117637634,
+            "continuation_brier": 0.0010166227920649362,
+            "terminal_brier": 0.03253175178542733,
+            "terminal_examples": 16,
+            "validation_transitions": 512,
+            "open_loop_image_mse": 0.029547181446105242,
+            "persistence_image_mse": 0.04678977932780981,
+            "open_loop_reward_mae": 0.2600942999124527
+          }
+        },
+        "imagination_gate": {
+          "ready": true,
+          "reasons": [],
+          "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+        },
+        "losses": {
+          "reconstruction": 0.01594099961221218,
+          "reward": 0.004219484515488148,
+          "continuation": 0.004919996950775385,
+          "dynamics_kl": 1.0994861125946045,
+          "representation_kl": 1.0994861125946045,
+          "ensemble": 0.15781961381435394,
+          "loss": 0.8425918221473694,
+          "posterior_image_mse": 0.01594099961221218,
+          "reward_mae": 0.027178892865777016,
+          "terminal_reward_mae": 0.12515868246555328,
+          "continuation_brier": 9.743381815496832e-05,
+          "terminal_brier": 0.0020295751746743917,
+          "terminal_examples": 6,
+          "validation_transitions": 125,
+          "model_gradient_norm": 0.5506044030189514,
+          "actor_loss": -0.9210548996925354,
+          "critic_loss": 0.22295314073562622,
+          "imagined_reward": -0.33406347036361694,
+          "imagined_transitions": 20552
+        }
+      },
+      "note": "Only real RAM-verified episodes can establish mission completion. Imagined transitions are not real timesteps."
+    }
+  }
+}
