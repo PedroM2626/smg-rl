@@ -63,3 +63,42 @@ def test_frame_ring_wrap_does_not_cross_episode_or_worker_histories():
         assert sample['next_images'].min() >= 100
     with pytest.raises(ValueError, match='Stale'):
         replay.observation(0)
+
+
+def test_worker_expansion_remaps_wrapped_frame_ids_and_preserves_sampling_rng(tmp_path):
+    replay = PrioritizedFrames(8, 4, workers=2, n_step=3)
+    for episode in range(70):
+        current = replay.add_frame(frame(episode))
+        for step in range(4):
+            following = replay.add_frame(frame(episode + step + 1), current)
+            replay.append(episode % 2, current, step, float(step), following, 0, step == 3, step == 3)
+            current = following
+    before = {int(i): replay.observation(int(i)) for key in ('state', 'next') for i in replay.arrays[key][:replay.size]}
+    expanded = replay.expanded_workers(6)
+    assert expanded.workers == len(expanded.pending) == 6 and not any(expanded.pending)
+    assert expanded.emitted == replay.emitted and expanded.next_frame == replay.next_frame
+    for identity, pixels in before.items():
+        np.testing.assert_array_equal(expanded.observation(identity), pixels)
+    expected, actual = replay.sample(16, .6), expanded.sample(16, .6)
+    for key in expected:
+        np.testing.assert_array_equal(expected[key], actual[key])
+    path = tmp_path / 'expanded.npz'
+    expanded.save(path)
+    restored = PrioritizedFrames.load(path, {'capacity':8,'image_size':4,'stack':4,'workers':6,
+        'n_step':3,'gamma':.997,'alpha':.5})
+    for worker in range(6):
+        first = restored.add_frame(frame(100 + worker))
+        last = restored.add_frame(frame(110 + worker), first)
+        restored.append(worker, first, 0, 0., last, 0, True, True)
+    assert restored.emitted == replay.emitted + 6
+
+
+def test_worker_expansion_refuses_pending_transitions_and_shrinking():
+    replay = PrioritizedFrames(8, 4, workers=2)
+    first, last = replay.add_frame(frame(0)), replay.add_frame(frame(1))
+    replay.append(0, first, 0, 0., last, 0, False, False)
+    with pytest.raises(ValueError, match='flushed'):
+        replay.expanded_workers(6)
+    replay.flush_cuts()
+    with pytest.raises(ValueError):
+        replay.expanded_workers(1)

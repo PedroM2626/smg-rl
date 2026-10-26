@@ -3,6 +3,13 @@
 Visual reinforcement learning for **Super Mario Galaxy 1 and 2** in
 Dolphin on Windows.
 
+**Current owner-authorized run:** [six SMG1 collectors for two hours](docs/smg1-six-two-hour.md),
+continuing the final IQN/IMPALA learner with an explicitly audited replay-layout
+expansion. Only worker allocation/owned paths change; task/reward and learner
+state remain preserved. SMG2 remains stopped and is not a solved mission. The
+new phase has independent finite state/budgets and continuous TensorBoard
+reward, attempt and distance history.
+
 **Latest completed intervention (October 26):** [simple reward + IQN/IMPALA](docs/simple-reward-impala.md)
 starts fresh after the owner requested correcting the idle incentive before a
 six-hour trial. The finite episodic reward pays new grounded route advance,
@@ -26,8 +33,8 @@ Both six-hour branches and nine final frozen episodes are now complete, with
 zero stars. Frozen Sweet Sweet stalls at23.64% of its opening; both SMG2 policies
 traverse their short mapped openings and then die. These are not full-mission
 percentages. [Final results and diagnosis](docs/impala-final-results.md) identify
-incomplete route coverage and the Sweet jumping-in-place policy. No training
-extension or new experiment is running.
+incomplete route coverage and the Sweet jumping-in-place policy. Those budgets
+are closed; the newer SMG1-only continuation has its own authorization and state.
 A later owner-requested [frozen stochastic comparison](docs/stochastic-iqn-evaluation.md)
 also completed without stars: Sweet's mean opening advance rose from23.64% to
 32.42% with noise/epsilon, best35.03%. These remain short-opening metrics, not

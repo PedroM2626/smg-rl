@@ -1,8 +1,10 @@
 # Six-hour IQN/IMPALA results and Sweet Sweet diagnosis
 
 Date: October26,2026. Both finite training branches and all nine declared frozen
-canonical episodes are complete. No training extension or new algorithm trial
-is allocated. Original checkpoints, failure evidence and videos remain retained.
+canonical episodes are complete. That protocol allocates no further training or
+new algorithm trial. Original artifacts remain retained. The owner later
+authorized a separate [two-hour SMG1-only continuation](smg1-six-two-hour.md),
+which does not change these results or reopen their budgets.
 
 The owner subsequently requested a separate
 [frozen stochastic execution comparison](stochastic-iqn-evaluation.md), now also

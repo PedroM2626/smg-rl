@@ -2,6 +2,7 @@
 
 import json
 from collections import deque
+from copy import deepcopy
 
 import numpy as np
 
@@ -158,6 +159,34 @@ class PrioritizedFrames:
             np.savez_compressed(stream, metadata=np.asarray(json.dumps(metadata)),
                 frames=self.frames[:used], frame_ids=self.frame_ids[:used], previous=self.previous[:used],
                 tree=self.tree, minimum=self.minimum, **self.arrays)
+
+    def expanded_workers(self, workers):
+        """Explicitly grow a flushed collector layout without changing experience.
+
+        Frame IDs survive ring wrap; copying physical offsets into a larger ring
+        would corrupt their modulo mapping. Remap every retained generation and
+        its previous-frame ID. Model/replay counters, priorities and RNG survive.
+        """
+        if type(workers) is not int or workers <= self.workers or any(self.pending):
+            raise ValueError('Worker expansion requires a larger integer count and flushed collector cuts.')
+        result = type(self)(self.capacity, self.image_size, self.stack, workers,
+                            self.n_step, self.gamma, self.alpha)
+        slots = np.flatnonzero(self.frame_ids >= 0)
+        targets = self.frame_ids[slots] % result.frame_capacity
+        if len(np.unique(targets)) != len(targets):
+            raise ValueError('Retained frame generations collide in the expanded ring.')
+        for start in range(0, len(slots), 4096):
+            source, target = slots[start:start + 4096], targets[start:start + 4096]
+            result.frames[target] = self.frames[source]
+            result.frame_ids[target] = self.frame_ids[source]
+            result.previous[target] = self.previous[source]
+        for key, array in self.arrays.items():
+            result.arrays[key][:] = array
+        result.tree[:], result.minimum[:] = self.tree, self.minimum
+        for key in ('next_frame', 'position', 'size', 'emitted', 'max_priority'):
+            setattr(result, key, getattr(self, key))
+        result.rng.bit_generator.state = deepcopy(self.rng.bit_generator.state)
+        return result
 
     @classmethod
     def load(cls, path, expected):

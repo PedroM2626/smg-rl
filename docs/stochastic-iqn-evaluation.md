@@ -87,5 +87,7 @@ This is a coordinate plot, not a claimed video screenshot of the historical peak
 No action-trace replay, synthetic completion or new training was used to locate it.
 
 211 portable tests and Ruff passed after the explicit stochastic mode and
-provenance fields were added. This finite comparison is closed, with no new
-training or recurring follow-up allocated.
+provenance fields were added. This finite comparison is closed and allocates no
+new training or follow-up. The later owner-requested
+[SMG1-only two-hour phase](smg1-six-two-hour.md) has separate state/budgets and
+preserves these stochastic results.

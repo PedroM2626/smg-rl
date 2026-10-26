@@ -130,7 +130,7 @@ class MetricsExporter:
             writer.close()
 
 
-def export_metrics(watch=False, max_seconds=None, interval=15):
+def export_metrics(watch=False, max_seconds=None, interval=15, training_state=STATE):
     if watch and (max_seconds is None or not np.isfinite(max_seconds) or max_seconds <= 0):
         raise ValueError('Watching requires a finite positive wall-clock budget.')
     if not np.isfinite(interval) or interval <= 0:
@@ -143,10 +143,11 @@ def export_metrics(watch=False, max_seconds=None, interval=15):
     process = psutil.Process()
     exporter.data['controller'] = {'pid': process.pid, 'created_time': process.create_time()}
     exporter.data['state'] = 'running'
+    exporter.data['training_state'] = str(training_state)
     started = time.perf_counter()
     try:
         while True:
-            training = read(STATE)
+            training = read(training_state)
             exporter.export(training)
             if (not watch or training['phase'] in ('completed', 'stopped', 'needs_review') or STOP.exists()
                     or EXPORT_STOP.exists()

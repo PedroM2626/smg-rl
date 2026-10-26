@@ -1,5 +1,9 @@
 # Documentation index
 
+The current finite allocation is [six SMG1 collectors for two hours](smg1-six-two-hour.md).
+It continues the final IQN/IMPALA checkpoint without reopening the completed
+six-hour or stochastic-evaluation budgets.
+
 Documentation describes the checked implementation, measured engineering
 validation, and an experimental protocol. A method being specified here does
 not mean its ablations or full-course learning results have been obtained.
@@ -44,7 +48,7 @@ each run's `status.json` remains the live source.
 
 ## Understand and reproduce
 
-The latest active protocol is [simple regional reward and six-hour IQN/IMPALA](simple-reward-impala.md),
+The completed six-hour protocol is [simple regional reward and IQN/IMPALA](simple-reward-impala.md),
 including the duration-neutral objective, residual encoder, gradual exploration,
 attempt axes and finite block supervisor. Earlier experiment closure statements
 refer to their own dated allocations.
