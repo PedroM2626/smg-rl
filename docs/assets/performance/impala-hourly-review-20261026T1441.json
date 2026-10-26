@@ -1,0 +1,392 @@
+{
+  "observed_at": "2026-10-26T14:42:26.912840+00:00",
+  "phase": "main_running",
+  "supervisor_alive": true,
+  "games": {
+    "smg1": {
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg1\\dqn-20261026-105502-946113",
+      "job_alive": true,
+      "controller_alive": true,
+      "updated_at": "2026-10-26T14:42:22.883328+00:00",
+      "real": 51790,
+      "updates": 12435,
+      "targets": 24,
+      "epsilon": 0.552322,
+      "decisions_per_second": 13.025689647280156,
+      "attempts": 472,
+      "error": null,
+      "elapsed_this_block": 2839.9264071,
+      "already_reviewed_training_seconds": 1157.4766218000004,
+      "HP_lost_this_block": 0,
+      "groups": {
+        "sweet_sweet/curriculum": {
+          "completed": 236,
+          "deaths": 202,
+          "timeouts": 34,
+          "stars": 0,
+          "best_opening_percent": 32.47927986711083,
+          "recent_mean_opening_percent": 2.2644708776654623,
+          "recent_nonzero_attempts": 36
+        },
+        "sweet_sweet/full_start": {
+          "completed": 236,
+          "deaths": 182,
+          "timeouts": 54,
+          "stars": 0,
+          "best_opening_percent": 37.46312680438354,
+          "recent_mean_opening_percent": 7.6047165709612505,
+          "recent_nonzero_attempts": 80
+        }
+      },
+      "q": {
+        "learning/q_mean": -1.5014731884002686,
+        "learning/q_max": -1.2701637744903564,
+        "learning/loss": 0.18688085675239563,
+        "learning/gradient_norm": 1.602332592010498
+      },
+      "actions": {
+        "none": 0.14165225625038147,
+        "d": 0.10350886732339859,
+        "a": 0.1114024668931961,
+        "w": 0.09972426295280457,
+        "s": 0.12267517298460007,
+        "jump": 0.13146086037158966,
+        "spin": 0.180660679936409,
+        "crouch": 0.10891544073820114
+      },
+      "checkpoints": [
+        {
+          "label": "health",
+          "agent_valid": true,
+          "replay_valid": true,
+          "real_decisions": 3072
+        },
+        {
+          "label": "block01",
+          "agent_valid": true,
+          "replay_valid": true,
+          "real_decisions": 14798
+        }
+      ],
+      "stderr_tail": "",
+      "active_attempts": [
+        {
+          "variation": "sweet_sweet",
+          "start_kind": "curriculum",
+          "worker_episode": 161,
+          "episode_step": 87,
+          "start_relative_route_progress": 0.0,
+          "dead": false,
+          "complete": false
+        },
+        {
+          "variation": "sweet_sweet",
+          "start_kind": "curriculum",
+          "worker_episode": 163,
+          "episode_step": 26,
+          "start_relative_route_progress": 0.0,
+          "dead": false,
+          "complete": false
+        }
+      ],
+      "real_replay_pending": 4
+    },
+    "smg2": {
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg2\\dqn-20261026-105503-431010",
+      "job_alive": true,
+      "controller_alive": true,
+      "updated_at": "2026-10-26T14:42:18.639978+00:00",
+      "real": 88968,
+      "updates": 21729,
+      "targets": 43,
+      "epsilon": 0.60886,
+      "decisions_per_second": 22.66367199212533,
+      "attempts": 741,
+      "error": null,
+      "elapsed_this_block": 2835.1981100999983,
+      "already_reviewed_training_seconds": 1219.9940488999964,
+      "HP_lost_this_block": 0,
+      "groups": {
+        "spinning/curriculum": {
+          "completed": 188,
+          "deaths": 184,
+          "timeouts": 4,
+          "stars": 0,
+          "best_opening_percent": 49.94540259469419,
+          "recent_mean_opening_percent": 7.865080314168139,
+          "recent_nonzero_attempts": 63
+        },
+        "double_time/full_start": {
+          "completed": 185,
+          "deaths": 156,
+          "timeouts": 29,
+          "stars": 0,
+          "best_opening_percent": 52.29040925007708,
+          "recent_mean_opening_percent": 23.402319298120343,
+          "recent_nonzero_attempts": 88
+        },
+        "spinning/full_start": {
+          "completed": 209,
+          "deaths": 174,
+          "timeouts": 35,
+          "stars": 0,
+          "best_opening_percent": 100.0,
+          "recent_mean_opening_percent": 26.576348083920777,
+          "recent_nonzero_attempts": 93
+        },
+        "double_time/curriculum": {
+          "completed": 159,
+          "deaths": 136,
+          "timeouts": 23,
+          "stars": 0,
+          "best_opening_percent": 44.586951629303215,
+          "recent_mean_opening_percent": 10.160558726476763,
+          "recent_nonzero_attempts": 95
+        }
+      },
+      "q": {
+        "learning/q_mean": -1.50226628780365,
+        "learning/q_max": -0.8718812465667725,
+        "learning/loss": 0.22207367420196533,
+        "learning/gradient_norm": 1.829925775527954
+      },
+      "actions": {
+        "none": 0.1634579598903656,
+        "d": 0.1122736856341362,
+        "a": 0.123093381524086,
+        "w": 0.1150483638048172,
+        "s": 0.0979042649269104,
+        "jump": 0.1016555055975914,
+        "spin": 0.147414430975914,
+        "crouch": 0.1391524076461792
+      },
+      "checkpoints": [
+        {
+          "label": "health",
+          "agent_valid": true,
+          "replay_valid": true,
+          "real_decisions": 6144
+        },
+        {
+          "label": "block01",
+          "agent_valid": true,
+          "replay_valid": true,
+          "real_decisions": 24712
+        }
+      ],
+      "stderr_tail": "",
+      "active_attempts": [
+        {
+          "variation": "spinning",
+          "start_kind": "full_start",
+          "worker_episode": 123,
+          "episode_step": 38,
+          "start_relative_route_progress": 0.0,
+          "dead": false,
+          "complete": false
+        },
+        {
+          "variation": "double_time",
+          "start_kind": "full_start",
+          "worker_episode": 107,
+          "episode_step": 277,
+          "start_relative_route_progress": 0.1781680168325334,
+          "dead": false,
+          "complete": false
+        },
+        {
+          "variation": "spinning",
+          "start_kind": "curriculum",
+          "worker_episode": 118,
+          "episode_step": 34,
+          "start_relative_route_progress": 0.16046012261693773,
+          "dead": false,
+          "complete": false
+        },
+        {
+          "variation": "double_time",
+          "start_kind": "full_start",
+          "worker_episode": 109,
+          "episode_step": 138,
+          "start_relative_route_progress": 0.15547691461047966,
+          "dead": false,
+          "complete": false
+        }
+      ],
+      "real_replay_pending": 8
+    }
+  },
+  "resources": {
+    "available_ram_gib": 3.938526153564453,
+    "cpu_percent": 67.0
+  },
+  "emulators": [
+    {
+      "pid": 7964,
+      "created_time": 1793022911.6342707
+    },
+    {
+      "pid": 10580,
+      "created_time": 1793022911.043738
+    },
+    {
+      "pid": 20200,
+      "created_time": 1793022916.8211348
+    },
+    {
+      "pid": 22348,
+      "created_time": 1793022905.9464235
+    },
+    {
+      "pid": 33040,
+      "created_time": 1793022906.5732412
+    },
+    {
+      "pid": 33364,
+      "created_time": 1793022921.91112
+    }
+  ],
+  "telemetry": {
+    "state": "running",
+    "updated_at": 1793025745.3990724,
+    "exported_attempts": 1213,
+    "error": null,
+    "controller": {
+      "pid": 16704,
+      "created_time": 1793023236.7606833
+    }
+  },
+  "canonical_collection_traces": {
+    "sweet_sweet": {
+      "best": {
+        "mission": "sweet_sweet",
+        "start_kind": "full_start",
+        "attempt": 114,
+        "worker": 1,
+        "worker_episode": 37,
+        "real_decisions": 22640,
+        "optimizer_updates": 5147,
+        "ram_star": false,
+        "dead": false,
+        "opening_advance": 0.3746312680438354,
+        "return": -1.6253687319561645,
+        "decisions": 342,
+        "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg1\\dqn-20261026-105502-946113"
+      },
+      "csv": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg1\\dqn-20261026-105502-946113\\worker-01\\sweet_sweet\\episode-000037.csv",
+      "opening_exit_confirmed": false,
+      "credited_samples": 18,
+      "all_credit_grounded": true,
+      "last_outcome": "timeout",
+      "last_scene": "0x806A1BD0",
+      "star": "False",
+      "arc_fraction": 0.3746312680438354,
+      "first50_mean": 0.13911990523845502,
+      "latest50_mean": 0.057362491798799195,
+      "latest100_returns_mean": -1.926018077752862,
+      "best_action_counts": {
+        "w": 38,
+        "d": 42,
+        "a": 45,
+        "crouch": 47,
+        "s": 45,
+        "spin": 48,
+        "none": 41,
+        "jump": 36
+      }
+    },
+    "spinning": {
+      "best": {
+        "mission": "spinning",
+        "start_kind": "full_start",
+        "attempt": 158,
+        "worker": 0,
+        "worker_episode": 72,
+        "real_decisions": 55028,
+        "optimizer_updates": 13243,
+        "ram_star": false,
+        "dead": true,
+        "opening_advance": 1.0,
+        "return": -1.0,
+        "decisions": 273,
+        "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg2\\dqn-20261026-105503-431010"
+      },
+      "csv": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg2\\dqn-20261026-105503-431010\\worker-00\\spinning\\episode-000072.csv",
+      "opening_exit_confirmed": true,
+      "credited_samples": 33,
+      "all_credit_grounded": true,
+      "last_outcome": "death",
+      "last_scene": "0x807D5320",
+      "star": "False",
+      "arc_fraction": 1.0,
+      "first50_mean": 0.15697868845623492,
+      "latest50_mean": 0.21641974417712256,
+      "latest100_returns_mean": -1.732084575389838,
+      "best_action_counts": {
+        "none": 46,
+        "d": 31,
+        "s": 28,
+        "crouch": 28,
+        "spin": 29,
+        "w": 45,
+        "a": 41,
+        "jump": 25
+      }
+    },
+    "double_time": {
+      "best": {
+        "mission": "double_time",
+        "start_kind": "full_start",
+        "attempt": 66,
+        "worker": 1,
+        "worker_episode": 36,
+        "real_decisions": 19816,
+        "optimizer_updates": 4440,
+        "ram_star": false,
+        "dead": true,
+        "opening_advance": 0.5229040925007709,
+        "return": -1.4770959074992291,
+        "decisions": 88,
+        "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg2\\dqn-20261026-103946-558016"
+      },
+      "csv": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg2\\dqn-20261026-103946-558016\\worker-01\\double_time\\episode-000036.csv",
+      "opening_exit_confirmed": false,
+      "credited_samples": 16,
+      "all_credit_grounded": true,
+      "last_outcome": "death",
+      "last_scene": "0x807D5310",
+      "star": "False",
+      "arc_fraction": 0.5229040925007709,
+      "first50_mean": 0.15305939319986803,
+      "latest50_mean": 0.23837337554405305,
+      "latest100_returns_mean": -1.7670983899076185,
+      "best_action_counts": {
+        "crouch": 9,
+        "jump": 10,
+        "spin": 14,
+        "w": 15,
+        "s": 8,
+        "d": 11,
+        "none": 12,
+        "a": 9
+      }
+    }
+  },
+  "decision": {
+    "continue_existing_finite_blocks": true,
+    "dispatch_or_setting_changes": false,
+    "additional_training_allocated": 0,
+    "evaluations_dispatched": 0,
+    "findings": [
+      "Spinning canonical exploratory attempt158 crossed the entire short mapped opening with grounded credit and confirmed exit, then died; no RAM star.",
+      "Its epsilon was approximately0.762 at collection; this does not establish learned navigation.",
+      "SMG1 canonical recent50 mean opening advance was lower than its first50 (5.74% versus13.91%). Its best37.46% is a collection maximum, not a frozen result.",
+      "No action collapse, nonfinite loss/Q/gradient, runtime error, stale status or checkpoint hash failure was observed.",
+      "Keep the predeclared schedule unchanged; recheck SMG1 stall and action/Q calibration at the next hourly review, without silent objective changes."
+    ],
+    "hypotheses_not_conclusions": [
+      "SMG1 dense credit remains restricted to a short grounded route and requires a specific directional sequence.",
+      "Lower epsilon changes the exploration distribution; first/latest collection averages are not controlled policy evaluations."
+    ]
+  }
+}

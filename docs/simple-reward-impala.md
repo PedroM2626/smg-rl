@@ -113,8 +113,9 @@ Existing curated start banks and their 50% mixture remain signed and unchanged.
    Every block closes its owned emulators, flushes pending replay, saves a new
    immutable checkpoint and passes a mechanical accounting/reward review before
    its successor. All main blocks resume only their own new branch.
-4. Total training wall budget is21600 seconds per game, including health/startup
-   time but excluding checkpoint/review/resume overhead. Independent absolute
+4. Total accounted training wall budget is21600 seconds per game, including
+   health/startup and the close/checkpoint time included in final run status.
+   Separate inter-block review/resume overhead is outside that counter. Independent absolute
    real-decision safety caps are500000 SMG1 and1000000 SMG2 aggregate. These are
    ceilings, not targets or permission to exceed six hours. The earlier boundary
    wins. Errors, owner stop or integrity failures stop successors, retaining
@@ -251,3 +252,42 @@ confirms that the running TensorBoard server actually serves the new scalars.
 # Explicit finite watcher, already running for the current trial.
 .venv\Scripts\python.exe scripts/export_training_metrics.py --watch --max-seconds 25200 --interval 15
 ```
+
+## First hourly review: October26,11:42 America/Sao_Paulo
+
+The [read-only review](assets/performance/impala-hourly-review-20261026T1441.json)
+confirmed six owned emulators, actual live supervisor/controller creation times,
+fresh statuses, empty current error logs, finite optimization/Q metrics and valid
+agent/replay hashes for both completed blocks in each game. The current one-hour
+blocks were still running; no successor, evaluation or settings change was
+dispatched by this review. Pending real/replay differences were the expected
+four/eight n-step decisions, not rejected experience. The telemetry exporter was
+healthy with1213 completed attempts exported across both games.
+
+| Game | Real decisions | Optimizer updates | Completed attempts | Current epsilon |
+| --- | ---: | ---: | ---: | ---: |
+| SMG1 |51790|12435|472|0.5523|
+| SMG2, aggregate |88968|21729|741|0.6089|
+
+No RAM stars occurred. Canonical collection maxima were37.46% Sweet Sweet,
+100% Spinning and52.29% Double Time **of the short mapped openings only**.
+Spinning full-start attempt158, worker00 episode72 at real decision55028,
+confirmed the opening exit with33 grounded credited samples, then died after273
+decisions. Its exploration epsilon was approximately0.762. This verifies a real
+exploratory route traversal, not a learned full-course solution or a frozen
+policy improvement. The exact CSV, actor-update age, actions and RAM scene are
+retained in the evidence.
+
+SMG1 needs continued scrutiny: canonical mean opening advance in the latest50
+completed attempts was5.74%, versus13.91% in the first50. Its single best trace
+does not establish sustained improvement. SMG2's corresponding first/latest50
+means were15.70/21.64% Spinning and15.31/23.84% Double Time. These changing-policy,
+changing-epsilon collection averages are not a controlled efficacy comparison.
+No action occupied more than19% of the current-block aggregate choices, but
+high remaining epsilon can mask a weak greedy policy. Logged Q means were near
+-1.50 in both games, with finite losses/gradients rather than a numerical blow-up.
+
+The decision is to retain the existing finite budget and inspect the SMG1 stall,
+action/Q calibration and route coverage again after further allocated data.
+No extra fitting, genetic run, reward changes or early evaluation was authorized
+by this review. Health/data integrity is distinct from useful policy learning.
