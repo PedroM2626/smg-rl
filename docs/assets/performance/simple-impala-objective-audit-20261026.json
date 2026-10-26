@@ -1,0 +1,56 @@
+{
+  "scope": "Analytic controls and random-pixel runtime diagnostic; no game learning or efficacy ranking.",
+  "failure_returns": [
+    {
+      "failure_decisions": 1,
+      "old_discounted_return_no_progress": -2.001,
+      "new_return_no_progress": -2.0,
+      "new_return_half_opening": -1.5
+    },
+    {
+      "failure_decisions": 14,
+      "old_discounted_return_no_progress": -1.937118920341447,
+      "new_return_no_progress": -2.0,
+      "new_return_half_opening": -1.5
+    },
+    {
+      "failure_decisions": 180,
+      "old_discounted_return_no_progress": -1.3072966186512682,
+      "new_return_no_progress": -2.0,
+      "new_return_half_opening": -1.5
+    },
+    {
+      "failure_decisions": 3000,
+      "old_discounted_return_no_progress": -0.3335369854952587,
+      "new_return_no_progress": -2.0,
+      "new_return_half_opening": -1.5
+    }
+  ],
+  "credit_controls": {
+    "stationary": 0.0,
+    "revisit": 0.2,
+    "assisted_stationary": 0.0,
+    "assisted_advance": 0.4
+  },
+  "encoder_cost": {
+    "nature": {
+      "parameters": 2779314,
+      "synthetic_forward_backward_batch32_median_ms": 2.371250000578584,
+      "inference_batch2_median_ms": 0.6389499994838843
+    },
+    "impala": {
+      "parameters": 2664370,
+      "synthetic_forward_backward_batch32_median_ms": 10.264700000334415,
+      "inference_batch2_median_ms": 1.32205000227259
+    }
+  },
+  "device": "cuda",
+  "choice": "Fresh IQN with original IMPALA-style residual encoder, simple advance reward and gradual exploration.",
+  "genetic_assessment": "Not selected: no local evidence of superior learning; population rollouts multiply the emulator cost. No GA experiment was run.",
+  "limitations": [
+    "Duration neutrality does not force movement.",
+    "Route maps cover verified openings only.",
+    "Gamma1 is finite-episode undiscounted Q-learning, not a full BTR reproduction.",
+    "Multiple deliberate changes form a new intervention, not an attribution ablation."
+  ]
+}

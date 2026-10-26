@@ -1,6 +1,12 @@
 # Methodology and mathematical specification
 
-**Current environment revision (October 25, 2026):** the latest regional profiles
+**Latest revision (October 26, 2026):** the active
+[simple-reward IQN/IMPALA protocol](simple-reward-impala.md) specifies the
+undiscounted incremental high-water reward, residual visual encoder and
+attempt/decision metrics. Those equations apply only to the new signed profiles;
+the earlier equations below retain their historical meaning and checkpoints.
+
+**Regional revision (October 25, 2026):** the regional profiles
 use [ordered grounded potential shaping, curated resets and frame-based termination](regional-intervention.md).
 Those equations supersede the historical novelty/projection objective below only
 for the new signed configurations. The finite intervention is complete; no extra

@@ -1,5 +1,22 @@
 # Command-line reference
 
+The current CLI default is `config/impala-iqn-smg2.yaml`. The finite
+[IQN/IMPALA protocol](simple-reward-impala.md) owns the current six collectors;
+do not launch these example commands in addition to an active supervisor.
+
+```powershell
+# Read-only view of actual owned runs, attempts and bounded budgets.
+.venv\Scripts\python.exe scripts/run_impala_trial.py snapshot
+
+# Explicit standalone finite example, only when no current owned collector runs.
+.venv\Scripts\python.exe -m smg_rl.cli --config config/impala-iqn-smg1.yaml train-dqn --steps 3072 --max-seconds 900
+```
+
+`--max-seconds` stops collection at the earlier wall/decision boundary, then
+closes emulators and saves the final immutable checkpoint. Boot time is included;
+close/checkpoint overhead may finish afterward. Attempts persist on resume.
+Historical profiles retain their original reward/encoder settings.
+
 Run from the repository root using `.\.venv\Scripts\smg-rl.exe` or
 `.\.venv\Scripts\python.exe -m smg_rl.cli`. The optional global argument
 `--config PATH` goes before the subcommand and defaults to `config/iqn-smg2.yaml`

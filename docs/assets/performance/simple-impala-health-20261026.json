@@ -1,0 +1,252 @@
+{
+  "scope": "Actual-game health blocks; collection maxima include random warmup, not frozen-policy results.",
+  "games": {
+    "smg1": {
+      "passed": true,
+      "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg1\\dqn-20261026-103259-101525\\checkpoint-final",
+      "agent_sha256": "9427dd65678c1b97c97bdd49b6dcbe24898c691aeb36682a83fc88382f25d6bf",
+      "real_decisions": 3072,
+      "completed_attempts": 35,
+      "elapsed_seconds": 251.97437910000008,
+      "decisions_per_second": 12.19171572511675,
+      "best_collection": {
+        "sweet_sweet/curriculum": {
+          "opening_advance": 0.20585212380284218,
+          "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg1\\dqn-20261026-103259-101525\\worker-00\\sweet_sweet\\episode-000006.csv",
+          "outcome": "death"
+        },
+        "sweet_sweet/full_start": {
+          "opening_advance": 0.26148844392468956,
+          "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg1\\dqn-20261026-103259-101525\\worker-01\\sweet_sweet\\episode-000005.csv",
+          "outcome": "death"
+        }
+      },
+      "actions": {
+        "w": 363,
+        "d": 367,
+        "none": 412,
+        "spin": 430,
+        "jump": 389,
+        "a": 378,
+        "s": 380,
+        "crouch": 353
+      },
+      "attempts": {
+        "sweet_sweet/curriculum": {
+          "completed": 18,
+          "ram_stars": 0,
+          "deaths": 17,
+          "timeouts": 1,
+          "best_opening_advance": 0.20585212380284218,
+          "recent_opening_advances": [
+            0.0,
+            0.0,
+            0.0,
+            0.17933031948291034,
+            0.0,
+            0.0,
+            0.0,
+            0.20585212380284218,
+            0.13162382641169762,
+            0.0,
+            0.1271302792074229,
+            0.0,
+            0.0020279885518992846,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "sweet_sweet/full_start": {
+          "completed": 17,
+          "ram_stars": 0,
+          "deaths": 15,
+          "timeouts": 2,
+          "best_opening_advance": 0.26148844392468956,
+          "recent_opening_advances": [
+            0.10207610361193831,
+            0.057139049349613065,
+            0.010534196124460007,
+            0.08384739926961528,
+            0.0,
+            0.26148844392468956,
+            0.2050272286084775,
+            0.15602778170440865,
+            0.007290396638424858,
+            0.17276853579778526,
+            0.006537547213322529,
+            0.1945802300601971,
+            0.23742327037371289,
+            0.0,
+            0.0,
+            0.13155213600445964,
+            0.0
+          ]
+        }
+      },
+      "reason": "Finite metrics, exact real/replay/attempt counts, signed artifacts and simple reward controls passed.",
+      "note": "Collection maxima include random exploration. Opening fractions are not mission percentages."
+    },
+    "smg2": {
+      "passed": true,
+      "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg2\\dqn-20261026-103259-126874\\checkpoint-final",
+      "agent_sha256": "b5220402565ac75bb76855ef0f229980860f7db489e7038ae02b185ed881fb43",
+      "real_decisions": 6144,
+      "completed_attempts": 78,
+      "elapsed_seconds": 312.6880581999976,
+      "decisions_per_second": 19.64897551690398,
+      "best_collection": {
+        "spinning/full_start": {
+          "opening_advance": 0.5185512486547575,
+          "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg2\\dqn-20261026-103259-126874\\worker-02\\spinning\\episode-000007.csv",
+          "outcome": "death"
+        },
+        "spinning/curriculum": {
+          "opening_advance": 0.2826265270533238,
+          "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg2\\dqn-20261026-103259-126874\\worker-02\\spinning\\episode-000020.csv",
+          "outcome": "death"
+        },
+        "double_time/full_start": {
+          "opening_advance": 0.5225690955517706,
+          "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg2\\dqn-20261026-103259-126874\\worker-01\\double_time\\episode-000010.csv",
+          "outcome": "death"
+        },
+        "double_time/curriculum": {
+          "opening_advance": 0.24081212726569876,
+          "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg2\\dqn-20261026-103259-126874\\worker-01\\double_time\\episode-000008.csv",
+          "outcome": "death"
+        }
+      },
+      "actions": {
+        "d": 769,
+        "s": 755,
+        "none": 778,
+        "crouch": 798,
+        "spin": 709,
+        "w": 762,
+        "jump": 767,
+        "a": 806
+      },
+      "attempts": {
+        "spinning/curriculum": {
+          "completed": 20,
+          "ram_stars": 0,
+          "deaths": 20,
+          "timeouts": 0,
+          "best_opening_advance": 0.2826265270533238,
+          "recent_opening_advances": [
+            0.0,
+            0.14617909187652633,
+            0.0796066107592196,
+            0.0,
+            0.0,
+            0.01124846486804909,
+            0.0,
+            0.002429744676594292,
+            0.0,
+            0.040421305186436496,
+            0.044996974776013166,
+            0.0,
+            0.02418331295549092,
+            0.0,
+            0.007092050060885646,
+            0.1157759439046313,
+            0.2826265270533238,
+            0.0006106076507932379,
+            0.015146994585466117,
+            0.042725572502736786
+          ]
+        },
+        "double_time/full_start": {
+          "completed": 23,
+          "ram_stars": 0,
+          "deaths": 23,
+          "timeouts": 0,
+          "best_opening_advance": 0.5225690955517706,
+          "recent_opening_advances": [
+            0.0,
+            0.058876312940503425,
+            0.39819289555319115,
+            0.4268433205328722,
+            0.0,
+            0.13011761755877574,
+            8.092465552362696e-07,
+            0.10364633792800834,
+            0.006542431587976395,
+            0.1227659238531293,
+            0.0,
+            0.21877055045064997,
+            0.5225690955517706,
+            0.195492363196423,
+            0.1766509129779717,
+            0.08832768969822961,
+            0.3007650221390824,
+            0.0,
+            0.005042212974038387,
+            0.0,
+            0.3610239211473817,
+            0.33924870705786725,
+            0.07544801721133049
+          ]
+        },
+        "spinning/full_start": {
+          "completed": 26,
+          "ram_stars": 0,
+          "deaths": 26,
+          "timeouts": 0,
+          "best_opening_advance": 0.5185512486547575,
+          "recent_opening_advances": [
+            0.1440433112492696,
+            0.011808323422368837,
+            0.20944952412796855,
+            0.5185512486547575,
+            0.0,
+            0.0,
+            0.08988110071074065,
+            0.023605628641639457,
+            0.10554104867519028,
+            0.0,
+            0.10485239541911798,
+            0.03770411981532694,
+            0.05274689278193887,
+            0.3717453330714657,
+            0.04727789562461587,
+            0.3715066364625385,
+            0.16425685845516622,
+            0.3315564217082858,
+            0.16926813331090057,
+            0.14187620344286503,
+            0.0,
+            0.3433830621151837,
+            0.22663596398514232,
+            0.4055372126652379,
+            0.45878141858023697,
+            0.33539046848144083
+          ]
+        },
+        "double_time/curriculum": {
+          "completed": 9,
+          "ram_stars": 0,
+          "deaths": 9,
+          "timeouts": 0,
+          "best_opening_advance": 0.24081212726569876,
+          "recent_opening_advances": [
+            0.0071204048151863875,
+            0.04436157335118318,
+            0.008474165365060404,
+            0.24081212726569876,
+            0.028739426538323398,
+            0.06665237865220253,
+            0.07901808620192408,
+            0.005214395741098679,
+            0.004101572790612518
+          ]
+        }
+      },
+      "reason": "Finite metrics, exact real/replay/attempt counts, signed artifacts and simple reward controls passed.",
+      "note": "Collection maxima include random exploration. Opening fractions are not mission percentages."
+    }
+  }
+}

@@ -1,5 +1,13 @@
 # Local validation report
 
+**October 26 IQN/IMPALA revision:**199 portable tests and Ruff passed. Analytic
+controls establish equal -2 no-progress failure returns across episode durations,
+one-time route credit and assisted-start baselines. Both actual-game health
+blocks passed exact frame/replay/attempt/reward and immutable-checkpoint audits:
+3072 SMG1 decisions/35 attempts and6144 SMG2 decisions/78 attempts. No RAM star
+occurred; health maxima include random exploration. See the
+[protocol and evidence](simple-reward-impala.md#initial-actual-game-review).
+
 This is a chronological engineering evidence register. Earlier test counts and
 throughput values describe their respective revisions, rather than current
 performance guarantees. The [background report](background-training.md) records

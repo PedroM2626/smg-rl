@@ -44,6 +44,11 @@ each run's `status.json` remains the live source.
 
 ## Understand and reproduce
 
+The latest active protocol is [simple regional reward and six-hour IQN/IMPALA](simple-reward-impala.md),
+including the duration-neutral objective, residual encoder, gradual exploration,
+attempt axes and finite block supervisor. Earlier experiment closure statements
+refer to their own dated allocations.
+
 | Need | Document |
 | --- | --- |
 | POMDP, action/observation spaces, reward equations, novelty, PPO, and limitations | [Methodology](methodology.md) |

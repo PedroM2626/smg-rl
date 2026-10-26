@@ -35,6 +35,27 @@ class NoisyLinear(nn.Module):
         return F.linear(inputs, weight, bias)
 
 
+class ResidualBlock(nn.Module):
+    """Original implementation of the two-convolution IMPALA residual unit."""
+
+    def __init__(self, channels):
+        super().__init__()
+        self.layers = nn.Sequential(nn.ReLU(), nn.Conv2d(channels, channels, 3, padding=1),
+                                    nn.ReLU(), nn.Conv2d(channels, channels, 3, padding=1))
+
+    def forward(self, inputs):
+        return inputs + self.layers(inputs)
+
+
+def impala_encoder(stack, channels):
+    layers = []
+    for output in (channels, channels * 2, channels * 2):
+        layers.extend([nn.Conv2d(stack, output, 3, padding=1), nn.MaxPool2d(3, 2, padding=1),
+                       ResidualBlock(output), ResidualBlock(output)])
+        stack = output
+    return nn.Sequential(*layers, nn.ReLU(), nn.AdaptiveMaxPool2d((6, 6)), nn.Flatten())
+
+
 class DistributionalQ(nn.Module):
     def __init__(self, signature, settings):
         super().__init__()
@@ -47,9 +68,12 @@ class DistributionalQ(nn.Module):
         size, stack = signature['image_size'], settings['frame_stack']
         if min(hidden, channels, stack) < 1 or size < 40 or self.atoms < 2:
             raise ValueError('Invalid distributional image/network dimensions.')
-        self.conv = nn.Sequential(nn.Conv2d(stack, channels, 8, 4), nn.ReLU(),
-            nn.Conv2d(channels, channels * 2, 4, 2), nn.ReLU(),
-            nn.Conv2d(channels * 2, channels * 2, 3, 1), nn.ReLU(), nn.Flatten())
+        encoder = settings.get('encoder', 'nature')
+        if encoder not in ('nature', 'impala'):
+            raise ValueError('Choose a known visual encoder explicitly.')
+        self.conv = (impala_encoder(stack, channels) if encoder == 'impala' else nn.Sequential(
+            nn.Conv2d(stack, channels, 8, 4), nn.ReLU(), nn.Conv2d(channels, channels * 2, 4, 2), nn.ReLU(),
+            nn.Conv2d(channels * 2, channels * 2, 3, 1), nn.ReLU(), nn.Flatten()))
         with torch.no_grad():
             features = self.conv(torch.zeros(1, stack, size, size)).shape[-1]
         self.encode = nn.Sequential(nn.Linear(features, hidden), nn.ReLU())

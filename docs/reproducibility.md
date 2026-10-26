@@ -4,6 +4,7 @@
 
 | Question | Document |
 | --- | --- |
+| Current simple reward, IQN/IMPALA, attempt axes and six-hour bounded supervisor | [Simple reward and IMPALA](simple-reward-impala.md) |
 | Install and basic commands | [README](../README.md) |
 | Native frame bridge, profiling, build provenance, and measured acceleration | [Native backend](native-backend.md) |
 | Current protocol, batched optimizer, reward revision, and measured tradeoffs | [Optimization audit](optimization-v2.md) |

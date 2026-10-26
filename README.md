@@ -3,13 +3,27 @@
 Visual reinforcement learning for **Super Mario Galaxy 1 and 2** in
 Dolphin on Windows.
 
-**Current algorithm (October 26):** [pure model-free Rainbow and IQN](docs/model-free.md)
-replace the active RSSM learner. Both use real-pixel frame stacks and prioritized
-replay, with zero imagined transitions. Both completed 8192 real decisions per
+**Current intervention (October 26):** [simple reward + IQN/IMPALA](docs/simple-reward-impala.md)
+starts fresh after the owner requested correcting the idle incentive before a
+six-hour trial. The finite episodic reward pays new grounded route advance,
+RAM stars and failure/HP penalties, with gamma1 and no time cost. A residual
+visual encoder and gradual exploration replace the archived pilot settings.
+Six collectors share two game policies. Attempts, rolling progress and decisions
+are tracked separately; safe intermediate starts never establish full-start
+success. Health blocks must pass before reviewed15/60-minute blocks, with a
+six-hour-per-game ceiling and immutable checkpoints. Local live authority is
+`.local/impala-six-hour-state.json`; the CLI defaults to
+`config/impala-iqn-smg2.yaml` (`impala-iqn-smg1.yaml` for SMG1).
+[TensorBoard](http://127.0.0.1:6006/) includes both decision and attempt axes.
+No genetic advantage or learned completion is claimed from this selection.
+
+**Completed model-free comparison:** [Rainbow and IQN](docs/model-free.md)
+used real-pixel frame stacks and prioritized replay, with zero imagined
+transitions. Both completed 8192 real decisions per
 mission and nine frozen evaluations each, without a star. IQN ran faster in this
 trial but also mostly spun/idled; no navigation or sample-efficiency advantage
-was demonstrated. All training/evaluation jobs are stopped and the follow-up
-is retired. [Frozen paths and action occupancy](docs/assets/performance/model-free-comparison-20261026.png)
+was demonstrated. Those comparison jobs stopped and their follow-up retired.
+[Frozen paths and action occupancy](docs/assets/performance/model-free-comparison-20261026.png)
 show the actual behavior.
 [TensorBoard](http://127.0.0.1:6006/) is installed, logging and served locally.
 
@@ -51,16 +65,15 @@ still failed; SMG2 reached its 6096-decision cap and completed bounded evaluatio
 **Current owner-selected controls:** [exactly eight exclusive actions in both games](docs/motor8-and-algorithms.md),
 with a video inset of the actual policy image and live applied-button indicators.
 The closed bounded motor8 pilot superseded the remaining legacy54/motor16 stages;
-old checkpoints and their historical profiles are retained. The CLI now defaults to
-`config/regional-smg2-12.yaml`; use `config/regional-smg1-12.yaml` for the new
-SMG1 reward/curriculum profile. Both retain eight physically exclusive legacy
+old checkpoints and their historical profiles are retained. Historical regional
+RSSM profiles are `config/regional-smg2-12.yaml` and
+`config/regional-smg1-12.yaml`. Both retain eight physically exclusive legacy
 twelve-frame controls. Experimental frame4 profiles additionally test carried
 jump direction: eight logical labels, with direction+jump as an explicitly
 declared physical combination. The historical Galaxy 1 pilot uses
 `config/motor8-smg1.yaml`, while the new repaired checkpoint requires
-`config/motor8-smg1-boundary-repaired.yaml`. Rainbow DQN is
-assessed as a separate future baseline, not an unverified replacement of the
-active world-model learner.
+`config/motor8-smg1-boundary-repaired.yaml`. The later model-free comparison and
+current IQN/IMPALA intervention have separate profiles and replay identities.
 
 **Earlier October 25 intervention (superseded):** [reviewed motor and exploration experiments](docs/exploration-interventions.md)
 implement a versioned 16-action profile, exact button releases, RAM ground contact

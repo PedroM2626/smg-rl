@@ -16,7 +16,7 @@ def main():
     parser = argparse.ArgumentParser(
         description="Visual reinforcement learning and game telemetry validation in Dolphin."
     )
-    parser.add_argument("--config", default="config/iqn-smg2.yaml")
+    parser.add_argument("--config", default="config/impala-iqn-smg2.yaml")
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser(
         "prepare", help="Create an isolated Dolphin profile and copy local savestates."
@@ -54,6 +54,7 @@ def main():
     supervised.add_argument("--resume")
     dqn = commands.add_parser('train-dqn', help='Finite model-free Rainbow/IQN training with TensorBoard.')
     dqn.add_argument('--steps', type=int)
+    dqn.add_argument('--max-seconds', type=float, help='Stop and checkpoint at this finite wall-clock budget.')
     dqn.add_argument('--resume', help='Immutable model-free checkpoint directory, including replay.')
     q_video = commands.add_parser('record-dqn', help='Finite canonical-start Rainbow/IQN Q-value/input video.')
     q_video.add_argument('checkpoint')
@@ -116,7 +117,8 @@ def main():
     if args.command == 'train-dqn':
         from smg_rl.dqn_training import train_dqn
 
-        print(train_dqn(config, args.steps if args.steps is not None else config['training']['steps'], args.resume))
+        print(train_dqn(config, args.steps if args.steps is not None else config['training']['steps'],
+                        args.resume, args.max_seconds))
         return
     if args.command == "test-world-horizon":
         from smg_rl.horizon_trial import horizon_trial

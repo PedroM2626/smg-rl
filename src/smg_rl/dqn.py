@@ -23,6 +23,19 @@ class DistributionalAgent:
                                            eps=settings.get('adam_epsilon', .00015))
         self.real_decisions, self.updates, self.target_updates = 0, 0, 0
         self.rng = np.random.default_rng(seed)
+        self.attempts = {}
+
+    def epsilon(self, evaluate=False):
+        if evaluate:
+            return self.settings.get('evaluation_epsilon', 0.)
+        if self.real_decisions < self.settings['learning_starts']:
+            return 1.
+        duration = self.settings.get('epsilon_decay_decisions', 0)
+        if not duration:
+            return self.settings['epsilon']
+        fraction = min(1., (self.real_decisions - self.settings['learning_starts']) / duration)
+        start = self.settings.get('epsilon_start', 1.)
+        return start + fraction * (self.settings['epsilon'] - start)
 
     @torch.no_grad()
     def act(self, observation, evaluate=False, return_values=False):
@@ -33,8 +46,7 @@ class DistributionalAgent:
             self.online.reset_noise()
         values = self.online.expected(images, scenario, self.settings['quantiles'], deterministic=evaluate)
         actions = values.argmax(-1).cpu().numpy()
-        epsilon = self.settings.get('evaluation_epsilon', 0.) if evaluate else (1. if self.real_decisions < self.settings['learning_starts']
-                                      else self.settings['epsilon'])
+        epsilon = self.epsilon(evaluate)
         random = self.rng.random(len(actions)) < epsilon
         actions[random] = self.rng.integers(len(self.signature['action_names']), size=int(random.sum()))
         metrics = {'q_mean': float(values.mean()), 'q_max': float(values.max()), 'epsilon': epsilon}
@@ -108,7 +120,7 @@ class DistributionalAgent:
         torch.save({'online': self.online.state_dict(), 'target': self.target.state_dict(),
             'optimizer': self.optimizer.state_dict(), 'real_decisions': self.real_decisions,
             'updates': self.updates, 'target_updates': self.target_updates,
-            'torch_rng': torch.get_rng_state(), 'rng': self.rng.bit_generator.state,
+            'torch_rng': torch.get_rng_state(), 'rng': self.rng.bit_generator.state, 'attempts': self.attempts,
             'cuda_rng': torch.cuda.get_rng_state_all() if self.device.type == 'cuda' else []}, folder / 'agent.pt')
         replay.save(folder / 'replay.npz')
         atomic_json(folder / 'manifest.json', {'schema': 1, 'algorithm': self.settings['algorithm'],
@@ -132,6 +144,7 @@ class DistributionalAgent:
             data = torch.load(folder / 'agent.pt', map_location=result.device, weights_only=True)
             result.online.load_state_dict(data['online'])
             result.real_decisions, result.updates = data['real_decisions'], data['updates']
+            result.attempts = data.get('attempts', {})
         return result
 
     @classmethod
@@ -148,6 +161,7 @@ class DistributionalAgent:
         result.target.load_state_dict(data['target'])
         result.optimizer.load_state_dict(data['optimizer'])
         result.real_decisions, result.updates, result.target_updates = data['real_decisions'], data['updates'], data['target_updates']
+        result.attempts = data.get('attempts', {})
         torch.set_rng_state(data['torch_rng'].cpu())
         if data['cuda_rng'] and result.device.type == 'cuda':
             torch.cuda.set_rng_state_all([x.cpu() for x in data['cuda_rng']])

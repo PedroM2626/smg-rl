@@ -25,6 +25,41 @@ class RegionalPotential:
         return float(reward)
 
 
+class RegionalAdvance:
+    """Pay each new verified route high-water mark once, without terminal clawback.
+
+    This is a dense auxiliary objective, not policy-invariant potential shaping.
+    Duration neutrality requires the validated undiscounted, zero-step-cost profile.
+    """
+
+    def __init__(self, scale=1.0):
+        if not np.isfinite(scale) or not 0 < scale <= 5:
+            raise ValueError('Invalid regional advance scale.')
+        self.scale, self.value = scale, 0.0
+
+    def reset(self, progress):
+        if not np.isfinite(progress) or not 0 <= progress <= 1:
+            raise ValueError('Regional progress must lie in[0,1].')
+        self.value = self.scale * progress
+
+    def update(self, progress, frames, terminal=False):
+        if not isinstance(frames, int) or frames < 1 or not np.isfinite(progress) or not 0 <= progress <= 1:
+            raise ValueError('Advance needs finite progress and a positive frame count.')
+        following = max(self.value, self.scale * progress)
+        reward, self.value = following - self.value, following
+        return float(reward)
+
+
+def validate_simple_objective(settings, weights, gamma):
+    """Reject profiles that silently reintroduce delayed-failure preference."""
+    values = [weights[k] for k in ('step', 'death', 'timeout', 'completion')] + [weights.get('damage', 0.)]
+    if (not np.isfinite(values).all() or gamma != 1.0 or settings['gamma_per_frame'] != 1.0
+            or weights['step'] != 0 or weights['death'] != weights['timeout']
+            or not weights['death'] < -settings['scale']
+            or weights['completion'] <= settings['scale'] or weights.get('damage', 0.) > 0):
+        raise ValueError('Simple advance requires gamma1, zero time cost and equal bounded failure penalties.')
+
+
 class ExplorationBudget:
     """Bound per-episode novelty and fade it during a measured progress stall."""
 

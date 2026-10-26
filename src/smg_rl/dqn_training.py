@@ -39,6 +39,10 @@ def prepare_dqn(config, resume=None):
             or s['capacity'] < s['learning_starts'] or s['frame_stack'] != config['environment']['frame_stack']
             or len(action_set(config)) != 8 or config['parallel']['frame_skip'] != 12):
         raise ValueError('Invalid model-free replay/learning settings.')
+    if ('epsilon_decay_decisions' in s and (type(s['epsilon_decay_decisions']) is not int
+            or s['epsilon_decay_decisions'] < 1 or not np.isfinite(s.get('epsilon_start', 1.))
+            or not s['epsilon'] <= s.get('epsilon_start', 1.) <= 1)):
+        raise ValueError('Invalid real-decision exploration schedule.')
     parameters = {'capacity': s['capacity'], 'image_size': config['environment']['image_size'],
         'stack': s['frame_stack'], 'workers': config['parallel']['workers'],
         'n_step': s['n_step'], 'gamma': s['gamma'], 'alpha': s['alpha']}
@@ -53,20 +57,23 @@ def prepare_dqn(config, resume=None):
             PrioritizedFrames(**parameters, seed=config['training']['seed']))
 
 
-def train_dqn(config, steps, resume=None):
+def train_dqn(config, steps, resume=None, max_seconds=None):
     config = deepcopy(config)
     workers = config['parallel']['workers']
     if steps < 1 or steps % workers:
         raise ValueError('Use a finite real-decision budget divisible by the worker count.')
+    if max_seconds is not None and (not np.isfinite(max_seconds) or max_seconds <= 0):
+        raise ValueError('The optional wall-clock budget must be positive and finite.')
     agent, replay = prepare_dqn(config, resume)
     config['model_free_run'] = 'online'
     run = new_run(config, 'dqn')
     atomic_json(run / 'controller.json', {'pid': os.getpid(), 'created_time': psutil.Process().create_time(),
         'workers': workers, 'algorithm': agent.settings['algorithm'], 'resume': str(resume) if resume else None,
-        'requested_additional': steps, 'source_count': agent.real_decisions, 'target_count': agent.real_decisions + steps})
+        'requested_additional': steps, 'source_count': agent.real_decisions, 'target_count': agent.real_decisions + steps,
+        'max_seconds': max_seconds})
     print(json.dumps({'run': str(run)}), flush=True)
     config['paths']['user'] = str(runtime_directory(config, run) / 'template')
-    started, initial = time.monotonic(), agent.real_decisions
+    started, initial = time.perf_counter(), agent.real_decisions
     start_updates = agent.updates
     state, error, vector = 'running', None, None
     metrics, infos, actions_metrics = {}, (), {}
@@ -75,12 +82,14 @@ def train_dqn(config, steps, resume=None):
     logdir = Path(config['paths']['tensorboard']) / agent.settings['algorithm'] / game_id(config) / run.name
     writer = SummaryWriter(str(logdir), flush_secs=10)
     ledger = (run / 'collector-steps.jsonl').open('x', encoding='utf-8')
+    attempts_ledger = (run / 'attempts.jsonl').open('x', encoding='utf-8')
     writer.add_text('configuration', json.dumps(config, indent=2))
     writer.add_text('accounting', 'Only real emulator decisions; no world model, synthetic rollouts or imagined transitions.')
     full_stars, assisted_stars, deaths, damage, episode_counts = 0, 0, 0, 0, 0
+    stop_reason = None
 
     def publish():
-        elapsed = time.monotonic() - started
+        elapsed = time.perf_counter() - started
         record = {'state': state, 'algorithm': agent.settings['algorithm'],
             'timesteps': agent.real_decisions, 'real_decisions': agent.real_decisions,
             'requested_additional': steps, 'source_count': initial, 'target_count': initial + steps,
@@ -88,18 +97,24 @@ def train_dqn(config, steps, resume=None):
             'imagined_transitions': 0, 'sampled_transitions': agent.updates * agent.settings['batch_size'],
             'replay_transitions': replay.size, 'replay_emitted': replay.emitted,
             'replay_bytes': replay.bytes_allocated, 'elapsed_seconds': elapsed,
+            'max_seconds': max_seconds, 'stop_reason': stop_reason, 'epsilon': agent.epsilon(),
             'decisions_per_second': (agent.real_decisions - initial) / max(elapsed, 1e-6),
             'emulated_frames_per_second': 12 * (agent.real_decisions - initial) / max(elapsed, 1e-6),
             'full_start_stars_this_run': full_stars, 'assisted_stars_this_run': assisted_stars,
             'episodes_this_run': episode_counts, 'deaths_this_run': deaths, 'nonfatal_hp_lost_this_run': damage,
+            'attempts': agent.attempts,
+            'completed_attempts': sum(v['completed'] for v in agent.attempts.values()),
             'tensorboard': str(logdir), 'updated_at': datetime.now(timezone.utc).isoformat(),
             'losses': metrics, 'timings': profiler.snapshot(), 'error': error,
             'start_kinds': [i.get('start_kind') for i in infos],
             'start_relative_route_progress': [i.get('start_relative_route_progress') for i in infos],
+            'active_attempts': [{k: i.get(k) for k in ('variation', 'start_kind', 'worker_episode',
+                'episode_step', 'start_relative_route_progress', 'dead', 'complete')} for i in infos],
             'note': 'Opening route/projection values are not native mission percentage. No final-policy success claim from collection maxima.'}
         atomic_json(run / 'status.json', record)
         for tag, value in {**metrics, **actions_metrics}.items():
             writer.add_scalar(f'learning/{tag}', value, agent.real_decisions)
+        writer.add_scalar('learning/epsilon', agent.epsilon(), agent.real_decisions)
         for key in ('optimizer_updates', 'replay_transitions', 'replay_bytes', 'decisions_per_second',
                     'emulated_frames_per_second', 'full_start_stars_this_run', 'assisted_stars_this_run', 'deaths_this_run'):
             writer.add_scalar(f'training/{key}', record[key], agent.real_decisions)
@@ -121,6 +136,9 @@ def train_dqn(config, steps, resume=None):
         tick = 0
         publish()
         while agent.real_decisions < initial + steps and not (run / 'STOP').exists():
+            if max_seconds is not None and time.perf_counter() - started >= max_seconds:
+                stop_reason = 'wall_clock_budget'
+                break
             policy_updates = agent.updates
             with profiler.measure('policy_inference'):
                 actions, actions_metrics = agent.act(observation)
@@ -149,9 +167,27 @@ def train_dqn(config, steps, resume=None):
                     assisted_stars += int(bool(star) and kind != 'full_start')
                     deaths += int(info.get('dead', False))
                     episode_counts += 1
+                    key = f'{name}/{kind}'
+                    attempt = agent.attempts.setdefault(key, {'completed': 0, 'ram_stars': 0, 'deaths': 0,
+                        'timeouts': 0, 'best_opening_advance': 0., 'recent_opening_advances': []})
+                    advance = float(info.get('start_relative_route_progress', 0))
+                    attempt['completed'] += 1
+                    attempt['ram_stars'] += int(bool(star))
+                    attempt['deaths'] += int(bool(info.get('dead')))
+                    attempt['timeouts'] += int(not info.get('dead') and not star)
+                    attempt['best_opening_advance'] = max(attempt['best_opening_advance'], advance)
+                    attempt['recent_opening_advances'] = (attempt['recent_opening_advances'] + [advance])[-100:]
+                    attempts_ledger.write(json.dumps({'mission': name, 'start_kind': kind,
+                        'attempt': attempt['completed'], 'worker': index, 'worker_episode': info['worker_episode'],
+                        'real_decisions': agent.real_decisions, 'optimizer_updates': agent.updates,
+                        'ram_star': bool(star), 'dead': bool(info.get('dead')), 'opening_advance': advance,
+                        'return': float(info['episode']['r']), 'decisions': int(info['episode']['l'])}) + '\n')
                     for key, value in {'return': info['episode']['r'], 'decisions': info['episode']['l'],
                         'ram_star': bool(star), 'opening_advance': info.get('start_relative_route_progress', 0)}.items():
                         writer.add_scalar(f'episodes/{name}/{kind}/{key}', value, agent.real_decisions)
+                        writer.add_scalar(f'attempt_axis/{name}/{kind}/{key}', value, attempt['completed'])
+                    writer.add_scalar(f'attempt_axis/{name}/{kind}/mean_opening_last100',
+                        np.mean(attempt['recent_opening_advances']), attempt['completed'])
                     assisted[index] = vector.reset_infos[index].get('start_kind') == 'curriculum'
             observation = next_observation
             # Real-decision interval, independent of vector width.
@@ -167,9 +203,12 @@ def train_dqn(config, steps, resume=None):
                                  agent.real_decisions, dataformats='HW')
                 publish()
                 ledger.flush()
+                attempts_ledger.flush()
         state = 'stopped' if (run / 'STOP').exists() else 'completed'
+        stop_reason = 'owner_stop' if state == 'stopped' else stop_reason or 'decision_budget'
     except KeyboardInterrupt:
         state = 'stopped'
+        stop_reason = 'interrupted'
     except BaseException as exc:
         state, error = 'failed', repr(exc)
         (run / 'error.txt').write_text(error, encoding='utf-8')
@@ -184,10 +223,12 @@ def train_dqn(config, steps, resume=None):
             assert replay.emitted == agent.real_decisions
             atomic_json(run / 'block-summary.json', {'source_real': initial, 'final_real': agent.real_decisions,
                 'new_real': agent.real_decisions - initial, 'new_optimizer_updates': agent.updates - start_updates,
-                'state': state, 'checkpoint': str(run / 'checkpoint-final'), 'imagined_transitions': 0})
+                'state': state, 'checkpoint': str(run / 'checkpoint-final'), 'imagined_transitions': 0,
+                'stop_reason': stop_reason, 'max_seconds': max_seconds})
             publish()
         finally:
             writer.flush()
             writer.close()
             ledger.close()
+            attempts_ledger.close()
     return run

@@ -196,3 +196,28 @@ def test_distance_normalization_does_not_pay_entire_opening_as_a_mission(tmp_pat
         assert env.potential.value == pytest.approx(.002)
     finally:
         env.close()
+
+
+def test_incremental_environment_pays_real_new_progress_once_and_keeps_failure_credit(tmp_path):
+    env, backend = regional_environment(tmp_path)
+    env.close()
+    config = env.config
+    config['world_model']['gamma'] = 1.
+    config['rewards'].update(step=0., death=-2., timeout=-2., completion=20., damage=-.25)
+    config['regional_reward'].update(mode='advance', gamma_per_frame=1., scale=1.)
+    config['regional_reward'].pop('normalization_distance', None)
+    backend.closed = False
+    env = GalaxyEnv(config, backend, tmp_path / 'simple', memory=backend, intrinsic=False)
+    try:
+        env.reset(options={'variation': 0})
+        assert env.step(0)[1] == 0  # Stationary animation cannot produce credit.
+        advance = env.step(3)[1]
+        assert advance == pytest.approx(.1)
+        assert env.step(0)[1] == 0
+        backend.dead = True
+        _, reward, terminated, truncated, info = env.step(0)
+        assert terminated and not truncated and reward == -2.
+        assert info['regional_shaping_reward'] == 0
+        assert env.total_reward == pytest.approx(-1.9)
+    finally:
+        env.close()

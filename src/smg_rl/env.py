@@ -20,7 +20,14 @@ from smg_rl.memory import GameMemory, MemoryFault
 from smg_rl.plotting import plot_trajectory
 from smg_rl.profiles import game_id
 from smg_rl.replay import ReplayRecorder, replay_signature
-from smg_rl.rewards import DamageTracker, ExplorationBudget, ProgressReward, RegionalPotential
+from smg_rl.rewards import (
+    DamageTracker,
+    ExplorationBudget,
+    ProgressReward,
+    RegionalAdvance,
+    RegionalPotential,
+    validate_simple_objective,
+)
 from smg_rl.route import RouteProgress
 
 
@@ -86,7 +93,11 @@ class GalaxyEnv(gym.Env):
                     or config['rewards']['progress'] != 0 or config['rewards']['intrinsic'] != 0
                     or settings['max_idle_frames'] < 1 or settings['max_episode_frames'] < 1):
                 raise ValueError('Regional reward requires a signed schema3 route and separate shaping.')
-            self.potential = RegionalPotential(settings['scale'], settings['gamma_per_frame'])
+            mode = settings.get('mode', 'potential')
+            if mode not in ('potential', 'advance'):
+                raise ValueError('Unknown regional reward mode.')
+            self.potential = (RegionalAdvance(settings['scale']) if mode == 'advance'
+                              else RegionalPotential(settings['scale'], settings['gamma_per_frame']))
             normalization = settings.get('normalization_distance', self.route.total_length)
             if not np.isfinite(normalization) or normalization <= 0:
                 raise ValueError('Regional normalization distance must be positive and finite.')
@@ -94,6 +105,8 @@ class GalaxyEnv(gym.Env):
             learner = config['dqn'] if 'dqn' in config else config['world_model']
             if abs(learner['gamma'] - expected_gamma) > 1e-10:
                 raise ValueError('Learner discount must match the regional frame discount.')
+            if mode == 'advance':
+                validate_simple_objective(settings, config['rewards'], learner['gamma'])
         self.curriculum_bank = None
         curriculum = config.get('curriculum', {})
         if curriculum.get('enabled', False):

@@ -62,6 +62,7 @@ def test_full_model_free_loop_records_tensorboard_boundaries_and_resumable_repla
     agent, replay = DistributionalAgent.load(run / 'checkpoint-final', replay_signature(config), config['dqn'],
         {'capacity': 32, 'image_size': 40, 'stack': 4, 'workers': 1, 'n_step': 3, 'gamma': .997, 'alpha': .5})
     assert replay.emitted == agent.real_decisions == 5
+    assert agent.attempts['sweet_sweet/full_start']['completed'] == 1
     assert agent.updates > 0 and not any(replay.pending)
     assert replay.arrays['terminal'][:3].all()
     assert not replay.arrays['terminal'][3:5].any()  # Collector cut bootstraps.
@@ -70,3 +71,20 @@ def test_full_model_free_loop_records_tensorboard_boundaries_and_resumable_repla
     events.Reload()
     assert 'learning/loss' in events.Tags()['scalars']
     assert events.Scalars('training/optimizer_updates')[-1].value > 0
+    assert events.Scalars('attempt_axis/sweet_sweet/full_start/opening_advance')[-1].step == 1
+
+
+def test_wall_clock_budget_stops_before_an_unallocated_decision(tmp_path, monkeypatch):
+    config = load_config('config/iqn-smg1.yaml')
+    config['paths'].update(runs=str(tmp_path / 'runs'), tensorboard=str(tmp_path / 'tensorboard'))
+    config['environment']['image_size'] = 40
+    config['parallel']['workers'] = 1
+    config['training']['device'] = 'cpu'
+    config['dqn'].update(capacity=32, learning_starts=2, batch_size=2, channels=2, hidden=32,
+                         train_every=1, target_update_interval=2, quantiles=4)
+    monkeypatch.setattr(dqn_training, 'MeasuredSubprocVecEnv', lambda *a, **k: BoundaryVector())
+    run = dqn_training.train_dqn(config, 100, max_seconds=1e-9)
+    import json
+    status = json.loads((run / 'status.json').read_text())
+    assert status['real_decisions'] == 0 and status['state'] == 'completed'
+    assert status['stop_reason'] == 'wall_clock_budget'

@@ -1,5 +1,12 @@
 # Model-free Rainbow, IQN and TensorBoard
 
+**Latest successor:** the owner subsequently authorized a fresh
+[simple-reward IQN/IMPALA six-hour intervention](simple-reward-impala.md).
+It fixes the duration incentive, changes the encoder and exploration schedule,
+and adds persisted attempt axes. This document's completed-comparison results
+and original configurations remain historical; no pilot checkpoint/replay is
+resumed into the new reward branch.
+
 **Comparison completed:** Rainbow and fresh IQN each reached 8192 real decisions
 per mission and completed all nine frozen evaluations. Neither collected a star
 or demonstrated useful frozen-policy navigation. All training/evaluation processes
