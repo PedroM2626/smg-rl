@@ -1,5 +1,12 @@
 # Local validation report
 
+**October26 memory-pressure recovery:** the full portable suite passed209 tests
+and Ruff after introducing Torch-free collectors, pre-spawn BLAS thread limits,
+Windows commit monitoring, clean pressure stops and once-only failed-partial
+accounting. Both actual-game recovery health blocks passed before the remaining
+original training allocation resumed. See the
+[failure analysis and recovery evidence](memory-pressure-recovery.md).
+
 **October 26 IQN/IMPALA revision:**199 portable tests and Ruff passed. Analytic
 controls establish equal -2 no-progress failure returns across episode durations,
 one-time route credit and assisted-start baselines. Both actual-game health

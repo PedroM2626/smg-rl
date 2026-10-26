@@ -12,7 +12,6 @@ from gymnasium import spaces
 
 from smg_rl.actions import action_name, action_set, advance_action
 from smg_rl.checkpoints import digest
-from smg_rl.curiosity import IntrinsicReward
 from smg_rl.curriculum import CurriculumBank
 from smg_rl.diagnostics import StageProfiler, atomic_json, measured
 from smg_rl.frontier import FrontierArchive
@@ -58,6 +57,8 @@ class GalaxyEnv(gym.Env):
         self.action_space = spaces.Discrete(len(self.actions))
         self.frames = deque(maxlen=stack)
         self.use_intrinsic = intrinsic
+        if intrinsic:
+            from smg_rl.curiosity import IntrinsicReward
         self.curiosity = (
             {
                 v["name"]: IntrinsicReward(len(self.actions), config["novelty"])

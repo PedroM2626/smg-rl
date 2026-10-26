@@ -6,6 +6,14 @@ RAM-confirmed stars and no useful frozen navigation. New configurations, replay,
 weights, counters and TensorBoard series start independently. Neither historical
 PPO/RSSM checkpoints nor Rainbow/IQN pilot artifacts are modified.
 
+**Crash/recovery update:** Windows commit exhaustion stopped both games at
+96000/174504 committed real decisions. The owner explicitly requested diagnosis
+and resumption. [Memory-pressure recovery](memory-pressure-recovery.md) records
+the Realtek helper cleanup, Torch-free collectors, pre-spawn BLAS limits,
+commit-based stop guard, retained SMG2 CSV coverage gap and exact remaining
+original budgets. Recovery health passed before the resumed one-hour blocks;
+reward, architecture, replay identity and learner state remain unchanged.
+
 ## Objective: remove the advantage of postponing a failure
 
 The previous gamma 0.997, step -0.001, failure -2 objective gave a stationary

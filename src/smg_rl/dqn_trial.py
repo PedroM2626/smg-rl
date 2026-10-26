@@ -24,6 +24,7 @@ from smg_rl.config import load_config
 from smg_rl.diagnostics import atomic_json
 from smg_rl.profiles import PROFILES, game_id
 from smg_rl.replay import replay_signature
+from smg_rl.resource_memory import require_memory_headroom
 
 STATE = Path('.local/impala-six-hour-state.json')
 STOP = Path('.local/impala-six-hour.STOP')
@@ -64,6 +65,7 @@ def locate_run(job):
 def launch(state, game, steps, seconds, resume, label):
     """The pending command is durable before process creation; never blindly retry."""
     with LOCK:
+        require_memory_headroom()
         job = {'config': f'config/impala-iqn-{game}.yaml', 'label': label, 'phase': 'pending',
                'source_real': state['games'][game].get('real_decisions', 0),
                'source_attempts': state['games'][game].get('completed_attempts', 0),
@@ -78,18 +80,23 @@ def launch(state, game, steps, seconds, resume, label):
         state['games'][game]['jobs'].append(job)
         save(state)
         with open(job['stdout'], 'x', encoding='utf-8') as out, open(job['stderr'], 'x', encoding='utf-8') as err:
-            process = subprocess.Popen(command, stdout=out, stderr=err,
+            environment = dict(os.environ)
+            environment.update({key: '1' for key in ('OPENBLAS_NUM_THREADS', 'OMP_NUM_THREADS', 'MKL_NUM_THREADS',
+                                                     'NUMEXPR_NUM_THREADS')})
+            process = subprocess.Popen(command, stdout=out, stderr=err, env=environment,
                                        creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
         job.update(phase='running', pid=process.pid, created_time=psutil.Process(process.pid).create_time())
         save(state)
         return process, job
 
 
-def audit_block(run, config, source_real, source_attempts):
+def audit_block(run, config, source_real, source_attempts, failed=False):
     """Verify real counts, reward sum, RAM outcomes, checkpoint hashes and attempts."""
     status = read(run / 'status.json')
     controller = read(run / 'controller.json')
-    if alive(controller) or status['state'] != 'completed' or status['error'] is not None:
+    eligible = (status['state'] == 'failed' and status['error'] == 'EOFError()' if failed else
+                status['state'] == 'completed' and status['error'] is None)
+    if alive(controller) or not eligible:
         raise ValueError('Only a clean, stopped block can authorize a successor.')
     if status['source_count'] != source_real or status['imagined_transitions'] != 0:
         raise ValueError('Unexpected branch ancestry or imagined data.')
@@ -147,12 +154,24 @@ def audit_block(run, config, source_real, source_attempts):
         fraction = max(float(r['start_relative_route_progress']) for r in rows)
         if key not in best or fraction > best[key]['opening_advance']:
             best[key] = {'opening_advance': fraction, 'trajectory': str(path), 'outcome': last['outcome']}
-    if physical != status['real_decisions'] - source_real or sum(episodes.values()) != len(ledger):
+    gap = status['real_decisions'] - source_real - physical
+    allowed_gap = config['parallel']['workers'] * config['environment']['max_steps'] if failed else 0
+    gap_valid = -config['parallel']['workers'] <= gap <= allowed_gap if failed else gap == 0
+    if not gap_valid:
+        raise ValueError('CSV coverage gap exceeds the declared failed-collector tail bound.')
+    extra_terminals = sum(episodes.values()) - len(ledger)
+    if not (0 <= extra_terminals <= config['parallel']['workers'] if failed else extra_terminals == 0):
         raise ValueError('CSV decisions/episodes do not reconcile with the learner.')
+    for attempt in ledger:
+        path = run / f'worker-{attempt["worker"]:02d}' / attempt['mission'] / f'episode-{attempt["worker_episode"]:06d}.csv'
+        if not path.is_file():
+            raise ValueError('An acknowledged completed attempt lacks its retained CSV.')
     return {'passed': True, 'checkpoint': str(checkpoint), 'agent_sha256': manifest['agent_sha256'],
             'real_decisions': status['real_decisions'], 'completed_attempts': status['completed_attempts'],
             'elapsed_seconds': status['elapsed_seconds'], 'decisions_per_second': status['decisions_per_second'],
             'best_collection': best, 'actions': dict(actions), 'attempts': status['attempts'],
+            'csv_decision_gap': gap, 'failed_partial_checkpoint': failed,
+            'unacknowledged_terminal_csv_episodes': extra_terminals,
             'reason': 'Finite metrics, exact real/replay/attempt counts, signed artifacts and simple reward controls passed.',
             'note': 'Collection maxima include random exploration. Opening fractions are not mission percentages.'}
 
@@ -195,9 +214,10 @@ def start_health():
 
 def supervise():
     state = read(STATE)
-    if state['phase'] != 'health_running' or STOP.exists():
+    recovery = state['phase'] == 'recovery_ready'
+    if state['phase'] not in ('health_running', 'recovery_ready') or STOP.exists():
         raise ValueError('Only the once-reviewed health phase may enter this finite main trial.')
-    for game, branch in state['games'].items():
+    for game, branch in (() if recovery else state['games'].items()):
         job = branch['jobs'][-1]
         if alive(job):
             raise ValueError('Health block is still running; no duplicate main block allowed.')
@@ -210,18 +230,24 @@ def supervise():
 
     def branch_work(game):
         branch = state['games'][game]
-        block = 1
+        block = max((int(j['label'][5:]) for j in branch['jobs'] if j['label'].startswith('block')), default=0) + 1
+        recovery_health = recovery
         try:
             while branch['elapsed_training_seconds'] < SECONDS and branch['real_decisions'] < branch['real_cap']:
                 if STOP.exists() or failed.is_set():
                     break
-                seconds = min(900 if block == 1 else 3600, SECONDS - branch['elapsed_training_seconds'])
+                seconds = min(180 if recovery_health else 900 if block == 1 else 3600,
+                              SECONDS - branch['elapsed_training_seconds'])
                 steps = branch['real_cap'] - branch['real_decisions']
                 workers = load_config(f'config/impala-iqn-{game}.yaml')['parallel']['workers']
+                if recovery_health:
+                    steps = min(steps, 512 * workers)
                 steps -= steps % workers
                 if not steps:
                     break
-                process, job = launch(state, game, steps, seconds, branch['checkpoint'], f'block{block:02d}')
+                label = (f'recovery{1 + sum(j["label"].startswith("recovery") for j in branch["jobs"]):02d}'
+                         if recovery_health else f'block{block:02d}')
+                process, job = launch(state, game, steps, seconds, branch['checkpoint'], label)
                 while process.poll() is None:
                     run = locate_run(job)
                     if run and job.get('run') != str(run):
@@ -236,6 +262,7 @@ def supervise():
                 if process.returncode or STOP.exists() or failed.is_set():
                     raise RuntimeError(f"Block ended with code {process.returncode}; inspect {job['stderr']} and retain partial data.")
                 apply_review(state, game, job)
+                recovery_health = False
                 block += 1
             with LOCK:
                 branch['phase'] = 'stopped' if STOP.exists() or failed.is_set() else 'completed'
@@ -259,6 +286,31 @@ def supervise():
     state['finished_at'] = datetime.now(timezone.utc).isoformat()
     save(state)
     print(json.dumps(state, indent=2))
+
+
+def recover():
+    """Explicit owner-authorized recovery, never an automatic exception retry."""
+    state = read(STATE)
+    if state['phase'] != 'needs_review' or STOP.exists() or alive(state['supervisor']):
+        raise ValueError('Recovery requires a stopped failed trial and no owner stop.')
+    backup = STATE.with_name('impala-six-hour-state-before-recovery-20261026.json')
+    with backup.open('x', encoding='utf-8') as stream:
+        json.dump(state, stream, indent=2)
+    for game, branch in state['games'].items():
+        job = branch['jobs'][-1]
+        run = locate_run(job)
+        review = audit_block(run, load_config(job['config']), job['source_real'], job['source_attempts'], failed=True)
+        job.update(phase='failed_accounted', recovery_audit=review)
+        branch.update(real_decisions=review['real_decisions'], completed_attempts=review['completed_attempts'],
+                      checkpoint=review['checkpoint'], phase='recovery_ready')
+        branch['elapsed_training_seconds'] += review['elapsed_seconds']
+        branch['previous_error'] = branch.pop('error', None)
+    state.update(phase='recovery_ready', recovery_authorization='Owner explicitly requested identifying the cause and resuming on October26.',
+                 recovery_method='Torch-free collectors, single-threaded child BLAS, Windows commit preflight/runtime guard; signed learner settings unchanged.')
+    save(state)
+    print(json.dumps({g: {'source_real':b['real_decisions'], 'remaining_seconds':SECONDS-b['elapsed_training_seconds'],
+                         'csv_decision_gap':b['jobs'][-1]['recovery_audit']['csv_decision_gap']}
+                      for g,b in state['games'].items()}, indent=2))
 
 
 def snapshot():

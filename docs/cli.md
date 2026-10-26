@@ -17,6 +17,14 @@ closes emulators and saves the final immutable checkpoint. Boot time is included
 close/checkpoint overhead may finish afterward. Attempts persist on resume.
 Historical profiles retain their original reward/encoder settings.
 
+After an explicitly owner-authorized diagnosis/repair, `scripts/run_impala_trial.py recover`
+audits the retained failed partial checkpoints and charges their original time
+and decisions exactly once. It refuses active trials and owner stop files.
+`supervise` then validates short recovery blocks before bounded successors.
+This is not an automatic retry command; see the
+[Windows commit-exhaustion recovery](memory-pressure-recovery.md) for the
+actual source counts, coverage gap and unchanged allocation.
+
 Run from the repository root using `.\.venv\Scripts\smg-rl.exe` or
 `.\.venv\Scripts\python.exe -m smg_rl.cli`. The optional global argument
 `--config PATH` goes before the subcommand and defaults to `config/iqn-smg2.yaml`

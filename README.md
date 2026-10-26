@@ -19,6 +19,9 @@ Its `telemetry/RMGE01/simple-impala` and `telemetry/SB4E01/simple-impala` runs
 add episode reward, sampled world-space path length, valid grounded route
 advance and last100-attempt means, backfilled without restarting training.
 No genetic advantage or learned completion is claimed from this selection.
+The [memory-pressure repair](docs/memory-pressure-recovery.md) diagnosed Windows
+commit exhaustion, preserved the failed partial checkpoints and resumed only the
+remaining six-hour allocation with lean collectors and a commit-headroom guard.
 
 **Completed model-free comparison:** [Rainbow and IQN](docs/model-free.md)
 used real-pixel frame stacks and prioritized replay, with zero imagined

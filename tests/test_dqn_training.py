@@ -10,6 +10,14 @@ from smg_rl.dqn import DistributionalAgent
 from smg_rl.replay import replay_signature
 
 
+@pytest.fixture(autouse=True)
+def portable_memory_headroom(monkeypatch):
+    # Tiny vector fixtures must not require a production six-emulator RAM budget.
+    monkeypatch.setattr(dqn_training, 'require_memory_headroom', lambda: None)
+    monkeypatch.setattr(dqn_training, 'memory_snapshot', lambda: {
+        'commit_available_bytes': 16 * 2**30, 'physical_available_bytes': 8 * 2**30})
+
+
 class BoundaryVector:
     """Deterministic collector fixture; never a learned/game completion."""
     def __init__(self):
@@ -88,3 +96,21 @@ def test_wall_clock_budget_stops_before_an_unallocated_decision(tmp_path, monkey
     status = json.loads((run / 'status.json').read_text())
     assert status['real_decisions'] == 0 and status['state'] == 'completed'
     assert status['stop_reason'] == 'wall_clock_budget'
+
+
+def test_memory_pressure_stops_cleanly_and_flushes_committed_replay(tmp_path, monkeypatch):
+    import json
+
+    config = load_config('config/iqn-smg1.yaml')
+    config['paths'].update(runs=str(tmp_path / 'runs'), tensorboard=str(tmp_path / 'tensorboard'))
+    config['environment']['image_size'] = 40
+    config['parallel']['workers'] = 1
+    config['training']['device'] = 'cpu'
+    config['dqn'].update(capacity=128, learning_starts=100, batch_size=2, channels=2, hidden=32)
+    monkeypatch.setattr(dqn_training, 'MeasuredSubprocVecEnv', lambda *a, **k: BoundaryVector())
+    monkeypatch.setattr(dqn_training, 'memory_safe', lambda _: False)
+    run = dqn_training.train_dqn(config, 100)
+    status = json.loads((run / 'status.json').read_text())
+    assert status['state'] == 'stopped' and status['stop_reason'] == 'memory_pressure'
+    assert status['real_decisions'] == status['replay_emitted'] == 64
+    assert status['error'] is None

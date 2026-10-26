@@ -43,3 +43,31 @@ def test_only_an_active_unreviewed_health_phase_can_dispatch_main(tmp_path, monk
     monkeypatch.setattr(dqn_trial, 'STATE', path)
     with pytest.raises(ValueError, match='once-reviewed'):
         dqn_trial.supervise()
+
+
+def test_explicit_partial_recovery_preserves_source_and_charges_failed_time_once(tmp_path, monkeypatch):
+    state_path = tmp_path / 'state.json'
+    state = {'phase': 'needs_review', 'supervisor': {'pid': 1, 'created_time': 0}, 'games': {'smg1': {
+        'real_decisions': 100, 'completed_attempts': 10, 'elapsed_training_seconds': 1000.,
+        'error': 'original failure', 'jobs': [{'phase': 'needs_review', 'source_real': 100,
+            'source_attempts': 10, 'config': 'fixture'}]}}}
+    atomic_json(state_path, state)
+    monkeypatch.setattr(dqn_trial, 'STATE', state_path)
+    monkeypatch.setattr(dqn_trial, 'STOP', tmp_path / 'STOP')
+    monkeypatch.setattr(dqn_trial, 'alive', lambda _: False)
+    monkeypatch.setattr(dqn_trial, 'locate_run', lambda _: tmp_path / 'run')
+    monkeypatch.setattr(dqn_trial, 'load_config', lambda _: {})
+    def review(*args, failed=False):
+        assert failed
+        return {'real_decisions': 150, 'completed_attempts': 15, 'elapsed_seconds': 30.,
+                'checkpoint': 'retained-checkpoint', 'csv_decision_gap': 1}
+    monkeypatch.setattr(dqn_trial, 'audit_block', review)
+    dqn_trial.recover()
+    result = json.loads(state_path.read_text())
+    assert result['phase'] == 'recovery_ready'
+    branch = result['games']['smg1']
+    assert branch['real_decisions'] == 150 and branch['completed_attempts'] == 15
+    assert branch['elapsed_training_seconds'] == 1030.
+    assert branch['jobs'][-1]['phase'] == 'failed_accounted'
+    with pytest.raises(ValueError):
+        dqn_trial.recover()

@@ -1,0 +1,183 @@
+{
+  "observed_at": "2026-10-26T17:00:08.712156+00:00",
+  "scope": "Windows commit-exhaustion repair and owner-authorized remaining-budget recovery; not a learning efficacy result.",
+  "failure": {
+    "time_utc": "2026-10-26T15:37:20Z",
+    "windows_resource_event": 2004,
+    "low_virtual_memory_event": 26,
+    "dolphin_exit_code": "0xC0000409",
+    "WER_subtype": 7,
+    "named_largest_consumers_bytes": {
+      "Realtek_user_helper_pid9788": 9458786304,
+      "Python_pid26388": 3972005888,
+      "Python_pid25732": 3961274368
+    }
+  },
+  "helper_restart": {
+    "pid": 9788,
+    "created_time": 1793010422.045639,
+    "private_bytes": 30093705216,
+    "rss_bytes": 9431879680,
+    "service_pid_preserved": 5852,
+    "process_path": "C:\\Windows\\System32\\DriverStore\\FileRepository\\realtekservice.inf_amd64_c150fe6bdbf9aafe\\RtkAudUService64.exe",
+    "reason": "Owner-authorized root-cause repair: restart only leaking per-user audio helper after Windows commit-exhaustion event, preserving the system audio service."
+  },
+  "cold_import_comparison": {
+    "legacy_imports": {
+      "private_bytes": 1600372736,
+      "threads": 27,
+      "torch_imported": true,
+      "sb3_imported": true
+    },
+    "lean_imports": {
+      "private_bytes": 60743680,
+      "threads": 4,
+      "torch_imported": false,
+      "sb3_imported": false
+    }
+  },
+  "memory_after_recovery": {
+    "physical_available_bytes": 7934124032,
+    "physical_total_bytes": 34049417216,
+    "commit_total_bytes": 40665042944,
+    "commit_limit_bytes": 81900384256,
+    "commit_available_bytes": 41235341312,
+    "kernel_paged_bytes": 2479931392,
+    "kernel_nonpaged_bytes": 1822060544
+  },
+  "supervisor_alive": true,
+  "games": {
+    "smg1": {
+      "failed_source": {
+        "real_decisions": 96000,
+        "completed_attempts": 710,
+        "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg1\\dqn-20261026-115529-956779\\checkpoint-final",
+        "agent_sha256": "0c52e146411905e4681746c97da1c614ce47ce20e3f5bddb0c513c92e73ceecd",
+        "elapsed_seconds": 2538.1769563999987,
+        "csv_decision_gap": 0,
+        "unacknowledged_terminal_csv_episodes": 0
+      },
+      "recovery_health": {
+        "source_real": 96000,
+        "requested_additional": 1024,
+        "review": {
+          "passed": true,
+          "real_decisions": 97024,
+          "completed_attempts": 712,
+          "elapsed_seconds": 106.31196540000383,
+          "csv_decision_gap": 0
+        }
+      },
+      "current_run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg1\\dqn-20261026-135527-886235",
+      "current_controller": {
+        "pid": 28488,
+        "created_time": 1793033719.5719988,
+        "workers": 2,
+        "algorithm": "iqn",
+        "resume": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg1\\dqn-20261026-135328-804732\\checkpoint-final",
+        "requested_additional": 402976,
+        "source_count": 97024,
+        "target_count": 500000,
+        "max_seconds": 3600.0
+      },
+      "current_state": "running",
+      "current_real_decisions": 101120,
+      "current_memory": {
+        "physical_available_bytes": 8022097920,
+        "physical_total_bytes": 34049417216,
+        "commit_total_bytes": 40564482048,
+        "commit_limit_bytes": 81900384256,
+        "commit_available_bytes": 41335902208,
+        "kernel_paged_bytes": 2483257344,
+        "kernel_nonpaged_bytes": 1821941760
+      },
+      "collectors": [
+        {
+          "pid": 31976,
+          "private_bytes": 64647168,
+          "torch_imported": false,
+          "sb3_imported": false
+        },
+        {
+          "pid": 24504,
+          "private_bytes": 64397312,
+          "torch_imported": false,
+          "sb3_imported": false
+        }
+      ],
+      "remaining_accounted_seconds_at_observation": 13902.758964100001
+    },
+    "smg2": {
+      "failed_source": {
+        "real_decisions": 174504,
+        "completed_attempts": 1241,
+        "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg2\\dqn-20261026-115537-655374\\checkpoint-final",
+        "agent_sha256": "eb009f3fc7fb5e8554c3b5422264dab068f5fc4238b92ad195ef5bf4fde4115b",
+        "elapsed_seconds": 2542.5661285000024,
+        "csv_decision_gap": 46,
+        "unacknowledged_terminal_csv_episodes": 1
+      },
+      "recovery_health": {
+        "source_real": 174504,
+        "requested_additional": 2048,
+        "review": {
+          "passed": true,
+          "real_decisions": 176552,
+          "completed_attempts": 1261,
+          "elapsed_seconds": 123.20235970000067,
+          "csv_decision_gap": 0
+        }
+      },
+      "current_run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg2\\dqn-20261026-135544-787233",
+      "current_controller": {
+        "pid": 23204,
+        "created_time": 1793033734.7094045,
+        "workers": 4,
+        "algorithm": "iqn",
+        "resume": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg2\\dqn-20261026-135329-178811\\checkpoint-final",
+        "requested_additional": 823448,
+        "source_count": 176552,
+        "target_count": 1000000,
+        "max_seconds": 3600.0
+      },
+      "current_state": "running",
+      "current_real_decisions": 182184,
+      "current_memory": {
+        "physical_available_bytes": 8049405952,
+        "physical_total_bytes": 34049417216,
+        "commit_total_bytes": 40507969536,
+        "commit_limit_bytes": 81900384256,
+        "commit_available_bytes": 41392414720,
+        "kernel_paged_bytes": 2481516544,
+        "kernel_nonpaged_bytes": 1818169344
+      },
+      "collectors": [
+        {
+          "pid": 16320,
+          "private_bytes": 64512000,
+          "torch_imported": false,
+          "sb3_imported": false
+        },
+        {
+          "pid": 16812,
+          "private_bytes": 64741376,
+          "torch_imported": false,
+          "sb3_imported": false
+        },
+        {
+          "pid": 14044,
+          "private_bytes": 64278528,
+          "torch_imported": false,
+          "sb3_imported": false
+        },
+        {
+          "pid": 32328,
+          "private_bytes": 64753664,
+          "torch_imported": false,
+          "sb3_imported": false
+        }
+      ],
+      "remaining_accounted_seconds_at_observation": 13830.012699899995
+    }
+  }
+}

@@ -16,9 +16,11 @@ from smg_rl.actions import action_set
 from smg_rl.diagnostics import StageProfiler, atomic_json
 from smg_rl.dqn import DistributionalAgent
 from smg_rl.dqn_replay import PrioritizedFrames
-from smg_rl.parallel import WorkerFactory, runtime_directory
+from smg_rl.lean_worker import LeanWorkerFactory
+from smg_rl.parallel import runtime_directory
 from smg_rl.profiles import PROFILES, game_id, require_training_enabled
 from smg_rl.replay import replay_signature
+from smg_rl.resource_memory import memory_safe, memory_snapshot, require_memory_headroom
 from smg_rl.train import new_run
 from smg_rl.vector import MeasuredSubprocVecEnv
 
@@ -106,6 +108,7 @@ def train_dqn(config, steps, resume=None, max_seconds=None):
             'completed_attempts': sum(v['completed'] for v in agent.attempts.values()),
             'tensorboard': str(logdir), 'updated_at': datetime.now(timezone.utc).isoformat(),
             'losses': metrics, 'timings': profiler.snapshot(), 'error': error,
+            'memory': memory_snapshot(),
             'start_kinds': [i.get('start_kind') for i in infos],
             'start_relative_route_progress': [i.get('start_relative_route_progress') for i in infos],
             'active_attempts': [{k: i.get(k) for k in ('variation', 'start_kind', 'worker_episode',
@@ -119,6 +122,8 @@ def train_dqn(config, steps, resume=None, max_seconds=None):
                     'emulated_frames_per_second', 'full_start_stars_this_run', 'assisted_stars_this_run', 'deaths_this_run'):
             writer.add_scalar(f'training/{key}', record[key], agent.real_decisions)
         writer.add_scalar('resources/available_ram_gib', psutil.virtual_memory().available / 2**30, agent.real_decisions)
+        writer.add_scalar('resources/commit_available_gib', record['memory']['commit_available_bytes'] / 2**30,
+                          agent.real_decisions)
         for index, name in enumerate(agent.signature['action_names']):
             writer.add_scalar(f'actions/{name}', counts[index] / max(1, counts.sum()), agent.real_decisions)
         for name, item in profiler.snapshot().items():
@@ -126,9 +131,11 @@ def train_dqn(config, steps, resume=None, max_seconds=None):
                 writer.add_scalar(f'timing/{name}_mean_ms', item['mean_ms'], agent.real_decisions)
 
     try:
+        require_memory_headroom()
         shape = (config['environment']['frame_stack'], config['environment']['image_size'], config['environment']['image_size'])
-        vector = MeasuredSubprocVecEnv([WorkerFactory(config, i, str(run)) for i in range(workers)],
-                                      shape, shared=False, receive_order='ordered', timeout=config['parallel']['worker_timeout'])
+        vector = MeasuredSubprocVecEnv([LeanWorkerFactory(config, i, str(run)) for i in range(workers)],
+                                      shape, shared=False, receive_order='ordered', timeout=config['parallel']['worker_timeout'],
+                                      lean=True)
         vector.seed(config['training']['seed'] + agent.real_decisions)
         observation = vector.reset()
         current = [replay.add_frame(image[-1]) for image in observation['image']]
@@ -204,8 +211,11 @@ def train_dqn(config, steps, resume=None, max_seconds=None):
                 publish()
                 ledger.flush()
                 attempts_ledger.flush()
-        state = 'stopped' if (run / 'STOP').exists() else 'completed'
-        stop_reason = 'owner_stop' if state == 'stopped' else stop_reason or 'decision_budget'
+                if not memory_safe(memory_snapshot()):
+                    stop_reason = 'memory_pressure'
+                    break
+        state = 'stopped' if (run / 'STOP').exists() or stop_reason == 'memory_pressure' else 'completed'
+        stop_reason = stop_reason or ('owner_stop' if state == 'stopped' else 'decision_budget')
     except KeyboardInterrupt:
         state = 'stopped'
         stop_reason = 'interrupted'

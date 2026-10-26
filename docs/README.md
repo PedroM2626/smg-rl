@@ -48,6 +48,9 @@ The latest active protocol is [simple regional reward and six-hour IQN/IMPALA](s
 including the duration-neutral objective, residual encoder, gradual exploration,
 attempt axes and finite block supervisor. Earlier experiment closure statements
 refer to their own dated allocations.
+The [memory-pressure recovery](memory-pressure-recovery.md) records the actual
+Windows failure, lean collector fix and explicitly authorized remaining-budget
+resumption without resetting real decisions or attempts.
 
 | Need | Document |
 | --- | --- |

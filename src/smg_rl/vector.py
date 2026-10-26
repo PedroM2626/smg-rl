@@ -6,9 +6,11 @@ automatic resets, terminal observations, or recurrent PPO rollout semantics.
 
 import ctypes
 import multiprocessing as mp
+import os
 import time
 from multiprocessing.connection import wait
 
+import cloudpickle
 import numpy as np
 import psutil
 from stable_baselines3.common.vec_env.base_vec_env import CloudpickleWrapper, VecEnv
@@ -92,11 +94,13 @@ class ParentConnection:
 
 class MeasuredSubprocVecEnv(SubprocVecEnv):
     def __init__(self, env_fns, image_shape, shared=True, receive_order="ready", start_method="spawn",
-                 timeout=120.0):
+                 timeout=120.0, lean=False):
         if not env_fns or timeout <= 0 or not np.isfinite(timeout):
             raise ValueError("At least one environment and a positive finite timeout are required.")
         if receive_order not in ("ready", "ordered"):
             raise ValueError("Unknown worker receive order.")
+        if lean and shared:
+            raise ValueError('Lean collectors use owned pipe observations, not shared image buffers.')
         self.waiting, self.closed = False, False
         self.profiler = StageProfiler()
         self.receive_order = receive_order
@@ -116,10 +120,31 @@ class MeasuredSubprocVecEnv(SubprocVecEnv):
         self.processes = []
         try:
             for index, (remote, work, factory) in enumerate(zip(raw_remotes, self.work_remotes, env_fns)):
-                process = context.Process(target=measured_worker,
-                                          args=(work, remote, CloudpickleWrapper(factory), self.pixels,
-                                                self.statistics, index, image_shape), daemon=True)
-                process.start()
+                if lean:
+                    from smg_rl.lean_worker import lean_worker
+
+                    process = context.Process(target=lean_worker,
+                        args=(work, remote, cloudpickle.dumps(factory), self.statistics, index), daemon=True)
+                else:
+                    process = context.Process(target=measured_worker,
+                        args=(work, remote, CloudpickleWrapper(factory), self.pixels,
+                              self.statistics, index, image_shape), daemon=True)
+                if lean:
+                    # Set before spawn/import of NumPy; late BLAS changes cannot
+                    # reclaim its already-created thread stacks on Windows.
+                    keys = ('OPENBLAS_NUM_THREADS', 'OMP_NUM_THREADS', 'MKL_NUM_THREADS', 'NUMEXPR_NUM_THREADS')
+                    previous = {key: os.environ.get(key) for key in keys}
+                    try:
+                        os.environ.update({key: '1' for key in keys})
+                        process.start()
+                    finally:
+                        for key, value in previous.items():
+                            if value is None:
+                                os.environ.pop(key, None)
+                            else:
+                                os.environ[key] = value
+                else:
+                    process.start()
                 self.processes.append(process)
                 work.close()
             self.remotes[0].send(("get_spaces", None))
