@@ -3,7 +3,8 @@
 Run from the repository root using `.\.venv\Scripts\smg-rl.exe` or
 `.\.venv\Scripts\python.exe -m smg_rl.cli`. The optional global argument
 `--config PATH` goes before the subcommand and defaults to `config/iqn-smg2.yaml`
-for the active second algorithm trial. Rainbow remains explicitly selectable.
+for the retained IQN profile. Both initial algorithm trials are completed and
+stopped; Rainbow remains explicitly selectable for deliberately allocated work.
 Current model-free profiles are `rainbow-smg1.yaml`, `rainbow-smg2.yaml` and the
 corresponding `iqn-*` alternatives. Use `train-dqn` and `record-dqn`; see the
 [implementation, TensorBoard and finite protocol](model-free.md).

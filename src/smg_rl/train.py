@@ -2,6 +2,7 @@
 
 import json
 import random
+import uuid
 from datetime import datetime
 from pathlib import Path
 
@@ -39,8 +40,17 @@ class Checkpoints(BaseCallback):
 
 
 def new_run(config, kind):
-    path = Path(config["paths"]["runs"]) / f"{kind}-{datetime.now():%Y%m%d-%H%M%S-%f}"
-    path.mkdir(parents=True)
+    root = Path(config['paths']['runs'])
+    name = f"{kind}-{datetime.now():%Y%m%d-%H%M%S-%f}"
+    for attempt in range(16):
+        # Windows clock resolution can give simultaneous workers the same timestamp.
+        path = root / (name if attempt == 0 else f'{name}-{uuid.uuid4().hex[:8]}')
+        try:
+            path.mkdir(parents=True)
+            break
+        except FileExistsError:
+            if attempt == 15:
+                raise
     (path / "config.json").write_text(json.dumps(config, indent=2) + "\n", encoding="utf-8")
     return path
 

@@ -5,10 +5,12 @@ Dolphin on Windows.
 
 **Current algorithm (October 26):** [pure model-free Rainbow and IQN](docs/model-free.md)
 replace the active RSSM learner. Both use real-pixel frame stacks and prioritized
-replay, with zero imagined transitions. Rainbow completed its 8192-decision-per-
-mission pilot and nine frozen evaluations without a star; it mostly spun/idled.
-The equivalent fresh IQN pilot is now active, with six collectors and the same
-reward/control/budget. No online superiority result is claimed.
+replay, with zero imagined transitions. Both completed 8192 real decisions per
+mission and nine frozen evaluations each, without a star. IQN ran faster in this
+trial but also mostly spun/idled; no navigation or sample-efficiency advantage
+was demonstrated. All training/evaluation jobs are stopped and the follow-up
+is retired. [Frozen paths and action occupancy](docs/assets/performance/model-free-comparison-20261026.png)
+show the actual behavior.
 [TensorBoard](http://127.0.0.1:6006/) is installed, logging and served locally.
 
 **Previous RSSM training:** the [six-collector regional blocks](docs/regional-six-training.md#completed-block-review)
@@ -289,12 +291,12 @@ starts; near-star slots remain detector fixtures.
 ## Model-free training and TensorBoard
 
 Rainbow profiles are `config/rainbow-smg1.yaml` and `config/rainbow-smg2.yaml`.
-The active IQN trial uses `config/iqn-smg1.yaml` and `config/iqn-smg2.yaml`; each uses
+The IQN trial uses `config/iqn-smg1.yaml` and `config/iqn-smg2.yaml`; each uses
 explicitly documented Rainbow-style additions. There is no world-model prediction
 or imagination in either learner. Both retain the regional reward, eight actions,
 12-frame controls and start distribution for the first comparison.
 
-The six-worker IQN pilot is already dispatched. Do not execute duplicate jobs.
+The six-worker IQN pilot is complete. No successor is automatically allocated.
 For a deliberately allocated future block:
 
 ```powershell

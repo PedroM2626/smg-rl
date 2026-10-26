@@ -18,8 +18,9 @@ from smg_rl.route import RouteProgress
 
 def main():
     state = json.loads(Path('.local/model-free-state.json').read_text())
+    algorithm = state.get('current_algorithm', 'rainbow')
     report = {'observed_at': datetime.now(timezone.utc).isoformat(),
-              'scope': 'Completed declared Rainbow blocks and frozen evaluations. No new training or fitting.',
+              'scope': f'Completed declared {algorithm} blocks and frozen evaluations. No new training or fitting.',
               'games': {}, 'missions': [], 'evaluations': []}
     for game, job in state['current_jobs'].items():
         config = load_config(job['config'])
@@ -102,7 +103,6 @@ def main():
         assert digest(checkpoint / 'agent.pt') == recording['agent_sha256']
         report['evaluations'].append({'mission': name, 'run': str(run), 'recording': recording,
                                       'action_counts': dict(actions), 'video_verified': True, 'probe': probe})
-    algorithm = state.get('current_algorithm', 'rainbow')
     atomic_json(f'docs/assets/performance/model-free-{algorithm}-final-20261026.json', report)
     print(json.dumps({'missions': report['missions'], 'evaluations': [
         {'mission': e['mission'], 'episodes': e['recording']['episodes'], 'actions': e['action_counts']}

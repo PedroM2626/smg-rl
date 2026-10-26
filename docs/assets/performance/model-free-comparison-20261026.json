@@ -1,0 +1,170 @@
+{
+  "scope": "One paired training seed per game, three frozen epsilon-evaluation seeds. Exploratory, no significance or superiority claim.",
+  "missions": [
+    {
+      "mission": "sweet_sweet",
+      "algorithms": {
+        "Rainbow": {
+          "real_training_decisions_per_mission": 8192,
+          "full_start_stars": 0,
+          "evaluation_decisions": 540,
+          "outcomes": [
+            "timeout",
+            "timeout",
+            "timeout"
+          ],
+          "mapped_opening_percent_by_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "action_counts": {
+            "s": 18,
+            "spin": 521,
+            "w": 1
+          },
+          "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\rainbow\\smg1\\eval-dqn-video-20261026-075948-176403\\policy.mp4"
+        },
+        "IQN": {
+          "real_training_decisions_per_mission": 8192,
+          "full_start_stars": 0,
+          "evaluation_decisions": 660,
+          "outcomes": [
+            "timeout",
+            "timeout",
+            "evaluation_budget_cut"
+          ],
+          "mapped_opening_percent_by_seed": [
+            0.0,
+            0.0,
+            1.138595893576501
+          ],
+          "action_counts": {
+            "spin": 656,
+            "w": 1,
+            "s": 1,
+            "crouch": 1,
+            "none": 1
+          },
+          "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\iqn\\smg1\\eval-dqn-video-20261026-085405-776756\\policy.mp4"
+        }
+      }
+    },
+    {
+      "mission": "spinning",
+      "algorithms": {
+        "Rainbow": {
+          "real_training_decisions_per_mission": 8192,
+          "full_start_stars": 0,
+          "evaluation_decisions": 660,
+          "outcomes": [
+            "timeout",
+            "timeout",
+            "evaluation_budget_cut"
+          ],
+          "mapped_opening_percent_by_seed": [
+            0.0,
+            0.0,
+            0.8476639792027362
+          ],
+          "action_counts": {
+            "none": 225,
+            "spin": 432,
+            "w": 1,
+            "s": 1,
+            "crouch": 1
+          },
+          "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\rainbow\\smg2\\eval-dqn-video-20261026-075948-259232\\policy.mp4"
+        },
+        "IQN": {
+          "real_training_decisions_per_mission": 8192,
+          "full_start_stars": 0,
+          "evaluation_decisions": 660,
+          "outcomes": [
+            "timeout",
+            "timeout",
+            "evaluation_budget_cut"
+          ],
+          "mapped_opening_percent_by_seed": [
+            0.0,
+            0.0,
+            0.8476639792027362
+          ],
+          "action_counts": {
+            "none": 657,
+            "w": 1,
+            "s": 1,
+            "crouch": 1
+          },
+          "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\iqn\\smg2\\eval-dqn-video-20261026-085814-204723\\policy.mp4"
+        }
+      }
+    },
+    {
+      "mission": "double_time",
+      "algorithms": {
+        "Rainbow": {
+          "real_training_decisions_per_mission": 8192,
+          "full_start_stars": 0,
+          "evaluation_decisions": 660,
+          "outcomes": [
+            "timeout",
+            "timeout",
+            "evaluation_budget_cut"
+          ],
+          "mapped_opening_percent_by_seed": [
+            0.0,
+            0.0,
+            0.8476639792027362
+          ],
+          "action_counts": {
+            "spin": 650,
+            "none": 7,
+            "w": 1,
+            "s": 1,
+            "crouch": 1
+          },
+          "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\rainbow\\smg2\\eval-dqn-video-20261026-075948-746569\\policy.mp4"
+        },
+        "IQN": {
+          "real_training_decisions_per_mission": 8192,
+          "full_start_stars": 0,
+          "evaluation_decisions": 660,
+          "outcomes": [
+            "timeout",
+            "timeout",
+            "evaluation_budget_cut"
+          ],
+          "mapped_opening_percent_by_seed": [
+            0.0,
+            0.0,
+            0.8476639792027362
+          ],
+          "action_counts": {
+            "none": 657,
+            "w": 1,
+            "s": 1,
+            "crouch": 1
+          },
+          "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\iqn\\smg2\\eval-dqn-video-20261026-085405-776756\\policy.mp4"
+        }
+      }
+    }
+  ],
+  "throughput": {
+    "smg1": {
+      "Rainbow": 10.079576342806847,
+      "IQN": 13.438169049467035
+    },
+    "smg2": {
+      "Rainbow": 18.684548363342536,
+      "IQN": 23.017590731309532
+    }
+  },
+  "limitations": [
+    "Opening fractions are not full mission percentages.",
+    "Collection maxima are not frozen policy results.",
+    "Wall-clock workloads/visitation differ; throughput is not sample efficiency.",
+    "Inputs use the same documented recording capture path in both algorithms."
+  ]
+}

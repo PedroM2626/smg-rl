@@ -1,11 +1,11 @@
 # Model-free Rainbow, IQN and TensorBoard
 
-**Current phase:** Rainbow's first online blocks and all nine frozen evaluations
-are complete. They produced no stars and mostly spin/idle behavior. After that
-manual review, the owner-authorized IQN alternative is receiving an equivalent
-fresh online pilot, with the same 8192-decision-per-mission cap. No world model
-or reward change was introduced. The CLI default follows the active IQN SMG2
-trial; Rainbow remains explicitly selectable.
+**Comparison completed:** Rainbow and fresh IQN each reached 8192 real decisions
+per mission and completed all nine frozen evaluations. Neither collected a star
+or demonstrated useful frozen-policy navigation. All training/evaluation processes
+are stopped, with no successor allocated. TensorBoard remains available for
+history. The CLI default retains the IQN profile for explicitly requested future
+work; it does not imply a running job or demonstrated superiority.
 
 On October 26, 2026 the owner selected model-free distributional Q-learning after
 the finite RSSM/world-model pilot. PPO was already a historical alternative; the
@@ -187,6 +187,10 @@ every two frames. Encoder frame counts, stable input digests and 8-on/4-off butt
 timing passed sidecar checks. Full-RGBA recording uses the established OpenCV
 gray/crop/resize path; collection uses native CPU capture, so evaluation records
 that capture-path distinction rather than assuming byte-identical preprocessing.
+The movie inset displays the latest actual grayscale frame from the four-frame
+observation, not the entire temporal stack. The network still receives all four;
+TensorBoard's stack image shows all four collection frames together. Sidecar
+input digests refer to the displayed latest frame.
 
 [IQN optimizer validation](assets/performance/model-free-iqn-smoke-20261026.json)
 performed 64 finite updates per game on **copies** of the real Rainbow health
@@ -214,9 +218,11 @@ detector fixtures never establish full-start learning success.
 
 ## Commands
 
-The Rainbow pilot is completed; the reviewed IQN comparison is dispatched. Inspect state/status before executing
+Both finite algorithm pilots are completed. Inspect state/status before executing
 commands; do not duplicate active workers. IQN occupies the six collectors after Rainbow stopped, rather than adding
 another six concurrently. Both trial allocations remain finite.
+
+These statements describe the completed dispatch order; no collector remains active.
 
 ```powershell
 # Reference for a NEW bounded Rainbow block:
@@ -288,3 +294,63 @@ The hourly follow-up reads the current algorithm and actual controllers from
 state and must never rerun the completed Rainbow blocks/evaluations. One paired
 training seed per game is an exploratory comparison, not three independently
 trained seeds; three evaluation seeds do not establish statistical superiority.
+
+
+## Final IQN result and comparison closure
+
+[IQN completion evidence](assets/performance/model-free-iqn-final-20261026.json)
+reconciles 8192 SMG1 and 16384 SMG2 real decisions, 1920/3967 optimizer updates,
+3/7 target synchronizations and zero imagined transitions. Replay scenario counts,
+episode decisions and per-action ledgers match exactly. No runtime training
+error, RAM star or nonfatal HP loss occurred. All 302 terminal failures passed
+potential closure (maximum error about 1.17e-15), with 12 nonterminal collector
+cuts retained separately. No reward, model parameter or optimizer was changed
+during frozen evaluation.
+
+IQN's nine final episodes produced six idle timeouts and three 300-decision
+budget cuts, with zero RAM stars. Sweet Sweet used spin 656/660 times; each SMG2
+mission used none 657/660 times. Every mission had zero grounded opening advance
+for evaluation seeds 11/23. Seed 47 reached 1.139% of the short Sweet Sweet opening
+and 0.848% of each SMG2 opening. These tiny excursions occurred in the explicit
+1% epsilon evaluation and do not show useful navigation, a full-course percentage
+or independently replicated learning. Videos, exact image digests, raw Q values,
+button timing and encoded frame counts were checked and retained.
+
+The [paired summary](assets/performance/model-free-comparison-20261026.json)
+and [world-path/action-occupancy figure](assets/performance/model-free-comparison-20261026.png)
+compare all three frozen seeds for each mission. Main-block observed throughput:
+
+| Game | Rainbow real decisions/s | IQN real decisions/s |
+| --- | ---: | ---: |
+| SMG1 |10.08|13.44|
+| SMG2, aggregate across both scenarios |18.68|23.02|
+
+IQN's Q update means were 21.14/20.08ms versus Rainbow 52.28/50.40ms in this
+implementation/machine. Workloads, visits and runtime conditions differ: these
+observations support lower measured overhead here, not a general algorithm
+ranking or proven sample-efficiency benefit. Neither final policy solved a
+mission; faster counters did not translate into demonstrated navigation.
+
+One parallel Spinning evaluation failed before emulator creation because two
+`new_run` calls received the same Windows clock timestamp. No episode or game
+decision was executed by that failed allocation. Both completed other missions
+and the original stderr were retained. Run allocation now atomically falls back
+to a random suffix on name collision, with a frozen-clock regression test.
+Only the three previously unexecuted Spinning seeds were retried, with the same
+300-decision cap; the successful retry is recorded in local state. No completed
+training/evaluation budget was duplicated or extended.
+
+The useful next diagnosis is the time/failure objective, exploration and Q
+calibration rather than an automatic longer run. The explicit return calculation
+above shows why delaying failure can be preferable among failed behaviors.
+The observed spin/idle policies in both algorithms, with zero curiosity and no
+world model, make visual novelty an insufficient sole explanation. They do not
+prove a single root cause or that either learner cannot succeed after a better
+validated task design and larger controlled study.
+
+This finite comparison is closed. No additional fitting, training or algorithm
+trial was started. The hourly follow-up was removed after the final report;
+TensorBoard was deliberately left available for inspecting retained history.
+The regression suite passed 182 tests and Ruff. All original checkpoints, ROMs,
+states and profiles remain preserved; commits contain only source/docs/config
+and numeric or project-authored figure evidence.
