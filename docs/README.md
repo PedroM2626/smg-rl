@@ -13,6 +13,7 @@ each run's `status.json` remains the live source.
 | Need | Document |
 | --- | --- |
 | Installation, supported tasks, rewards, and recommended quick start | [Main README](../README.md) |
+| Active pure Rainbow/IQN learner, shared-frame PER, TensorBoard, immutable replay checkpoints and finite trials | [Model-free learning](model-free.md) |
 | Exact command arguments, backend, and side effects | [CLI reference](cli.md) |
 | Local ROM and savestate filenames and roles | [Asset guide](../data/README.md) |
 | Native build, shared-memory capture, exact frame stepping, profiling, and benchmarks | [Native backend](native-backend.md) |

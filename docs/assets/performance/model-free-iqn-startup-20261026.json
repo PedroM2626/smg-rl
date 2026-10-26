@@ -1,0 +1,408 @@
+{
+  "scope": "Dated fresh-IQN health review and active snapshot, not a final navigation or superiority result.",
+  "allocation_review": {
+    "observed_at": "2026-10-26T11:06:03.394882+00:00",
+    "owner_scope": "Owner selected Rainbow and/or IQN and requested continuation. This manually reviewed second algorithm pilot is within that scope.",
+    "reason": "Test IQN under the same finite real-frame/control/reward/start budget after completed Rainbow frozen evaluations. Do not silently change rewards or infer superiority.",
+    "fresh_initialization": true,
+    "use_offline_smoke_checkpoint": false,
+    "cap_per_algorithm_per_mission": 8192,
+    "maximum_emulators": 6
+  },
+  "jobs": {
+    "smg1": {
+      "phase": "first_block_running",
+      "config": "config/iqn-smg1.yaml",
+      "workers": 2,
+      "health_budget": 1024,
+      "cumulative_cap": 8192,
+      "source_count": 1024,
+      "resume": null,
+      "run": "runs\\model-free\\iqn\\smg1\\dqn-20261026-080937-104391",
+      "controller": {
+        "pid": 10300,
+        "created_time": 1793012973.7696035,
+        "workers": 2,
+        "algorithm": "iqn",
+        "resume": "runs\\model-free\\iqn\\smg1\\dqn-20261026-080606-856840\\checkpoint-final",
+        "requested_additional": 7168,
+        "source_count": 1024,
+        "target_count": 8192
+      },
+      "status": {
+        "state": "running",
+        "algorithm": "iqn",
+        "timesteps": 2048,
+        "real_decisions": 2048,
+        "requested_additional": 7168,
+        "source_count": 1024,
+        "target_count": 8192,
+        "optimizer_updates": 384,
+        "target_updates": 0,
+        "imagined_transitions": 0,
+        "sampled_transitions": 12288,
+        "replay_transitions": 2046,
+        "replay_emitted": 2046,
+        "replay_bytes": 711808320,
+        "elapsed_seconds": 81.17199999999866,
+        "decisions_per_second": 12.615187503080088,
+        "emulated_frames_per_second": 151.38225003696107,
+        "full_start_stars_this_run": 0,
+        "assisted_stars_this_run": 0,
+        "episodes_this_run": 12,
+        "deaths_this_run": 11,
+        "nonfatal_hp_lost_this_run": 0,
+        "tensorboard": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\tensorboard\\iqn\\RMGE01\\dqn-20261026-080937-104391",
+        "updated_at": "2026-10-26T11:10:58.279705+00:00",
+        "losses": {
+          "loss": 1.5971298217773438,
+          "gradient_norm": 14.242879867553711,
+          "beta": 0.41228800000000004,
+          "mean_priority": 0.8788655996322632,
+          "effective_sample_size": 30.937091827392578
+        },
+        "timings": {
+          "policy_inference": {
+            "count": 512,
+            "total_ms": 2289.816799977416,
+            "mean_ms": 4.4722984374558905,
+            "recent_p50_ms": 3.924050000932766,
+            "recent_p95_ms": 6.534484998701373
+          },
+          "emulator_collection": {
+            "count": 512,
+            "total_ms": 63557.8873000195,
+            "mean_ms": 124.13649863285059,
+            "recent_p50_ms": 111.12739999953192,
+            "recent_p95_ms": 170.20547499942035
+          },
+          "q_update": {
+            "count": 256,
+            "total_ms": 5217.877400013094,
+            "mean_ms": 20.38233359380115,
+            "recent_p50_ms": 20.27070000076492,
+            "recent_p95_ms": 27.313649999996414
+          }
+        },
+        "error": null,
+        "start_kinds": [
+          "curriculum",
+          "full_start"
+        ],
+        "start_relative_route_progress": [
+          0.07307592798152118,
+          0.20121920378906258
+        ],
+        "note": "Opening route/projection values are not native mission percentage. No final-policy success claim from collection maxima."
+      },
+      "review": {
+        "state": "passed",
+        "reason": "Fresh IQN health: exact real/replay counts, finite quantile updates, valid checkpoint and actual TensorBoard metrics. No reused smoke initialization.",
+        "source_count": 1024,
+        "next_target": 8192,
+        "next_additional": 7168
+      },
+      "health_run": "runs\\model-free\\iqn\\smg1\\dqn-20261026-080606-856840",
+      "health_status": {
+        "state": "completed",
+        "algorithm": "iqn",
+        "timesteps": 1024,
+        "real_decisions": 1024,
+        "requested_additional": 1024,
+        "source_count": 0,
+        "target_count": 1024,
+        "optimizer_updates": 128,
+        "target_updates": 0,
+        "imagined_transitions": 0,
+        "sampled_transitions": 4096,
+        "replay_transitions": 1024,
+        "replay_emitted": 1024,
+        "replay_bytes": 711808320,
+        "elapsed_seconds": 76.04699999999866,
+        "decisions_per_second": 13.465356950307283,
+        "emulated_frames_per_second": 161.5842834036874,
+        "full_start_stars_this_run": 0,
+        "assisted_stars_this_run": 0,
+        "episodes_this_run": 9,
+        "deaths_this_run": 8,
+        "nonfatal_hp_lost_this_run": 0,
+        "tensorboard": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\tensorboard\\iqn\\RMGE01\\dqn-20261026-080606-856840",
+        "updated_at": "2026-10-26T11:07:22.907337+00:00",
+        "losses": {
+          "loss": 1.5092902183532715,
+          "gradient_norm": 5.953420162200928,
+          "beta": 0.406144,
+          "mean_priority": 0.6676918268203735,
+          "effective_sample_size": 30.6573543548584
+        },
+        "timings": {
+          "policy_inference": {
+            "count": 512,
+            "total_ms": 2314.648899995518,
+            "mean_ms": 4.520798632803746,
+            "recent_p50_ms": 3.7429500007419847,
+            "recent_p95_ms": 6.5863100015121745
+          },
+          "emulator_collection": {
+            "count": 512,
+            "total_ms": 58675.986000016565,
+            "mean_ms": 114.60153515628235,
+            "recent_p50_ms": 107.91455000071437,
+            "recent_p95_ms": 145.65389499985028
+          },
+          "q_update": {
+            "count": 128,
+            "total_ms": 2749.0964999888092,
+            "mean_ms": 21.477316406162572,
+            "recent_p50_ms": 19.066050001129042,
+            "recent_p95_ms": 24.647225000262548
+          },
+          "checkpoint": {
+            "count": 1,
+            "total_ms": 601.0248999991745,
+            "mean_ms": 601.0248999991745,
+            "recent_p50_ms": 601.0248999991745,
+            "recent_p95_ms": 601.0248999991745
+          }
+        },
+        "error": null,
+        "start_kinds": [
+          "curriculum",
+          "full_start"
+        ],
+        "start_relative_route_progress": [
+          0.022376618323142333,
+          0.09728220338717866
+        ],
+        "note": "Opening route/projection values are not native mission percentage. No final-policy success claim from collection maxima."
+      },
+      "health_checkpoint": "runs\\model-free\\iqn\\smg1\\dqn-20261026-080606-856840\\checkpoint-final",
+      "target_count": 8192,
+      "requested_additional": 7168,
+      "owned_emulators": [
+        {
+          "pid": 30576,
+          "created_time": 1793012984.7435088
+        },
+        {
+          "pid": 11384,
+          "created_time": 1793012979.629826
+        }
+      ]
+    },
+    "smg2": {
+      "phase": "first_block_running",
+      "config": "config/iqn-smg2.yaml",
+      "workers": 4,
+      "health_budget": 2048,
+      "cumulative_cap": 16384,
+      "source_count": 2048,
+      "resume": null,
+      "run": "runs\\model-free\\iqn\\smg2\\dqn-20261026-080937-141391",
+      "controller": {
+        "pid": 15756,
+        "created_time": 1793012973.782614,
+        "workers": 4,
+        "algorithm": "iqn",
+        "resume": "runs\\model-free\\iqn\\smg2\\dqn-20261026-080607-150417\\checkpoint-final",
+        "requested_additional": 14336,
+        "source_count": 2048,
+        "target_count": 16384
+      },
+      "status": {
+        "state": "running",
+        "algorithm": "iqn",
+        "timesteps": 3584,
+        "real_decisions": 3584,
+        "requested_additional": 14336,
+        "source_count": 2048,
+        "target_count": 16384,
+        "optimizer_updates": 767,
+        "target_updates": 1,
+        "imagined_transitions": 0,
+        "sampled_transitions": 24544,
+        "replay_transitions": 3576,
+        "replay_emitted": 3576,
+        "replay_bytes": 712006336,
+        "elapsed_seconds": 90.73500000000058,
+        "decisions_per_second": 16.928417920317298,
+        "emulated_frames_per_second": 203.14101504380758,
+        "full_start_stars_this_run": 0,
+        "assisted_stars_this_run": 0,
+        "episodes_this_run": 17,
+        "deaths_this_run": 16,
+        "nonfatal_hp_lost_this_run": 0,
+        "tensorboard": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\tensorboard\\iqn\\SB4E01\\dqn-20261026-080937-141391",
+        "updated_at": "2026-10-26T11:11:07.885337+00:00",
+        "losses": {
+          "loss": 1.6792370080947876,
+          "gradient_norm": 11.412381172180176,
+          "beta": 0.42150400000000005,
+          "mean_priority": 0.905762255191803,
+          "effective_sample_size": 30.91790199279785
+        },
+        "timings": {
+          "policy_inference": {
+            "count": 384,
+            "total_ms": 1902.5512999978673,
+            "mean_ms": 4.9545606770777795,
+            "recent_p50_ms": 3.977399999712361,
+            "recent_p95_ms": 6.43613500178617
+          },
+          "emulator_collection": {
+            "count": 384,
+            "total_ms": 58312.96579994887,
+            "mean_ms": 151.8566817707002,
+            "recent_p50_ms": 119.55490000036662,
+            "recent_p95_ms": 466.5286700004794
+          },
+          "q_update": {
+            "count": 384,
+            "total_ms": 8210.660099968663,
+            "mean_ms": 21.381927343668394,
+            "recent_p50_ms": 20.409499999004765,
+            "recent_p95_ms": 27.07701999934215
+          }
+        },
+        "error": null,
+        "start_kinds": [
+          "full_start",
+          "full_start",
+          "curriculum",
+          "full_start"
+        ],
+        "start_relative_route_progress": [
+          0.0554002721746548,
+          0.00012445278273508554,
+          0.17394760540716278,
+          0.0
+        ],
+        "note": "Opening route/projection values are not native mission percentage. No final-policy success claim from collection maxima."
+      },
+      "review": {
+        "state": "passed",
+        "reason": "Fresh IQN health: exact real/replay counts, finite quantile updates, valid checkpoint and actual TensorBoard metrics. No reused smoke initialization.",
+        "source_count": 2048,
+        "next_target": 16384,
+        "next_additional": 14336
+      },
+      "health_run": "runs\\model-free\\iqn\\smg2\\dqn-20261026-080607-150417",
+      "health_status": {
+        "state": "completed",
+        "algorithm": "iqn",
+        "timesteps": 2048,
+        "real_decisions": 2048,
+        "requested_additional": 2048,
+        "source_count": 0,
+        "target_count": 2048,
+        "optimizer_updates": 383,
+        "target_updates": 0,
+        "imagined_transitions": 0,
+        "sampled_transitions": 12256,
+        "replay_transitions": 2048,
+        "replay_emitted": 2048,
+        "replay_bytes": 712006336,
+        "elapsed_seconds": 100.14099999999962,
+        "decisions_per_second": 20.451163858958946,
+        "emulated_frames_per_second": 245.41396630750734,
+        "full_start_stars_this_run": 0,
+        "assisted_stars_this_run": 0,
+        "episodes_this_run": 23,
+        "deaths_this_run": 21,
+        "nonfatal_hp_lost_this_run": 0,
+        "tensorboard": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\tensorboard\\iqn\\SB4E01\\dqn-20261026-080607-150417",
+        "updated_at": "2026-10-26T11:07:47.299669+00:00",
+        "losses": {
+          "loss": 0.6902778148651123,
+          "gradient_norm": 6.92995548248291,
+          "beta": 0.41228800000000004,
+          "mean_priority": 0.6071732640266418,
+          "effective_sample_size": 30.679019927978516
+        },
+        "timings": {
+          "policy_inference": {
+            "count": 512,
+            "total_ms": 2238.962299979903,
+            "mean_ms": 4.372973242148248,
+            "recent_p50_ms": 3.5612500014394755,
+            "recent_p95_ms": 5.7891700005711755
+          },
+          "emulator_collection": {
+            "count": 512,
+            "total_ms": 67042.7606999474,
+            "mean_ms": 130.94289199208475,
+            "recent_p50_ms": 107.06514999947103,
+            "recent_p95_ms": 370.15572000018415
+          },
+          "q_update": {
+            "count": 383,
+            "total_ms": 7001.404199992976,
+            "mean_ms": 18.280428720608292,
+            "recent_p50_ms": 17.209199999342673,
+            "recent_p95_ms": 21.861079998780042
+          },
+          "checkpoint": {
+            "count": 1,
+            "total_ms": 553.2956999995804,
+            "mean_ms": 553.2956999995804,
+            "recent_p50_ms": 553.2956999995804,
+            "recent_p95_ms": 553.2956999995804
+          }
+        },
+        "error": null,
+        "start_kinds": [
+          "full_start",
+          "curriculum",
+          "full_start",
+          "full_start"
+        ],
+        "start_relative_route_progress": [
+          0.2534914200440416,
+          0.20338724419922957,
+          0.16043874761417584,
+          0.3212419363020156
+        ],
+        "note": "Opening route/projection values are not native mission percentage. No final-policy success claim from collection maxima."
+      },
+      "health_checkpoint": "runs\\model-free\\iqn\\smg2\\dqn-20261026-080607-150417\\checkpoint-final",
+      "target_count": 16384,
+      "requested_additional": 14336,
+      "owned_emulators": [
+        {
+          "pid": 13324,
+          "created_time": 1793012995.1041172
+        },
+        {
+          "pid": 11084,
+          "created_time": 1793012989.918815
+        },
+        {
+          "pid": 14060,
+          "created_time": 1793012984.787357
+        },
+        {
+          "pid": 23644,
+          "created_time": 1793012979.7347083
+        }
+      ]
+    }
+  },
+  "tensorboard": {
+    "url": "http://127.0.0.1:6006/",
+    "http": "{\"logdir\": \"runs/model-free/tensorboard\"}",
+    "processes": [
+      {
+        "pid": 29520,
+        "created_time": 1793010535.781025
+      },
+      {
+        "pid": 29736,
+        "created_time": 1793010535.8269603
+      }
+    ],
+    "http_status": 200
+  },
+  "resources": {
+    "available_ram_gib": 7.453327178955078
+  }
+}

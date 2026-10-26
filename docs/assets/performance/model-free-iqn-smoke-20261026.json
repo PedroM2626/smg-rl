@@ -1,0 +1,44 @@
+{
+  "reports": [
+    {
+      "game": "smg1",
+      "state": "completed",
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\iqn\\smg1\\dqn-offline-smoke-20261026-073245-452267",
+      "updates": 64,
+      "physical_new_real_decisions": 0,
+      "imagined_transitions": 0,
+      "reused_source_real_decisions": 1024,
+      "source_checkpoint": "runs\\model-free\\rainbow\\smg1\\dqn-20261026-072845-942059\\checkpoint-final",
+      "source_replay_sha256": "4ee0f649a68a8b003bdd28886dd069f302f56e075fb9f4af291765fd989015af",
+      "optimizer_wall_seconds": 2.957998400001088,
+      "last_metrics": {
+        "loss": 0.312668114900589,
+        "gradient_norm": 0.8635554909706116,
+        "beta": 0.406144,
+        "mean_priority": 0.2030261754989624,
+        "effective_sample_size": 31.078773498535156
+      },
+      "scope": "Implementation/finite-gradient smoke on reused real data, not unseen evaluation or a Rainbow/IQN performance comparison."
+    },
+    {
+      "game": "smg2",
+      "state": "completed",
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\iqn\\smg2\\dqn-offline-smoke-20261026-073249-483779",
+      "updates": 64,
+      "physical_new_real_decisions": 0,
+      "imagined_transitions": 0,
+      "reused_source_real_decisions": 2048,
+      "source_checkpoint": "runs\\model-free\\rainbow\\smg2\\dqn-20261026-072846-204607\\checkpoint-final",
+      "source_replay_sha256": "38f730372974a41207b9d80a74f087a613b8cbeadaf34989ce5770459a6b63fa",
+      "optimizer_wall_seconds": 2.3629789000005985,
+      "last_metrics": {
+        "loss": 0.7782764434814453,
+        "gradient_norm": 1.1337661743164062,
+        "beta": 0.41228800000000004,
+        "mean_priority": 0.39708706736564636,
+        "effective_sample_size": 26.862131118774414
+      },
+      "scope": "Implementation/finite-gradient smoke on reused real data, not unseen evaluation or a Rainbow/IQN performance comparison."
+    }
+  ]
+}

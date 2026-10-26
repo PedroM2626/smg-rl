@@ -1,0 +1,921 @@
+{
+  "observed_at": "2026-10-26T11:04:12.328734+00:00",
+  "scope": "Completed declared Rainbow blocks and frozen evaluations. No new training or fitting.",
+  "games": {
+    "smg1": {
+      "status": {
+        "state": "completed",
+        "algorithm": "rainbow",
+        "timesteps": 8192,
+        "real_decisions": 8192,
+        "requested_additional": 7168,
+        "source_count": 1024,
+        "target_count": 8192,
+        "optimizer_updates": 1920,
+        "target_updates": 3,
+        "imagined_transitions": 0,
+        "sampled_transitions": 61440,
+        "replay_transitions": 8192,
+        "replay_emitted": 8192,
+        "replay_bytes": 711808320,
+        "elapsed_seconds": 711.1409999999996,
+        "decisions_per_second": 10.079576342806847,
+        "emulated_frames_per_second": 120.95491611368216,
+        "full_start_stars_this_run": 0,
+        "assisted_stars_this_run": 0,
+        "episodes_this_run": 133,
+        "deaths_this_run": 122,
+        "nonfatal_hp_lost_this_run": 0,
+        "tensorboard": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\tensorboard\\rainbow\\RMGE01\\dqn-20261026-073806-238494",
+        "updated_at": "2026-10-26T10:49:57.375537+00:00",
+        "losses": {
+          "support_clipped_mass": 0.0,
+          "loss": 1.4928679466247559,
+          "gradient_norm": 0.7419211268424988,
+          "beta": 0.449152,
+          "mean_priority": 0.08667440712451935,
+          "effective_sample_size": 27.712350845336914
+        },
+        "timings": {
+          "policy_inference": {
+            "count": 3584,
+            "total_ms": 36525.63699983875,
+            "mean_ms": 10.191304966472867,
+            "recent_p50_ms": 11.135150001791772,
+            "recent_p95_ms": 16.96540999928402
+          },
+          "emulator_collection": {
+            "count": 3584,
+            "total_ms": 555911.385000115,
+            "mean_ms": 155.10920340404996,
+            "recent_p50_ms": 133.08730000062496,
+            "recent_p95_ms": 163.12124000032782
+          },
+          "q_update": {
+            "count": 1792,
+            "total_ms": 93679.46390004727,
+            "mean_ms": 52.276486551365664,
+            "recent_p50_ms": 57.458899998891866,
+            "recent_p95_ms": 74.46451000014349
+          },
+          "checkpoint": {
+            "count": 1,
+            "total_ms": 6167.822499999602,
+            "mean_ms": 6167.822499999602,
+            "recent_p50_ms": 6167.822499999602,
+            "recent_p95_ms": 6167.822499999602
+          }
+        },
+        "error": null,
+        "start_kinds": [
+          "full_start",
+          "full_start"
+        ],
+        "start_relative_route_progress": [
+          0.0017693798578732008,
+          0.0
+        ],
+        "note": "Opening route/projection values are not native mission percentage. No final-policy success claim from collection maxima."
+      },
+      "manifest": {
+        "schema": 1,
+        "algorithm": "rainbow",
+        "signature": {
+          "schema": 1,
+          "game_id": "RMGE01",
+          "scenario_names": [
+            "sweet_sweet"
+          ],
+          "action_names": [
+            "none",
+            "d",
+            "a",
+            "w",
+            "s",
+            "jump",
+            "spin",
+            "crouch"
+          ],
+          "image_size": 84,
+          "crop": [
+            0.12,
+            0.17,
+            0.88,
+            0.91
+          ],
+          "frame_skip": 12,
+          "reward_revision": "regional-frame-potential-v1",
+          "reward_weights": {
+            "completion": 20.0,
+            "damage": -0.25,
+            "death": -2.0,
+            "progress": 0.0,
+            "step": -0.001,
+            "timeout": -2.0
+          },
+          "action_execution": "motor8-v1:12-frames:jump-spin-8-on-4-off",
+          "regional_reward": {
+            "enabled": true,
+            "spec_sha256": "dd7858d20f3c8a7c95908f8e0756277f1ab6877dce1f013bd9a4631b2cfb0a94",
+            "scale": 5.0,
+            "normalization_distance": 50000.0,
+            "gamma_per_frame": 0.9997496555897012,
+            "max_idle_frames": 2160,
+            "max_episode_frames": 36000
+          },
+          "termination_revision": "absorbing-frame-budget-v1",
+          "curriculum_distribution": {
+            "enabled": true,
+            "probability": 0.5,
+            "spec_sha256": "51ced5aebf3c9752bf277bbdf11eb36ae3ac9729fb7c8a88b693e420373ee225"
+          }
+        },
+        "settings": {
+          "algorithm": "rainbow",
+          "gamma": 0.997,
+          "frame_stack": 4,
+          "capacity": 50000,
+          "max_replay_bytes": 850000000,
+          "n_step": 3,
+          "alpha": 0.5,
+          "beta_start": 0.4,
+          "beta_steps": 100000,
+          "priority_epsilon": 1e-06,
+          "batch_size": 32,
+          "learning_starts": 512,
+          "train_every": 4,
+          "target_update_interval": 500,
+          "learning_rate": 6.25e-05,
+          "adam_epsilon": 0.00015,
+          "max_grad_norm": 10.0,
+          "epsilon": 0.01,
+          "evaluation_epsilon": 0.01,
+          "hidden": 512,
+          "channels": 32,
+          "atoms": 51,
+          "v_min": -10.0,
+          "v_max": 25.0,
+          "quantiles": 32,
+          "cosine_embedding": 64
+        },
+        "agent_sha256": "25d54091e614ed80ffbef8d19c5bab6b700436de0d111d36315ad582915ce30c",
+        "replay_sha256": "7c8c5466961b17e9c08ab5e51e4a9146428bdd4c1e6c37d3924bed7a8d72ca09",
+        "replay_emitted": 8192,
+        "real_decisions": 8192,
+        "note": "New run resumes with canonical/curriculum resets; collector cuts retain bootstrap."
+      },
+      "scenario_transition_counts": {
+        "0": 8192
+      },
+      "training_action_counts": {
+        "w": 286,
+        "jump": 607,
+        "crouch": 104,
+        "d": 828,
+        "a": 101,
+        "none": 473,
+        "spin": 3947,
+        "s": 1846
+      },
+      "terminal_failures_audited": 153,
+      "maximum_terminal_closure_error": 6.938893903907228e-16,
+      "observed_logged_support_clip_mass_max": 0.0,
+      "tensorboard_scalar_tags": [
+        "training/optimizer_updates",
+        "training/replay_transitions",
+        "training/replay_bytes",
+        "training/decisions_per_second",
+        "training/emulated_frames_per_second",
+        "training/full_start_stars_this_run",
+        "training/assisted_stars_this_run",
+        "training/deaths_this_run",
+        "resources/available_ram_gib",
+        "actions/none",
+        "actions/d",
+        "actions/a",
+        "actions/w",
+        "actions/s",
+        "actions/jump",
+        "actions/spin",
+        "actions/crouch",
+        "episodes/sweet_sweet/full_start/return",
+        "episodes/sweet_sweet/full_start/decisions",
+        "episodes/sweet_sweet/full_start/ram_star",
+        "episodes/sweet_sweet/full_start/opening_advance",
+        "learning/support_clipped_mass",
+        "learning/loss",
+        "learning/gradient_norm",
+        "learning/beta",
+        "learning/mean_priority",
+        "learning/effective_sample_size",
+        "learning/q_mean",
+        "learning/q_max",
+        "learning/epsilon",
+        "timing/policy_inference_mean_ms",
+        "timing/emulator_collection_mean_ms",
+        "timing/q_update_mean_ms",
+        "episodes/sweet_sweet/curriculum/return",
+        "episodes/sweet_sweet/curriculum/decisions",
+        "episodes/sweet_sweet/curriculum/ram_star",
+        "episodes/sweet_sweet/curriculum/opening_advance",
+        "timing/checkpoint_mean_ms"
+      ]
+    },
+    "smg2": {
+      "status": {
+        "state": "completed",
+        "algorithm": "rainbow",
+        "timesteps": 16384,
+        "real_decisions": 16384,
+        "requested_additional": 14336,
+        "source_count": 2048,
+        "target_count": 16384,
+        "optimizer_updates": 3967,
+        "target_updates": 7,
+        "imagined_transitions": 0,
+        "sampled_transitions": 126944,
+        "replay_transitions": 16384,
+        "replay_emitted": 16384,
+        "replay_bytes": 712006336,
+        "elapsed_seconds": 767.2649999999994,
+        "decisions_per_second": 18.684548363342536,
+        "emulated_frames_per_second": 224.21458036011043,
+        "full_start_stars_this_run": 0,
+        "assisted_stars_this_run": 0,
+        "episodes_this_run": 89,
+        "deaths_this_run": 55,
+        "nonfatal_hp_lost_this_run": 0,
+        "tensorboard": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\tensorboard\\rainbow\\SB4E01\\dqn-20261026-073806-378273",
+        "updated_at": "2026-10-26T10:50:53.647847+00:00",
+        "losses": {
+          "support_clipped_mass": 0.0,
+          "loss": 1.1151432991027832,
+          "gradient_norm": 0.34495267271995544,
+          "beta": 0.498304,
+          "mean_priority": 0.19926835596561432,
+          "effective_sample_size": 25.797290802001953
+        },
+        "timings": {
+          "policy_inference": {
+            "count": 3584,
+            "total_ms": 37346.478800071054,
+            "mean_ms": 10.420334486626968,
+            "recent_p50_ms": 10.652549999576877,
+            "recent_p95_ms": 14.844334998269915
+          },
+          "emulator_collection": {
+            "count": 3584,
+            "total_ms": 514541.80699995556,
+            "mean_ms": 143.56635239954116,
+            "recent_p50_ms": 117.12289999923087,
+            "recent_p95_ms": 149.84648499994364
+          },
+          "q_update": {
+            "count": 3584,
+            "total_ms": 180635.38809994498,
+            "mean_ms": 50.400498911815006,
+            "recent_p50_ms": 52.74424999879557,
+            "recent_p95_ms": 66.53671500062046
+          },
+          "checkpoint": {
+            "count": 1,
+            "total_ms": 4789.391599999362,
+            "mean_ms": 4789.391599999362,
+            "recent_p50_ms": 4789.391599999362,
+            "recent_p95_ms": 4789.391599999362
+          }
+        },
+        "error": null,
+        "start_kinds": [
+          "full_start",
+          "full_start",
+          "full_start",
+          "curriculum"
+        ],
+        "start_relative_route_progress": [
+          0.061807481775737964,
+          0.10267242526121524,
+          0.0,
+          0.10481005003687188
+        ],
+        "note": "Opening route/projection values are not native mission percentage. No final-policy success claim from collection maxima."
+      },
+      "manifest": {
+        "schema": 1,
+        "algorithm": "rainbow",
+        "signature": {
+          "schema": 1,
+          "game_id": "SB4E01",
+          "scenario_names": [
+            "spinning",
+            "double_time"
+          ],
+          "action_names": [
+            "none",
+            "d",
+            "a",
+            "w",
+            "s",
+            "jump",
+            "spin",
+            "crouch"
+          ],
+          "image_size": 84,
+          "crop": [
+            0.12,
+            0.17,
+            0.88,
+            0.91
+          ],
+          "frame_skip": 12,
+          "reward_revision": "regional-frame-potential-v1",
+          "reward_weights": {
+            "completion": 20.0,
+            "death": -2.0,
+            "progress": 0.0,
+            "step": -0.001,
+            "timeout": -2.0
+          },
+          "action_execution": "motor8-v1:12-frames:jump-spin-8-on-4-off",
+          "regional_reward": {
+            "enabled": true,
+            "spec_sha256": "a610eccb5bc9a4fc026757b723889689a1ac0ef0acfbc712711b123a3209b1f4",
+            "scale": 5.0,
+            "normalization_distance": 50000.0,
+            "gamma_per_frame": 0.9997496555897012,
+            "max_idle_frames": 2160,
+            "max_episode_frames": 36000
+          },
+          "termination_revision": "absorbing-frame-budget-v1",
+          "curriculum_distribution": {
+            "enabled": true,
+            "probability": 0.5,
+            "spec_sha256": "6a7c77673325101acb6298fae726e377ca93b04d79efcdccef7d5a4cbe0db24a"
+          }
+        },
+        "settings": {
+          "algorithm": "rainbow",
+          "gamma": 0.997,
+          "frame_stack": 4,
+          "capacity": 50000,
+          "max_replay_bytes": 850000000,
+          "n_step": 3,
+          "alpha": 0.5,
+          "beta_start": 0.4,
+          "beta_steps": 100000,
+          "priority_epsilon": 1e-06,
+          "batch_size": 32,
+          "learning_starts": 512,
+          "train_every": 4,
+          "target_update_interval": 500,
+          "learning_rate": 6.25e-05,
+          "adam_epsilon": 0.00015,
+          "max_grad_norm": 10.0,
+          "epsilon": 0.01,
+          "evaluation_epsilon": 0.01,
+          "hidden": 512,
+          "channels": 32,
+          "atoms": 51,
+          "v_min": -10.0,
+          "v_max": 25.0,
+          "quantiles": 32,
+          "cosine_embedding": 64
+        },
+        "agent_sha256": "300cc7b288248c1fa507f789c99d1ecf715af71b21cb2a57b67b98cac51b6398",
+        "replay_sha256": "f123ec2d8f31f19b4a940def873956ed9ada2d3de23e512a86be351accd1314a",
+        "replay_emitted": 16384,
+        "real_decisions": 16384,
+        "note": "New run resumes with canonical/curriculum resets; collector cuts retain bootstrap."
+      },
+      "scenario_transition_counts": {
+        "0": 8192,
+        "1": 8192
+      },
+      "training_action_counts": {
+        "d": 546,
+        "none": 4985,
+        "s": 917,
+        "crouch": 468,
+        "a": 308,
+        "w": 596,
+        "jump": 1238,
+        "spin": 7326
+      },
+      "terminal_failures_audited": 118,
+      "maximum_terminal_closure_error": 4.3021142204224816e-16,
+      "observed_logged_support_clip_mass_max": 0.0,
+      "tensorboard_scalar_tags": [
+        "training/optimizer_updates",
+        "training/replay_transitions",
+        "training/replay_bytes",
+        "training/decisions_per_second",
+        "training/emulated_frames_per_second",
+        "training/full_start_stars_this_run",
+        "training/assisted_stars_this_run",
+        "training/deaths_this_run",
+        "resources/available_ram_gib",
+        "actions/none",
+        "actions/d",
+        "actions/a",
+        "actions/w",
+        "actions/s",
+        "actions/jump",
+        "actions/spin",
+        "actions/crouch",
+        "episodes/double_time/curriculum/return",
+        "episodes/double_time/curriculum/decisions",
+        "episodes/double_time/curriculum/ram_star",
+        "episodes/double_time/curriculum/opening_advance",
+        "episodes/spinning/full_start/return",
+        "episodes/spinning/full_start/decisions",
+        "episodes/spinning/full_start/ram_star",
+        "episodes/spinning/full_start/opening_advance",
+        "episodes/double_time/full_start/return",
+        "episodes/double_time/full_start/decisions",
+        "episodes/double_time/full_start/ram_star",
+        "episodes/double_time/full_start/opening_advance",
+        "episodes/spinning/curriculum/return",
+        "episodes/spinning/curriculum/decisions",
+        "episodes/spinning/curriculum/ram_star",
+        "episodes/spinning/curriculum/opening_advance",
+        "learning/support_clipped_mass",
+        "learning/loss",
+        "learning/gradient_norm",
+        "learning/beta",
+        "learning/mean_priority",
+        "learning/effective_sample_size",
+        "learning/q_mean",
+        "learning/q_max",
+        "learning/epsilon",
+        "timing/policy_inference_mean_ms",
+        "timing/emulator_collection_mean_ms",
+        "timing/q_update_mean_ms",
+        "timing/checkpoint_mean_ms"
+      ]
+    }
+  },
+  "missions": [
+    {
+      "game": "smg1",
+      "variation": "sweet_sweet",
+      "start_kind": "full_start",
+      "episodes": 75,
+      "decisions": 4995,
+      "outcomes": {
+        "death": 62,
+        "interrupted": 3,
+        "timeout": 10
+      },
+      "ram_stars": 0,
+      "nonfatal_hp_lost": 0,
+      "maximum_start_relative_opening_fraction": 0.20474319648543235,
+      "maximum_grounded_arc_distance": 447.5977619822338,
+      "best_collection_trace": "runs\\model-free\\rainbow\\smg1\\dqn-20261026-073806-238494\\worker-00\\sweet_sweet\\episode-000066.csv",
+      "note": "Collection maximum, not a frozen-policy result."
+    },
+    {
+      "game": "smg1",
+      "variation": "sweet_sweet",
+      "start_kind": "curriculum",
+      "episodes": 82,
+      "decisions": 3197,
+      "outcomes": {
+        "death": 79,
+        "interrupted": 1,
+        "timeout": 2
+      },
+      "ram_stars": 0,
+      "nonfatal_hp_lost": 0,
+      "maximum_start_relative_opening_fraction": 0.41936296259702055,
+      "maximum_grounded_arc_distance": 916.7871105793793,
+      "best_collection_trace": "runs\\model-free\\rainbow\\smg1\\dqn-20261026-072845-942059\\worker-00\\sweet_sweet\\episode-000006.csv",
+      "note": "Collection maximum, not a frozen-policy result."
+    },
+    {
+      "game": "smg2",
+      "variation": "spinning",
+      "start_kind": "full_start",
+      "episodes": 37,
+      "decisions": 6122,
+      "outcomes": {
+        "death": 23,
+        "interrupted": 3,
+        "timeout": 11
+      },
+      "ram_stars": 0,
+      "nonfatal_hp_lost": 0,
+      "maximum_start_relative_opening_fraction": 1.0,
+      "maximum_grounded_arc_distance": 1960.9772228646443,
+      "best_collection_trace": "runs\\model-free\\rainbow\\smg2\\dqn-20261026-072846-204607\\worker-00\\spinning\\episode-000006.csv",
+      "note": "Collection maximum, not a frozen-policy result."
+    },
+    {
+      "game": "smg2",
+      "variation": "spinning",
+      "start_kind": "curriculum",
+      "episodes": 39,
+      "decisions": 2070,
+      "outcomes": {
+        "death": 33,
+        "interrupted": 1,
+        "timeout": 5
+      },
+      "ram_stars": 0,
+      "nonfatal_hp_lost": 0,
+      "maximum_start_relative_opening_fraction": 0.14617909187652633,
+      "maximum_grounded_arc_distance": 286.6538696289063,
+      "best_collection_trace": "runs\\model-free\\rainbow\\smg2\\dqn-20261026-072846-204607\\worker-02\\spinning\\episode-000002.csv",
+      "note": "Collection maximum, not a frozen-policy result."
+    },
+    {
+      "game": "smg2",
+      "variation": "double_time",
+      "start_kind": "full_start",
+      "episodes": 29,
+      "decisions": 5921,
+      "outcomes": {
+        "death": 13,
+        "interrupted": 3,
+        "timeout": 13
+      },
+      "ram_stars": 0,
+      "nonfatal_hp_lost": 0,
+      "maximum_start_relative_opening_fraction": 0.583016762990904,
+      "maximum_grounded_arc_distance": 1143.2825927734375,
+      "best_collection_trace": "runs\\model-free\\rainbow\\smg2\\dqn-20261026-072846-204607\\worker-03\\double_time\\episode-000006.csv",
+      "note": "Collection maximum, not a frozen-policy result."
+    },
+    {
+      "game": "smg2",
+      "variation": "double_time",
+      "start_kind": "curriculum",
+      "episodes": 21,
+      "decisions": 2271,
+      "outcomes": {
+        "death": 15,
+        "timeout": 5,
+        "interrupted": 1
+      },
+      "ram_stars": 0,
+      "nonfatal_hp_lost": 0,
+      "maximum_start_relative_opening_fraction": 0.5844742782866196,
+      "maximum_grounded_arc_distance": 1146.1407470703125,
+      "best_collection_trace": "runs\\model-free\\rainbow\\smg2\\dqn-20261026-072846-204607\\worker-01\\double_time\\episode-000005.csv",
+      "note": "Collection maximum, not a frozen-policy result."
+    }
+  ],
+  "evaluations": [
+    {
+      "mission": "sweet_sweet",
+      "run": "runs\\model-free\\rainbow\\smg1\\eval-dqn-video-20261026-075948-176403",
+      "recording": {
+        "state": "completed",
+        "checkpoint": "runs/model-free/rainbow/smg1/dqn-20261026-073806-238494/checkpoint-final",
+        "agent_sha256": "25d54091e614ed80ffbef8d19c5bab6b700436de0d111d36315ad582915ce30c",
+        "variation": "sweet_sweet",
+        "episodes": [
+          {
+            "seed": 11,
+            "decisions": 180,
+            "outcome": "timeout",
+            "full_start_ram_star": false,
+            "opening_fraction": 0.0,
+            "maximum_geometric_projection_percent": 0.0,
+            "telemetry": {
+              "position": [
+                -45.8689079284668,
+                45.0000114440918,
+                668.1358642578125
+              ],
+              "scenario": 1,
+              "stage": "BeltConveyerExGalaxy",
+              "actor": 2164967084,
+              "actor_nerve": 2154426424,
+              "scene_nerve": 2154437584,
+              "scene_frame": 3483,
+              "dead": false,
+              "complete": false,
+              "health": 3,
+              "max_health": 3,
+              "grounded": true
+            }
+          },
+          {
+            "seed": 23,
+            "decisions": 180,
+            "outcome": "timeout",
+            "full_start_ram_star": false,
+            "opening_fraction": 0.0,
+            "maximum_geometric_projection_percent": 0.0,
+            "telemetry": {
+              "position": [
+                -45.8689079284668,
+                45.0000114440918,
+                668.1358642578125
+              ],
+              "scenario": 1,
+              "stage": "BeltConveyerExGalaxy",
+              "actor": 2164967084,
+              "actor_nerve": 2154426424,
+              "scene_nerve": 2154437584,
+              "scene_frame": 3483,
+              "dead": false,
+              "complete": false,
+              "health": 3,
+              "max_health": 3,
+              "grounded": true
+            }
+          },
+          {
+            "seed": 47,
+            "decisions": 180,
+            "outcome": "timeout",
+            "full_start_ram_star": false,
+            "opening_fraction": 0.0,
+            "maximum_geometric_projection_percent": 0.0,
+            "telemetry": {
+              "position": [
+                -46.01758575439453,
+                45.0000114440918,
+                642.2902221679688
+              ],
+              "scenario": 1,
+              "stage": "BeltConveyerExGalaxy",
+              "actor": 2164967084,
+              "actor_nerve": 2154426424,
+              "scene_nerve": 2154437584,
+              "scene_frame": 3483,
+              "dead": false,
+              "complete": false,
+              "health": 3,
+              "max_health": 3,
+              "grounded": true
+            }
+          }
+        ],
+        "optimizer_updates": 1920,
+        "algorithm": "rainbow",
+        "physical_training_decisions_added": 0,
+        "imagined_transitions": 0,
+        "evaluation_epsilon": 0.01,
+        "scope": "Canonical-start frozen policy evaluation, noisy parameters disabled; small explicit epsilon. Not training-success accounting.",
+        "overlay": "Exact policy grayscale frame, raw expected Q returns (not probabilities), selected action and applied controls.",
+        "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\rainbow\\smg1\\eval-dqn-video-20261026-075948-176403\\policy.mp4",
+        "frames_written": 3240
+      },
+      "action_counts": {
+        "s": 18,
+        "spin": 521,
+        "w": 1
+      },
+      "video_verified": true,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1174,
+            "height": 660,
+            "nb_frames": "3240"
+          }
+        ]
+      }
+    },
+    {
+      "mission": "spinning",
+      "run": "runs\\model-free\\rainbow\\smg2\\eval-dqn-video-20261026-075948-259232",
+      "recording": {
+        "state": "completed",
+        "checkpoint": "runs/model-free/rainbow/smg2/dqn-20261026-073806-378273/checkpoint-final",
+        "agent_sha256": "300cc7b288248c1fa507f789c99d1ecf715af71b21cb2a57b67b98cac51b6398",
+        "variation": "spinning",
+        "episodes": [
+          {
+            "seed": 11,
+            "decisions": 180,
+            "outcome": "timeout",
+            "full_start_ram_star": false,
+            "opening_fraction": 0.0,
+            "maximum_geometric_projection_percent": 0.0,
+            "telemetry": {
+              "position": [
+                0.0,
+                -1150.0,
+                500.0
+              ],
+              "scenario": 1,
+              "stage": "SecretAthleticGalaxy",
+              "actor": 2166529088,
+              "actor_nerve": 2155695668,
+              "scene_nerve": 2155696912,
+              "scene_frame": 2268,
+              "dead": false,
+              "complete": false,
+              "health": null,
+              "max_health": null,
+              "grounded": true
+            }
+          },
+          {
+            "seed": 23,
+            "decisions": 180,
+            "outcome": "timeout",
+            "full_start_ram_star": false,
+            "opening_fraction": 0.0,
+            "maximum_geometric_projection_percent": 0.0,
+            "telemetry": {
+              "position": [
+                0.0,
+                -1150.0,
+                500.0
+              ],
+              "scenario": 1,
+              "stage": "SecretAthleticGalaxy",
+              "actor": 2166529088,
+              "actor_nerve": 2155695668,
+              "scene_nerve": 2155696912,
+              "scene_frame": 2268,
+              "dead": false,
+              "complete": false,
+              "health": null,
+              "max_health": null,
+              "grounded": true
+            }
+          },
+          {
+            "seed": 47,
+            "decisions": 300,
+            "outcome": "evaluation_budget_cut",
+            "full_start_ram_star": false,
+            "opening_fraction": 0.008476639792027361,
+            "maximum_geometric_projection_percent": 0.04381294129081823,
+            "telemetry": {
+              "position": [
+                -0.07544105499982834,
+                -1150.0,
+                598.382080078125
+              ],
+              "scenario": 1,
+              "stage": "SecretAthleticGalaxy",
+              "actor": 2166529088,
+              "actor_nerve": 2155695668,
+              "scene_nerve": 2155696912,
+              "scene_frame": 3708,
+              "dead": false,
+              "complete": false,
+              "health": null,
+              "max_health": null,
+              "grounded": true
+            }
+          }
+        ],
+        "optimizer_updates": 3967,
+        "algorithm": "rainbow",
+        "physical_training_decisions_added": 0,
+        "imagined_transitions": 0,
+        "evaluation_epsilon": 0.01,
+        "scope": "Canonical-start frozen policy evaluation, noisy parameters disabled; small explicit epsilon. Not training-success accounting.",
+        "overlay": "Exact policy grayscale frame, raw expected Q returns (not probabilities), selected action and applied controls.",
+        "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\rainbow\\smg2\\eval-dqn-video-20261026-075948-259232\\policy.mp4",
+        "frames_written": 3960
+      },
+      "action_counts": {
+        "none": 225,
+        "spin": 432,
+        "w": 1,
+        "s": 1,
+        "crouch": 1
+      },
+      "video_verified": true,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1174,
+            "height": 660,
+            "nb_frames": "3960"
+          }
+        ]
+      }
+    },
+    {
+      "mission": "double_time",
+      "run": "runs\\model-free\\rainbow\\smg2\\eval-dqn-video-20261026-075948-746569",
+      "recording": {
+        "state": "completed",
+        "checkpoint": "runs/model-free/rainbow/smg2/dqn-20261026-073806-378273/checkpoint-final",
+        "agent_sha256": "300cc7b288248c1fa507f789c99d1ecf715af71b21cb2a57b67b98cac51b6398",
+        "variation": "double_time",
+        "episodes": [
+          {
+            "seed": 11,
+            "decisions": 180,
+            "outcome": "timeout",
+            "full_start_ram_star": false,
+            "opening_fraction": 0.0,
+            "maximum_geometric_projection_percent": 0.0,
+            "telemetry": {
+              "position": [
+                0.0,
+                -1150.0,
+                500.0
+              ],
+              "scenario": 2,
+              "stage": "SecretAthleticGalaxy",
+              "actor": 2166530752,
+              "actor_nerve": 2155695668,
+              "scene_nerve": 2155696912,
+              "scene_frame": 2205,
+              "dead": false,
+              "complete": false,
+              "health": null,
+              "max_health": null,
+              "grounded": true
+            }
+          },
+          {
+            "seed": 23,
+            "decisions": 180,
+            "outcome": "timeout",
+            "full_start_ram_star": false,
+            "opening_fraction": 0.0,
+            "maximum_geometric_projection_percent": 0.0,
+            "telemetry": {
+              "position": [
+                0.0,
+                -1150.0,
+                500.0
+              ],
+              "scenario": 2,
+              "stage": "SecretAthleticGalaxy",
+              "actor": 2166530752,
+              "actor_nerve": 2155695668,
+              "scene_nerve": 2155696912,
+              "scene_frame": 2205,
+              "dead": false,
+              "complete": false,
+              "health": null,
+              "max_health": null,
+              "grounded": true
+            }
+          },
+          {
+            "seed": 47,
+            "decisions": 300,
+            "outcome": "evaluation_budget_cut",
+            "full_start_ram_star": false,
+            "opening_fraction": 0.008476639792027361,
+            "maximum_geometric_projection_percent": 0.03114020948860768,
+            "telemetry": {
+              "position": [
+                -0.07544105499982834,
+                -1150.0,
+                598.382080078125
+              ],
+              "scenario": 2,
+              "stage": "SecretAthleticGalaxy",
+              "actor": 2166530752,
+              "actor_nerve": 2155695668,
+              "scene_nerve": 2155696912,
+              "scene_frame": 3645,
+              "dead": false,
+              "complete": false,
+              "health": null,
+              "max_health": null,
+              "grounded": true
+            }
+          }
+        ],
+        "optimizer_updates": 3967,
+        "algorithm": "rainbow",
+        "physical_training_decisions_added": 0,
+        "imagined_transitions": 0,
+        "evaluation_epsilon": 0.01,
+        "scope": "Canonical-start frozen policy evaluation, noisy parameters disabled; small explicit epsilon. Not training-success accounting.",
+        "overlay": "Exact policy grayscale frame, raw expected Q returns (not probabilities), selected action and applied controls.",
+        "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\rainbow\\smg2\\eval-dqn-video-20261026-075948-746569\\policy.mp4",
+        "frames_written": 3960
+      },
+      "action_counts": {
+        "spin": 650,
+        "none": 7,
+        "w": 1,
+        "s": 1,
+        "crouch": 1
+      },
+      "video_verified": true,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1174,
+            "height": 660,
+            "nb_frames": "3960"
+          }
+        ]
+      }
+    }
+  ]
+}

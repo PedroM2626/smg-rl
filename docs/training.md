@@ -1,5 +1,9 @@
 # Training and experiment guide
 
+**Current learner (October26):** [model-free Rainbow with optional IQN](model-free.md)
+replaces the active RSSM experiment. Use its explicit profiles and TensorBoard;
+older PPO/world-model workflows below remain historical references.
+
 **Current status (October 25, 2026):** staged development superseded the October 23
 hold below. The latest [regional reward/curriculum/control intervention](regional-intervention.md)
 is complete, with all processes stopped at finite boundaries. Use the new regional12

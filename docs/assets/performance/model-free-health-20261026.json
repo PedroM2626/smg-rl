@@ -1,0 +1,447 @@
+{
+  "scope": "Finite startup/optimizer/evaluation implementation checks; not an algorithm performance comparison.",
+  "maximum_evaluation_decisions_per_mission": 96,
+  "training_phases": {
+    "smg1": {
+      "run": "runs\\model-free\\rainbow\\smg1\\dqn-20261026-072845-942059",
+      "status": {
+        "state": "completed",
+        "algorithm": "rainbow",
+        "timesteps": 1024,
+        "real_decisions": 1024,
+        "requested_additional": 1024,
+        "source_count": 0,
+        "target_count": 1024,
+        "optimizer_updates": 128,
+        "target_updates": 0,
+        "imagined_transitions": 0,
+        "sampled_transitions": 4096,
+        "replay_transitions": 1024,
+        "replay_emitted": 1024,
+        "replay_bytes": 711808320,
+        "elapsed_seconds": 86.96900000000096,
+        "decisions_per_second": 11.774310386459414,
+        "emulated_frames_per_second": 141.29172463751294,
+        "full_start_stars_this_run": 0,
+        "assisted_stars_this_run": 0,
+        "episodes_this_run": 20,
+        "deaths_this_run": 19,
+        "nonfatal_hp_lost_this_run": 0,
+        "tensorboard": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\tensorboard\\rainbow\\RMGE01\\dqn-20261026-072845-942059",
+        "updated_at": "2026-10-26T10:30:12.902878+00:00",
+        "losses": {
+          "support_clipped_mass": 0.0,
+          "loss": 1.747509241104126,
+          "gradient_norm": 0.2742200493812561,
+          "beta": 0.406144,
+          "mean_priority": 0.5356493592262268,
+          "effective_sample_size": 28.381044387817383
+        },
+        "timings": {
+          "policy_inference": {
+            "count": 512,
+            "total_ms": 2881.803400021454,
+            "mean_ms": 5.628522265666902,
+            "recent_p50_ms": 3.875750000588596,
+            "recent_p95_ms": 11.127404999388089
+          },
+          "emulator_collection": {
+            "count": 512,
+            "total_ms": 66547.6382999841,
+            "mean_ms": 129.97585605465645,
+            "recent_p50_ms": 107.0945000010397,
+            "recent_p95_ms": 303.83429000121396
+          },
+          "q_update": {
+            "count": 128,
+            "total_ms": 4006.63900003201,
+            "mean_ms": 31.301867187750076,
+            "recent_p50_ms": 22.722699999576434,
+            "recent_p95_ms": 56.027350000476844
+          },
+          "checkpoint": {
+            "count": 1,
+            "total_ms": 656.1748000021908,
+            "mean_ms": 656.1748000021908,
+            "recent_p50_ms": 656.1748000021908,
+            "recent_p95_ms": 656.1748000021908
+          }
+        },
+        "error": null,
+        "start_kinds": [
+          "full_start",
+          "curriculum"
+        ],
+        "start_relative_route_progress": [
+          0.0,
+          0.0
+        ],
+        "note": "Opening route/projection values are not native mission percentage. No final-policy success claim from collection maxima."
+      },
+      "review": {
+        "state": "passed",
+        "reason": "Exact real/replay accounting, finite losses/gradients, real Q updates, no support clipping, valid resumable checkpoint and TensorBoard events.",
+        "tensorboard_tags": [
+          "training/optimizer_updates",
+          "training/replay_transitions",
+          "training/replay_bytes",
+          "training/decisions_per_second",
+          "training/emulated_frames_per_second",
+          "training/full_start_stars_this_run",
+          "training/assisted_stars_this_run",
+          "training/deaths_this_run",
+          "resources/available_ram_gib",
+          "actions/none",
+          "actions/d",
+          "actions/a",
+          "actions/w",
+          "actions/s",
+          "actions/jump",
+          "actions/spin",
+          "actions/crouch",
+          "episodes/sweet_sweet/curriculum/return",
+          "episodes/sweet_sweet/curriculum/decisions",
+          "episodes/sweet_sweet/curriculum/ram_star",
+          "episodes/sweet_sweet/curriculum/opening_advance",
+          "learning/q_mean",
+          "learning/q_max",
+          "learning/epsilon",
+          "timing/policy_inference_mean_ms",
+          "timing/emulator_collection_mean_ms",
+          "episodes/sweet_sweet/full_start/return",
+          "episodes/sweet_sweet/full_start/decisions",
+          "episodes/sweet_sweet/full_start/ram_star",
+          "episodes/sweet_sweet/full_start/opening_advance",
+          "learning/support_clipped_mass",
+          "learning/loss",
+          "learning/gradient_norm",
+          "learning/beta",
+          "learning/mean_priority",
+          "learning/effective_sample_size",
+          "timing/q_update_mean_ms",
+          "timing/checkpoint_mean_ms"
+        ],
+        "no_world_model": true,
+        "source_count": 1024,
+        "next_target": 8192,
+        "next_additional": 7168
+      }
+    },
+    "smg2": {
+      "run": "runs\\model-free\\rainbow\\smg2\\dqn-20261026-072846-204607",
+      "status": {
+        "state": "completed",
+        "algorithm": "rainbow",
+        "timesteps": 2048,
+        "real_decisions": 2048,
+        "requested_additional": 2048,
+        "source_count": 0,
+        "target_count": 2048,
+        "optimizer_updates": 383,
+        "target_updates": 0,
+        "imagined_transitions": 0,
+        "sampled_transitions": 12256,
+        "replay_transitions": 2048,
+        "replay_emitted": 2048,
+        "replay_bytes": 712006336,
+        "elapsed_seconds": 113.10900000000038,
+        "decisions_per_second": 18.106428312512648,
+        "emulated_frames_per_second": 217.27713975015178,
+        "full_start_stars_this_run": 0,
+        "assisted_stars_this_run": 0,
+        "episodes_this_run": 29,
+        "deaths_this_run": 29,
+        "nonfatal_hp_lost_this_run": 0,
+        "tensorboard": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\tensorboard\\rainbow\\SB4E01\\dqn-20261026-072846-204607",
+        "updated_at": "2026-10-26T10:30:39.312453+00:00",
+        "losses": {
+          "support_clipped_mass": 0.0,
+          "loss": 1.853474497795105,
+          "gradient_norm": 0.3715977370738983,
+          "beta": 0.41228800000000004,
+          "mean_priority": 0.2444266378879547,
+          "effective_sample_size": 28.232133865356445
+        },
+        "timings": {
+          "policy_inference": {
+            "count": 512,
+            "total_ms": 3357.420400083356,
+            "mean_ms": 6.557461718912805,
+            "recent_p50_ms": 4.63944999864907,
+            "recent_p95_ms": 11.051990000123624
+          },
+          "emulator_collection": {
+            "count": 512,
+            "total_ms": 71856.51619997225,
+            "mean_ms": 140.3447582030708,
+            "recent_p50_ms": 107.49705000125687,
+            "recent_p95_ms": 416.7241999997714
+          },
+          "q_update": {
+            "count": 383,
+            "total_ms": 12358.983200032526,
+            "mean_ms": 32.26888563977161,
+            "recent_p50_ms": 30.11329999935697,
+            "recent_p95_ms": 49.59080999942671
+          },
+          "checkpoint": {
+            "count": 1,
+            "total_ms": 1106.9204000013997,
+            "mean_ms": 1106.9204000013997,
+            "recent_p50_ms": 1106.9204000013997,
+            "recent_p95_ms": 1106.9204000013997
+          }
+        },
+        "error": null,
+        "start_kinds": [
+          "full_start",
+          "full_start",
+          "curriculum",
+          "full_start"
+        ],
+        "start_relative_route_progress": [
+          0.0,
+          0.05791379197521865,
+          0.02330034933559577,
+          0.05804474985526314
+        ],
+        "note": "Opening route/projection values are not native mission percentage. No final-policy success claim from collection maxima."
+      },
+      "review": {
+        "state": "passed",
+        "reason": "Exact real/replay accounting, finite losses/gradients, real Q updates, no support clipping, valid resumable checkpoint and TensorBoard events.",
+        "tensorboard_tags": [
+          "training/optimizer_updates",
+          "training/replay_transitions",
+          "training/replay_bytes",
+          "training/decisions_per_second",
+          "training/emulated_frames_per_second",
+          "training/full_start_stars_this_run",
+          "training/assisted_stars_this_run",
+          "training/deaths_this_run",
+          "resources/available_ram_gib",
+          "actions/none",
+          "actions/d",
+          "actions/a",
+          "actions/w",
+          "actions/s",
+          "actions/jump",
+          "actions/spin",
+          "actions/crouch",
+          "episodes/spinning/curriculum/return",
+          "episodes/spinning/curriculum/decisions",
+          "episodes/spinning/curriculum/ram_star",
+          "episodes/spinning/curriculum/opening_advance",
+          "learning/q_mean",
+          "learning/q_max",
+          "learning/epsilon",
+          "timing/policy_inference_mean_ms",
+          "timing/emulator_collection_mean_ms",
+          "episodes/double_time/full_start/return",
+          "episodes/double_time/full_start/decisions",
+          "episodes/double_time/full_start/ram_star",
+          "episodes/double_time/full_start/opening_advance",
+          "episodes/spinning/full_start/return",
+          "episodes/spinning/full_start/decisions",
+          "episodes/spinning/full_start/ram_star",
+          "episodes/spinning/full_start/opening_advance",
+          "episodes/double_time/curriculum/return",
+          "episodes/double_time/curriculum/decisions",
+          "episodes/double_time/curriculum/ram_star",
+          "episodes/double_time/curriculum/opening_advance",
+          "learning/support_clipped_mass",
+          "learning/loss",
+          "learning/gradient_norm",
+          "learning/beta",
+          "learning/mean_priority",
+          "learning/effective_sample_size",
+          "timing/q_update_mean_ms",
+          "timing/checkpoint_mean_ms"
+        ],
+        "no_world_model": true,
+        "source_count": 2048,
+        "next_target": 16384,
+        "next_additional": 14336
+      }
+    }
+  },
+  "evaluations": [
+    {
+      "game": "smg1",
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\rainbow\\smg1\\eval-dqn-video-20261026-073513-996426",
+      "recording": {
+        "state": "completed",
+        "checkpoint": "runs\\model-free\\rainbow\\smg1\\dqn-20261026-072845-942059\\checkpoint-final",
+        "agent_sha256": "b51fd5f16b8a2c52eee7e090004b8943e9e2bbe8cc8d8558c39cbe36417bbe10",
+        "variation": "sweet_sweet",
+        "episodes": [
+          {
+            "seed": 11,
+            "decisions": 96,
+            "outcome": "evaluation_budget_cut",
+            "full_start_ram_star": false,
+            "opening_fraction": 0.0,
+            "maximum_geometric_projection_percent": 0.0,
+            "telemetry": {
+              "position": [
+                -50.0,
+                45.0000114440918,
+                -50.0
+              ],
+              "scenario": 1,
+              "stage": "BeltConveyerExGalaxy",
+              "actor": 2164967084,
+              "actor_nerve": 2154426424,
+              "scene_nerve": 2154437584,
+              "scene_frame": 2475,
+              "dead": false,
+              "complete": false,
+              "health": 3,
+              "max_health": 3,
+              "grounded": true
+            }
+          }
+        ],
+        "optimizer_updates": 128,
+        "algorithm": "rainbow",
+        "physical_training_decisions_added": 0,
+        "imagined_transitions": 0,
+        "evaluation_epsilon": 0.01,
+        "scope": "Canonical-start frozen policy evaluation, noisy parameters disabled; small explicit epsilon. Not training-success accounting.",
+        "overlay": "Exact policy grayscale frame, raw expected Q returns (not probabilities), selected action and applied controls.",
+        "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\rainbow\\smg1\\eval-dqn-video-20261026-073513-996426\\policy.mp4",
+        "frames_written": 576
+      },
+      "video_verified": true,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1174,
+            "height": 660,
+            "nb_frames": "576"
+          }
+        ]
+      }
+    },
+    {
+      "game": "smg2",
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\rainbow\\smg2\\eval-dqn-video-20261026-073543-238677",
+      "recording": {
+        "state": "completed",
+        "checkpoint": "runs\\model-free\\rainbow\\smg2\\dqn-20261026-072846-204607\\checkpoint-final",
+        "agent_sha256": "8e7721ff1af1e47d9a7ed5d71fb81ec58e90d3957b54845379310ac7d2046362",
+        "variation": "spinning",
+        "episodes": [
+          {
+            "seed": 11,
+            "decisions": 14,
+            "outcome": "death",
+            "full_start_ram_star": false,
+            "opening_fraction": 0.0,
+            "maximum_geometric_projection_percent": 0.0,
+            "telemetry": {
+              "position": [
+                -0.7379245162010193,
+                -3461.203857421875,
+                1462.1566162109375
+              ],
+              "scenario": 1,
+              "stage": "SecretAthleticGalaxy",
+              "actor": 2166529088,
+              "actor_nerve": 2155695676,
+              "scene_nerve": 2155696928,
+              "scene_frame": 2,
+              "dead": true,
+              "complete": false,
+              "health": null,
+              "max_health": null,
+              "grounded": false
+            }
+          }
+        ],
+        "optimizer_updates": 383,
+        "algorithm": "rainbow",
+        "physical_training_decisions_added": 0,
+        "imagined_transitions": 0,
+        "evaluation_epsilon": 0.01,
+        "scope": "Canonical-start frozen policy evaluation, noisy parameters disabled; small explicit epsilon. Not training-success accounting.",
+        "overlay": "Exact policy grayscale frame, raw expected Q returns (not probabilities), selected action and applied controls.",
+        "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\rainbow\\smg2\\eval-dqn-video-20261026-073543-238677\\policy.mp4",
+        "frames_written": 84
+      },
+      "video_verified": true,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1174,
+            "height": 660,
+            "nb_frames": "84"
+          }
+        ]
+      }
+    },
+    {
+      "game": "smg2",
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\rainbow\\smg2\\eval-dqn-video-20261026-073550-469373",
+      "recording": {
+        "state": "completed",
+        "checkpoint": "runs\\model-free\\rainbow\\smg2\\dqn-20261026-072846-204607\\checkpoint-final",
+        "agent_sha256": "8e7721ff1af1e47d9a7ed5d71fb81ec58e90d3957b54845379310ac7d2046362",
+        "variation": "double_time",
+        "episodes": [
+          {
+            "seed": 11,
+            "decisions": 18,
+            "outcome": "death",
+            "full_start_ram_star": false,
+            "opening_fraction": 0.0,
+            "maximum_geometric_projection_percent": 0.0,
+            "telemetry": {
+              "position": [
+                -0.8323498964309692,
+                -3591.37744140625,
+                1585.2899169921875
+              ],
+              "scenario": 2,
+              "stage": "SecretAthleticGalaxy",
+              "actor": 2166530752,
+              "actor_nerve": 2155695676,
+              "scene_nerve": 2155696928,
+              "scene_frame": 6,
+              "dead": true,
+              "complete": false,
+              "health": null,
+              "max_health": null,
+              "grounded": false
+            }
+          }
+        ],
+        "optimizer_updates": 383,
+        "algorithm": "rainbow",
+        "physical_training_decisions_added": 0,
+        "imagined_transitions": 0,
+        "evaluation_epsilon": 0.01,
+        "scope": "Canonical-start frozen policy evaluation, noisy parameters disabled; small explicit epsilon. Not training-success accounting.",
+        "overlay": "Exact policy grayscale frame, raw expected Q returns (not probabilities), selected action and applied controls.",
+        "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\rainbow\\smg2\\eval-dqn-video-20261026-073550-469373\\policy.mp4",
+        "frames_written": 108
+      },
+      "video_verified": true,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1174,
+            "height": 660,
+            "nb_frames": "108"
+          }
+        ]
+      }
+    }
+  ]
+}

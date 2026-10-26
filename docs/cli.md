@@ -2,8 +2,13 @@
 
 Run from the repository root using `.\.venv\Scripts\smg-rl.exe` or
 `.\.venv\Scripts\python.exe -m smg_rl.cli`. The optional global argument
-`--config PATH` goes before the subcommand and defaults to `config/regional-smg2-12.yaml`.
-Use `config/regional-smg1-12.yaml` for the new Galaxy 1 reward/curriculum profile.
+`--config PATH` goes before the subcommand and defaults to `config/iqn-smg2.yaml`
+for the active second algorithm trial. Rainbow remains explicitly selectable.
+Current model-free profiles are `rainbow-smg1.yaml`, `rainbow-smg2.yaml` and the
+corresponding `iqn-*` alternatives. Use `train-dqn` and `record-dqn`; see the
+[implementation, TensorBoard and finite protocol](model-free.md).
+The retained `config/regional-smg1-12.yaml` is the earlier RSSM reward/curriculum
+profile, not a model-free learner profile.
 These require the verified local curriculum banks; old checkpoint/replay signatures
 are deliberately incompatible. The separate `regional-*-4.yaml` profiles are
 experimental control candidates. See [regional validation and results](regional-intervention.md).
@@ -34,6 +39,8 @@ Example paths containing `EXAMPLE` below must be replaced with real local paths.
 | `train [--attach] [--steps N] [--rollout-steps N] [--resume ZIP]` | Single visible desktop recurrent PPO learner. Requires training enabled. |
 | `train-parallel [--workers N] [--steps N] [--resume ZIP]` | One hidden vectorized learner attempt; no automatic restart. Requires a `parallel` section and training enabled. |
 | `train-supervised [--workers N] [--steps N] [--resume ZIP]` | Manage hidden learner attempts with paired-checkpoint recovery, timeout, retry backoff, and a fixed overall target. |
+| `train-dqn [--steps N] [--resume DIRECTORY]` | Finite Rainbow/IQN real-pixel training with prioritized frame replay and TensorBoard. Workers are explicit in the profile. No world model. |
+| `record-dqn DIRECTORY [--variation N] [--seeds 11 23 47] [--max-steps 300]` | Frozen canonical-start Q-policy video; actual grayscale input, raw expected Q returns and applied controls. No optimizer calls. |
 | `status [RUN]` | Read the latest parallel attempt in the configured runs root, or the explicit attempt; includes owning supervisor state. |
 | `stop [RUN]` | Request graceful stop of that parallel attempt and its supervisor, when present. |
 | `evaluate [--attach] ZIP [--episodes N]` | Visible desktop deterministic evaluation, intrinsic reward/curiosity updates disabled; default 5 episodes per configured variation. |

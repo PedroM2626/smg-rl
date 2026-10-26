@@ -1,13 +1,21 @@
 # SMG RL
 
-Visual recurrent reinforcement learning for **Super Mario Galaxy 1 and 2** in
+Visual reinforcement learning for **Super Mario Galaxy 1 and 2** in
 Dolphin on Windows.
 
-**Latest completed training:** the [six-collector regional blocks](docs/regional-six-training.md#completed-block-review)
+**Current algorithm (October 26):** [pure model-free Rainbow and IQN](docs/model-free.md)
+replace the active RSSM learner. Both use real-pixel frame stacks and prioritized
+replay, with zero imagined transitions. Rainbow completed its 8192-decision-per-
+mission pilot and nine frozen evaluations without a star; it mostly spun/idled.
+The equivalent fresh IQN pilot is now active, with six collectors and the same
+reward/control/budget. No online superiority result is claimed.
+[TensorBoard](http://127.0.0.1:6006/) is installed, logging and served locally.
+
+**Previous RSSM training:** the [six-collector regional blocks](docs/regional-six-training.md#completed-block-review)
 reached 8192 new real decisions per mission and stopped without process errors.
 SMG2 passed final prediction gates and performed 32 imagined actor updates; SMG1
 performed 3 but finished blocked on reward/continuation prediction. There were no
-RAM-confirmed stars. All processes are stopped and the hourly review is retired.
+RAM-confirmed stars. Those RSSM processes stopped and their hourly review retired.
 The audit separates canonical and assisted starts and includes real trajectories.
 
 **Latest completed intervention (October 25):** [regional rewards, curated starts and a separate frame4 test](docs/regional-intervention.md)
@@ -143,9 +151,9 @@ and directly supervises prior predictions; see the
 
 | Game / executable | Mission | Training start | Detector fixture | Recommended configuration |
 | --- | --- | --- | --- | --- |
-| Galaxy 2 USA / `SB4E01` | Twisty Trials: Spinning and Spinning and Spinning | Slot 1 | Slot 2, near star | `config/native.yaml` |
-| Galaxy 2 USA / `SB4E01` | Twisty Trials: Turning Turning Double Time | Slot 3 | Slot 4, near star | `config/native.yaml` |
-| Galaxy 1 USA / `RMGE01` | Sweet Sweet Galaxy: Rocky Road | Slot 1 | Slot 2, near star | `config/smg1-native.yaml` |
+| Galaxy 2 USA / `SB4E01` | Twisty Trials: Spinning and Spinning and Spinning | Slot 1 | Slot 2, near star | `config/rainbow-smg2.yaml` |
+| Galaxy 2 USA / `SB4E01` | Twisty Trials: Turning Turning Double Time | Slot 3 | Slot 4, near star | `config/rainbow-smg2.yaml` |
+| Galaxy 1 USA / `RMGE01` | Sweet Sweet Galaxy: Rocky Road | Slot 1 | Slot 2, near star | `config/rainbow-smg1.yaml` |
 
 The checked profiles and supplied savestates were tested with **Dolphin 2609a**.
 Other regions, revisions, or state files require new validation. Galaxy 1's
@@ -155,8 +163,8 @@ Other regions, revisions, or state files require new validation. Galaxy 1's
 
 The policy receives cropped 84 x 84 grayscale gameplay observations and a scenario
 one-hot vector: two entries for Galaxy 2, one for Galaxy 1. The environment stacks
-four frames; the recurrent world model consumes the latest frame and its latent
-history. The current profiles use eight actions: none, right, left, forward,
+four frames; active Rainbow/IQN networks consume the full stack. The historical
+world model consumed the latest frame and latent history. Current profiles use eight actions: none, right, left, forward,
 backward, jump, spin and crouch. The original 54-action design remains available
 only in historical profiles. RAM supplies rewards, checks and logs, and is
 excluded from policy input.
@@ -274,9 +282,36 @@ or control timing:
 Calibration uses a temporary hidden worker to check start/goal states, movement,
 star collection, death, and pause acknowledgment. It records evidence and closes
 its owned instance. No game memory is written. Training and evaluation reset
-only to full-start states: Galaxy 2 slots 1/3 and Galaxy 1 slot 1.
+to canonical slots 1/3 for Galaxy 2 and slot 1 for Galaxy 1, or validated curriculum
+anchors during regional training. Frozen evaluations always force canonical
+starts; near-star slots remain detector fixtures.
+
+## Model-free training and TensorBoard
+
+Rainbow profiles are `config/rainbow-smg1.yaml` and `config/rainbow-smg2.yaml`.
+The active IQN trial uses `config/iqn-smg1.yaml` and `config/iqn-smg2.yaml`; each uses
+explicitly documented Rainbow-style additions. There is no world-model prediction
+or imagination in either learner. Both retain the regional reward, eight actions,
+12-frame controls and start distribution for the first comparison.
+
+The six-worker IQN pilot is already dispatched. Do not execute duplicate jobs.
+For a deliberately allocated future block:
+
+```powershell
+.venv\Scripts\python.exe -m smg_rl.cli --config config/rainbow-smg1.yaml train-dqn --steps 1024
+```
+
+`--steps` counts additional aggregate real decisions. A resumable checkpoint is
+an immutable directory containing the Q networks, optimizer and prioritized
+frame replay, not a PPO ZIP or RSSM PT file. [Commands, algorithms and staged evidence](docs/model-free.md)
+explain the exact targets and accounting. TensorBoard logs real steps, return,
+deaths/HP, Q/loss, replay priority/size, actions, input frames and measured stages
+at **http://127.0.0.1:6006/**. No past runs are backfilled with invented metrics.
 
 ## Bounded regional world-model pilot
+
+This section is historical. The owner selected the model-free replacement above;
+do not dispatch its RSSM command as the current learner.
 
 The environment/control intervention is complete. The separate owner-requested
 six-instance run is complete; inspect its [exact results and limits](docs/regional-six-training.md)

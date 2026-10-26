@@ -1,5 +1,9 @@
 # Eight exclusive actions, visible policy inputs and algorithm comparison
 
+**October26 replacement:** the owner subsequently selected [model-free Rainbow
+and IQN](model-free.md). These are now implemented and tested; Rainbow's finite
+six-collector pilot is active. The exploratory assessment below is historical.
+
 **Latest environment intervention:** [regional shaping, curated starts and separate
 temporal tests](regional-intervention.md) are complete. CLI defaults now select
 the corrected regional12 reward/curriculum profile. Historical pilot identities
