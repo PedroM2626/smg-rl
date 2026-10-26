@@ -1,0 +1,367 @@
+{
+  "observed_at": "2026-10-26T00:50:44.782319+00:00",
+  "scope": "Startup/health evidence and dated running snapshot only. Not a completion or readiness claim.",
+  "jobs": {
+    "smg1": {
+      "phase": "first_block_running",
+      "config": "config/regional-six-smg1.yaml",
+      "workers": 2,
+      "health_steps": 512,
+      "target_after_review": 8192,
+      "initial_checkpoint": ".local/regional-six/smg1-initial.pt",
+      "run": "runs\\regional-six\\smg1\\world-model-20261025-214721-733881",
+      "controller": {
+        "pid": 640,
+        "created_time": 1792975638.9103928,
+        "workers": 2,
+        "algorithm": "gaussian-rssm-imagination-v1",
+        "resume": "runs/regional-six/smg1/world-model-20261025-214517-915763/world-final.pt"
+      },
+      "latest_status": {
+        "state": "running",
+        "algorithm": "gaussian-rssm-imagination-v1",
+        "timesteps": 3104,
+        "real_decisions": 3104,
+        "model_updates": 0,
+        "actor_updates": 0,
+        "imagined_transitions": 0,
+        "elapsed_seconds": 200.38999999999942,
+        "decisions_per_second": 12.934777184490281,
+        "updated_at": "2026-10-26T00:50:42.128777+00:00",
+        "progress": [
+          0.0018868181392944635,
+          0.0
+        ],
+        "start_kinds": [
+          "full_start",
+          "full_start"
+        ],
+        "route_prefix_progress": [
+          0.04820865759212543,
+          0.0
+        ],
+        "route_prefix_exited": [
+          false,
+          false
+        ],
+        "real_validation_decisions": 0,
+        "physical_decisions_this_run": 2592,
+        "diagnostics": {
+          "replay": {
+            "chunks": 51,
+            "transitions": 2977,
+            "start_kinds": {
+              "curriculum": 1020,
+              "full_start": 1957
+            },
+            "train_episodes": 40,
+            "validation_episodes": 11,
+            "scenarios": {
+              "sweet_sweet": 2977
+            },
+            "train_scenarios": {
+              "sweet_sweet": 2383
+            },
+            "validation_scenarios": {
+              "sweet_sweet": 594
+            },
+            "rejected": []
+          },
+          "validation": {},
+          "imagination_gate": {
+            "ready": false,
+            "reasons": [
+              "Insufficient real visual transitions",
+              "sweet_sweet: no held-out prediction metrics"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          },
+          "losses": {}
+        },
+        "note": "Only real RAM-verified episodes can establish mission completion. Imagined transitions are not real timesteps."
+      },
+      "health_review": {
+        "run": "runs\\regional-six\\smg1\\world-model-20261025-214517-915763",
+        "decision": "Health block passed. Dispatch only remaining7680 aggregate real decisions to cumulative8192. Same checkpoint/signature/replay; unchanged gates.",
+        "checkpoint": "runs\\regional-six\\smg1\\world-model-20261025-214517-915763\\world-final.pt",
+        "replay": {
+          "chunks": 9,
+          "transitions": 512,
+          "start_kinds": {
+            "curriculum": 31,
+            "full_start": 481
+          },
+          "train_episodes": 4,
+          "validation_episodes": 5,
+          "scenarios": {
+            "sweet_sweet": 512
+          },
+          "train_scenarios": {
+            "sweet_sweet": 264
+          },
+          "validation_scenarios": {
+            "sweet_sweet": 248
+          },
+          "rejected": []
+        },
+        "workers": [
+          {
+            "worker": "worker-00",
+            "decisions": 256,
+            "health_loss": 0,
+            "ram_stars": 0
+          },
+          {
+            "worker": "worker-01",
+            "decisions": 256,
+            "health_loss": 0,
+            "ram_stars": 0
+          }
+        ]
+      },
+      "source_run": "runs\\regional-six\\smg1\\world-model-20261025-214517-915763",
+      "source_count": 512,
+      "target_count": 8192,
+      "requested_additional": 7680,
+      "owned_emulators": [
+        {
+          "pid": 34540,
+          "created_time": 1792975648.732607,
+          "rss_gib": 1.0033035278320312
+        },
+        {
+          "pid": 33224,
+          "created_time": 1792975643.6335304,
+          "rss_gib": 1.0085220336914062
+        }
+      ]
+    },
+    "smg2": {
+      "phase": "first_block_running",
+      "config": "config/regional-six-smg2.yaml",
+      "workers": 4,
+      "health_steps": 1024,
+      "target_after_review": 16384,
+      "initial_checkpoint": ".local/regional-six/smg2-initial.pt",
+      "run": "runs\\regional-six\\smg2\\world-model-20261025-214757-927434",
+      "controller": {
+        "pid": 34112,
+        "created_time": 1792975668.6347787,
+        "workers": 4,
+        "algorithm": "gaussian-rssm-imagination-v1",
+        "resume": "runs/regional-six/smg2/world-model-20261025-214518-089752/world-final.pt"
+      },
+      "latest_status": {
+        "state": "running",
+        "algorithm": "gaussian-rssm-imagination-v1",
+        "timesteps": 3968,
+        "real_decisions": 3968,
+        "model_updates": 0,
+        "actor_updates": 0,
+        "imagined_transitions": 0,
+        "elapsed_seconds": 165.56300000000192,
+        "decisions_per_second": 17.7817507534894,
+        "updated_at": "2026-10-26T00:50:43.497125+00:00",
+        "progress": [
+          0.009549094419997812,
+          0.002104205782221491,
+          0.009316021611613347,
+          0.0011680540041145993
+        ],
+        "start_kinds": [
+          "full_start",
+          "full_start",
+          "full_start",
+          "full_start"
+        ],
+        "route_prefix_progress": [
+          0.19047374676256493,
+          0.05955495955167157,
+          0.09580298025275462,
+          0.026669155975956392
+        ],
+        "route_prefix_exited": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "real_validation_decisions": 0,
+        "physical_decisions_this_run": 2944,
+        "diagnostics": {
+          "replay": {
+            "chunks": 83,
+            "transitions": 3904,
+            "start_kinds": {
+              "curriculum": 1444,
+              "full_start": 2460
+            },
+            "train_episodes": 64,
+            "validation_episodes": 19,
+            "scenarios": {
+              "spinning": 1957,
+              "double_time": 1947
+            },
+            "train_scenarios": {
+              "spinning": 1439,
+              "double_time": 1596
+            },
+            "validation_scenarios": {
+              "spinning": 518,
+              "double_time": 351
+            },
+            "rejected": []
+          },
+          "validation": {},
+          "imagination_gate": {
+            "ready": false,
+            "reasons": [
+              "Insufficient real visual transitions",
+              "spinning: no held-out prediction metrics",
+              "double_time: no held-out prediction metrics"
+            ],
+            "scope": "Held-out visited states only; no guarantee for unseen geometry or star collection."
+          },
+          "losses": {}
+        },
+        "note": "Only real RAM-verified episodes can establish mission completion. Imagined transitions are not real timesteps."
+      },
+      "health_review": {
+        "run": "runs\\regional-six\\smg2\\world-model-20261025-214518-089752",
+        "decision": "Health block passed. Dispatch only remaining15360 aggregate real decisions to cumulative16384 (8192 per mission). Same checkpoint/signature/replay; unchanged gates.",
+        "checkpoint": "runs\\regional-six\\smg2\\world-model-20261025-214518-089752\\world-final.pt",
+        "replay": {
+          "chunks": 23,
+          "transitions": 1024,
+          "start_kinds": {
+            "curriculum": 319,
+            "full_start": 705
+          },
+          "train_episodes": 18,
+          "validation_episodes": 5,
+          "scenarios": {
+            "spinning": 512,
+            "double_time": 512
+          },
+          "train_scenarios": {
+            "spinning": 447,
+            "double_time": 399
+          },
+          "validation_scenarios": {
+            "spinning": 65,
+            "double_time": 113
+          },
+          "rejected": []
+        },
+        "workers": [
+          {
+            "worker": "worker-00",
+            "variation": "spinning",
+            "decisions": 256,
+            "grounded_unknown": 0,
+            "ram_stars": 0
+          },
+          {
+            "worker": "worker-01",
+            "variation": "double_time",
+            "decisions": 256,
+            "grounded_unknown": 0,
+            "ram_stars": 0
+          },
+          {
+            "worker": "worker-02",
+            "variation": "spinning",
+            "decisions": 256,
+            "grounded_unknown": 0,
+            "ram_stars": 0
+          },
+          {
+            "worker": "worker-03",
+            "variation": "double_time",
+            "decisions": 256,
+            "grounded_unknown": 0,
+            "ram_stars": 0
+          }
+        ]
+      },
+      "source_run": "runs\\regional-six\\smg2\\world-model-20261025-214518-089752",
+      "source_count": 1024,
+      "target_count": 16384,
+      "requested_additional": 15360,
+      "owned_emulators": [
+        {
+          "pid": 31920,
+          "created_time": 1792975699.538573,
+          "rss_gib": 1.0067367553710938
+        },
+        {
+          "pid": 35008,
+          "created_time": 1792975694.863134,
+          "rss_gib": 0.9923248291015625
+        },
+        {
+          "pid": 34048,
+          "created_time": 1792975691.4996946,
+          "rss_gib": 0.9934654235839844
+        },
+        {
+          "pid": 36468,
+          "created_time": 1792975683.2762334,
+          "rss_gib": 0.9949302673339844
+        }
+      ]
+    }
+  },
+  "resources": {
+    "observed_at": "2026-10-26T00:50:43.556608+00:00",
+    "available_ram_gib": 5.733074188232422,
+    "memory_used_percent": 81.9,
+    "cpu_used_percent": 63.0,
+    "gpu": "1300 MiB, 71 %, 63"
+  },
+  "initialization": {
+    "smg1": {
+      "source": "runs\\m8-smg1-boundary\\boundary-heads_strong-20261025-162736-258709\\actor-smoke.pt",
+      "source_sha256": "c42a1b168b7c2bfe9e3857b4f49082ac91576be2a0f07a966dbbf1df14f1f1fe",
+      "source_counts": {
+        "real_decisions": 4096,
+        "model_updates": 704,
+        "actor_updates": 1,
+        "imagined_transitions": 1024
+      },
+      "new_branch_counts": {
+        "real_decisions": 0,
+        "model_updates": 0,
+        "actor_updates": 0,
+        "imagined_transitions": 0
+      },
+      "transfer": "Retain encoder, recurrent latent dynamics, decoder and ensemble under identical physical controls.",
+      "reset": "Reward/support, continuation, actor, critics, optimizers, replay RNG and new-branch counters.",
+      "initial_action_prior": "80% walking/idle,15% jump,2.5% spin,2.5% crouch; not a trained policy.",
+      "gate": "Original thresholds unchanged. No readiness inherited; fresh compatible real replay required."
+    },
+    "smg2": {
+      "source": "runs\\m8-smg2\\world-model-20261025-133915-837384\\world-final.pt",
+      "source_sha256": "81d9c99ab880759f744a29b7094e3317869c0098c30fa001b3681c6a61b245d7",
+      "source_counts": {
+        "real_decisions": 6096,
+        "model_updates": 636,
+        "actor_updates": 134,
+        "imagined_transitions": 129552
+      },
+      "new_branch_counts": {
+        "real_decisions": 0,
+        "model_updates": 0,
+        "actor_updates": 0,
+        "imagined_transitions": 0
+      },
+      "transfer": "Retain encoder, recurrent latent dynamics, decoder and ensemble under identical physical controls.",
+      "reset": "Reward/support, continuation, actor, critics, optimizers, replay RNG and new-branch counters.",
+      "initial_action_prior": "80% walking/idle,15% jump,2.5% spin,2.5% crouch; not a trained policy.",
+      "gate": "Original thresholds unchanged. No readiness inherited; fresh compatible real replay required."
+    }
+  },
+  "new_cumulative_cap_per_mission": 8192,
+  "portable_tests": 168,
+  "ruff": "passed"
+}

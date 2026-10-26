@@ -1,5 +1,11 @@
 # Concurrent Galaxy 1 and Galaxy 2 training
 
+**Current explicit authorization:** [six-instance regional training](regional-six-training.md)
+uses two Sweet Sweet collectors, two Spinning collectors and two Double Time
+collectors, with two independent game policies. Initial health blocks passed;
+the new finite main blocks have an 8192-real-decision cap per mission. Older
+resource limits and stopped-pilot statements below describe earlier experiments.
+
 **Latest status (October 25, 2026):** the finite motor8 pilot has closed. A
 separately requested [SMG1 prediction repair](smg1-boundary-repair.md) passed
 fresh gates and one actor smoke; no long online or six-emulator run is active.

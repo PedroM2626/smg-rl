@@ -1,5 +1,10 @@
 # Regional rewards, curated starts and separate temporal control experiment
 
+**Subsequent authorization:** the owner then requested [six concurrent regional
+collectors](regional-six-training.md). That separate finite run supersedes the
+two-emulator limit below for its own dispatch only. This completed validation
+record and its no-training accounting remain unchanged.
+
 The owner authorized these three changes on October 25, 2026. They form a new
 bounded intervention after the previous pilot closed. Original checkpoints,
 states, ROMs, reward identities and quality gates remain retained. The local
