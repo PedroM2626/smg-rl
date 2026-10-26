@@ -3,7 +3,8 @@
 **Current explicit authorization:** [six-instance regional training](regional-six-training.md)
 uses two Sweet Sweet collectors, two Spinning collectors and two Double Time
 collectors, with two independent game policies. Initial health blocks passed;
-the new finite main blocks have an 8192-real-decision cap per mission. Older
+the finite main blocks completed at 8192 real decisions per mission. All processes
+are stopped, with no stars and no automatically allocated successor. Older
 resource limits and stopped-pilot statements below describe earlier experiments.
 
 **Latest status (October 25, 2026):** the finite motor8 pilot has closed. A

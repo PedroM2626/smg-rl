@@ -38,7 +38,7 @@ each run's `status.json` remains the live source.
 | Repaired SMG1 terminal prediction, preserved dynamics, fresh confirmation and gated actor smoke | [SMG1 boundary repair](smg1-boundary-repair.md) |
 | BTR Appendix J.1, inspected Wii code, RAM-probe limits and staged environment hypotheses | [BTR research review](btr-research-review.md) |
 | Corrected regional potential, nine validated intermediate starts,36 frozen control attempts and frame4 equivalence | [Regional intervention](regional-intervention.md) |
-| Current owner-authorized six collectors, visual warm start, reviewed health blocks and finite 8192-per-mission cap | [Six-instance regional training](regional-six-training.md) |
+| Completed six-collector blocks, exact 8192-per-mission accounting, prediction gates and full-start/assisted results | [Six-instance regional training](regional-six-training.md) |
 | Measured throughput and 1M-decision wall-clock projections | [Main README timing section](../README.md#decision-budgets-and-measured-wall-clock) |
 
 ## Understand and reproduce

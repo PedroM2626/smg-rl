@@ -3,12 +3,12 @@
 Visual recurrent reinforcement learning for **Super Mario Galaxy 1 and 2** in
 Dolphin on Windows.
 
-**Current run:** the owner requested [six concurrent regional collectors](docs/regional-six-training.md),
-two for each mission. Both startup health blocks passed; two game policies now
-collect into fresh replay with visual dynamics warm-started and reward/policy
-heads reset. The reviewed blocks stop at 8192 new real decisions per mission.
-Hourly reviews retain unchanged prediction gates and separate assisted/full-start
-results. Six collectors do not mean six independent policies.
+**Latest completed training:** the [six-collector regional blocks](docs/regional-six-training.md#completed-block-review)
+reached 8192 new real decisions per mission and stopped without process errors.
+SMG2 passed final prediction gates and performed 32 imagined actor updates; SMG1
+performed 3 but finished blocked on reward/continuation prediction. There were no
+RAM-confirmed stars. All processes are stopped and the hourly review is retired.
+The audit separates canonical and assisted starts and includes real trajectories.
 
 **Latest completed intervention (October 25):** [regional rewards, curated starts and a separate frame4 test](docs/regional-intervention.md)
 passed actual-game contact/reset checks in all three missions. Nine reachable
@@ -279,9 +279,9 @@ only to full-start states: Galaxy 2 slots 1/3 and Galaxy 1 slot 1.
 ## Bounded regional world-model pilot
 
 The environment/control intervention is complete. The separate owner-requested
-six-instance run is active; inspect its [exact state and limits](docs/regional-six-training.md)
+six-instance run is complete; inspect its [exact results and limits](docs/regional-six-training.md)
 before starting anything else. The following command is an isolated-run reference,
-not an instruction to duplicate an active learner.
+not an instruction to extend the completed allocation automatically.
 The next training step should isolate the new reward and curated-start mixture at
 12 frames, using fresh replay and unchanged prediction gates. Review each finite
 block before launching a successor. For a fresh 256-decision SMG1 health block:
@@ -294,7 +294,7 @@ This starts a new learner, not a historical checkpoint resume. For SMG2 select
 `config/regional-smg2-12.yaml` instead, after
 reviewing the prior block. The earlier intervention used at most two emulator
 instances; only the explicitly authorized six-instance profiles supersede that
-limit. Do not combine additional jobs with the six active workers. The verified local banks are required.
+limit for that completed allocation. Review before assigning any successor budget. The verified local banks are required.
 Old reward/checkpoint signatures are intentionally incompatible; successful old
 prediction gates do not validate the new reward/start distribution. No million-step
 or six-instance extension is implied by these checks. Frame4 remains experimental.
