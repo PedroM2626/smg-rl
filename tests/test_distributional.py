@@ -118,3 +118,36 @@ def test_iqn_explicit_quantiles_and_evaluation_values_are_deterministic():
     values = network.expected(images, scenario, 8, deterministic=True)
     network.reset_noise()
     torch.testing.assert_close(values, network.expected(images, scenario, 8, deterministic=True))
+
+
+def test_seeded_stochastic_act_changes_actions_without_updates_or_weight_changes():
+    torch.set_num_threads(1)
+    s = settings('iqn')
+    s.update(epsilon=0., evaluation_epsilon=0.)
+    agent = DistributionalAgent(signature(), s)
+    agent.real_decisions = 1000
+    before = {name: tensor.clone() for name, tensor in agent.online.state_dict().items()}
+    observation = {'image': np.zeros((1, 4, 40, 40), np.uint8), 'scenario': np.ones((1, 1), np.float32)}
+    def trace(seed):
+        torch.manual_seed(seed)
+        agent.rng = np.random.default_rng(seed)
+        result = []
+        for _ in range(16):
+            action, metrics = agent.act(observation, evaluate=False, return_values=True)
+            assert not metrics['epsilon_random_mask'][0]
+            result.append(int(action[0]))
+        return result
+    first = trace(11)
+    assert len(set(first)) > 1 and trace(11) == first and trace(23) != first
+    assert agent.updates == 0 and agent.real_decisions == 1000
+    for name, value in agent.online.state_dict().items():
+        torch.testing.assert_close(value, before[name], rtol=0, atol=0)
+
+
+def test_explicit_random_action_provenance_is_not_confused_with_noisynet():
+    s = settings()
+    s.update(evaluation_epsilon=1.)
+    agent = DistributionalAgent(signature(), s)
+    observation = {'image': np.zeros((2, 4, 40, 40), np.uint8), 'scenario': np.ones((2, 1), np.float32)}
+    _, metrics = agent.act(observation, evaluate=True, return_values=True)
+    assert metrics['epsilon_random_mask'].all() and not agent.online.training

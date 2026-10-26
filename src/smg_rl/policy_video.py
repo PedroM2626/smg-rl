@@ -108,6 +108,8 @@ class VideoBackend:
         self.input_log.write(json.dumps({'frame':self.frames_written, 'episode':self.episode, 'decision':self.step,
             'selected_action':self.last_action, 'applied_controls':self.last_controls,
             'policy_expected_returns': self.policy_q_values.tolist() if self.policy_q_values is not None else None,
+            'policy_action_source': self.__dict__.get('policy_action_source'),
+            'policy_epsilon': self.__dict__.get('policy_epsilon'),
             'policy_input_sha256':hashlib.sha256(self.policy_image.tobytes()).hexdigest()
                 if self.policy_image is not None else None})+'\n')
         self.frames_written += 1

@@ -28,6 +28,10 @@ traverse their short mapped openings and then die. These are not full-mission
 percentages. [Final results and diagnosis](docs/impala-final-results.md) identify
 incomplete route coverage and the Sweet jumping-in-place policy. No training
 extension or new experiment is running.
+A later owner-requested [frozen stochastic comparison](docs/stochastic-iqn-evaluation.md)
+also completed without stars: Sweet's mean opening advance rose from23.64% to
+32.42% with noise/epsilon, best35.03%. These remain short-opening metrics, not
+full-course percentages. The linked map locates the older51.80% training record.
 
 **Completed model-free comparison:** [Rainbow and IQN](docs/model-free.md)
 used real-pixel frame stacks and prioritized replay, with zero imagined

@@ -17,6 +17,13 @@ closes emulators and saves the final immutable checkpoint. Boot time is included
 close/checkpoint overhead may finish afterward. Attempts persist on resume.
 Historical profiles retain their original reward/encoder settings.
 
+For an explicitly allocated frozen stochastic test, `record-dqn --stochastic`
+uses NoisyNet, random IQN quantiles and the checkpoint's current training epsilon,
+without optimization. The default retains deterministic/no-noise evaluation and
+its declared evaluation epsilon. Record the mode and preserve failures; the
+[completed stochastic comparison](stochastic-iqn-evaluation.md) is not permission
+to duplicate its episodes or resume training.
+
 After an explicitly owner-authorized diagnosis/repair, `scripts/run_impala_trial.py recover`
 audits the retained failed partial checkpoints and charges their original time
 and decisions exactly once. It refuses active trials and owner stop files.

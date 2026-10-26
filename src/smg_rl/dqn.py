@@ -52,6 +52,7 @@ class DistributionalAgent:
         metrics = {'q_mean': float(values.mean()), 'q_max': float(values.max()), 'epsilon': epsilon}
         if return_values:
             metrics['q_values'] = values.cpu().numpy()
+            metrics['epsilon_random_mask'] = random.copy()
         return actions, metrics
 
     def update(self, replay):

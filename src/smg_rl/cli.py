@@ -61,6 +61,8 @@ def main():
     q_video.add_argument('--variation', type=int, default=0)
     q_video.add_argument('--seeds', nargs='+', type=int, default=[11, 23, 47])
     q_video.add_argument('--max-steps', type=int, default=300)
+    q_video.add_argument('--stochastic', action='store_true',
+                         help='Frozen NoisyNet/random-quantile evaluation with checkpoint training epsilon; no learning.')
     for name in ("train-world-model", "fit-world-model"):
         world = commands.add_parser(name, help="Guarded visual world-model workflow (experimental).")
         world.add_argument("--resume")
@@ -112,7 +114,7 @@ def main():
     if args.command == 'record-dqn':
         from smg_rl.dqn_video import record_dqn
 
-        print(record_dqn(args.config, args.checkpoint, args.variation, args.seeds, args.max_steps))
+        print(record_dqn(args.config, args.checkpoint, args.variation, args.seeds, args.max_steps, args.stochastic))
         return
     if args.command == 'train-dqn':
         from smg_rl.dqn_training import train_dqn

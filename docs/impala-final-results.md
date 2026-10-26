@@ -4,6 +4,11 @@ Date: October26,2026. Both finite training branches and all nine declared frozen
 canonical episodes are complete. No training extension or new algorithm trial
 is allocated. Original checkpoints, failure evidence and videos remain retained.
 
+The owner subsequently requested a separate
+[frozen stochastic execution comparison](stochastic-iqn-evaluation.md), now also
+complete. It preserves the greedy results below, adds no training, and locates
+the historical Sweet51.80% exploratory record on a top-down coordinate map.
+
 ## Final training and frozen behavior
 
 SMG1 finished296150 committed real decisions and1911 completed attempts;

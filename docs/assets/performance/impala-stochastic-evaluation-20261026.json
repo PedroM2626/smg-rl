@@ -1,0 +1,360 @@
+{
+  "scope": "Owner-requested frozen stochastic execution, not new training. Paired final checkpoints and canonical starts; three rollout seeds, not independent training replicas.",
+  "maximum_allocated_decisions": 5400,
+  "actual_evaluation_decisions": 935,
+  "training_decisions_added": 0,
+  "missions": {
+    "sweet_sweet": {
+      "recording": {
+        "state": "completed",
+        "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg1\\dqn-20261026-165924-309805\\checkpoint-final",
+        "agent_sha256": "2cf9e0180bf21e0469e6d570b9a721c8b3f56fcb984838fa3cd4ac58e1e6a0c2",
+        "variation": "sweet_sweet",
+        "episodes": [
+          {
+            "seed": 11,
+            "decisions": 193,
+            "outcome": "timeout",
+            "full_start_ram_star": false,
+            "epsilon_random_decisions": 26,
+            "opening_fraction": 0.3477817072839023,
+            "maximum_geometric_projection_percent": 2.7537190602584443,
+            "telemetry": {
+              "position": [
+                130.42092895507812,
+                101.300048828125,
+                338.3090515136719
+              ],
+              "scenario": 1,
+              "stage": "BeltConveyerExGalaxy",
+              "actor": 2164967084,
+              "actor_nerve": 2154426424,
+              "scene_nerve": 2154437584,
+              "scene_frame": 3639,
+              "dead": false,
+              "complete": false,
+              "health": 3,
+              "max_health": 3,
+              "grounded": false
+            }
+          },
+          {
+            "seed": 23,
+            "decisions": 212,
+            "outcome": "timeout",
+            "full_start_ram_star": false,
+            "epsilon_random_decisions": 20,
+            "opening_fraction": 0.3503118769994023,
+            "maximum_geometric_projection_percent": 2.7094742763115036,
+            "telemetry": {
+              "position": [
+                -260.351318359375,
+                172.70004272460938,
+                210.31436157226562
+              ],
+              "scenario": 1,
+              "stage": "BeltConveyerExGalaxy",
+              "actor": 2164967084,
+              "actor_nerve": 2154426424,
+              "scene_nerve": 2154437584,
+              "scene_frame": 3867,
+              "dead": false,
+              "complete": false,
+              "health": 3,
+              "max_health": 3,
+              "grounded": false
+            }
+          },
+          {
+            "seed": 47,
+            "decisions": 53,
+            "outcome": "death",
+            "full_start_ram_star": false,
+            "epsilon_random_decisions": 4,
+            "opening_fraction": 0.2744027372628568,
+            "maximum_geometric_projection_percent": 2.478799795611564,
+            "telemetry": {
+              "position": [
+                299.0288391113281,
+                -2408.348388671875,
+                -1183.8565673828125
+              ],
+              "scenario": 1,
+              "stage": "BeltConveyerExGalaxy",
+              "actor": 2164967084,
+              "actor_nerve": 2154426432,
+              "scene_nerve": 2154437600,
+              "scene_frame": 7,
+              "dead": true,
+              "complete": false,
+              "health": 3,
+              "max_health": 3,
+              "grounded": false
+            }
+          }
+        ],
+        "optimizer_updates": 73525,
+        "algorithm": "iqn",
+        "physical_training_decisions_added": 0,
+        "imagined_transitions": 0,
+        "evaluation_epsilon": 0.09999999999999998,
+        "evaluation_mode": "noisynet_epsilon",
+        "parameter_noise_enabled": true,
+        "quantiles": "random",
+        "scope": "Canonical-start frozen weights; explicit parameter-noise/epsilon mode. No fitting, training or training-success accounting.",
+        "overlay": "Exact policy grayscale frame, raw expected Q returns (not probabilities), selected action and applied controls.",
+        "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg1\\eval-dqn-video-20261026-190456-690728\\policy.mp4",
+        "frames_written": 2748
+      },
+      "mean_opening_percent": 32.416544051538715,
+      "best_opening_percent": 35.03118769994023,
+      "greedy_mean_opening_percent": 23.64019054225169,
+      "outcomes": {
+        "timeout": 2,
+        "death": 1
+      },
+      "ram_stars": 0,
+      "decision_sources": {
+        "noisynet_argmax": 408,
+        "epsilon_random": 50
+      },
+      "encoded_frames": 2748,
+      "overlays_and_source_flags_verified": true,
+      "weights_optimizer_replay_unchanged": true
+    },
+    "spinning": {
+      "recording": {
+        "state": "completed",
+        "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg2\\dqn-20261026-165929-116375\\checkpoint-final",
+        "agent_sha256": "402b6c0cd97d17bc0d89e1d5fa77491c15319b94817a4db2c460fcdfe012cdf8",
+        "variation": "spinning",
+        "episodes": [
+          {
+            "seed": 11,
+            "decisions": 142,
+            "outcome": "death",
+            "full_start_ram_star": false,
+            "epsilon_random_decisions": 22,
+            "opening_fraction": 1.0,
+            "maximum_geometric_projection_percent": 5.0736607558275795,
+            "telemetry": {
+              "position": [
+                -1171.30810546875,
+                -3540.202880859375,
+                -1108.6939697265625
+              ],
+              "scenario": 1,
+              "stage": "SecretAthleticGalaxy",
+              "actor": 2166529088,
+              "actor_nerve": 2155695676,
+              "scene_nerve": 2155696928,
+              "scene_frame": 4,
+              "dead": true,
+              "complete": false,
+              "health": null,
+              "max_health": null,
+              "grounded": false
+            }
+          },
+          {
+            "seed": 23,
+            "decisions": 143,
+            "outcome": "death",
+            "full_start_ram_star": false,
+            "epsilon_random_decisions": 13,
+            "opening_fraction": 1.0,
+            "maximum_geometric_projection_percent": 5.038307931949919,
+            "telemetry": {
+              "position": [
+                -1442.683837890625,
+                -3587.20263671875,
+                -1187.0841064453125
+              ],
+              "scenario": 1,
+              "stage": "SecretAthleticGalaxy",
+              "actor": 2166529088,
+              "actor_nerve": 2155695676,
+              "scene_nerve": 2155696928,
+              "scene_frame": 6,
+              "dead": true,
+              "complete": false,
+              "health": null,
+              "max_health": null,
+              "grounded": false
+            }
+          },
+          {
+            "seed": 47,
+            "decisions": 80,
+            "outcome": "death",
+            "full_start_ram_star": false,
+            "epsilon_random_decisions": 9,
+            "opening_fraction": 0.9977205275826055,
+            "maximum_geometric_projection_percent": 5.1143408171825815,
+            "telemetry": {
+              "position": [
+                -1275.6842041015625,
+                -3344.25146484375,
+                -1043.480224609375
+              ],
+              "scenario": 1,
+              "stage": "SecretAthleticGalaxy",
+              "actor": 2166529088,
+              "actor_nerve": 2155695676,
+              "scene_nerve": 2155696912,
+              "scene_frame": 1068,
+              "dead": true,
+              "complete": false,
+              "health": null,
+              "max_health": null,
+              "grounded": false
+            }
+          }
+        ],
+        "optimizer_updates": 115229,
+        "algorithm": "iqn",
+        "physical_training_decisions_added": 0,
+        "imagined_transitions": 0,
+        "evaluation_epsilon": 0.09999999999999998,
+        "evaluation_mode": "noisynet_epsilon",
+        "parameter_noise_enabled": true,
+        "quantiles": "random",
+        "scope": "Canonical-start frozen weights; explicit parameter-noise/epsilon mode. No fitting, training or training-success accounting.",
+        "overlay": "Exact policy grayscale frame, raw expected Q returns (not probabilities), selected action and applied controls.",
+        "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg2\\eval-dqn-video-20261026-190457-002880\\policy.mp4",
+        "frames_written": 2190
+      },
+      "mean_opening_percent": 99.92401758608685,
+      "best_opening_percent": 100.0,
+      "greedy_mean_opening_percent": 100.0,
+      "outcomes": {
+        "death": 3
+      },
+      "ram_stars": 0,
+      "decision_sources": {
+        "noisynet_argmax": 321,
+        "epsilon_random": 44
+      },
+      "encoded_frames": 2190,
+      "overlays_and_source_flags_verified": true,
+      "weights_optimizer_replay_unchanged": true
+    },
+    "double_time": {
+      "recording": {
+        "state": "completed",
+        "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg2\\dqn-20261026-165929-116375\\checkpoint-final",
+        "agent_sha256": "402b6c0cd97d17bc0d89e1d5fa77491c15319b94817a4db2c460fcdfe012cdf8",
+        "variation": "double_time",
+        "episodes": [
+          {
+            "seed": 11,
+            "decisions": 35,
+            "outcome": "death",
+            "full_start_ram_star": false,
+            "epsilon_random_decisions": 3,
+            "opening_fraction": 0.9991134776900724,
+            "maximum_geometric_projection_percent": 3.678452321796065,
+            "telemetry": {
+              "position": [
+                554.9810180664062,
+                -4751.24462890625,
+                -1419.5213623046875
+              ],
+              "scenario": 2,
+              "stage": "SecretAthleticGalaxy",
+              "actor": 2166530752,
+              "actor_nerve": 2155695676,
+              "scene_nerve": 2155696928,
+              "scene_frame": 9,
+              "dead": true,
+              "complete": false,
+              "health": null,
+              "max_health": null,
+              "grounded": false
+            }
+          },
+          {
+            "seed": 23,
+            "decisions": 38,
+            "outcome": "death",
+            "full_start_ram_star": false,
+            "epsilon_random_decisions": 3,
+            "opening_fraction": 1.0,
+            "maximum_geometric_projection_percent": 4.501269055176853,
+            "telemetry": {
+              "position": [
+                916.9425659179688,
+                -3428.577392578125,
+                -1670.9248046875
+              ],
+              "scenario": 2,
+              "stage": "SecretAthleticGalaxy",
+              "actor": 2166530752,
+              "actor_nerve": 2155695676,
+              "scene_nerve": 2155696928,
+              "scene_frame": 1,
+              "dead": true,
+              "complete": false,
+              "health": null,
+              "max_health": null,
+              "grounded": false
+            }
+          },
+          {
+            "seed": 47,
+            "decisions": 39,
+            "outcome": "death",
+            "full_start_ram_star": false,
+            "epsilon_random_decisions": 1,
+            "opening_fraction": 1.0,
+            "maximum_geometric_projection_percent": 4.307369356913647,
+            "telemetry": {
+              "position": [
+                360.05841064453125,
+                -3352.442626953125,
+                -1079.5462646484375
+              ],
+              "scenario": 2,
+              "stage": "SecretAthleticGalaxy",
+              "actor": 2166530752,
+              "actor_nerve": 2155695676,
+              "scene_nerve": 2155696912,
+              "scene_frame": 513,
+              "dead": true,
+              "complete": false,
+              "health": null,
+              "max_health": null,
+              "grounded": false
+            }
+          }
+        ],
+        "optimizer_updates": 115229,
+        "algorithm": "iqn",
+        "physical_training_decisions_added": 0,
+        "imagined_transitions": 0,
+        "evaluation_epsilon": 0.09999999999999998,
+        "evaluation_mode": "noisynet_epsilon",
+        "parameter_noise_enabled": true,
+        "quantiles": "random",
+        "scope": "Canonical-start frozen weights; explicit parameter-noise/epsilon mode. No fitting, training or training-success accounting.",
+        "overlay": "Exact policy grayscale frame, raw expected Q returns (not probabilities), selected action and applied controls.",
+        "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg2\\eval-dqn-video-20261026-190457-404153\\policy.mp4",
+        "frames_written": 672
+      },
+      "mean_opening_percent": 99.97044925633575,
+      "best_opening_percent": 100.0,
+      "greedy_mean_opening_percent": 100.0,
+      "outcomes": {
+        "death": 3
+      },
+      "ram_stars": 0,
+      "decision_sources": {
+        "noisynet_argmax": 105,
+        "epsilon_random": 7
+      },
+      "encoded_frames": 672,
+      "overlays_and_source_flags_verified": true,
+      "weights_optimizer_replay_unchanged": true
+    }
+  }
+}

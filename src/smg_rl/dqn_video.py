@@ -20,7 +20,7 @@ from smg_rl.replay import replay_signature
 from smg_rl.train import new_run
 
 
-def record_dqn(config_path, checkpoint, variation, seeds=(11, 23, 47), maximum_steps=300):
+def record_dqn(config_path, checkpoint, variation, seeds=(11, 23, 47), maximum_steps=300, stochastic=False):
     if not seeds or maximum_steps < 1:
         raise ValueError('Finite evaluation seeds and a positive decision budget are required.')
     config = load_config(config_path)
@@ -28,11 +28,14 @@ def record_dqn(config_path, checkpoint, variation, seeds=(11, 23, 47), maximum_s
         raise ValueError('Evaluation variation is outside the configured missions.')
     config['model_free_run'] = 'evaluation'
     agent = DistributionalAgent.load_policy(checkpoint, replay_signature(config), config['training']['device'])
+    epsilon = agent.epsilon(evaluate=not stochastic)
+    mode = 'noisynet_epsilon' if stochastic else 'epsilon_greedy' if epsilon else 'greedy'
     torch.set_num_threads(config['training']['torch_threads'])
     run = new_run(config, 'eval-dqn-video')
     atomic_json(run / 'controller.json', {'pid': os.getpid(), 'created_time': psutil.Process().create_time(),
         'role': 'frozen_model_free_evaluation', 'checkpoint': str(checkpoint),
-        'variation': variation, 'seeds': list(seeds), 'maximum_decisions_per_seed': maximum_steps})
+        'variation': variation, 'seeds': list(seeds), 'maximum_decisions_per_seed': maximum_steps,
+        'evaluation_mode': mode, 'evaluation_epsilon': epsilon})
     print({'evaluation_run': str(run), 'variation': variation}, flush=True)
     config['paths']['user'] = str(runtime_directory(config, run) / 'template')
     native_config = deepcopy(config)
@@ -40,15 +43,16 @@ def record_dqn(config_path, checkpoint, variation, seeds=(11, 23, 47), maximum_s
     backend = NativeDolphin(native_config)
     name = config['variations'][variation]['name']
     video = VideoBackend(backend, run / 'policy.mp4',
-        f"{agent.settings['algorithm'].upper()} EVALUATION | {name} | real {agent.real_decisions} | Q updates {agent.updates}",
+        f"{agent.settings['algorithm'].upper()} {mode.upper()} EVAL | {name} | eps {epsilon:.3f} | real {agent.real_decisions}",
         decision_frames=config['parallel']['frame_skip'])
     env = None
     record = {'state': 'running', 'checkpoint': str(checkpoint),
         'agent_sha256': digest(Path(checkpoint) / 'agent.pt'), 'variation': name, 'episodes': [],
         'optimizer_updates': agent.updates, 'algorithm': agent.settings['algorithm'],
         'physical_training_decisions_added': 0, 'imagined_transitions': 0,
-        'evaluation_epsilon': agent.settings.get('evaluation_epsilon', 0),
-        'scope': 'Canonical-start frozen policy evaluation, noisy parameters disabled; small explicit epsilon. Not training-success accounting.',
+        'evaluation_epsilon': epsilon, 'evaluation_mode': mode, 'parameter_noise_enabled': stochastic,
+        'quantiles': 'random' if stochastic else 'fixed_midpoints',
+        'scope': 'Canonical-start frozen weights; explicit parameter-noise/epsilon mode. No fitting, training or training-success accounting.',
         'overlay': 'Exact policy grayscale frame, raw expected Q returns (not probabilities), selected action and applied controls.',
         'video': str((run / 'policy.mp4').resolve())}
     atomic_json(run / 'recording.json', record)
@@ -59,11 +63,16 @@ def record_dqn(config_path, checkpoint, variation, seeds=(11, 23, 47), maximum_s
             torch.manual_seed(seed)
             observation, _ = env.reset(seed=seed, options={'full_start': True})
             video.episode, video.step = episode, 0
-            completed, info = False, {}
+            completed, info, random_decisions = False, {}, 0
             for step in range(maximum_steps):
-                actions, metrics = agent.act({k: v[None] for k, v in observation.items()}, evaluate=True, return_values=True)
+                actions, metrics = agent.act({k: v[None] for k, v in observation.items()},
+                                            evaluate=not stochastic, return_values=True)
+                random_action = bool(metrics['epsilon_random_mask'][0])
+                random_decisions += int(random_action)
                 video.policy_image = observation['image'][-1].copy()
                 video.policy_q_values = metrics['q_values'][0]
+                video.policy_action_source = 'epsilon_random' if random_action else 'noisynet_argmax' if stochastic else 'greedy_argmax'
+                video.policy_epsilon = epsilon
                 observation, _, terminated, truncated, info = env.step(int(actions[0]))
                 if terminated or truncated:
                     completed = True
@@ -71,6 +80,7 @@ def record_dqn(config_path, checkpoint, variation, seeds=(11, 23, 47), maximum_s
             record['episodes'].append({'seed': seed, 'decisions': step + 1,
                 'outcome': 'star' if info['complete'] else 'death' if info['dead'] else 'timeout' if completed else 'evaluation_budget_cut',
                 'full_start_ram_star': bool(info['complete'] and not info['dead']),
+                'epsilon_random_decisions': random_decisions,
                 'opening_fraction': info['route_prefix_progress'],
                 'maximum_geometric_projection_percent': 100 * info['best_progress'],
                 'telemetry': env.telemetry.to_dict()})

@@ -1,0 +1,23 @@
+{
+  "training_csv": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg1\\dqn-20261026-155811-318065\\worker-00\\sweet_sweet\\episode-000065.csv",
+  "frozen_csv": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg1\\eval-dqn-video-20261026-182204-372894\\worker-00\\sweet_sweet\\episode-000001.csv",
+  "training_attempt": 657,
+  "training_real_count": 219858,
+  "training_optimizer_updates": 54452,
+  "peak_step": 149,
+  "peak_position": [
+    159.82260131835938,
+    -50.00019836425781,
+    -1084.12646484375
+  ],
+  "peak_opening_fraction": 0.5179649845795358,
+  "grounded": true,
+  "health": 3,
+  "outcome": "death",
+  "frozen_stall_position": [
+    166.73147583007812,
+    206.40000915527344,
+    -315.14007568359375
+  ],
+  "scope": "Coordinates/trajectory locate a past exploratory training peak. Not full-mission percentage, not the final policy, and no video frame at that original peak is claimed."
+}
