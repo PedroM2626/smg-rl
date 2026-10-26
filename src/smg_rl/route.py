@@ -7,7 +7,7 @@ class RouteProgress:
     def __init__(self, specification):
         self.specification = specification
         self.schema = specification.get("schema", 1)
-        if self.schema not in (1, 2):
+        if self.schema not in (1, 2, 3):
             raise ValueError("Unsupported route schema.")
         self.points = np.asarray(specification["waypoints"], dtype=float)
         if (self.points.ndim != 2 or self.points.shape[1] != 3 or len(self.points) < 2
@@ -23,12 +23,27 @@ class RouteProgress:
             raise ValueError("Routes require positive tolerances and grounded confirmation.")
         self.reset(None)
 
-    def reset(self, telemetry):
+    def reset(self, telemetry, segment=None):
         self.segment, self.best, self.confirmations = 0, 0.0, 0
         self.exited = False
         self.initial_health = telemetry.health if telemetry else None
         self.eligible = telemetry is not None and np.linalg.norm(
             np.asarray(telemetry.position) - self.points[0]) <= self.specification["waypoint_radius"]
+        if self.schema == 3 and segment is not None:
+            if not isinstance(segment, int) or not 0 <= segment < len(self.lengths):
+                raise ValueError('Invalid curriculum route region.')
+            self.segment = segment
+            point = np.asarray(telemetry.position, dtype=float)
+            start, end = self.points[segment:segment + 2]
+            axis = (end - start)[[0, 2]]
+            t = float(np.clip((point - start)[[0, 2]] @ axis / (axis @ axis), 0, 1))
+            nearest = start + t * (end - start)
+            self.eligible = bool(telemetry.grounded is True and np.isfinite(point).all()
+                and np.linalg.norm((point - nearest)[[0, 2]]) <= self.specification['corridor_radius']
+                and abs(point[1] - nearest[1]) <= self.specification['height_tolerance'])
+            if not self.eligible:
+                raise ValueError('Curriculum position is outside its verified route region.')
+            self.best = float((self.lengths[:segment].sum() + t * self.lengths[segment]) / self.total_length)
 
     def update(self, telemetry):
         if not self.eligible or telemetry.dead or telemetry.complete:
@@ -36,10 +51,11 @@ class RouteProgress:
             return 0.0
         point = np.asarray(telemetry.position, dtype=float)
         if (not np.isfinite(point).all() or telemetry.grounded is not True
-                or (self.initial_health is not None and (telemetry.health is None or telemetry.health < self.initial_health))):
+                or (self.specification.get('requires_full_health', True) and self.initial_health is not None
+                    and (telemetry.health is None or telemetry.health < self.initial_health))):
             self.confirmations = 0
             return 0.0
-        if self.schema == 2:
+        if self.schema in (2, 3):
             return self._update_endpoint_crossing(point)
         start, end = self.points[self.segment:self.segment + 2]
         axis = (end - start)[[0, 2]]
@@ -66,7 +82,8 @@ class RouteProgress:
         """Resolve crossings now; proximity must not manufacture later progress.
 
         Schema 1 is retained for historical reward/checkpoint reproducibility.
-        Schema 2 is an isolated candidate, not enabled in the live motor8 profile.
+        Schema 2 remains an isolated candidate. Schema 3 uses these crossings
+        with explicitly anchored curriculum resets and separate potential shaping.
         """
         segment = self.segment
         while True:

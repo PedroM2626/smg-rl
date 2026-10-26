@@ -1,0 +1,1060 @@
+{
+  "scope": "Frozen-policy sensitivity only; not a trained comparison or native mission percentage.",
+  "runs": [
+    {
+      "state": "completed",
+      "game": "smg1",
+      "run": "runs\\regional-intervention\\control-smg1-20261025-211619-123965",
+      "attempts": [
+        {
+          "condition": "legacy12",
+          "seed": 11,
+          "variation": "sweet_sweet",
+          "frames": 1104,
+          "decisions": 92,
+          "wall_seconds": 11.571859100000438,
+          "emulated_frames_per_second": 95.40385779498112,
+          "confirmed_opening_fraction": 0.2822799757111851,
+          "confirmed_distance": 617.1041946671744,
+          "damage": 0,
+          "dead": true,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "death",
+          "video": "runs\\regional-intervention\\control-smg1-20261025-211619-123965\\legacy12\\seed11.mp4"
+        },
+        {
+          "condition": "legacy12",
+          "seed": 23,
+          "variation": "sweet_sweet",
+          "frames": 900,
+          "decisions": 75,
+          "wall_seconds": 6.108290899999702,
+          "emulated_frames_per_second": 147.34072340923447,
+          "confirmed_opening_fraction": 0.25178431824509234,
+          "confirmed_distance": 550.4363479874869,
+          "damage": 0,
+          "dead": true,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "death",
+          "video": null
+        },
+        {
+          "condition": "legacy12",
+          "seed": 47,
+          "variation": "sweet_sweet",
+          "frames": 444,
+          "decisions": 37,
+          "wall_seconds": 2.8125624999993306,
+          "emulated_frames_per_second": 157.86315859651322,
+          "confirmed_opening_fraction": 0.06674399042039078,
+          "confirmed_distance": 145.9118605684959,
+          "damage": 0,
+          "dead": true,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "death",
+          "video": null
+        },
+        {
+          "condition": "held12_inertia",
+          "seed": 11,
+          "variation": "sweet_sweet",
+          "frames": 1176,
+          "decisions": 98,
+          "wall_seconds": 11.536605100001907,
+          "emulated_frames_per_second": 101.9364006834043,
+          "confirmed_opening_fraction": 0.24550448586967094,
+          "confirmed_distance": 536.7077408097525,
+          "damage": 0,
+          "dead": true,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "death",
+          "video": "runs\\regional-intervention\\control-smg1-20261025-211619-123965\\held12_inertia\\seed11.mp4"
+        },
+        {
+          "condition": "held12_inertia",
+          "seed": 23,
+          "variation": "sweet_sweet",
+          "frames": 720,
+          "decisions": 60,
+          "wall_seconds": 3.786188800000673,
+          "emulated_frames_per_second": 190.1648433379424,
+          "confirmed_opening_fraction": 0.14513027842422646,
+          "confirmed_distance": 317.2754403253844,
+          "damage": 0,
+          "dead": true,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "death",
+          "video": null
+        },
+        {
+          "condition": "held12_inertia",
+          "seed": 47,
+          "variation": "sweet_sweet",
+          "frames": 444,
+          "decisions": 37,
+          "wall_seconds": 3.139555699999619,
+          "emulated_frames_per_second": 141.4212845467446,
+          "confirmed_opening_fraction": 0.06674399042039078,
+          "confirmed_distance": 145.9118605684959,
+          "damage": 0,
+          "dead": true,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "death",
+          "video": null
+        },
+        {
+          "condition": "held12_carry",
+          "seed": 11,
+          "variation": "sweet_sweet",
+          "frames": 1020,
+          "decisions": 85,
+          "wall_seconds": 11.668938300001173,
+          "emulated_frames_per_second": 87.4115514005158,
+          "confirmed_opening_fraction": 0.2842613673198949,
+          "confirmed_distance": 621.4357986710806,
+          "damage": 0,
+          "dead": true,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "death",
+          "video": "runs\\regional-intervention\\control-smg1-20261025-211619-123965\\held12_carry\\seed11.mp4"
+        },
+        {
+          "condition": "held12_carry",
+          "seed": 23,
+          "variation": "sweet_sweet",
+          "frames": 240,
+          "decisions": 20,
+          "wall_seconds": 1.6037897000023804,
+          "emulated_frames_per_second": 149.64555514955845,
+          "confirmed_opening_fraction": 0.12082193132478777,
+          "confirmed_distance": 264.1339345466064,
+          "damage": 0,
+          "dead": true,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "death",
+          "video": null
+        },
+        {
+          "condition": "held12_carry",
+          "seed": 47,
+          "variation": "sweet_sweet",
+          "frames": 372,
+          "decisions": 31,
+          "wall_seconds": 2.2057052000018302,
+          "emulated_frames_per_second": 168.65354445357943,
+          "confirmed_opening_fraction": 0.06674399042039078,
+          "confirmed_distance": 145.9118605684959,
+          "damage": 0,
+          "dead": true,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "death",
+          "video": null
+        },
+        {
+          "condition": "held4_carry",
+          "seed": 11,
+          "variation": "sweet_sweet",
+          "frames": 1200,
+          "decisions": 300,
+          "wall_seconds": 14.582628500000283,
+          "emulated_frames_per_second": 82.28969146405785,
+          "confirmed_opening_fraction": 0.08627439275047478,
+          "confirmed_distance": 188.60809919140024,
+          "damage": 0,
+          "dead": false,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "timeout",
+          "video": "runs\\regional-intervention\\control-smg1-20261025-211619-123965\\held4_carry\\seed11.mp4"
+        },
+        {
+          "condition": "held4_carry",
+          "seed": 23,
+          "variation": "sweet_sweet",
+          "frames": 1200,
+          "decisions": 300,
+          "wall_seconds": 9.163825199997518,
+          "emulated_frames_per_second": 130.949682453603,
+          "confirmed_opening_fraction": 0.0842288564405534,
+          "confirmed_distance": 184.13626574300847,
+          "damage": 0,
+          "dead": false,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "timeout",
+          "video": null
+        },
+        {
+          "condition": "held4_carry",
+          "seed": 47,
+          "variation": "sweet_sweet",
+          "frames": 1200,
+          "decisions": 300,
+          "wall_seconds": 8.964528499996959,
+          "emulated_frames_per_second": 133.86091638845335,
+          "confirmed_opening_fraction": 4.0163741968101245e-05,
+          "confirmed_distance": 0.08780365514628043,
+          "damage": 0,
+          "dead": false,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "timeout",
+          "video": null
+        }
+      ],
+      "checkpoint": "runs\\m8-smg1-boundary\\boundary-heads_strong-20261025-162736-258709\\actor-smoke.pt",
+      "checkpoint_sha256": "c42a1b168b7c2bfe9e3857b4f49082ac91576be2a0f07a966dbbf1df14f1f1fe",
+      "source_counts": {
+        "real": 4096,
+        "model": 704,
+        "actor": 1,
+        "imagined": 1024
+      },
+      "seeds": [
+        11,
+        23,
+        47
+      ],
+      "conditions": [
+        "legacy12",
+        "held12_inertia",
+        "held12_carry",
+        "held4_carry"
+      ],
+      "maximum_frames_per_attempt": 1200,
+      "scope": "Explicit inference-only adaptation. Frozen policy, canonical starts, no learning or replay.",
+      "limitation": "Four-frame recurrent dynamics are unvalidated. This is not a learning-rate comparison.",
+      "wall_time_note": "Seed11 includes video encoding and full RGBA capture. Compare throughput only within a capture mode."
+    },
+    {
+      "state": "completed",
+      "game": "smg2",
+      "run": "runs\\regional-intervention\\control-smg2-20261025-211619-257318",
+      "attempts": [
+        {
+          "condition": "legacy12",
+          "seed": 11,
+          "variation": "spinning",
+          "frames": 876,
+          "decisions": 73,
+          "wall_seconds": 8.992946700000175,
+          "emulated_frames_per_second": 97.40967329429218,
+          "confirmed_opening_fraction": 0.2504553771835503,
+          "confirmed_distance": 491.1372900009155,
+          "damage": 0,
+          "dead": true,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "death",
+          "video": "runs\\regional-intervention\\control-smg2-20261025-211619-257318\\legacy12\\seed11.mp4"
+        },
+        {
+          "condition": "legacy12",
+          "seed": 11,
+          "variation": "double_time",
+          "frames": 1164,
+          "decisions": 97,
+          "wall_seconds": 11.829133700000966,
+          "emulated_frames_per_second": 98.40111960184413,
+          "confirmed_opening_fraction": 0.2504553771835503,
+          "confirmed_distance": 491.1372900009155,
+          "damage": 0,
+          "dead": true,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "death",
+          "video": "runs\\regional-intervention\\control-smg2-20261025-211619-257318\\legacy12\\seed11.mp4"
+        },
+        {
+          "condition": "legacy12",
+          "seed": 23,
+          "variation": "spinning",
+          "frames": 900,
+          "decisions": 75,
+          "wall_seconds": 5.027283300001727,
+          "emulated_frames_per_second": 179.02313163845187,
+          "confirmed_opening_fraction": 0.027078977106448545,
+          "confirmed_distance": 53.10125732421875,
+          "damage": 0,
+          "dead": true,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "death",
+          "video": null
+        },
+        {
+          "condition": "legacy12",
+          "seed": 23,
+          "variation": "double_time",
+          "frames": 900,
+          "decisions": 75,
+          "wall_seconds": 5.087440200000856,
+          "emulated_frames_per_second": 176.90625631331227,
+          "confirmed_opening_fraction": 0.03963143386122464,
+          "confirmed_distance": 77.71633911132812,
+          "damage": 0,
+          "dead": true,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "death",
+          "video": null
+        },
+        {
+          "condition": "legacy12",
+          "seed": 47,
+          "variation": "spinning",
+          "frames": 288,
+          "decisions": 24,
+          "wall_seconds": 2.2044332999976177,
+          "emulated_frames_per_second": 130.64582176304052,
+          "confirmed_opening_fraction": 0.03368046813052343,
+          "confirmed_distance": 66.046630859375,
+          "damage": 0,
+          "dead": true,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "death",
+          "video": null
+        },
+        {
+          "condition": "legacy12",
+          "seed": 47,
+          "variation": "double_time",
+          "frames": 288,
+          "decisions": 24,
+          "wall_seconds": 1.9681165000001783,
+          "emulated_frames_per_second": 146.33280092920003,
+          "confirmed_opening_fraction": 0.03368046813052343,
+          "confirmed_distance": 66.046630859375,
+          "damage": 0,
+          "dead": true,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "death",
+          "video": null
+        },
+        {
+          "condition": "held12_inertia",
+          "seed": 11,
+          "variation": "spinning",
+          "frames": 936,
+          "decisions": 78,
+          "wall_seconds": 9.12052020000192,
+          "emulated_frames_per_second": 102.62572522999324,
+          "confirmed_opening_fraction": 0.3124541840061927,
+          "confirmed_distance": 612.7155380249023,
+          "damage": 0,
+          "dead": true,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "death",
+          "video": "runs\\regional-intervention\\control-smg2-20261025-211619-257318\\held12_inertia\\seed11.mp4"
+        },
+        {
+          "condition": "held12_inertia",
+          "seed": 11,
+          "variation": "double_time",
+          "frames": 972,
+          "decisions": 81,
+          "wall_seconds": 10.042156900002738,
+          "emulated_frames_per_second": 96.79195512268237,
+          "confirmed_opening_fraction": 0.3212389483147347,
+          "confirmed_distance": 629.9422607421875,
+          "damage": 0,
+          "dead": true,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "death",
+          "video": "runs\\regional-intervention\\control-smg2-20261025-211619-257318\\held12_inertia\\seed11.mp4"
+        },
+        {
+          "condition": "held12_inertia",
+          "seed": 23,
+          "variation": "spinning",
+          "frames": 624,
+          "decisions": 52,
+          "wall_seconds": 4.008340600001247,
+          "emulated_frames_per_second": 155.67539345329232,
+          "confirmed_opening_fraction": 0.08213978591361548,
+          "confirmed_distance": 161.07424926757812,
+          "damage": 0,
+          "dead": true,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "death",
+          "video": null
+        },
+        {
+          "condition": "held12_inertia",
+          "seed": 23,
+          "variation": "double_time",
+          "frames": 660,
+          "decisions": 55,
+          "wall_seconds": 3.5961607999997796,
+          "emulated_frames_per_second": 183.52905687644457,
+          "confirmed_opening_fraction": 0.0822456415880139,
+          "confirmed_distance": 161.28182983398438,
+          "damage": 0,
+          "dead": true,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "death",
+          "video": null
+        },
+        {
+          "condition": "held12_inertia",
+          "seed": 47,
+          "variation": "spinning",
+          "frames": 288,
+          "decisions": 24,
+          "wall_seconds": 1.6636230000003707,
+          "emulated_frames_per_second": 173.11614470341888,
+          "confirmed_opening_fraction": 0.03368046813052343,
+          "confirmed_distance": 66.046630859375,
+          "damage": 0,
+          "dead": true,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "death",
+          "video": null
+        },
+        {
+          "condition": "held12_inertia",
+          "seed": 47,
+          "variation": "double_time",
+          "frames": 288,
+          "decisions": 24,
+          "wall_seconds": 1.9146015000005718,
+          "emulated_frames_per_second": 150.42294702052305,
+          "confirmed_opening_fraction": 0.03368046813052343,
+          "confirmed_distance": 66.046630859375,
+          "damage": 0,
+          "dead": true,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "death",
+          "video": null
+        },
+        {
+          "condition": "held12_carry",
+          "seed": 11,
+          "variation": "spinning",
+          "frames": 816,
+          "decisions": 68,
+          "wall_seconds": 8.893695700000535,
+          "emulated_frames_per_second": 91.7503844886385,
+          "confirmed_opening_fraction": 0.3459709314430099,
+          "confirmed_distance": 678.4411163330078,
+          "damage": 0,
+          "dead": true,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "death",
+          "video": "runs\\regional-intervention\\control-smg2-20261025-211619-257318\\held12_carry\\seed11.mp4"
+        },
+        {
+          "condition": "held12_carry",
+          "seed": 11,
+          "variation": "double_time",
+          "frames": 768,
+          "decisions": 64,
+          "wall_seconds": 8.26167550000173,
+          "emulated_frames_per_second": 92.95935188931583,
+          "confirmed_opening_fraction": 0.33498892656570606,
+          "confirmed_distance": 656.9056549072266,
+          "damage": 0,
+          "dead": true,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "death",
+          "video": "runs\\regional-intervention\\control-smg2-20261025-211619-257318\\held12_carry\\seed11.mp4"
+        },
+        {
+          "condition": "held12_carry",
+          "seed": 23,
+          "variation": "spinning",
+          "frames": 624,
+          "decisions": 52,
+          "wall_seconds": 3.654197700001532,
+          "emulated_frames_per_second": 170.76251785713137,
+          "confirmed_opening_fraction": 0.12691447185002988,
+          "confirmed_distance": 248.87638854980466,
+          "damage": 0,
+          "dead": true,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "death",
+          "video": null
+        },
+        {
+          "condition": "held12_carry",
+          "seed": 23,
+          "variation": "double_time",
+          "frames": 660,
+          "decisions": 55,
+          "wall_seconds": 3.9844387999983155,
+          "emulated_frames_per_second": 165.6444064344216,
+          "confirmed_opening_fraction": 0.12665913899941908,
+          "confirmed_distance": 248.37568664550778,
+          "damage": 0,
+          "dead": true,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "death",
+          "video": null
+        },
+        {
+          "condition": "held12_carry",
+          "seed": 47,
+          "variation": "spinning",
+          "frames": 288,
+          "decisions": 24,
+          "wall_seconds": 2.00195050000184,
+          "emulated_frames_per_second": 143.8597008266365,
+          "confirmed_opening_fraction": 0.03368046813052343,
+          "confirmed_distance": 66.046630859375,
+          "damage": 0,
+          "dead": true,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "death",
+          "video": null
+        },
+        {
+          "condition": "held12_carry",
+          "seed": 47,
+          "variation": "double_time",
+          "frames": 288,
+          "decisions": 24,
+          "wall_seconds": 1.9113815000018803,
+          "emulated_frames_per_second": 150.67635634210998,
+          "confirmed_opening_fraction": 0.03368046813052343,
+          "confirmed_distance": 66.046630859375,
+          "damage": 0,
+          "dead": true,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "death",
+          "video": null
+        },
+        {
+          "condition": "held4_carry",
+          "seed": 11,
+          "variation": "spinning",
+          "frames": 1200,
+          "decisions": 300,
+          "wall_seconds": 12.085633200000302,
+          "emulated_frames_per_second": 99.29144630998482,
+          "confirmed_opening_fraction": 0.08038495032101939,
+          "confirmed_distance": 157.633056640625,
+          "damage": 0,
+          "dead": false,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "timeout",
+          "video": "runs\\regional-intervention\\control-smg2-20261025-211619-257318\\held4_carry\\seed11.mp4"
+        },
+        {
+          "condition": "held4_carry",
+          "seed": 11,
+          "variation": "double_time",
+          "frames": 1200,
+          "decisions": 300,
+          "wall_seconds": 12.27902449999965,
+          "emulated_frames_per_second": 97.72763300537711,
+          "confirmed_opening_fraction": 0.08029487495444809,
+          "confirmed_distance": 157.4564208984375,
+          "damage": 0,
+          "dead": false,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "timeout",
+          "video": "runs\\regional-intervention\\control-smg2-20261025-211619-257318\\held4_carry\\seed11.mp4"
+        },
+        {
+          "condition": "held4_carry",
+          "seed": 23,
+          "variation": "spinning",
+          "frames": 1200,
+          "decisions": 300,
+          "wall_seconds": 7.290113600000041,
+          "emulated_frames_per_second": 164.60648843661275,
+          "confirmed_opening_fraction": 0.0,
+          "confirmed_distance": 0.0,
+          "damage": 0,
+          "dead": false,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "timeout",
+          "video": null
+        },
+        {
+          "condition": "held4_carry",
+          "seed": 23,
+          "variation": "double_time",
+          "frames": 1200,
+          "decisions": 300,
+          "wall_seconds": 7.306123200000002,
+          "emulated_frames_per_second": 164.24579317249942,
+          "confirmed_opening_fraction": 0.0,
+          "confirmed_distance": 0.0,
+          "damage": 0,
+          "dead": false,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "timeout",
+          "video": null
+        },
+        {
+          "condition": "held4_carry",
+          "seed": 47,
+          "variation": "spinning",
+          "frames": 1200,
+          "decisions": 300,
+          "wall_seconds": 6.755502600000909,
+          "emulated_frames_per_second": 177.6329713794853,
+          "confirmed_opening_fraction": 0.0,
+          "confirmed_distance": 0.0,
+          "damage": 0,
+          "dead": false,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "timeout",
+          "video": null
+        },
+        {
+          "condition": "held4_carry",
+          "seed": 47,
+          "variation": "double_time",
+          "frames": 1200,
+          "decisions": 300,
+          "wall_seconds": 7.210282899999584,
+          "emulated_frames_per_second": 166.42897603921605,
+          "confirmed_opening_fraction": 0.02885819903273801,
+          "confirmed_distance": 56.59027099609375,
+          "damage": 0,
+          "dead": false,
+          "ram_star": false,
+          "start_kind": "full_start",
+          "outcome": "timeout",
+          "video": null
+        }
+      ],
+      "checkpoint": "runs\\m8-smg2\\world-model-20261025-133915-837384\\world-final.pt",
+      "checkpoint_sha256": "81d9c99ab880759f744a29b7094e3317869c0098c30fa001b3681c6a61b245d7",
+      "source_counts": {
+        "real": 6096,
+        "model": 636,
+        "actor": 134,
+        "imagined": 129552
+      },
+      "seeds": [
+        11,
+        23,
+        47
+      ],
+      "conditions": [
+        "legacy12",
+        "held12_inertia",
+        "held12_carry",
+        "held4_carry"
+      ],
+      "maximum_frames_per_attempt": 1200,
+      "scope": "Explicit inference-only adaptation. Frozen policy, canonical starts, no learning or replay.",
+      "limitation": "Four-frame recurrent dynamics are unvalidated. This is not a learning-rate comparison.",
+      "wall_time_note": "Seed11 includes video encoding and full RGBA capture. Compare throughput only within a capture mode."
+    }
+  ],
+  "summary": [
+    {
+      "game": "smg1",
+      "variation": "sweet_sweet",
+      "condition": "legacy12",
+      "seeds": [
+        11,
+        23,
+        47
+      ],
+      "mean_confirmed_distance": 437.8174677410524,
+      "median_confirmed_distance": 550.4363479874869,
+      "best_confirmed_distance": 617.1041946671744,
+      "deaths": 3,
+      "damage": 0,
+      "ram_stars": 0,
+      "frames": 2448,
+      "decisions": 204,
+      "median_nonvideo_frames_per_second": 152.60194100287384
+    },
+    {
+      "game": "smg1",
+      "variation": "sweet_sweet",
+      "condition": "held12_inertia",
+      "seeds": [
+        11,
+        23,
+        47
+      ],
+      "mean_confirmed_distance": 333.2983472345443,
+      "median_confirmed_distance": 317.2754403253844,
+      "best_confirmed_distance": 536.7077408097525,
+      "deaths": 3,
+      "damage": 0,
+      "ram_stars": 0,
+      "frames": 2340,
+      "decisions": 195,
+      "median_nonvideo_frames_per_second": 165.7930639423435
+    },
+    {
+      "game": "smg1",
+      "variation": "sweet_sweet",
+      "condition": "held12_carry",
+      "seeds": [
+        11,
+        23,
+        47
+      ],
+      "mean_confirmed_distance": 343.8271979287276,
+      "median_confirmed_distance": 264.1339345466064,
+      "best_confirmed_distance": 621.4357986710806,
+      "deaths": 3,
+      "damage": 0,
+      "ram_stars": 0,
+      "frames": 1632,
+      "decisions": 136,
+      "median_nonvideo_frames_per_second": 159.14954980156892
+    },
+    {
+      "game": "smg1",
+      "variation": "sweet_sweet",
+      "condition": "held4_carry",
+      "seeds": [
+        11,
+        23,
+        47
+      ],
+      "mean_confirmed_distance": 124.27738952985166,
+      "median_confirmed_distance": 184.13626574300847,
+      "best_confirmed_distance": 188.60809919140024,
+      "deaths": 0,
+      "damage": 0,
+      "ram_stars": 0,
+      "frames": 3600,
+      "decisions": 900,
+      "median_nonvideo_frames_per_second": 132.4052994210282
+    },
+    {
+      "game": "smg2",
+      "variation": "spinning",
+      "condition": "legacy12",
+      "seeds": [
+        11,
+        23,
+        47
+      ],
+      "mean_confirmed_distance": 203.42839272816977,
+      "median_confirmed_distance": 66.046630859375,
+      "best_confirmed_distance": 491.1372900009155,
+      "deaths": 3,
+      "damage": 0,
+      "ram_stars": 0,
+      "frames": 2064,
+      "decisions": 172,
+      "median_nonvideo_frames_per_second": 154.8344767007462
+    },
+    {
+      "game": "smg2",
+      "variation": "double_time",
+      "condition": "legacy12",
+      "seeds": [
+        11,
+        23,
+        47
+      ],
+      "mean_confirmed_distance": 211.63341999053955,
+      "median_confirmed_distance": 77.71633911132812,
+      "best_confirmed_distance": 491.1372900009155,
+      "deaths": 3,
+      "damage": 0,
+      "ram_stars": 0,
+      "frames": 2352,
+      "decisions": 196,
+      "median_nonvideo_frames_per_second": 161.61952862125617
+    },
+    {
+      "game": "smg2",
+      "variation": "spinning",
+      "condition": "held12_inertia",
+      "seeds": [
+        11,
+        23,
+        47
+      ],
+      "mean_confirmed_distance": 279.94547271728516,
+      "median_confirmed_distance": 161.07424926757812,
+      "best_confirmed_distance": 612.7155380249023,
+      "deaths": 3,
+      "damage": 0,
+      "ram_stars": 0,
+      "frames": 1848,
+      "decisions": 154,
+      "median_nonvideo_frames_per_second": 164.3957690783556
+    },
+    {
+      "game": "smg2",
+      "variation": "double_time",
+      "condition": "held12_inertia",
+      "seeds": [
+        11,
+        23,
+        47
+      ],
+      "mean_confirmed_distance": 285.7569071451823,
+      "median_confirmed_distance": 161.28182983398438,
+      "best_confirmed_distance": 629.9422607421875,
+      "deaths": 3,
+      "damage": 0,
+      "ram_stars": 0,
+      "frames": 1920,
+      "decisions": 160,
+      "median_nonvideo_frames_per_second": 166.97600194848383
+    },
+    {
+      "game": "smg2",
+      "variation": "spinning",
+      "condition": "held12_carry",
+      "seeds": [
+        11,
+        23,
+        47
+      ],
+      "mean_confirmed_distance": 331.12137858072913,
+      "median_confirmed_distance": 248.87638854980466,
+      "best_confirmed_distance": 678.4411163330078,
+      "deaths": 3,
+      "damage": 0,
+      "ram_stars": 0,
+      "frames": 1728,
+      "decisions": 144,
+      "median_nonvideo_frames_per_second": 157.31110934188393
+    },
+    {
+      "game": "smg2",
+      "variation": "double_time",
+      "condition": "held12_carry",
+      "seeds": [
+        11,
+        23,
+        47
+      ],
+      "mean_confirmed_distance": 323.77599080403644,
+      "median_confirmed_distance": 248.37568664550778,
+      "best_confirmed_distance": 656.9056549072266,
+      "deaths": 3,
+      "damage": 0,
+      "ram_stars": 0,
+      "frames": 1716,
+      "decisions": 143,
+      "median_nonvideo_frames_per_second": 158.1603813882658
+    },
+    {
+      "game": "smg2",
+      "variation": "spinning",
+      "condition": "held4_carry",
+      "seeds": [
+        11,
+        23,
+        47
+      ],
+      "mean_confirmed_distance": 52.544352213541664,
+      "median_confirmed_distance": 0.0,
+      "best_confirmed_distance": 157.633056640625,
+      "deaths": 0,
+      "damage": 0,
+      "ram_stars": 0,
+      "frames": 3600,
+      "decisions": 900,
+      "median_nonvideo_frames_per_second": 171.119729908049
+    },
+    {
+      "game": "smg2",
+      "variation": "double_time",
+      "condition": "held4_carry",
+      "seeds": [
+        11,
+        23,
+        47
+      ],
+      "mean_confirmed_distance": 71.34889729817708,
+      "median_confirmed_distance": 56.59027099609375,
+      "best_confirmed_distance": 157.4564208984375,
+      "deaths": 0,
+      "damage": 0,
+      "ram_stars": 0,
+      "frames": 3600,
+      "decisions": 900,
+      "median_nonvideo_frames_per_second": 165.33738460585772
+    }
+  ],
+  "videos": [
+    {
+      "video": "runs\\regional-intervention\\control-smg1-20261025-211619-123965\\held12_carry\\seed11.mp4",
+      "sha256": "b7ec49360f6736343c03ec7aa7cf3e9a34dca8b1fa916e50a90629b57c036f47",
+      "frames": 510,
+      "verified": "Exact action/control timing, stable actual input digest per decision, encoded frame count.",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1174,
+            "height": 660,
+            "avg_frame_rate": "30/1",
+            "nb_frames": "510"
+          }
+        ]
+      }
+    },
+    {
+      "video": "runs\\regional-intervention\\control-smg1-20261025-211619-123965\\held12_inertia\\seed11.mp4",
+      "sha256": "257ce41d0e9e5c52d9d6b8d723fa33221bf16fece02db0a96aa91aff10c66349",
+      "frames": 588,
+      "verified": "Exact action/control timing, stable actual input digest per decision, encoded frame count.",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1174,
+            "height": 660,
+            "avg_frame_rate": "30/1",
+            "nb_frames": "588"
+          }
+        ]
+      }
+    },
+    {
+      "video": "runs\\regional-intervention\\control-smg1-20261025-211619-123965\\held4_carry\\seed11.mp4",
+      "sha256": "741ecaafafeda56ce320d6da8b1a0f32bf432007be433bbee40bd3e14ee3b0c6",
+      "frames": 600,
+      "verified": "Exact action/control timing, stable actual input digest per decision, encoded frame count.",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1174,
+            "height": 660,
+            "avg_frame_rate": "30/1",
+            "nb_frames": "600"
+          }
+        ]
+      }
+    },
+    {
+      "video": "runs\\regional-intervention\\control-smg1-20261025-211619-123965\\legacy12\\seed11.mp4",
+      "sha256": "20866e9bd1135e6d2b1e6be77aa6e070b81f83ed1186a760572b230ab0c259f6",
+      "frames": 552,
+      "verified": "Exact action/control timing, stable actual input digest per decision, encoded frame count.",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1174,
+            "height": 660,
+            "avg_frame_rate": "30/1",
+            "nb_frames": "552"
+          }
+        ]
+      }
+    },
+    {
+      "video": "runs\\regional-intervention\\control-smg2-20261025-211619-257318\\held12_carry\\seed11.mp4",
+      "sha256": "ee4f2aceceefe30400ccee57ca9625de4c110505bacba516547c5da282f8aa6d",
+      "frames": 792,
+      "verified": "Exact action/control timing, stable actual input digest per decision, encoded frame count.",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1174,
+            "height": 660,
+            "avg_frame_rate": "30/1",
+            "nb_frames": "792"
+          }
+        ]
+      }
+    },
+    {
+      "video": "runs\\regional-intervention\\control-smg2-20261025-211619-257318\\held12_inertia\\seed11.mp4",
+      "sha256": "e21cc1a99cb0bc916b097716cfa5a160aff3664b484e51b530027a8212e71bda",
+      "frames": 954,
+      "verified": "Exact action/control timing, stable actual input digest per decision, encoded frame count.",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1174,
+            "height": 660,
+            "avg_frame_rate": "30/1",
+            "nb_frames": "954"
+          }
+        ]
+      }
+    },
+    {
+      "video": "runs\\regional-intervention\\control-smg2-20261025-211619-257318\\held4_carry\\seed11.mp4",
+      "sha256": "f444474d29942a2e648fbd2c39986184201cb794726019fe20526f7adc1a15e0",
+      "frames": 1200,
+      "verified": "Exact action/control timing, stable actual input digest per decision, encoded frame count.",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1174,
+            "height": 660,
+            "avg_frame_rate": "30/1",
+            "nb_frames": "1200"
+          }
+        ]
+      }
+    },
+    {
+      "video": "runs\\regional-intervention\\control-smg2-20261025-211619-257318\\legacy12\\seed11.mp4",
+      "sha256": "963a2df1e2910e4843e34035a138b39e76d0591cbaeadf6eba51a9c0c1d4c005",
+      "frames": 1020,
+      "verified": "Exact action/control timing, stable actual input digest per decision, encoded frame count.",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 1174,
+            "height": 660,
+            "avg_frame_rate": "30/1",
+            "nb_frames": "1020"
+          }
+        ]
+      }
+    }
+  ],
+  "limitations": [
+    "Three seeds only; no significance claim.",
+    "SMG1 source has one actor update; SMG2 source has134. Both are weak policies.",
+    "Four-frame recurrent inference was intentionally adapted without fitting; dynamics gates do not transfer.",
+    "Capture/encoding and fixed condition order confound absolute wall throughput.",
+    "Distances cover the validated opening. Full mission progression remains unverified."
+  ]
+}

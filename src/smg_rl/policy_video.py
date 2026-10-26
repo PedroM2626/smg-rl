@@ -23,9 +23,9 @@ from smg_rl.world_model import ImaginedAgent
 
 
 class VideoBackend:
-    """Observe every two emulated frames; retain twelve-frame policy decisions."""
+    """Observe every two emulated frames with signed four/twelve-frame decisions."""
 
-    def __init__(self, backend, destination, label):
+    def __init__(self, backend, destination, label, decision_frames=12):
         self.backend, self.label = backend, label
         self.writer = None
         self.destination = Path(destination)
@@ -38,6 +38,9 @@ class VideoBackend:
         self.policy_image = None
         self.policy_probabilities = None
         self.input_log = None
+        if decision_frames not in (4, 12):
+            raise ValueError('Policy video supports signed four/twelve-frame decisions.')
+        self.decision_frames = decision_frames
 
     def __getattr__(self, name):
         return getattr(self.backend, name)
@@ -106,19 +109,19 @@ class VideoBackend:
         self.frames_written += 1
 
     def advance(self, names):
-        self.last_action = "+".join(names) or "none"
+        self.last_action = self.__dict__.get('logical_action', '+'.join(names) or 'none')
         self.step += 1
-        for _ in range(6):
+        for _ in range(self.decision_frames // 2):
             self.backend.advance(names)
             self.last_controls = tuple(names)
             self.telemetry = self.backend.memory.sample()
             self.frame()
-        self.last_frame_count = 12
+        self.last_frame_count = self.decision_frames
 
     def advance_pulse(self, names, pressed, released):
-        if pressed + released != 12 or pressed % 2 or released % 2:
-            raise ValueError("Video pulses must cover twelve frames in two-frame chunks.")
-        self.last_action = "+".join(names)
+        if pressed + released != self.decision_frames or pressed % 2 or released % 2:
+            raise ValueError('Video pulses must match the decision in two-frame chunks.')
+        self.last_action = self.__dict__.get('logical_action', '+'.join(names))
         self.step += 1
         for controls, count in ((names, pressed), (tuple(n for n in names if n not in ("jump", "spin")), released)):
             for _ in range(count // 2):
@@ -126,7 +129,7 @@ class VideoBackend:
                 self.last_controls = tuple(controls)
                 self.telemetry = self.backend.memory.sample()
                 self.frame()
-        self.last_frame_count = 12
+        self.last_frame_count = self.decision_frames
 
     def close(self):
         try:
@@ -168,14 +171,15 @@ def record_policy(config_path, checkpoint, variation, seeds=(11, 23, 47), maximu
     name = config["variations"][variation]["name"]
     policy_stage = 'UNTRAINED POLICY PRIOR' if agent.actor_updates == 0 else 'POLICY EVALUATION'
     video = VideoBackend(backend, run / "policy.mp4",
-                         f"{config['game']['id']} | {name} | {policy_stage} | real {agent.real_decisions} | actor updates {agent.actor_updates}")
+                         f"{config['game']['id']} | {name} | {policy_stage} | real {agent.real_decisions} | actor updates {agent.actor_updates}",
+                         decision_frames=config['parallel']['frame_skip'])
     env = None
     result = {"scope": "Full-start policy evaluation; no learning; no training-success accounting",
               "checkpoint": str(checkpoint), "checkpoint_sha256": digest(checkpoint),
               "variation": name, "seeds": list(seeds), "episodes": [],
-              "capture": "Native full RGBA, 30 samples/s, policy every 12 frames; silent 1x game time",
+              "capture": f"Native full RGBA, 30 samples/s, policy every {config['parallel']['frame_skip']} frames; silent 1x game time",
               "observation_note": "Full RGBA capture uses the existing OpenCV gray/crop/resize path.",
-              "policy_input_overlay": "Exact cropped grayscale frame used by the actor, held for each twelve-frame decision; recurrent latent memory is not visualized.",
+              "policy_input_overlay": "Exact cropped grayscale frame used by the actor, held for each decision; recurrent latent memory is not visualized.",
               "button_overlay": "Applied controls per two-frame sample; policy probabilities are epsilon-mixture probabilities, not Q values.",
               "source_actor_updates":agent.actor_updates,
               "video": str((run / "policy.mp4").resolve())}
@@ -184,7 +188,7 @@ def record_policy(config_path, checkpoint, variation, seeds=(11, 23, 47), maximu
                         intrinsic=False, variation=variation)
         for episode, seed in enumerate(seeds, 1):
             torch.manual_seed(seed)
-            observation, _ = env.reset(seed=seed)
+            observation, _ = env.reset(seed=seed, options={'full_start': True})
             latent, previous, first = None, None, np.ones(1, dtype=bool)
             video.episode, video.step, video.last_action = episode, 0, "reset"
             video.policy_image = observation['image'][-1].copy()

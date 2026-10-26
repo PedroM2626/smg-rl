@@ -1,0 +1,14 @@
+{
+  "schema": 3,
+  "game_id": "RMGE01",
+  "variation": "sweet_sweet",
+  "name": "Canonical platform through first chocolate approach",
+  "scope": "Script-verified opening only; not a complete course or native mission percentage",
+  "waypoints": [[-50,45,-50],[230,45,-400],[230,-50,-650],[230,-50,-1400],[500,-50,-1500],[500,-50,-1950]],
+  "waypoint_radius": 250,
+  "corridor_radius": 250,
+  "height_tolerance": 140,
+  "exit_confirmations": 2,
+  "requires_grounded": true,
+  "requires_full_health": false
+}

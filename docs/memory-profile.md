@@ -31,6 +31,7 @@ The chain is resolved on every sample. Loading another state can relocate the ac
 | Stage | ASCII string at `scene_controller + 0x40` must be `SecretAthleticGalaxy` | Both variations live |
 | Scenario | `U32(scene_controller + 0x80)` is 1 or 2 | All four states live |
 | Mario X / Y / Z | Three contiguous big-endian floats at `mario_actor + 0x14`, `+0x18`, `+0x1C` | Movement and star/death tests |
+| Ground contact | If byte `actor+0xE24` is zero: `U32(U32(actor+0x584)+0x0C) & 0x40000000` | Independently disassembled SMG2 `MarioAccess::isOnGround` at0x803B4A70; jump/land/fall tested in both variations October 25 |
 | Actor state | `current_nerve(actor_spine)` | Live transitions |
 | Scene state | `current_nerve(scene_spine)` | Live transitions |
 | Scene frame counter | `U32(scene_spine + 0x0C)` | Changes while running, stable while paused |
@@ -44,11 +45,22 @@ The chain is resolved on every sample. Loading another state can relocate the ac
 
 The completion singleton is a **state identity**, not the value stored at an address named "completion". Compare the object's current nerve pointer to `0x807D5318`; reading the byte at `0x807D5318` as a Boolean would be incorrect. Normal gameplay uses scene nerve `0x807D5310`.
 
+Ground contact does not reuse Galaxy 1 offsets. The SMG2 function follows
+`actor+0x584` to Mario and tests the flag above on its ordinary branch. The
+alternate riding branch (`actor+0xE24 !=0`) is not validated: the reader returns
+unknown contact there, suppressing grounded regional progress. The three-mission
+fixture evidence is retained in [regional preparation](assets/performance/regional-preparation-20261025.json).
+
 ## Progress and coordinate frames
 
 Both starts are near `(0, -1150, 500)`. The first near-star point is near `(-2835, -450, -37225)`. The second paused snapshot is near `(-3095, -695, -52697)`. Earlier captures taken after settling on the rotating platform were near `(-2857, -627, -52697)`; the final profile restores states while paused to preserve the saved position. Use the current `config/calibration.json` rather than assuming an immutable heap address or platform-relative position.
 
 For each variation, project the current X/Z position onto its own start-to-goal vector, clamp to `[0, 1]`, and reward only increases over the episode's farthest valid projection. Reversing and re-crossing the same point cannot repeatedly earn progress. A large one-step displacement, a height below `min_reward_y`, or death suppresses progress reward. The policy never receives this projection.
+
+That paragraph describes the historical projection reward. The new
+`regional-*-12.yaml` and experimental 4 profiles keep projection as a diagnostic
+with reward coefficient zero. They use ordered grounded schema3 opening regions
+and terminal-closed potential shaping instead; see [the exact formula and scope](regional-intervention.md).
 
 There is no claim of a discovered native course percentage field. This progress value is computed from the verified coordinate addresses. It is appropriate to these mostly longitudinal courses; a looping course would need ordered waypoints or a route graph.
 

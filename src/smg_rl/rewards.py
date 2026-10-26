@@ -3,6 +3,28 @@
 import numpy as np
 
 
+class RegionalPotential:
+    """Frame-discounted shaping with an absorbing zero terminal potential."""
+
+    def __init__(self, scale=1.0, gamma_per_frame=0.997 ** (1 / 12)):
+        if not np.isfinite([scale, gamma_per_frame]).all() or not 0 < scale <= 5 or not 0 < gamma_per_frame <= 1:
+            raise ValueError('Invalid regional potential scale/discount.')
+        self.scale, self.gamma_per_frame, self.value = scale, gamma_per_frame, 0.0
+
+    def reset(self, progress):
+        if not np.isfinite(progress) or not 0 <= progress <= 1:
+            raise ValueError('Regional progress must lie in[0,1].')
+        self.value = self.scale * progress
+
+    def update(self, progress, frames, terminal=False):
+        if not isinstance(frames, int) or frames < 1 or not np.isfinite(progress) or not 0 <= progress <= 1:
+            raise ValueError('Shaping needs finite progress and a positive frame count.')
+        following = 0.0 if terminal else self.scale * progress
+        reward = self.gamma_per_frame ** frames * following - self.value
+        self.value = following
+        return float(reward)
+
+
 class ExplorationBudget:
     """Bound per-episode novelty and fade it during a measured progress stall."""
 

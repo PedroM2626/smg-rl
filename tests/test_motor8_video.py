@@ -48,3 +48,18 @@ def test_video_preserves_actual_policy_tile_and_displays_applied_release():
     assert np.array_equal(pressed[36:288,114:366],released[36:288,114:366])
     assert not np.array_equal(pressed[329:351,114:424],released[329:351,114:424])
     assert video.last_action == 'jump'  # Selected action and physical input are distinct.
+
+
+def test_four_frame_video_keeps_logical_jump_and_actual_carried_controls():
+    config = load_config('config/regional-smg1-4.yaml')
+    calls = []
+    backend = SimpleNamespace(bridge=object(), config=config,
+        advance=lambda controls: calls.append(controls), memory=SimpleNamespace(sample=lambda: None))
+    video = VideoBackend(backend, Path('unused.mp4'), 'timing fixture', decision_frames=4)
+    video.frame = lambda: None
+    advance_action(video, ('w',), config)
+    calls.clear()
+    advance_action(video, ('jump',), config)
+    assert calls == [('w', 'jump'), ('w', 'jump')]
+    assert video.last_frame_count == 4
+    assert video.last_action == 'jump' and video.last_controls == ('w', 'jump')

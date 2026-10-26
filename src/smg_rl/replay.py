@@ -13,7 +13,7 @@ from pathlib import Path
 
 import numpy as np
 
-from smg_rl.actions import action_name, action_set
+from smg_rl.actions import action_name, action_set, execution_signature
 from smg_rl.profiles import game_id
 
 SCHEMA = 1
@@ -33,9 +33,14 @@ def replay_signature(config):
             "reward_weights": {k: v for k, v in config["rewards"].items()
                                if k in ("completion", "death", "damage", "progress", "step", "timeout")}}
     if config.get("actions", {}).get("profile", "legacy54") != "legacy54":
-        result["action_execution"] = config["actions"]["profile"] + ":12-frames:jump-spin-8-on-4-off"
+        result["action_execution"] = execution_signature(config)
     if config.get("route_reward", {}).get("enabled"):
         result["route_reward"] = config["route_reward"]
+    if config.get('regional_reward', {}).get('enabled'):
+        result['regional_reward'] = config['regional_reward']
+        result['termination_revision'] = 'absorbing-frame-budget-v1'
+    if config.get('curriculum', {}).get('enabled'):
+        result['curriculum_distribution'] = config['curriculum']
     return result
 
 
@@ -57,11 +62,14 @@ class ReplayRecorder:
             raise ValueError("Replay requires the final cropped uint8 observation frame.")
         return image.copy()
 
-    def begin(self, image, scenario):
+    def begin(self, image, scenario, provenance=None):
         self.flush()
         if not 0 <= scenario < len(self.signature["scenario_names"]):
             raise ValueError("Replay scenario is outside its signature.")
         self.episode_id, self.scenario, self.chunk = uuid.uuid4().hex, scenario, 0
+        self.provenance = provenance or {}
+        if set(self.provenance) - {'start_kind', 'anchor_id', 'route_region', 'route_sha256'}:
+            raise ValueError('Invalid replay reset provenance fields.')
         self.images, self.first, self.transitions = [self._image(image)], [True], []
 
     def append(self, action, image, reward, intrinsic_reward, terminated, truncated):
@@ -84,7 +92,8 @@ class ReplayRecorder:
         actions, rewards, intrinsic, terminated, truncated = zip(*self.transitions)
         metadata = {"signature": self.signature, "episode_id": self.episode_id,
                     "scenario": self.scenario, "chunk": self.chunk,
-                    "source": "real_training", "reward_target": "reward_minus_intrinsic"}
+                    "source": "real_training", "reward_target": "reward_minus_intrinsic",
+                    **self.provenance}
         path = self.folder / f"{time.time_ns()}-{self.episode_id}-{self.chunk:05d}.npz"
         pending = path.with_suffix(".tmp")
         try:
@@ -173,7 +182,8 @@ class SequenceReplay:
                     split = int(hashlib.sha256(meta["episode_id"].encode()).hexdigest()[:8], 16) / 2**32
                     item = {"path": path, "episode_id": meta["episode_id"], "scenario": meta["scenario"],
                             "steps": len(chunk["actions"]), "terminal": bool(chunk["terminated"][-1]),
-                            "validation": split < self.validation_fraction}
+                            "validation": split < self.validation_fraction,
+                            'start_kind': meta.get('start_kind', 'unspecified_legacy')}
                 current[path] = item
             except (OSError, ValueError, KeyError, TypeError, zipfile.BadZipFile) as exc:
                 rejected.append({"path": str(path), "error": str(exc)})
@@ -182,6 +192,8 @@ class SequenceReplay:
 
     def summary(self):
         return {"chunks": len(self.index), "transitions": sum(x["steps"] for x in self.index),
+                "start_kinds": {name: sum(x['steps'] for x in self.index if x['start_kind'] == name)
+                                for name in sorted({x['start_kind'] for x in self.index})},
                 "train_episodes": len({x["episode_id"] for x in self.index if not x["validation"]}),
                 "validation_episodes": len({x["episode_id"] for x in self.index if x["validation"]}),
                 "scenarios": {name: sum(x["steps"] for x in self.index if x["scenario"] == i)

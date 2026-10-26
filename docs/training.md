@@ -1,10 +1,16 @@
 # Training and experiment guide
 
+**Current status (October 25, 2026):** staged development superseded the October 23
+hold below. The latest [regional reward/curriculum/control intervention](regional-intervention.md)
+is complete, with all processes stopped at finite boundaries. Use the new regional12
+profiles for future isolated pilots; frame4 remains experimental. Historical
+checkpoint reward heads/replay must not be resumed under the new signatures.
+
 **Status note (2026-10-23):** the supervised PPO jobs described here are stopped;
 their final pairs are preserved. The separate world-model experiment recorded in
 [the live world-model record](world-model-live.md) was also stopped at the
 owner's request on October 23, 2026; its final checkpoints are preserved and
-all training remains stopped until the owner explicitly authorizes resuming.
+that dated hold was superseded by the later staged authorization above.
 
 **Native backend update (2026-10-22):** the local learners now use
 `config/native.yaml` and `config/smg1-native.yaml`, with shared-memory RGBA

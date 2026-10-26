@@ -1,0 +1,3013 @@
+{
+  "scope": "Scripted engineering fixtures only. All completion fixtures use near-star states and are excluded from training success.",
+  "preparation": {
+    "smg1": {
+      "file": "runs\\regional-intervention\\prepare-smg1-20261025-210433-695157\\result.json",
+      "sha256": "f3c9f031557f8dbaf36068c46e55cbd56a178036354b7a138cb3cef6f4bccff5",
+      "report": {
+        "state": "completed",
+        "game": "smg1",
+        "run": "runs\\regional-intervention\\prepare-smg1-20261025-210433-695157",
+        "emulator_sha256": "b9f2131c647bdcd82d3846a4a820d978316ca55b517493d51503ea9f4b016fc4",
+        "missions": [
+          {
+            "variation": "sweet_sweet",
+            "scenario": 1,
+            "origin_slot": 1,
+            "physical_frames": 1764,
+            "fixtures": {
+              "contact": {
+                "initial_grounded": true,
+                "airborne_jump": true,
+                "landed": true,
+                "airborne_fall": true,
+                "ram_death": true
+              },
+              "near_star_detector": {
+                "complete": true,
+                "source_slot": 2,
+                "training_or_full_start_success": false
+              }
+            },
+            "candidates": [
+              {
+                "name": "right-approach",
+                "scenario": 1,
+                "origin_slot": 1,
+                "schedule": [
+                  [
+                    [
+                      "d"
+                    ],
+                    36
+                  ],
+                  [
+                    [],
+                    24
+                  ]
+                ],
+                "position": [
+                  205.04385375976562,
+                  45.0000114440918,
+                  -51.46714782714844
+                ],
+                "health": 3,
+                "scene_frame": 1383,
+                "near_star_fixture": false,
+                "accepted": true,
+                "validation": {
+                  "passed": true,
+                  "idle_frames": 60
+                },
+                "file": "runs\\regional-intervention\\prepare-smg1-20261025-210433-695157\\sweet_sweet-right-approach.state",
+                "sha256": "70dbec4dc6b85a2424c98f44668645c915c2060505d6438fb6ece46c4d50b615"
+              },
+              {
+                "name": "first-pink",
+                "scenario": 1,
+                "origin_slot": 1,
+                "schedule": [
+                  [
+                    [
+                      "d"
+                    ],
+                    36
+                  ],
+                  [
+                    [
+                      "w"
+                    ],
+                    192
+                  ],
+                  [
+                    [],
+                    12
+                  ]
+                ],
+                "position": [
+                  213.2288360595703,
+                  -50.00019836425781,
+                  -1413.873779296875
+                ],
+                "health": 3,
+                "scene_frame": 1563,
+                "near_star_fixture": false,
+                "accepted": true,
+                "validation": {
+                  "passed": true,
+                  "idle_frames": 60
+                },
+                "file": "runs\\regional-intervention\\prepare-smg1-20261025-210433-695157\\sweet_sweet-first-pink.state",
+                "sha256": "03a4b9066dc50d73a23b4bb45f9b7ff6501426ac04ff78dedcfd4c0aaebff16c"
+              },
+              {
+                "name": "first-chocolate",
+                "scenario": 1,
+                "origin_slot": 1,
+                "schedule": [
+                  [
+                    [
+                      "d"
+                    ],
+                    36
+                  ],
+                  [
+                    [
+                      "w"
+                    ],
+                    192
+                  ],
+                  [
+                    [
+                      "d"
+                    ],
+                    24
+                  ],
+                  [
+                    [
+                      "w"
+                    ],
+                    96
+                  ],
+                  [
+                    [],
+                    24
+                  ]
+                ],
+                "position": [
+                  512.7356567382812,
+                  -50.00029754638672,
+                  -1897.1407470703125
+                ],
+                "health": 3,
+                "scene_frame": 1695,
+                "near_star_fixture": false,
+                "accepted": true,
+                "validation": {
+                  "passed": true,
+                  "idle_frames": 60
+                },
+                "file": "runs\\regional-intervention\\prepare-smg1-20261025-210433-695157\\sweet_sweet-first-chocolate.state",
+                "sha256": "b2650f87c4390566245c12be2dd614c2f4c080c079f1deac1ecc353b66fc6a25"
+              },
+              {
+                "name": "beyond-chocolate",
+                "scenario": 1,
+                "origin_slot": 1,
+                "schedule": [
+                  [
+                    [
+                      "d"
+                    ],
+                    36
+                  ],
+                  [
+                    [
+                      "w"
+                    ],
+                    192
+                  ],
+                  [
+                    [
+                      "d"
+                    ],
+                    24
+                  ],
+                  [
+                    [
+                      "w"
+                    ],
+                    80
+                  ],
+                  [
+                    [
+                      "jump"
+                    ],
+                    24
+                  ],
+                  [
+                    [
+                      "w"
+                    ],
+                    72
+                  ],
+                  [
+                    [],
+                    12
+                  ]
+                ],
+                "position": [
+                  389.1203308105469,
+                  -857.0123901367188,
+                  -2578.564453125
+                ],
+                "health": 3,
+                "scene_frame": 1,
+                "near_star_fixture": false,
+                "accepted": false,
+                "validation": {
+                  "passed": false,
+                  "idle_frames": 60
+                },
+                "rejection": "Not an alive grounded undamaged candidate."
+              }
+            ]
+          }
+        ],
+        "maximum_frames_per_mission": 6000,
+        "scope": "Scripted geometry/contact/curriculum fixtures only. No learner, training replay or learned success."
+      }
+    },
+    "smg2": {
+      "file": "runs\\regional-intervention\\prepare-smg2-20261025-210444-024670\\result.json",
+      "sha256": "4714d3760e035d6b066c944cf0c8b07ef83bf31a08b99bbc3da51f9a829009bb",
+      "report": {
+        "state": "completed",
+        "game": "smg2",
+        "run": "runs\\regional-intervention\\prepare-smg2-20261025-210444-024670",
+        "emulator_sha256": "b9f2131c647bdcd82d3846a4a820d978316ca55b517493d51503ea9f4b016fc4",
+        "missions": [
+          {
+            "variation": "spinning",
+            "scenario": 1,
+            "origin_slot": 1,
+            "physical_frames": 1396,
+            "fixtures": {
+              "contact": {
+                "initial_grounded": true,
+                "airborne_jump": true,
+                "landed": true,
+                "airborne_fall": true,
+                "ram_death": true
+              },
+              "near_star_detector": {
+                "complete": true,
+                "source_slot": 2,
+                "training_or_full_start_success": false
+              }
+            },
+            "candidates": [
+              {
+                "name": "platform-approach",
+                "scenario": 1,
+                "origin_slot": 1,
+                "schedule": [
+                  [
+                    [
+                      "w"
+                    ],
+                    48
+                  ],
+                  [
+                    [],
+                    24
+                  ]
+                ],
+                "position": [
+                  0.1556178331375122,
+                  -1150.0,
+                  297.10223388671875
+                ],
+                "health": null,
+                "scene_frame": 180,
+                "near_star_fixture": false,
+                "accepted": true,
+                "validation": {
+                  "passed": true,
+                  "idle_frames": 60
+                },
+                "file": "runs\\regional-intervention\\prepare-smg2-20261025-210444-024670\\spinning-platform-approach.state",
+                "sha256": "d41f1d1f891e4a4fc583bca7f07bb5177a5e9ea56f8a204eb92d5dcb88a28b3c"
+              },
+              {
+                "name": "first-bridge",
+                "scenario": 1,
+                "origin_slot": 1,
+                "schedule": [
+                  [
+                    [
+                      "w"
+                    ],
+                    120
+                  ],
+                  [
+                    [],
+                    12
+                  ]
+                ],
+                "position": [
+                  0.3964049220085144,
+                  -1147.155517578125,
+                  -588.999755859375
+                ],
+                "health": null,
+                "scene_frame": 240,
+                "near_star_fixture": false,
+                "accepted": true,
+                "validation": {
+                  "passed": true,
+                  "idle_frames": 60
+                },
+                "file": "runs\\regional-intervention\\prepare-smg2-20261025-210444-024670\\spinning-first-bridge.state",
+                "sha256": "8e95be82e6ea49c5fa3cc259811fb53aec608ff7ef5e297e87f15f7d5f8a6ca0"
+              },
+              {
+                "name": "obstacle-approach",
+                "scenario": 1,
+                "origin_slot": 1,
+                "schedule": [
+                  [
+                    [
+                      "w"
+                    ],
+                    160
+                  ],
+                  [
+                    [],
+                    12
+                  ]
+                ],
+                "position": [
+                  35.02604675292969,
+                  -1150.5633544921875,
+                  -1108.4093017578125
+                ],
+                "health": null,
+                "scene_frame": 280,
+                "near_star_fixture": false,
+                "accepted": true,
+                "validation": {
+                  "passed": true,
+                  "idle_frames": 60
+                },
+                "file": "runs\\regional-intervention\\prepare-smg2-20261025-210444-024670\\spinning-obstacle-approach.state",
+                "sha256": "09a78a585f6424edacd05ef169729eaf8441c3b699f9cd62ea0f6cc24e2216c6"
+              },
+              {
+                "name": "beyond-obstacle",
+                "scenario": 1,
+                "origin_slot": 1,
+                "schedule": [
+                  [
+                    [
+                      "w"
+                    ],
+                    172
+                  ],
+                  [
+                    [
+                      "jump"
+                    ],
+                    24
+                  ],
+                  [
+                    [
+                      "w"
+                    ],
+                    64
+                  ],
+                  [
+                    [],
+                    12
+                  ]
+                ],
+                "position": [
+                  209.85305786132812,
+                  -1199.14794921875,
+                  -1432.8094482421875
+                ],
+                "health": null,
+                "scene_frame": 380,
+                "near_star_fixture": false,
+                "accepted": true,
+                "validation": {
+                  "passed": true,
+                  "idle_frames": 60
+                },
+                "file": "runs\\regional-intervention\\prepare-smg2-20261025-210444-024670\\spinning-beyond-obstacle.state",
+                "sha256": "6452cc8894bc72300e689bf78c422904e7de15b6b705a242a2bb84ff7294d641"
+              }
+            ]
+          },
+          {
+            "variation": "double_time",
+            "scenario": 2,
+            "origin_slot": 3,
+            "physical_frames": 1284,
+            "fixtures": {
+              "contact": {
+                "initial_grounded": true,
+                "airborne_jump": true,
+                "landed": true,
+                "airborne_fall": true,
+                "ram_death": true
+              },
+              "near_star_detector": {
+                "complete": true,
+                "source_slot": 4,
+                "training_or_full_start_success": false
+              }
+            },
+            "candidates": [
+              {
+                "name": "platform-approach",
+                "scenario": 2,
+                "origin_slot": 3,
+                "schedule": [
+                  [
+                    [
+                      "w"
+                    ],
+                    48
+                  ],
+                  [
+                    [],
+                    24
+                  ]
+                ],
+                "position": [
+                  0.1556178629398346,
+                  -1150.0,
+                  297.10223388671875
+                ],
+                "health": null,
+                "scene_frame": 117,
+                "near_star_fixture": false,
+                "accepted": true,
+                "validation": {
+                  "passed": true,
+                  "idle_frames": 60
+                },
+                "file": "runs\\regional-intervention\\prepare-smg2-20261025-210444-024670\\double_time-platform-approach.state",
+                "sha256": "d5f539afbbe03357983fcd3563c04cdda609a9fb0a092b51eac4a6c3276436a3"
+              },
+              {
+                "name": "first-bridge",
+                "scenario": 2,
+                "origin_slot": 3,
+                "schedule": [
+                  [
+                    [
+                      "w"
+                    ],
+                    120
+                  ],
+                  [
+                    [],
+                    12
+                  ]
+                ],
+                "position": [
+                  146.68832397460938,
+                  -1171.2720947265625,
+                  -590.9886474609375
+                ],
+                "health": null,
+                "scene_frame": 177,
+                "near_star_fixture": false,
+                "accepted": true,
+                "validation": {
+                  "passed": true,
+                  "idle_frames": 60
+                },
+                "file": "runs\\regional-intervention\\prepare-smg2-20261025-210444-024670\\double_time-first-bridge.state",
+                "sha256": "e48aabfd643e37663cbb458a2c72c4885cd50fc7f49f31076339d1f486c18c88"
+              },
+              {
+                "name": "obstacle-approach",
+                "scenario": 2,
+                "origin_slot": 3,
+                "schedule": [
+                  [
+                    [
+                      "w"
+                    ],
+                    160
+                  ],
+                  [
+                    [],
+                    12
+                  ]
+                ],
+                "position": [
+                  388.8445739746094,
+                  -1350.8201904296875,
+                  -1100.0562744140625
+                ],
+                "health": null,
+                "scene_frame": 217,
+                "near_star_fixture": false,
+                "accepted": false,
+                "validation": {
+                  "passed": false,
+                  "idle_frames": 60
+                },
+                "file": "runs\\regional-intervention\\prepare-smg2-20261025-210444-024670\\double_time-obstacle-approach.state",
+                "sha256": "0c80b35ce0c4bbe9216858c914ba27467e8c064f8e08c8e5f8ed3b71fa84f3e1",
+                "rejection": "Failed repeated60-frame grounded idle safety probe."
+              },
+              {
+                "name": "beyond-obstacle",
+                "scenario": 2,
+                "origin_slot": 3,
+                "schedule": [
+                  [
+                    [
+                      "w"
+                    ],
+                    172
+                  ],
+                  [
+                    [
+                      "jump"
+                    ],
+                    24
+                  ],
+                  [
+                    [
+                      "w"
+                    ],
+                    64
+                  ],
+                  [
+                    [],
+                    12
+                  ]
+                ],
+                "position": [
+                  587.894775390625,
+                  -1795.158447265625,
+                  -2001.3275146484375
+                ],
+                "health": null,
+                "scene_frame": 317,
+                "near_star_fixture": false,
+                "accepted": false,
+                "validation": {
+                  "passed": false,
+                  "idle_frames": 60
+                },
+                "rejection": "Not an alive grounded undamaged candidate."
+              }
+            ]
+          }
+        ],
+        "maximum_frames_per_mission": 6000,
+        "scope": "Scripted geometry/contact/curriculum fixtures only. No learner, training replay or learned success."
+      }
+    }
+  },
+  "validation": {
+    "smg1": {
+      "file": "runs\\regional-intervention\\validate-smg1-20261025-211430-776735\\result.json",
+      "sha256": "24c722d21a612f3af74106a679bc71eb6542f45d807861688a7576e7013f30ca",
+      "report": {
+        "state": "completed",
+        "run": "runs\\regional-intervention\\validate-smg1-20261025-211430-776735",
+        "game": "smg1",
+        "trace_audit": [
+          {
+            "variation": "sweet_sweet",
+            "trace": "jump-land",
+            "confirmed_opening_fraction": 0.0,
+            "confirmed_distance": 0.0,
+            "closed_discounted_shaping": 0.0,
+            "partial_undiscounted_shaping": 0.0,
+            "ram_death": false
+          },
+          {
+            "variation": "sweet_sweet",
+            "trace": "fall",
+            "confirmed_opening_fraction": 0.08178429421805014,
+            "confirmed_distance": 178.79210486928375,
+            "closed_discounted_shaping": -3.122502256758253e-17,
+            "partial_undiscounted_shaping": -0.0006827785743981525,
+            "ram_death": true
+          },
+          {
+            "variation": "sweet_sweet",
+            "trace": "right-approach",
+            "confirmed_opening_fraction": 0.07340340219677988,
+            "confirmed_distance": 160.47028232998275,
+            "closed_discounted_shaping": 0.0,
+            "partial_undiscounted_shaping": 0.015929758873028534,
+            "ram_death": false
+          },
+          {
+            "variation": "sweet_sweet",
+            "trace": "first-pink",
+            "confirmed_opening_fraction": 0.6624539940567798,
+            "confirmed_distance": 1448.2186966202994,
+            "closed_discounted_shaping": 8.326672684688674e-17,
+            "partial_undiscounted_shaping": 0.14005592214628643,
+            "ram_death": false
+          },
+          {
+            "variation": "sweet_sweet",
+            "trace": "first-chocolate",
+            "confirmed_opening_fraction": 1.0,
+            "confirmed_distance": 2186.1422975980586,
+            "closed_discounted_shaping": 1.1102230246251565e-16,
+            "partial_undiscounted_shaping": 0.20749754736141013,
+            "ram_death": false
+          },
+          {
+            "variation": "sweet_sweet",
+            "trace": "beyond-chocolate",
+            "confirmed_opening_fraction": 0.9810305254380337,
+            "confirmed_distance": 2144.6723268949336,
+            "closed_discounted_shaping": 3.3306690738754696e-16,
+            "partial_undiscounted_shaping": -0.014297698320516472,
+            "ram_death": true
+          }
+        ],
+        "restorations": [
+          {
+            "file": "sweet-sweet-right-approach.state",
+            "seed": 2,
+            "region": 0,
+            "passed": true,
+            "initial_potential": 0.016047028232998275,
+            "reset_reward": 0.0,
+            "final": {
+              "position": [
+                208.1582489013672,
+                45.0000114440918,
+                -51.48505783081055
+              ],
+              "scenario": 1,
+              "stage": "BeltConveyerExGalaxy",
+              "actor": 2164967084,
+              "actor_nerve": 2154426424,
+              "scene_nerve": 2154437584,
+              "scene_frame": 1443,
+              "dead": false,
+              "complete": false,
+              "health": 3,
+              "max_health": 3,
+              "grounded": true
+            }
+          },
+          {
+            "file": "sweet-sweet-first-pink.state",
+            "seed": 19,
+            "region": 2,
+            "passed": true,
+            "initial_potential": 0.14482186966202992,
+            "reset_reward": 0.0,
+            "final": {
+              "position": [
+                213.06776428222656,
+                -50.00019836425781,
+                -961.8770141601562
+              ],
+              "scenario": 1,
+              "stage": "BeltConveyerExGalaxy",
+              "actor": 2164967084,
+              "actor_nerve": 2154426424,
+              "scene_nerve": 2154437584,
+              "scene_frame": 1623,
+              "dead": false,
+              "complete": false,
+              "health": 3,
+              "max_health": 3,
+              "grounded": true
+            }
+          },
+          {
+            "file": "sweet-sweet-first-chocolate.state",
+            "seed": 11,
+            "region": 4,
+            "passed": true,
+            "initial_potential": 0.21332830446683712,
+            "reset_reward": 0.0,
+            "final": {
+              "position": [
+                512.722412109375,
+                -50.00029754638672,
+                -1419.448974609375
+              ],
+              "scenario": 1,
+              "stage": "BeltConveyerExGalaxy",
+              "actor": 2164967084,
+              "actor_nerve": 2154426424,
+              "scene_nerve": 2154437584,
+              "scene_frame": 1755,
+              "dead": false,
+              "complete": false,
+              "health": 3,
+              "max_health": 3,
+              "grounded": true
+            }
+          }
+        ],
+        "scope": "Engineering validation only. No optimizer or training replay.",
+        "maximum_idle_frames_per_restoration": 60,
+        "frames": 180
+      }
+    },
+    "smg2": {
+      "file": "runs\\regional-intervention\\validate-smg2-20261025-211431-082280\\result.json",
+      "sha256": "a492f7b9e7202f43c38f0179f937c2a8b5b92a74a5d2b7bb9be5b1a833aab120",
+      "report": {
+        "state": "completed",
+        "run": "runs\\regional-intervention\\validate-smg2-20261025-211431-082280",
+        "game": "smg2",
+        "trace_audit": [
+          {
+            "variation": "spinning",
+            "trace": "jump-land",
+            "confirmed_opening_fraction": 0.0,
+            "confirmed_distance": 0.0,
+            "closed_discounted_shaping": 0.0,
+            "partial_undiscounted_shaping": 0.0,
+            "ram_death": false
+          },
+          {
+            "variation": "spinning",
+            "trace": "fall",
+            "confirmed_opening_fraction": 0.0,
+            "confirmed_distance": 0.0,
+            "closed_discounted_shaping": 0.0,
+            "partial_undiscounted_shaping": 0.0,
+            "ram_death": true
+          },
+          {
+            "variation": "spinning",
+            "trace": "platform-approach",
+            "confirmed_opening_fraction": 0.10346768118850616,
+            "confirmed_distance": 202.89776611328122,
+            "closed_discounted_shaping": 3.469446951953614e-18,
+            "partial_undiscounted_shaping": 0.020134753928378702,
+            "ram_death": false
+          },
+          {
+            "variation": "spinning",
+            "trace": "first-bridge",
+            "confirmed_opening_fraction": 0.555335239574347,
+            "confirmed_distance": 1088.999755859375,
+            "closed_discounted_shaping": -2.7755575615628914e-17,
+            "partial_undiscounted_shaping": 0.10748979662820923,
+            "ram_death": false
+          },
+          {
+            "variation": "spinning",
+            "trace": "obstacle-approach",
+            "confirmed_opening_fraction": 0.8227662999472843,
+            "confirmed_distance": 1613.4259739372446,
+            "closed_discounted_shaping": 0.0,
+            "partial_undiscounted_shaping": 0.15848705495468648,
+            "ram_death": false
+          },
+          {
+            "variation": "spinning",
+            "trace": "beyond-obstacle",
+            "confirmed_opening_fraction": 1.0,
+            "confirmed_distance": 1960.9772228646443,
+            "closed_discounted_shaping": -2.220446049250313e-16,
+            "partial_undiscounted_shaping": 0.18886242395119027,
+            "ram_death": false
+          },
+          {
+            "variation": "double_time",
+            "trace": "jump-land",
+            "confirmed_opening_fraction": 0.0,
+            "confirmed_distance": 0.0,
+            "closed_discounted_shaping": 0.0,
+            "partial_undiscounted_shaping": 0.0,
+            "ram_death": false
+          },
+          {
+            "variation": "double_time",
+            "trace": "fall",
+            "confirmed_opening_fraction": 0.0,
+            "confirmed_distance": 0.0,
+            "closed_discounted_shaping": 0.0,
+            "partial_undiscounted_shaping": 0.0,
+            "ram_death": true
+          },
+          {
+            "variation": "double_time",
+            "trace": "platform-approach",
+            "confirmed_opening_fraction": 0.10346768118850616,
+            "confirmed_distance": 202.89776611328122,
+            "closed_discounted_shaping": 3.469446951953614e-18,
+            "partial_undiscounted_shaping": 0.020134753928378702,
+            "ram_death": false
+          },
+          {
+            "variation": "double_time",
+            "trace": "first-bridge",
+            "confirmed_opening_fraction": 0.5563494745069981,
+            "confirmed_distance": 1090.9886474609375,
+            "closed_discounted_shaping": -4.163336342344337e-17,
+            "partial_undiscounted_shaping": 0.1076875870228889,
+            "ram_death": false
+          },
+          {
+            "variation": "double_time",
+            "trace": "obstacle-approach",
+            "confirmed_opening_fraction": 0.7465884930812433,
+            "confirmed_distance": 1464.0430297851562,
+            "closed_discounted_shaping": -2.7755575615628914e-17,
+            "partial_undiscounted_shaping": 0.14359357254278815,
+            "ram_death": false
+          },
+          {
+            "variation": "double_time",
+            "trace": "beyond-obstacle",
+            "confirmed_opening_fraction": 0.7465884930812433,
+            "confirmed_distance": 1464.0430297851562,
+            "closed_discounted_shaping": -1.6653345369377348e-16,
+            "partial_undiscounted_shaping": 0.13992979874834408,
+            "ram_death": false
+          }
+        ],
+        "restorations": [
+          {
+            "file": "spinning-platform-approach.state",
+            "seed": 2,
+            "region": 0,
+            "passed": true,
+            "initial_potential": 0.020289776611328122,
+            "reset_reward": 0.0,
+            "final": {
+              "position": [
+                0.1556178331375122,
+                -1150.0,
+                297.10223388671875
+              ],
+              "scenario": 1,
+              "stage": "SecretAthleticGalaxy",
+              "actor": 2166529088,
+              "actor_nerve": 2155695668,
+              "scene_nerve": 2155696912,
+              "scene_frame": 240,
+              "dead": false,
+              "complete": false,
+              "health": null,
+              "max_health": null,
+              "grounded": true
+            }
+          },
+          {
+            "file": "spinning-first-bridge.state",
+            "seed": 19,
+            "region": 1,
+            "passed": true,
+            "initial_potential": 0.1088999755859375,
+            "reset_reward": 0.0,
+            "final": {
+              "position": [
+                82.5373306274414,
+                -1155.8900146484375,
+                -604.8272705078125
+              ],
+              "scenario": 1,
+              "stage": "SecretAthleticGalaxy",
+              "actor": 2166529088,
+              "actor_nerve": 2155695668,
+              "scene_nerve": 2155696912,
+              "scene_frame": 300,
+              "dead": false,
+              "complete": false,
+              "health": null,
+              "max_health": null,
+              "grounded": true
+            }
+          },
+          {
+            "file": "spinning-obstacle-approach.state",
+            "seed": 22,
+            "region": 2,
+            "passed": true,
+            "initial_potential": 0.16134259739372447,
+            "reset_reward": 0.0,
+            "final": {
+              "position": [
+                117.17439270019531,
+                -1166.54150390625,
+                -1124.322265625
+              ],
+              "scenario": 1,
+              "stage": "SecretAthleticGalaxy",
+              "actor": 2166529088,
+              "actor_nerve": 2155695668,
+              "scene_nerve": 2155696912,
+              "scene_frame": 340,
+              "dead": false,
+              "complete": false,
+              "health": null,
+              "max_health": null,
+              "grounded": true
+            }
+          },
+          {
+            "file": "spinning-obstacle-jump-approach.state",
+            "seed": 11,
+            "region": 2,
+            "passed": true,
+            "initial_potential": 0.19609772228646444,
+            "reset_reward": 0.0,
+            "final": {
+              "position": [
+                278.23077392578125,
+                -1250.4466552734375,
+                -1432.806396484375
+              ],
+              "scenario": 1,
+              "stage": "SecretAthleticGalaxy",
+              "actor": 2166529088,
+              "actor_nerve": 2155695668,
+              "scene_nerve": 2155696912,
+              "scene_frame": 440,
+              "dead": false,
+              "complete": false,
+              "health": null,
+              "max_health": null,
+              "grounded": true
+            }
+          },
+          {
+            "file": "double-time-platform-approach.state",
+            "seed": 2,
+            "region": 0,
+            "passed": true,
+            "initial_potential": 0.020289776611328122,
+            "reset_reward": 0.0,
+            "final": {
+              "position": [
+                0.1556178629398346,
+                -1150.0,
+                297.10223388671875
+              ],
+              "scenario": 2,
+              "stage": "SecretAthleticGalaxy",
+              "actor": 2166530752,
+              "actor_nerve": 2155695668,
+              "scene_nerve": 2155696912,
+              "scene_frame": 177,
+              "dead": false,
+              "complete": false,
+              "health": null,
+              "max_health": null,
+              "grounded": true
+            }
+          },
+          {
+            "file": "double-time-first-bridge.state",
+            "seed": 11,
+            "region": 1,
+            "passed": true,
+            "initial_potential": 0.10909886474609375,
+            "reset_reward": 0.0,
+            "final": {
+              "position": [
+                428.8467102050781,
+                -1458.072998046875,
+                -606.8750610351562
+              ],
+              "scenario": 2,
+              "stage": "SecretAthleticGalaxy",
+              "actor": 2166530752,
+              "actor_nerve": 2155695668,
+              "scene_nerve": 2155696912,
+              "scene_frame": 237,
+              "dead": false,
+              "complete": false,
+              "health": null,
+              "max_health": null,
+              "grounded": true
+            }
+          }
+        ],
+        "scope": "Engineering validation only. No optimizer or training replay.",
+        "maximum_idle_frames_per_restoration": 60,
+        "frames": 360
+      }
+    }
+  },
+  "banks": {
+    "smg1": {
+      "file": ".local/regional-curriculum/smg1/bank.json",
+      "sha256": "51ced5aebf3c9752bf277bbdf11eb36ae3ac9729fb7c8a88b693e420373ee225",
+      "entries": [
+        {
+          "file": "sweet-sweet-right-approach.state",
+          "sha256": "70dbec4dc6b85a2424c98f44668645c915c2060505d6438fb6ece46c4d50b615",
+          "region": 0,
+          "position": [
+            205.04385375976562,
+            45.0000114440918,
+            -51.46714782714844
+          ],
+          "health": 3,
+          "scene_frame": 1383
+        },
+        {
+          "file": "sweet-sweet-first-pink.state",
+          "sha256": "03a4b9066dc50d73a23b4bb45f9b7ff6501426ac04ff78dedcfd4c0aaebff16c",
+          "region": 2,
+          "position": [
+            213.2288360595703,
+            -50.00019836425781,
+            -1413.873779296875
+          ],
+          "health": 3,
+          "scene_frame": 1563
+        },
+        {
+          "file": "sweet-sweet-first-chocolate.state",
+          "sha256": "b2650f87c4390566245c12be2dd614c2f4c080c079f1deac1ecc353b66fc6a25",
+          "region": 4,
+          "position": [
+            512.7356567382812,
+            -50.00029754638672,
+            -1897.1407470703125
+          ],
+          "health": 3,
+          "scene_frame": 1695
+        }
+      ]
+    },
+    "smg2": {
+      "file": ".local/regional-curriculum/smg2/bank.json",
+      "sha256": "6a7c77673325101acb6298fae726e377ca93b04d79efcdccef7d5a4cbe0db24a",
+      "entries": [
+        {
+          "file": "spinning-platform-approach.state",
+          "sha256": "d41f1d1f891e4a4fc583bca7f07bb5177a5e9ea56f8a204eb92d5dcb88a28b3c",
+          "region": 0,
+          "position": [
+            0.1556178331375122,
+            -1150.0,
+            297.10223388671875
+          ],
+          "health": null,
+          "scene_frame": 180
+        },
+        {
+          "file": "spinning-first-bridge.state",
+          "sha256": "8e95be82e6ea49c5fa3cc259811fb53aec608ff7ef5e297e87f15f7d5f8a6ca0",
+          "region": 1,
+          "position": [
+            0.3964049220085144,
+            -1147.155517578125,
+            -588.999755859375
+          ],
+          "health": null,
+          "scene_frame": 240
+        },
+        {
+          "file": "spinning-obstacle-approach.state",
+          "sha256": "09a78a585f6424edacd05ef169729eaf8441c3b699f9cd62ea0f6cc24e2216c6",
+          "region": 2,
+          "position": [
+            35.02604675292969,
+            -1150.5633544921875,
+            -1108.4093017578125
+          ],
+          "health": null,
+          "scene_frame": 280
+        },
+        {
+          "file": "spinning-obstacle-jump-approach.state",
+          "sha256": "6452cc8894bc72300e689bf78c422904e7de15b6b705a242a2bb84ff7294d641",
+          "region": 2,
+          "position": [
+            209.85305786132812,
+            -1199.14794921875,
+            -1432.8094482421875
+          ],
+          "health": null,
+          "scene_frame": 380
+        },
+        {
+          "file": "double-time-platform-approach.state",
+          "sha256": "d5f539afbbe03357983fcd3563c04cdda609a9fb0a092b51eac4a6c3276436a3",
+          "region": 0,
+          "position": [
+            0.1556178629398346,
+            -1150.0,
+            297.10223388671875
+          ],
+          "health": null,
+          "scene_frame": 117
+        },
+        {
+          "file": "double-time-first-bridge.state",
+          "sha256": "e48aabfd643e37663cbb458a2c72c4885cd50fc7f49f31076339d1f486c18c88",
+          "region": 1,
+          "position": [
+            146.68832397460938,
+            -1171.2720947265625,
+            -590.9886474609375
+          ],
+          "health": null,
+          "scene_frame": 177
+        }
+      ]
+    }
+  },
+  "equivalence": [
+    {
+      "file": "runs\\regional-intervention\\frame4-equivalence-20261025-212037-151398\\result.json",
+      "sha256": "0027aa9e73be955327126a81277718500cb25a37587df69071e8681aa134bff9",
+      "report": {
+        "state": "failed",
+        "run": "runs\\regional-intervention\\frame4-equivalence-20261025-212037-151398",
+        "missions": [
+          {
+            "game": "smg1",
+            "variation": "sweet_sweet",
+            "passed": true,
+            "frames": 408,
+            "maximum_xyz_error": 0.0,
+            "final_image_mean_abs_error": 0.0,
+            "twelve_frame_samples": [
+              {
+                "position": [
+                  -46.70279312133789,
+                  45.0000114440918,
+                  -50.01896667480469
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1335,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": true
+              },
+              {
+                "position": [
+                  5.3160271644592285,
+                  45.0000114440918,
+                  -50.31821060180664
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1347,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": true
+              },
+              {
+                "position": [
+                  105.15281677246094,
+                  45.0000114440918,
+                  -50.892520904541016
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1359,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": true
+              },
+              {
+                "position": [
+                  215.9288330078125,
+                  45.0000114440918,
+                  -103.08045196533203
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1371,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": true
+              },
+              {
+                "position": [
+                  225.6876983642578,
+                  45.0000114440918,
+                  -248.0817108154297
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1383,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": true
+              },
+              {
+                "position": [
+                  224.80592346191406,
+                  45.0000114440918,
+                  -401.3685607910156
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1395,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": true
+              },
+              {
+                "position": [
+                  223.91302490234375,
+                  45.0000114440918,
+                  -556.5943603515625
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1407,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": true
+              },
+              {
+                "position": [
+                  223.04920959472656,
+                  234.8000030517578,
+                  -706.7716674804688
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1419,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": false
+              },
+              {
+                "position": [
+                  222.2173614501953,
+                  242.30003356933594,
+                  -851.3854370117188
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1431,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": false
+              },
+              {
+                "position": [
+                  221.54684448242188,
+                  101.30007934570312,
+                  -967.9456176757812
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1443,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": false
+              },
+              {
+                "position": [
+                  221.09425354003906,
+                  -50.00019836425781,
+                  -1014.621826171875
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1455,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": true
+              },
+              {
+                "position": [
+                  221.01007080078125,
+                  -50.00019836425781,
+                  -933.254150390625
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1467,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": true
+              },
+              {
+                "position": [
+                  221.00428771972656,
+                  -50.00019836425781,
+                  -838.2597045898438
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1479,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": true
+              },
+              {
+                "position": [
+                  221.0038299560547,
+                  -50.00019836425781,
+                  -742.3405151367188
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1491,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": true
+              },
+              {
+                "position": [
+                  221.0037841796875,
+                  -28.700199127197266,
+                  -664.3474731445312
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1503,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": false
+              },
+              {
+                "position": [
+                  221.0037841796875,
+                  23.499805450439453,
+                  -724.3474731445312
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1515,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": false
+              },
+              {
+                "position": [
+                  221.0037841796875,
+                  -50.00018310546875,
+                  -751.3160400390625
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1527,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": true
+              }
+            ],
+            "matched_four_frame_samples": [
+              {
+                "position": [
+                  -46.70279312133789,
+                  45.0000114440918,
+                  -50.01896667480469
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1335,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": true
+              },
+              {
+                "position": [
+                  5.3160271644592285,
+                  45.0000114440918,
+                  -50.31821060180664
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1347,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": true
+              },
+              {
+                "position": [
+                  105.15281677246094,
+                  45.0000114440918,
+                  -50.892520904541016
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1359,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": true
+              },
+              {
+                "position": [
+                  215.9288330078125,
+                  45.0000114440918,
+                  -103.08045196533203
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1371,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": true
+              },
+              {
+                "position": [
+                  225.6876983642578,
+                  45.0000114440918,
+                  -248.0817108154297
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1383,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": true
+              },
+              {
+                "position": [
+                  224.80592346191406,
+                  45.0000114440918,
+                  -401.3685607910156
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1395,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": true
+              },
+              {
+                "position": [
+                  223.91302490234375,
+                  45.0000114440918,
+                  -556.5943603515625
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1407,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": true
+              },
+              {
+                "position": [
+                  223.04920959472656,
+                  234.8000030517578,
+                  -706.7716674804688
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1419,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": false
+              },
+              {
+                "position": [
+                  222.2173614501953,
+                  242.30003356933594,
+                  -851.3854370117188
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1431,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": false
+              },
+              {
+                "position": [
+                  221.54684448242188,
+                  101.30007934570312,
+                  -967.9456176757812
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1443,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": false
+              },
+              {
+                "position": [
+                  221.09425354003906,
+                  -50.00019836425781,
+                  -1014.621826171875
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1455,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": true
+              },
+              {
+                "position": [
+                  221.01007080078125,
+                  -50.00019836425781,
+                  -933.254150390625
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1467,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": true
+              },
+              {
+                "position": [
+                  221.00428771972656,
+                  -50.00019836425781,
+                  -838.2597045898438
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1479,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": true
+              },
+              {
+                "position": [
+                  221.0038299560547,
+                  -50.00019836425781,
+                  -742.3405151367188
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1491,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": true
+              },
+              {
+                "position": [
+                  221.0037841796875,
+                  -28.700199127197266,
+                  -664.3474731445312
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1503,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": false
+              },
+              {
+                "position": [
+                  221.0037841796875,
+                  23.499805450439453,
+                  -724.3474731445312
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1515,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": false
+              },
+              {
+                "position": [
+                  221.0037841796875,
+                  -50.00018310546875,
+                  -751.3160400390625
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 1527,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": true
+              }
+            ]
+          },
+          {
+            "game": "smg2",
+            "variation": "spinning",
+            "passed": true,
+            "frames": 408,
+            "maximum_xyz_error": 0.0,
+            "final_image_mean_abs_error": 0.0,
+            "twelve_frame_samples": [
+              {
+                "position": [
+                  2.073645830154419,
+                  -1150.0,
+                  500.0015869140625
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 120,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  48.75065994262695,
+                  -1150.0,
+                  500.03741455078125
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 132,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  145.61117553710938,
+                  -1150.0,
+                  500.1117248535156
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 144,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  254.87356567382812,
+                  -1150.0,
+                  449.3724670410156
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 156,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  265.4732666015625,
+                  -1150.0,
+                  305.3727722167969
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 168,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  265.590576171875,
+                  -1150.0,
+                  152.38058471679688
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 180,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  265.7095947265625,
+                  -1150.0,
+                  -2.7623109817504883
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 192,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  265.8246154785156,
+                  -960.2000122070312,
+                  -152.90673828125
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 204,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": false
+              },
+              {
+                "position": [
+                  265.9354248046875,
+                  -952.7000122070312,
+                  -297.4891357421875
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 216,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": false
+              },
+              {
+                "position": [
+                  266.01812744140625,
+                  -1082.0001220703125,
+                  -405.3549499511719
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 228,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  284.7524719238281,
+                  -1113.535888671875,
+                  -447.3341369628906
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 240,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  302.783447265625,
+                  -1125.84326171875,
+                  -450.2181396484375
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 252,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  320.2811279296875,
+                  -1138.8956298828125,
+                  -450.3863525390625
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 264,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  337.21661376953125,
+                  -1152.6689453125,
+                  -450.385009765625
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 276,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  353.5605773925781,
+                  -1167.1395263671875,
+                  -450.384765625
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 288,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  369.4778137207031,
+                  -1183.0484619140625,
+                  -450.3843994140625
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 300,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  384.5211486816406,
+                  -1198.843017578125,
+                  -450.3836669921875
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 312,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              }
+            ],
+            "matched_four_frame_samples": [
+              {
+                "position": [
+                  2.073645830154419,
+                  -1150.0,
+                  500.0015869140625
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 120,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  48.75065994262695,
+                  -1150.0,
+                  500.03741455078125
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 132,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  145.61117553710938,
+                  -1150.0,
+                  500.1117248535156
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 144,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  254.87356567382812,
+                  -1150.0,
+                  449.3724670410156
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 156,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  265.4732666015625,
+                  -1150.0,
+                  305.3727722167969
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 168,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  265.590576171875,
+                  -1150.0,
+                  152.38058471679688
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 180,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  265.7095947265625,
+                  -1150.0,
+                  -2.7623109817504883
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 192,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  265.8246154785156,
+                  -960.2000122070312,
+                  -152.90673828125
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 204,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": false
+              },
+              {
+                "position": [
+                  265.9354248046875,
+                  -952.7000122070312,
+                  -297.4891357421875
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 216,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": false
+              },
+              {
+                "position": [
+                  266.01812744140625,
+                  -1082.0001220703125,
+                  -405.3549499511719
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 228,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  284.7524719238281,
+                  -1113.535888671875,
+                  -447.3341369628906
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 240,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  302.783447265625,
+                  -1125.84326171875,
+                  -450.2181396484375
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 252,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  320.2811279296875,
+                  -1138.8956298828125,
+                  -450.3863525390625
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 264,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  337.21661376953125,
+                  -1152.6689453125,
+                  -450.385009765625
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 276,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  353.5605773925781,
+                  -1167.1395263671875,
+                  -450.384765625
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 288,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  369.4778137207031,
+                  -1183.0484619140625,
+                  -450.3843994140625
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 300,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  384.5211486816406,
+                  -1198.843017578125,
+                  -450.3836669921875
+                ],
+                "scenario": 1,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166529088,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 312,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              }
+            ]
+          }
+        ],
+        "scope": "Scripted physical-control equivalence only; no learned navigation or replay.",
+        "maximum_frames_per_mission": 408,
+        "error": "ValueError('Motor timing must match native frame stepping.')"
+      }
+    },
+    {
+      "file": "runs\\regional-intervention\\frame4-equivalence-20261025-212116-331368\\result.json",
+      "sha256": "5bea545fe1ccb39e32dbfaef51cac1844da0c38a6e568c50384ece66d3a5ff83",
+      "report": {
+        "state": "completed",
+        "run": "runs\\regional-intervention\\frame4-equivalence-20261025-212116-331368",
+        "missions": [
+          {
+            "game": "smg2",
+            "variation": "double_time",
+            "passed": true,
+            "frames": 408,
+            "maximum_xyz_error": 0.0,
+            "final_image_mean_abs_error": 0.0,
+            "twelve_frame_samples": [
+              {
+                "position": [
+                  2.073645830154419,
+                  -1150.0,
+                  500.0015869140625
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 57,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  48.75065994262695,
+                  -1150.0,
+                  500.03741455078125
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 69,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  145.61117553710938,
+                  -1150.0,
+                  500.1117248535156
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 81,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  254.87356567382812,
+                  -1150.0,
+                  449.3724670410156
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 93,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  265.4732666015625,
+                  -1150.0,
+                  305.3727722167969
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 105,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  265.590576171875,
+                  -1150.0,
+                  152.38058471679688
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 117,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  265.7095947265625,
+                  -1150.0,
+                  -2.7623186111450195
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 129,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  265.8246154785156,
+                  -960.2000122070312,
+                  -152.90675354003906
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 141,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": false
+              },
+              {
+                "position": [
+                  265.9354248046875,
+                  -952.7000122070312,
+                  -297.4891357421875
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 153,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": false
+              },
+              {
+                "position": [
+                  266.0247802734375,
+                  -1093.7000732421875,
+                  -414.0238342285156
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 165,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": false
+              },
+              {
+                "position": [
+                  301.4499816894531,
+                  -1205.0823974609375,
+                  -473.6059875488281
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 177,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  348.6084289550781,
+                  -1252.8211669921875,
+                  -480.1011657714844
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 189,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  388.2828063964844,
+                  -1306.9354248046875,
+                  -480.5378723144531
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 201,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  419.62640380859375,
+                  -1366.2647705078125,
+                  -480.5391845703125
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 213,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  441.96649169921875,
+                  -1429.536865234375,
+                  -480.5389404296875
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 225,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  458.0584716796875,
+                  -1493.0433349609375,
+                  -480.53857421875
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 237,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  493.10888671875,
+                  -1629.703857421875,
+                  -480.5379638671875
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 249,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              }
+            ],
+            "matched_four_frame_samples": [
+              {
+                "position": [
+                  2.073645830154419,
+                  -1150.0,
+                  500.0015869140625
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 57,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  48.75065994262695,
+                  -1150.0,
+                  500.03741455078125
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 69,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  145.61117553710938,
+                  -1150.0,
+                  500.1117248535156
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 81,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  254.87356567382812,
+                  -1150.0,
+                  449.3724670410156
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 93,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  265.4732666015625,
+                  -1150.0,
+                  305.3727722167969
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 105,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  265.590576171875,
+                  -1150.0,
+                  152.38058471679688
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 117,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  265.7095947265625,
+                  -1150.0,
+                  -2.7623186111450195
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 129,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  265.8246154785156,
+                  -960.2000122070312,
+                  -152.90675354003906
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 141,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": false
+              },
+              {
+                "position": [
+                  265.9354248046875,
+                  -952.7000122070312,
+                  -297.4891357421875
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 153,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": false
+              },
+              {
+                "position": [
+                  266.0247802734375,
+                  -1093.7000732421875,
+                  -414.0238342285156
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 165,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": false
+              },
+              {
+                "position": [
+                  301.4499816894531,
+                  -1205.0823974609375,
+                  -473.6059875488281
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 177,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  348.6084289550781,
+                  -1252.8211669921875,
+                  -480.1011657714844
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 189,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  388.2828063964844,
+                  -1306.9354248046875,
+                  -480.5378723144531
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 201,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  419.62640380859375,
+                  -1366.2647705078125,
+                  -480.5391845703125
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 213,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  441.96649169921875,
+                  -1429.536865234375,
+                  -480.5389404296875
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 225,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  458.0584716796875,
+                  -1493.0433349609375,
+                  -480.53857421875
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 237,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              },
+              {
+                "position": [
+                  493.10888671875,
+                  -1629.703857421875,
+                  -480.5379638671875
+                ],
+                "scenario": 2,
+                "stage": "SecretAthleticGalaxy",
+                "actor": 2166530752,
+                "actor_nerve": 2155695668,
+                "scene_nerve": 2155696912,
+                "scene_frame": 249,
+                "dead": false,
+                "complete": false,
+                "health": null,
+                "max_health": null,
+                "grounded": true
+              }
+            ]
+          }
+        ],
+        "retained_partial_report": "runs\\regional-intervention\\frame4-equivalence-20261025-212037-151398\\result.json",
+        "scope": "Scripted physical-control equivalence only; no learned navigation or replay.",
+        "maximum_frames_per_mission": 408
+      }
+    }
+  ],
+  "failure_review": "The first equivalence controller retained a mutated frame_skip between SMG2 scenarios and stopped before the third mission executed. Fixed per-mode initialization; only the unexecuted double_time mission retried. First two completed cases retained; total408 physical frames per mission unchanged. All three cases have identical RAM coordinates, health/contact/scene frames and final pixel arrays."
+}

@@ -1,0 +1,14 @@
+{
+  "schema": 3,
+  "game_id": "SB4E01",
+  "variations": ["spinning", "double_time"],
+  "name": "Canonical platform through first obstacle approach",
+  "scope": "Script-verified opening only; obstacle clearance and full course remain unverified",
+  "waypoints": [[0,-1150,500],[0,-1150,-300],[0,-1150,-1000],[100,-1200,-1450]],
+  "waypoint_radius": 280,
+  "corridor_radius": 450,
+  "height_tolerance": 300,
+  "exit_confirmations": 2,
+  "requires_grounded": true,
+  "requires_full_health": false
+}

@@ -3,17 +3,26 @@
 Visual recurrent reinforcement learning for **Super Mario Galaxy 1 and 2** in
 Dolphin on Windows.
 
+**Latest completed intervention (October 25):** [regional rewards, curated starts and a separate frame4 test](docs/regional-intervention.md)
+passed actual-game contact/reset checks in all three missions. Nine reachable
+intermediate states passed bounded safety probes. The new shaping removed positive
+discounted returns from all 49 retained failed episodes (12 were positive before).
+All 36 frozen-policy control attempts are complete, with zero stars. Frame4 reduced
+navigation in this test; twelve-frame controls remain the baseline. No job remains
+running. These are environment/control results, not new learned completions.
+
 **SMG1 prediction block repaired:** [component-isolated repair and fresh confirmation](docs/smg1-boundary-repair.md)
 pass unchanged gates in all three draws on four new episodes, followed by one
-actual gated actor update. Known reward geometry/scale defects remain a separate
-reason to revise the online experiment. [The BTR appendix/code review](docs/btr-research-review.md)
+actual gated actor update. Its historical reward geometry/scale defects were addressed in the separate
+regional revision above. [The BTR appendix/code review](docs/btr-research-review.md)
 checks regional rewards, intermediate starts, temporal control and the absence
 of a validated published SMG progress address in the inspected code.
 
 **Finite motor8 pilot closed:** [all six trained SMG2 evaluations](docs/motor8-evaluation-results.md)
 ended in death with zero RAM-confirmed stars. Videos retain the actual policy
 image and applied controls. No training or evaluation remains running under this
-pilot, and its follow-up is retired; SMG1 remains blocked for diagnosis.
+pilot, and its follow-up is retired. The later SMG1 prediction repair and regional
+reward revision have separate identities and evidence linked above.
 
 **Reward review:** [hourly reviews and the motor8 reward audit](docs/motor8-reward-review.md)
 identify stationary waypoint credit and an overweighted SMG1 initial-prefix
@@ -23,9 +32,13 @@ still failed; SMG2 reached its 6096-decision cap and completed bounded evaluatio
 
 **Current owner-selected controls:** [exactly eight exclusive actions in both games](docs/motor8-and-algorithms.md),
 with a video inset of the actual policy image and live applied-button indicators.
-The new bounded motor8 pilot supersedes the remaining legacy54/motor16 stages;
-old checkpoints and their historical profiles are retained. The CLI defaults to
-`config/motor8-smg2.yaml`; the historical Galaxy 1 pilot uses
+The closed bounded motor8 pilot superseded the remaining legacy54/motor16 stages;
+old checkpoints and their historical profiles are retained. The CLI now defaults to
+`config/regional-smg2-12.yaml`; use `config/regional-smg1-12.yaml` for the new
+SMG1 reward/curriculum profile. Both retain eight physically exclusive legacy
+twelve-frame controls. Experimental frame4 profiles additionally test carried
+jump direction: eight logical labels, with direction+jump as an explicitly
+declared physical combination. The historical Galaxy 1 pilot uses
 `config/motor8-smg1.yaml`, while the new repaired checkpoint requires
 `config/motor8-smg1-boundary-repaired.yaml`. Rainbow DQN is
 assessed as a separate future baseline, not an unverified replacement of the
@@ -132,33 +145,37 @@ Other regions, revisions, or state files require new validation. Galaxy 1's
 
 ## Observation, memory, and rewards
 
-The policy receives four cropped 84 x 84 grayscale gameplay frames and a scenario
-one-hot vector: two entries for Galaxy 2, one for Galaxy 1. There are 54 discrete
-actions: nine movement directions, including idle, combined with six button
-modes. RAM values are used for rewards, checks, and logs, and are excluded from
-the policy observation.
+The policy receives cropped 84 x 84 grayscale gameplay observations and a scenario
+one-hot vector: two entries for Galaxy 2, one for Galaxy 1. The environment stacks
+four frames; the recurrent world model consumes the latest frame and its latent
+history. The current profiles use eight actions: none, right, left, forward,
+backward, jump, spin and crouch. The original 54-action design remains available
+only in historical profiles. RAM supplies rewards, checks and logs, and is
+excluded from policy input.
 
 | Signal | Source and interpretation | Default contribution |
 | --- | --- | --- |
-| Exploration | Per-worker, per-scenario visual novelty; fades after 30 stalled decisions and stops at 120 | `0.005 * intrinsic_bonus`, at most `+0.5` per episode |
-| Progress | New valid episode high-water projection of Mario's world X/Z position onto the calibrated start-to-star axis | `5 * increase` |
+| Exploration | Visual curiosity and disagreement bonus disabled in new regional profiles | `0` |
+| Progress | Ordered grounded opening-route potential, normalized by 50000 world units | `gamma_frames * Phi_next - Phi_previous`; zero terminal potential |
 | Completion | Game-specific star-collection scene nerve | `+20` |
 | Death | Game-specific actor/scene predicates; Galaxy 1 also checks zero HP | `-2` |
 | Nonfatal damage, Galaxy 1 | Decrease in RAM health since the preceding sample | `-0.25` per HP lost |
-| Time | Each decision | `-0.001` |
-| Timeout | Decision limit or 180 decisions without valid progress | `-2`, separate from RAM death |
+| Time | Per 12 actual emulated frames, scaled for 4-frame controls | `-0.001` |
+| Timeout | 2160 frames without new grounded route distance or 36000 episode frames | `-2`, absorbing failure separate from RAM death |
 
-These are the recommended native configurations' `bounded-exploration-v2`
-settings. Legacy configurations retain their historical rewards. Curiosity is
-scored every eligible decision and optimized in batches of eight; PPO still
-collects 128 decisions per worker per rollout. See the
-[optimization and stagnation audit](docs/optimization-v2.md) for measurements,
-reward equations, validation, and checkpoint migration.
+These are the new `regional-frame-potential-v1` settings. Old native and motor8
+profiles retain historical rewards and must be selected explicitly for
+reproduction. [Regional reward equations, integrity checks and validation](docs/regional-intervention.md)
+explain the discount, intermediate-start baseline and failure closure. Historical
+PPO curiosity batching and 128-decision rollouts are documented in the
+[earlier optimization audit](docs/optimization-v2.md).
 
-**Progress is a geometric proxy, not a native game completion percentage.** Height,
-displacement, and death gates reject invalid progress. Sweet Sweet Galaxy's
-curved route is not mapped to ordered waypoints, so its projection can misstate
-distance along the actual path. Only the RAM completion event proves success.
+**Progress is a geometric proxy, not a native game completion percentage.** The
+new ordered routes cover verified openings, including Sweet Sweet's initial
+turns; the rest of each course still needs mapping. A separate start-to-star
+projection remains a diagnostic and can misstate curved-course progress. Only
+the RAM star event establishes completion; full-start and assisted runs are
+reported separately.
 
 Galaxy 2 completion is `0x807D5318` for both missions; Galaxy 1 completion is
 `0x806A1BD8`. Galaxy 1 health and maximum health are read through the dynamic
@@ -251,11 +268,30 @@ star collection, death, and pause acknowledgment. It records evidence and closes
 its owned instance. No game memory is written. Training and evaluation reset
 only to full-start states: Galaxy 2 slots 1/3 and Galaxy 1 slot 1.
 
-## Train with hidden instances and automatic recovery
+## Bounded regional world-model pilot
 
-The recommended local arrangement is **two independent learners and five Dolphin
-processes**: four Galaxy 2 workers alternating its missions and one Galaxy 1
-worker. Run each command in a separate terminal when starting fresh experiments:
+The environment/control intervention is complete and no process remains running.
+The next training step should isolate the new reward and curated-start mixture at
+12 frames, using fresh replay and unchanged prediction gates. Review each finite
+block before launching a successor. For a fresh 256-decision SMG1 health block:
+
+```powershell
+.\.venv\Scripts\smg-rl.exe --config config/regional-smg1-12.yaml train-world-model --steps 256
+```
+
+This starts a new learner, not a historical checkpoint resume. For SMG2 select
+`config/regional-smg2-12.yaml` instead, after
+reviewing the prior block. Keep at most two emulator instances: SMG1's one worker
+must not overlap SMG2's two workers. The verified local banks are required.
+Old reward/checkpoint signatures are intentionally incompatible; successful old
+prediction gates do not validate the new reward/start distribution. No million-step
+or six-instance extension is implied by these checks. Frame4 remains experimental.
+
+## Historical PPO operation and automatic recovery
+
+Earlier PPO experiments used two learners and five Dolphin processes: four
+Galaxy 2 workers and one Galaxy 1 worker. The commands below reproduce that older
+setup; the bounded regional intervention uses the limits above.
 
 ```powershell
 .\.venv\Scripts\smg-rl.exe --config config/native.yaml train-supervised --workers 4 --steps 1000000

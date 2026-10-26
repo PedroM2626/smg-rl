@@ -13,13 +13,14 @@ from gymnasium import spaces
 from smg_rl.actions import action_name, action_set, advance_action
 from smg_rl.checkpoints import digest
 from smg_rl.curiosity import IntrinsicReward
+from smg_rl.curriculum import CurriculumBank
 from smg_rl.diagnostics import StageProfiler, atomic_json, measured
 from smg_rl.frontier import FrontierArchive
 from smg_rl.memory import GameMemory, MemoryFault
 from smg_rl.plotting import plot_trajectory
 from smg_rl.profiles import game_id
 from smg_rl.replay import ReplayRecorder, replay_signature
-from smg_rl.rewards import DamageTracker, ExplorationBudget, ProgressReward
+from smg_rl.rewards import DamageTracker, ExplorationBudget, ProgressReward, RegionalPotential
 from smg_rl.route import RouteProgress
 
 
@@ -74,6 +75,31 @@ class GalaxyEnv(gym.Env):
                 raise ValueError("Route reward specification integrity mismatch.")
             self.route = RouteProgress(spec)
         self.archives = {}
+        self.regional_settings = config.get('regional_reward', {})
+        self.regional = self.regional_settings.get('enabled', False)
+        self.potential = None
+        if self.regional:
+            settings = self.regional_settings
+            if (self.route is None or self.route.schema != 3
+                    or digest(config['paths']['route']) != settings['spec_sha256']
+                    or config.get('route_reward', {}).get('enabled')
+                    or config['rewards']['progress'] != 0 or config['rewards']['intrinsic'] != 0
+                    or settings['max_idle_frames'] < 1 or settings['max_episode_frames'] < 1):
+                raise ValueError('Regional reward requires a signed schema3 route and separate shaping.')
+            self.potential = RegionalPotential(settings['scale'], settings['gamma_per_frame'])
+            normalization = settings.get('normalization_distance', self.route.total_length)
+            if not np.isfinite(normalization) or normalization <= 0:
+                raise ValueError('Regional normalization distance must be positive and finite.')
+            expected_gamma = settings['gamma_per_frame'] ** config['parallel']['frame_skip']
+            if abs(config['world_model']['gamma'] - expected_gamma) > 1e-10:
+                raise ValueError('Learner discount must match the regional frame discount.')
+        self.curriculum_bank = None
+        curriculum = config.get('curriculum', {})
+        if curriculum.get('enabled', False):
+            if not self.regional or config.get('frontier', {}).get('enabled'):
+                raise ValueError('Curated curriculum requires regional shaping and its own start bank.')
+            self.curriculum_bank = CurriculumBank(config['paths']['curriculum'], curriculum['spec_sha256'],
+                game_id(config), digest(config['paths']['dolphin']), curriculum['probability'])
         self.frontier_history = deque(maxlen=6)
         self.frontier_validation_decisions = 0
         replay = config.get("replay", {})
@@ -89,6 +115,11 @@ class GalaxyEnv(gym.Env):
             folder = root / self.run_dir.relative_to(training_run)
             self.replay = ReplayRecorder(folder, replay_signature(config),
                                          replay.get("chunk_steps", 256), replay.get("max_worker_bytes", 268435456))
+
+    def _potential_fraction(self):
+        distance = self.route.best * self.route.total_length
+        normalization = self.regional_settings.get('normalization_distance', self.route.total_length)
+        return float(min(1.0, distance / normalization))
 
     def _observation(self):
         scenario = np.zeros(self.scenario_count, dtype=np.float32)
@@ -107,6 +138,7 @@ class GalaxyEnv(gym.Env):
         if index not in range(self.scenario_count):
             raise ValueError("Variation index is outside the configured scenarios.")
         self.variation = self.config["variations"][index]
+        self.backend._motor_direction = ()
         self.start_kind, self.start_state_id = "full_start", ""
         self.archive = None
         settings = self.config.get("frontier", {})
@@ -120,10 +152,13 @@ class GalaxyEnv(gym.Env):
                     Path(self.config["paths"]["frontier"]) / self.run_dir.name / name,
                     identity, {"minimum_height": minimum, **settings})
             self.archive = self.archives[name]
-        entry = self.archive.choose(self.np_random) if self.archive else None
+        curated = (self.curriculum_bank.choose(self.np_random, self.variation['scenario'])
+                   if self.curriculum_bank and not options.get('full_start', False) else None)
+        entry = curated or (self.archive.choose(self.np_random) if self.archive else None)
         if entry:
-            self.backend.load_state(self.archive.state_path(entry))
-            self.start_kind, self.start_state_id = "frontier", entry["file"]
+            owner = self.curriculum_bank if curated else self.archive
+            self.backend.load_state(owner.state_path(entry))
+            self.start_kind, self.start_state_id = 'curriculum' if curated else 'frontier', entry['file']
         else:
             self.backend.load_slot(self.variation["start_slot"])
         self.telemetry = self.memory.sample()
@@ -134,6 +169,10 @@ class GalaxyEnv(gym.Env):
         ):
             raise MemoryFault("Reset did not restore the requested live starting state.")
         expected = self.calibration[self.variation["name"]]
+        if curated:
+            if curated['route_sha256'] != self.regional_settings['spec_sha256']:
+                raise ValueError('Curriculum anchor belongs to another regional route.')
+            self.curriculum_bank.verify_reset(curated, self.telemetry, expected['goal'])
         target = entry["position"] if entry else expected["start"]
         if np.linalg.norm(np.asarray(self.telemetry.position) - target) > (0.01 if entry else 500):
             raise MemoryFault("Reset position does not match the calibrated start.")
@@ -153,10 +192,14 @@ class GalaxyEnv(gym.Env):
         )
         self.progress.reset(self.telemetry.position)
         if self.route:
-            self.route.reset(self.telemetry)
+            self.route.reset(self.telemetry, segment=int(curated['region']) if curated else None)
+        if self.potential:
+            self.potential.reset(self._potential_fraction())
+        self.route_start = self.route.best if self.route else 0.0
         self.damage = DamageTracker()
         self.damage.reset(self.telemetry.health)
         self.steps, self.idle_steps, self.total_reward = 0, 0, 0.0
+        self.emulated_frames, self.idle_frames = 0, 0
         weights = self.config["rewards"]
         self.exploration_budget = ExplorationBudget(
             weights.get("intrinsic_episode_budget"),
@@ -165,7 +208,10 @@ class GalaxyEnv(gym.Env):
         self.episode += 1
         self.rows = []
         if self.replay:
-            self.replay.begin(frame, index)
+            provenance = ({'start_kind': self.start_kind, 'anchor_id': self.start_state_id,
+                           'route_region': self.route.segment,
+                           'route_sha256': self.regional_settings['spec_sha256']} if self.regional else None)
+            self.replay.begin(frame, index, provenance=provenance)
         if self.use_intrinsic:
             self.curiosity[self.variation["name"]].reset(frame)
         self._append(-1, 0.0, self.progress.best, "running", {})
@@ -194,8 +240,15 @@ class GalaxyEnv(gym.Env):
         )
         route_delta = self.route.update(self.telemetry) if self.route else 0.0
         route_settings = self.config.get("route_reward", {})
-        advance = route_delta if route_settings.get("enabled") else delta
+        advance = route_delta if route_settings.get("enabled") or self.regional else delta
         self.idle_steps = 0 if advance > 1e-5 else self.idle_steps + 1
+        measured_frames = getattr(self.backend, 'last_frame_count', None)
+        control_frames = int(measured_frames) if measured_frames is not None else None
+        if self.regional and control_frames != self.config['parallel']['frame_skip']:
+            raise RuntimeError('Regional shaping requires verified native frame counts.')
+        self.emulated_frames = (self.emulated_frames + control_frames
+                                if control_frames is not None and self.emulated_frames is not None else None)
+        self.idle_frames = 0 if advance > 1e-5 else self.idle_frames + (control_frames or 0)
         weights = self.config["rewards"]
         curiosity, metrics = 0.0, {}
         # Terminal cinematics and falls cannot earn visual novelty rewards.
@@ -212,7 +265,8 @@ class GalaxyEnv(gym.Env):
                 )
         raw_intrinsic = weights["intrinsic"] * curiosity
         intrinsic_reward, intrinsic_gate = self.exploration_budget.pay(raw_intrinsic, self.idle_steps)
-        reward = weights["step"] + weights["progress"] * delta + intrinsic_reward
+        step_reward = weights['step'] * (control_frames / 12 if self.regional else 1)
+        reward = step_reward + weights["progress"] * delta + intrinsic_reward
         route_reward = route_settings.get("weight", 0.0) * route_delta if route_settings.get("enabled") else 0.0
         reward += route_reward
         if self.telemetry.complete:
@@ -231,6 +285,15 @@ class GalaxyEnv(gym.Env):
             self.steps >= self.config["environment"]["max_steps"]
             or self.idle_steps >= self.config["environment"]["idle_limit"]
         )
+        timed_out = truncated
+        if self.regional:
+            timed_out = not terminated and (
+                self.emulated_frames >= self.regional_settings['max_episode_frames']
+                or self.idle_frames >= self.regional_settings['max_idle_frames'])
+            terminated = terminated or timed_out
+            truncated = False
+        shaping_reward = self.potential.update(self._potential_fraction(), control_frames, terminated) if self.potential else 0.0
+        reward += shaping_reward
         self.frontier_history.append(self.telemetry)
         if self.archive and not terminated and not truncated:
             _, probes = self.archive.consider(
@@ -238,7 +301,7 @@ class GalaxyEnv(gym.Env):
                 {"episode": self.episode, "step": self.steps, "start_kind": self.start_kind,
                  "parent_state": self.start_state_id, "run": str(self.run_dir)})
             self.frontier_validation_decisions += probes
-        timeout_penalty = weights.get("timeout", 0.0) if truncated else 0.0
+        timeout_penalty = weights.get("timeout", 0.0) if timed_out else 0.0
         reward += timeout_penalty
         if self.replay:
             with self.profiler.measure("replay_recording"):
@@ -250,7 +313,7 @@ class GalaxyEnv(gym.Env):
             else "death"
             if self.telemetry.dead
             else "timeout"
-            if truncated
+            if timed_out
             else "running"
         )
         metrics.update(
@@ -272,6 +335,12 @@ class GalaxyEnv(gym.Env):
             route_prefix_progress=self.route.best if self.route else None,
             route_prefix_exited=self.route.exited if self.route else False,
             route_reward=route_reward,
+            regional_shaping_reward=shaping_reward,
+            shaping_potential=self.potential.value if self.potential else None,
+            region_index=self.route.segment if self.regional else None,
+            start_relative_route_progress=self.route.best - self.route_start if self.route else None,
+            emulated_frames=self.emulated_frames,
+            step_reward=step_reward,
         )
         with self.profiler.measure("logging"):
             self._append(action, reward, fraction, outcome, metrics)
@@ -346,6 +415,12 @@ class GalaxyEnv(gym.Env):
                 route_prefix_progress=metrics.get("route_prefix_progress"),
                 route_prefix_exited=metrics.get("route_prefix_exited", False),
                 route_reward=metrics.get("route_reward", 0.0),
+                regional_shaping_reward=metrics.get('regional_shaping_reward', 0.0),
+                shaping_potential=metrics.get('shaping_potential', self.potential.value if self.potential else None),
+                region_index=metrics.get('region_index', self.route.segment if self.regional else None),
+                start_relative_route_progress=metrics.get('start_relative_route_progress', 0.0 if self.route else None),
+                emulated_frames=self.emulated_frames,
+                step_reward=metrics.get('step_reward', 0.0),
                 health_lost=metrics.get("health_lost", 0),
                 damage_penalty=metrics.get("damage_penalty", 0.0),
             )
@@ -403,6 +478,9 @@ class GalaxyEnv(gym.Env):
                         "route_prefix_progress": self.route.best if self.route else None,
                         "route_prefix_exited": self.route.exited if self.route else False,
                         "route_reward_total": sum(r["route_reward"] for r in self.rows),
+                        "regional_shaping_total": sum(r['regional_shaping_reward'] for r in self.rows),
+                        "emulated_frames": self.emulated_frames,
+                        "route_start": self.route_start,
                     }
                 )
                 + "\n"

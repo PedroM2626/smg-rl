@@ -37,6 +37,8 @@ def ram():
         (0x80007004, 0x807D4E34),
         (0x80008004, GameMemory.PLAYING),
         (0x80002080, 1),
+        (0x80006000 + 0x584, 0x80009000),
+        (0x8000900C, 0x40000000),
     ]:
         ram.word(address, value)
     ram.put(0x80002040, b"SecretAthleticGalaxy\0")
@@ -68,8 +70,17 @@ def test_resolves_actor_after_heap_relocation(ram):
     assert memory.sample().actor == 0x80006000
     ram.word(0x80005014, 0x90001000)
     ram.word(0x90001058, 0x80007000)
+    ram.word(0x90001000 + 0x584, 0x80009000)
     ram.put(0x90001014, struct.pack(">fff", 20, -450, -37000))
     assert memory.sample().position == (20, -450, -37000)
+
+
+def test_smg2_ground_contact_is_game_specific_and_excludes_alternate_actor_mode(ram):
+    assert GameMemory(ram).sample().grounded is True
+    ram.word(0x8000900C, 0)
+    assert GameMemory(ram).sample().grounded is False
+    ram.put(0x80006000 + 0xE24, b'\1')
+    assert GameMemory(ram).sample().grounded is None
 
 
 @pytest.mark.parametrize("mutation", ["game", "code", "pointer", "stage", "scene", "nan"])

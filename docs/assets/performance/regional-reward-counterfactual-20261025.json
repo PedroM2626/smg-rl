@@ -1,0 +1,403 @@
+{
+  "scope": "Offline counterfactual on retained real episodes, not unseen evaluation or learning.",
+  "source": "docs/assets/performance/motor8-reward-audit-20261025.json",
+  "source_sha256": "a9fcf2543c42ea15b3ffa0f856541cf36d8d9a771b3df774e4d2a93ae0451109",
+  "episodes": [
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-130607-976206\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "sha256": "98ba1297b46402f8c4f7e691c80185f4b89e2413924e815f49ab01d4b4dbcfce",
+      "outcome": "death",
+      "old_discounted_return": -1.5011176872122265,
+      "new_discounted_return": -1.5352697786774723,
+      "discounted_shaping": -3.7947076036992655e-18
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-130607-976206\\worker-00\\sweet_sweet\\episode-000002.csv",
+      "sha256": "77caa9f66cfa5de8998d3ef1edec5b80f53cd9a10d44946582190fcd4dc85bb9",
+      "outcome": "death",
+      "old_discounted_return": -1.7512404979724174,
+      "new_discounted_return": -1.7512404979724179,
+      "discounted_shaping": 0.0
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "sha256": "69455b1b0b78d8c64be08a62f996fbbb8bc75a56459aa141cb1fa39911fd2b1e",
+      "outcome": "death",
+      "old_discounted_return": -1.0126346021989718,
+      "new_discounted_return": -1.7010297111117043,
+      "discounted_shaping": -3.469446951953614e-17
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000002.csv",
+      "sha256": "6870d0919ce6df77042e28ec586b3b637f005f257bbbc1d46efdd21c035f9b4f",
+      "outcome": "death",
+      "old_discounted_return": -1.64935404717373,
+      "new_discounted_return": -1.701029711111704,
+      "discounted_shaping": -4.553649124439119e-18
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000003.csv",
+      "sha256": "abd799e16c572b5d3b1bb01441672cff21aa21300be7b8f3ceddf16c4ec4169f",
+      "outcome": "death",
+      "old_discounted_return": 1.2961228734727943,
+      "new_discounted_return": -1.4055869505096095,
+      "discounted_shaping": 5.551115123125783e-17
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000004.csv",
+      "sha256": "c2508bb45dd5efb4d7c26413d3d590eb0e812df09653885d522b231f2f53e095",
+      "outcome": "death",
+      "old_discounted_return": 0.22759316013038022,
+      "new_discounted_return": -1.4349768811078987,
+      "discounted_shaping": -2.7755575615628914e-17
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000005.csv",
+      "sha256": "4b72bf35064ce61853720332d075aeeac9181ea71dbf582b3b7a890bcd14f8b1",
+      "outcome": "death",
+      "old_discounted_return": -1.8032946202094136,
+      "new_discounted_return": -1.803294620209414,
+      "discounted_shaping": 6.938893903907228e-18
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000006.csv",
+      "sha256": "3d0e9c19145c078e4a16ac52bdcecc57b43d00dfcd6099786ca2bd57645c3c71",
+      "outcome": "death",
+      "old_discounted_return": 0.7653518070148453,
+      "new_discounted_return": -1.8803258253576536,
+      "discounted_shaping": 6.938893903907228e-17
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000007.csv",
+      "sha256": "198e8c1855997b413f39d565d8de2c361387bea41d321830aa2efd4a9b3169e5",
+      "outcome": "death",
+      "old_discounted_return": -1.4449514605773484,
+      "new_discounted_return": -1.4449514605773488,
+      "discounted_shaping": 0.0
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000008.csv",
+      "sha256": "7f2a17bd15384b83572dfa4d223434105f15086d5d7a4e109b2003a50988e999",
+      "outcome": "death",
+      "old_discounted_return": -1.684691062582338,
+      "new_discounted_return": -1.6846910625823381,
+      "discounted_shaping": 0.0
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000009.csv",
+      "sha256": "8909d368ecdcbb145774ccfe5d2b15f03c9d566e8b33ae0e03685130c18f19e8",
+      "outcome": "death",
+      "old_discounted_return": -0.5947402652412097,
+      "new_discounted_return": -1.8756848478815806,
+      "discounted_shaping": -3.469446951953614e-17
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000010.csv",
+      "sha256": "4dc64edbbc528daae49a10a53ebec15c43a05664e7e52ff2a1eb002aff127892",
+      "outcome": "death",
+      "old_discounted_return": -0.36369065722823857,
+      "new_discounted_return": -1.7944880821397389,
+      "discounted_shaping": 5.551115123125783e-17
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000011.csv",
+      "sha256": "b17a216339282e973d2b74e5eb6cc7ce3cd935a6595a1e291938574aa17248c6",
+      "outcome": "death",
+      "old_discounted_return": 0.6908501444722608,
+      "new_discounted_return": -1.8121542362387197,
+      "discounted_shaping": 6.938893903907228e-18
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000012.csv",
+      "sha256": "5e652004a833951b38b24d07631ab8a8fb9b9006c03ff064936fa3f674bdcff4",
+      "outcome": "death",
+      "old_discounted_return": -1.163911289447247,
+      "new_discounted_return": -1.5793951969046731,
+      "discounted_shaping": -4.163336342344337e-17
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000013.csv",
+      "sha256": "480382b70b3548dc4deaaf4af928257caa78ad3c6e94a5869d2f213309be07a5",
+      "outcome": "death",
+      "old_discounted_return": 0.35151035005484665,
+      "new_discounted_return": -1.8435855173548397,
+      "discounted_shaping": 2.7755575615628914e-17
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000014.csv",
+      "sha256": "d6e3b76fbc0cdbfc4cc0138aafe5162fb21a5fe10cad18e0601a934db0e442c0",
+      "outcome": "timeout",
+      "old_discounted_return": 1.4359713628614237,
+      "new_discounted_return": -1.2314067894475627,
+      "discounted_shaping": 1.3877787807814457e-16
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000015.csv",
+      "sha256": "a9135223f4dc2445efd27c511ec2158b5900f373598cb22b4a7b828517ccf847",
+      "outcome": "death",
+      "old_discounted_return": -1.4282303300040484,
+      "new_discounted_return": -1.696926621978369,
+      "discounted_shaping": 1.734723475976807e-18
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000016.csv",
+      "sha256": "41607d4de1aaf24abee8937c61061633f9ac337455b3aeed734d65a8abdd63c8",
+      "outcome": "death",
+      "old_discounted_return": -1.6461261876332582,
+      "new_discounted_return": -1.7010297111117043,
+      "discounted_shaping": -6.7220534694101275e-18
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000017.csv",
+      "sha256": "36c05f24c1e0e71223b08d1e31274fefc1bc6aea0cdefae7b0e89116fb38189a",
+      "outcome": "death",
+      "old_discounted_return": -1.4690008109456714,
+      "new_discounted_return": -1.8664446199579219,
+      "discounted_shaping": -1.214306433183765e-17
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000018.csv",
+      "sha256": "d7aed2f8f32fa2b75c3f1a7b8dff22c51fbb4bfa256e2adb6673bc004545bba6",
+      "outcome": "death",
+      "old_discounted_return": 0.1595467315137351,
+      "new_discounted_return": -1.5388864379914464,
+      "discounted_shaping": 0.0
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000019.csv",
+      "sha256": "8b32f18bed067ad78454cd69b5fa618c012c9eb74a909524a9c5d1b2e83134f3",
+      "outcome": "death",
+      "old_discounted_return": -1.8572597502397539,
+      "new_discounted_return": -1.857259750239754,
+      "discounted_shaping": 0.0
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000020.csv",
+      "sha256": "5081b3b3170d47cae754b35c27c1788c1b098a83fd5a9f5fbf03fd77f6e464a0",
+      "outcome": "death",
+      "old_discounted_return": -0.16285005719035417,
+      "new_discounted_return": -1.3832712702372583,
+      "discounted_shaping": 1.97758476261356e-16
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000021.csv",
+      "sha256": "06ecf6d357805d90de2e25e64a67dc2e8d912caf5337c4c7afe95ee053b186f1",
+      "outcome": "death",
+      "old_discounted_return": -1.8121542362387197,
+      "new_discounted_return": -1.8121542362387197,
+      "discounted_shaping": 1.734723475976807e-18
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000022.csv",
+      "sha256": "d08109c9ad5ac64100df855163f16cc7f6ae84d1118027a36f7715345dfcdc6f",
+      "outcome": "death",
+      "old_discounted_return": 0.7762499087838453,
+      "new_discounted_return": -1.8121542362387202,
+      "discounted_shaping": -4.163336342344337e-17
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-131039-469948\\worker-00\\sweet_sweet\\episode-000023.csv",
+      "sha256": "5a9b6a472acaf75536ae508d8f17bce6909c0446e0cc4cf466417fcf36c3b0c4",
+      "outcome": "death",
+      "old_discounted_return": -1.7727018709146658,
+      "new_discounted_return": -1.772701870914666,
+      "discounted_shaping": 0.0
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "sha256": "1be3487f0eaf555c5689e61585946ba11afe4f74a7fa33a9de0bac85da08f9ac",
+      "outcome": "death",
+      "old_discounted_return": -1.6969266219783685,
+      "new_discounted_return": -1.696926621978369,
+      "discounted_shaping": 0.0
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000002.csv",
+      "sha256": "8c6bdc1619495b6d11c132ec85b07586982987879ea9c0ef586cdcd7f1ece0b6",
+      "outcome": "death",
+      "old_discounted_return": -1.383964451805293,
+      "new_discounted_return": -1.8210672501342746,
+      "discounted_shaping": -1.9081958235744878e-17
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000003.csv",
+      "sha256": "377e779e93681977b9048d6c7eb883f645d55ccc3f7a8cbe78b19b32ef4470e6",
+      "outcome": "death",
+      "old_discounted_return": -0.7496939649981501,
+      "new_discounted_return": -1.701029711111704,
+      "discounted_shaping": -3.469446951953614e-18
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000004.csv",
+      "sha256": "8bf9dea933c4af932179f0df9d821502d1c040df9d03be875ce800544a826844",
+      "outcome": "death",
+      "old_discounted_return": -0.6475592496435585,
+      "new_discounted_return": -1.415295425576282,
+      "discounted_shaping": -1.734723475976807e-17
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000005.csv",
+      "sha256": "c2316ccde10eca189e5ca37dead0d1f061fbeb8587a0bf275381c76343287ffb",
+      "outcome": "death",
+      "old_discounted_return": -0.5311893043677492,
+      "new_discounted_return": -1.4250918038093419,
+      "discounted_shaping": -1.2663481374630692e-16
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000006.csv",
+      "sha256": "a526721048e40e1d1f28e0779afdf88aed6d3da2fa09da1a116da415c211ced1",
+      "outcome": "death",
+      "old_discounted_return": 0.9528189859034584,
+      "new_discounted_return": -1.6725652931911281,
+      "discounted_shaping": 6.245004513516506e-17
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000007.csv",
+      "sha256": "4690b53e0b1128155a6e25aaf941db50650ddd5a231bc61c6a0908a2775586a9",
+      "outcome": "death",
+      "old_discounted_return": -1.474422543366025,
+      "new_discounted_return": -1.5571336303507142,
+      "discounted_shaping": -1.214306433183765e-17
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000008.csv",
+      "sha256": "78d47344c712cf30bcfd7985c2a55d82726cf5675ff00c0fa5d63e246626cb20",
+      "outcome": "death",
+      "old_discounted_return": -1.6956024282717213,
+      "new_discounted_return": -1.8803258253576538,
+      "discounted_shaping": -3.469446951953614e-17
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000009.csv",
+      "sha256": "d836ef9cad6e6f36aaeba90bf72fb3ff8b68954b185485fc2755b12cad742746",
+      "outcome": "death",
+      "old_discounted_return": -1.318595981673349,
+      "new_discounted_return": -1.4685781092016252,
+      "discounted_shaping": -2.42861286636753e-17
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000010.csv",
+      "sha256": "f2349c1d4b92a178a179cc45ee465da940b4a54e6da409d70115c11fdf2d4881",
+      "outcome": "death",
+      "old_discounted_return": 0.578046240960238,
+      "new_discounted_return": -1.8756848478815809,
+      "discounted_shaping": 2.0816681711721685e-17
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000011.csv",
+      "sha256": "8c3465a0a200a53f525ea6370ef535a7cdd95052c349da7559fdb62c9a3c9507",
+      "outcome": "death",
+      "old_discounted_return": 0.8682266137452379,
+      "new_discounted_return": -1.4416166061956164,
+      "discounted_shaping": 1.8735013540549517e-16
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000012.csv",
+      "sha256": "2358fefb8dec013da303c9f67e7534484aa67614cf5cb1239f03bc7c667aba3d",
+      "outcome": "death",
+      "old_discounted_return": 0.971331062541597,
+      "new_discounted_return": -1.742745816149065,
+      "discounted_shaping": 1.249000902703301e-16
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000013.csv",
+      "sha256": "dfbd15e790cd5c5a0f6bb94ba22d80f8d45d67e3fbbdd71eae1347995ba09e24",
+      "outcome": "death",
+      "old_discounted_return": -0.7326854200555084,
+      "new_discounted_return": -1.434976881107899,
+      "discounted_shaping": -1.717376241217039e-16
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000014.csv",
+      "sha256": "5669bff09f44df62033f9ef10c6dfa9b4f30b6e9753cb08d61213e063b76b78a",
+      "outcome": "death",
+      "old_discounted_return": -0.652578632432734,
+      "new_discounted_return": -1.6486391926682253,
+      "discounted_shaping": 8.326672684688674e-17
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000015.csv",
+      "sha256": "ec378bdea2cffce6977badb9270b2b29c47dbe6b287fd23498b83229b541877e",
+      "outcome": "death",
+      "old_discounted_return": -1.2931393515888874,
+      "new_discounted_return": -1.6887573345860964,
+      "discounted_shaping": 4.336808689942018e-17
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000016.csv",
+      "sha256": "23af2e3e90ead53bad0505644ef5e1ffb2c331ec660b4ba78c50710f74732c27",
+      "outcome": "death",
+      "old_discounted_return": -1.5037375165795024,
+      "new_discounted_return": -1.738517578700618,
+      "discounted_shaping": -1.734723475976807e-17
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000017.csv",
+      "sha256": "5467681d56bdc66a15e2af3c761e74e10131f23559c9eaf3763978230f0b5bb7",
+      "outcome": "death",
+      "old_discounted_return": -1.2089383200393293,
+      "new_discounted_return": -1.6565666836700927,
+      "discounted_shaping": 1.214306433183765e-17
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000018.csv",
+      "sha256": "5335b9c6e134a27ca5542d09df1bb5337c80781cbd6d9a5055aa07c505bdaf83",
+      "outcome": "death",
+      "old_discounted_return": -1.383271270237258,
+      "new_discounted_return": -1.3832712702372585,
+      "discounted_shaping": 0.0
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000019.csv",
+      "sha256": "fac616cdd0a623bc598b39ea055bbafd7adace7b7b58e516c4c96e8efb234247",
+      "outcome": "death",
+      "old_discounted_return": -0.49361361592767783,
+      "new_discounted_return": -1.6486391926682251,
+      "discounted_shaping": 5.551115123125783e-17
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000020.csv",
+      "sha256": "d73e3aa8f1039846a054a2bb505b757edd70ee7a17b4d1dbd7f5448cbc4ace46",
+      "outcome": "death",
+      "old_discounted_return": -1.598255527841801,
+      "new_discounted_return": -1.5982555278418011,
+      "discounted_shaping": 0.0
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000021.csv",
+      "sha256": "5d330bf49e3d1447d0928e9d08a19d2906c113ed2653c4369ce65864317cf076",
+      "outcome": "death",
+      "old_discounted_return": -1.5465890517607,
+      "new_discounted_return": -1.6765950784264074,
+      "discounted_shaping": -2.0816681711721685e-17
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000022.csv",
+      "sha256": "5364cdbd7b02ad1c9b57194f9d93ed4996dadb2fc74bc8630c45c20840d2273d",
+      "outcome": "death",
+      "old_discounted_return": -0.9474686249810569,
+      "new_discounted_return": -1.5645096074086995,
+      "discounted_shaping": -6.938893903907228e-17
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000023.csv",
+      "sha256": "086b9665ba0422718706e1d2a37c6f7289268d3c651f293ab86791d6ddce14a5",
+      "outcome": "death",
+      "old_discounted_return": -0.9594782177457736,
+      "new_discounted_return": -1.6765950784264072,
+      "discounted_shaping": -2.949029909160572e-17
+    },
+    {
+      "csv": "runs\\m8-smg1\\world-model-20261025-132157-406146\\worker-00\\sweet_sweet\\episode-000024.csv",
+      "sha256": "a2d6a58298f113749d72cdc99f229baba19bf4305b93c866a7599ad9020a593b",
+      "outcome": "death",
+      "old_discounted_return": -1.6917567310617165,
+      "new_discounted_return": -1.7259088225269628,
+      "discounted_shaping": -2.4936649967166602e-18
+    }
+  ],
+  "terminal_failures": 49,
+  "old_positive_failures": 12,
+  "new_positive_failures": 0,
+  "route_sha256": "dd7858d20f3c8a7c95908f8e0756277f1ab6877dce1f013bd9a4631b2cfb0a94"
+}

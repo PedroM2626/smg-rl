@@ -1,5 +1,12 @@
 # Methodology and mathematical specification
 
+**Current environment revision (October 25, 2026):** the latest regional profiles
+use [ordered grounded potential shaping, curated resets and frame-based termination](regional-intervention.md).
+Those equations supersede the historical novelty/projection objective below only
+for the new signed configurations. The finite intervention is complete; no extra
+training was launched. The October 23 hold below was superseded by the owner's
+later authorization for reviewed bounded experiments.
+
 **Status note (2026-10-23):** the supervised PPO jobs described by these
 equations are stopped; their final pairs are preserved. The separate visual
 world-model experiment specified in [the world-model implementation](world-model.md)

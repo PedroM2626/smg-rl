@@ -113,7 +113,9 @@ class GameMemory:
             if health is not None and (maximum not in (1, 3, 6) or not 0 <= health <= maximum):
                 raise MemoryFault(f"Invalid health telemetry: {health}/{maximum}")
             grounded = None
-            if p.mario_offset is not None:
+            excluded = (p.grounded_exclusion_offset is not None
+                        and self.reader.read_bytes(actor + p.grounded_exclusion_offset, 1) != b'\0')
+            if p.mario_offset is not None and not excluded:
                 mario = self.pointer(actor + p.mario_offset)
                 flags = self.u32(mario + p.movement_flags_offset)
                 grounded = bool(flags & p.grounded_mask)

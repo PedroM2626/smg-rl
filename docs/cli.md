@@ -2,8 +2,12 @@
 
 Run from the repository root using `.\.venv\Scripts\smg-rl.exe` or
 `.\.venv\Scripts\python.exe -m smg_rl.cli`. The optional global argument
-`--config PATH` goes before the subcommand and defaults to `config/motor8-smg2.yaml`.
-Use `config/motor8-smg1.yaml` for the current Galaxy 1 pilot. Historical
+`--config PATH` goes before the subcommand and defaults to `config/regional-smg2-12.yaml`.
+Use `config/regional-smg1-12.yaml` for the new Galaxy 1 reward/curriculum profile.
+These require the verified local curriculum banks; old checkpoint/replay signatures
+are deliberately incompatible. The separate `regional-*-4.yaml` profiles are
+experimental control candidates. See [regional validation and results](regional-intervention.md).
+Use explicit `config/motor8-smg1.yaml` or `config/motor8-smg2.yaml` only when reproducing the closed pilot. Historical
 `config/default.yaml` and staged profiles retain legacy action semantics for
 checkpoint reproduction; they are not the owner-selected eight-action default.
 Configuration files should live directly under `config/`: the loader treats the

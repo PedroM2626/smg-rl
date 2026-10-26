@@ -1,5 +1,12 @@
 # Eight exclusive actions, visible policy inputs and algorithm comparison
 
+**Latest environment intervention:** [regional shaping, curated starts and separate
+temporal tests](regional-intervention.md) are complete. CLI defaults now select
+the corrected regional12 reward/curriculum profile. Historical pilot identities
+below remain unchanged. The optional carried-jump experiment retains eight logical
+labels but applies direction+jump together; it is explicitly separate from the
+eight physically exclusive baseline controls.
+
 **Subsequent owner-requested repair:** [SMG1 prediction gates now pass a fresh
 confirmation and a gated actor smoke](smg1-boundary-repair.md). This does not
 reopen the closed pilot or silently change its reward/action identity. The

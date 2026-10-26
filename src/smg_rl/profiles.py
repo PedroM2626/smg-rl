@@ -29,6 +29,7 @@ class MemoryProfile:
     mario_offset: int | None = None
     movement_flags_offset: int | None = None
     grounded_mask: int | None = None
+    grounded_exclusion_offset: int | None = None
 
 
 PROFILES = {
@@ -51,6 +52,10 @@ PROFILES = {
         0x807D5320,
         "SecretAthleticGalaxy",
         (1, 2),
+        mario_offset=0x584,
+        movement_flags_offset=0x0C,
+        grounded_mask=0x40000000,
+        grounded_exclusion_offset=0xE24,
     ),
     "RMGE01": MemoryProfile(
         "RMGE01",
