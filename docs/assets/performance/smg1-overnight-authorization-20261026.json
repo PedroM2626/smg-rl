@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-26",
+  "owner_request": "Continue the same six-worker SMG1 training until October27 07:00 America/Sao_Paulo; progress reviews every three hours.",
+  "deadline_utc": "2026-10-27T10:00:00+00:00",
+  "initial_supervisor": {
+    "pid": 34092,
+    "created_time": 1793054634.864419
+  },
+  "overnight_supervisor": {
+    "pid": 38788,
+    "created_time": 1793057999.7434127
+  },
+  "phase_at_authorization": "needs_review",
+  "source_real": 296150,
+  "source_attempts": 1911,
+  "no_training_overlap": true,
+  "initial_final_assessment": "Superseded and deferred until overnight completion; same six frozen episodes.",
+  "review_cadence_hours": 3,
+  "final_review_local": "2026-10-27T07:05:00-03:00",
+  "phase_after_reviewed_recovery": "running",
+  "reviewed_recovery": "smg1-overnight-recovery-20261026.json",
+  "verified_tests": 219,
+  "ruff": "passed"
+}

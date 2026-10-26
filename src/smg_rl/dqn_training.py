@@ -59,20 +59,32 @@ def prepare_dqn(config, resume=None):
             PrioritizedFrames(**parameters, seed=config['training']['seed']))
 
 
-def train_dqn(config, steps, resume=None, max_seconds=None):
+def deadline_timestamp(value):
+    if value is None:
+        return None
+    parsed = datetime.fromisoformat(value.replace('Z', '+00:00'))
+    if parsed.tzinfo is None or parsed.utcoffset() is None:
+        raise ValueError('An absolute deadline must include its timezone.')
+    return parsed.timestamp()
+
+
+def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
     config = deepcopy(config)
     workers = config['parallel']['workers']
     if steps < 1 or steps % workers:
         raise ValueError('Use a finite real-decision budget divisible by the worker count.')
     if max_seconds is not None and (not np.isfinite(max_seconds) or max_seconds <= 0):
         raise ValueError('The optional wall-clock budget must be positive and finite.')
+    deadline = deadline_timestamp(deadline_utc)
+    if deadline is not None and deadline <= time.time():
+        raise ValueError('The absolute collection deadline has already passed.')
     agent, replay = prepare_dqn(config, resume)
     config['model_free_run'] = 'online'
     run = new_run(config, 'dqn')
     atomic_json(run / 'controller.json', {'pid': os.getpid(), 'created_time': psutil.Process().create_time(),
         'workers': workers, 'algorithm': agent.settings['algorithm'], 'resume': str(resume) if resume else None,
         'requested_additional': steps, 'source_count': agent.real_decisions, 'target_count': agent.real_decisions + steps,
-        'max_seconds': max_seconds})
+        'max_seconds': max_seconds, 'deadline_utc': deadline_utc})
     print(json.dumps({'run': str(run)}), flush=True)
     config['paths']['user'] = str(runtime_directory(config, run) / 'template')
     started, initial = time.perf_counter(), agent.real_decisions
@@ -100,6 +112,7 @@ def train_dqn(config, steps, resume=None, max_seconds=None):
             'replay_transitions': replay.size, 'replay_emitted': replay.emitted,
             'replay_bytes': replay.bytes_allocated, 'elapsed_seconds': elapsed,
             'max_seconds': max_seconds, 'stop_reason': stop_reason, 'epsilon': agent.epsilon(),
+            'deadline_utc': deadline_utc,
             'decisions_per_second': (agent.real_decisions - initial) / max(elapsed, 1e-6),
             'emulated_frames_per_second': 12 * (agent.real_decisions - initial) / max(elapsed, 1e-6),
             'full_start_stars_this_run': full_stars, 'assisted_stars_this_run': assisted_stars,
@@ -143,6 +156,9 @@ def train_dqn(config, steps, resume=None, max_seconds=None):
         tick = 0
         publish()
         while agent.real_decisions < initial + steps and not (run / 'STOP').exists():
+            if deadline is not None and time.time() >= deadline:
+                stop_reason = 'scheduled_deadline'
+                break
             if max_seconds is not None and time.perf_counter() - started >= max_seconds:
                 stop_reason = 'wall_clock_budget'
                 break
@@ -234,7 +250,7 @@ def train_dqn(config, steps, resume=None, max_seconds=None):
             atomic_json(run / 'block-summary.json', {'source_real': initial, 'final_real': agent.real_decisions,
                 'new_real': agent.real_decisions - initial, 'new_optimizer_updates': agent.updates - start_updates,
                 'state': state, 'checkpoint': str(run / 'checkpoint-final'), 'imagined_transitions': 0,
-                'stop_reason': stop_reason, 'max_seconds': max_seconds})
+                'stop_reason': stop_reason, 'max_seconds': max_seconds, 'deadline_utc': deadline_utc})
             publish()
         finally:
             writer.flush()

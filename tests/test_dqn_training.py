@@ -114,3 +114,30 @@ def test_memory_pressure_stops_cleanly_and_flushes_committed_replay(tmp_path, mo
     assert status['state'] == 'stopped' and status['stop_reason'] == 'memory_pressure'
     assert status['real_decisions'] == status['replay_emitted'] == 64
     assert status['error'] is None
+
+
+def test_absolute_deadline_saves_clean_checkpoint_before_next_decision(tmp_path, monkeypatch):
+    import json
+
+    config = load_config('config/iqn-smg1.yaml')
+    config['paths'].update(runs=str(tmp_path / 'runs'), tensorboard=str(tmp_path / 'tensorboard'))
+    config['environment']['image_size'] = 40
+    config['parallel']['workers'] = 1
+    config['training']['device'] = 'cpu'
+    config['dqn'].update(capacity=32, learning_starts=20, batch_size=2, channels=2, hidden=32)
+    wall = [1000.]
+    vector = BoundaryVector()
+    original_reset = vector.reset
+
+    def reset_after_deadline():
+        wall[0] = 2001.
+        return original_reset()
+
+    vector.reset = reset_after_deadline
+    monkeypatch.setattr(dqn_training.time, 'time', lambda: wall[0])
+    monkeypatch.setattr(dqn_training, 'MeasuredSubprocVecEnv', lambda *a, **k: vector)
+    run = dqn_training.train_dqn(config, 100, deadline_utc='1970-01-01T00:33:20+00:00')
+    status = json.loads((run / 'status.json').read_text())
+    assert status['real_decisions'] == 0 and status['state'] == 'completed'
+    assert status['stop_reason'] == 'scheduled_deadline'
+    assert (run / 'checkpoint-final' / 'agent.pt').exists()

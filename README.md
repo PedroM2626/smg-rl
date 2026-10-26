@@ -3,7 +3,7 @@
 Visual reinforcement learning for **Super Mario Galaxy 1 and 2** in
 Dolphin on Windows.
 
-**Current owner-authorized run:** [six SMG1 collectors for two hours](docs/smg1-six-two-hour.md),
+**Current owner-authorized run:** [six SMG1 collectors until October 27, 07:00 BRT](docs/smg1-overnight.md),
 continuing the final IQN/IMPALA learner with an explicitly audited replay-layout
 expansion. Only worker allocation/owned paths change; task/reward and learner
 state remain preserved. SMG2 remains stopped and is not a solved mission. The

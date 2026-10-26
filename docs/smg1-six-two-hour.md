@@ -1,5 +1,12 @@
 # SMG1-only continuation: six collectors for two hours
 
+**Superseded duration:** the owner subsequently extended this same continuation
+until October 27, 2026 at 07:00 America/Sao_Paulo, with reviews every three
+hours. See [the overnight protocol](smg1-overnight.md). The initial supervisor
+finishes its original segment; the overnight coordinator then adopts its audited
+checkpoint. Final evaluations are deferred until the overnight allocation ends.
+The schedule below documents the initial segment only.
+
 Date: October26,2026. The owner requested concentrating all six collectors on
 Sweet Sweet for a two-hour continuation. SMG2 is not solved: frozen policies
 traverse its mapped openings and then die, with zero stars. Its jobs remain

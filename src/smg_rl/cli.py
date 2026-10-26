@@ -55,6 +55,7 @@ def main():
     dqn = commands.add_parser('train-dqn', help='Finite model-free Rainbow/IQN training with TensorBoard.')
     dqn.add_argument('--steps', type=int)
     dqn.add_argument('--max-seconds', type=float, help='Stop and checkpoint at this finite wall-clock budget.')
+    dqn.add_argument('--deadline-utc', help='Timezone-qualified absolute collection deadline; checkpoint afterward.')
     dqn.add_argument('--resume', help='Immutable model-free checkpoint directory, including replay.')
     q_video = commands.add_parser('record-dqn', help='Finite canonical-start Rainbow/IQN Q-value/input video.')
     q_video.add_argument('checkpoint')
@@ -120,7 +121,7 @@ def main():
         from smg_rl.dqn_training import train_dqn
 
         print(train_dqn(config, args.steps if args.steps is not None else config['training']['steps'],
-                        args.resume, args.max_seconds))
+                        args.resume, args.max_seconds, args.deadline_utc))
         return
     if args.command == "test-world-horizon":
         from smg_rl.horizon_trial import horizon_trial
