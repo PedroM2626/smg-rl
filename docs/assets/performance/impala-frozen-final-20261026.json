@@ -1,0 +1,579 @@
+{
+  "scope": "Completed canonical frozen evaluations; epsilon0, NoisyLinear disabled; three identical seeded replays are not independent training replicas.",
+  "training_decisions_added": 0,
+  "missions": {
+    "sweet_sweet": {
+      "recording": {
+        "state": "completed",
+        "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg1\\dqn-20261026-165924-309805\\checkpoint-final",
+        "agent_sha256": "2cf9e0180bf21e0469e6d570b9a721c8b3f56fcb984838fa3cd4ac58e1e6a0c2",
+        "variation": "sweet_sweet",
+        "episodes": [
+          {
+            "seed": 11,
+            "decisions": 198,
+            "outcome": "timeout",
+            "full_start_ram_star": false,
+            "opening_fraction": 0.2364019054225169,
+            "maximum_geometric_projection_percent": 1.8452612382808944,
+            "telemetry": {
+              "position": [
+                166.73147583007812,
+                206.40000915527344,
+                -315.14007568359375
+              ],
+              "scenario": 1,
+              "stage": "BeltConveyerExGalaxy",
+              "actor": 2164967084,
+              "actor_nerve": 2154426424,
+              "scene_nerve": 2154437584,
+              "scene_frame": 3699,
+              "dead": false,
+              "complete": false,
+              "health": 3,
+              "max_health": 3,
+              "grounded": false
+            }
+          },
+          {
+            "seed": 23,
+            "decisions": 198,
+            "outcome": "timeout",
+            "full_start_ram_star": false,
+            "opening_fraction": 0.2364019054225169,
+            "maximum_geometric_projection_percent": 1.8452612382808944,
+            "telemetry": {
+              "position": [
+                166.73147583007812,
+                206.40000915527344,
+                -315.14007568359375
+              ],
+              "scenario": 1,
+              "stage": "BeltConveyerExGalaxy",
+              "actor": 2164967084,
+              "actor_nerve": 2154426424,
+              "scene_nerve": 2154437584,
+              "scene_frame": 3699,
+              "dead": false,
+              "complete": false,
+              "health": 3,
+              "max_health": 3,
+              "grounded": false
+            }
+          },
+          {
+            "seed": 47,
+            "decisions": 198,
+            "outcome": "timeout",
+            "full_start_ram_star": false,
+            "opening_fraction": 0.2364019054225169,
+            "maximum_geometric_projection_percent": 1.8452612382808944,
+            "telemetry": {
+              "position": [
+                166.73147583007812,
+                206.40000915527344,
+                -315.14007568359375
+              ],
+              "scenario": 1,
+              "stage": "BeltConveyerExGalaxy",
+              "actor": 2164967084,
+              "actor_nerve": 2154426424,
+              "scene_nerve": 2154437584,
+              "scene_frame": 3699,
+              "dead": false,
+              "complete": false,
+              "health": 3,
+              "max_health": 3,
+              "grounded": false
+            }
+          }
+        ],
+        "optimizer_updates": 73525,
+        "algorithm": "iqn",
+        "physical_training_decisions_added": 0,
+        "imagined_transitions": 0,
+        "evaluation_epsilon": 0.0,
+        "scope": "Canonical-start frozen policy evaluation, noisy parameters disabled; small explicit epsilon. Not training-success accounting.",
+        "overlay": "Exact policy grayscale frame, raw expected Q returns (not probabilities), selected action and applied controls.",
+        "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg1\\eval-dqn-video-20261026-182204-372894\\policy.mp4",
+        "frames_written": 3564
+      },
+      "episode_audits": [
+        {
+          "csv": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg1\\eval-dqn-video-20261026-182204-372894\\worker-00\\sweet_sweet\\episode-000001.csv",
+          "decisions": 198,
+          "outcome": "timeout",
+          "actions": {
+            "w": 5,
+            "d": 3,
+            "none": 15,
+            "a": 3,
+            "jump": 170,
+            "s": 2
+          },
+          "last80_actions": {
+            "jump": 80
+          },
+          "last_progress_step": 18,
+          "opening_fraction": 0.2364019054225169,
+          "hp_lost": 0,
+          "last80_x_range": [
+            166.73147583007812,
+            166.73147583007812
+          ],
+          "last80_z_range": [
+            -315.14007568359375,
+            -315.14007568359375
+          ]
+        },
+        {
+          "csv": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg1\\eval-dqn-video-20261026-182204-372894\\worker-00\\sweet_sweet\\episode-000002.csv",
+          "decisions": 198,
+          "outcome": "timeout",
+          "actions": {
+            "w": 5,
+            "d": 3,
+            "none": 15,
+            "a": 3,
+            "jump": 170,
+            "s": 2
+          },
+          "last80_actions": {
+            "jump": 80
+          },
+          "last_progress_step": 18,
+          "opening_fraction": 0.2364019054225169,
+          "hp_lost": 0,
+          "last80_x_range": [
+            166.73147583007812,
+            166.73147583007812
+          ],
+          "last80_z_range": [
+            -315.14007568359375,
+            -315.14007568359375
+          ]
+        },
+        {
+          "csv": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg1\\eval-dqn-video-20261026-182204-372894\\worker-00\\sweet_sweet\\episode-000003.csv",
+          "decisions": 198,
+          "outcome": "timeout",
+          "actions": {
+            "w": 5,
+            "d": 3,
+            "none": 15,
+            "a": 3,
+            "jump": 170,
+            "s": 2
+          },
+          "last80_actions": {
+            "jump": 80
+          },
+          "last_progress_step": 18,
+          "opening_fraction": 0.2364019054225169,
+          "hp_lost": 0,
+          "last80_x_range": [
+            166.73147583007812,
+            166.73147583007812
+          ],
+          "last80_z_range": [
+            -315.14007568359375,
+            -315.14007568359375
+          ]
+        }
+      ],
+      "video_overlays_verified": true,
+      "weights_optimizer_and_replay_unchanged": true,
+      "encoded_frames": 3564
+    },
+    "spinning": {
+      "recording": {
+        "state": "completed",
+        "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg2\\dqn-20261026-165929-116375\\checkpoint-final",
+        "agent_sha256": "402b6c0cd97d17bc0d89e1d5fa77491c15319b94817a4db2c460fcdfe012cdf8",
+        "variation": "spinning",
+        "episodes": [
+          {
+            "seed": 11,
+            "decisions": 66,
+            "outcome": "death",
+            "full_start_ram_star": false,
+            "opening_fraction": 1.0,
+            "maximum_geometric_projection_percent": 5.088164857915254,
+            "telemetry": {
+              "position": [
+                -658.9906005859375,
+                -3442.117431640625,
+                -260.60687255859375
+              ],
+              "scenario": 1,
+              "stage": "SecretAthleticGalaxy",
+              "actor": 2166529088,
+              "actor_nerve": 2155695676,
+              "scene_nerve": 2155696928,
+              "scene_frame": 2,
+              "dead": true,
+              "complete": false,
+              "health": null,
+              "max_health": null,
+              "grounded": false
+            }
+          },
+          {
+            "seed": 23,
+            "decisions": 66,
+            "outcome": "death",
+            "full_start_ram_star": false,
+            "opening_fraction": 1.0,
+            "maximum_geometric_projection_percent": 5.088164857915254,
+            "telemetry": {
+              "position": [
+                -658.9906005859375,
+                -3442.117431640625,
+                -260.60687255859375
+              ],
+              "scenario": 1,
+              "stage": "SecretAthleticGalaxy",
+              "actor": 2166529088,
+              "actor_nerve": 2155695676,
+              "scene_nerve": 2155696928,
+              "scene_frame": 2,
+              "dead": true,
+              "complete": false,
+              "health": null,
+              "max_health": null,
+              "grounded": false
+            }
+          },
+          {
+            "seed": 47,
+            "decisions": 66,
+            "outcome": "death",
+            "full_start_ram_star": false,
+            "opening_fraction": 1.0,
+            "maximum_geometric_projection_percent": 5.088164857915254,
+            "telemetry": {
+              "position": [
+                -658.9906005859375,
+                -3442.117431640625,
+                -260.60687255859375
+              ],
+              "scenario": 1,
+              "stage": "SecretAthleticGalaxy",
+              "actor": 2166529088,
+              "actor_nerve": 2155695676,
+              "scene_nerve": 2155696928,
+              "scene_frame": 2,
+              "dead": true,
+              "complete": false,
+              "health": null,
+              "max_health": null,
+              "grounded": false
+            }
+          }
+        ],
+        "optimizer_updates": 115229,
+        "algorithm": "iqn",
+        "physical_training_decisions_added": 0,
+        "imagined_transitions": 0,
+        "evaluation_epsilon": 0.0,
+        "scope": "Canonical-start frozen policy evaluation, noisy parameters disabled; small explicit epsilon. Not training-success accounting.",
+        "overlay": "Exact policy grayscale frame, raw expected Q returns (not probabilities), selected action and applied controls.",
+        "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg2\\eval-dqn-video-20261026-182204-215623\\policy.mp4",
+        "frames_written": 1188
+      },
+      "episode_audits": [
+        {
+          "csv": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg2\\eval-dqn-video-20261026-182204-215623\\worker-00\\spinning\\episode-000001.csv",
+          "decisions": 66,
+          "outcome": "death",
+          "actions": {
+            "w": 18,
+            "none": 19,
+            "s": 13,
+            "a": 13,
+            "d": 2,
+            "jump": 1
+          },
+          "last80_actions": {
+            "reset": 1,
+            "w": 18,
+            "none": 19,
+            "s": 13,
+            "a": 13,
+            "d": 2,
+            "jump": 1
+          },
+          "last_progress_step": 22,
+          "opening_fraction": 1.0,
+          "hp_lost": 0,
+          "last80_x_range": [
+            -658.9906005859375,
+            217.1816864013672
+          ],
+          "last80_z_range": [
+            -1436.3194580078125,
+            500.0
+          ]
+        },
+        {
+          "csv": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg2\\eval-dqn-video-20261026-182204-215623\\worker-00\\spinning\\episode-000002.csv",
+          "decisions": 66,
+          "outcome": "death",
+          "actions": {
+            "w": 18,
+            "none": 19,
+            "s": 13,
+            "a": 13,
+            "d": 2,
+            "jump": 1
+          },
+          "last80_actions": {
+            "reset": 1,
+            "w": 18,
+            "none": 19,
+            "s": 13,
+            "a": 13,
+            "d": 2,
+            "jump": 1
+          },
+          "last_progress_step": 22,
+          "opening_fraction": 1.0,
+          "hp_lost": 0,
+          "last80_x_range": [
+            -658.9906005859375,
+            217.1816864013672
+          ],
+          "last80_z_range": [
+            -1436.3194580078125,
+            500.0
+          ]
+        },
+        {
+          "csv": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg2\\eval-dqn-video-20261026-182204-215623\\worker-00\\spinning\\episode-000003.csv",
+          "decisions": 66,
+          "outcome": "death",
+          "actions": {
+            "w": 18,
+            "none": 19,
+            "s": 13,
+            "a": 13,
+            "d": 2,
+            "jump": 1
+          },
+          "last80_actions": {
+            "reset": 1,
+            "w": 18,
+            "none": 19,
+            "s": 13,
+            "a": 13,
+            "d": 2,
+            "jump": 1
+          },
+          "last_progress_step": 22,
+          "opening_fraction": 1.0,
+          "hp_lost": 0,
+          "last80_x_range": [
+            -658.9906005859375,
+            217.1816864013672
+          ],
+          "last80_z_range": [
+            -1436.3194580078125,
+            500.0
+          ]
+        }
+      ],
+      "video_overlays_verified": true,
+      "weights_optimizer_and_replay_unchanged": true,
+      "encoded_frames": 1188
+    },
+    "double_time": {
+      "recording": {
+        "state": "completed",
+        "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg2\\dqn-20261026-165929-116375\\checkpoint-final",
+        "agent_sha256": "402b6c0cd97d17bc0d89e1d5fa77491c15319b94817a4db2c460fcdfe012cdf8",
+        "variation": "double_time",
+        "episodes": [
+          {
+            "seed": 11,
+            "decisions": 44,
+            "outcome": "death",
+            "full_start_ram_star": false,
+            "opening_fraction": 1.0,
+            "maximum_geometric_projection_percent": 3.940166875414961,
+            "telemetry": {
+              "position": [
+                789.7432250976562,
+                -3537.776123046875,
+                -1519.729736328125
+              ],
+              "scenario": 2,
+              "stage": "SecretAthleticGalaxy",
+              "actor": 2166530752,
+              "actor_nerve": 2155695676,
+              "scene_nerve": 2155696928,
+              "scene_frame": 4,
+              "dead": true,
+              "complete": false,
+              "health": null,
+              "max_health": null,
+              "grounded": false
+            }
+          },
+          {
+            "seed": 23,
+            "decisions": 44,
+            "outcome": "death",
+            "full_start_ram_star": false,
+            "opening_fraction": 1.0,
+            "maximum_geometric_projection_percent": 3.940166875414961,
+            "telemetry": {
+              "position": [
+                789.7432250976562,
+                -3537.776123046875,
+                -1519.729736328125
+              ],
+              "scenario": 2,
+              "stage": "SecretAthleticGalaxy",
+              "actor": 2166530752,
+              "actor_nerve": 2155695676,
+              "scene_nerve": 2155696928,
+              "scene_frame": 4,
+              "dead": true,
+              "complete": false,
+              "health": null,
+              "max_health": null,
+              "grounded": false
+            }
+          },
+          {
+            "seed": 47,
+            "decisions": 44,
+            "outcome": "death",
+            "full_start_ram_star": false,
+            "opening_fraction": 1.0,
+            "maximum_geometric_projection_percent": 3.940166875414961,
+            "telemetry": {
+              "position": [
+                789.7432250976562,
+                -3537.776123046875,
+                -1519.729736328125
+              ],
+              "scenario": 2,
+              "stage": "SecretAthleticGalaxy",
+              "actor": 2166530752,
+              "actor_nerve": 2155695676,
+              "scene_nerve": 2155696928,
+              "scene_frame": 4,
+              "dead": true,
+              "complete": false,
+              "health": null,
+              "max_health": null,
+              "grounded": false
+            }
+          }
+        ],
+        "optimizer_updates": 115229,
+        "algorithm": "iqn",
+        "physical_training_decisions_added": 0,
+        "imagined_transitions": 0,
+        "evaluation_epsilon": 0.0,
+        "scope": "Canonical-start frozen policy evaluation, noisy parameters disabled; small explicit epsilon. Not training-success accounting.",
+        "overlay": "Exact policy grayscale frame, raw expected Q returns (not probabilities), selected action and applied controls.",
+        "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg2\\eval-dqn-video-20261026-182203-892572\\policy.mp4",
+        "frames_written": 792
+      },
+      "episode_audits": [
+        {
+          "csv": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg2\\eval-dqn-video-20261026-182203-892572\\worker-00\\double_time\\episode-000001.csv",
+          "decisions": 44,
+          "outcome": "death",
+          "actions": {
+            "a": 13,
+            "w": 16,
+            "s": 6,
+            "jump": 9
+          },
+          "last80_actions": {
+            "reset": 1,
+            "a": 13,
+            "w": 16,
+            "s": 6,
+            "jump": 9
+          },
+          "last_progress_step": 20,
+          "opening_fraction": 1.0,
+          "hp_lost": 0,
+          "last80_x_range": [
+            -46.08090591430664,
+            789.7432250976562
+          ],
+          "last80_z_range": [
+            -1614.9486083984375,
+            500.0
+          ]
+        },
+        {
+          "csv": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg2\\eval-dqn-video-20261026-182203-892572\\worker-00\\double_time\\episode-000002.csv",
+          "decisions": 44,
+          "outcome": "death",
+          "actions": {
+            "a": 13,
+            "w": 16,
+            "s": 6,
+            "jump": 9
+          },
+          "last80_actions": {
+            "reset": 1,
+            "a": 13,
+            "w": 16,
+            "s": 6,
+            "jump": 9
+          },
+          "last_progress_step": 20,
+          "opening_fraction": 1.0,
+          "hp_lost": 0,
+          "last80_x_range": [
+            -46.08090591430664,
+            789.7432250976562
+          ],
+          "last80_z_range": [
+            -1614.9486083984375,
+            500.0
+          ]
+        },
+        {
+          "csv": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\simple-impala-iqn\\smg2\\eval-dqn-video-20261026-182203-892572\\worker-00\\double_time\\episode-000003.csv",
+          "decisions": 44,
+          "outcome": "death",
+          "actions": {
+            "a": 13,
+            "w": 16,
+            "s": 6,
+            "jump": 9
+          },
+          "last80_actions": {
+            "reset": 1,
+            "a": 13,
+            "w": 16,
+            "s": 6,
+            "jump": 9
+          },
+          "last_progress_step": 20,
+          "opening_fraction": 1.0,
+          "hp_lost": 0,
+          "last80_x_range": [
+            -46.08090591430664,
+            789.7432250976562
+          ],
+          "last80_z_range": [
+            -1614.9486083984375,
+            500.0
+          ]
+        }
+      ],
+      "video_overlays_verified": true,
+      "weights_optimizer_and_replay_unchanged": true,
+      "encoded_frames": 792
+    }
+  }
+}

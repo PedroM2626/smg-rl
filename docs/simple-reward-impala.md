@@ -1,5 +1,10 @@
 # Simple regional reward and six-hour IQN/IMPALA trial
 
+**Completed:** both original six-hour branches and all nine frozen evaluations
+finished. Zero stars occurred. [Final results and Sweet Sweet diagnosis](impala-final-results.md)
+separate the learned local openings from full-course failure; no continuation
+is allocated and the hourly follow-up is retired after final review.
+
 Date: October 26, 2026. This owner-authorized intervention follows the completed
 [model-free comparison](model-free.md). That comparison remains archived: zero
 RAM-confirmed stars and no useful frozen navigation. New configurations, replay,

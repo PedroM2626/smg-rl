@@ -3,7 +3,7 @@
 Visual reinforcement learning for **Super Mario Galaxy 1 and 2** in
 Dolphin on Windows.
 
-**Current intervention (October 26):** [simple reward + IQN/IMPALA](docs/simple-reward-impala.md)
+**Latest completed intervention (October 26):** [simple reward + IQN/IMPALA](docs/simple-reward-impala.md)
 starts fresh after the owner requested correcting the idle incentive before a
 six-hour trial. The finite episodic reward pays new grounded route advance,
 RAM stars and failure/HP penalties, with gamma1 and no time cost. A residual
@@ -22,6 +22,12 @@ No genetic advantage or learned completion is claimed from this selection.
 The [memory-pressure repair](docs/memory-pressure-recovery.md) diagnosed Windows
 commit exhaustion, preserved the failed partial checkpoints and resumed only the
 remaining six-hour allocation with lean collectors and a commit-headroom guard.
+Both six-hour branches and nine final frozen episodes are now complete, with
+zero stars. Frozen Sweet Sweet stalls at23.64% of its opening; both SMG2 policies
+traverse their short mapped openings and then die. These are not full-mission
+percentages. [Final results and diagnosis](docs/impala-final-results.md) identify
+incomplete route coverage and the Sweet jumping-in-place policy. No training
+extension or new experiment is running.
 
 **Completed model-free comparison:** [Rainbow and IQN](docs/model-free.md)
 used real-pixel frame stacks and prioritized replay, with zero imagined

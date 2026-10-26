@@ -51,6 +51,8 @@ refer to their own dated allocations.
 The [memory-pressure recovery](memory-pressure-recovery.md) records the actual
 Windows failure, lean collector fix and explicitly authorized remaining-budget
 resumption without resetting real decisions or attempts.
+That allocation and all nine frozen evaluations are complete; see the
+[final IQN/IMPALA results and Sweet Sweet diagnosis](impala-final-results.md).
 
 | Need | Document |
 | --- | --- |
