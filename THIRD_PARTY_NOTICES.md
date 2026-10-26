@@ -29,6 +29,12 @@ licenses. Consult each dependency's distribution metadata and upstream license
 when redistributing an environment; the project MIT license does not replace
 those terms.
 
+The model-free Rainbow/IQN code is original project code implementing published
+methods. No DQN Zoo/JAX source was copied into this MIT repository. TensorBoard
+is an installed dependency with its own Apache-2.0 license; PyTorch and other
+dependencies retain their upstream terms. Local event logs and checkpoints are
+excluded from Git, as are the existing emulator binaries and game assets.
+
 The [reference bibliography](docs/references.bib) attributes the research methods
 and upstream projects used in the technical documentation. The memory profiles
 record address/layout facts derived from pinned Garigari and Petari sources and

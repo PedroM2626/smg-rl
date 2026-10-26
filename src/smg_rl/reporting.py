@@ -33,10 +33,12 @@ def training_report(root, output=None):
     tasks, runs, warnings, evidence = {}, [], [], {}
     for config_path in sorted(root.rglob("config.json")):
         run = config_path.parent
-        if not run.name.startswith(("train-", "parallel-", "world-model-")):
+        if not run.name.startswith(("train-", "parallel-", "world-model-", 'dqn-')):
             continue
         config = read_json(config_path, {})
         if run.name.startswith("world-model-") and config.get("world_model_run") != "online":
+            continue
+        if run.name.startswith('dqn-') and config.get('model_free_run') != 'online':
             continue
         gid = game_id(config)
         if gid not in PROFILES or not config.get("variations"):
@@ -51,6 +53,7 @@ def training_report(root, output=None):
         runs.append(
             {
                 "path": str(run),
+                "algorithm": config.get('dqn', {}).get('algorithm', 'rssm' if config.get('world_model_run') else 'ppo'),
                 "game_id": gid,
                 "controller_running": alive,
                 "state": status.get(

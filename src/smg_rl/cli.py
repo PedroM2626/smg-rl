@@ -16,7 +16,7 @@ def main():
     parser = argparse.ArgumentParser(
         description="Visual reinforcement learning and game telemetry validation in Dolphin."
     )
-    parser.add_argument("--config", default="config/regional-smg2-12.yaml")
+    parser.add_argument("--config", default="config/iqn-smg2.yaml")
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser(
         "prepare", help="Create an isolated Dolphin profile and copy local savestates."
@@ -52,6 +52,14 @@ def main():
     supervised.add_argument("--workers", type=int)
     supervised.add_argument("--steps", type=int)
     supervised.add_argument("--resume")
+    dqn = commands.add_parser('train-dqn', help='Finite model-free Rainbow/IQN training with TensorBoard.')
+    dqn.add_argument('--steps', type=int)
+    dqn.add_argument('--resume', help='Immutable model-free checkpoint directory, including replay.')
+    q_video = commands.add_parser('record-dqn', help='Finite canonical-start Rainbow/IQN Q-value/input video.')
+    q_video.add_argument('checkpoint')
+    q_video.add_argument('--variation', type=int, default=0)
+    q_video.add_argument('--seeds', nargs='+', type=int, default=[11, 23, 47])
+    q_video.add_argument('--max-steps', type=int, default=300)
     for name in ("train-world-model", "fit-world-model"):
         world = commands.add_parser(name, help="Guarded visual world-model workflow (experimental).")
         world.add_argument("--resume")
@@ -96,6 +104,20 @@ def main():
         print(plot_trajectory(args.trajectory, args.output))
         return
     config = load_config(args.config)
+    historical = {'train-world-model', 'fit-world-model', 'test-world-horizon', 'ablate-world-model',
+                  'record-world-policy', 'inspect-replay', 'train', 'train-parallel', 'train-supervised', 'evaluate'}
+    if 'dqn' in config and args.command in historical:
+        parser.error('This model-free profile requires train-dqn/record-dqn; select an explicit historical profile for PPO/RSSM commands.')
+    if args.command == 'record-dqn':
+        from smg_rl.dqn_video import record_dqn
+
+        print(record_dqn(args.config, args.checkpoint, args.variation, args.seeds, args.max_steps))
+        return
+    if args.command == 'train-dqn':
+        from smg_rl.dqn_training import train_dqn
+
+        print(train_dqn(config, args.steps if args.steps is not None else config['training']['steps'], args.resume))
+        return
     if args.command == "test-world-horizon":
         from smg_rl.horizon_trial import horizon_trial
 
@@ -152,7 +174,7 @@ def main():
         return
     if args.command in ("status", "stop"):
         root = Path(config["paths"]["runs"]).resolve()
-        candidates = sorted([*root.glob("parallel-*"), *root.glob("world-model-*")], key=lambda p: p.stat().st_mtime)
+        candidates = sorted([*root.glob("parallel-*"), *root.glob("world-model-*"), *root.glob('dqn-*')], key=lambda p: p.stat().st_mtime)
         run = Path(args.run).resolve() if args.run else candidates[-1] if candidates else None
         if run is None or run.parent != root or not (run / "controller.json").is_file():
             parser.error("Choose an existing parallel run in the configured runs directory.")

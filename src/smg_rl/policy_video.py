@@ -19,7 +19,6 @@ from smg_rl.native import NativeDolphin
 from smg_rl.parallel import runtime_directory
 from smg_rl.replay import replay_signature
 from smg_rl.train import new_run
-from smg_rl.world_model import ImaginedAgent
 
 
 class VideoBackend:
@@ -37,6 +36,7 @@ class VideoBackend:
         self.last_controls = ()
         self.policy_image = None
         self.policy_probabilities = None
+        self.policy_q_values = None
         self.input_log = None
         if decision_frames not in (4, 12):
             raise ValueError('Policy video supports signed four/twelve-frame decisions.')
@@ -75,6 +75,9 @@ class VideoBackend:
                 probability = float(self.policy_probabilities[i])
                 cv2.rectangle(canvas, (x,y+19), (x+round(310*probability),y+22), (90,210,160), -1)
                 label += f"  {100*probability:.1f}%"
+            elif self.policy_q_values is not None:
+                value = float(self.policy_q_values[i])
+                label += f'  Q {value:.3f}'
             cv2.putText(canvas, label, (x+6,y+16), cv2.FONT_HERSHEY_SIMPLEX,
                         0.45, (12,12,12) if pressed else (235,235,235), 1, cv2.LINE_AA)
         lines = [self.label, f"Episode {self.episode} | decision {self.step} | {self.last_action}"]
@@ -104,6 +107,7 @@ class VideoBackend:
             self.input_log = self.destination.with_suffix('.inputs.jsonl').open('x', encoding='utf-8')
         self.input_log.write(json.dumps({'frame':self.frames_written, 'episode':self.episode, 'decision':self.step,
             'selected_action':self.last_action, 'applied_controls':self.last_controls,
+            'policy_expected_returns': self.policy_q_values.tolist() if self.policy_q_values is not None else None,
             'policy_input_sha256':hashlib.sha256(self.policy_image.tobytes()).hexdigest()
                 if self.policy_image is not None else None})+'\n')
         self.frames_written += 1
@@ -147,6 +151,8 @@ class VideoBackend:
 
 def record_policy(config_path, checkpoint, variation, seeds=(11, 23, 47), maximum_steps=600):
     """Record predeclared episodes, including failures; never resume training."""
+    from smg_rl.world_model import ImaginedAgent
+
     if not seeds or maximum_steps < 1:
         raise ValueError("A recording needs seeds and a positive step budget.")
     config = deepcopy(load_config(config_path))

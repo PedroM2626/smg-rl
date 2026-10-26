@@ -91,7 +91,8 @@ class GalaxyEnv(gym.Env):
             if not np.isfinite(normalization) or normalization <= 0:
                 raise ValueError('Regional normalization distance must be positive and finite.')
             expected_gamma = settings['gamma_per_frame'] ** config['parallel']['frame_skip']
-            if abs(config['world_model']['gamma'] - expected_gamma) > 1e-10:
+            learner = config['dqn'] if 'dqn' in config else config['world_model']
+            if abs(learner['gamma'] - expected_gamma) > 1e-10:
                 raise ValueError('Learner discount must match the regional frame discount.')
         self.curriculum_bank = None
         curriculum = config.get('curriculum', {})
@@ -215,7 +216,8 @@ class GalaxyEnv(gym.Env):
         if self.use_intrinsic:
             self.curiosity[self.variation["name"]].reset(frame)
         self._append(-1, 0.0, self.progress.best, "running", {})
-        return self._observation(), self.telemetry.to_dict()
+        return self._observation(), {**self.telemetry.to_dict(), 'start_kind': self.start_kind,
+                                     'anchor_id': self.start_state_id}
 
     @measured("step")
     def step(self, action):
@@ -317,6 +319,8 @@ class GalaxyEnv(gym.Env):
             else "running"
         )
         metrics.update(
+            worker_episode=self.episode,
+            episode_step=self.steps,
             start_kind=self.start_kind,
             frontier_state=self.start_state_id,
             frontier_validation_decisions=self.frontier_validation_decisions,
