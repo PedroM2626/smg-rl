@@ -1,0 +1,161 @@
+{
+  "scope": "Actual TensorBoard HTTP scalar verification; telemetry only, no training/reward changes.",
+  "runs": {
+    "telemetry\\RMGE01\\simple-impala": {
+      "by_attempt/sweet_sweet/curriculum/episode_reward": {
+        "points_served": 95,
+        "latest": [
+          1793023242.6221898,
+          95,
+          -1.7533698081970215
+        ]
+      },
+      "by_attempt/sweet_sweet/curriculum/path_distance_xz": {
+        "points_served": 95,
+        "latest": [
+          1793023242.6221898,
+          95,
+          729.7736206054688
+        ]
+      },
+      "by_attempt/sweet_sweet/curriculum/valid_route_advance": {
+        "points_served": 95,
+        "latest": [
+          1793023242.6221898,
+          95,
+          539.1688232421875
+        ]
+      },
+      "by_attempt/sweet_sweet/full_start/episode_reward": {
+        "points_served": 96,
+        "latest": [
+          1793023252.9706326,
+          96,
+          -1.8342971801757812
+        ]
+      },
+      "by_attempt/sweet_sweet/full_start/path_distance_xz": {
+        "points_served": 96,
+        "latest": [
+          1793023252.9706326,
+          96,
+          7449.03662109375
+        ]
+      },
+      "by_attempt/sweet_sweet/full_start/valid_route_advance": {
+        "points_served": 96,
+        "latest": [
+          1793023252.9706326,
+          96,
+          362.25
+        ]
+      }
+    },
+    "telemetry\\SB4E01\\simple-impala": {
+      "by_attempt/spinning/curriculum/episode_reward": {
+        "points_served": 93,
+        "latest": [
+          1793023244.2462816,
+          93,
+          -2.0
+        ]
+      },
+      "by_attempt/spinning/curriculum/path_distance_xz": {
+        "points_served": 93,
+        "latest": [
+          1793023244.2462816,
+          93,
+          1154.9759521484375
+        ]
+      },
+      "by_attempt/spinning/curriculum/valid_route_advance": {
+        "points_served": 93,
+        "latest": [
+          1793023244.2462816,
+          93,
+          0.0
+        ]
+      },
+      "by_attempt/double_time/full_start/episode_reward": {
+        "points_served": 99,
+        "latest": [
+          1793023241.863381,
+          99,
+          -2.0
+        ]
+      },
+      "by_attempt/double_time/full_start/path_distance_xz": {
+        "points_served": 99,
+        "latest": [
+          1793023241.863381,
+          99,
+          943.3103637695312
+        ]
+      },
+      "by_attempt/double_time/full_start/valid_route_advance": {
+        "points_served": 99,
+        "latest": [
+          1793023241.863381,
+          99,
+          0.0
+        ]
+      },
+      "by_attempt/spinning/full_start/episode_reward": {
+        "points_served": 100,
+        "latest": [
+          1793023249.8895078,
+          100,
+          -1.996603012084961
+        ]
+      },
+      "by_attempt/spinning/full_start/path_distance_xz": {
+        "points_served": 100,
+        "latest": [
+          1793023249.8895078,
+          100,
+          1221.0799560546875
+        ]
+      },
+      "by_attempt/spinning/full_start/valid_route_advance": {
+        "points_served": 100,
+        "latest": [
+          1793023249.8895078,
+          100,
+          6.661346435546875
+        ]
+      },
+      "by_attempt/double_time/curriculum/episode_reward": {
+        "points_served": 71,
+        "latest": [
+          1793023253.9355576,
+          71,
+          -1.9052702188491821
+        ]
+      },
+      "by_attempt/double_time/curriculum/path_distance_xz": {
+        "points_served": 71,
+        "latest": [
+          1793023253.9355576,
+          71,
+          1437.3380126953125
+        ]
+      },
+      "by_attempt/double_time/curriculum/valid_route_advance": {
+        "points_served": 71,
+        "latest": [
+          1793023253.9355576,
+          71,
+          185.76292419433594
+        ]
+      }
+    }
+  },
+  "exported_attempts": 554,
+  "supervisor_alive": true,
+  "training_phase": "main_running",
+  "latest_run_states": {
+    "smg1": "running",
+    "smg2": "running"
+  },
+  "units": "World-coordinate units; sampled path length is distinct from grounded opening advance and native mission completion."
+}

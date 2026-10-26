@@ -192,3 +192,62 @@ recorded pending/running/completed before/after dispatch. Owner stop/hold blocks
 evaluation too. No automatic training extension or genetic run is allocated.
 The separate `.local/impala-six-hour-evaluations.json` ledger owns evaluation
 dispatch; do not edit the training supervisor's state concurrently to record it.
+
+## Reward and distance in TensorBoard
+
+The original writer already exposes `episodes/.../return` and
+`attempt_axis/.../return` for total episode reward, plus `opening_advance` as a
+fraction of the short verified opening. Those values were confirmed in actual
+event files; they were not explicit path-distance series.
+
+`scripts/export_training_metrics.py` now reads the original attempt ledger and
+episode CSVs without modifying/restarting collectors, reward, replay or weights.
+It backfills completed attempts from the current trial and follows new ones.
+Its continuous TensorBoard runs, spanning all reviewed blocks, are:
+
+- `telemetry/RMGE01/simple-impala` for SMG1;
+- `telemetry/SB4E01/simple-impala` for both SMG2 missions, with separate tags.
+
+Under `by_attempt/MISSION/START_KIND/` and `by_real_decision/MISSION/START_KIND/`:
+
+| Scalar suffix | Definition |
+| --- | --- |
+| `episode_reward` | Sum of actual rewards in that completed attempt |
+| `path_distance_xz` | Sum of horizontal distances between recorded RAM positions, including backtracking |
+| `path_distance_xyz` | Corresponding3D sampled path length, including vertical movement/jumps |
+| `net_displacement_xz` | Start-to-last nonterminal horizontal displacement; omitted after an invalid/discontinuous sample |
+| `valid_route_advance` | Confirmed ordered grounded opening advance from that attempt's start, in world units |
+| `opening_advance_percent` | Percentage of the short mapped opening only |
+| `best_valid_route_advance` | Best completed collection advance in that mission/start group |
+| `episode_reward_mean_last100` | Mean reward of the latest at most100 attempts in the group |
+| `path_distance_xz_mean_last100` | Corresponding mean sampled horizontal path length |
+| `valid_route_advance_mean_last100` | Corresponding mean valid forward route advance |
+| `excluded_position_samples` | Invalid, terminal or discontinuous samples omitted from path integration |
+
+Distances use game world units, not calibrated meters. They are sampled every
+decision, not integrated at every game frame, and can underestimate curved paths.
+Reset boundaries are never connected; death/star cinematic jumps and steps beyond
+the configured maximum telemetry displacement are excluded. Path length can grow
+while the agent goes in circles, jumps or backtracks: only the separate grounded
+route metric represents verified forward progress. No metric is a native full
+mission percentage, a new reward term or proof of a learned star.
+
+The exporter refreshes every15 seconds and logs when an attempt has completed.
+Its own `.local/impala-telemetry-state.json` records export/controller ownership
+separately from the training supervisor. Normal restarts retain last exported
+attempt indices and rolling windows; missing attempts fail rather than silently
+fabricating an axis. It stops when the trial completes/stops/needs review or at
+its independent seven-hour ceiling. Its failure cannot stop or change a learner.
+The exporter-specific `.local/impala-telemetry.STOP` stops only telemetry.
+Five focused portable tests passed for loops versus net progress, vertical motion,
+terminal/discontinuous positions, backfill/resume axes and missing-attempt refusal;
+Ruff passed. [HTTP verification evidence](assets/performance/tensorboard-distance-20261026.json)
+confirms that the running TensorBoard server actually serves the new scalars.
+
+```powershell
+# One-time backfill; do not start a second exporter while the watcher is alive.
+.venv\Scripts\python.exe scripts/export_training_metrics.py
+
+# Explicit finite watcher, already running for the current trial.
+.venv\Scripts\python.exe scripts/export_training_metrics.py --watch --max-seconds 25200 --interval 15
+```

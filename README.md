@@ -15,6 +15,9 @@ six-hour-per-game ceiling and immutable checkpoints. Local live authority is
 `.local/impala-six-hour-state.json`; the CLI defaults to
 `config/impala-iqn-smg2.yaml` (`impala-iqn-smg1.yaml` for SMG1).
 [TensorBoard](http://127.0.0.1:6006/) includes both decision and attempt axes.
+Its `telemetry/RMGE01/simple-impala` and `telemetry/SB4E01/simple-impala` runs
+add episode reward, sampled world-space path length, valid grounded route
+advance and last100-attempt means, backfilled without restarting training.
 No genetic advantage or learned completion is claimed from this selection.
 
 **Completed model-free comparison:** [Rainbow and IQN](docs/model-free.md)
