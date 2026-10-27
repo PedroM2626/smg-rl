@@ -1,5 +1,9 @@
 # Genetic evolution with unlocked visual parameters
 
+**Completed:** the two-hour trial ended at09:56 BRT on October27. Mutated vision
+did not beat the unchanged ancestral champion, and no native star was collected.
+All training remains stopped; no automatic successor is allocated.
+
 On October27 the owner explicitly requested continuing the GA with the visual
 network unlocked. This replaces the intervening IQN return; the live IQN is
 stopped and audited before the six emulator instances are reassigned. The first
@@ -132,3 +136,83 @@ new record or proof of visual improvement. Six owned emulators and fresh status
 were verified, with no errors. Collection's absolute cutoff is October27 at
 09:56:22 BRT, and final review is scheduled for10:02 BRT.
 See [the dispatch/provenance evidence](assets/performance/genetic-visual-authorization-20261027.json).
+
+## Final results (October27,10:02 review)
+
+The trainer completed with `stop_reason=scheduled_deadline`, no reported runtime
+errors and all source hashes unchanged. Runtime including setup/cleanup was
+7205.437 seconds (2h00m05.437s), at31.75 real decisions/s. The last sampled
+emulator response was09:56:21.971 BRT,145.5ms before the absolute cutoff; the
+supervisor finished at09:56:32.599 BRT. Actual supervisor/controller identities
+are no longer alive and no Dolphin remains. IQN was not resumed.
+
+| Metric | Full-visual trial |
+| --- | ---: |
+| Real evolution decisions |228793 |
+| Complete generations |75 |
+| Completed fitness trials |1814 |
+| Completed trials with mutated visual genes |1739 |
+| Completed unchanged-baseline trials |75 |
+| Partial deadline-cut trials |6 |
+| Partial decisions, included in real total |432 |
+| Native full-start stars |0 |
+| Gradient updates |0 |
+
+All trials started from the canonical state. Generations0–74 completed;
+generation75 had14 completed trials,6 partial trials and4 individuals not yet
+dispatched. Its incomplete population did not reproduce. There were1720 deaths,
+94 episode timeouts and152 nonfatal HP lost. Jump occupied62.832% of decisions,
+forward21.086%, crouch8.170% and right5.699%; other action counts remain in the
+audit evidence. No new frozen confirmation episode was allocated or run.
+
+| Best eligible policy | Fitness (world units) | Grounded goal projection | Mapped opening | Outcome |
+| --- | ---: | ---: | ---: | --- |
+| Unchanged ancestral baseline |2361.440219 |8.066498% |100% |Death,269 decisions |
+| Best with mutated visual genes |2326.263003 |7.946335% |100% |Death,63 decisions |
+
+The retained champion is **the unchanged initial baseline**, generation0,
+individual0, genotype
+`b55a54b110e0f0fc5a3d3911dc699de58c98e2e60c0b77c33bb7e4b3246b19f2`.
+Its visual delta L2 is zero. It must not be described as a learned visual
+improvement merely because it was reevaluated in a full-visual run.
+
+The strongest visually mutated individual was also from generation0,
+individual3, genotype
+`07fbc62fe8325801670c0267195d44862e3374307cce4737ad155da5902e3110`,
+with visual delta L2=0.7291223252. Its fitness was1.4897% below the baseline
+(a0.12016 percentage-point difference in geometric projection). No later
+complete candidate exceeded it or the retained baseline. Native completion
+remained absent;100% opening and either geometric percentage are not native
+mission completion or a calibrated full-route fraction.
+
+There was an observed repeatability exception: the identical baseline genotype
+produced8.066498% on74 completed repeats and6.500852% once (generation51).
+This is preserved, not discarded. With no action epsilon/noise enabled,
+possible render/input/numerical/environment variability remains to investigate;
+these logs do not isolate the cause. Repeated collection of the same saved
+state is not independent generalization testing.
+
+The artifact audit recomputed fitness and native completion flags from all1820
+new trial CSVs, verified source/layout/baseline/champion hashes and frozen source
+tensors, reconstructed every full1869736-gene population across75 completed
+generations from the compact journal, checked every evaluated genotype and
+its actual visual delta, and matched the final population/RNG snapshot. This
+confirms that visually mutated policies really were evaluated. It does not
+establish useful visual learning.239 portable tests and Ruff passed, including
+rejection of mistaking partial or unchanged-baseline records for mutated-visual
+improvement.
+
+Reproduce the read-only audit (no training/evaluation jobs are dispatched):
+
+```powershell
+.venv\Scripts\python.exe scripts/audit_visual_genetic_result.py
+```
+
+See [the result evidence](assets/performance/genetic-visual-result-20261027.json)
+and [the trajectory/generation figure](assets/performance/genetic-visual-result-20261027.png).
+The result does not support the claim that simply unlocking vision was enough
+to solve the plateau in this allocation. It also does not prove frozen vision
+was irrelevant: search dimension, mutation scaling, trial duration and observed
+repeatability limit a causal comparison. No reward/control changes, additional
+fitting or automatic training extension were made. The completion follow-up is
+retired after reporting; original and final population snapshots remain intact.

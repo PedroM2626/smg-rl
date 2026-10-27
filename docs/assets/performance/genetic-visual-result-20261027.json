@@ -1,0 +1,126 @@
+{
+  "recorded_utc": "2026-10-27T13:06:45.121992+00:00",
+  "audit_passed": true,
+  "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\genetic-smg1\\genetic-20261027-075626-448268",
+  "all_controllers_stopped": true,
+  "remaining_emulators": [],
+  "stop_reason": "scheduled_deadline",
+  "supervisor_completed_at": "2026-10-27T12:56:32.599113+00:00",
+  "elapsed_seconds": 7205.437000000005,
+  "counts": {
+    "real_decisions": 228793,
+    "completed_trials": 1814,
+    "partial_trials": 6,
+    "partial_decisions": 432,
+    "full_start_stars": 0
+  },
+  "new_generations": 75,
+  "genome_parameters": 1869736,
+  "visual_evolvable_parameters": 1569184,
+  "gradient_updates": 0,
+  "no_prior_fitness_reused": true,
+  "source_hashes_unchanged": true,
+  "initial_final_population_hashes_and_rng_verified": true,
+  "all_physical_trial_fitness_recomputed": 1820,
+  "complete_generation_genotypes_and_mutation_rng_reconstructed": 75,
+  "actual_visual_genome_deltas_recomputed": 1820,
+  "summary": {
+    "completed_mutated_visual_trials": 1739,
+    "completed_baseline_trials": 75,
+    "best_complete": {
+      "individual": 0,
+      "seed": 11,
+      "phase": "evolution",
+      "generation": 0,
+      "worker": 0,
+      "decisions": 269,
+      "genome_sha256": "b55a54b110e0f0fc5a3d3911dc699de58c98e2e60c0b77c33bb7e4b3246b19f2",
+      "fitness_world_units": 2361.440219460008,
+      "geometric_projection_percent": 8.066497565365971,
+      "sampled_path_distance_xz": 11570.568774342366,
+      "environment_return": -1.25,
+      "mapped_opening_percent": 100.0,
+      "fitness_eligible": true,
+      "invalid_position": false,
+      "outcome": "death",
+      "ram_star": false,
+      "dead": true,
+      "health": 2,
+      "start_kind": "full_start",
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\genetic-smg1\\genetic-20261027-075626-448268\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "visual_genome_delta_l2": 0.0
+    },
+    "best_mutated_visual": {
+      "individual": 3,
+      "seed": 11,
+      "phase": "evolution",
+      "generation": 0,
+      "worker": 3,
+      "decisions": 63,
+      "genome_sha256": "07fbc62fe8325801670c0267195d44862e3374307cce4737ad155da5902e3110",
+      "fitness_world_units": 2326.2630034802496,
+      "geometric_projection_percent": 7.946334910085219,
+      "sampled_path_distance_xz": 4695.47622200785,
+      "environment_return": -1.25,
+      "mapped_opening_percent": 100.0,
+      "fitness_eligible": true,
+      "invalid_position": false,
+      "outcome": "death",
+      "ram_star": false,
+      "dead": true,
+      "health": 2,
+      "start_kind": "full_start",
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\genetic-smg1\\genetic-20261027-075626-448268\\worker-03\\sweet_sweet\\episode-000001.csv",
+      "visual_genome_delta_l2": 0.729122325154313
+    }
+  },
+  "champion_sha256": "16ad3d6793335f7dbaab6fb9e7c175101f29e90c1acba41421b37dc90a83ee03",
+  "champion_equals_unchanged_baseline": true,
+  "best_mutated_relative_fitness": 0.9851034907892767,
+  "deaths": 1720,
+  "nonfatal_hp_lost": 152,
+  "action_occupancy": {
+    "none": {
+      "count": 396,
+      "percent": 0.17308221842451474
+    },
+    "d": {
+      "count": 13038,
+      "percent": 5.698600918734402
+    },
+    "a": {
+      "count": 157,
+      "percent": 0.06862098053699195
+    },
+    "w": {
+      "count": 48244,
+      "percent": 21.086309458768408
+    },
+    "s": {
+      "count": 2083,
+      "percent": 0.9104299519653136
+    },
+    "jump": {
+      "count": 143755,
+      "percent": 62.83190482226292
+    },
+    "spin": {
+      "count": 2427,
+      "percent": 1.060784202313882
+    },
+    "crouch": {
+      "count": 18693,
+      "percent": 8.17026744699357
+    }
+  },
+  "real_decisions_per_second": 31.752827760481402,
+  "new_frozen_confirmation_trials": 0,
+  "last_emulator_sample_utc": "2026-10-27T12:56:21.971341+00:00",
+  "last_sample_minus_deadline_seconds": -0.14552760124206543,
+  "interpretation": "Visual parameters were genuinely mutated and evaluated, but none surpassed the unchanged ancestral baseline within this allocation. This does not isolate a causal explanation: search dimension and mutation scaling also changed. Geometric projection/opening fractions are not native mission percentage. Collection maxima are not new frozen evaluation results.",
+  "figure": "docs\\assets\\performance\\genetic-visual-result-20261027.png",
+  "baseline_repeat_geometric_percent_counts": {
+    "8.066497565365971": 74,
+    "6.500852354404635": 1
+  }
+}

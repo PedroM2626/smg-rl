@@ -1,8 +1,8 @@
 # Documentation index
 
-The current allocation is [full-visual genetic evolution](genetic-visual.md),
-with six SMG1 collectors and an initial two-hour budget. The intermediate
-[IQN return](iqn-return-20261027.md) is paused and retained.
+The [full-visual genetic trial](genetic-visual.md) completed with zero stars and
+no improvement over the unchanged baseline. No training remains active; the
+intermediate [IQN return](iqn-return-20261027.md) is paused and retained.
 The [overnight SMG1 genetic allocation](genetic-overnight.md) completed at
 October27,07:00 BRT: zero stars and no improvement over the inherited pilot
 champion. Its population/RNG ancestry from the

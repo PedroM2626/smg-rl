@@ -3,10 +3,11 @@
 Visual reinforcement learning for **Super Mario Galaxy 1 and 2** in
 Dolphin on Windows.
 
-**Current owner-authorized run:** [full-visual SMG1 genetic evolution](docs/genetic-visual.md),
-unlocking1869736 action-path parameters including1569184 visual parameters, with
-six collectors and an initial two-hour budget. IQN is paused and retained;
-fitness/control match the earlier GA and source checkpoints remain immutable.
+**Latest completed run:** [full-visual SMG1 genetic evolution](docs/genetic-visual.md)
+ended on October27 at09:56 BRT:228793 real decisions,75 complete generations,
+and zero stars. The unchanged8.0665% geometric baseline remained best; mutated
+vision reached7.9463%. No training is active; all IQN/genetic checkpoints remain
+retained. Geometric projection and mapped opening are not native mission progress.
 
 **Latest completed genetic run:** [overnight six-worker SMG1 training](docs/genetic-overnight.md)
 stopped at October27,07:00 BRT. It added810628 real decisions and278 complete
