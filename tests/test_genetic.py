@@ -39,6 +39,56 @@ def test_fitness_credits_only_new_grounded_goal_projection_and_excludes_falls():
     assert score.update({'position': [80, 0, 0], 'grounded': True}) == 45
 
 
+def test_distance_fitness_evaluator_uses_nearest_point_not_axis_projection(tmp_path):
+    import json
+    import time
+    from types import SimpleNamespace
+
+    from smg_rl.genetic import GeneticEvaluator
+
+    class Remote:
+        def send(self, command):
+            observation = {'image': np.zeros((4, 40, 40), np.uint8), 'scenario': np.ones(1, np.float32)}
+            if command[0] == 'reset':
+                self.reply = observation, {'start_kind': 'full_start', 'position': [0, 0, 0]}
+            else:
+                info = {'position': [90, 0, 100], 'grounded': True, 'complete': False,
+                        'dead': False, 'worker_episode': 1}
+                self.reply = observation, 999999., True, info, {}
+
+        def recv(self):
+            return self.reply
+
+    calibration = tmp_path / 'calibration.json'
+    calibration.write_text(json.dumps({'variations': {'sweet': {'start': [0, 0, 0], 'goal': [100, 0, 0]}}}))
+    config = {'paths': {'calibration': str(calibration)}, 'variations': [{'name': 'sweet'}],
+              'parallel': {'workers': 1}, 'environment': {'max_step_distance': 500}}
+    policy = SimpleNamespace(logits=lambda observations, genomes: torch.zeros((len(genomes), 8)))
+    vector = SimpleNamespace(remotes=[Remote()])
+    writer = SimpleNamespace(add_scalar=lambda *args: None)
+    status = {'fitness_mode': 'goal-distance-xyz-v1', 'real_decisions': 0, 'completed_trials': 0,
+              'partial_trials': 0, 'full_start_stars': 0, 'deaths': 0, 'nonfatal_hp_lost': 0,
+              'action_counts': [0] * 8, 'last_publish_decision': 0}
+    policy.network = SimpleNamespace(state_dict=lambda: {})
+    evaluator = GeneticEvaluator(config, tmp_path, policy, vector, time.monotonic() + 30, status, writer)
+    records = evaluator.evaluate([{'individual': 0, 'seed': 11, 'genome': np.zeros(8, np.float32)}],
+                                 'evolution', 0, time.monotonic() + 30)
+    evaluator.ledger.close()
+    record = records[0][0]
+    assert record['fitness_world_units'] == 0
+    assert record['geometric_projection_percent'] == pytest.approx(90)
+    assert record['mapped_opening_percent'] is None
+    assert record['fitness_mode'] == 'goal-distance-xyz-v1'
+
+
+def test_distance_fitness_cannot_reuse_old_population():
+    from smg_rl.genetic import train_genetic
+
+    config = {'parallel': {'workers': 6}, 'variations': [{}]}
+    with pytest.raises(ValueError, match='historical fitness cannot be reused'):
+        train_genetic(config, 'unused', seconds=60, fitness_mode='goal-distance-xyz-v1', resume_run='old')
+
+
 def test_elitism_preserves_best_genomes_and_mutations_are_reproducible_and_independent():
     population = np.arange(240, dtype=np.float32).reshape(24, 10) / 100
     original = population.copy()

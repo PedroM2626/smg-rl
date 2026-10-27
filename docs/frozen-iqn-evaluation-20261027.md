@@ -74,14 +74,17 @@ but projection is not Euclidean distance to the goal and can increase for
 off-course motion. Trajectory CSVs are retained for verification and graphs,
 not required by the online genetic tracker to assign its fitness.
 
-`GroundedGoalDistance` in `src/smg_rl/goal_distance.py` is an **offline-only
-prototype** for the user's proposed alternative. It credits each new closest
+At the time of this evaluation, `GroundedGoalDistance` in
+`src/smg_rl/goal_distance.py` was an **offline-only prototype** for the user's
+proposed alternative. It credits each new closest
 alive-grounded X/Z distance once, relative to the actual episode reset, with a
 finite-position/discontinuity guard. Its scale is normalized to the canonical
 start-to-goal distance; assisted starts do not receive credit merely for being
 closer at reset. It needs no predefined course route. The evaluation replayed
 the six recorded traces through this candidate without changing their behavior;
 these values do **not** establish that a policy trained with it would improve.
+A later [genetic experiment](genetic-goal-distance-20261027.md) explicitly uses
+full XYZ distance for its separate online fitness; IQN reward/replay are unchanged.
 
 Geometric distance can reward an unreachable shortcut and can punish a
 necessary detour or a route passing above/below the goal; X/Z ignores height.

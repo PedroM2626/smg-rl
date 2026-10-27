@@ -7,7 +7,11 @@ experiments reported here.
 
 The later [frozen SMG1 IQN evaluation](docs/frozen-iqn-evaluation-20261027.md)
 completed six canonical attempts without a star. Its goal-distance candidate was
-analyzed offline and is not active in training.
+analyzed offline. A separately signed [frozen-vision genetic proximity experiment](docs/genetic-goal-distance-20261027.md)
+selects full XYZ distance without a mapped route; it does not change the IQN reward.
+Its five-minute pilot ended with no star and no improvement over its imported
+champion; [the audit](docs/genetic-goal-distance-20261027.md#completed-pilot-and-audit)
+separates completed attempts, partial attempts and geometric metrics.
 
 ## Current evidence
 

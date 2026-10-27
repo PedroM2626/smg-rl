@@ -8,7 +8,10 @@ No command here automatically allocates training or changes an existing budget.
 The subsequently requested [frozen IQN checkpoint evaluation](frozen-iqn-evaluation-20261027.md)
 completed six canonical episodes with zero stars. Greedy evaluation repeatedly
 reached the mapped opening and then died. A goal-distance tracker was tested
-offline; it is not connected to the training reward or replay.
+offline. A subsequent [frozen-vision genetic experiment](genetic-goal-distance-20261027.md)
+selects distance fitness explicitly; it does not alter the IQN reward or replay.
+Its five-minute pilot ended without stars or improvement over the imported head;
+see the [completed pilot audit](genetic-goal-distance-20261027.md#completed-pilot-and-audit).
 
 ## What is established
 

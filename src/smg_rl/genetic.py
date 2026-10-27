@@ -18,10 +18,13 @@ from torch.utils.tensorboard import SummaryWriter
 from smg_rl.checkpoints import digest
 from smg_rl.diagnostics import atomic_json
 from smg_rl.dqn import DistributionalAgent
+from smg_rl.goal_distance import GroundedGoalDistance
 from smg_rl.lean_worker import LeanWorkerFactory
 from smg_rl.parallel import runtime_directory
 from smg_rl.plotting import plot_trajectory
+from smg_rl.profiles import require_training_enabled
 from smg_rl.replay import replay_signature
+from smg_rl.resource_disk import require_disk_headroom
 from smg_rl.resource_memory import memory_safe, memory_snapshot, require_memory_headroom
 from smg_rl.vector import MeasuredSubprocVecEnv
 
@@ -197,20 +200,33 @@ class GeneticEvaluator:
             active[worker] = {'candidate': candidate, 'observation': observation, 'steps': 0, 'opening': 0., 'return': 0.,
                               'advance': GroundedAdvance(self.bounds['start'], self.bounds['goal'],
                                   self.config['environment']['max_step_distance'])}
+            if self.status.get('fitness_mode', 'goal-projection-xz-v1') == 'goal-distance-xyz-v1':
+                active[worker]['distance'] = GroundedGoalDistance(
+                    self.bounds['start'], self.bounds['goal'], reset['position'],
+                    self.config['environment']['max_step_distance'], dimensions=(0, 1, 2))
+                active[worker]['initial_distance'] = active[worker]['distance'].best_distance
 
         def finish(worker, outcome, info, eligible):
             item = active.pop(worker)
             advance = item['advance']
+            distance = item.get('distance')
+            fitness = item['initial_distance'] - distance.best_distance if distance else advance.best
+            invalid = advance.invalid or bool(distance and distance.invalid)
             record = {k: v for k, v in item['candidate'].items() if k != 'genome'}
             record.update(phase=phase, generation=generation, worker=worker, decisions=item['steps'],
-                genome_sha256=genome_digest(item['candidate']['genome']), fitness_world_units=advance.best,
+                genome_sha256=genome_digest(item['candidate']['genome']), fitness_world_units=fitness,
                 geometric_projection_percent=100 * advance.best / advance.length,
                 sampled_path_distance_xz=advance.path_xz, environment_return=item['return'],
-                mapped_opening_percent=100 * item['opening'], fitness_eligible=eligible and not advance.invalid,
-                invalid_position=advance.invalid, outcome=outcome, ram_star=bool(info.get('complete')),
+                mapped_opening_percent=100 * item['opening'] if distance is None else None,
+                fitness_eligible=eligible and not invalid,
+                invalid_position=invalid, outcome=outcome, ram_star=bool(info.get('complete')),
                 dead=bool(info.get('dead')), health=info.get('health'), start_kind='full_start',
                 trajectory=str(self.run / f'worker-{worker:02d}' / self.config['variations'][0]['name'] /
                     f"episode-{info['worker_episode']:06d}.csv") if 'worker_episode' in info else None)
+            if distance:
+                record.update(fitness_mode='goal-distance-xyz-v1',
+                              closest_goal_distance_world_units=distance.best_distance,
+                              distance_reduction_percent=100 * fitness / distance.normalization)
             if hasattr(self.policy, 'visual_delta_l2'):
                 record['visual_genome_delta_l2'] = self.policy.visual_delta_l2(item['candidate']['genome'])
             self.ledger.write(json.dumps(record) + '\n')
@@ -228,11 +244,12 @@ class GeneticEvaluator:
                                 'policy_mode': self.status.get('policy_mode', 'head'),
                                 'gene_layout': getattr(self.policy, 'layout', None)}, self.run / 'champion.tmp')
                     os.replace(self.run / 'champion.tmp', self.run / 'champion.pt')
-                self.writer.add_scalar(f'{phase}/fitness_world_units', advance.best, self.status['completed_trials'])
+                self.writer.add_scalar(f'{phase}/fitness_world_units', fitness, self.status['completed_trials'])
                 self.writer.add_scalar(f'{phase}/geometric_projection_percent', record['geometric_projection_percent'],
                                        self.status['completed_trials'])
                 for key in ('sampled_path_distance_xz', 'environment_return', 'mapped_opening_percent', 'decisions'):
-                    self.writer.add_scalar(f'{phase}/{key}', record[key], self.status['completed_trials'])
+                    if record[key] is not None:
+                        self.writer.add_scalar(f'{phase}/{key}', record[key], self.status['completed_trials'])
                 self.writer.add_scalar('accounting/real_decisions', self.status['real_decisions'], self.status['completed_trials'])
             else:
                 self.status['partial_trials'] += 1
@@ -257,6 +274,9 @@ class GeneticEvaluator:
                     item['steps'] += 1
                     item['return'] += float(reward)
                     item['advance'].update(info)
+                    if 'distance' in item:
+                        item['distance'].update(info['position'], info.get('grounded'),
+                                                info.get('dead', False), info.get('complete', False))
                     item['opening'] = max(item['opening'], float(info.get('start_relative_route_progress') or 0))
                     self.status['real_decisions'] += 1
                     self.status['action_counts'][int(action)] += 1
@@ -271,6 +291,8 @@ class GeneticEvaluator:
                 if self.status['real_decisions'] - self.status.get('last_publish_decision', -1000) >= 192:
                     if not memory_safe(memory_snapshot()):
                         raise MemoryError('Memory pressure stopped genetic evaluation; no automatic retry.')
+                    if self.status.get('fitness_mode') == 'goal-distance-xyz-v1':
+                        require_disk_headroom(self.config)
                     self.status.update(last_publish_decision=self.status['real_decisions'],
                                        updated_at=datetime.now(timezone.utc).isoformat())
                     checked_json(self.run / 'status.json', self.status)
@@ -283,14 +305,25 @@ class GeneticEvaluator:
 
 
 def train_genetic(config, source, seconds=3600, population_size=24, max_decisions=1200,
-                  deadline_utc=None, resume_run=None, confirmation_seconds=300, policy_mode='head'):
+                  deadline_utc=None, resume_run=None, confirmation_seconds=300, policy_mode='head',
+                  fitness_mode='goal-projection-xz-v1', initial_head=None):
     wall_deadline = collection_deadline(seconds, deadline_utc)
     if (population_size < 6
             or population_size > 96 or max_decisions < 1 or max_decisions > 3000
             or config['parallel']['workers'] != 6 or len(config['variations']) != 1
             or not math.isfinite(confirmation_seconds) or not 0 <= confirmation_seconds <= 300
-            or policy_mode not in ('head', 'full_visual')):
+            or policy_mode not in ('head', 'full_visual')
+            or fitness_mode not in ('goal-projection-xz-v1', 'goal-distance-xyz-v1')):
         raise ValueError('This pilot requires six workers, one mission and finite bounded dimensions/time.')
+    if fitness_mode == 'goal-distance-xyz-v1' and (resume_run or policy_mode != 'head'):
+        raise ValueError('Distance fitness requires a fresh frozen-head population; historical fitness cannot be reused.')
+    if config.get('genetic', {}).get('fitness_mode', fitness_mode) != fitness_mode:
+        raise ValueError('Configured and requested genetic fitness modes differ.')
+    if initial_head and (resume_run or policy_mode != 'head' or fitness_mode != 'goal-distance-xyz-v1'):
+        raise ValueError('An initial head requires a fresh distance-fitness head-only population.')
+    require_training_enabled(config)
+    if fitness_mode == 'goal-distance-xyz-v1':
+        require_disk_headroom(config)
     if any((p.info['name'] or '').lower() == 'dolphin.exe' for p in psutil.process_iter(['name'])):
         raise ValueError('Genetic training requires exclusive emulator ownership; pause and audit IQN first.')
     require_memory_headroom()
@@ -312,6 +345,25 @@ def train_genetic(config, source, seconds=3600, population_size=24, max_decision
         policy = GeneticVisualPolicy(agent)
     else:
         policy = GeneticHead(agent)
+    head_ancestry = None
+    if initial_head:
+        initial_head = Path(initial_head)
+        parent = json.loads((initial_head.parent / 'summary.json').read_text())
+        if (parent.get('policy_mode', 'head') != 'head' or parent['state'] != 'completed'
+                or parent.get('error') or parent['source_hashes'] != source_hashes
+                or digest(initial_head) != parent['champion_sha256']):
+            raise ValueError('Initial genetic champion identity or source differs.')
+        saved = torch.load(initial_head, map_location='cpu', weights_only=True)
+        if (saved.get('policy_mode', 'head') != 'head'
+                or not all(torch.equal(v.cpu(), saved['source_online'][k])
+                           for k, v in policy.network.state_dict().items())):
+            raise ValueError('Initial champion does not use the exact frozen source network.')
+        genome = saved['genome'].numpy().copy()
+        if genome.shape != policy.source.shape or not np.isfinite(genome).all():
+            raise ValueError('Initial champion head is invalid.')
+        policy.source = genome
+        head_ancestry = {'path': str(initial_head), 'sha256': digest(initial_head),
+                         'genome_sha256': genome_digest(genome), 'reused_fitness_trials': 0}
     rng = np.random.default_rng(142)
     population = None
     if not (resume_run and policy_mode == 'full_visual'):
@@ -334,6 +386,11 @@ def train_genetic(config, source, seconds=3600, population_size=24, max_decision
     frames = max_decisions * config['parallel']['frame_skip']
     config['regional_reward'].update(max_idle_frames=frames, max_episode_frames=frames)
     config['environment'].update(max_steps=max_decisions, idle_limit=max_decisions)
+    if fitness_mode == 'goal-distance-xyz-v1':
+        # Fitness is independent of route maps and route-idle termination.
+        config['paths'].pop('route', None)
+        config['regional_reward']['enabled'] = False
+        config['route_reward']['enabled'] = False
     run = Path(config['paths']['runs']) / ('genetic-' + datetime.now().strftime('%Y%m%d-%H%M%S-%f'))
     run.mkdir(parents=True, exist_ok=False)
     config['paths']['user'] = str(runtime_directory(config, run) / 'template')
@@ -348,8 +405,11 @@ def train_genetic(config, source, seconds=3600, population_size=24, max_decision
               'generations_completed': 0, 'completed_trials': 0, 'partial_trials': 0, 'full_start_stars': 0,
               'deaths': 0, 'nonfatal_hp_lost': 0, 'action_counts': [0] * 8, 'seconds': seconds,
               'population': population_size, 'genome_parameters': len(policy.source), 'mutation_std': .02,
-              'fitness': 'Maximum grounded X/Z projection toward calibrated goal in world units; not native progress.',
+              'fitness': ('Maximum reduction in alive-grounded XYZ distance to calibrated goal in world units; not native progress.'
+                          if fitness_mode == 'goal-distance-xyz-v1' else
+                          'Maximum grounded X/Z projection toward calibrated goal in world units; not native progress.'),
               'curriculum': False, 'fitness_seed': 11, 'confirmation_seeds': [23, 47], 'error': None}
+    status.update(fitness_mode=fitness_mode, initial_head_ancestry=head_ancestry)
     status.update(deadline_utc=deadline_utc, generation_offset=offset,
                   resume_genetic_run=str(resume_run) if resume_run else None,
                   inherited_completed_trials=len(inherited), confirmation_reserve_seconds=confirmation_seconds)
@@ -412,8 +472,9 @@ def train_genetic(config, source, seconds=3600, population_size=24, max_decision
         if confirmation_seconds and status.get('champion') and not (run / 'STOP').exists():
             checkpoint = torch.load(run / 'champion.pt', map_location='cpu', weights_only=True)
             champion = checkpoint['genome'].numpy()
+            initial_label = 'initial_champion' if head_ancestry else 'source_baseline'
             candidates = [{'individual': name, 'seed': seed, 'genome': genome}
-                          for name, genome in [('source_baseline', policy.source), ('genetic_champion', champion)]
+                          for name, genome in [(initial_label, policy.source), ('genetic_champion', champion)]
                           for seed in (23, 47)]
             tests = evaluator.evaluate(candidates, 'frozen_confirmation', offset + status['generations_completed'], end_at)
             status['confirmation_results'] = [record for record, _ in tests]
