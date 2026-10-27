@@ -1,5 +1,7 @@
 # Staged training continuation
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 The owner authorized development, fitting and online training on October 24,
 2026, with explicit reviews between bounded blocks. The former shutdown hold
 is superseded; retained final checkpoints remain immutable starting points.

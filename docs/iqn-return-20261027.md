@@ -1,5 +1,7 @@
 # Return to IQN after the genetic plateau
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 **Superseded active allocation:** the owner subsequently selected
 [full-visual genetic evolution](genetic-visual.md). This IQN return is
 intentionally paused and retained; do not resume it automatically.

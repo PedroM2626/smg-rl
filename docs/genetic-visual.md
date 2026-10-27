@@ -1,5 +1,7 @@
 # Genetic evolution with unlocked visual parameters
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 **Completed:** the two-hour trial ended at09:56 BRT on October27. Mutated vision
 did not beat the unchanged ancestral champion, and no native star was collected.
 This GA remains stopped. The owner subsequently authorized a separate
@@ -203,7 +205,9 @@ establish useful visual learning.239 portable tests and Ruff passed, including
 rejection of mistaking partial or unchanged-baseline records for mutated-visual
 improvement.
 
-Reproduce the read-only audit (no training/evaluation jobs are dispatched):
+The audit below does not dispatch training or evaluation, but it writes the
+published JSON and figure paths; running it again overwrites those artifacts.
+Preserve the original evidence first if it is needed unchanged:
 
 ```powershell
 .venv\Scripts\python.exe scripts/audit_visual_genetic_result.py

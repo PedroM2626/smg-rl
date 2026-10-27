@@ -1,8 +1,9 @@
 # Command-line reference
 
-The current CLI default is `config/impala-iqn-smg2.yaml`. The finite
-[IQN/IMPALA protocol](simple-reward-impala.md) owns the current six collectors;
-do not launch these example commands in addition to an active supervisor.
+The CLI default is `config/impala-iqn-smg2.yaml`. The earlier six-hour
+[IQN/IMPALA protocol](simple-reward-impala.md) is closed. The later SMG1
+four-hour allocation failed and is also closed; see [current evidence](current-status.md).
+Inspect actual process ownership before launching any separately allocated job.
 
 ```powershell
 # Read-only view of actual owned runs, attempts and bounded budgets.
@@ -34,11 +35,12 @@ actual source counts, coverage gap and unchanged allocation.
 
 Run from the repository root using `.\.venv\Scripts\smg-rl.exe` or
 `.\.venv\Scripts\python.exe -m smg_rl.cli`. The optional global argument
-`--config PATH` goes before the subcommand and defaults to `config/iqn-smg2.yaml`
-for the retained IQN profile. Both initial algorithm trials are completed and
+`--config PATH` goes before the subcommand and defaults to
+`config/impala-iqn-smg2.yaml`. Both initial algorithm trials are completed and
 stopped; Rainbow remains explicitly selectable for deliberately allocated work.
-Current model-free profiles are `rainbow-smg1.yaml`, `rainbow-smg2.yaml` and the
-corresponding `iqn-*` alternatives. Use `train-dqn` and `record-dqn`; see the
+Model-free profiles include `rainbow-smg1.yaml`, `rainbow-smg2.yaml`, the
+`iqn-*` alternatives, `impala-iqn-*`, and the later SMG1 six-worker profile.
+They have different signed settings. Use `train-dqn` and `record-dqn`; see the
 [implementation, TensorBoard and finite protocol](model-free.md).
 The retained `config/regional-smg1-12.yaml` is the earlier RSSM reward/curriculum
 profile, not a model-free learner profile.
@@ -193,11 +195,12 @@ collects real experience and performs gated imagined actor/critic updates;
 without an emulator. Use the explicit `config/world-model.yaml` or
 `config/smg1-world-model.yaml` profile. These models cannot resume PPO ZIP files.
 
-All training commands check `.local/training-hold.json` relative to the project
-root before creating an environment. The owner explicitly authorized the current
-world-model experiment; its preceding hold was archived locally. A future hold
-must still be honored. No training example in these docs overrides an active
-hold. `status` and `stop` also accept world-model run directories;
+The training entry points guarded by `require_training_enabled` check
+`.local/training-hold.json` relative to the project root before creating an
+environment. The historical world-model authorization and its budgets are
+closed; a present hold must still be honored. No example here overrides an
+active hold or authorizes a new run. `status` and `stop` accept supported
+world-model run directories;
 when omitted, the run is selected by modification time across supported types.
 The existing `train-supervised` command remains a PPO-pair supervisor. It is not
 a supervisor for world-model `.pt` checkpoints. See [the full workflow](world-model.md)

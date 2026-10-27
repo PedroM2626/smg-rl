@@ -1,5 +1,7 @@
 # BTR appendix and public-code review
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 Date: October 25, 2026. This analysis accompanies the
 [SMG1 prediction-block repair](smg1-boundary-repair.md). It does not silently
 replace the active RSSM learner with Rainbow/BTR or change the owner's eight

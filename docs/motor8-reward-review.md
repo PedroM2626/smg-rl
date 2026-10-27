@@ -1,5 +1,7 @@
 # Motor8 reward review, October 25, 2026
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 **Later owner-requested prediction repair:** [SMG1 now passes fresh prediction
 gates and an actor optimizer smoke](smg1-boundary-repair.md). The environmental
 reward defects in this review remain separate and have not been silently changed.

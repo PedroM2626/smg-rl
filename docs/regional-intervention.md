@@ -1,5 +1,7 @@
 # Regional rewards, curated starts and separate temporal control experiment
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 **Subsequent authorization:** the owner then requested [six concurrent regional
 collectors](regional-six-training.md). That separate finite run supersedes the
 two-emulator limit below for its own dispatch only. This completed validation

@@ -1,5 +1,7 @@
 # Methodology and mathematical specification
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 **Latest revision (October 26, 2026):** the active
 [simple-reward IQN/IMPALA protocol](simple-reward-impala.md) specifies the
 undiscounted incremental high-water reward, residual visual encoder and
@@ -18,12 +20,12 @@ equations are stopped; their final pairs are preserved. The separate visual
 world-model experiment specified in [the world-model implementation](world-model.md)
 and recorded in [the live world-model record](world-model-live.md) was also
 stopped at the owner's request on October 23, 2026; its final checkpoints are
-preserved and all training remains stopped until the owner explicitly authorizes
-resuming.
+preserved. The October 23 hold was superseded by later bounded owner-authorized
+work; see [current evidence](current-status.md).
 
 ## Abstract
 
-This project implements visual, recurrent on-policy reinforcement learning for
+The historical PPO baseline implements visual, recurrent on-policy reinforcement learning for
 two Twisty Trials scenarios in Super Mario Galaxy 2. It combines episodic visual
 novelty and Random Network Distillation (RND) with coordinate-derived progress,
 death penalties and a RAM-verified star-collection bonus. The policy observes

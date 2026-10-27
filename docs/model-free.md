@@ -1,5 +1,7 @@
 # Model-free Rainbow, IQN and TensorBoard
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 **Latest successor:** the owner subsequently authorized a fresh
 [simple-reward IQN/IMPALA six-hour intervention](simple-reward-impala.md).
 It fixes the duration incentive, changes the encoder and exploration schedule,

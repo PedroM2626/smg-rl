@@ -1,5 +1,7 @@
 # Frozen stochastic IQN comparison and the Sweet Sweet51.80% location
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 Date: October26,2026. The owner requested stochastic evaluation after the
 [completed greedy evaluations](impala-final-results.md). No training resumed,
 weights were not fitted and all original deterministic results remain retained.

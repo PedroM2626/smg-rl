@@ -1,5 +1,7 @@
 # Reproducibility, architecture and operations
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 ## Documentation map
 
 | Question | Document |
@@ -300,8 +302,8 @@ state. Synthetic implementation validation predates the owner's explicit resume
 authorization. The authorized online experiment collected new visual replay and
 fitted the model with separate counters and held-out policy gates; see the
 [live experiment record](world-model-live.md). It was stopped at the owner's
-request on October 23, 2026, and all training remains stopped until the owner
-explicitly authorizes resuming. At the dated snapshot of
+request on October 23, 2026. That hold was superseded by later owner-authorized
+bounded work. At the dated snapshot of
 **October 23, 2026, 17:48 UTC**, Galaxy 2 had 732288 real decisions, 1182
 imagined actor updates and 1192992 imagined transitions; Galaxy 1 had 229349
 real decisions, 421 imagined actor updates and 431104 imagined transitions. The

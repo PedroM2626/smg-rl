@@ -1,5 +1,7 @@
 # Renderer comparison, dependency security, and bounded recovery
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 This October 22, 2026 revision retains native protocol 3, 12 frame boundaries
 per decision, 54 actions, four stacked 84 x 84 observations, the bounded
 exploration reward, and the same PPO settings. It selects Vulkan after a

@@ -1,5 +1,7 @@
 # SMG1 overnight continuation
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 **Superseded remaining allocation:** after the completed genetic pilot, the
 owner selected [continuous GA training until07:00](genetic-overnight.md) instead
 of IQN. IQN is intentionally paused and retained; do not resume it automatically.

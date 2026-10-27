@@ -1,5 +1,7 @@
 # Owner-authorized six-instance regional training
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 **Completed and reviewed:** both blocks reached their exact caps. All six owned
 emulators and both controllers exited, with no process errors. No successor or
 extra fit was dispatched. The hourly follow-up is retired after this review.

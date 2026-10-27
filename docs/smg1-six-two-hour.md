@@ -1,5 +1,7 @@
 # SMG1-only continuation: six collectors for two hours
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 **Superseded duration:** the owner subsequently extended this same continuation
 until October 27, 2026 at 07:00 America/Sao_Paulo, with reviews every three
 hours. See [the overnight protocol](smg1-overnight.md). The initial supervisor

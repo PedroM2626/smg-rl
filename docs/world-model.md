@@ -1,5 +1,7 @@
 # Visual world-model experiment
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 ## Current status and authorization
 
 On October 22, 2026 the owner first stopped training during implementation, then
@@ -14,9 +16,9 @@ supervised PPO jobs remain stopped; their final policy/curiosity pairs remain lo
 
 The local `.local/training-hold.json`, when present, blocks all training commands
 before environment creation. It was absent while the authorized October 22-23
-experiment ran; it is present again for the current owner hold, and `AGENTS.md`
-records that all training remains stopped until the owner explicitly authorizes
-resuming.
+experiment ran. The October 23 hold was superseded by subsequent owner-authorized
+bounded work; check the actual hold file and [current evidence](current-status.md)
+before a new allocation.
 
 Two online jobs started at approximately 20:01 America/Sao_Paulo on October 22
 with independent budgets of 1,000,000 new real decisions: four Galaxy 2 workers

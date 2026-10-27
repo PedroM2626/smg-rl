@@ -1,5 +1,7 @@
 # Protocol v2 and bounded exploration audit
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 This revision was measured on 2026-10-22 on the documented Windows laptop.
 It changes synchronization, profiling, curiosity optimization, and reward
 allocation. It does not establish a learned full-course solution. All three

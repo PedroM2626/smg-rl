@@ -1,6 +1,8 @@
 # Concurrent Galaxy 1 and Galaxy 2 training
 
-**Current explicit authorization:** [six-instance regional training](regional-six-training.md)
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
+**Completed October 25 allocation:** [six-instance regional training](regional-six-training.md)
 uses two Sweet Sweet collectors, two Spinning collectors and two Double Time
 collectors, with two independent game policies. Initial health blocks passed;
 the finite main blocks completed at 8192 real decisions per mission. All processes
@@ -18,7 +20,7 @@ below are historical; do not dispatch their million-step commands automatically.
 their final pairs are preserved. The separate world-model experiment recorded in
 [the live world-model record](world-model-live.md) was also stopped at the
 owner's request on October 23, 2026; its final checkpoints are preserved and
-all training remains stopped until the owner explicitly authorizes resuming.
+the October 23 hold was superseded by later bounded owner-authorized work.
 The commands below are retained for reproducibility and intentional replacement
 runs.
 

@@ -1,5 +1,7 @@
 # Reviewed exploration, motor control and route interventions
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 **Superseded action plan:** later on October 25 the owner requested exactly eight
 exclusive actions in both games. Remaining legacy54 factorial and motor16 stages
 were stopped/superseded, with all collected data and checkpoints retained. See

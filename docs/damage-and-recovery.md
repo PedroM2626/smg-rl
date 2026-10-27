@@ -1,5 +1,7 @@
 # Galaxy 1 health supervision and learner recovery
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 **Native backend update (2026-10-22):** the local learners now use
 `config/native.yaml` and `config/smg1-native.yaml`, with shared-memory RGBA
 capture and bounded frame stepping. The stock hotkey/PNG backend remains a

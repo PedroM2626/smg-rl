@@ -1,8 +1,11 @@
 # Documentation index
 
-The [four-hour IQN/IMPALA allocation](iqn-four-hours-20261027.md) failed after
+[Current evidence, settings and next-experiment plan](current-status.md) are
+summarized separately from dated historical records. The
+[four-hour IQN/IMPALA allocation](iqn-four-hours-20261027.md) failed after
 about2h18 due to disk exhaustion; it did not complete four hours. No training
-remains active. Its last valid checkpoint and failed-block evidence are retained.
+was active at the October 27 audit. Its last valid checkpoint and failed-block
+evidence are retained.
 The [full-visual genetic trial](genetic-visual.md) completed with zero stars and
 no improvement over the unchanged baseline. Its artifacts and the intermediate
 [IQN return](iqn-return-20261027.md) remain retained.
@@ -15,22 +18,22 @@ checkpoints remain retained; no automatic successor is allocated.
 Documentation describes the checked implementation, measured engineering
 validation, and an experimental protocol. A method being specified here does
 not mean its ablations or full-course learning results have been obtained.
-Use run artifacts for live status; historical observations below are dated
-evidence rather than continuously updated dashboards. The dated world-model
-snapshots and final stop are in the [live experiment record](world-model-live.md);
-each run's `status.json` remains the live source.
+Use actual process identity together with run artifacts for live status; an
+error can leave `status.json` stale. Historical observations below are dated
+evidence, not dashboards. World-model snapshots and final stop are in the
+[historical experiment record](world-model-live.md).
 
 ## Start and operate
 
 | Need | Document |
 | --- | --- |
 | Installation, supported tasks, rewards, and recommended quick start | [Main README](../README.md) |
-| Active pure Rainbow/IQN learner, shared-frame PER, TensorBoard, immutable replay checkpoints and finite trials | [Model-free learning](model-free.md) |
+| Model-free Rainbow/IQN implementation, PER, TensorBoard and completed trials | [Model-free learning](model-free.md) |
 | Exact command arguments, backend, and side effects | [CLI reference](cli.md) |
 | Local ROM and savestate filenames and roles | [Asset guide](../data/README.md) |
 | Native build, shared-memory capture, exact frame stepping, profiling, and benchmarks | [Native backend](native-backend.md) |
 | Protocol v2, curiosity batches, bounded exploration, and the stagnation audit | [Optimization revision](optimization-v2.md) |
-| Current protocol v3, event wakeups, native preprocessing, and worker barrier profiling | [Native pipeline and collection](optimization-v3.md) |
+| Historical protocol v3, event wakeups, native preprocessing, and worker barrier profiling | [Native pipeline and collection](optimization-v3.md) |
 | Vulkan comparison, dependency audit, transactional checkpoint pairs and bounded recovery | [Renderer and security revision](optimization-v4.md), [security policy](../SECURITY.md) |
 | Hidden rendering, isolated inputs, CUDA, timing, and throughput | [Background training](background-training.md) |
 | Two learners, resource measurements, status, and cross-game reports | [Concurrent training](concurrent-training.md) |

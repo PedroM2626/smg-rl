@@ -1,266 +1,98 @@
 # SMG RL
 
-Visual reinforcement learning for **Super Mario Galaxy 1 and 2** in
-Dolphin on Windows.
+Visual reinforcement-learning experiments for **Super Mario Galaxy** and
+**Super Mario Galaxy 2** on Windows, using Dolphin. This is a research project:
+no full-start, RAM-confirmed mission completion has been demonstrated in the
+experiments reported here.
 
-**Latest IQN allocation:** [the four-hour six-worker run](docs/iqn-four-hours-20261027.md)
-was interrupted after about2h18 by disk exhaustion.275250 new acknowledged
-decisions were observed;177582 are in valid checkpoints and97668 were not saved.
-Canonical goal projection increased6.3193% to6.5860%, with zero stars. No training
-is active. Repeated temporary-state retention is fixed, but existing data remain
-preserved and disk space must be addressed before another allocation.
+## Current evidence
 
-**Latest completed genetic run:** [full-visual SMG1 evolution](docs/genetic-visual.md)
-ended on October27 at09:56 BRT:228793 real decisions,75 complete generations,
-and zero stars. The unchanged8.0665% geometric baseline remained best; mutated
-vision reached7.9463%. Genetic jobs remain stopped and all source checkpoints
-are retained. Projection/opening fractions are not native mission progress.
+As of the October 27, 2026 audit, the latest SMG1 IQN/IMPALA allocation stopped
+after approximately 2 hours 18 minutes because the disk filled. The intended
+four hours were **not** completed. Its last valid checkpoint contains 749,006
+real decisions and 12,125 completed attempts. A further 97,668 acknowledged
+decisions in the failed segment have no usable final policy/replay checkpoint.
+The failed checkpoint is incomplete and must not be resumed. See the
+[failure audit and recovery boundaries](docs/iqn-four-hours-20261027.md).
 
-**Latest completed genetic run:** [overnight six-worker SMG1 training](docs/genetic-overnight.md)
-stopped at October27,07:00 BRT. It added810628 real decisions and278 complete
-generations without improving the inherited8.0665% geometric projection or
-collecting a star.100% mapped opening is not100% mission. This was action-head
-evolution on frozen IMPALA/IQN features. Genetic/SMG2 jobs remain stopped;
-checkpoints, population ancestry and TensorBoard histories are retained.
+The best full-start IQN collection trajectory in that failed segment reached a
+**6.586% start-to-goal geometric projection**, then died. This is not a native
+mission percentage, a fraction of the winding route, or a frozen-policy test;
+the weights at that point were not saved. No star was observed. Earlier frozen
+IQN/IMPALA evaluations also obtained no stars. The two SMG2 evaluations reached
+100% of their *mapped openings*, not 100% of their missions, before dying.
+[Frozen results](docs/impala-final-results.md) distinguish these outcomes.
 
-**Earlier IQN intervention (October 26):** [simple reward + IQN/IMPALA](docs/simple-reward-impala.md)
-starts fresh after the owner requested correcting the idle incentive before a
-six-hour trial. The finite episodic reward pays new grounded route advance,
-RAM stars and failure/HP penalties, with gamma1 and no time cost. A residual
-visual encoder and gradual exploration replace the archived pilot settings.
-Six collectors share two game policies. Attempts, rolling progress and decisions
-are tracked separately; safe intermediate starts never establish full-start
-success. Health blocks must pass before reviewed15/60-minute blocks, with a
-six-hour-per-game ceiling and immutable checkpoints. Local live authority is
-`.local/impala-six-hour-state.json`; the CLI defaults to
-`config/impala-iqn-smg2.yaml` (`impala-iqn-smg1.yaml` for SMG1).
-[TensorBoard](http://127.0.0.1:6006/) includes both decision and attempt axes.
-Its `telemetry/RMGE01/simple-impala` and `telemetry/SB4E01/simple-impala` runs
-add episode reward, sampled world-space path length, valid grounded route
-advance and last100-attempt means, backfilled without restarting training.
-No genetic advantage or learned completion is claimed from this selection.
-The [memory-pressure repair](docs/memory-pressure-recovery.md) diagnosed Windows
-commit exhaustion, preserved the failed partial checkpoints and resumed only the
-remaining six-hour allocation with lean collectors and a commit-headroom guard.
-Both six-hour branches and nine final frozen episodes are now complete, with
-zero stars. Frozen Sweet Sweet stalls at23.64% of its opening; both SMG2 policies
-traverse their short mapped openings and then die. These are not full-mission
-percentages. [Final results and diagnosis](docs/impala-final-results.md) identify
-incomplete route coverage and the Sweet jumping-in-place policy. Those budgets
-are closed; the newer SMG1-only continuation has its own authorization and state.
-A later owner-requested [frozen stochastic comparison](docs/stochastic-iqn-evaluation.md)
-also completed without stars: Sweet's mean opening advance rose from23.64% to
-32.42% with noise/epsilon, best35.03%. These remain short-opening metrics, not
-full-course percentages. The linked map locates the older51.80% training record.
+A separate full-visual genetic trial obtained no stars and did not improve its
+unchanged 8.0665% geometric baseline. The strongest mutated-vision candidate
+reached 7.9463%; these are collection maxima from different experiments, not a
+controlled IQN-versus-GA ranking. See [genetic results](docs/genetic-visual.md).
 
-**Completed model-free comparison:** [Rainbow and IQN](docs/model-free.md)
-used real-pixel frame stacks and prioritized replay, with zero imagined
-transitions. Both completed 8192 real decisions per
-mission and nine frozen evaluations each, without a star. IQN ran faster in this
-trial but also mostly spun/idled; no navigation or sample-efficiency advantage
-was demonstrated. Those comparison jobs stopped and their follow-up retired.
-[Frozen paths and action occupancy](docs/assets/performance/model-free-comparison-20261026.png)
-show the actual behavior.
-[TensorBoard](http://127.0.0.1:6006/) is installed, logging and served locally.
+**Do not infer live status from these dated results.** Training was stopped at
+the last audit; check the process and controller state before starting anything.
+The [current evidence and next-experiment guide](docs/current-status.md) is the
+entry point for status, limitations, and a bounded research plan.
 
-**Previous RSSM training:** the [six-collector regional blocks](docs/regional-six-training.md#completed-block-review)
-reached 8192 new real decisions per mission and stopped without process errors.
-SMG2 passed final prediction gates and performed 32 imagined actor updates; SMG1
-performed 3 but finished blocked on reward/continuation prediction. There were no
-RAM-confirmed stars. Those RSSM processes stopped and their hourly review retired.
-The audit separates canonical and assisted starts and includes real trajectories.
+## Tasks and inputs
 
-**Latest completed intervention (October 25):** [regional rewards, curated starts and a separate frame4 test](docs/regional-intervention.md)
-passed actual-game contact/reset checks in all three missions. Nine reachable
-intermediate states passed bounded safety probes. The new shaping removed positive
-discounted returns from all 49 retained failed episodes (12 were positive before).
-All 36 frozen-policy control attempts are complete, with zero stars. Frame4 reduced
-navigation in this test; twelve-frame controls remain the baseline. That
-intervention closed before the separate six-instance run above started. These
-are environment/control results, not new learned completions.
+| Game | Mission | Full-start slot | Near-star detector fixture |
+| --- | --- | --- | --- |
+| Galaxy 2, `SB4E01` | Twisty Trials: Spinning and Spinning and Spinning | 1 | 2 |
+| Galaxy 2, `SB4E01` | Twisty Trials: Turning Turning Double Time | 3 | 4 |
+| Galaxy 1, `RMGE01` | Sweet Sweet Galaxy: Rocky Road | 1 | 2 |
 
-**SMG1 prediction block repaired:** [component-isolated repair and fresh confirmation](docs/smg1-boundary-repair.md)
-pass unchanged gates in all three draws on four new episodes, followed by one
-actual gated actor update. Its historical reward geometry/scale defects were addressed in the separate
-regional revision above. [The BTR appendix/code review](docs/btr-research-review.md)
-checks regional rewards, intermediate starts, temporal control and the absence
-of a validated published SMG progress address in the inspected code.
+The near-star states validate the completion detector and do not establish
+learned success. Curated intermediate states have separate assisted-start labels.
+ROMs, savestates, worker profiles, run data, replay and checkpoints are local and
+ignored by Git. See [asset names and roles](data/README.md). The checked profiles
+were validated against the documented USA game builds and Dolphin 2609a; other
+versions require recalibration.
 
-**Finite motor8 pilot closed:** [all six trained SMG2 evaluations](docs/motor8-evaluation-results.md)
-ended in death with zero RAM-confirmed stars. Videos retain the actual policy
-image and applied controls. No training or evaluation remains running under this
-pilot, and its follow-up is retired. The later SMG1 prediction repair and regional
-reward revision have separate identities and evidence linked above.
+## Last IQN method
 
-**Reward review:** [hourly reviews and the motor8 reward audit](docs/motor8-reward-review.md)
-identify stationary waypoint credit and an overweighted SMG1 initial-prefix
-reward. An isolated schema-2 correction is tested but not enabled in training.
-SMG1 continuation stopped at 4096 new real decisions after prediction gates
-still failed; SMG2 reached its 6096-decision cap and completed bounded evaluation.
+The latest SMG1 run used `config/smg1-six-two-hour.yaml`, six isolated Dolphin
+collectors and one model-free IQN learner with an IMPALA-style residual visual
+encoder. The online encoder is trainable; it was not frozen in IQN. It uses
+prioritized replay, double and dueling heads, three-step returns and noisy
+layers. The learner does not use a world model, imagined experience or visual
+curiosity. Rainbow, recurrent PPO, world models and genetic search are separate
+implemented experimental alternatives, not components automatically active in
+this run. The older Rainbow/IQN comparison used different signed settings; see
+[model-free implementation](docs/model-free.md).
 
-**Current owner-selected controls:** [exactly eight exclusive actions in both games](docs/motor8-and-algorithms.md),
-with a video inset of the actual policy image and live applied-button indicators.
-The closed bounded motor8 pilot superseded the remaining legacy54/motor16 stages;
-old checkpoints and their historical profiles are retained. Historical regional
-RSSM profiles are `config/regional-smg2-12.yaml` and
-`config/regional-smg1-12.yaml`. Both retain eight physically exclusive legacy
-twelve-frame controls. Experimental frame4 profiles additionally test carried
-jump direction: eight logical labels, with direction+jump as an explicitly
-declared physical combination. The historical Galaxy 1 pilot uses
-`config/motor8-smg1.yaml`, while the new repaired checkpoint requires
-`config/motor8-smg1-boundary-repaired.yaml`. The later model-free comparison and
-current IQN/IMPALA intervention have separate profiles and replay identities.
+The policy receives a stack of four cropped 84 × 84 grayscale images and the
+scenario identity. RAM coordinates, health and terminal signals are used for
+reward and evaluation, not fed to the policy. The selected `motor8-v1` profile
+provides eight exclusive logical actions: none, right, left, forward, backward,
+jump, spin and crouch. Each decision advances 12 emulated frames; jump and spin
+use the documented 8-frame press / 4-frame release pulse. The separate frame-4
+carry-direction experiment has different control semantics and must not be
+silently mixed with this replay. See [controls and signatures](docs/motor8-and-algorithms.md).
 
-**Earlier October 25 intervention (superseded):** [reviewed motor and exploration experiments](docs/exploration-interventions.md)
-implement a versioned 16-action profile, exact button releases, RAM ground contact
-for SMG1 and a validated initial-route prefix. A four-arm, three-seed curiosity/
-entropy comparison and separate motor/reward pilots use finite reviewed budgets.
-The scripted platform exit is a control fixture, not learned mission completion.
-Remaining legacy54/motor16 stages were superseded by the owner's eight-action
-request; their data and checkpoints remain retained.
+The latest SMG1 signed reward uses `regional-advance-undiscounted-v2`: new
+grounded high-water advance along a **mapped opening only**, star +20, death or
+timeout -2, and SMG1 nonfatal HP loss -0.25 per HP; no per-step or intrinsic
+bonus, with gamma 1. It includes a mix of canonical and verified assisted
+starts. Beyond the mapped route there is no incremental route reward until the
+star; additional training time alone is not evidence this limitation is fixed.
+The old `regional-frame-potential-v1` profiles have different reward semantics.
+See [reward specification and attempt metrics](docs/simple-reward-impala.md).
 
-**October 25 failure analysis:** [the intrinsic-reward and control audit](docs/exploration-failure-analysis.md)
-confirms positive calculated novelty without horizontal movement, but finds
-small immediate gradient effects at coefficient 0.01 and substantial action,
-entropy and progress-target concerns. A trained zero-intrinsic comparison is
-still needed. Read-only diagnostics and 731 actual-game fixture decisions added
-no training steps or learned completions. The owner subsequently authorized the
-bounded intervention linked above; older stop statements are dated snapshots.
+The game-specific completion detector reads a scene-state address
+(`0x807D5318` for the tested SMG2 missions, `0x806A1BD8` for tested SMG1);
+SMG1 HP uses actor-relative offsets. Address interpretation depends on the
+validated game/emulator state. Full-start star evidence must be distinguished
+from detector fixtures, assisted resets, imagined transitions and projections.
+See [SMG2 memory](docs/memory-profile.md), [SMG1 memory](docs/smg1.md) and
+[damage limitations](docs/damage-and-recovery.md).
 
-**October 25 follow-up:** [actual policy videos and frontier savestate exploration](docs/frontier-exploration.md)
-are implemented and checked in bounded live pilots. A paired
-[8-versus-16 imagination trial](docs/horizon-trial.md) passed prediction gates but
-showed no clear navigation benefit; horizon 8 remains the default. Experiments
-are stopped after their budgets, with local videos and checkpoints retained.
+## Installation and local operation
 
-**Earlier staged result (October 25, 2026, before the current motor8 pilot):** all bounded experiments finished
-and training is stopped. Galaxy 2 terminal reward weight 5 improved prediction
-gates and enabled more actor updates, without observed navigation improvement
-over 25000 new real decisions per arm. Galaxy 1 curiosity coefficient 0.1 showed
-no clear benefit over 0.01 in 10000 decisions per arm. No full-start mission
-completion was observed. See [the staged results, plots and limitations](docs/staged-training.md).
-
-**The owner authorized Dreamer-inspired collection and training on October 22,
-2026.** At the dated snapshot of **October 23, 2026, 17:48 UTC**, both
-world-model jobs were running. Galaxy 2 had 732,288 real decisions, 22,748 model
-updates, 1,182 imagined actor updates and 1,192,992 imagined transitions;
-Galaxy 1 had 229,349 real decisions, 30,508 model updates, 421 imagined actor
-updates and 431,104 imagined transitions. The maximum recorded geometric projection
-was 19.53% (`spinning`) and 13.76% (`double_time`) for Galaxy 2, and 5.06% for
-Galaxy 1; no full-start mission has been completed. At the owner's request,
-both jobs were stopped later that day before the PC was shut down; their final
-checkpoints are retained at 870,272 Galaxy 2 and 278,773 Galaxy 1 real
-decisions. On October 24 the owner authorized resuming with
-[bounded stages and reviews](docs/staged-training.md), starting with a longer
-Galaxy 2 offline comparison and a Galaxy 1 online health check.
-The preserved PPO pairs remain at 824,416 Galaxy 2 and
-220,891 Galaxy 1 decisions. Live counters remain in each run's `status.json`;
-this paragraph is a dated snapshot. See
-[the world-model implementation](docs/world-model.md) and the
-[dated live record](docs/world-model-live.md).
-
-The baseline uses one scenario-conditioned recurrent PPO policy for the two Galaxy 2 missions.
-A separate policy targets Sweet Sweet Galaxy in Galaxy 1. Exploration combines
-visual inverse-dynamics features, episodic k-nearest-neighbor novelty, and Random
-Network Distillation (RND). This is **NGU-inspired exploration**, rather than a
-reproduction of NGU's distributed Q-learning algorithm.
-
-The native backend provides shared-memory renderer capture, bounded frame
-stepping, stage profiling, and supervised checkpoint recovery. It has live
-detector, health, capture, training, checkpoint, and recovery evidence. **A learned full-course solution has not been established.**
-Near-star calibration success is a detector test, not evidence of learning.
-The [documentation index](docs/README.md) separates operating instructions,
-mathematical specification, measured evidence, and planned experiments.
-
-The current **protocol-v3** backend uses Windows event wakeups and sends
-already cropped 84 x 84 grayscale observations from Dolphin. The measured
-collector profiles each worker's barrier wait and can transfer frame stacks
-through shared memory while preserving synchronous recurrent PPO semantics.
-See [image equivalence, configuration and timing evidence](docs/optimization-v3.md).
-
-The recommended profiles now select Vulkan after a matched renderer comparison.
-The latest revision also updates Torch/SB3, verifies checkpoint pair integrity,
-and bounds failed-worker recovery. See the [renderer and security audit](docs/optimization-v4.md)
-and [security policy](SECURITY.md). Full-course learning remains unproven.
-
-An experimental PyTorch visual world model now provides episode-separated pixel
-replay, recurrent dynamics, reward/continuation prediction, disagreement exploration,
-and quality-gated actor/critic updates in latent imagination. It is Dreamer-inspired,
-not a DreamerV3 reproduction. Live collection now records new image sequences;
-old trajectory CSVs lack the required images. Experimental profiles are
-`config/world-model.yaml` and `config/smg1-world-model.yaml`. Model optimizer updates
-start after 4096 replay transitions; policy updates additionally require every
-held-out scenario gate to pass. A failing cycle pauses new imagined actor
-updates without stopping collection or discarding the model. No learning-speed
-advantage or learned full-course completion has been established.
-`inspect-replay` is read-only.
-The Galaxy 1 objective repair balances pixel likelihood and terminal sampling
-and directly supervises prior predictions; see the
-[repair procedure and evidence](docs/world-model-smg1-repair.md).
-
-## Supported tasks
-
-| Game / executable | Mission | Training start | Detector fixture | Recommended configuration |
-| --- | --- | --- | --- | --- |
-| Galaxy 2 USA / `SB4E01` | Twisty Trials: Spinning and Spinning and Spinning | Slot 1 | Slot 2, near star | `config/rainbow-smg2.yaml` |
-| Galaxy 2 USA / `SB4E01` | Twisty Trials: Turning Turning Double Time | Slot 3 | Slot 4, near star | `config/rainbow-smg2.yaml` |
-| Galaxy 1 USA / `RMGE01` | Sweet Sweet Galaxy: Rocky Road | Slot 1 | Slot 2, near star | `config/rainbow-smg1.yaml` |
-
-The checked profiles and supplied savestates were tested with **Dolphin 2609a**.
-Other regions, revisions, or state files require new validation. Galaxy 1's
-`config/smg1.yaml` is a validation-only configuration with training disabled.
-
-## Observation, memory, and rewards
-
-The policy receives cropped 84 x 84 grayscale gameplay observations and a scenario
-one-hot vector: two entries for Galaxy 2, one for Galaxy 1. The environment stacks
-four frames; active Rainbow/IQN networks consume the full stack. The historical
-world model consumed the latest frame and latent history. Current profiles use eight actions: none, right, left, forward,
-backward, jump, spin and crouch. The original 54-action design remains available
-only in historical profiles. RAM supplies rewards, checks and logs, and is
-excluded from policy input.
-
-| Signal | Source and interpretation | Default contribution |
-| --- | --- | --- |
-| Exploration | Visual curiosity and disagreement bonus disabled in new regional profiles | `0` |
-| Progress | Ordered grounded opening-route potential, normalized by 50000 world units | `gamma_frames * Phi_next - Phi_previous`; zero terminal potential |
-| Completion | Game-specific star-collection scene nerve | `+20` |
-| Death | Game-specific actor/scene predicates; Galaxy 1 also checks zero HP | `-2` |
-| Nonfatal damage, Galaxy 1 | Decrease in RAM health since the preceding sample | `-0.25` per HP lost |
-| Time | Per 12 actual emulated frames, scaled for 4-frame controls | `-0.001` |
-| Timeout | 2160 frames without new grounded route distance or 36000 episode frames | `-2`, absorbing failure separate from RAM death |
-
-These are the new `regional-frame-potential-v1` settings. Old native and motor8
-profiles retain historical rewards and must be selected explicitly for
-reproduction. [Regional reward equations, integrity checks and validation](docs/regional-intervention.md)
-explain the discount, intermediate-start baseline and failure closure. Historical
-PPO curiosity batching and 128-decision rollouts are documented in the
-[earlier optimization audit](docs/optimization-v2.md).
-
-**Progress is a geometric proxy, not a native game completion percentage.** The
-new ordered routes cover verified openings, including Sweet Sweet's initial
-turns; the rest of each course still needs mapping. A separate start-to-star
-projection remains a diagnostic and can misstate curved-course progress. Only
-the RAM star event establishes completion; full-start and assisted runs are
-reported separately.
-
-Galaxy 2 completion is `0x807D5318` for both missions; Galaxy 1 completion is
-`0x806A1BD8`. Galaxy 1 health and maximum health are read through the dynamic
-Mario actor pointer at offsets `0x380` and `0x3E0`. A live 3-to-2 HP transition
-was measured. Healing earns no bonus; an unchanged HP value incurs no repeated
-damage penalty. Fatal transitions use the death penalty without an extra damage
-charge. Damage frames receive no novelty bonus. Net HP sampling can miss damage
-followed by healing between samples.
-
-See the [Galaxy 2 pointer profile](docs/memory-profile.md),
-[Galaxy 1 profile](docs/smg1.md), [damage evidence](docs/damage-and-recovery.md),
-and [reward equations and limitations](docs/methodology.md).
-
-## Install and supply local assets
-
-Use 64-bit **Python 3.11 or 3.12** on Windows. The tested GPU environment uses
-Python 3.11, Torch 2.14.1+cu126, and SB3/sb3-contrib 2.9.0. Run these commands from
-the repository root in a fresh environment:
+Use Windows, 64-bit Python 3.11 or 3.12, and user-provided game images and
+compatible savestates. The tested GPU environment used Python 3.11 and Torch
+2.14.1+cu126. The lock records exact packages and an extra CUDA index; availability
+of the pinned wheels on those indexes is required when recreating the environment.
+The previously cached installation wheels were removed during storage cleanup.
 
 ```powershell
 py -3.11 -m venv .venv
@@ -270,337 +102,53 @@ py -3.11 -m venv .venv
 .\.venv\Scripts\python.exe -c "import torch; print(torch.cuda.is_available())"
 ```
 
-The GPU lock includes the CUDA wheel index and development tools. The separate
-`requirements-windows.lock.txt` records the older desktop CPU environment.
-Default `python` on the development machine points to Python 3.8, so commands
-explicitly use the virtual environment. CUDA configurations require a compatible
-NVIDIA GPU/driver. For a CPU experiment, copy the relevant complete YAML to an
-ignored `config/local.yaml` and change `training.device` to `cpu`.
+Native profiles require a separately patched Dolphin build and local assets;
+see [native build and prerequisites](docs/native-backend.md). Hidden operation
+still renders through a hidden surface; it is not renderer-free headless
+emulation. Keep the original emulator and user profile untouched. If paths
+differ, copy a complete YAML directly under `config/`, adjust its paths and
+revalidate. `--config` precedes the CLI subcommand.
 
-```text
-data/
-  Super Mario Galaxy 2 (USA) (En,Fr,Es).nkit.iso
-  SB4E01.s01
-  SB4E01.s02
-  SB4E01.s03
-  SB4E01.s04
-  Super Mario Galaxy (USA) (En,Fr,Es).nkit.iso
-  RMGE01.s01
-  RMGE01.s02
-```
-
-See [asset roles](data/README.md). ROMs, savestates, copied profiles, virtual
-environments, checkpoints, and full run logs are local-only and ignored by Git.
-Savestates must match the emulator build.
-
-Legacy configurations point to `D:\emuladores\Dolphin-x64\Dolphin.exe` and use
-`%APPDATA%\Dolphin Emulator` as the source user profile. Edit a copy of the
-appropriate YAML if paths differ. `--config` must appear **before** the
-subcommand. Paths resolve relative to the project root. Profiles are copied
-into owned `.local/` directories; the source profile is preserved. Existing
-destination state copies are not overwritten; use a new owned profile after
-replacing source savestates.
-
-## Build the native backend
-
-The recommended native configurations use `.local/native-dolphin/Dolphin.exe`.
-They require a separate patched **Dolphin 2609a** build, compatible MSVC/Windows
-SDK, CMake, and Ninja. The original installed emulator remains available for the
-legacy fallback. From a compatible developer PowerShell:
+Read-only inspection (the historical failed run can contain a stale `running`
+status; check actual PIDs, creation times and failure evidence as well):
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts/build_native.ps1
+.\.venv\Scripts\python.exe -m smg_rl.cli --help
+.\.venv\Scripts\python.exe scripts/run_smg1_six.py snapshot --state .local/iqn-four-hour-20261027-state.json
 ```
 
-The build script pins upstream source, applies the local bridge, and deploys into
-an owned ignored directory. See [build prerequisites, protocol, measured evidence,
-and licensing](docs/native-backend.md). For the stock emulator instead, use
-`config/parallel.yaml` (Galaxy 2) or `config/smg1-training.yaml` (Galaxy 1) in the
-commands below; those retain hotkey/PNG control and their original calibration.
-Native configurations have separate calibration files.
+The generic CLI default is `config/impala-iqn-smg2.yaml`, **not** the latest
+SMG1 checkpoint configuration. Configuration files are complete profiles, not
+overlays. A checkpoint must match its game, model, action, reward and replay
+signatures; preserve the original checkpoint and audit before any continuation.
+The [CLI reference](docs/cli.md) documents examples and their side effects.
+They do not authorize an unbounded job or a retry of a failed allocation.
 
-## Validate before training
-
-The checked-in calibration matches the supplied local states. Re-run validation
-after changing the game executable, savestates, Dolphin build, memory profile,
-or control timing:
+TensorBoard event files can contain episode reward, action occupancy, sampled
+path distance, grounded route advance and attempts, depending on the run. A
+local server is not necessarily running; to start one intentionally:
 
 ```powershell
-.\.venv\Scripts\smg-rl.exe --config config/native.yaml calibrate-background
-.\.venv\Scripts\smg-rl.exe --config config/smg1-native.yaml calibrate-background
+.\.venv\Scripts\python.exe -m tensorboard.main --logdir runs/model-free/tensorboard --host 127.0.0.1 --port 6006
 ```
 
-Calibration uses a temporary hidden worker to check start/goal states, movement,
-star collection, death, and pause acknowledgment. It records evidence and closes
-its owned instance. No game memory is written. Training and evaluation reset
-to canonical slots 1/3 for Galaxy 2 and slot 1 for Galaxy 1, or validated curriculum
-anchors during regional training. Frozen evaluations always force canonical
-starts; near-star slots remain detector fixtures.
+Visit <http://127.0.0.1:6006/> while that process is running. Historical event
+coverage varies; absent metrics must not be interpreted as zero.
 
-## Model-free training and TensorBoard
+## Documentation, tests and license
 
-Rainbow profiles are `config/rainbow-smg1.yaml` and `config/rainbow-smg2.yaml`.
-The IQN trial uses `config/iqn-smg1.yaml` and `config/iqn-smg2.yaml`; each uses
-explicitly documented Rainbow-style additions. There is no world-model prediction
-or imagination in either learner. Both retain the regional reward, eight actions,
-12-frame controls and start distribution for the first comparison.
-
-The six-worker IQN pilot is complete. No successor is automatically allocated.
-For a deliberately allocated future block:
-
-```powershell
-.venv\Scripts\python.exe -m smg_rl.cli --config config/rainbow-smg1.yaml train-dqn --steps 1024
-```
-
-`--steps` counts additional aggregate real decisions. A resumable checkpoint is
-an immutable directory containing the Q networks, optimizer and prioritized
-frame replay, not a PPO ZIP or RSSM PT file. [Commands, algorithms and staged evidence](docs/model-free.md)
-explain the exact targets and accounting. TensorBoard logs real steps, return,
-deaths/HP, Q/loss, replay priority/size, actions, input frames and measured stages
-at **http://127.0.0.1:6006/**. No past runs are backfilled with invented metrics.
-
-## Bounded regional world-model pilot
-
-This section is historical. The owner selected the model-free replacement above;
-do not dispatch its RSSM command as the current learner.
-
-The environment/control intervention is complete. The separate owner-requested
-six-instance run is complete; inspect its [exact results and limits](docs/regional-six-training.md)
-before starting anything else. The following command is an isolated-run reference,
-not an instruction to extend the completed allocation automatically.
-The next training step should isolate the new reward and curated-start mixture at
-12 frames, using fresh replay and unchanged prediction gates. Review each finite
-block before launching a successor. For a fresh 256-decision SMG1 health block:
-
-```powershell
-.\.venv\Scripts\smg-rl.exe --config config/regional-smg1-12.yaml train-world-model --steps 256
-```
-
-This starts a new learner, not a historical checkpoint resume. For SMG2 select
-`config/regional-smg2-12.yaml` instead, after
-reviewing the prior block. The earlier intervention used at most two emulator
-instances; only the explicitly authorized six-instance profiles supersede that
-limit for that completed allocation. Review before assigning any successor budget. The verified local banks are required.
-Old reward/checkpoint signatures are intentionally incompatible; successful old
-prediction gates do not validate the new reward/start distribution. No million-step
-or six-instance extension is implied by these checks. Frame4 remains experimental.
-
-## Historical PPO operation and automatic recovery
-
-Earlier PPO experiments used two learners and five Dolphin processes: four
-Galaxy 2 workers and one Galaxy 1 worker. The commands below reproduce that older
-setup; the bounded regional intervention uses the limits above.
-
-```powershell
-.\.venv\Scripts\smg-rl.exe --config config/native.yaml train-supervised --workers 4 --steps 1000000
-```
-
-```powershell
-.\.venv\Scripts\smg-rl.exe --config config/smg1-native.yaml train-supervised --workers 1 --steps 1000000
-```
-
-Check `status` before starting additional learners. These commands do not attach
-to an existing training run. Each worker owns its profile, loopback device discovery, shared-memory inputs
-and renderer capture, and read-only RAM reader. Keyboard/mouse focus is unnecessary. The GPU
-still renders to a hidden Win32 surface: this is **hidden rendering, not
-renderer-free headless emulation**. CUDA runs policy learning; curiosity models
-run on CPU with independent worker/scenario statistics.
-
-`train-supervised` wraps `train-parallel`, retries infrastructure failures using
-completed policy/curiosity pairs, and preserves its original timestep target.
-It backs off between attempts and detects 240 seconds without learner status.
-A failing worker aborts that attempt; recovery may lose work since the last
-complete checkpoint. It does not repair a bad configuration or guarantee
-convergence. See [recovery semantics](docs/damage-and-recovery.md).
-
-`--steps` is the number of **additional aggregate decisions**, including when
-resuming; a PPO rollout can round the final count upward. To resume a particular
-experiment, replace the example path with a real matching checkpoint pair:
-
-```powershell
-.\.venv\Scripts\smg-rl.exe --config config/native.yaml train-supervised --workers 4 --steps 100000 --resume runs/parallel-EXAMPLE/model-final.zip
-```
-
-Both `model-final.zip` and `model-final.intrinsic.pt` must exist. Policy,
-optimizer, curiosity models, and lifelong statistics resume. Episodes, emulator
-state, episodic memory, LSTM state, RNG state, and partial rollouts restart.
-This is statistical continuation, not exact replay.
-
-## Inspect, report, and stop
-
-```powershell
-.\.venv\Scripts\smg-rl.exe --config config/native.yaml status
-.\.venv\Scripts\smg-rl.exe --config config/smg1-native.yaml status
-.\.venv\Scripts\smg-rl.exe report --output runs/training-report.json
-```
-
-`status` selects the newest learner attempt under the configured runs directory
-and includes its owning supervisor state. An explicit attempt directory may
-follow `status` or `stop`. The report audits both games, including live episode
-snapshots, and exports a fixed best-trajectory CSV and top-down figure for each
-available task. It excludes validation/evaluation fixtures and near-star resets.
-A success requires a full-start trace and the correct RAM completion evidence.
-Missing evidence is reported as a warning or unknown value.
-
-```powershell
-.\.venv\Scripts\smg-rl.exe --config config/native.yaml stop
-.\.venv\Scripts\smg-rl.exe --config config/smg1-native.yaml stop
-```
-
-Each stop request also stops the owning supervisor. Allow the current vector
-step and final checkpoint save to finish. Ctrl+C in the supervisor's foreground
-terminal also requests shutdown. A worker failure may prevent a final save;
-the most recent complete periodic pair remains the recovery point.
-
-The CLI generates reports when invoked. Scheduled notifications are configured
-separately in the local desktop app; cloning this repository creates no schedule.
-See [concurrent operation and report interpretation](docs/concurrent-training.md).
-
-## Outputs and trajectory plots
-
-```text
-runs/                                      # Galaxy 2
-  supervised-TIMESTAMP-PID/                 # Manager status and attempt logs
-  parallel-TIMESTAMP/                       # One learner attempt
-    config.json, controller.json, status.json
-    model-N.zip, model-N.intrinsic.pt        # Matching resumable pair
-    worker-00/spinning/episode-000001.csv
-    worker-00/spinning/episode-000001.png
-    worker-00/live.csv
-    worker-00/episodes.jsonl
-    worker-00/timings.json                    # Bounded stage timing statistics
-runs/smg1/                                 # Independent Galaxy 1 namespace
-  supervised-TIMESTAMP-PID/
-  parallel-TIMESTAMP/worker-00/sweet_sweet/
-```
-
-CSV logs contain measured XYZ positions, valid progress, action, reward,
-actor/scene nerves, scene counter, and terminal outcomes. Galaxy 1 also records
-health, maximum health, HP lost, and damage penalty. Per-worker episode summaries
-are saved as JSONL. Live snapshots update every 16 decisions and at reset/terminal
-transitions. Periodic pairs are saved every 1024 Galaxy 2 or 256 Galaxy 1
-aggregate decisions; each attempt retains the newest three periodic pairs.
-
-Plots show actual world **X/Z coordinates from above**, with decision order and
-progress history. They are trajectories, not reconstructed floor maps. Every
-episode gets a CSV; PNGs are generated every 20 episodes, on success, and for
-interrupted episodes. Generate an individual figure later with:
-
-```powershell
-.\.venv\Scripts\smg-rl.exe plot runs/parallel-EXAMPLE/worker-00/spinning/episode-000001.csv --output runs/trajectory.png
-```
-
-## Evaluation and desktop fallback
-
-`evaluate` currently uses the visible desktop adapter. Stop parallel learners
-and close their Dolphin instances before starting a desktop evaluation. It uses
-deterministic actions with intrinsic rewards and curiosity learning disabled:
-
-```powershell
-.\.venv\Scripts\smg-rl.exe --config config/native.yaml evaluate runs/parallel-EXAMPLE/model-final.zip --episodes 10
-.\.venv\Scripts\smg-rl.exe --config config/smg1-native.yaml evaluate runs/smg1/parallel-EXAMPLE/model-final.zip --episodes 10
-```
-
-Galaxy 2 evaluates both missions; Galaxy 1 evaluates its single mission. Match
-the checkpoint's game and observation/action spaces. The visible adapter needs
-foreground focus and W/A/S/D movement, Shift crouch, left mouse jump, and middle
-mouse spin. The owned profile sets F1-F4 load and F10 pause. `prepare`, `launch`,
-`calibrate`, `train`, and `--attach` support this single-instance fallback;
-`telemetry` also uses the single-process hook. See the [complete CLI reference](docs/cli.md).
-
-## Profiling and measured acceleration
-
-```powershell
-.\.venv\Scripts\smg-rl.exe --config config/native.yaml benchmark --steps 128
-.\.venv\Scripts\smg-rl.exe --config config/smg1-native.yaml benchmark --steps 128
-```
-
-The benchmark measures a fixed action cycle with visual curiosity and no PPO
-optimization; it is excluded from training success reports. Workers publish
-`timings.json`; learner status includes control/capture, telemetry, curiosity,
-policy-forward, rollout, PPO-update, and checkpoint timings. Nested stages overlap
-and must not be summed as exclusive costs.
-
-Current protocol-v3 repeated environment tests measured **16.34 decisions/s in
-Galaxy 1** and **20.07 in Galaxy 2**, excluding resets and PPO. Matched
-poll/full-image conditions on the same build measured 15.34 and 17.97,
-respectively: observed differences of about 6.6% and 11.6%. Native CPU image
-preparation matched the tested OpenCV images exactly while reducing bridge
-payload from 1521216 to 7056 bytes. Four-worker collection tests favored ordered
-pipes over the shared-vector alternatives; all modes retain the synchronous
-PPO barrier. These are short engineering tests, not five-worker training rates
-or proof of faster learning. See [current measurements](docs/optimization-v3.md),
-[curiosity/reward revision](docs/optimization-v2.md), and
-[historical backend comparison](docs/native-backend.md).
-
-## Timing, performance, and research limits
-
-Native commands advance exactly the requested number of Dolphin frame-step
-boundaries and return while paused, with fresh RGBA pixels in shared memory.
-The final-frame readback avoids PNG files and screenshot-flush frames. Native
-configurations use unlimited emulation speed and 12 frames per decision. All
-128 decisions in each final environment benchmark acknowledged 12 frames;
-unchanged-nerve scene-counter deltas also matched 12. Scene counters can reset
-on transitions and are not the frame-control clock.
-
-The fallback retains asynchronous hotkeys, bounded pause probes, and PNG capture.
-Its historical throughput and failures are documented in
-[background training](docs/background-training.md). Native control removes those
-hotkey/capture failure paths; file-lock retries, panic exits, PID checks, command
-timeouts, and supervision handle other failures. This is not a guarantee against
-persistent file locks, invalid states, or driver/process crashes.
-
-A 12-frame native action is shorter than the old approximate action, whose
-handshakes added many frames. Migrating old policy/curiosity checkpoints changes
-the control-duration distribution. It preserves weights, not an identical
-experimental condition. More decisions per second do not prove better learning.
-Long runs, independent seeds, reward ablations, and full-start success evaluation
-remain necessary.
-
-### Decision budgets and measured wall-clock
-
-A decision is one environment step (12 emulated frame boundaries), not one
-rendered frame or one imagined transition. The measured cumulative rates at the
-October 23, 2026, 17:48 UTC snapshot imply the following wall-clock budgets for
-a fresh 1,000,000-decision run. These are projections for consuming the budget, not for
-learning or completing a mission:
-
-| Mode | Galaxy 2 | Galaxy 1 | Basis |
-| --- | ---: | ---: | --- |
-| World model (collection + fitting + validation) | about 25.6 h | about 75 h (range 63-86 h) | 10.83 and 3.71 decisions/s |
-| PPO, recent concurrent measurement | 17-18 h | 55-61 h | 15.4-16.4 and 4.5-5.1 decisions/s |
-| PPO, earlier native production snapshot | about 11 h | about 38 h | 25.0 and 7.3 decisions/s |
-
-The recent PPO row comes from the [v4 runtime snapshot](docs/optimization-v4.md);
-the earlier row comes from the [native production snapshot](docs/native-backend.md).
-
-The world-model rate includes fitting and held-out validation, so it is lower
-per real decision than the PPO collection rate. The tradeoff is favorable only
-if fewer real decisions are needed; that has not been established. The Galaxy 2
-world-model run started from zero, while the Galaxy 1 estimate is extrapolated
-from a resumed run and earlier measurements. GPU load, emulator speed, resets,
-recoveries and failures change the actual result. The `decisions_per_second`
-field in a stopped PPO status file can describe only the last resume interval,
-not the whole run.
-
-## Development and license
+- [Documentation index](docs/README.md) and [current status](docs/current-status.md)
+- [Experimental evidence and next steps](docs/current-status.md#next-experiments)
+- [Training guide](docs/training.md), [CLI](docs/cli.md) and [reproducibility](docs/reproducibility.md)
+- [Historical PPO mathematics](docs/methodology.md), [world model](docs/world-model.md)
+  and [experiment protocol](docs/experiments.md)
+- [Storage cleanup and failure evidence](docs/iqn-four-hours-20261027.md#subsequent-verified-storage-cleanup)
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q
-.\.venv\Scripts\python.exe -m ruff check src tests scripts
+.\.venv\Scripts\python.exe -m ruff check .
 ```
 
-Portable tests cover telemetry, health/reward semantics, curiosity persistence,
-observations, capture/pause behavior, DSU, supervision, and reporting. They do not
-boot a game. Live evidence is documented separately in the
-[validation register](docs/validation.md). `ci/windows-tests.yml` is a template;
-hosted GitHub Actions is not configured by its presence in that directory.
-
-The [MIT License](LICENSE) applies to original project material. Game artwork,
-the retained gameplay screenshot, Dolphin, and dependencies retain their own
-rights and licenses; see [third-party notices](THIRD_PARTY_NOTICES.md).
-The [technical report](docs/methodology.md),
-[experimental protocol](docs/experiments.md),
-[reproducibility guide](docs/reproducibility.md), and
-[BibTeX bibliography](docs/references.bib) provide the academic and operational
-detail behind this overview.
+Portable tests do not boot Dolphin or prove that a policy solved a mission.
+Original project material uses the [MIT license](LICENSE); games, Dolphin and
+dependencies have separate rights, as described in [third-party notices](THIRD_PARTY_NOTICES.md).

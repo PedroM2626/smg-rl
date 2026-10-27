@@ -1,10 +1,14 @@
 # Training and experiment guide
 
-**Current learner (October26):** [model-free Rainbow with optional IQN](model-free.md)
-replaces the active RSSM experiment. Use its explicit profiles and TensorBoard;
-older PPO/world-model workflows below remain historical references.
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
 
-**Current status (October 25, 2026):** staged development superseded the October 23
+**Latest audited allocation (October 27):** SMG1 IQN/IMPALA stopped on disk
+exhaustion before its four-hour budget completed. No automatic successor was
+allocated. See [current evidence](current-status.md) and the
+[failure audit](iqn-four-hours-20261027.md). The model-free Rainbow/IQN
+comparison and older PPO/world-model workflows below are historical references.
+
+**Status on October 25, 2026:** staged development superseded the October 23
 hold below. The latest [regional reward/curriculum/control intervention](regional-intervention.md)
 is complete, with all processes stopped at finite boundaries. Use the new regional12
 profiles for future isolated pilots; frame4 remains experimental. Historical

@@ -1,5 +1,7 @@
 # Galaxy 1 imagination repair, October 23, 2026
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 ## Observed failure
 
 The resumed Galaxy 1 learner reached approximately 174000 real decisions and

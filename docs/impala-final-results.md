@@ -1,5 +1,7 @@
 # Six-hour IQN/IMPALA results and Sweet Sweet diagnosis
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 Date: October26,2026. Both finite training branches and all nine declared frozen
 canonical episodes are complete. That protocol allocates no further training or
 new algorithm trial. Original artifacts remain retained. The owner later

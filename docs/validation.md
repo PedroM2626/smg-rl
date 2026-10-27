@@ -1,5 +1,7 @@
 # Local validation report
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 **October26 memory-pressure recovery:** the full portable suite passed209 tests
 and Ruff after introducing Torch-free collectors, pre-spawn BLAS thread limits,
 Windows commit monitoring, clean pressure stops and once-only failed-partial
@@ -203,7 +205,7 @@ they are re-evaluated every cycle on fresh held-out batches, so the specific
 failing metric can change. The Galaxy 1 world model remains below the preserved
 PPO record of 7.152%. Both learners were stopped at the owner's request later
 that day at 870,272 Galaxy 2 and 278,773 Galaxy 1 real decisions; all training
-remains stopped until the owner explicitly authorizes resuming. See the
+was stopped at that time; the hold was superseded by later bounded work. See the
 [live experiment record](world-model-live.md),
 [implementation specification](world-model.md) and
 [validation evidence](assets/performance/world-model-validation.json).

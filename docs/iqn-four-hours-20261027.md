@@ -1,5 +1,7 @@
 # Four-hour six-worker IQN allocation
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 **Interrupted, not completed:** a curriculum reset exhausted C: at approximately
 13:30 BRT. Final checkpoint writing also failed. The last valid checkpoint is
 749006 real decisions; all training is stopped and no retry/extension was run.
@@ -36,8 +38,9 @@ state, active emulator ownership conflicts, owner stop, memory pressure and
 failures block dispatch; retain any partial collection without blind retries.
 All processes have explicit finite budgets and hidden owned emulator profiles.
 
-The active state is `.local/iqn-four-hour-20261027-state.json`. Create
-`.local/iqn-four-hour-20261027.STOP` to stop this allocation. Inspection:
+The historical allocation state is `.local/iqn-four-hour-20261027-state.json`.
+During that allocation `.local/iqn-four-hour-20261027.STOP` was its stop marker.
+Read-only inspection:
 
 ```powershell
 .venv\Scripts\python.exe scripts/run_smg1_six.py snapshot --state .local/iqn-four-hour-20261027-state.json
@@ -183,9 +186,13 @@ hash/replay/CSV/attempt audit. See [the failure audit](assets/performance/iqn-fo
 [global progress evidence](assets/performance/iqn-four-hour-goal-progress-20261027.json)
 and [the preserved best trajectory](assets/performance/iqn-four-hour-result-20261027.png).
 
-```powershell
-.venv\Scripts\python.exe scripts/audit_iqn_four_hour_result.py
-```
+The original `scripts/audit_iqn_four_hour_result.py` writes its JSON and figure
+at the published evidence paths; it is not a read-only snapshot. Its retained
+file count and disk measurements reflect the time it is run, and its original
+no-deletion assumption no longer holds after the subsequent cleanup. Do not
+rerun it over the preserved October 27 evidence without first adapting its
+output and cleanup accounting. Use the published JSON and the local cleanup
+logs to inspect the historical result and later changes separately.
 
 The completion follow-up is retired after reporting the failure. A future
 allocation must address storage headroom and explicitly resume from the last

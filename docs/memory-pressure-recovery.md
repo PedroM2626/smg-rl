@@ -1,5 +1,7 @@
 # Windows commit-exhaustion diagnosis and bounded recovery
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 Date: October26,2026. This records the owner's explicit request to identify the
 crash cause and resume the [six-hour IQN/IMPALA trial](simple-reward-impala.md).
 It does not allocate six additional hours or change any learning objective.

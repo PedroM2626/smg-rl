@@ -1,10 +1,12 @@
 # Super Mario Galaxy: Sweet Sweet Galaxy
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 **Status note (2026-10-23):** the Galaxy 1 PPO learner is stopped and its final
 pair is preserved. The Galaxy 1 world-model run recorded in
 [the live world-model record](world-model-live.md) was also stopped at the
-owner's request on October 23, 2026; its final checkpoint is preserved and all
-training remains stopped until the owner explicitly authorizes resuming.
+owner's request on October 23, 2026; its final checkpoint is preserved. The
+October 23 hold was superseded by later bounded owner-authorized work.
 
 ## Scope and status
 

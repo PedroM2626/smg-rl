@@ -1,5 +1,7 @@
 # Eight exclusive actions, visible policy inputs and algorithm comparison
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 **October26 replacement:** the owner subsequently selected [model-free Rainbow
 and IQN](model-free.md). These are now implemented and tested; Rainbow's finite
 six-collector pilot is active. The exploratory assessment below is historical.

@@ -1,5 +1,7 @@
 # Simple regional reward and six-hour IQN/IMPALA trial
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 **Completed:** both original six-hour branches and all nine frozen evaluations
 finished. Zero stars occurred. [Final results and Sweet Sweet diagnosis](impala-final-results.md)
 separate the learned local openings from full-course failure; no continuation

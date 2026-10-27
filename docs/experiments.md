@@ -1,5 +1,7 @@
 # Experimental protocol and evidence register
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 ## Research questions
 
 1. Does visual episodic novelty plus RND improve full-course success compared

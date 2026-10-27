@@ -1,8 +1,11 @@
 # One-hour SMG1 genetic intervention
 
-**Latest allocation:** the completed pilot is now the ancestor of an explicitly
-authorized [continuous overnight GA continuation](genetic-overnight.md), replacing
-the remaining IQN run until October27,07:00 BRT. The results below remain fixed.
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
+**Historical sequence:** this completed pilot was the ancestor of the
+[overnight GA continuation](genetic-overnight.md), which ended October 27 at
+07:00 BRT. Later GA and IQN allocations are summarized in [current evidence](current-status.md).
+The pilot results below remain fixed.
 
 On October 26 the owner explicitly requested implementation and a one-hour
 genetic algorithm (GA) pilot, with fitness defined by furthest advance. This

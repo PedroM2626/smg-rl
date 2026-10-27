@@ -1,5 +1,7 @@
 # Authorized online world-model experiment
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 ## Scope and authorization
 
 On October 22, 2026 the owner explicitly authorized continuing the Dreamer-inspired
@@ -67,9 +69,9 @@ to demonstrate that it needs fewer of them.
 At the owner's request, both jobs were stopped before the PC was shut down.
 Each learner acknowledged the stop request, saved `world-final.pt` with its
 SHA-256 manifest, and wrote a final `status.json` with `state: stopped`; neither
-run directory contains `error.txt`. The local training hold is active again and
-`AGENTS.md` records that all training remains stopped until the owner explicitly
-authorizes resuming.
+run directory contains `error.txt`. A local training hold was active at that
+October 23 stop; later owner authorization superseded it. Consult
+[current evidence](current-status.md) and the actual hold file before new work.
 
 | Game | Final run | Real decisions | Model updates | Actor updates | Imagined transitions |
 | --- | --- | ---: | ---: | ---: | ---: |

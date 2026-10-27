@@ -1,5 +1,7 @@
 # Continuous genetic continuation until 07:00
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 **Completed:** collection stopped at October27,07:00 BRT, with zero stars and
 no improvement over the inherited pilot champion. The owner subsequently
 authorized [returning to IQN](iqn-return-20261027.md); this GA remains stopped.
@@ -163,7 +165,8 @@ CSVs (including partials), reconciled real/attempt/star counts, compared frozen
 source tensors and hashes, and reproduced all278 new generation populations
 and mutation/selection RNG transitions, including the22 inherited records.
 It separately audited the final unselected generation. All checks passed.
-Reproduce the read-only audit with:
+The following audit does not collect training, but it writes its result artifacts
+and figure. Preserve existing evidence before rerunning it:
 
 ```powershell
 .venv\Scripts\python.exe scripts/audit_genetic_overnight.py

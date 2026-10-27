@@ -1,5 +1,7 @@
 # Galaxy 2 offline world-model ablation
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 **Completed October 24, 2026:** all 30 predeclared fits and reserved final audits
 finished. All 122 portable tests and Ruff passed. Original checkpoints and the
 global hold were verified unchanged; the narrow experiment grant is inactive.

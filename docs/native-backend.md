@@ -1,5 +1,7 @@
 # Native capture, frame control, profiling, and failure handling
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 The current client uses **protocol v3**. The [current pipeline audit](optimization-v3.md)
 records event notifications, native grayscale/area preparation, and per-worker
 collection profiling. The [preceding revision](optimization-v2.md) records the

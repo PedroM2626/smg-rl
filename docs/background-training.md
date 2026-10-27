@@ -1,10 +1,12 @@
 # Hidden parallel training on Windows
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 **Status note (2026-10-23):** the supervised PPO jobs described here are stopped;
 their final pairs are preserved. The separate world-model experiment recorded in
 [the live world-model record](world-model-live.md) was also stopped at the
 owner's request on October 23, 2026; its final checkpoints are preserved and
-all training remains stopped until the owner explicitly authorizes resuming.
+the October 23 hold was superseded by later bounded owner-authorized work.
 
 **Native backend update (2026-10-22):** the local learners now use
 `config/native.yaml` and `config/smg1-native.yaml`, with shared-memory RGBA

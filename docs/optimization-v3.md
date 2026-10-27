@@ -1,5 +1,7 @@
 # Protocol v3: event wakeups, native image preparation, and worker barriers
 
+> **Historical context:** Experiment status, authorizations, schedules and live counters in this document refer to their stated dates. Later work may supersede them; consult [current evidence and next experiments](current-status.md) and check actual process state before acting.
+
 This revision implements three measured engineering experiments: replacing
 bridge polling with event wakeups, preparing compact observations in Dolphin,
 and profiling/optimizing synchronous vector collection. It retains the same
