@@ -22,3 +22,11 @@ def test_existing_six_worker_phase_cannot_dispatch_again(tmp_path, monkeypatch):
     monkeypatch.setattr(run_smg1_six, 'STOP', tmp_path / 'STOP')
     with pytest.raises(ValueError, match='duplicate'):
         run_smg1_six.supervise()
+
+
+def test_four_hour_allocation_is_explicit_finite_and_keeps_two_hour_defaults():
+    assert run_smg1_six.finite_budget(7200) == (720000, 8)
+    assert run_smg1_six.finite_budget(14400) == (1440000, 12)
+    for invalid in (0, -1, 14401, float('inf'), 7200., True):
+        with pytest.raises(ValueError, match='finite integer'):
+            run_smg1_six.finite_budget(invalid)

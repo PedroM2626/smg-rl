@@ -1,8 +1,9 @@
 # Documentation index
 
+The current allocation is [four hours of six-worker IQN/IMPALA](iqn-four-hours-20261027.md).
 The [full-visual genetic trial](genetic-visual.md) completed with zero stars and
-no improvement over the unchanged baseline. No training remains active; the
-intermediate [IQN return](iqn-return-20261027.md) is paused and retained.
+no improvement over the unchanged baseline. Its artifacts and the intermediate
+[IQN return](iqn-return-20261027.md) remain retained.
 The [overnight SMG1 genetic allocation](genetic-overnight.md) completed at
 October27,07:00 BRT: zero stars and no improvement over the inherited pilot
 champion. Its population/RNG ancestry from the

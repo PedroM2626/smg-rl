@@ -2,7 +2,8 @@
 
 **Completed:** the two-hour trial ended at09:56 BRT on October27. Mutated vision
 did not beat the unchanged ancestral champion, and no native star was collected.
-All training remains stopped; no automatic successor is allocated.
+This GA remains stopped. The owner subsequently authorized a separate
+[four-hour IQN allocation](iqn-four-hours-20261027.md); no GA successor is allocated.
 
 On October27 the owner explicitly requested continuing the GA with the visual
 network unlocked. This replaces the intervening IQN return; the live IQN is

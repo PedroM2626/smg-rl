@@ -1,4 +1,4 @@
-"""Owner-authorized two-hour SMG1-only continuation with six lean collectors."""
+"""Finite owner-authorized SMG1 IQN continuation with six lean collectors."""
 
 import argparse
 import json
@@ -38,7 +38,14 @@ def snapshot():
     print(json.dumps(state, indent=2))
 
 
-def supervise(resume_review=None):
+def finite_budget(training_seconds):
+    if type(training_seconds) is not int or not 60 <= training_seconds <= 14400:
+        raise ValueError('Use an explicit finite integer allocation from60 to14400 seconds.')
+    return max(3072, training_seconds * 100), (training_seconds + 1799) // 1800 + 4
+
+
+def supervise(resume_review=None, training_seconds=7200):
+    real_cap, dispatch_cap = finite_budget(training_seconds)
     if STATE.exists() or STOP.exists():
         raise ValueError('Existing continuation/stop requires review; never dispatch a duplicate.')
     if any((p.info['name'] or '').lower() == 'dolphin.exe' for p in psutil.process_iter(['name'])):
@@ -63,18 +70,19 @@ def supervise(resume_review=None):
               'real_decisions': migration['real_decisions'], 'source_attempts': migration['completed_attempts'],
               'completed_attempts': migration['completed_attempts'], 'elapsed_training_seconds': 0.,
               'checkpoint': str(source.resolve())}
-    state = {'schema': 1, 'phase': 'running', 'owner_authorization': 'Owner requested six SMG1 workers for two hours.',
+    state = {'schema': 1, 'phase': 'running', 'owner_authorization': f'Owner requested six SMG1 workers; finite allocation{training_seconds} seconds.',
              'supervisor': {'pid': os.getpid(), 'created_time': psutil.Process().create_time()},
-             'training_seconds': 7200, 'new_real_decision_cap': 720000, 'maximum_emulators': 6,
+             'training_seconds': training_seconds, 'new_real_decision_cap': real_cap, 'maximum_emulators': 6,
+             'maximum_dispatches': dispatch_cap,
              'games': {'smg1': branch}, 'note': 'One shared policy, unchanged objective/control/start mixture. Zero stars alone does not prove a game bug.'}
     if resume_review:
-        state.update(owner_authorization='Owner requested returning to IQN; initial finite two-hour allocation with staged reviews.',
+        state.update(owner_authorization=f'Owner requested IQN continuation; finite{training_seconds}-second allocation with staged reviews.',
                      retained_pause_review=str(resume_review), visual_encoder='IMPALA, trainable by gradient')
     save(state)
     try:
-        for block in range(8):  # Health,30min,60min,remainder; a hard finite dispatch ceiling.
-            remaining = 7200 - branch['elapsed_training_seconds']
-            decisions = 720000 - (branch['real_decisions'] - branch['source_real'])
+        for block in range(dispatch_cap):  # Health,30min,60min/remainder; finite dispatch ceiling.
+            remaining = training_seconds - branch['elapsed_training_seconds']
+            decisions = real_cap - (branch['real_decisions'] - branch['source_real'])
             if remaining <= 0 or decisions < 6 or STOP.exists():
                 break
             require_memory_headroom()
@@ -137,10 +145,11 @@ if __name__ == '__main__':
     parser.add_argument('--state', type=Path)
     parser.add_argument('--stop', type=Path)
     parser.add_argument('--log-prefix')
+    parser.add_argument('--training-seconds', type=int, default=7200)
     args = parser.parse_args()
     STATE, STOP = args.state or STATE, args.stop or STOP
     LOG_PREFIX = args.log_prefix or LOG_PREFIX
     if args.mode == 'supervise':
-        supervise(args.resume_reviewed)
+        supervise(args.resume_reviewed, args.training_seconds)
     else:
         snapshot()

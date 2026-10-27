@@ -1,0 +1,57 @@
+{
+  "recorded_utc": "2026-10-27T14:21:25.072977+00:00",
+  "owner_authorization": "Focus on IQN with six workers for four hours and return results.",
+  "training_seconds": 14400,
+  "new_real_decision_safety_cap": 1440000,
+  "dispatch_safety_cap": 12,
+  "source_real_decisions": 571424,
+  "source_attempts": 8779,
+  "source_optimizer_updates": 142344,
+  "source_checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\smg1-six-two-hour\\dqn-20261027-072529-193280\\checkpoint-final",
+  "supervisor": {
+    "pid": 2756,
+    "created_time": 1793110324.1029923
+  },
+  "initial_run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\smg1-six-two-hour\\dqn-20261027-111212-990054",
+  "initial_controller": {
+    "pid": 44628,
+    "created_time": 1793110325.0574393,
+    "workers": 6,
+    "algorithm": "iqn",
+    "resume": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\smg1-six-two-hour\\dqn-20261027-072529-193280\\checkpoint-final",
+    "requested_additional": 3072,
+    "source_count": 571424,
+    "target_count": 574496,
+    "max_seconds": 300.0,
+    "deadline_utc": null
+  },
+  "initial_health_review_passed": true,
+  "first_actual_visual_update_probe": {
+    "weights_changed": true,
+    "gradient_l2": 0.01899089850485325,
+    "source_optimizer_updates": 142344,
+    "observed_optimizer_updates": 142345
+  },
+  "baseline_global_goal_projection": {
+    "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\smg1-six-two-hour\\dqn-20261027-072529-193280\\worker-01\\sweet_sweet\\episode-000024.csv",
+    "geometric_projection_percent": 6.319297974008416,
+    "grounded_fitness_world_units": 1849.9533748881245,
+    "step": 40,
+    "position": [
+      807.2242431640625,
+      -50.00019454956055,
+      -2667.754150390625
+    ],
+    "outcome": "death",
+    "saved_decisions": 46,
+    "ram_star": false,
+    "start_kind": "full_start",
+    "partial_episode": false,
+    "mapped_opening_fraction": 0.8527405768304077
+  },
+  "baseline_native_full_start_stars": 0,
+  "no_ga_or_world_model_active": true,
+  "no_reward_control_or_replay_change": true,
+  "completion_review_local": "2026-10-27T15:30:00-03:00",
+  "global_progress_interpretation": "Alive-grounded X/Z projection from canonical start toward near-star goal, not native mission percentage or full-course path fraction. Training maxima include exploration and are not frozen-policy performance."
+}
