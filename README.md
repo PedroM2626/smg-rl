@@ -3,9 +3,10 @@
 Visual reinforcement learning for **Super Mario Galaxy 1 and 2** in
 Dolphin on Windows.
 
-**Current owner-authorized run:** [return to six-worker SMG1 IQN/IMPALA](docs/iqn-return-20261027.md)
-from the retained523004-real checkpoint, with trainable online vision and an
-initial two-hour staged budget. Original reward/control/replay remain unchanged.
+**Current owner-authorized run:** [full-visual SMG1 genetic evolution](docs/genetic-visual.md),
+unlocking1869736 action-path parameters including1569184 visual parameters, with
+six collectors and an initial two-hour budget. IQN is paused and retained;
+fitness/control match the earlier GA and source checkpoints remain immutable.
 
 **Latest completed genetic run:** [overnight six-worker SMG1 training](docs/genetic-overnight.md)
 stopped at October27,07:00 BRT. It added810628 real decisions and278 complete

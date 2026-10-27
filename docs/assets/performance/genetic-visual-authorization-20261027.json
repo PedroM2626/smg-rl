@@ -1,0 +1,76 @@
+{
+  "recorded_utc": "2026-10-27T10:59:48.696875+00:00",
+  "owner_authorization": "Owner requested continuing genetic training with visual representation unlocked.",
+  "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\genetic-smg1\\genetic-20261027-075626-448268",
+  "supervisor": {
+    "pid": 9540,
+    "created_time": 1793098508.5980778
+  },
+  "actual_controller": {
+    "pid": 34272,
+    "created_time": 1793098582.190487,
+    "source": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\smg1-six-two-hour\\dqn-20261026-204307-660910\\checkpoint-final",
+    "seconds": 7200.0,
+    "workers": 6,
+    "deadline_utc": "2026-10-27T12:56:22.116869+00:00",
+    "resume_genetic_run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\genetic-smg1\\genetic-20261026-231504-090947"
+  },
+  "deadline_utc": "2026-10-27T12:56:22.116869+00:00",
+  "iqn_pause_checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\smg1-six-two-hour\\dqn-20261027-072529-193280\\checkpoint-final",
+  "iqn_pause_real_decisions": 571424,
+  "iqn_pause_attempts": 8779,
+  "policy_mode": "full_visual",
+  "genome_parameters": 1869736,
+  "visual_evolvable_parameters": 1569184,
+  "initial_visual_mutation_l2": 0.7296743484169457,
+  "gene_layout_sha256": "1d667a5bff0491c760d9de845851629bc75fae5867366931b485ae357e952940",
+  "preflight": {
+    "genome_parameters": 1869736,
+    "visual_evolvable_parameters": 1569184,
+    "population_mib": 171.179443359375,
+    "six_candidate_first_forward_seconds": 0.5129627999995137,
+    "baseline_logits_match": true,
+    "initial_visual_mutation_l2": 0.7296743484169457,
+    "lineage": {
+      "parent_mode": "head",
+      "parent_generation": 319,
+      "parent_champion_fitness_world_units": 2361.440219460008,
+      "reused_fitness_trials": 0
+    },
+    "disk_free_gib": 84.45423889160156,
+    "layout_sha256": "1d667a5bff0491c760d9de845851629bc75fae5867366931b485ae357e952940"
+  },
+  "new_real_decisions_at_recording": 4814,
+  "completed_trials_at_recording": 46,
+  "physical_trials_with_mutated_visual_parameters": 44,
+  "baseline_trial": [
+    {
+      "individual": 0,
+      "seed": 11,
+      "phase": "evolution",
+      "generation": 0,
+      "worker": 0,
+      "decisions": 269,
+      "genome_sha256": "b55a54b110e0f0fc5a3d3911dc699de58c98e2e60c0b77c33bb7e4b3246b19f2",
+      "fitness_world_units": 2361.440219460008,
+      "geometric_projection_percent": 8.066497565365971,
+      "sampled_path_distance_xz": 11570.568774342366,
+      "environment_return": -1.25,
+      "mapped_opening_percent": 100.0,
+      "fitness_eligible": true,
+      "invalid_position": false,
+      "outcome": "death",
+      "ram_star": false,
+      "dead": true,
+      "health": 2,
+      "start_kind": "full_start",
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\genetic-smg1\\genetic-20261027-075626-448268\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "visual_genome_delta_l2": 0.0
+    }
+  ],
+  "no_fitness_reused": true,
+  "review_local": "2026-10-27T10:02:00-03:00",
+  "portable_tests": 238,
+  "ruff": "passed",
+  "interpretation": "All active visual/action weights evolve without gradients. Source templates remain immutable but candidate-specific functional weights differ. Unlocking vision is a hypothesis test, not proof of the prior plateau cause."
+}

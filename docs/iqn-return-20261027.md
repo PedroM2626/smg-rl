@@ -1,5 +1,9 @@
 # Return to IQN after the genetic plateau
 
+**Superseded active allocation:** the owner subsequently selected
+[full-visual genetic evolution](genetic-visual.md). This IQN return is
+intentionally paused and retained; do not resume it automatically.
+
 On October27 the owner requested resuming IQN and asked whether frozen vision
 caused the genetic experiment's plateau. The GA is completed and retained;
 only Sweet Sweet IQN resumes, using six collectors and one shared policy.

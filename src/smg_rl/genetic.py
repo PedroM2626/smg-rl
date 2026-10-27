@@ -78,17 +78,23 @@ class GeneticHead:
         return (weights @ features[:, :, None]).squeeze(-1) + genes[:, -self.actions:]
 
 
-def next_population(population, fitness, rng, elite=4, sigma=.02):
+def next_population(population, fitness, rng, elite=4, sigma=.02, mutation_scale=None):
     population, fitness = np.asarray(population), np.asarray(fitness)
     if (population.ndim != 2 or fitness.shape != (len(population),) or not np.isfinite(population).all()
             or not np.isfinite(fitness).all() or not 1 <= elite < len(population) or not math.isfinite(sigma) or sigma <= 0):
         raise ValueError('Only a completely evaluated finite population can reproduce.')
+    if mutation_scale is not None and (mutation_scale.shape != population.shape[1:]
+            or not np.isfinite(mutation_scale).all() or (mutation_scale <= 0).any()):
+        raise ValueError('Mutation scales must be positive, finite and match genome dimensions.')
     order = np.argsort(-fitness, kind='stable')
     result = [population[i].copy() for i in order[:elite]]
     while len(result) < len(population):
         parents = [max(rng.integers(len(population), size=3), key=lambda i: fitness[i]) for _ in range(2)]
         child = np.where(rng.random(population.shape[1]) < .5, population[parents[0]], population[parents[1]])
-        child = np.clip(child + rng.normal(0, sigma, child.shape), -5, 5).astype(np.float32)
+        noise = rng.normal(0, sigma, child.shape)
+        if mutation_scale is not None:
+            noise *= mutation_scale
+        child = np.clip(child + noise, -5, 5).astype(np.float32)
         result.append(child)
     return np.stack(result)
 
@@ -117,6 +123,8 @@ def resume_population(folder, source_hashes, population_size, gene_count):
     """Reconstruct the pending generation and reuse only its completed physical trials."""
     folder = Path(folder)
     final = json.loads((folder / 'summary.json').read_text())
+    if final.get('policy_mode', 'head') != 'head':
+        raise ValueError('Head-only resume cannot load a full-visual population.')
     if (final['state'] != 'completed' or final['error'] or final['source_hashes'] != source_hashes
             or final['population'] != population_size or final['genome_parameters'] != gene_count
             or final['generations_completed'] < 1 or digest(folder / 'champion.pt') != final['champion_sha256']):
@@ -203,6 +211,8 @@ class GeneticEvaluator:
                 dead=bool(info.get('dead')), health=info.get('health'), start_kind='full_start',
                 trajectory=str(self.run / f'worker-{worker:02d}' / self.config['variations'][0]['name'] /
                     f"episode-{info['worker_episode']:06d}.csv") if 'worker_episode' in info else None)
+            if hasattr(self.policy, 'visual_delta_l2'):
+                record['visual_genome_delta_l2'] = self.policy.visual_delta_l2(item['candidate']['genome'])
             self.ledger.write(json.dumps(record) + '\n')
             self.ledger.flush()
             if record['fitness_eligible']:
@@ -214,7 +224,9 @@ class GeneticEvaluator:
                     self.status['champion'] = record
                     self.status['champion_origin_run'] = str(self.run)
                     torch.save({'source_online': self.policy.network.state_dict(),
-                                'genome': torch.from_numpy(item['candidate']['genome'].copy())}, self.run / 'champion.tmp')
+                                'genome': torch.from_numpy(item['candidate']['genome'].copy()),
+                                'policy_mode': self.status.get('policy_mode', 'head'),
+                                'gene_layout': getattr(self.policy, 'layout', None)}, self.run / 'champion.tmp')
                     os.replace(self.run / 'champion.tmp', self.run / 'champion.pt')
                 self.writer.add_scalar(f'{phase}/fitness_world_units', advance.best, self.status['completed_trials'])
                 self.writer.add_scalar(f'{phase}/geometric_projection_percent', record['geometric_projection_percent'],
@@ -271,12 +283,13 @@ class GeneticEvaluator:
 
 
 def train_genetic(config, source, seconds=3600, population_size=24, max_decisions=1200,
-                  deadline_utc=None, resume_run=None, confirmation_seconds=300):
+                  deadline_utc=None, resume_run=None, confirmation_seconds=300, policy_mode='head'):
     wall_deadline = collection_deadline(seconds, deadline_utc)
     if (population_size < 6
             or population_size > 96 or max_decisions < 1 or max_decisions > 3000
             or config['parallel']['workers'] != 6 or len(config['variations']) != 1
-            or not math.isfinite(confirmation_seconds) or not 0 <= confirmation_seconds <= 300):
+            or not math.isfinite(confirmation_seconds) or not 0 <= confirmation_seconds <= 300
+            or policy_mode not in ('head', 'full_visual')):
         raise ValueError('This pilot requires six workers, one mission and finite bounded dimensions/time.')
     if any((p.info['name'] or '').lower() == 'dolphin.exe' for p in psutil.process_iter(['name'])):
         raise ValueError('Genetic training requires exclusive emulator ownership; pause and audit IQN first.')
@@ -288,13 +301,32 @@ def train_genetic(config, source, seconds=3600, population_size=24, max_decision
     source_hashes = {name: digest(source / name) for name in ('agent.pt', 'replay.npz', 'manifest.json')}
     torch.set_num_threads(config['training'].get('torch_threads', 1))
     agent = DistributionalAgent.load_policy(source, signature, config['training']['device'])
-    policy = GeneticHead(agent)
+    if policy_mode == 'full_visual':
+        from smg_rl.genetic_visual import (
+            GeneticVisualPolicy,
+            initial_visual_population,
+            resume_visual_population,
+            save_population,
+        )
+
+        policy = GeneticVisualPolicy(agent)
+    else:
+        policy = GeneticHead(agent)
     rng = np.random.default_rng(142)
-    population = np.stack([policy.source + rng.normal(0, .02, policy.source.shape).astype(np.float32)
-                           for _ in range(population_size)])
-    population[0] = policy.source.copy()
+    population = None
+    if not (resume_run and policy_mode == 'full_visual'):
+        population = np.stack([policy.source + rng.normal(0, .02, policy.source.shape).astype(np.float32)
+                               for _ in range(population_size)])
+        population[0] = policy.source.copy()
     offset, inherited, ancestor = 0, {}, None
-    if resume_run:
+    lineage = None
+    if resume_run and policy_mode == 'full_visual':
+        parent = json.loads((Path(resume_run) / 'summary.json').read_text())
+        if parent.get('policy_mode', 'head') == 'head':
+            population, rng, lineage = initial_visual_population(policy, resume_run, source_hashes, population_size)
+        else:
+            population, rng, offset, inherited, ancestor = resume_visual_population(policy, resume_run, source_hashes, population_size)
+    elif resume_run:
         population, rng, offset, inherited, ancestor = resume_population(
             resume_run, source_hashes, population_size, len(policy.source))
     config['curriculum']['enabled'] = False
@@ -321,6 +353,20 @@ def train_genetic(config, source, seconds=3600, population_size=24, max_decision
     status.update(deadline_utc=deadline_utc, generation_offset=offset,
                   resume_genetic_run=str(resume_run) if resume_run else None,
                   inherited_completed_trials=len(inherited), confirmation_reserve_seconds=confirmation_seconds)
+    status['policy_mode'] = policy_mode
+    if policy_mode == 'full_visual':
+        status.update(method='genetic_full_visual_action_path_no_gradients', gene_layout_sha256=policy.layout_sha256,
+                      visual_evolvable_parameters=policy.visual_parameters, mutation_rule='Layer-scaled0.02; output-head absolute0.02.',
+                      ancestry_lift=lineage, initial_visual_mutation_l2=policy.visual_delta_l2(population[1]),
+                      baseline_kind='ancestral_frozen_vision_ga_champion' if lineage else
+                          ancestor.get('baseline_kind', 'original_source') if ancestor else 'original_source',
+                      baseline_genome_sha256=genome_digest(policy.source))
+        checked_json(run / 'gene-layout.json', policy.layout)
+        np.save(run / 'baseline-genome.npy', policy.source, allow_pickle=False)
+        if shutil.disk_usage(run).free < max(8 * 2**30, population.nbytes * 4):
+            raise OSError('Insufficient disk headroom for bounded visual population snapshots and physical logs.')
+        save_population(run, 'population-initial', population,
+                        {'rng_state': rng.bit_generator.state, 'generation': offset, 'gene_layout_sha256': policy.layout_sha256})
     if ancestor:
         status.update(champion=ancestor['champion'], prior_real_decisions=ancestor.get('prior_real_decisions', 0) + ancestor['real_decisions'],
                       prior_completed_trials=ancestor.get('prior_completed_trials', 0) + ancestor['completed_trials'],
@@ -347,7 +393,10 @@ def train_genetic(config, source, seconds=3600, population_size=24, max_decision
                 break  # Never reproduce from incomplete or interrupted candidate fitness.
             by_id = {r['individual']: r for r, _ in trials}
             fitness = [by_id[i]['fitness_world_units'] for i in range(population_size)]
-            np.savez_compressed(run / f'generation-{generation:04d}.npz', genomes=population, fitness=fitness)
+            if policy_mode == 'full_visual':
+                np.savez_compressed(run / f'generation-{generation:04d}.npz', fitness=fitness)
+            else:
+                np.savez_compressed(run / f'generation-{generation:04d}.npz', genomes=population, fitness=fitness)
             checked_json(run / f'generation-{generation:04d}.json', {
                 'review_passed': True, 'completed_trials': len(trials), 'best_fitness_world_units': max(fitness),
                 'rng_state_before_reproduction': rng.bit_generator.state,
@@ -356,7 +405,8 @@ def train_genetic(config, source, seconds=3600, population_size=24, max_decision
             status['generations_completed'] += 1
             writer.add_scalar('generation/best_fitness_world_units', max(fitness), generation)
             writer.add_scalar('generation/mean_fitness_world_units', float(np.mean(fitness)), generation)
-            population = next_population(population, fitness, rng)
+            population = next_population(population, fitness, rng,
+                                         mutation_scale=policy.mutation_scale if policy_mode == 'full_visual' else None)
             inherited = {}
             checked_json(run / 'status.json', status)
         if confirmation_seconds and status.get('champion') and not (run / 'STOP').exists():
@@ -378,6 +428,11 @@ def train_genetic(config, source, seconds=3600, population_size=24, max_decision
             vector.close()
         if evaluator is not None:
             evaluator.ledger.close()
+        if policy_mode == 'full_visual':
+            saved_population = save_population(run, 'population-final', population,
+                {'rng_state': rng.bit_generator.state, 'generation': offset + status['generations_completed'],
+                 'gene_layout_sha256': policy.layout_sha256})
+            status['final_population_sha256'] = saved_population['sha256']
         writer.flush()
         writer.close()
         final_hashes = {name: digest(source / name) for name in source_hashes}
