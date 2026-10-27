@@ -1,0 +1,30 @@
+{
+  "recorded_utc": "2026-10-27T00:43:50.940352+00:00",
+  "owner_authorization": "Implement and run the genetic algorithm for one hour, selecting furthest advance.",
+  "scope": "SMG1 Sweet Sweet only, six emulators maximum; IQN temporarily paused and restored after clean GA review.",
+  "method": "Transfer-initialized genetic action-head evolution on frozen IMPALA/IQN features, without gradient updates.",
+  "fitness": "Maximum alive-grounded X/Z projection toward calibrated near-star goal, in world units. No additional fitness terms.",
+  "world_projection_is_not_native_percentage": true,
+  "population": 24,
+  "elite": 4,
+  "mutation_std": 0.02,
+  "genes": 4104,
+  "maximum_wall_seconds": 3600,
+  "final_confirmation_reserve_seconds": 300,
+  "iqn_pause_checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\smg1-six-two-hour\\dqn-20261026-204307-660910\\checkpoint-final",
+  "iqn_pause_agent_sha256": "121521c552be0d6c3ea0a367e58d52e0e8ca5fb41358c295753d67f56413db1e",
+  "iqn_pause_real_decisions": 481532,
+  "iqn_pause_attempts": 6988,
+  "ga_run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\genetic-smg1\\genetic-20261026-214127-729002",
+  "ga_controller": {
+    "pid": 35400,
+    "created_time": 1793061682.0899217,
+    "source": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\smg1-six-two-hour\\dqn-20261026-204307-660910\\checkpoint-final",
+    "seconds": 3600.0,
+    "workers": 6
+  },
+  "state_at_recording": "running",
+  "final_results_pending": true,
+  "confirmation_interpretation": "Canonical deterministic repeats, not unseen states; resetting the Gymnasium seed does not randomize restored Wii RNG.",
+  "iqn_resume_deadline_utc": "2026-10-27T10:00:00+00:00"
+}

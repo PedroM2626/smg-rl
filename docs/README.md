@@ -2,6 +2,8 @@
 
 The current finite allocation is [six SMG1 collectors until October 27, 07:00 BRT](smg1-overnight.md),
 with owner-requested progress reviews every three hours.
+An owner-requested [one-hour genetic head-evolution pilot](genetic-hour.md)
+temporarily pauses that allocation, then resumes its unchanged checkpoint.
 It continues the final IQN/IMPALA checkpoint without reopening the completed
 six-hour or stochastic-evaluation budgets.
 

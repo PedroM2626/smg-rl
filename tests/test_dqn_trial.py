@@ -71,3 +71,14 @@ def test_explicit_partial_recovery_preserves_source_and_charges_failed_time_once
     assert branch['jobs'][-1]['phase'] == 'failed_accounted'
     with pytest.raises(ValueError):
         dqn_trial.recover()
+
+
+@pytest.mark.parametrize('reason,allowed', [('owner_stop', True), ('memory_pressure', False), ('interrupted', False)])
+def test_reviewed_pause_requires_an_explicit_clean_owner_stop(tmp_path, monkeypatch, reason, allowed):
+    status = {'state': 'stopped', 'error': None, 'stop_reason': reason, 'source_count': 999}
+    monkeypatch.setattr(dqn_trial, 'read', lambda path: status if path.name == 'status.json' else {})
+    monkeypatch.setattr(dqn_trial, 'alive', lambda _: False)
+    with pytest.raises(ValueError, match='Unexpected branch' if allowed else 'Only a clean'):
+        dqn_trial.audit_block(tmp_path, {}, 100, 0, paused=True)
+    with pytest.raises(ValueError, match='Only a clean'):
+        dqn_trial.audit_block(tmp_path, {}, 100, 0)

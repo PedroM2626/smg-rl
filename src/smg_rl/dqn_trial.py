@@ -90,12 +90,18 @@ def launch(state, game, steps, seconds, resume, label):
         return process, job
 
 
-def audit_block(run, config, source_real, source_attempts, failed=False):
+def audit_block(run, config, source_real, source_attempts, failed=False, paused=False):
     """Verify real counts, reward sum, RAM outcomes, checkpoint hashes and attempts."""
     status = read(run / 'status.json')
     controller = read(run / 'controller.json')
-    eligible = (status['state'] == 'failed' and status['error'] == 'EOFError()' if failed else
-                status['state'] == 'completed' and status['error'] is None)
+    if failed and paused:
+        raise ValueError('A reviewed pause cannot also be a failed recovery.')
+    if failed:
+        eligible = status['state'] == 'failed' and status['error'] == 'EOFError()'
+    elif paused:
+        eligible = status['state'] == 'stopped' and status['stop_reason'] == 'owner_stop' and status['error'] is None
+    else:
+        eligible = status['state'] == 'completed' and status['error'] is None
     if alive(controller) or not eligible:
         raise ValueError('Only a clean, stopped block can authorize a successor.')
     if status['source_count'] != source_real or status['imagined_transitions'] != 0:

@@ -23,6 +23,7 @@ STOP = Path('.local/smg1-overnight.STOP')
 DEADLINE = '2026-10-27T10:00:00+00:00'
 CONFIG = 'config/smg1-six-two-hour.yaml'
 RECOVERY = Path('.local/smg1-overnight-reviewed-recovery.json')
+PAUSED = Path('.local/smg1-overnight-paused-for-ga.json')
 
 
 def remaining_seconds(deadline=DEADLINE):
@@ -37,8 +38,11 @@ def save(state):
 def supervise():
     if STATE.exists() or STOP.exists() or remaining_seconds() <= 0:
         raise ValueError('Existing state/stop or expired deadline; never duplicate overnight training.')
-    initial = read(INITIAL)
-    recovery = read(RECOVERY) if RECOVERY.exists() else None
+    paused = read(PAUSED) if PAUSED.exists() else None
+    initial = paused if paused else read(INITIAL)
+    recovery = read(RECOVERY) if RECOVERY.exists() and not paused else None
+    if paused and (not paused.get('reviewed_genetic_pause') or alive(initial['supervisor'])):
+        raise ValueError('Only a manually requested, audited, stopped genetic pause can resume.')
     if recovery:
         if initial['phase'] != 'needs_review' or alive(initial['supervisor']):
             raise ValueError('Recovery requires the reviewed, stopped initial supervisor.')
@@ -65,7 +69,7 @@ def supervise():
     save(state)
     try:
         while True:
-            if not recovery:
+            if not recovery and not paused:
                 initial = read(INITIAL)
             state['games'] = deepcopy(initial['games'])
             state['initial_phase'] = initial['phase']
@@ -82,7 +86,8 @@ def supervise():
             time.sleep(3)
         branch = state['games']['smg1']
         last = branch['jobs'][-1]
-        audit_block(locate_run(last), load_config(last['config']), last['source_real'], last['source_attempts'], failed=bool(recovery))
+        audit_block(locate_run(last), load_config(last['config']), last['source_real'], last['source_attempts'],
+                    failed=bool(recovery), paused=bool(paused))
         state['phase'] = 'running'
         save(state)
         for index in range(24):
@@ -95,11 +100,12 @@ def supervise():
             if seconds <= 0 or steps < 6 or STOP.exists():
                 break
             require_memory_headroom()
-            job = {'config': CONFIG, 'label': f'overnight{index:02d}', 'phase': 'pending_dispatch',
+            prefix = 'smg1-overnight-after-genetic' if paused else 'smg1-overnight'
+            job = {'config': CONFIG, 'label': f'{prefix}{index:02d}', 'phase': 'pending_dispatch',
                    'source_real': branch['real_decisions'], 'source_attempts': branch['completed_attempts'],
                    'requested_additional': steps, 'max_seconds': min(3600., seconds), 'deadline_utc': DEADLINE,
-                   'stdout': f'.local/smg1-overnight-{index:02d}.out.log',
-                   'stderr': f'.local/smg1-overnight-{index:02d}.err.log'}
+                   'stdout': f'.local/{prefix}-{index:02d}.out.log',
+                   'stderr': f'.local/{prefix}-{index:02d}.err.log'}
             command = [sys.executable, '-m', 'smg_rl.cli', '--config', CONFIG, 'train-dqn',
                        '--steps', str(steps), '--max-seconds', str(job['max_seconds']),
                        '--deadline-utc', DEADLINE, '--resume', branch['checkpoint']]
