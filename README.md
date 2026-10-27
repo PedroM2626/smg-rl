@@ -5,6 +5,10 @@ Visual reinforcement-learning experiments for **Super Mario Galaxy** and
 no full-start, RAM-confirmed mission completion has been demonstrated in the
 experiments reported here.
 
+The later [frozen SMG1 IQN evaluation](docs/frozen-iqn-evaluation-20261027.md)
+completed six canonical attempts without a star. Its goal-distance candidate was
+analyzed offline and is not active in training.
+
 ## Current evidence
 
 As of the October 27, 2026 audit, the latest SMG1 IQN/IMPALA allocation stopped

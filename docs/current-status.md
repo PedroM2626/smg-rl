@@ -5,6 +5,11 @@ snapshot, not a live process monitor. Older documents may use present tense for
 their own dated experiments; their original observations remain historical.
 No command here automatically allocates training or changes an existing budget.
 
+The subsequently requested [frozen IQN checkpoint evaluation](frozen-iqn-evaluation-20261027.md)
+completed six canonical episodes with zero stars. Greedy evaluation repeatedly
+reached the mapped opening and then died. A goal-distance tracker was tested
+offline; it is not connected to the training reward or replay.
+
 ## What is established
 
 | Evidence | Result | Interpretation |
@@ -73,12 +78,11 @@ generalization require explicitly varied, documented states or timing.
 
 These are proposals, not results or an authorization to dispatch a job:
 
-1. **Audit the last usable IQN checkpoint and evaluation path.** Verify the
-   model, optimizer and replay manifest, then record bounded canonical frozen
-   evaluations with an exact image/control overlay. Keep deterministic and
-   stochastic evaluations separate and record policy settings, state bytes,
-   attempt outcomes and hashes. Compare against the older frozen results,
-   without calling collection maxima a frozen-policy success.
+1. **Use the completed frozen evaluation as a baseline.** The checkpoint and
+   replay hashes were verified and deterministic/stochastic videos were
+   recorded; see [the evaluation](frozen-iqn-evaluation-20261027.md). Further
+   tests would need varied documented game states or platform timing, without
+   calling collection maxima a frozen-policy success.
 2. **Validate course coverage before extending the reward.** Use read-only RAM
    and recorded trajectories to map additional reachable, grounded regions and
    check continuity, height and moving-platform effects. An assisted or scripted

@@ -2,6 +2,9 @@
 
 [Current evidence, settings and next-experiment plan](current-status.md) are
 summarized separately from dated historical records. The
+[frozen IQN checkpoint evaluation and goal-distance candidate](frozen-iqn-evaluation-20261027.md)
+report six canonical attempts, videos, trajectories and the offline-only metric.
+The
 [four-hour IQN/IMPALA allocation](iqn-four-hours-20261027.md) failed after
 about2h18 due to disk exhaustion; it did not complete four hours. No training
 was active at the October 27 audit. Its last valid checkpoint and failed-block

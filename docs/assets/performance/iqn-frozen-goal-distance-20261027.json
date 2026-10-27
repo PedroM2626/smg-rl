@@ -1,0 +1,149 @@
+{
+  "recorded_utc": "2026-10-27T20:54:42.797864+00:00",
+  "checkpoint_agent_sha256": "4b13d0734f09d7f0b182eff3a6ae5fdeb4a094524b83e4ef447f2310f5ce5816",
+  "checkpoint_replay_sha256": "5c6408bbb28c94de3322ca45243d7d0e75bead7f0f36a145f2020ab94bd9dc34",
+  "scope": "Frozen canonical-start evaluation; the goal-distance candidate is offline only.",
+  "metric": "Closest alive-grounded X/Z distance improvement from the canonical start; not native mission completion.",
+  "goal_xyz": [
+    26681.45703125,
+    950.0,
+    -11984.625
+  ],
+  "episodes": [
+    {
+      "mode": "greedy",
+      "seed_label": 11,
+      "trajectory": "runs\\model-free\\smg1-six-two-hour\\eval-dqn-video-20261027-175202-073857\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "decisions": 58,
+      "outcome": "death",
+      "ram_star": false,
+      "grounded_projection_percent": 4.690157022787013,
+      "closest_distance_improvement_world_units": 1333.0574942914209,
+      "closest_distance_improvement_percent_of_initial": 4.553621532986988,
+      "opening_fraction": 1.0,
+      "actions": {
+        "w": 24,
+        "d": 5,
+        "a": 5,
+        "spin": 21,
+        "jump": 3
+      },
+      "episode_return": -1.0,
+      "regional_reward": 1.0,
+      "epsilon_random_decisions": 0
+    },
+    {
+      "mode": "greedy",
+      "seed_label": 23,
+      "trajectory": "runs\\model-free\\smg1-six-two-hour\\eval-dqn-video-20261027-175202-073857\\worker-00\\sweet_sweet\\episode-000002.csv",
+      "decisions": 58,
+      "outcome": "death",
+      "ram_star": false,
+      "grounded_projection_percent": 4.690157022787013,
+      "closest_distance_improvement_world_units": 1333.0574942914209,
+      "closest_distance_improvement_percent_of_initial": 4.553621532986988,
+      "opening_fraction": 1.0,
+      "actions": {
+        "w": 24,
+        "d": 5,
+        "a": 5,
+        "spin": 21,
+        "jump": 3
+      },
+      "episode_return": -1.0,
+      "regional_reward": 1.0,
+      "epsilon_random_decisions": 0
+    },
+    {
+      "mode": "greedy",
+      "seed_label": 47,
+      "trajectory": "runs\\model-free\\smg1-six-two-hour\\eval-dqn-video-20261027-175202-073857\\worker-00\\sweet_sweet\\episode-000003.csv",
+      "decisions": 58,
+      "outcome": "death",
+      "ram_star": false,
+      "grounded_projection_percent": 4.690157022787013,
+      "closest_distance_improvement_world_units": 1333.0574942914209,
+      "closest_distance_improvement_percent_of_initial": 4.553621532986988,
+      "opening_fraction": 1.0,
+      "actions": {
+        "w": 24,
+        "d": 5,
+        "a": 5,
+        "spin": 21,
+        "jump": 3
+      },
+      "episode_return": -1.0,
+      "regional_reward": 1.0,
+      "epsilon_random_decisions": 0
+    },
+    {
+      "mode": "noisynet_epsilon",
+      "seed_label": 11,
+      "trajectory": "runs\\model-free\\smg1-six-two-hour\\eval-dqn-video-20261027-175242-481141\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "decisions": 56,
+      "outcome": "death",
+      "ram_star": false,
+      "grounded_projection_percent": 4.690157022787013,
+      "closest_distance_improvement_world_units": 1333.0574942914209,
+      "closest_distance_improvement_percent_of_initial": 4.553621532986988,
+      "opening_fraction": 1.0,
+      "actions": {
+        "w": 24,
+        "d": 8,
+        "a": 3,
+        "crouch": 2,
+        "none": 4,
+        "spin": 14,
+        "jump": 1
+      },
+      "episode_return": -1.0,
+      "regional_reward": 1.0,
+      "epsilon_random_decisions": 8
+    },
+    {
+      "mode": "noisynet_epsilon",
+      "seed_label": 23,
+      "trajectory": "runs\\model-free\\smg1-six-two-hour\\eval-dqn-video-20261027-175242-481141\\worker-00\\sweet_sweet\\episode-000002.csv",
+      "decisions": 27,
+      "outcome": "death",
+      "ram_star": false,
+      "grounded_projection_percent": 2.839099810904802,
+      "closest_distance_improvement_world_units": 823.4139559116302,
+      "closest_distance_improvement_percent_of_initial": 2.812718533339952,
+      "opening_fraction": 0.49401647104683466,
+      "actions": {
+        "w": 11,
+        "d": 7,
+        "none": 2,
+        "spin": 4,
+        "jump": 2,
+        "a": 1
+      },
+      "episode_return": -1.5059835289531653,
+      "regional_reward": 0.49401647104683466,
+      "epsilon_random_decisions": 3
+    },
+    {
+      "mode": "noisynet_epsilon",
+      "seed_label": 47,
+      "trajectory": "runs\\model-free\\smg1-six-two-hour\\eval-dqn-video-20261027-175242-481141\\worker-00\\sweet_sweet\\episode-000003.csv",
+      "decisions": 30,
+      "outcome": "death",
+      "ram_star": false,
+      "grounded_projection_percent": 3.9584519739404915,
+      "closest_distance_improvement_world_units": 1123.4672073532165,
+      "closest_distance_improvement_percent_of_initial": 3.8376772861756128,
+      "opening_fraction": 0.9361224628901708,
+      "actions": {
+        "w": 19,
+        "d": 5,
+        "none": 1,
+        "spin": 4,
+        "jump": 1
+      },
+      "episode_return": -1.0638775371098292,
+      "regional_reward": 0.9361224628901708,
+      "epsilon_random_decisions": 1
+    }
+  ]
+}
