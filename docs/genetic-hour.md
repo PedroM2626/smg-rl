@@ -1,5 +1,9 @@
 # One-hour SMG1 genetic intervention
 
+**Latest allocation:** the completed pilot is now the ancestor of an explicitly
+authorized [continuous overnight GA continuation](genetic-overnight.md), replacing
+the remaining IQN run until October27,07:00 BRT. The results below remain fixed.
+
 On October 26 the owner explicitly requested implementation and a one-hour
 genetic algorithm (GA) pilot, with fitness defined by furthest advance. This
 supersedes earlier statements that no genetic experiment was allocated. Only
@@ -155,6 +159,11 @@ The audit is reproducible with:
 ```powershell
 .venv\Scripts\python.exe scripts/audit_genetic_result.py
 ```
+
+That point-in-time audit also verifies live IQN restoration. After the subsequent
+owner-authorized switch back to GA, its live-IQN assertion is intentionally no
+longer satisfied; retain the completed audit JSON as historical evidence and do
+not restart IQN merely to satisfy a superseded runtime-health check.
 
 IQN resumed its original paused checkpoint at481532 real decisions and119871
 updates, preserving its optimizer/replay/RNG and its October27 07:00 BRT

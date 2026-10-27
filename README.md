@@ -3,14 +3,12 @@
 Visual reinforcement learning for **Super Mario Galaxy 1 and 2** in
 Dolphin on Windows.
 
-**Current owner-authorized run:** [six SMG1 collectors until October 27, 07:00 BRT](docs/smg1-overnight.md),
-with an owner-requested [one-hour genetic pilot](docs/genetic-hour.md) that
-temporarily pauses IQN, evolves its action head, and then restores that allocation,
-continuing the final IQN/IMPALA learner with an explicitly audited replay-layout
-expansion. Only worker allocation/owned paths change; task/reward and learner
-state remain preserved. SMG2 remains stopped and is not a solved mission. The
-new phase has independent finite state/budgets and continuous TensorBoard
-reward, attempt and distance history.
+**Current owner-authorized run:** [continuous six-worker SMG1 genetic training
+until October27,07:00 BRT](docs/genetic-overnight.md), with progress analysis at07:00.
+It resumes the population/RNG/champion from the [completed one-hour pilot](docs/genetic-hour.md).
+The GA evolves the action head on frozen IMPALA/IQN features; IQN is paused and
+retained. SMG2 remains stopped and is not solved. Finite independent accounting
+and TensorBoard preserve fitness, reward, attempt and distance history.
 
 **Latest completed intervention (October 26):** [simple reward + IQN/IMPALA](docs/simple-reward-impala.md)
 starts fresh after the owner requested correcting the idle incentive before a

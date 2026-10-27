@@ -153,3 +153,61 @@ def test_result_audit_refuses_missing_nonempty_trajectories():
 
     with pytest.raises(ValueError, match='lacks a trajectory'):
         audited_trajectory({'trajectory': None, 'decisions': 1}, {}, 50)
+
+
+def test_extended_genetic_budget_requires_a_future_timezone_qualified_deadline(monkeypatch):
+    from smg_rl import genetic
+
+    monkeypatch.setattr(genetic.time, 'time', lambda: 1000.)
+    assert genetic.collection_deadline(43200, '1970-01-01T01:00:00+00:00') == 3600
+    with pytest.raises(ValueError, match='absolute deadline'):
+        genetic.collection_deadline(7200)
+    with pytest.raises(ValueError, match='timezone'):
+        genetic.collection_deadline(7200, '2026-10-27T07:00:00')
+    with pytest.raises(ValueError, match='already passed'):
+        genetic.collection_deadline(7200, '1970-01-01T00:00:00+00:00')
+    with pytest.raises(ValueError, match='12 hours'):
+        genetic.collection_deadline(50000, '2026-10-27T07:00:00-03:00')
+
+
+def test_absolute_genetic_deadline_overrides_remaining_monotonic_budget(tmp_path, monkeypatch):
+    from smg_rl import genetic
+
+    evaluator = object.__new__(genetic.GeneticEvaluator)
+    evaluator.run, evaluator.stop_at, evaluator.wall_deadline = tmp_path, float('inf'), 1000.
+    monkeypatch.setattr(genetic.time, 'time', lambda: 1000.)
+    assert evaluator.stopped()
+
+
+def test_resume_restores_population_rng_and_only_completed_pending_trials(tmp_path):
+    import json
+
+    from smg_rl.checkpoints import digest
+    from smg_rl.genetic import resume_population
+
+    population = np.arange(240, dtype=np.float32).reshape(24, 10) / 100
+    fitness = np.arange(24, dtype=np.float64)
+    rng = np.random.default_rng(142)
+    before = rng.bit_generator.state
+    pending_population = next_population(population, fitness, rng)
+    np.savez_compressed(tmp_path / 'generation-0000.npz', genomes=population, fitness=fitness)
+    meta = {'review_passed': True, 'rng_state_before_reproduction': before,
+            'trial_genome_hashes': {str(i): genome_digest(g) for i, g in enumerate(population)}}
+    (tmp_path / 'generation-0000.json').write_text(json.dumps(meta))
+    (tmp_path / 'champion.pt').write_bytes(b'fixture: not a trained checkpoint')
+    source_hashes = {'fixture': 'source'}
+    final = {'state': 'completed', 'error': None, 'source_hashes': source_hashes, 'population': 24,
+             'genome_parameters': 10, 'generations_completed': 1, 'mutation_std': .02,
+             'champion_sha256': digest(tmp_path / 'champion.pt')}
+    (tmp_path / 'summary.json').write_text(json.dumps(final))
+    trials = [{'phase': 'evolution', 'generation': 0, 'individual': i, 'fitness_eligible': True,
+               'fitness_world_units': float(fitness[i])} for i in range(24)]
+    trials += [{'phase': 'evolution', 'generation': 1, 'individual': i, 'fitness_eligible': i == 3,
+                'genome_sha256': genome_digest(pending_population[i])} for i in (3, 4)]
+    (tmp_path / 'trials.jsonl').write_text('\n'.join(json.dumps(t) for t in trials))
+    restored, restored_rng, offset, inherited, _ = resume_population(tmp_path, source_hashes, 24, 10)
+    assert np.array_equal(restored, pending_population)
+    assert restored_rng.bit_generator.state == rng.bit_generator.state
+    assert offset == 1 and list(inherited) == [3]
+    with pytest.raises(ValueError, match='identity'):
+        resume_population(tmp_path, {'different': 'source'}, 24, 10)

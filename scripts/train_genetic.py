@@ -10,5 +10,9 @@ if __name__ == '__main__':
     parser.add_argument('--config', required=True)
     parser.add_argument('--source', required=True)
     parser.add_argument('--seconds', type=float, default=3600)
+    parser.add_argument('--deadline-utc')
+    parser.add_argument('--resume-run')
+    parser.add_argument('--confirmation-seconds', type=float, default=300)
     args = parser.parse_args()
-    train_genetic(load_config(args.config), args.source, args.seconds)
+    train_genetic(load_config(args.config), args.source, args.seconds, deadline_utc=args.deadline_utc,
+                  resume_run=args.resume_run, confirmation_seconds=args.confirmation_seconds)

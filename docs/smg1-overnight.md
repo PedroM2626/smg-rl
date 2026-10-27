@@ -1,5 +1,10 @@
 # SMG1 overnight continuation
 
+**Superseded remaining allocation:** after the completed genetic pilot, the
+owner selected [continuous GA training until07:00](genetic-overnight.md) instead
+of IQN. IQN is intentionally paused and retained; do not resume it automatically.
+The protocol below records its earlier authorization and history.
+
 On October 26, 2026 the owner extended the existing six-collector Sweet Sweet
 training until **October 27 at 07:00 America/Sao_Paulo**, equivalent to
 **2026-10-27T10:00:00+00:00**. Progress reviews occur every three hours.

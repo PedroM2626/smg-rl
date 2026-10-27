@@ -1,0 +1,42 @@
+{
+  "recorded_utc": "2026-10-27T02:15:19.546347+00:00",
+  "owner_authorization": "Continue GA instead of IQN without scheduled pauses; analyze progress at07:00.",
+  "deadline_utc": "2026-10-27T10:00:00+00:00",
+  "deadline_local": "2026-10-27T07:00:00-03:00",
+  "method": "genetic_action_head_with_frozen_transferred_impala_iqn_features",
+  "population": 24,
+  "genome_parameters": 4104,
+  "frozen_feature_source": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\smg1-six-two-hour\\dqn-20261026-204307-660910\\checkpoint-final",
+  "genetic_ancestor_run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\genetic-smg1\\genetic-20261026-214127-729002",
+  "inherited_completed_trials": 22,
+  "generation_offset": 41,
+  "prior_real_decisions": 91178,
+  "prior_completed_trials": 1010,
+  "inherited_fitness_not_new_attempts": true,
+  "iqn_pause_review": {
+    "passed": true,
+    "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\smg1-six-two-hour\\dqn-20261026-223740-163588\\checkpoint-final",
+    "agent_sha256": "c5907d6c716698ba34065718520078e0ceb1b793f3778c89b1baada7d11bcf34",
+    "real_decisions": 523004,
+    "completed_attempts": 8000
+  },
+  "iqn_auto_resume": false,
+  "new_run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\genetic-smg1\\genetic-20261026-231504-090947",
+  "controller": {
+    "pid": 41296,
+    "created_time": 1793067294.7336195,
+    "source": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\smg1-six-two-hour\\dqn-20261026-204307-660910\\checkpoint-final",
+    "seconds": 43200.0,
+    "workers": 6,
+    "deadline_utc": "2026-10-27T10:00:00+00:00",
+    "resume_genetic_run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\genetic-smg1\\genetic-20261026-214127-729002"
+  },
+  "supervisor": {
+    "pid": 41388,
+    "created_time": 1793067216.6933484
+  },
+  "prior_champion_fitness_world_units": 2361.440219460008,
+  "confirmation_reserve_seconds": 0,
+  "scheduled_final_analysis_local": "2026-10-27T07:00:00-03:00",
+  "interpretation": "Continuous process, finite absolute deadline; generation reviews without emulator restarts. Projection/opening percentages are not native mission percentage. Prior source tensors/population/RNG remain preserved."
+}
