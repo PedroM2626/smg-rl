@@ -1,6 +1,8 @@
 # Documentation index
 
-The current allocation is [four hours of six-worker IQN/IMPALA](iqn-four-hours-20261027.md).
+The [four-hour IQN/IMPALA allocation](iqn-four-hours-20261027.md) failed after
+about2h18 due to disk exhaustion; it did not complete four hours. No training
+remains active. Its last valid checkpoint and failed-block evidence are retained.
 The [full-visual genetic trial](genetic-visual.md) completed with zero stars and
 no improvement over the unchanged baseline. Its artifacts and the intermediate
 [IQN return](iqn-return-20261027.md) remain retained.

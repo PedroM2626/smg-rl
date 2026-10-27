@@ -1,0 +1,113 @@
+{
+  "recorded_utc": "2026-10-27T19:44:08.839499+00:00",
+  "audit_passed": true,
+  "training_completed_four_hours": false,
+  "failure": "Disk exhaustion while staging a curriculum state; subsequent final checkpoint serialization also failed.",
+  "root_cause": "NativeDolphin.load_state retained the prior disposable slot9 on every reset, creating unbounded per-profile copies.",
+  "all_controllers_stopped": true,
+  "remaining_emulators": [],
+  "clean_accounted_seconds": 5623.076266899981,
+  "attempted_accounted_seconds_latest_status_lower_bound": 8261.190005299984,
+  "remaining_allocated_seconds_upper_bound": 6138.8099947000155,
+  "source_real_decisions": 571424,
+  "last_valid_checkpoint_real": 749006,
+  "initial_source_checkpoint_hash_verified": true,
+  "new_checkpointed_real_decisions": 177582,
+  "acknowledged_real_decisions_observed": 846674,
+  "new_acknowledged_real_decisions": 275250,
+  "uncheckpointed_acknowledged_decisions": 97668,
+  "saved_csv_decisions": 275102,
+  "saved_minus_acknowledged": -148,
+  "source_completed_attempts": 8779,
+  "new_acknowledged_completed_attempts": 4774,
+  "observed_total_completed_attempts": 13553,
+  "last_valid_checkpoint_completed_attempts": 12125,
+  "new_attempts_by_start_kind": {
+    "canonical": 2386,
+    "assisted": 2388
+  },
+  "acknowledged_ram_stars_by_start_kind": {},
+  "acknowledged_deaths": 4539,
+  "saved_csv_nonfatal_hp_lost": 0.0,
+  "last_valid_checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\smg1-six-two-hour\\dqn-20261027-114555-611503\\checkpoint-final",
+  "last_valid_checkpoint_agent_sha256": "4b13d0734f09d7f0b182eff3a6ae5fdeb4a094524b83e4ef447f2310f5ce5816",
+  "failed_run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\smg1-six-two-hour\\dqn-20261027-124631-367787",
+  "failed_status_is_stale_running": true,
+  "failed_status_last_real": 846542,
+  "failed_checkpoint_resumable": false,
+  "failed_checkpoint_files": {
+    ".incomplete": 0,
+    "agent.pt": 1150976
+  },
+  "progress_before": {
+    "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\smg1-six-two-hour\\dqn-20261027-072529-193280\\worker-01\\sweet_sweet\\episode-000024.csv",
+    "geometric_projection_percent": 6.319297974008416,
+    "grounded_fitness_world_units": 1849.9533748881245,
+    "step": 40,
+    "position": [
+      807.2242431640625,
+      -50.00019454956055,
+      -2667.754150390625
+    ],
+    "outcome": "death",
+    "saved_decisions": 46,
+    "ram_star": false,
+    "start_kind": "full_start",
+    "partial_episode": false,
+    "mapped_opening_fraction": 0.8527405768304077
+  },
+  "best_observed_new": {
+    "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\smg1-six-two-hour\\dqn-20261027-124631-367787\\worker-01\\sweet_sweet\\episode-000074.csv",
+    "geometric_projection_percent": 6.586019401883368,
+    "grounded_fitness_world_units": 1928.0351820258345,
+    "step": 134,
+    "position": [
+      770.4668579101562,
+      -50.00019454956055,
+      -2941.612548828125
+    ],
+    "outcome": "death",
+    "saved_decisions": 188,
+    "ram_star": false,
+    "start_kind": "full_start",
+    "partial_episode": false,
+    "mapped_opening_fraction": 1.0
+  },
+  "best_observed_new_is_from_failed_run": true,
+  "best_observed_within_clean_blocks": {
+    "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\smg1-six-two-hour\\dqn-20261027-111513-207242\\worker-01\\sweet_sweet\\episode-000060.csv",
+    "geometric_projection_percent": 6.0092333167202625,
+    "grounded_fitness_world_units": 1759.1829821098422,
+    "step": 42,
+    "position": [
+      671.5546264648438,
+      -50.00019836425781,
+      -2748.977783203125
+    ],
+    "outcome": "death",
+    "saved_decisions": 57,
+    "ram_star": false,
+    "start_kind": "full_start",
+    "partial_episode": false,
+    "mapped_opening_fraction": 1.0
+  },
+  "retained_slot_copies": 5862,
+  "retained_slot_bytes": 225667442367,
+  "review_c_free_bytes": 1402179584,
+  "review_d_free_bytes": 3820404936704,
+  "files_deleted_or_relocated": false,
+  "automatic_retry_started": false,
+  "actions_by_index": {
+    "3": 102040,
+    "7": 6606,
+    "1": 29352,
+    "2": 21917,
+    "0": 12889,
+    "5": 43250,
+    "4": 30151,
+    "6": 29045
+  },
+  "completed_block_audits": 3,
+  "interpretation": "Only749006 real decisions are resumable. The larger846674 acknowledged total and6.5860% geometric maximum describe actual observations, not a saved final policy. Projection and opening fraction are not native mission percentage. No new frozen evaluation was allocated.",
+  "figure": "docs\\assets\\performance\\iqn-four-hour-result-20261027.png"
+}

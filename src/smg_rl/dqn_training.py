@@ -20,6 +20,7 @@ from smg_rl.lean_worker import LeanWorkerFactory
 from smg_rl.parallel import runtime_directory
 from smg_rl.profiles import PROFILES, game_id, require_training_enabled
 from smg_rl.replay import replay_signature
+from smg_rl.resource_disk import disk_safe, disk_snapshot, require_disk_headroom
 from smg_rl.resource_memory import memory_safe, memory_snapshot, require_memory_headroom
 from smg_rl.train import new_run
 from smg_rl.vector import MeasuredSubprocVecEnv
@@ -78,6 +79,7 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
     deadline = deadline_timestamp(deadline_utc)
     if deadline is not None and deadline <= time.time():
         raise ValueError('The absolute collection deadline has already passed.')
+    require_disk_headroom(config)
     agent, replay = prepare_dqn(config, resume)
     config['model_free_run'] = 'online'
     run = new_run(config, 'dqn')
@@ -125,6 +127,7 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
             'tensorboard': str(logdir), 'updated_at': datetime.now(timezone.utc).isoformat(),
             'losses': metrics, 'timings': profiler.snapshot(), 'error': error,
             'memory': memory_snapshot(),
+            'disk': disk_snapshot(config),
             'visual_encoder_trainable': all(p.requires_grad for p in agent.online.conv.parameters()),
             'visual_encoder_first_update_probe': visual_probe,
             'start_kinds': [i.get('start_kind') for i in infos],
@@ -239,7 +242,10 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
                 if not memory_safe(memory_snapshot()):
                     stop_reason = 'memory_pressure'
                     break
-        state = 'stopped' if (run / 'STOP').exists() or stop_reason == 'memory_pressure' else 'completed'
+                if not disk_safe(disk_snapshot(config)):
+                    stop_reason = 'disk_pressure'
+                    break
+        state = 'stopped' if (run / 'STOP').exists() or stop_reason in ('memory_pressure', 'disk_pressure') else 'completed'
         stop_reason = stop_reason or ('owner_stop' if state == 'stopped' else 'decision_budget')
     except KeyboardInterrupt:
         state = 'stopped'
@@ -261,6 +267,13 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
                 'state': state, 'checkpoint': str(run / 'checkpoint-final'), 'imagined_transitions': 0,
                 'stop_reason': stop_reason, 'max_seconds': max_seconds, 'deadline_utc': deadline_utc})
             publish()
+        except BaseException as checkpoint_error:
+            state, stop_reason = 'failed', 'checkpoint_failure'
+            error = f'{error or "Collection finalization"}; checkpoint/close error: {checkpoint_error!r}'
+            # A failed checkpoint must not leave a healthy-looking running status.
+            # Publication can still fail on a completely exhausted volume.
+            publish()
+            raise
         finally:
             writer.flush()
             writer.close()

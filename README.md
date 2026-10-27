@@ -3,9 +3,12 @@
 Visual reinforcement learning for **Super Mario Galaxy 1 and 2** in
 Dolphin on Windows.
 
-**Current owner-authorized run:** [four hours of six-worker SMG1 IQN/IMPALA](docs/iqn-four-hours-20261027.md),
-resuming571424 real decisions with trainable vision and unchanged reward/replay.
-The final report separates global goal projection from mapped-opening progress.
+**Latest IQN allocation:** [the four-hour six-worker run](docs/iqn-four-hours-20261027.md)
+was interrupted after about2h18 by disk exhaustion.275250 new acknowledged
+decisions were observed;177582 are in valid checkpoints and97668 were not saved.
+Canonical goal projection increased6.3193% to6.5860%, with zero stars. No training
+is active. Repeated temporary-state retention is fixed, but existing data remain
+preserved and disk space must be addressed before another allocation.
 
 **Latest completed genetic run:** [full-visual SMG1 evolution](docs/genetic-visual.md)
 ended on October27 at09:56 BRT:228793 real decisions,75 complete generations,

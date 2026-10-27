@@ -229,9 +229,24 @@ class NativeDolphin(BackgroundDolphin):
         if not self.bridge.get(44) & 1:
             raise RuntimeError("This native build does not support frontier savestates.")
         destination = self.root / "StateSaves" / f"{self.memory.profile.game_id}.s09"
-        if destination.exists():
-            destination.rename(destination.with_name(destination.name + ".retained-" + uuid.uuid4().hex))
-        shutil.copy2(source, destination)
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        pending = destination.with_name(destination.name + '.staging-' + uuid.uuid4().hex)
+        original = None
+        try:
+            # Only the initially inherited slot is original. Later slot9 files
+            # are owned staging copies, not new archives to retain on every reset.
+            shutil.copy2(source, pending)
+            if destination.exists() and getattr(self, '_owned_restore_slot', None) != destination:
+                original = destination.with_name(destination.name + '.retained-original-' + uuid.uuid4().hex)
+                destination.rename(original)
+            pending.replace(destination)
+            self._owned_restore_slot = destination
+        except BaseException:
+            if original is not None and not destination.exists():
+                original.replace(destination)
+            raise
+        finally:
+            pending.unlink(missing_ok=True)  # Only this call's disposable partial copy.
         self.load_slot(9)
 
     @measured("advance")

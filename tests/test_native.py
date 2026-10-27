@@ -93,6 +93,53 @@ def test_native_action_rejects_inexact_frame_acknowledgment():
         backend.advance(["jump"])
 
 
+def restore_backend(root):
+    backend = object.__new__(NativeDolphin)
+    backend.root = root
+    backend.bridge = SimpleNamespace(get=lambda _: 1)
+    backend.memory = SimpleNamespace(profile=SimpleNamespace(game_id='RMGE01'))
+    backend.load_slot = lambda slot: None
+    return backend
+
+
+def test_restore_staging_preserves_initial_slot_once_without_accumulating_copies(tmp_path):
+    backend = restore_backend(tmp_path / 'owned-profile')
+    folder = backend.root / 'StateSaves'
+    folder.mkdir(parents=True)
+    slot = folder / 'RMGE01.s09'
+    slot.write_bytes(b'original inherited slot')
+    source = tmp_path / 'immutable-source.sav'
+    source.write_bytes(b'immutable archive state')
+    for _ in range(5):
+        backend.load_state(source)
+    assert slot.read_bytes() == source.read_bytes() == b'immutable archive state'
+    retained = list(folder.glob('*.retained-*'))
+    assert len(retained) == 1 and retained[0].read_bytes() == b'original inherited slot'
+    assert not list(folder.glob('*.staging-*'))
+
+
+def test_failed_restore_copy_leaves_original_slot_and_source_intact(tmp_path, monkeypatch):
+    from smg_rl import native
+
+    backend = restore_backend(tmp_path / 'owned-profile')
+    folder = backend.root / 'StateSaves'
+    folder.mkdir(parents=True)
+    slot = folder / 'RMGE01.s09'
+    slot.write_bytes(b'original')
+    source = tmp_path / 'immutable-source.sav'
+    source.write_bytes(b'source')
+
+    def full_disk(src, dst):
+        dst.write_bytes(b'partial')
+        raise OSError(28, 'No space left on device')
+
+    monkeypatch.setattr(native.shutil, 'copy2', full_disk)
+    with pytest.raises(OSError, match='No space'):
+        backend.load_state(source)
+    assert slot.read_bytes() == b'original' and source.read_bytes() == b'source'
+    assert not list(folder.glob('*.staging-*')) and not list(folder.glob('*.retained-*'))
+
+
 def test_frame_reply_requires_matching_cpu_completion_even_when_paused():
     source = bridge()
     source.timeout = 1

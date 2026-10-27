@@ -13,6 +13,7 @@ import psutil
 from smg_rl.config import load_config
 from smg_rl.diagnostics import atomic_json
 from smg_rl.dqn_trial import alive, audit_block, locate_run, read
+from smg_rl.resource_disk import require_disk_headroom
 from smg_rl.resource_memory import require_memory_headroom
 
 STATE = Path('.local/smg1-six-two-hour-state.json')
@@ -86,6 +87,7 @@ def supervise(resume_review=None, training_seconds=7200):
             if remaining <= 0 or decisions < 6 or STOP.exists():
                 break
             require_memory_headroom()
+            require_disk_headroom(load_config(CONFIG))
             seconds = min(300 if block == 0 else 1800 if block == 1 else 3600, remaining)
             steps = min(3072, decisions) if block == 0 else decisions
             steps -= steps % 6

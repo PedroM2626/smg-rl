@@ -16,6 +16,8 @@ def portable_memory_headroom(monkeypatch):
     monkeypatch.setattr(dqn_training, 'require_memory_headroom', lambda: None)
     monkeypatch.setattr(dqn_training, 'memory_snapshot', lambda: {
         'commit_available_bytes': 16 * 2**30, 'physical_available_bytes': 8 * 2**30})
+    monkeypatch.setattr(dqn_training, 'require_disk_headroom', lambda _: None)
+    monkeypatch.setattr(dqn_training, 'disk_snapshot', lambda _: {'runs': {'free_bytes': 8 * 2**30}})
 
 
 class BoundaryVector:
@@ -148,3 +150,44 @@ def test_absolute_deadline_saves_clean_checkpoint_before_next_decision(tmp_path,
     assert status['real_decisions'] == 0 and status['state'] == 'completed'
     assert status['stop_reason'] == 'scheduled_deadline'
     assert (run / 'checkpoint-final' / 'agent.pt').exists()
+
+
+def test_disk_pressure_stops_before_checkpoint_space_is_exhausted(tmp_path, monkeypatch):
+    import json
+
+    config = load_config('config/iqn-smg1.yaml')
+    config['paths'].update(runs=str(tmp_path / 'runs'), tensorboard=str(tmp_path / 'tensorboard'))
+    config['environment']['image_size'] = 40
+    config['parallel']['workers'] = 1
+    config['training']['device'] = 'cpu'
+    config['dqn'].update(capacity=128, learning_starts=100, batch_size=2, channels=2, hidden=32)
+    monkeypatch.setattr(dqn_training, 'MeasuredSubprocVecEnv', lambda *a, **k: BoundaryVector())
+    monkeypatch.setattr(dqn_training, 'disk_safe', lambda _: False)
+    run = dqn_training.train_dqn(config, 100)
+    status = json.loads((run / 'status.json').read_text())
+    assert status['state'] == 'stopped' and status['stop_reason'] == 'disk_pressure'
+    assert status['real_decisions'] == 64
+    assert (run / 'checkpoint-final/manifest.json').exists()
+
+
+def test_failed_checkpoint_reports_failure_instead_of_stale_running_state(tmp_path, monkeypatch):
+    import json
+
+    config = load_config('config/iqn-smg1.yaml')
+    config['paths'].update(runs=str(tmp_path / 'runs'), tensorboard=str(tmp_path / 'tensorboard'))
+    config['environment']['image_size'] = 40
+    config['parallel']['workers'] = 1
+    config['training']['device'] = 'cpu'
+    config['dqn'].update(capacity=32, learning_starts=20, batch_size=2, channels=2, hidden=32)
+    monkeypatch.setattr(dqn_training, 'MeasuredSubprocVecEnv', lambda *a, **k: BoundaryVector())
+
+    def cannot_save(*args):
+        raise OSError(28, 'No space left on device')
+
+    monkeypatch.setattr(DistributionalAgent, 'save', cannot_save)
+    with pytest.raises(OSError, match='No space'):
+        dqn_training.train_dqn(config, 2)
+    run = next((tmp_path / 'runs').glob('dqn-*'))
+    status = json.loads((run / 'status.json').read_text())
+    assert status['state'] == 'failed' and status['stop_reason'] == 'checkpoint_failure'
+    assert 'No space' in status['error']
