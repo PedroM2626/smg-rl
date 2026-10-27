@@ -1,5 +1,8 @@
 # Continuous genetic continuation until 07:00
 
+**Completed:** collection stopped at October27,07:00 BRT, with zero stars and
+no improvement over the inherited pilot champion. No training remains active.
+
 On October26 the owner chose to continue the GA instead of IQN, without
 scheduled training pauses, and requested progress analysis at07:00. The existing
 absolute cutoff remains **October27,2026 at07:00 America/Sao_Paulo**,
@@ -103,3 +106,73 @@ verified; collection counters advanced with zero reported errors. See the
 233 portable tests and Ruff passed, including absolute deadline enforcement,
 extended-budget rejection without a deadline, exact population/mutation-RNG
 restoration and exclusion of inherited partial trials from cached fitness.
+
+## Final morning results (October27)
+
+The trainer completed with `stop_reason=scheduled_deadline`, no errors and
+unchanged source/checkpoint hashes. Actual runtime was27903.437 seconds
+(7h45m03.437s), at29.05 real decisions/second. The latest sampled emulator
+response arrived41.8ms after07:00, consistent with an already in-flight action;
+the supervisor finished closing and auditing at07:00:06.458 BRT. Actual
+supervisor/controller identities are no longer alive and no Dolphin remains.
+IQN did not resume. Its newer523004-real/8000-attempt checkpoint is retained.
+
+| Accounting | Overnight only | Pilot + overnight |
+| --- | ---: | ---: |
+| Evolution decisions, including partials |810628 |900164 |
+| Separate frozen-confirmation decisions |0 |1642 |
+| All real emulator decisions |810628 |901806 |
+| Completed generations |278 |319 |
+| Completed evolution trials |6668 |7674 |
+| Separate completed frozen confirmations |0 |4 |
+| Partial trials |6 |8 |
+| Partial decisions (already included above) |254 |872 |
+| Native full-start stars |0 |0 |
+
+The22 inherited fitness records were not counted again. Overnight completed
+generations have indices41 through318. Generation319 had18 completed trials
+and6 deadline-cut trials, so it did not reproduce. Every new trial used a
+canonical start; no assisted state or synthetic completion is included.
+
+**No overnight record improved the pilot:** the retained best remains
+2361.440219 world units of grounded projection, equivalent to8.066498% of the
+calibrated start-to-star straight-line projection and100% of the short mapped
+opening. The best new complete trial and even the best unselected deadline-cut
+trial only matched that fitness. The exact champion file hash remained
+`23eb316bff29daec4a02e182e5122480cbfa0952387d7a44ae06ff814b546018`.
+Its originating episode is still the pilot's generation6/individual21, which
+eventually died. Neither percentage is native mission progress or completion.
+
+Overnight recorded6358 deaths,310 episode timeouts and848 nonfatal HP lost.
+Jump accounted for58.2194% of decisions, forward22.3903%, crouch12.5278% and
+right5.8694%; other actions together occupied less than1%. This action occupancy
+describes actual collection, not a newly frozen evaluation. No additional
+frozen confirmation episodes were allocated or run during morning analysis.
+
+This result demonstrates a sustained plateau in the fixed-feature,4104-gene
+action-head search. Additional time under the same settings did not solve it;
+it does not establish a defect in Sweet Sweet/SMG1 or general superiority or
+inferiority of genetic algorithms. Candidate limitations to investigate before
+another allocation include the frozen representation/action head and whether
+a straight-line maximum sufficiently ranks safe onward routes. These remain
+hypotheses; no fitness, representation or control change was made overnight.
+
+The final artifact audit recomputed grounded fitness from all6674 new trial
+CSVs (including partials), reconciled real/attempt/star counts, compared frozen
+source tensors and hashes, and reproduced all278 new generation populations
+and mutation/selection RNG transitions, including the22 inherited records.
+It separately audited the final unselected generation. All checks passed.
+Reproduce the read-only audit with:
+
+```powershell
+.venv\Scripts\python.exe scripts/audit_genetic_overnight.py
+```
+
+Detailed evidence is in [the final audit](assets/performance/genetic-overnight-result-20261027.json).
+The [trajectory and stagnation figure](assets/performance/genetic-overnight-result-20261027.png)
+uses the inherited champion and the complete generation histories. This reused
+data analysis is not unseen testing. The morning and safety follow-ups are
+retired after reporting; further training needs another owner allocation.
+Final verification passed234 portable tests and Ruff. Shared trajectory audit
+helpers are importable from both direct command-line reporters and tests; the
+accounting tests explicitly reject treating inherited fitness as new trials.

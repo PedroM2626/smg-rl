@@ -1,10 +1,10 @@
 # Documentation index
 
-The current finite allocation is [continuous six-worker SMG1 genetic evolution
-until October27,07:00 BRT](genetic-overnight.md), with progress analysis at07:00.
-It continues the population/RNG/champion from the [completed genetic pilot](genetic-hour.md).
-The earlier [IQN overnight allocation](smg1-overnight.md) is superseded and
-paused; its checkpoint and the completed six-hour/stochastic budgets are retained.
+The [overnight SMG1 genetic allocation](genetic-overnight.md) completed at
+October27,07:00 BRT: zero stars and no improvement over the inherited pilot
+champion. No training remains active. Its population/RNG ancestry from the
+[completed genetic pilot](genetic-hour.md) and all earlier IQN/world-model
+checkpoints remain retained; no automatic successor is allocated.
 
 Documentation describes the checked implementation, measured engineering
 validation, and an experimental protocol. A method being specified here does

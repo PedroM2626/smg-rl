@@ -1,0 +1,172 @@
+{
+  "recorded_utc": "2026-10-27T10:04:40.248950+00:00",
+  "audit_passed": true,
+  "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\genetic-smg1\\genetic-20261026-231504-090947",
+  "stop_reason": "scheduled_deadline",
+  "supervisor_completed_at": "2026-10-27T10:00:06.458385+00:00",
+  "last_emulator_sample_utc": "2026-10-27T10:00:00.041838+00:00",
+  "last_sample_minus_deadline_seconds": 0.04183793067932129,
+  "all_controllers_stopped": true,
+  "remaining_emulators": [],
+  "source_hashes_unchanged": true,
+  "frozen_source_tensors_equal": true,
+  "champion_hash_verified": "23eb316bff29daec4a02e182e5122480cbfa0952387d7a44ae06ff814b546018",
+  "gradient_updates": 0,
+  "elapsed_seconds": 27903.437000000005,
+  "local": {
+    "real_decisions": 810628,
+    "completed_trials": 6668,
+    "partial_trials": 6,
+    "partial_decisions": 254,
+    "full_start_stars": 0
+  },
+  "cumulative": {
+    "real_decisions": 901806,
+    "completed_trials": 7678,
+    "partial_trials": 8,
+    "partial_decisions": 872,
+    "full_start_stars": 0
+  },
+  "cumulative_evolution_only": {
+    "real_decisions": 900164,
+    "completed_trials": 7674,
+    "partial_trials": 8,
+    "partial_decisions": 872,
+    "full_start_stars": 0
+  },
+  "new_generations": 278,
+  "cumulative_complete_generations": 319,
+  "inherited_completed_trials_not_charged_again": 22,
+  "all_local_trial_csv_fitness_recomputed": 6674,
+  "generation_lineage_verified": 278,
+  "champion_is_inherited": true,
+  "inherited_champion": {
+    "individual": 21,
+    "seed": 11,
+    "phase": "evolution",
+    "generation": 6,
+    "worker": 5,
+    "decisions": 269,
+    "genome_sha256": "e35aa9a250eef3bdd9996819b9d9e388105ccdca15ae9d4ad82208e4e41594fb",
+    "fitness_world_units": 2361.440219460008,
+    "geometric_projection_percent": 8.066497565365971,
+    "sampled_path_distance_xz": 11570.568774342366,
+    "environment_return": -1.25,
+    "mapped_opening_percent": 100.0,
+    "fitness_eligible": true,
+    "invalid_position": false,
+    "outcome": "death",
+    "ram_star": false,
+    "dead": true,
+    "health": 2,
+    "start_kind": "full_start",
+    "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\genetic-smg1\\genetic-20261026-214127-729002\\worker-05\\sweet_sweet\\episode-000051.csv"
+  },
+  "retained_champion": {
+    "individual": 21,
+    "seed": 11,
+    "phase": "evolution",
+    "generation": 6,
+    "worker": 5,
+    "decisions": 269,
+    "genome_sha256": "e35aa9a250eef3bdd9996819b9d9e388105ccdca15ae9d4ad82208e4e41594fb",
+    "fitness_world_units": 2361.440219460008,
+    "geometric_projection_percent": 8.066497565365971,
+    "sampled_path_distance_xz": 11570.568774342366,
+    "environment_return": -1.25,
+    "mapped_opening_percent": 100.0,
+    "fitness_eligible": true,
+    "invalid_position": false,
+    "outcome": "death",
+    "ram_star": false,
+    "dead": true,
+    "health": 2,
+    "start_kind": "full_start",
+    "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\genetic-smg1\\genetic-20261026-214127-729002\\worker-05\\sweet_sweet\\episode-000051.csv"
+  },
+  "best_new_complete_trial": {
+    "individual": 0,
+    "seed": 11,
+    "phase": "evolution",
+    "generation": 42,
+    "worker": 0,
+    "decisions": 269,
+    "genome_sha256": "e35aa9a250eef3bdd9996819b9d9e388105ccdca15ae9d4ad82208e4e41594fb",
+    "fitness_world_units": 2361.440219460008,
+    "geometric_projection_percent": 8.066497565365971,
+    "sampled_path_distance_xz": 11570.568774342366,
+    "environment_return": -1.25,
+    "mapped_opening_percent": 100.0,
+    "fitness_eligible": true,
+    "invalid_position": false,
+    "outcome": "death",
+    "ram_star": false,
+    "dead": true,
+    "health": 2,
+    "start_kind": "full_start",
+    "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\genetic-smg1\\genetic-20261026-231504-090947\\worker-00\\sweet_sweet\\episode-000003.csv"
+  },
+  "best_unselected_partial_trial": {
+    "individual": 0,
+    "seed": 11,
+    "phase": "evolution",
+    "generation": 319,
+    "worker": 0,
+    "decisions": 153,
+    "genome_sha256": "e35aa9a250eef3bdd9996819b9d9e388105ccdca15ae9d4ad82208e4e41594fb",
+    "fitness_world_units": 2361.440219460008,
+    "geometric_projection_percent": 8.066497565365971,
+    "sampled_path_distance_xz": 9733.053912136376,
+    "environment_return": 0.75,
+    "mapped_opening_percent": 100.0,
+    "fitness_eligible": false,
+    "invalid_position": false,
+    "outcome": "partial_budget_cut",
+    "ram_star": false,
+    "dead": false,
+    "health": 2,
+    "start_kind": "full_start",
+    "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\genetic-smg1\\genetic-20261026-231504-090947\\worker-00\\sweet_sweet\\episode-000667.csv"
+  },
+  "deaths": 6358,
+  "nonfatal_hp_lost": 848,
+  "action_occupancy": {
+    "none": {
+      "count": 696,
+      "percent": 0.08585935842334586
+    },
+    "d": {
+      "count": 47579,
+      "percent": 5.869400020724672
+    },
+    "a": {
+      "count": 1266,
+      "percent": 0.15617521230453427
+    },
+    "w": {
+      "count": 181502,
+      "percent": 22.39029493183063
+    },
+    "s": {
+      "count": 5074,
+      "percent": 0.6259344606897368
+    },
+    "jump": {
+      "count": 471943,
+      "percent": 58.219429874122284
+    },
+    "spin": {
+      "count": 1014,
+      "percent": 0.12508820322021938
+    },
+    "crouch": {
+      "count": 101554,
+      "percent": 12.527817938684576
+    }
+  },
+  "real_decisions_per_second": 29.05118821025524,
+  "new_frozen_confirmation_trials": 0,
+  "iqn_retained_real_decisions": 523004,
+  "interpretation": "No improvement over the inherited pilot champion. Transferred action-head GA, not full-network evolution. Geometric projection and mapped opening are not native mission percentages; inherited fitness is reused data, not unseen testing. No new frozen policy evaluation was allocated or run.",
+  "figure": "docs\\assets\\performance\\genetic-overnight-result-20261027.png"
+}

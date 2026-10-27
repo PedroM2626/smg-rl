@@ -1,6 +1,5 @@
 """Read-only audit and comparative figure for the completed one-hour genetic pilot."""
 
-import csv
 import json
 from collections import Counter
 from datetime import datetime, timezone
@@ -16,32 +15,11 @@ import torch
 from smg_rl.checkpoints import digest
 from smg_rl.diagnostics import atomic_json
 from smg_rl.dqn_trial import alive, locate_run, read
-from smg_rl.genetic import GroundedAdvance, genome_digest, next_population
+from smg_rl.genetic import genome_digest, next_population
+from smg_rl.genetic_audit import audited_trajectory
 
 OUTPUT = Path('docs/assets/performance/genetic-hour-result-20261026.json')
 FIGURE = OUTPUT.with_name('genetic-hour-comparison-20261026.png')
-
-
-def audited_trajectory(record, bounds, max_step):
-    if not record.get('trajectory'):
-        if record['decisions']:
-            raise ValueError('A nonempty genetic trial lacks a trajectory.')
-        return [], []
-    with Path(record['trajectory']).open(newline='', encoding='utf-8') as stream:
-        rows = list(csv.DictReader(stream))
-    if len(rows) - 1 != record['decisions']:
-        raise ValueError('Genetic trial/CSV decision counts differ.')
-    score = GroundedAdvance(bounds['start'], bounds['goal'], max_step)
-    advances = [0.]
-    for row in rows[1:]:
-        score.update({'position': [float(row[k]) for k in ('x', 'y', 'z')],
-                      'grounded': row['grounded'] == 'True', 'dead': row['dead'] == 'True'})
-        advances.append(100 * score.best / score.length)
-    if score.invalid or not np.isclose(score.best, record['fitness_world_units'], atol=1e-6, rtol=0):
-        raise ValueError('Recomputed grounded trajectory fitness differs from the trial ledger.')
-    if record['ram_star'] != (rows[-1]['complete'] == 'True'):
-        raise ValueError('Genetic success differs from native completion CSV.')
-    return rows, advances
 
 
 def audit():

@@ -211,3 +211,14 @@ def test_resume_restores_population_rng_and_only_completed_pending_trials(tmp_pa
     assert offset == 1 and list(inherited) == [3]
     with pytest.raises(ValueError, match='identity'):
         resume_population(tmp_path, {'different': 'source'}, 24, 10)
+
+
+def test_report_counts_keep_partial_decisions_but_exclude_inherited_fitness():
+    from smg_rl.genetic_audit import counts
+
+    ledger = [{'decisions': 10, 'fitness_eligible': True, 'ram_star': False},
+              {'decisions': 4, 'fitness_eligible': False, 'ram_star': False}]
+    assert counts(ledger) == {'real_decisions': 14, 'completed_trials': 1, 'partial_trials': 1,
+                              'partial_decisions': 4, 'full_start_stars': 0}
+    with pytest.raises(ValueError, match='Inherited fitness'):
+        counts(ledger + [{**ledger[0], 'inherited_from_run': 'fixture'}])
