@@ -167,8 +167,9 @@ archived, relocated or silently replaced to free space during this review.
 The code now stages a restore into a unique temporary file, preserves an
 initially inherited slot9 at most once, and atomically replaces only its own
 subsequent staging copy. A failed copy leaves the original slot/source intact
-and removes only that call's incomplete temporary. All5862 historical retained
-files remain untouched. Output/profile volumes now require4GiB free at IQN
+and removes only that call's incomplete temporary. The 5862 historical retained
+files were untouched during the failure review; a subsequent owner-requested
+cleanup is documented below. Output/profile volumes now require4GiB free at IQN
 preflight and are checked every64 vector ticks; disk pressure triggers a clean
 stop while space remains for a checkpoint. Finalization errors now attempt to
 publish an explicit failed/checkpoint-failure status instead of leaving a stale
@@ -189,3 +190,19 @@ and [the preserved best trajectory](assets/performance/iqn-four-hour-result-2026
 The completion follow-up is retired after reporting the failure. A future
 allocation must address storage headroom and explicitly resume from the last
 valid checkpoint, while retaining failed time/decisions as separate accounting.
+
+## Subsequent verified storage cleanup
+
+On October 27, the owner authorized a cleanup after the failure review. The
+cleanup removed 9647 disposable, previously retained slot-9 staging copies
+(397032026141 logical bytes) from project-owned parallel worker profiles. Each
+removed file was checked with SHA-256 against an intact state in the immutable
+SMG1 or SMG2 curriculum bank; source digests were checked against their bank
+manifest. The oldest retained file per worker and at least one copy per
+worker and matching state digest were kept. The 22 candidates that did not
+match a verified source were also kept. Original ROMs, savestates, profiles,
+and checkpoints were not removed. Per-file local audit logs are retained in
+`.local/cleanup-verified-duplicates-20261027.jsonl` and
+`.local/cleanup-other-verified-duplicates-20261027.jsonl`. The nine curriculum
+sources and the last valid IQN checkpoint were hash-verified after cleanup.
+No training was resumed as part of this cleanup.
