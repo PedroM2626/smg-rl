@@ -206,3 +206,25 @@ and checkpoints were not removed. Per-file local audit logs are retained in
 `.local/cleanup-other-verified-duplicates-20261027.jsonl`. The nine curriculum
 sources and the last valid IQN checkpoint were hash-verified after cleanup.
 No training was resumed as part of this cleanup.
+
+### Follow-up storage reduction
+
+At the owner's request, inactive worker profiles were reviewed again. NTFS
+transparent compression was applied to their `WiiSD.raw` and `a.raw` images;
+909 images were checked byte-for-byte by SHA-256 before and after compression,
+with no errors. Their combined allocated size decreased from 87796232192 to
+310345728 bytes in that batch. Two images had already been compressed in the
+initial integrity tests, so this figure excludes most of their initial saving.
+The paths and file contents remain intact. A test on a savestate gained less
+than two percent, so the remaining savestates were left as they were. The
+per-file audit is `.local/compact-profile-images-20261027.jsonl`.
+
+The follow-up also removed 3106323630 logical bytes of cached `.whl`, `.cab`,
+`.msi`, and `.vsix` installation archives. Before removing the wheels, the
+installed package names and exact versions were verified. The installed Python
+environment, Dolphin build, profiles, ROMs, savestates, training replays and
+checkpoints remain in place. Reinstalling the same packages offline may require
+obtaining those archives again; the local audit is
+`.local/cleanup-installed-package-caches-20261027.jsonl`. NTFS compression
+reduces space on disk, not the apparent uncompressed file sizes, and an old
+profile may incur decompression overhead when it is used again.
