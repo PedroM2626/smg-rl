@@ -125,3 +125,31 @@ def test_existing_genetic_job_cannot_pause_iqn_or_launch_twice(tmp_path, monkeyp
     monkeypatch.setattr(run_genetic_hour, 'STATE', state)
     with pytest.raises(ValueError, match='no duplicate'):
         run_genetic_hour.supervise()
+
+
+def test_result_audit_recomputes_grounded_fitness_and_rejects_inflated_claims(tmp_path):
+    import csv
+
+    from scripts.audit_genetic_result import audited_trajectory
+
+    path = tmp_path / 'fixture.csv'
+    with path.open('w', newline='') as stream:
+        writer = csv.writer(stream)
+        writer.writerow(['x', 'y', 'z', 'grounded', 'dead', 'complete'])
+        writer.writerows([[0, 0, 0, True, False, False], [20, 0, 0, True, False, False],
+                          [40, 0, 0, False, False, False], [50, 0, 0, True, True, False]])
+    record = {'trajectory': str(path), 'decisions': 3, 'fitness_world_units': 20., 'ram_star': False}
+    bounds = {'start': [0, 0, 0], 'goal': [100, 0, 0]}
+    _, advances = audited_trajectory(record, bounds, 50)
+    assert advances == [0, 20, 20, 20]
+    with pytest.raises(ValueError, match='fitness differs'):
+        audited_trajectory({**record, 'fitness_world_units': 50}, bounds, 50)
+    with pytest.raises(ValueError, match='completion CSV'):
+        audited_trajectory({**record, 'ram_star': True}, bounds, 50)
+
+
+def test_result_audit_refuses_missing_nonempty_trajectories():
+    from scripts.audit_genetic_result import audited_trajectory
+
+    with pytest.raises(ValueError, match='lacks a trajectory'):
+        audited_trajectory({'trajectory': None, 'decisions': 1}, {}, 50)

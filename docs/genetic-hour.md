@@ -108,3 +108,62 @@ Confirmation seed labels23/47 are not unseen states: both policies use the same
 canonical savestate and deterministic actions. Changing a Gymnasium reset seed
 does not randomize the Wii RNG restored from that savestate. These repeats check
 repeatability; they do not establish independent generalization.
+
+## Completed pilot results (October 26, 22:45 review)
+
+The pilot completed cleanly in **3360.062 seconds (56 minutes)** inside its
+one-hour ceiling. The reserved confirmation block finished before the ceiling;
+the allocation was not extended to fill the remaining four minutes. There were
+41 complete generations, 1006 completed evolution trials, 2 partial budget-cut
+trials (618 decisions, excluded from selection), and 4 completed frozen
+confirmation trials: 1010 completed attempts plus the 2 partial attempts.
+Evolution consumed89536 real decisions including the retained partials;
+confirmations consumed1642, for **91178 new real decisions**. There were zero
+gradient updates,981 deaths,52 nonfatal HP lost and **zero native full-start
+stars** across all phases.
+
+Both canonical deterministic confirmation repeats reproduced these outcomes:
+
+| Frozen policy | Grounded fitness (world units) | Geometric projection toward star | Mapped initial opening | Outcome |
+| --- | ---: | ---: | ---: | --- |
+| Original IQN action head |1119.906610 |3.825515% |79.415796% |Death,552 decisions |
+| Evolved genetic action head |2361.440219 |8.066498% |100% |Death,269 decisions |
+
+The evolved head increased this fitness by **2.1086 times (+110.86%)** under the
+same new evaluation conditions. It reached the end of the mapped opening and
+made further geometric advance, but did not finish Sweet Sweet. The best result
+first appeared in generation index6 (the seventh generation), with no further
+record by the end of generation41's partial evaluation. This plateau limits the
+claim that simply continuing this search would keep improving it.
+
+In its best recorded trajectory, the peak grounded sample was at decision63,
+X515.5874,Y-50.0002,Z-4575.6050,HP3. It lost one HP at decision77, retreated and
+eventually died. Fitness measures the maximum reached, not the final position
+or total distance traveled.100% opening and8.0665% straight-line projection are
+different measurements; neither is a native mission-completion percentage.
+
+An independent artifact audit recomputed fitness from every one of the1012
+trial CSVs, reconciled all decisions/attempts, checked native completion flags,
+verified all41 generation archives and exact RNG-based reproduction lineage,
+and compared the frozen source tensors and checkpoint hashes. The champion
+genome is `e35aa9a250eef3bdd9996819b9d9e388105ccdca15ae9d4ad82208e4e41594fb`.
+Evidence and comparative trajectories are retained in
+[the final audit](assets/performance/genetic-hour-result-20261026.json) and
+[the comparison figure](assets/performance/genetic-hour-comparison-20261026.png).
+The audit is reproducible with:
+
+```powershell
+.venv\Scripts\python.exe scripts/audit_genetic_result.py
+```
+
+IQN resumed its original paused checkpoint at481532 real decisions and119871
+updates, preserving its optimizer/replay/RNG and its October27 07:00 BRT
+deadline. GA decisions did not enter its replay or counters, and the evolved
+head was not silently promoted into IQN. Actual resumed supervisor/controller
+identities and fresh advancing status were verified. The telemetry exporter is
+active; the TensorBoard HTTP server was found stopped during review and was
+restarted on127.0.0.1:6006, with HTTP200 confirmed. No extra training, genetic
+generation or retry was allocated during this final review.
+Final review validation passed230 portable tests and Ruff, including independent
+trajectory-fitness recomputation and rejection of inflated fitness/completion
+claims. Synthetic fixtures are not counted as emulator outcomes.
