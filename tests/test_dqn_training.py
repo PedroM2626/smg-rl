@@ -63,7 +63,8 @@ def test_full_model_free_loop_records_tensorboard_boundaries_and_resumable_repla
     config['parallel']['workers'] = 1
     config['training']['device'] = 'cpu'
     config['dqn'].update(capacity=32, learning_starts=2, batch_size=2, channels=2, hidden=32,
-                         train_every=1, target_update_interval=2, quantiles=4)
+                         train_every=1, target_update_interval=2, quantiles=4,
+                         encoder='impala' if algorithm == 'iqn' else 'nature')
     vector = BoundaryVector()
     monkeypatch.setattr(dqn_training, 'MeasuredSubprocVecEnv', lambda *a, **k: vector)
     run = dqn_training.train_dqn(config, 5)
@@ -72,6 +73,12 @@ def test_full_model_free_loop_records_tensorboard_boundaries_and_resumable_repla
     assert replay.emitted == agent.real_decisions == 5
     assert agent.attempts['sweet_sweet/full_start']['completed'] == 1
     assert agent.updates > 0 and not any(replay.pending)
+    import json
+
+    status = json.loads((run / 'status.json').read_text())
+    assert status['visual_encoder_trainable']
+    assert status['visual_encoder_first_update_probe']['weights_changed']
+    assert status['visual_encoder_first_update_probe']['gradient_l2'] > 0
     assert replay.arrays['terminal'][:3].all()
     assert not replay.arrays['terminal'][3:5].any()  # Collector cut bootstraps.
     assert replay.observation(replay.arrays['next'][0])[-1, 0, 0] == 13  # Final observation, not autoreset20.

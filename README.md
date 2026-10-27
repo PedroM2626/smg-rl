@@ -3,12 +3,16 @@
 Visual reinforcement learning for **Super Mario Galaxy 1 and 2** in
 Dolphin on Windows.
 
-**Latest completed run:** [overnight six-worker SMG1 genetic training](docs/genetic-overnight.md)
+**Current owner-authorized run:** [return to six-worker SMG1 IQN/IMPALA](docs/iqn-return-20261027.md)
+from the retained523004-real checkpoint, with trainable online vision and an
+initial two-hour staged budget. Original reward/control/replay remain unchanged.
+
+**Latest completed genetic run:** [overnight six-worker SMG1 training](docs/genetic-overnight.md)
 stopped at October27,07:00 BRT. It added810628 real decisions and278 complete
 generations without improving the inherited8.0665% geometric projection or
 collecting a star.100% mapped opening is not100% mission. This was action-head
-evolution on frozen IMPALA/IQN features. All training is now stopped; original
-IQN/SMG2 checkpoints, population ancestry and TensorBoard histories are retained.
+evolution on frozen IMPALA/IQN features. Genetic/SMG2 jobs remain stopped;
+checkpoints, population ancestry and TensorBoard histories are retained.
 
 **Earlier IQN intervention (October 26):** [simple reward + IQN/IMPALA](docs/simple-reward-impala.md)
 starts fresh after the owner requested correcting the idle incentive before a

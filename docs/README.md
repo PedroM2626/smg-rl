@@ -1,8 +1,10 @@
 # Documentation index
 
+The current allocation is [returning to IQN/IMPALA](iqn-return-20261027.md), with
+six SMG1 collectors, trainable vision and an initial two-hour staged budget.
 The [overnight SMG1 genetic allocation](genetic-overnight.md) completed at
 October27,07:00 BRT: zero stars and no improvement over the inherited pilot
-champion. No training remains active. Its population/RNG ancestry from the
+champion. Its population/RNG ancestry from the
 [completed genetic pilot](genetic-hour.md) and all earlier IQN/world-model
 checkpoints remain retained; no automatic successor is allocated.
 

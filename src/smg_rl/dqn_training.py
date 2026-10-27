@@ -101,6 +101,9 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
     writer.add_text('accounting', 'Only real emulator decisions; no world model, synthetic rollouts or imagined transitions.')
     full_stars, assisted_stars, deaths, damage, episode_counts = 0, 0, 0, 0, 0
     stop_reason = None
+    visual_parameter = next(agent.online.conv.parameters())
+    visual_before = visual_parameter.detach().clone()
+    visual_probe = None
 
     def publish():
         elapsed = time.perf_counter() - started
@@ -122,6 +125,8 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
             'tensorboard': str(logdir), 'updated_at': datetime.now(timezone.utc).isoformat(),
             'losses': metrics, 'timings': profiler.snapshot(), 'error': error,
             'memory': memory_snapshot(),
+            'visual_encoder_trainable': all(p.requires_grad for p in agent.online.conv.parameters()),
+            'visual_encoder_first_update_probe': visual_probe,
             'start_kinds': [i.get('start_kind') for i in infos],
             'start_relative_route_progress': [i.get('start_relative_route_progress') for i in infos],
             'active_attempts': [{k: i.get(k) for k in ('variation', 'start_kind', 'worker_episode',
@@ -219,6 +224,10 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
                 for _ in range(due):
                     with profiler.measure('q_update'):
                         metrics = agent.update(replay)
+                        if visual_probe is None:
+                            visual_probe = {'weights_changed': not torch.equal(visual_before, visual_parameter.detach()),
+                                'gradient_l2': float(visual_parameter.grad.norm()) if visual_parameter.grad is not None else None,
+                                'source_optimizer_updates': start_updates, 'observed_optimizer_updates': agent.updates}
             tick += 1
             if tick % 64 == 0:
                 assert all(np.array_equal(replay.observation(current[i]), observation['image'][i]) for i in range(workers))

@@ -19,6 +19,7 @@ STATE = Path('.local/smg1-six-two-hour-state.json')
 STOP = Path('.local/smg1-six-two-hour.STOP')
 CONFIG = 'config/smg1-six-two-hour.yaml'
 SOURCE = Path('.local/smg1-six-source/checkpoint-six-workers')
+LOG_PREFIX = 'smg1-six'
 
 
 def save(state):
@@ -37,22 +38,38 @@ def snapshot():
     print(json.dumps(state, indent=2))
 
 
-def supervise():
+def supervise(resume_review=None):
     if STATE.exists() or STOP.exists():
         raise ValueError('Existing continuation/stop requires review; never dispatch a duplicate.')
     if any((p.info['name'] or '').lower() == 'dolphin.exe' for p in psutil.process_iter(['name'])):
         raise ValueError('Review emulator ownership before starting the six SMG1 collectors.')
-    migration = read(SOURCE / 'worker-migration.json')
-    if migration['target_workers'] != 6 or not migration['learner_optimizer_rng_and_counters_equal']:
-        raise ValueError('An audited six-worker migration checkpoint is required.')
+    source = SOURCE
+    if resume_review:
+        retained = read(Path(resume_review))['iqn_pause_review']
+        if not retained['passed']:
+            raise ValueError('The retained IQN pause was not reviewed.')
+        source = Path(retained['checkpoint'])
+        prior = read(source.parent / 'status.json')
+        reviewed = audit_block(source.parent, load_config(CONFIG), prior['source_count'],
+                               prior['completed_attempts'] - prior['episodes_this_run'], paused=True)
+        if reviewed['agent_sha256'] != retained['agent_sha256']:
+            raise ValueError('The reviewed IQN resume checkpoint identity changed.')
+        migration = reviewed
+    else:
+        migration = read(SOURCE / 'worker-migration.json')
+        if migration['target_workers'] != 6 or not migration['learner_optimizer_rng_and_counters_equal']:
+            raise ValueError('An audited six-worker migration checkpoint is required.')
     branch = {'config': CONFIG, 'jobs': [], 'source_real': migration['real_decisions'],
               'real_decisions': migration['real_decisions'], 'source_attempts': migration['completed_attempts'],
               'completed_attempts': migration['completed_attempts'], 'elapsed_training_seconds': 0.,
-              'checkpoint': str(SOURCE.resolve())}
+              'checkpoint': str(source.resolve())}
     state = {'schema': 1, 'phase': 'running', 'owner_authorization': 'Owner requested six SMG1 workers for two hours.',
              'supervisor': {'pid': os.getpid(), 'created_time': psutil.Process().create_time()},
              'training_seconds': 7200, 'new_real_decision_cap': 720000, 'maximum_emulators': 6,
              'games': {'smg1': branch}, 'note': 'One shared policy, unchanged objective/control/start mixture. Zero stars alone does not prove a game bug.'}
+    if resume_review:
+        state.update(owner_authorization='Owner requested returning to IQN; initial finite two-hour allocation with staged reviews.',
+                     retained_pause_review=str(resume_review), visual_encoder='IMPALA, trainable by gradient')
     save(state)
     try:
         for block in range(8):  # Health,30min,60min,remainder; a hard finite dispatch ceiling.
@@ -68,7 +85,7 @@ def supervise():
             job = {'config': CONFIG, 'phase': 'pending_dispatch', 'label': label,
                    'source_real': branch['real_decisions'], 'source_attempts': branch['completed_attempts'],
                    'requested_additional': steps, 'max_seconds': seconds,
-                   'stdout': f'.local/smg1-six-{label}.out.log', 'stderr': f'.local/smg1-six-{label}.err.log',
+                   'stdout': f'.local/{LOG_PREFIX}-{label}.out.log', 'stderr': f'.local/{LOG_PREFIX}-{label}.err.log',
                    'resume': branch['checkpoint']}
             command = [sys.executable, '-m', 'smg_rl.cli', '--config', CONFIG, 'train-dqn',
                        '--steps', str(steps), '--max-seconds', str(seconds), '--resume', branch['checkpoint']]
@@ -116,5 +133,14 @@ def supervise():
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('mode', choices=['supervise', 'snapshot'])
+    parser.add_argument('--resume-reviewed', help='Completed controller state holding an audited IQN pause checkpoint.')
+    parser.add_argument('--state', type=Path)
+    parser.add_argument('--stop', type=Path)
+    parser.add_argument('--log-prefix')
     args = parser.parse_args()
-    {'supervise': supervise, 'snapshot': snapshot}[args.mode]()
+    STATE, STOP = args.state or STATE, args.stop or STOP
+    LOG_PREFIX = args.log_prefix or LOG_PREFIX
+    if args.mode == 'supervise':
+        supervise(args.resume_reviewed)
+    else:
+        snapshot()

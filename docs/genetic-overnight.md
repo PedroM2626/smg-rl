@@ -1,7 +1,8 @@
 # Continuous genetic continuation until 07:00
 
 **Completed:** collection stopped at October27,07:00 BRT, with zero stars and
-no improvement over the inherited pilot champion. No training remains active.
+no improvement over the inherited pilot champion. The owner subsequently
+authorized [returning to IQN](iqn-return-20261027.md); this GA remains stopped.
 
 On October26 the owner chose to continue the GA instead of IQN, without
 scheduled training pauses, and requested progress analysis at07:00. The existing
