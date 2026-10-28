@@ -1,0 +1,86 @@
+{
+  "scope": "Frozen source policy and initial-state repeats; not training or independent Wii environments.",
+  "route_sha256": "c4299bc59391563b00817bbbf2b96be11ce08a163e2b54c691892d474d5204ed",
+  "source_real_decisions": 749006,
+  "episodes": [
+    {
+      "mode": "greedy",
+      "seed": 11,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 58,
+        "native_star": false,
+        "death": true
+      },
+      "geometric_projection_percent": 4.690157022787013,
+      "opening_fraction": 1.0,
+      "outcome": "death",
+      "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\smg1-six-two-hour\\eval-dqn-video-20261028-143235-534411\\policy.mp4",
+      "trajectory": "runs\\model-free\\smg1-six-two-hour\\eval-dqn-video-20261028-143235-534411\\worker-00\\sweet_sweet\\episode-000001.csv"
+    },
+    {
+      "mode": "stochastic",
+      "seed": 11,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 56,
+        "native_star": false,
+        "death": true
+      },
+      "geometric_projection_percent": 4.690157022787013,
+      "opening_fraction": 1.0,
+      "outcome": "death",
+      "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\smg1-six-two-hour\\eval-dqn-video-20261028-143007-402175\\policy.mp4",
+      "trajectory": "runs\\model-free\\smg1-six-two-hour\\eval-dqn-video-20261028-143007-402175\\worker-00\\sweet_sweet\\episode-000001.csv"
+    },
+    {
+      "mode": "stochastic",
+      "seed": 23,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 27,
+        "native_star": false,
+        "death": true
+      },
+      "geometric_projection_percent": 3.247579433239709,
+      "opening_fraction": 0.49401647104683466,
+      "outcome": "death",
+      "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\smg1-six-two-hour\\eval-dqn-video-20261028-143007-402175\\policy.mp4",
+      "trajectory": "runs\\model-free\\smg1-six-two-hour\\eval-dqn-video-20261028-143007-402175\\worker-00\\sweet_sweet\\episode-000002.csv"
+    },
+    {
+      "mode": "stochastic",
+      "seed": 47,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 30,
+        "native_star": false,
+        "death": true
+      },
+      "geometric_projection_percent": 4.224762139242706,
+      "opening_fraction": 0.9361224628901708,
+      "outcome": "death",
+      "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\smg1-six-two-hour\\eval-dqn-video-20261028-143007-402175\\policy.mp4",
+      "trajectory": "runs\\model-free\\smg1-six-two-hour\\eval-dqn-video-20261028-143007-402175\\worker-00\\sweet_sweet\\episode-000003.csv"
+    }
+  ],
+  "schema4_issue": "An airborne visit followed by landing at the start could grant credit.",
+  "schema5_fix": "Commit pending crossings only after landing near the last crossed waypoint; preserve schema4 unchanged.",
+  "original_source_human_route_fraction_by_twelve_frame_phase": [
+    0.9840319802659435,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "limitation": "Reused human trajectory, not held-out generalization; waypoint proxy is not a native completion percentage."
+}

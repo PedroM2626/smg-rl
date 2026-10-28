@@ -7,7 +7,7 @@ class RouteProgress:
     def __init__(self, specification):
         self.specification = specification
         self.schema = specification.get("schema", 1)
-        if self.schema not in (1, 2, 3, 4):
+        if self.schema not in (1, 2, 3, 4, 5):
             raise ValueError("Unsupported route schema.")
         self.points = np.asarray(specification["waypoints"], dtype=float)
         if (self.points.ndim != 2 or self.points.shape[1] != 3 or len(self.points) < 2
@@ -21,9 +21,12 @@ class RouteProgress:
                 or not 1 <= specification["exit_confirmations"] <= 30
                 or specification.get("requires_grounded") is not True):
             raise ValueError("Routes require positive tolerances and grounded confirmation.")
-        if self.schema == 4 and (not np.isfinite(specification.get('max_sample_distance', 1000.0))
+        if self.schema in (4, 5) and (not np.isfinite(specification.get('max_sample_distance', 1000.0))
                                  or specification.get('max_sample_distance', 1000.0) <= 0):
             raise ValueError('Human-route sample distance must be finite and positive.')
+        if self.schema == 5 and (not np.isfinite(specification.get('landing_radius', 0))
+                                 or specification.get('landing_radius', 0) <= 0):
+            raise ValueError('Landing radius must be positive and finite.')
         self.reset(None)
 
     def reset(self, telemetry, segment=None):
@@ -32,6 +35,7 @@ class RouteProgress:
         self.initial_health = telemetry.health if telemetry else None
         self.previous_position = np.asarray(telemetry.position, dtype=float) if telemetry else None
         self.pending_segment = 0
+        self.committed_segment = 0
         self.eligible = telemetry is not None and np.linalg.norm(
             np.asarray(telemetry.position) - self.points[0]) <= self.specification["waypoint_radius"]
         if self.schema == 3 and segment is not None:
@@ -49,11 +53,11 @@ class RouteProgress:
             if not self.eligible:
                 raise ValueError('Curriculum position is outside its verified route region.')
             self.best = float((self.lengths[:segment].sum() + t * self.lengths[segment]) / self.total_length)
-        elif self.schema == 4 and segment is not None:
+        elif self.schema in (4, 5) and segment is not None:
             raise ValueError('Human-derived routes do not support assisted starts.')
 
     def update(self, telemetry):
-        if self.schema == 4:
+        if self.schema in (4, 5):
             return self._update_human_route(telemetry)
         if not self.eligible or telemetry.dead or telemetry.complete:
             self.confirmations = 0
@@ -124,6 +128,14 @@ class RouteProgress:
                 last_t = t
         if telemetry.grounded is not True:
             return 0.0
+        if self.schema == 5 and self.pending_segment > self.committed_segment:
+            end = self.points[self.pending_segment]
+            radius = min(self.specification['landing_radius'], .45 * self.lengths[self.pending_segment - 1])
+            if (np.linalg.norm((point - end)[[0, 2]]) > radius
+                    or abs(point[1] - end[1]) > self.specification['height_tolerance']):
+                self.pending_segment = self.committed_segment
+            else:
+                self.committed_segment = self.pending_segment
         self.segment = min(self.pending_segment, len(self.lengths) - 1)
         value = float(self.lengths[:self.pending_segment].sum() / self.total_length)
         credit = max(0.0, value - self.best)

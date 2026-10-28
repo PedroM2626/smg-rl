@@ -88,7 +88,7 @@ class GalaxyEnv(gym.Env):
         self.potential = None
         if self.regional:
             settings = self.regional_settings
-            if (self.route is None or self.route.schema not in (3, 4)
+            if (self.route is None or self.route.schema not in (3, 4, 5)
                     or digest(config['paths']['route']) != settings['spec_sha256']
                     or config.get('route_reward', {}).get('enabled')
                     or config['rewards']['progress'] != 0 or config['rewards']['intrinsic'] != 0
@@ -111,7 +111,7 @@ class GalaxyEnv(gym.Env):
         self.curriculum_bank = None
         curriculum = config.get('curriculum', {})
         if curriculum.get('enabled', False):
-            if self.route is not None and self.route.schema == 4:
+            if self.route is not None and self.route.schema in (4, 5):
                 raise ValueError('Human-derived routes require full-start collection.')
             if not self.regional or config.get('frontier', {}).get('enabled'):
                 raise ValueError('Curated curriculum requires regional shaping and its own start bank.')
