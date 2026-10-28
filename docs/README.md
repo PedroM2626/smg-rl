@@ -2,6 +2,10 @@
 
 [Current evidence, settings and next-experiment plan](current-status.md) are
 summarized separately from dated historical records. The
+[project experiment history](experiment-history.md) links successes, failures,
+and limits across stages. The [expanding-route trial](dynamic-route-night.md#completed-result)
+stopped with 100,884 real decisions, no accepted extension and no stars.
+The
 [frozen IQN checkpoint evaluation and goal-distance candidate](frozen-iqn-evaluation-20261027.md)
 report six canonical attempts, videos, trajectories and the offline-only metric.
 The
@@ -30,6 +34,8 @@ evidence, not dashboards. World-model snapshots and final stop are in the
 
 | Need | Document |
 | --- | --- |
+| Experiment timeline, negative results and comparison boundaries | [Experiment history](experiment-history.md) |
+| Bounded dynamic-route trial and actual outcome | [Dynamic route trial](dynamic-route-night.md) |
 | Installation, supported tasks, rewards, and recommended quick start | [Main README](../README.md) |
 | Robust genetic calibration, blocked gate and planned paired comparison | [Robust genetic plan and results](robust-genetic-plan-20261027.md) |
 | Model-free Rainbow/IQN implementation, PER, TensorBoard and completed trials | [Model-free learning](model-free.md) |
@@ -59,7 +65,7 @@ evidence, not dashboards. World-model snapshots and final stop are in the
 | BTR Appendix J.1, inspected Wii code, RAM-probe limits and staged environment hypotheses | [BTR research review](btr-research-review.md) |
 | Corrected regional potential, nine validated intermediate starts,36 frozen control attempts and frame4 equivalence | [Regional intervention](regional-intervention.md) |
 | Completed six-collector blocks, exact 8192-per-mission accounting, prediction gates and full-start/assisted results | [Six-instance regional training](regional-six-training.md) |
-| Measured throughput and 1M-decision wall-clock projections | [Main README timing section](../README.md#decision-budgets-and-measured-wall-clock) |
+| Historical throughput and budget measurements | [Native backend](native-backend.md) |
 
 ## Understand and reproduce
 

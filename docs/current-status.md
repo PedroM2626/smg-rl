@@ -1,6 +1,6 @@
 # Current evidence and next experiments
 
-This page summarizes the evidence audited on October 27, 2026. It is a dated
+This page summarizes the evidence audited through October 28, 2026. It is a dated
 snapshot, not a live process monitor. Older documents may use present tense for
 their own dated experiments; their original observations remain historical.
 No command here automatically allocates training or changes an existing budget.
@@ -19,12 +19,23 @@ The subsequent [robust-selection calibration](robust-genetic-plan-20261027.md#ca
 completed 49 episodes, but no mutation scale passed its preregistered gate.
 The proposed training arms were therefore not launched.
 
+The later [expanding-route trial](dynamic-route-night.md#completed-result) used
+IQN/IMPALA with six canonical-start workers and stopped after two main blocks
+without a validated extension or star. It recorded 100,884 real decisions and
+666 completed attempts; the largest exploratory opening advance was 66.25%,
+and the largest grounded goal-axis projection was 4.016% in a different
+episode. Neither quantity measures native mission completion. Its new reward
+scale and reset replay/optimizer mean this is not a controlled comparison with
+the source checkpoint. The [experiment history](experiment-history.md) links
+the evidence across stages.
+
 ## What is established
 
 | Evidence | Result | Interpretation |
 | --- | --- | --- |
-| Latest SMG1 IQN/IMPALA allocation | Stopped after roughly 2h18 of the intended 4h due to disk exhaustion; zero observed RAM stars | Failed block, not a completed four-hour experiment |
-| Last valid IQN checkpoint | 749,006 total real decisions; 12,125 completed attempts | Resumable candidate only after checking its manifest, replay, signatures, state and available resources |
+| Earlier four-hour SMG1 IQN/IMPALA allocation | Stopped after roughly 2h18 of the intended 4h due to disk exhaustion; zero observed RAM stars | Failed block, not a completed four-hour experiment |
+| Last valid checkpoint from that allocation | 749,006 total real decisions; 12,125 completed attempts | Source candidate only after checking its manifest, replay, signatures, state and available resources |
+| Later expanding-route IQN checkpoint | 100,884 new real decisions and 666 completed attempts in a fresh reward/replay branch | Saved and integrity checked, but not yet evaluated as a frozen policy; its counters are not a direct continuation of the source counters |
 | Failed IQN block | 97,668 acknowledged decisions after the valid checkpoint; 148 acknowledged decisions missing from CSV tail | Real collection occurred, but the final weights/replay were not saved and the tail is incomplete |
 | Best new IQN collection trajectory | 6.5860% geometric projection from canonical start toward goal, followed by death | Exploratory maximum under changing weights/epsilon; not a frozen result or mission completion fraction |
 | Earlier frozen IQN/IMPALA evaluations | No stars; Sweet reached 23.64% of its mapped opening, SMG2 cases reached 100% of their mapped openings and died | Short opening measures, not full-mission percentages |
@@ -33,7 +44,7 @@ The proposed training arms were therefore not launched.
 Sources: [IQN failure audit](iqn-four-hours-20261027.md),
 [IQN result data](assets/performance/iqn-four-hour-result-20261027.json),
 [frozen evaluation](impala-final-results.md), and
-[full-visual genetic audit](genetic-visual.md). The latest progress projection
+[full-visual genetic audit](genetic-visual.md). The geometric progress projection
 uses X/Z positions and the start-to-near-star direction. Curved paths, vertical
 motion and platform geometry make it unsuitable as a true mission-completion
 percentage. An opening-route fraction has a different denominator. Neither
@@ -57,13 +68,15 @@ former six-hour runs, initial Rainbow/IQN comparison, PPO and RSSM runs each
 have separate signed identities. Do not treat the CLI default as the last SMG1
 configuration or transplant old replay into a changed action/reward profile.
 
-The latest SMG1 IQN used an IMPALA-style residual encoder, stacked grayscale
+The source SMG1 IQN used an IMPALA-style residual encoder, stacked grayscale
 frames, IQN with Rainbow-style additions, eight exclusive actions and 12-frame
 control. Its online visual network trains through gradients. The reward is
 new grounded high-water advance through a verified opening, RAM star +20,
 death/timeout -2 and nonfatal HP loss -0.25 per HP; gamma is 1 and there is no
 time cost or curiosity. The short route ends before most of the mission, so
-additional route credit is absent beyond the opening. No evidence shows that
+additional route credit is absent beyond the opening. The later expanding-route
+trial used a changed normalization and canonical starts only, but no extension
+was accepted. No evidence shows that
 merely running longer will solve that coverage or exploration limitation.
 
 ## Status and evaluation boundaries

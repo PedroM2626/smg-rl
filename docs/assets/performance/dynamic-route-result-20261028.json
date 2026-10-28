@@ -1,0 +1,86 @@
+{
+  "phase": "stopped_no_validated_extension",
+  "created_utc": "2026-10-28T02:30:19.312459+00:00",
+  "finished_utc": "2026-10-28T03:33:10.844019+00:00",
+  "blocks": [
+    {
+      "block": 0,
+      "new_decisions": 3072,
+      "attempts": 22,
+      "elapsed": 103.54778050000095,
+      "optimizer_updates": 254,
+      "epsilon": 0.990784,
+      "full_stars": 0,
+      "deaths": 22,
+      "damage": 0,
+      "imagined": 0,
+      "best_opening": 0.2839228480614073,
+      "checkpoint_agent_ok": true,
+      "checkpoint_replay_ok": true,
+      "signature_ok": true
+    },
+    {
+      "block": 1,
+      "new_decisions": 48756,
+      "attempts": 325,
+      "elapsed": 1820.6391581999997,
+      "optimizer_updates": 12443,
+      "epsilon": 0.5519799999999999,
+      "full_stars": 0,
+      "deaths": 248,
+      "damage": 0,
+      "imagined": 0,
+      "best_opening": 0.4130628778552132,
+      "checkpoint_agent_ok": true,
+      "checkpoint_replay_ok": true,
+      "signature_ok": true
+    },
+    {
+      "block": 2,
+      "new_decisions": 49056,
+      "attempts": 319,
+      "elapsed": 1824.2537679000015,
+      "optimizer_updates": 24707,
+      "epsilon": 0.11047600000000002,
+      "full_stars": 0,
+      "deaths": 221,
+      "damage": 0,
+      "imagined": 0,
+      "best_opening": 0.6624539940567798,
+      "checkpoint_agent_ok": true,
+      "checkpoint_replay_ok": true,
+      "signature_ok": true
+    }
+  ],
+  "report": {
+    "runs": 3,
+    "canonical_saved_episodes": 684,
+    "saved_decisions": 100884,
+    "native_full_start_stars": 0,
+    "excluded_episodes": {},
+    "best": {
+      "trajectory": "runs/model-free/dynamic-route-smg1-20261028/dqn-20261027-233212-366066/worker-04/sweet_sweet/episode-000007.csv",
+      "geometric_projection_percent": 4.015987244521067,
+      "grounded_fitness_world_units": 1175.6668520881358,
+      "step": 78,
+      "position": [
+        797.6255493164062,
+        -50.000205993652344,
+        -1035.283447265625
+      ],
+      "outcome": "death",
+      "saved_decisions": 84,
+      "ram_star": false,
+      "start_kind": "full_start",
+      "partial_episode": false,
+      "mapped_opening_fraction": 0.2437668700057434
+    },
+    "coverage": "Saved full-start CSVs, including interrupted collector cuts; changing policy and exploration, not frozen evaluation."
+  },
+  "source_intact": true,
+  "versions": 1,
+  "meaning": "Geometric goal projection and mapped-opening fraction are not native mission-completion percentages.",
+  "checkpoint_source": "runs/model-free/smg1-six-two-hour/dqn-20261027-114555-611503/checkpoint-final",
+  "source_agent_sha256": "4b13d0734f09d7f0b182eff3a6ae5fdeb4a094524b83e4ef447f2310f5ce5816",
+  "partial_attempts": 18
+}

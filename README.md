@@ -16,10 +16,14 @@ The later owner-requested [three-hour run](docs/genetic-goal-distance-20261027.m
 also produced no star or improvement over its reevaluated initial champion.
 The subsequent [robust-selection calibration](docs/robust-genetic-plan-20261027.md#calibration-result-blocked)
 failed its preregistered viability gate; neither proposed comparison arm ran.
+The latest [expanding-route IQN trial](docs/dynamic-route-night.md#completed-result)
+stopped after two main blocks without a validated route extension or a star.
+The [experiment history](docs/experiment-history.md) summarizes findings,
+negative results and comparison limits across the project.
 
 ## Current evidence
 
-As of the October 27, 2026 audit, the latest SMG1 IQN/IMPALA allocation stopped
+In the October 27, 2026 audit, an earlier SMG1 IQN/IMPALA allocation stopped
 after approximately 2 hours 18 minutes because the disk filled. The intended
 four hours were **not** completed. Its last valid checkpoint contains 749,006
 real decisions and 12,125 completed attempts. A further 97,668 acknowledged
@@ -40,8 +44,12 @@ unchanged 8.0665% geometric baseline. The strongest mutated-vision candidate
 reached 7.9463%; these are collection maxima from different experiments, not a
 controlled IQN-versus-GA ranking. See [genetic results](docs/genetic-visual.md).
 
-**Do not infer live status from these dated results.** Training was stopped at
-the last audit; check the process and controller state before starting anything.
+The expanding-route trial subsequently collected 100,884 decisions and reached
+66.25% of the existing opening during exploratory collection, with no accepted
+route extensions or stars. Its best grounded start-to-goal projection was 4.016%;
+neither number is native mission progress or a frozen-policy success. Training
+was stopped at the October 28 review; check actual process and controller state
+before starting anything.
 The [current evidence and next-experiment guide](docs/current-status.md) is the
 entry point for status, limitations, and a bounded research plan.
 
@@ -60,9 +68,9 @@ ignored by Git. See [asset names and roles](data/README.md). The checked profile
 were validated against the documented USA game builds and Dolphin 2609a; other
 versions require recalibration.
 
-## Last IQN method
+## IQN method and reward profiles
 
-The latest SMG1 run used `config/smg1-six-two-hour.yaml`, six isolated Dolphin
+The source SMG1 run used `config/smg1-six-two-hour.yaml`, six isolated Dolphin
 collectors and one model-free IQN learner with an IMPALA-style residual visual
 encoder. The online encoder is trainable; it was not frozen in IQN. It uses
 prioritized replay, double and dueling heads, three-step returns and noisy
@@ -81,13 +89,16 @@ use the documented 8-frame press / 4-frame release pulse. The separate frame-4
 carry-direction experiment has different control semantics and must not be
 silently mixed with this replay. See [controls and signatures](docs/motor8-and-algorithms.md).
 
-The latest SMG1 signed reward uses `regional-advance-undiscounted-v2`: new
+The source SMG1 signed reward uses `regional-advance-undiscounted-v2`: new
 grounded high-water advance along a **mapped opening only**, star +20, death or
 timeout -2, and SMG1 nonfatal HP loss -0.25 per HP; no per-step or intrinsic
 bonus, with gamma 1. It includes a mix of canonical and verified assisted
 starts. Beyond the mapped route there is no incremental route reward until the
 star; additional training time alone is not evidence this limitation is fixed.
-The old `regional-frame-potential-v1` profiles have different reward semantics.
+The later expanding-route trial used canonical starts only, a fresh signed
+replay/optimizer and a different fixed normalization; see its
+[protocol and results](docs/dynamic-route-night.md). The old
+`regional-frame-potential-v1` profiles have different reward semantics.
 See [reward specification and attempt metrics](docs/simple-reward-impala.md).
 
 The game-specific completion detector reads a scene-state address
@@ -130,7 +141,7 @@ status; check actual PIDs, creation times and failure evidence as well):
 ```
 
 The generic CLI default is `config/impala-iqn-smg2.yaml`, **not** the latest
-SMG1 checkpoint configuration. Configuration files are complete profiles, not
+SMG1 branch configuration. Configuration files are complete profiles, not
 overlays. A checkpoint must match its game, model, action, reward and replay
 signatures; preserve the original checkpoint and audit before any continuation.
 The [CLI reference](docs/cli.md) documents examples and their side effects.

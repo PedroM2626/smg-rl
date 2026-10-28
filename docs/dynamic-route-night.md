@@ -50,6 +50,45 @@ the absolute deadline `2026-10-28T11:00:00+00:00` (08:00 São Paulo). The health
 block is not counted as stagnation. A failed or partial block is not retried.
 The 08:00 report is a separate scheduled follow-up and does not extend training.
 
+## Completed result
+
+The supervisor stopped cleanly at 00:33:10 BRT on October 28 after the two
+main blocks met the stated no-extension criterion. Wall time was approximately
+1 hour 3 minutes, including setup, checkpointing and review. The process and its
+six Dolphins were gone when checked at 08:00 BRT. No new training was launched.
+All three signed checkpoint/replay pairs passed hash and signature checks; the
+original source checkpoint and replay remained intact. No route version after
+version 0 was accepted, and no imagined experience was used.
+
+| Block | New real decisions | Completed attempts | Deaths | Best opening advance | Full-start RAM stars |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Health | 3,072 | 22 | 22 | 28.39% | 0 |
+| Main 1 | 48,756 | 325 | 248 | 41.31% | 0 |
+| Main 2 | 49,056 | 319 | 221 | 66.25% | 0 |
+| Total | 100,884 | 666 | 491 | 66.25% | 0 |
+
+The other 175 complete attempts ended by timeout; there were 18 additional
+interrupted collector trajectories and no recorded nonfatal HP loss. The final
+checkpoint records 24,707 optimizer updates. The best alive-grounded X/Z
+projection toward the near-star goal was 4.016%, in a different episode from
+the 66.25% opening maximum; it ended in death. Both numbers are diagnostics, not
+native mission completion. The [top-down trajectory](assets/performance/dynamic-route-result-20261028.png)
+and [audited summary](assets/performance/dynamic-route-result-20261028.json)
+retain the evidence. Original CSVs, profiles, checkpoints and replays remain
+local and are excluded from Git.
+
+The increasing opening maxima are a descriptive change under different
+exploration rates and evolving policies, not a controlled frozen-policy
+comparison. The stop criterion deliberately measured accepted extensions or
+stars rather than all possible changes in behavior; therefore stopping does
+not prove that no learning occurred. Since there was no accepted extension, the
+run did not test whether an expanded map could improve downstream learning.
+The acceptance heuristic may reject successful jumps, curved sections, or
+movements between sampled frames. Reward for the original opening fell from 1.0
+to approximately 0.0437 while the death penalty stayed at -2.0. This materially
+changes incentives; reward scaling and the fresh replay/optimizer are competing
+explanations for the outcome, not experimentally isolated causes.
+
 To inspect: `.venv\Scripts\python.exe scripts/run_dynamic_route_night.py snapshot`.
 The state records source and version hashes, exact commands, run/controller
 identity, block accounting, decisions and proposal evidence. To request an early
