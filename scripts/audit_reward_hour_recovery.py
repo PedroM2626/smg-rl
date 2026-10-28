@@ -43,8 +43,9 @@ def main():
               'limitations': ['Splitting at recovery checkpoints resets emulators, so collection differs from uninterrupted training.',
                   'Equal elapsed time does not imply equal real decisions.',
                   'Action seeds restore the same Wii state; these are not independent environments.',
-                  'First-segment fractions and grounded goal-axis projection are not native mission percentages.',
-                  'The fixed first-segment diagnostic can saturate and the strict full-route score has a floor effect.']}
+                  'First-segment fractions and means are withdrawn: they do not establish visited positions or valid progress.',
+                  'Grounded goal-axis projection is geometry, not a native mission percentage.',
+                  'The strict full-route reward tracker has a floor effect and is not independently validated as route traversal.']}
     old_stages = {x['arm']: x for x in original['stages'][:2]}
     continuation = first['stages']
     control_segments = continuation[1]['segments']
@@ -118,7 +119,8 @@ def main():
                         raise ValueError('Invalid native star terminal.')
                     episodes.append({'seed': episode['seed'], 'outcome': episode['outcome'],
                         'decisions': episode['decisions'], 'native_star': r['native_star'],
-                        'first_segment_fraction': first_segment_progress(path, spec),
+                        # Historical reproduction only: this projection is not a verified visit.
+                        'first_segment_fraction': first_segment_progress(path, spec, allow_unsafe_projection=True),
                         'strict_route_fraction': r['route_fraction'],
                         'grounded_goal_projection_percent': q['geometric_projection_percent'],
                         'hp_lost': sum(int(row['health_lost']) for row in rows[1:]),

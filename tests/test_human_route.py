@@ -5,7 +5,7 @@ import pytest
 
 from smg_rl.config import load_config
 from smg_rl.env import GalaxyEnv
-from smg_rl.human_route_audit import first_segment_progress
+from smg_rl.human_route_audit import first_segment_progress, observed_landmark_candidates
 from smg_rl.memory import Telemetry
 from smg_rl.replay import replay_signature
 from smg_rl.route import RouteProgress
@@ -101,4 +101,43 @@ def test_initial_progress_counts_only_nearby_live_grounded_observations(tmp_path
         writer.writerow(columns)
         writer.writerows(rows)
     spec = {'waypoints': [[0, 0, 0], [100, 0, 0]], 'waypoint_radius': 10}
-    assert first_segment_progress(path, spec) == pytest.approx(.5)
+    with pytest.raises(ValueError, match='Withdrawn metric'):
+        first_segment_progress(path, spec)
+    assert first_segment_progress(path, spec, allow_unsafe_projection=True) == pytest.approx(.5)
+
+
+def test_observed_landmarks_reject_nearby_parallel_platform_and_skipped_visits():
+    spec = {'schema': 'observed-landmarks-v1', 'start': [0, 0, 0], 'start_radius_3d': 1,
+            'max_step_distance_3d': 500,
+            'landmarks': [{'name': 'first', 'human_sample': 10, 'position': [100, 0, 0], 'radius_3d': 20},
+                          {'name': 'second', 'human_sample': 20, 'position': [200, 0, 0], 'radius_3d': 20}]}
+
+    def row(x, y=0, z=0, grounded=True, dead=False, complete=False):
+        return {'x': x, 'y': y, 'z': z, 'grounded': str(grounded),
+                'dead': str(dead), 'complete': str(complete)}
+
+    assert observed_landmark_candidates([row(0), row(50, z=50)], spec) == []
+    assert observed_landmark_candidates([row(0), row(200)], spec) == []  # no skipped first visit
+    assert observed_landmark_candidates([row(0), row(100, grounded=False)], spec) == []
+    assert observed_landmark_candidates([row(0), row(100, dead=True)], spec) == []
+    matches = observed_landmark_candidates([row(0), row(100), row(200)], spec)
+    assert [v['name'] for v in matches] == ['first', 'second']
+    with pytest.raises(ValueError, match='discontinuous'):
+        observed_landmark_candidates([row(0), row(600)], spec)
+
+
+def test_real_starting_platform_example_is_not_a_landmark_visit():
+    start = [-50.0, 45.0000114440918, -50.0]
+    # This actual final-evaluation position previously produced 51.23% by projection.
+    end = [453.1246337890625, 45.0, -532.9596557617188]
+    spec = {'schema': 'observed-landmarks-v1', 'start': start, 'start_radius_3d': 1,
+            'max_step_distance_3d': 500,
+            'landmarks': [{'name': 'First pink belt', 'human_sample': 120,
+                           'position': [-19.230239868164062, -50.00019836425781, -1022.8365478515625],
+                           'radius_3d': 100}]}
+    rows = []
+    for i in range(16):
+        point = [start[j] + i / 15 * (end[j] - start[j]) for j in range(3)]
+        rows.append({'x': point[0], 'y': point[1], 'z': point[2], 'grounded': 'True',
+                     'dead': 'False', 'complete': 'False'})
+    assert observed_landmark_candidates(rows, spec) == []

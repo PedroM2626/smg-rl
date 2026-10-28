@@ -11,9 +11,10 @@ RAM star events. The human demonstrations are not trained-agent successes.
 Separate candidate route profiles were prepared from those traces. The
 [one-hour-per-reward SMG1 comparison](reward-hour-pair-20261028.md#final-result-after-recovery)
 finished after the documented memory recovery, without a star or a clear
-winner. Its first-segment percentages are **not whole-level completion**;
-[video and telemetry examples](progress-metric-interpretation-20261028.md)
-show why they can be large while Mario remains near the initial platform.
+winner. Its first-segment percentages have been **withdrawn as invalid progress
+measurements**: [video and telemetry](progress-metric-interpretation-20261028.md)
+show a large score at the initial platform. A conservative landmark reanalysis
+found no candidate matches across 16 frozen attempts and no native stars.
 
 The subsequently requested [frozen IQN checkpoint evaluation](frozen-iqn-evaluation-20261027.md)
 completed six canonical episodes with zero stars. Greedy evaluation repeatedly
@@ -134,7 +135,7 @@ These are proposals, not results or an authorization to dispatch a job:
 2. **Improve measurement and validate the mapped course.** Full-start human
    recordings now cover each selected mission. Ground contact, moving surfaces,
    route order and evaluation metrics still require independent checks; the
-   current first-segment projection is not whole-course progress.
+   withdrawn first-segment projection must not be reported as visited progress.
 3. **Screen RAM fields with negative controls.** Exact replay of the complete
    human paths can provide more diverse paused memory snapshots. An address
    becomes a progress signal only after checks against idle animations,

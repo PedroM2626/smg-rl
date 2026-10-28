@@ -15,7 +15,7 @@ from smg_rl.checkpoints import digest
 from smg_rl.config import load_config
 from smg_rl.diagnostics import atomic_json
 from smg_rl.dqn_trial import audit_block, locate_run
-from smg_rl.human_route_audit import first_segment_progress, load_spec, score_episode
+from smg_rl.human_route_audit import episode_landmark_candidates, load_spec, score_episode
 from smg_rl.iqn_progress import episode_projection
 from smg_rl.replay import replay_signature
 from smg_rl.resource_disk import require_disk_headroom
@@ -52,7 +52,8 @@ def prepare():
                         'additional_training_seconds_per_arm': 3600, 'block_seconds': 1800,
                         'decision_ceiling_per_block': 999996,
                         'evaluation': 'One greedy and three stochastic full-start episodes at each reviewed half, action seeds 11/23/47, epsilon 0.1, max 600 decisions each.',
-                        'predeclared_metrics': 'RAM-confirmed full-start stars; grounded first-segment fraction (750-unit X/Z corridor, 500-unit height tolerance); strict human-route fraction; grounded start-to-goal projection, HP, deaths, timeout, attempts, real decisions and optimizer updates.',
+                        'predeclared_metrics': 'RAM-confirmed full-start stars; first-segment projection (later withdrawn as invalid); strict human-route fraction; grounded start-to-goal projection, HP, deaths, timeout, attempts, real decisions and optimizer updates.',
+                        'current_evaluation_metrics': 'Ordered sampled XYZ landmark candidates pending visual review; unvalidated reward-tracker fraction; grounded goal projection as geometry only.',
                         'warning': 'Single training seed; equal wall time does not ensure equal decisions or optimizer updates. Frozen seeds share the same Wii state. No causal or mission-percentage claim.'},
              'arms': {}, 'stages': []}
     save(state)
@@ -132,8 +133,9 @@ def evaluate(state, stage, mode):
             raise ValueError('Evaluation telemetry or star failed validation.')
         scores.append({'seed': episode['seed'], 'outcome': episode['outcome'],
                        'decisions': episode['decisions'], 'native_star': route['native_star'],
-                       'first_segment_fraction': first_segment_progress(path, specification),
-                       'route_fraction': route['route_fraction'],
+                       'observed_landmark_candidates': episode_landmark_candidates(
+                           path, load_spec('config/evaluation/smg1-human-landmarks-v1.json'))['candidate_landmarks'],
+                       'reward_tracker_fraction_unvalidated': route['route_fraction'],
                        'grounded_goal_projection_percent': projection['geometric_projection_percent'],
                        'trajectory': str(path), 'trajectory_sha256': digest(path),
                        'telemetry': episode['telemetry']})

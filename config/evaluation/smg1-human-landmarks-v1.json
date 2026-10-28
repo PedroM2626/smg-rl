@@ -1,0 +1,107 @@
+{
+  "schema": "observed-landmarks-v1",
+  "game_id": "RMGE01",
+  "scenario": 1,
+  "variation": "sweet_sweet",
+  "source_state_sha256": "64803de568f274c12927301ef6ef3753cff2afea5cf7954652b22bf43840a0e1",
+  "human_trajectory_sha256": "b21ed79be787c668c2e550b94afa78f26ab6f6fa331077ce0c51a2aafb294746",
+  "human_video_sha256": "01f709680c36033bf5c8db449d54188145fef708095b5f25d4b0f38234fbf4e2",
+  "start": [
+    -50.0,
+    45.0000114440918,
+    -50.0
+  ],
+  "start_radius_3d": 1.0,
+  "max_step_distance_3d": 500.0,
+  "landmarks": [
+    {
+      "name": "First pink belt",
+      "human_sample": 120,
+      "video_frame": 119,
+      "position": [
+        -19.230239868164062,
+        -50.00019836425781,
+        -1022.8365478515625
+      ],
+      "radius_3d": 100.0
+    },
+    {
+      "name": "Second pink belt",
+      "human_sample": 176,
+      "video_frame": 175,
+      "position": [
+        -30.376968383789062,
+        -50.00019836425781,
+        -2608.549560546875
+      ],
+      "radius_3d": 100.0
+    },
+    {
+      "name": "First wafer platform",
+      "human_sample": 603,
+      "video_frame": 602,
+      "position": [
+        7660.6904296875,
+        50.0,
+        -8275.5419921875
+      ],
+      "radius_3d": 100.0
+    },
+    {
+      "name": "First chocolate path",
+      "human_sample": 800,
+      "video_frame": 799,
+      "position": [
+        10324.140625,
+        -45.00016784667969,
+        -10995.4970703125
+      ],
+      "radius_3d": 100.0
+    },
+    {
+      "name": "Chocolate path later section",
+      "human_sample": 1021,
+      "video_frame": 1020,
+      "position": [
+        14724.7841796875,
+        -45.00001525878906,
+        -9231.1943359375
+      ],
+      "radius_3d": 100.0
+    },
+    {
+      "name": "Wafer corridor",
+      "human_sample": 1257,
+      "video_frame": 1256,
+      "position": [
+        17179.251953125,
+        49.999996185302734,
+        -11715.8828125
+      ],
+      "radius_3d": 100.0
+    },
+    {
+      "name": "Late conveyor",
+      "human_sample": 1499,
+      "video_frame": 1498,
+      "position": [
+        22768.685546875,
+        -58.00017547607422,
+        -11959.53515625
+      ],
+      "radius_3d": 100.0
+    },
+    {
+      "name": "Upper cake approach",
+      "human_sample": 1688,
+      "video_frame": 1687,
+      "position": [
+        25758.962890625,
+        650.0,
+        -11991.51953125
+      ],
+      "radius_3d": 100.0
+    }
+  ],
+  "scope": "Ordered position matches to selected human-video frames; a match is a candidate, not independently verified completion or proof of traversing every intermediate surface."
+}

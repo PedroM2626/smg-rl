@@ -1,39 +1,42 @@
-# Interpreting the final Sweet Sweet evaluation metrics
+# Withdrawn Sweet Sweet progress metric
 
-The October 28 reward-hour result reported a 52.15% stochastic mean for the
-human-route candidate and 49.93% for the opening control. These are not
-fractions of the mission, the human route or the star objective. They are
-the means of three maximum projections onto **only the first segment** of the
-human waypoint polyline. The first segment runs from approximately
-`(-50, 45, -50)` to `(-19.23, -50, -1022.84)` and spans roughly 973 horizontal
-world units. A sample can qualify when within 750 horizontal units of the
-segment and 500 vertical units of the interpolated segment. Those tolerances
-are broad relative to the segment and the projected maximum can be achieved
-on a nearby platform. The score is a high-water mark, not the final position;
-it can remain high after Mario returns or dies.
+The reported 52.15% and 49.93% first-section figures are **withdrawn as
+invalid progress measurements**. They did not establish that Mario reached the
+corresponding locations. The old calculation projected a grounded position onto
+a line between two human-route points, with a 750-unit lateral tolerance and a
+500-unit height tolerance. A position far beside the route could receive a large
+score. The flaw is not explained merely by saving a maximum over the episode.
 
-Direct video/telemetry checks illustrate the problem:
+A direct inspection of the control evaluation with stochastic action seed 23
+found Mario at the starting platform edge at `(453.12, 45.00, -532.96)` while
+the calculation reported 51.23% of the first segment. In the candidate
+evaluation with action seed 11, a sample near the start on the first blue belt
+was assigned 60.85%. Neither number demonstrates a visit to the corresponding
+point on the human route. The original reported aggregate scores and other
+first-segment results must not be used for ranking rewards or describing
+visited course progress. The original evidence remains unchanged for audit.
 
-| Final frozen evaluation | Episode and decision | Sample position (X, Y, Z) | First-segment score | Video inspection |
-| --- | --- | --- | ---: | --- |
-| Opening control, noisy action seed 23 | Episode 2, decision 15 | `(453.12, 45.00, -532.96)` | 51.23% | Mario is at the starting platform edge; the sample is approximately 488 horizontal units sideways from the projected segment. |
-| Human-route candidate, noisy action seed 11 | Episode 1, decision 75 | `(20.03, 56.68, -640.34)` | 60.85% | Mario is close to the start, on the first blue belt, and subsequently dies. |
+The retired calculation is disabled by default. Explicit opt-in exists only to
+reproduce historical artifacts; it does not make the score valid. A new
+conservative audit checks grounded, living XYZ samples against eight ordered
+landmarks selected from actual frames of the owner’s completed, replay-verified
+Sweet Sweet demonstration. It never interpolates an agent visit, enforces the
+canonical start and rejects nonfinite or discontinuous positions. A match is a
+**candidate for visual review**, not proof of the exact surface reached; the
+tolerances may miss other valid routes. Landmark counts are not a mission
+percentage. This instrument is for evaluation and does not change training
+rewards, signed profiles, existing checkpoints or historical replay.
 
-The candidate's previously reported 52.15% is the mean of 60.85%, 39.25% and
-56.35% across action seeds 11, 23 and 47; its 60.85% is one of those episodes,
-not a full-course percentage. For the control the mean is 49.93%, across
-46.04%, 51.23% and 52.53%. Both videos are concatenations of three separate
-full-start episodes. A single frame is only evidence of that episode and time,
-but these examples corroborate that the reported numbers can look large even
-when the agent has barely left its starting area. The candidate's strict
-ordered full-route score is zero in each frozen final evaluation, and no
-agent star was observed.
+The human source trajectory matched all eight landmarks on six sampling phases
+from the same recording; this is a consistency check, not independent
+generalization. Reanalysis of all 16 frozen evaluations in the one-hour
+comparison found zero candidate landmark matches and zero full-start native RAM
+stars. This is not proof of zero movement, zero mission percentage, or failure
+of every possible alternate path. Completion requires the native RAM star.
 
-The first-segment score is **not the training reward**: it is an offline
-diagnostic for comparing videos. The active training reward reads a different,
-separately signed route object and completion from RAM. See
-[the bounded comparison](reward-hour-pair-20261028.md) and its
-[episode evidence](assets/performance/reward-hour-pair-final-20261028.json).
-The naming and reporting of this partial metric can mislead readers; until a
-verified full-route progress measurement is available, report it only with its
-precise scope, corridor and limitations, next to native RAM-confirmed stars.
+See [landmark audit evidence](assets/performance/observed-landmark-audit-v2-20261028.json),
+[withdrawal manifest](assets/performance/withdrawn-progress-metric-20261028.json),
+and [the comparison](reward-hour-pair-20261028.md). The old first-segment
+projection was an offline diagnostic, not the training reward. The latter uses
+different signed route objects and still requires its own exploit and
+generalization validation. No training was started as part of this correction.

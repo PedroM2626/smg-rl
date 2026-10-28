@@ -1,0 +1,20 @@
+{
+  "status": "withdrawn",
+  "reason": "A wide-corridor projection can score positions on the starting platform as route progress; it does not establish a visited location.",
+  "withdrawn_fields": [
+    "first_segment_fraction",
+    "first_segment_mean"
+  ],
+  "historical_artifacts": [
+    {
+      "path": "docs/assets/performance/reward-hour-pair-final-20261028.json",
+      "sha256": "898d4bd1aaeafd4a928f1d19c18dd7f84ee6e06b52740b81843eb0084de1acb3"
+    },
+    {
+      "path": "docs/assets/performance/reward-hour-pair-interrupted-20261028.json",
+      "sha256": "3cd3537f36919731bba76009fc9907deb857a19e291d21ebdfb2bec8da9f09e3"
+    }
+  ],
+  "replacement": "observed-landmark-audit-v2-20261028.json; candidate proximity only, not level percentage",
+  "native_ram_star_is_unaffected": true
+}

@@ -1,0 +1,783 @@
+{
+  "state": "completed",
+  "landmark_spec_sha256": "3373d8de2d4eb7dbbf1cc987b2bee98f09ab6a296deda68af8a5c8d820a3d221",
+  "source_replay_sha256": "724d35225f5ba41e87b697e6c993bc386f9c3978bb92b19a136f07ca8ed0956c",
+  "evaluation_report_sha256": "898d4bd1aaeafd4a928f1d19c18dd7f84ee6e06b52740b81843eb0084de1acb3",
+  "human_sampled_phases": [
+    {
+      "phase": 0,
+      "matches": [
+        {
+          "name": "First pink belt",
+          "observation_index": 21,
+          "position": [
+            -19.370521545410156,
+            -50.00019836425781,
+            -1031.222900390625
+          ],
+          "distance_3d": 8.38752572922498,
+          "human_sample": 120
+        },
+        {
+          "name": "Second pink belt",
+          "observation_index": 31,
+          "position": [
+            -30.833879470825195,
+            -50.00019836425781,
+            -2607.97900390625
+          ],
+          "distance_3d": 0.7309600684153861,
+          "human_sample": 176
+        },
+        {
+          "name": "First wafer platform",
+          "observation_index": 101,
+          "position": [
+            7624.81689453125,
+            50.0,
+            -8240.26171875
+          ],
+          "distance_3d": 50.31508937119632,
+          "human_sample": 603
+        },
+        {
+          "name": "First chocolate path",
+          "observation_index": 134,
+          "position": [
+            10312.2470703125,
+            -45.00018310546875,
+            -10975.5732421875
+          ],
+          "distance_3d": 23.203783533280237,
+          "human_sample": 800
+        },
+        {
+          "name": "Chocolate path later section",
+          "observation_index": 171,
+          "position": [
+            14724.7841796875,
+            -45.00001525878906,
+            -9231.1943359375
+          ],
+          "distance_3d": 0.0,
+          "human_sample": 1021
+        },
+        {
+          "name": "Wafer corridor",
+          "observation_index": 211,
+          "position": [
+            17224.611328125,
+            49.999996185302734,
+            -11759.6748046875
+          ],
+          "distance_3d": 63.04927818889512,
+          "human_sample": 1257
+        },
+        {
+          "name": "Late conveyor",
+          "observation_index": 251,
+          "position": [
+            22776.994140625,
+            -58.00018310546875,
+            -11959.2294921875
+          ],
+          "distance_3d": 8.314214371887537,
+          "human_sample": 1499
+        },
+        {
+          "name": "Upper cake approach",
+          "observation_index": 282,
+          "position": [
+            25746.73046875,
+            650.0,
+            -11991.33203125
+          ],
+          "distance_3d": 12.233858801620137,
+          "human_sample": 1688
+        }
+      ]
+    },
+    {
+      "phase": 1,
+      "matches": [
+        {
+          "name": "First pink belt",
+          "observation_index": 21,
+          "position": [
+            -19.512489318847656,
+            -50.00019836425781,
+            -1039.9022216796875
+          ],
+          "distance_3d": 17.068007732607864,
+          "human_sample": 120
+        },
+        {
+          "name": "Second pink belt",
+          "observation_index": 30,
+          "position": [
+            -30.376968383789062,
+            -50.00019836425781,
+            -2608.549560546875
+          ],
+          "distance_3d": 0.0,
+          "human_sample": 176
+        },
+        {
+          "name": "First wafer platform",
+          "observation_index": 101,
+          "position": [
+            7642.89013671875,
+            50.0,
+            -8257.640625
+          ],
+          "distance_3d": 25.244987164881515,
+          "human_sample": 603
+        },
+        {
+          "name": "First chocolate path",
+          "observation_index": 134,
+          "position": [
+            10324.140625,
+            -45.00016784667969,
+            -10995.4970703125
+          ],
+          "distance_3d": 0.0,
+          "human_sample": 800
+        },
+        {
+          "name": "Chocolate path later section",
+          "observation_index": 171,
+          "position": [
+            14723.595703125,
+            -45.000022888183594,
+            -9220.099609375
+          ],
+          "distance_3d": 11.15820030454343,
+          "human_sample": 1021
+        },
+        {
+          "name": "Wafer corridor",
+          "observation_index": 211,
+          "position": [
+            17235.7734375,
+            49.999996185302734,
+            -11770.32421875
+          ],
+          "distance_3d": 78.4763971550103,
+          "human_sample": 1257
+        },
+        {
+          "name": "Late conveyor",
+          "observation_index": 251,
+          "position": [
+            22779.58984375,
+            -58.00018310546875,
+            -11959.0986328125
+          ],
+          "distance_3d": 10.913030882833596,
+          "human_sample": 1499
+        },
+        {
+          "name": "Upper cake approach",
+          "observation_index": 282,
+          "position": [
+            25758.962890625,
+            650.0,
+            -11991.51953125
+          ],
+          "distance_3d": 0.0,
+          "human_sample": 1688
+        }
+      ]
+    },
+    {
+      "phase": 2,
+      "matches": [
+        {
+          "name": "First pink belt",
+          "observation_index": 21,
+          "position": [
+            -19.655853271484375,
+            -50.00019836425781,
+            -1048.8240966796875
+          ],
+          "distance_3d": 25.99103385522144,
+          "human_sample": 120
+        },
+        {
+          "name": "Second pink belt",
+          "observation_index": 30,
+          "position": [
+            -30.478105545043945,
+            -50.00019836425781,
+            -2610.131103515625
+          ],
+          "distance_3d": 1.5847734498625536,
+          "human_sample": 176
+        },
+        {
+          "name": "First wafer platform",
+          "observation_index": 101,
+          "position": [
+            7660.6904296875,
+            50.0,
+            -8275.5419921875
+          ],
+          "distance_3d": 0.0,
+          "human_sample": 603
+        },
+        {
+          "name": "First chocolate path",
+          "observation_index": 134,
+          "position": [
+            10336.8115234375,
+            -45.00016784667969,
+            -11015.7158203125
+          ],
+          "distance_3d": 23.861046053682138,
+          "human_sample": 800
+        },
+        {
+          "name": "Chocolate path later section",
+          "observation_index": 171,
+          "position": [
+            14720.9775390625,
+            -45.000030517578125,
+            -9208.619140625
+          ],
+          "distance_3d": 22.893884691018588,
+          "human_sample": 1021
+        },
+        {
+          "name": "Wafer corridor",
+          "observation_index": 210,
+          "position": [
+            17179.251953125,
+            49.999996185302734,
+            -11715.8828125
+          ],
+          "distance_3d": 0.0,
+          "human_sample": 1257
+        },
+        {
+          "name": "Late conveyor",
+          "observation_index": 251,
+          "position": [
+            22782.021484375,
+            -58.00018310546875,
+            -11958.9677734375
+          ],
+          "distance_3d": 13.348001807757027,
+          "human_sample": 1499
+        },
+        {
+          "name": "Upper cake approach",
+          "observation_index": 282,
+          "position": [
+            25783.638671875,
+            650.0,
+            -11992.009765625
+          ],
+          "distance_3d": 24.680650518985175,
+          "human_sample": 1688
+        }
+      ]
+    },
+    {
+      "phase": 3,
+      "matches": [
+        {
+          "name": "First pink belt",
+          "observation_index": 21,
+          "position": [
+            -19.800365447998047,
+            -50.00019836425781,
+            -1057.9456787109375
+          ],
+          "distance_3d": 35.11375959474432,
+          "human_sample": 120
+        },
+        {
+          "name": "Second pink belt",
+          "observation_index": 30,
+          "position": [
+            -30.570777893066406,
+            -50.00019836425781,
+            -2610.24169921875
+          ],
+          "distance_3d": 1.7032015179482474,
+          "human_sample": 176
+        },
+        {
+          "name": "First wafer platform",
+          "observation_index": 101,
+          "position": [
+            7678.10009765625,
+            50.0,
+            -8294.0185546875
+          ],
+          "distance_3d": 25.386608686441875,
+          "human_sample": 603
+        },
+        {
+          "name": "First chocolate path",
+          "observation_index": 133,
+          "position": [
+            10281.3759765625,
+            -45.00018310546875,
+            -10917.64453125
+          ],
+          "distance_3d": 88.82473188510784,
+          "human_sample": 800
+        },
+        {
+          "name": "Chocolate path later section",
+          "observation_index": 171,
+          "position": [
+            14717.8203125,
+            -45.000030517578125,
+            -9197.5107421875
+          ],
+          "distance_3d": 34.39592903412279,
+          "human_sample": 1021
+        },
+        {
+          "name": "Wafer corridor",
+          "observation_index": 210,
+          "position": [
+            17191.693359375,
+            49.999996185302734,
+            -11727.974609375
+          ],
+          "distance_3d": 17.349355640593654,
+          "human_sample": 1257
+        },
+        {
+          "name": "Late conveyor",
+          "observation_index": 251,
+          "position": [
+            22785.119140625,
+            -58.00018310546875,
+            -11958.8291015625
+          ],
+          "distance_3d": 16.44875426170134,
+          "human_sample": 1499
+        },
+        {
+          "name": "Upper cake approach",
+          "observation_index": 281,
+          "position": [
+            25746.73046875,
+            650.0,
+            -11991.33203125
+          ],
+          "distance_3d": 12.233858801620137,
+          "human_sample": 1688
+        }
+      ]
+    },
+    {
+      "phase": 4,
+      "matches": [
+        {
+          "name": "First pink belt",
+          "observation_index": 21,
+          "position": [
+            -19.945817947387695,
+            -50.00019836425781,
+            -1067.23095703125
+          ],
+          "distance_3d": 44.40017588254564,
+          "human_sample": 120
+        },
+        {
+          "name": "Second pink belt",
+          "observation_index": 30,
+          "position": [
+            -30.65815544128418,
+            -50.00019836425781,
+            -2609.43115234375
+          ],
+          "distance_3d": 0.9253487221691364,
+          "human_sample": 176
+        },
+        {
+          "name": "First wafer platform",
+          "observation_index": 100,
+          "position": [
+            7588.314453125,
+            50.0,
+            -8206.8720703125
+          ],
+          "distance_3d": 99.76893381055123,
+          "human_sample": 603
+        },
+        {
+          "name": "First chocolate path",
+          "observation_index": 133,
+          "position": [
+            10290.8544921875,
+            -45.00018310546875,
+            -10936.6416015625
+          ],
+          "distance_3d": 67.61606938734201,
+          "human_sample": 800
+        },
+        {
+          "name": "Chocolate path later section",
+          "observation_index": 171,
+          "position": [
+            14714.3046875,
+            -45.000022888183594,
+            -9185.6669921875
+          ],
+          "distance_3d": 46.717863665182676,
+          "human_sample": 1021
+        },
+        {
+          "name": "Wafer corridor",
+          "observation_index": 210,
+          "position": [
+            17203.123046875,
+            49.999996185302734,
+            -11739.0302734375
+          ],
+          "distance_3d": 33.25107614310216,
+          "human_sample": 1257
+        },
+        {
+          "name": "Late conveyor",
+          "observation_index": 250,
+          "position": [
+            22768.685546875,
+            -58.00017547607422,
+            -11959.53515625
+          ],
+          "distance_3d": 0.0,
+          "human_sample": 1499
+        },
+        {
+          "name": "Upper cake approach",
+          "observation_index": 281,
+          "position": [
+            25746.73046875,
+            650.0,
+            -11991.33203125
+          ],
+          "distance_3d": 12.233858801620137,
+          "human_sample": 1688
+        }
+      ]
+    },
+    {
+      "phase": 5,
+      "matches": [
+        {
+          "name": "First pink belt",
+          "observation_index": 20,
+          "position": [
+            -19.230239868164062,
+            -50.00019836425781,
+            -1022.8365478515625
+          ],
+          "distance_3d": 0.0,
+          "human_sample": 120
+        },
+        {
+          "name": "Second pink belt",
+          "observation_index": 30,
+          "position": [
+            -30.74425506591797,
+            -50.00019836425781,
+            -2608.39892578125
+          ],
+          "distance_3d": 0.3969764973951971,
+          "human_sample": 176
+        },
+        {
+          "name": "First wafer platform",
+          "observation_index": 100,
+          "position": [
+            7606.5869140625,
+            50.0,
+            -8223.3544921875
+          ],
+          "distance_3d": 75.17130808516384,
+          "human_sample": 603
+        },
+        {
+          "name": "First chocolate path",
+          "observation_index": 133,
+          "position": [
+            10301.1513671875,
+            -45.00018310546875,
+            -10955.955078125
+          ],
+          "distance_3d": 45.73920769893305,
+          "human_sample": 800
+        },
+        {
+          "name": "Chocolate path later section",
+          "observation_index": 171,
+          "position": [
+            14710.5615234375,
+            -45.000022888183594,
+            -9171.9521484375
+          ],
+          "distance_3d": 60.92553430697903,
+          "human_sample": 1021
+        },
+        {
+          "name": "Wafer corridor",
+          "observation_index": 210,
+          "position": [
+            17213.927734375,
+            49.999996185302734,
+            -11749.435546875
+          ],
+          "distance_3d": 48.25138121688495,
+          "human_sample": 1257
+        },
+        {
+          "name": "Late conveyor",
+          "observation_index": 250,
+          "position": [
+            22773.5390625,
+            -58.00018310546875,
+            -11959.373046875
+          ],
+          "distance_3d": 4.856222129561234,
+          "human_sample": 1499
+        },
+        {
+          "name": "Upper cake approach",
+          "observation_index": 281,
+          "position": [
+            25746.73046875,
+            650.0,
+            -11991.33203125
+          ],
+          "distance_3d": 12.233858801620137,
+          "human_sample": 1688
+        }
+      ]
+    }
+  ],
+  "evaluation_episodes": [
+    {
+      "arm": "control",
+      "boundary": 1,
+      "mode": "greedy",
+      "seed": 11,
+      "outcome": "timeout",
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-hour-pair-20261028\\control\\eval-dqn-video-20261028-154017-583654\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "trajectory_sha256": "641c6b8d282830dc78d5610f8b4871d033745cc81645fbc0b57afb1a6c2b843d",
+      "candidate_landmarks": [],
+      "native_star": false,
+      "minimum_grounded_3d_distance_to_first_landmark": 494.0244343335232,
+      "scope": "XYZ proximity candidates require visual review; not a mission percentage."
+    },
+    {
+      "arm": "control",
+      "boundary": 1,
+      "mode": "stochastic",
+      "seed": 11,
+      "outcome": "timeout",
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-hour-pair-20261028\\control\\eval-dqn-video-20261028-154053-298472\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "trajectory_sha256": "b6caf621be9aa54791e0652b9f0ecd0b36b8f835e80c4a8a1ec10be455ad0649",
+      "candidate_landmarks": [],
+      "native_star": false,
+      "minimum_grounded_3d_distance_to_first_landmark": 601.225048980274,
+      "scope": "XYZ proximity candidates require visual review; not a mission percentage."
+    },
+    {
+      "arm": "control",
+      "boundary": 1,
+      "mode": "stochastic",
+      "seed": 23,
+      "outcome": "timeout",
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-hour-pair-20261028\\control\\eval-dqn-video-20261028-154053-298472\\worker-00\\sweet_sweet\\episode-000002.csv",
+      "trajectory_sha256": "eda3062e30d179f3f5b30cf4da5a0f9299c39e0518e58ac1a623c21265f1e9c6",
+      "candidate_landmarks": [],
+      "native_star": false,
+      "minimum_grounded_3d_distance_to_first_landmark": 517.6246006091453,
+      "scope": "XYZ proximity candidates require visual review; not a mission percentage."
+    },
+    {
+      "arm": "control",
+      "boundary": 1,
+      "mode": "stochastic",
+      "seed": 47,
+      "outcome": "timeout",
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-hour-pair-20261028\\control\\eval-dqn-video-20261028-154053-298472\\worker-00\\sweet_sweet\\episode-000003.csv",
+      "trajectory_sha256": "267425ca4b09d7d7b74ba8ccdf3b6936ef500a7c90ceab0104f70db98e4e2403",
+      "candidate_landmarks": [],
+      "native_star": false,
+      "minimum_grounded_3d_distance_to_first_landmark": 522.8911741368963,
+      "scope": "XYZ proximity candidates require visual review; not a mission percentage."
+    },
+    {
+      "arm": "control",
+      "boundary": 2,
+      "mode": "greedy",
+      "seed": 11,
+      "outcome": "death",
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-hour-pair-20261028\\control\\eval-dqn-video-20261028-170722-629577\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "trajectory_sha256": "c52de63b1266fd49e9e582f76ddb3589642bb789a7b53ff752e1fd8864075598",
+      "candidate_landmarks": [],
+      "native_star": false,
+      "minimum_grounded_3d_distance_to_first_landmark": 424.72805221575845,
+      "scope": "XYZ proximity candidates require visual review; not a mission percentage."
+    },
+    {
+      "arm": "control",
+      "boundary": 2,
+      "mode": "stochastic",
+      "seed": 11,
+      "outcome": "timeout",
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-hour-pair-20261028\\control\\eval-dqn-video-20261028-170740-778469\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "trajectory_sha256": "5f97111135b13b69582e4ef078d01b668fc621155b70fde335061edd2248fead",
+      "candidate_landmarks": [],
+      "native_star": false,
+      "minimum_grounded_3d_distance_to_first_landmark": 557.4791189193201,
+      "scope": "XYZ proximity candidates require visual review; not a mission percentage."
+    },
+    {
+      "arm": "control",
+      "boundary": 2,
+      "mode": "stochastic",
+      "seed": 23,
+      "outcome": "timeout",
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-hour-pair-20261028\\control\\eval-dqn-video-20261028-170740-778469\\worker-00\\sweet_sweet\\episode-000002.csv",
+      "trajectory_sha256": "1d4756650fb19c27a53f36196fce619b6c117f81ec887a4246bb6c79de8d02a2",
+      "candidate_landmarks": [],
+      "native_star": false,
+      "minimum_grounded_3d_distance_to_first_landmark": 663.0073038115889,
+      "scope": "XYZ proximity candidates require visual review; not a mission percentage."
+    },
+    {
+      "arm": "control",
+      "boundary": 2,
+      "mode": "stochastic",
+      "seed": 47,
+      "outcome": "timeout",
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-hour-pair-20261028\\control\\eval-dqn-video-20261028-170740-778469\\worker-00\\sweet_sweet\\episode-000003.csv",
+      "trajectory_sha256": "66af32482927c5ca0396c00c624a98cc32af9b81475ea5bfb2570e11a22fe535",
+      "candidate_landmarks": [],
+      "native_star": false,
+      "minimum_grounded_3d_distance_to_first_landmark": 533.4180263772942,
+      "scope": "XYZ proximity candidates require visual review; not a mission percentage."
+    },
+    {
+      "arm": "candidate",
+      "boundary": 1,
+      "mode": "greedy",
+      "seed": 11,
+      "outcome": "death",
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-hour-pair-20261028\\candidate\\eval-dqn-video-20261028-163113-797418\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "trajectory_sha256": "f1b779147a627180730693d5d044f4180141bb7e8456a4cd1492669aac786d54",
+      "candidate_landmarks": [],
+      "native_star": false,
+      "minimum_grounded_3d_distance_to_first_landmark": 253.05639098168817,
+      "scope": "XYZ proximity candidates require visual review; not a mission percentage."
+    },
+    {
+      "arm": "candidate",
+      "boundary": 1,
+      "mode": "stochastic",
+      "seed": 11,
+      "outcome": "timeout",
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-hour-pair-20261028\\candidate\\eval-dqn-video-20261028-163140-755821\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "trajectory_sha256": "6740f098cae3fd44f80fe5753076444c54d88f62b7cba236a8a370314289ea87",
+      "candidate_landmarks": [],
+      "native_star": false,
+      "minimum_grounded_3d_distance_to_first_landmark": 912.3654444690828,
+      "scope": "XYZ proximity candidates require visual review; not a mission percentage."
+    },
+    {
+      "arm": "candidate",
+      "boundary": 1,
+      "mode": "stochastic",
+      "seed": 23,
+      "outcome": "timeout",
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-hour-pair-20261028\\candidate\\eval-dqn-video-20261028-163140-755821\\worker-00\\sweet_sweet\\episode-000002.csv",
+      "trajectory_sha256": "a63f2bd0a7026e13fc54b11aa511d49fc6d415b31255f6c703490aa2fccc45df",
+      "candidate_landmarks": [],
+      "native_star": false,
+      "minimum_grounded_3d_distance_to_first_landmark": 946.1841568817345,
+      "scope": "XYZ proximity candidates require visual review; not a mission percentage."
+    },
+    {
+      "arm": "candidate",
+      "boundary": 1,
+      "mode": "stochastic",
+      "seed": 47,
+      "outcome": "death",
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-hour-pair-20261028\\candidate\\eval-dqn-video-20261028-163140-755821\\worker-00\\sweet_sweet\\episode-000003.csv",
+      "trajectory_sha256": "5b07c71ee4858c1de5f9a7274303b7abd67350ad76c05c7449b2955b68649450",
+      "candidate_landmarks": [],
+      "native_star": false,
+      "minimum_grounded_3d_distance_to_first_landmark": 859.3747109373253,
+      "scope": "XYZ proximity candidates require visual review; not a mission percentage."
+    },
+    {
+      "arm": "candidate",
+      "boundary": 2,
+      "mode": "greedy",
+      "seed": 11,
+      "outcome": "timeout",
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-hour-pair-20261028\\candidate\\eval-dqn-video-20261028-173801-187382\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "trajectory_sha256": "f4488997f1dc47caa7f124429bc70cf83805edd0e186e7bf4978a1e675f2d48d",
+      "candidate_landmarks": [],
+      "native_star": false,
+      "minimum_grounded_3d_distance_to_first_landmark": 532.3468637886625,
+      "scope": "XYZ proximity candidates require visual review; not a mission percentage."
+    },
+    {
+      "arm": "candidate",
+      "boundary": 2,
+      "mode": "stochastic",
+      "seed": 11,
+      "outcome": "death",
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-hour-pair-20261028\\candidate\\eval-dqn-video-20261028-173834-419247\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "trajectory_sha256": "9ce280bae4442d36eb2ff21ea78b6b8aae33f558acdb0074ac1ad94fe50183a6",
+      "candidate_landmarks": [],
+      "native_star": false,
+      "minimum_grounded_3d_distance_to_first_landmark": 399.02707448815113,
+      "scope": "XYZ proximity candidates require visual review; not a mission percentage."
+    },
+    {
+      "arm": "candidate",
+      "boundary": 2,
+      "mode": "stochastic",
+      "seed": 23,
+      "outcome": "death",
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-hour-pair-20261028\\candidate\\eval-dqn-video-20261028-173834-419247\\worker-00\\sweet_sweet\\episode-000002.csv",
+      "trajectory_sha256": "3533e0f43cbfd0166e8d420fadb3f8a8e15ddb71dbd266c70c8e662ad64741c4",
+      "candidate_landmarks": [],
+      "native_star": false,
+      "minimum_grounded_3d_distance_to_first_landmark": 611.9372995341396,
+      "scope": "XYZ proximity candidates require visual review; not a mission percentage."
+    },
+    {
+      "arm": "candidate",
+      "boundary": 2,
+      "mode": "stochastic",
+      "seed": 47,
+      "outcome": "timeout",
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-hour-pair-20261028\\candidate\\eval-dqn-video-20261028-173834-419247\\worker-00\\sweet_sweet\\episode-000003.csv",
+      "trajectory_sha256": "8862ddf7acdeafc341a94785b409001c8078e0a25a293b8dff9f91860c6b8320",
+      "candidate_landmarks": [],
+      "native_star": false,
+      "minimum_grounded_3d_distance_to_first_landmark": 500.0339048777973,
+      "scope": "XYZ proximity candidates require visual review; not a mission percentage."
+    }
+  ],
+  "limitations": [
+    "Human trajectory reused for its own landmark construction; not independent validation.",
+    "Position proximity creates only candidate visits; visual review is necessary, especially on moving platforms.",
+    "Alternative valid routes and between-sample crossings may be missed.",
+    "Landmark count is not level completion or a native percentage.",
+    "The previously reported wide-corridor projection is withdrawn as progress."
+  ]
+}
