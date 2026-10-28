@@ -162,3 +162,49 @@ hour unused; it does not retroactively erase the control overrun. Segment
 budgets remain at most 600 s. Any subsequent fault retains data and must be
 reviewed before another dispatch. The new ledger is
 `.local/reward-hour-recovery2-20261028/state.json`.
+
+## Final result after recovery
+
+Both branches were audited end-to-end, counting the original control block,
+the stopped candidate block and all subsequent recovery segments exactly once.
+The source checkpoints, final checkpoints and replays passed hashes and reward
+signature checks; real-decision CSV coverage reconciled at every segment. No
+world-model or imagined transitions were used. Native completion is always a
+separate RAM event.
+
+| Arm | Accounted time including cleanup | New real decisions | New attempts | Deaths | Nonfatal HP lost | Native stars |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Opening control | 3,602.72 s | 84,240 | 670 | 533 | 0 | 0 |
+| Human-route candidate | 3,504.23 s | 93,768 | 660 | 337 | 0 | 0 |
+
+The control exceeded the 3,600-second target by 2.72 seconds during cleanup, as
+recorded above. The candidate stopped 95.77 seconds short of the hour because
+the revised supervisor reserved time for cleanup. The candidate nevertheless
+collected 9,528 more decisions, so an equal-duration and equal-sample claim is
+not warranted. The extra recovery boundaries reset emulator episodes and make
+the two histories different from uninterrupted collection.
+
+Across the sixteen frozen evaluations, no episode collected a RAM star and no
+episode satisfied the strict full-route waypoint metric. The first-segment
+diagnostic and grounded goal-axis projection are distinct measures:
+
+| Arm | Boundary | Stochastic first-segment mean | Stochastic grounded goal-axis projection mean |
+| --- | --- | ---: | ---: |
+| Opening control | About 30 min | 58.23% | 2.20% |
+| Human-route candidate | About 30 min | 18.90% | 2.24% |
+| Opening control | Final | 49.93% | 2.13% |
+| Human-route candidate | Final | 52.15% | 1.34% |
+
+Each stochastic mean comprises three action-randomness draws from the same
+restored Wii state, not independent game states. The first-segment score may
+saturate or count paths alongside the human route; goal-axis projection is
+straight-line geometry, not native completion or distance along the course.
+The strict full-route score's zero floor prevents it from distinguishing these
+policies. The small final first-segment difference and the opposite direction in
+the goal-axis diagnostic do not establish a better reward. The baseline,
+midpoint and final evaluations of one training seed cannot provide a general
+or causal ranking. No additional training was launched.
+
+The [final machine-readable audit](assets/performance/reward-hour-pair-final-20261028.json)
+retains block hashes, outcomes, per-episode scores, trajectory hashes and
+video paths. The local videos display the applied controls and policy image.
