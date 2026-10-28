@@ -169,6 +169,15 @@ def checked_json(path, value):
         raise OSError(f'Could not publish genetic evidence: {path}')
 
 
+def sample_genetic_action(greedy, mode, epsilon, rng, action_count):
+    """Draw epsilon actions per episode; return whether a random draw occurred."""
+    if mode not in ('argmax', 'epsilon') or not 0 <= epsilon <= 1 or action_count < 1:
+        raise ValueError('Invalid genetic evaluation mode, epsilon or action count.')
+    if mode == 'epsilon' and rng.random() < epsilon:
+        return int(rng.integers(action_count)), True
+    return int(greedy), False
+
+
 class GeneticEvaluator:
     def __init__(self, config, run, policy, vector, stop_at, status, writer, wall_deadline=None):
         self.config, self.run, self.policy, self.vector = config, run, policy, vector
@@ -199,7 +208,10 @@ class GeneticEvaluator:
                 raise ValueError('Genetic fitness requires the same canonical start for every individual.')
             active[worker] = {'candidate': candidate, 'observation': observation, 'steps': 0, 'opening': 0., 'return': 0.,
                               'advance': GroundedAdvance(self.bounds['start'], self.bounds['goal'],
-                                  self.config['environment']['max_step_distance'])}
+                                  self.config['environment']['max_step_distance']),
+                              'action_rng': np.random.default_rng(candidate.get('action_seed', 0)),
+                              'action_hash': hashlib.sha256(), 'prefix_hash': hashlib.sha256(),
+                              'sampled_actions': 0, 'non_greedy_actions': 0}
             if self.status.get('fitness_mode', 'goal-projection-xz-v1') == 'goal-distance-xyz-v1':
                 active[worker]['distance'] = GroundedGoalDistance(
                     self.bounds['start'], self.bounds['goal'], reset['position'],
@@ -223,6 +235,9 @@ class GeneticEvaluator:
                 dead=bool(info.get('dead')), health=info.get('health'), start_kind='full_start',
                 trajectory=str(self.run / f'worker-{worker:02d}' / self.config['variations'][0]['name'] /
                     f"episode-{info['worker_episode']:06d}.csv") if 'worker_episode' in info else None)
+            record.update(action_sha256=item['action_hash'].hexdigest(),
+                          action_prefix60_sha256=item['prefix_hash'].hexdigest(),
+                          sampled_actions=item['sampled_actions'], non_greedy_actions=item['non_greedy_actions'])
             if distance:
                 record.update(fitness_mode='goal-distance-xyz-v1',
                               closest_goal_distance_world_units=distance.best_distance,
@@ -264,7 +279,19 @@ class GeneticEvaluator:
                 logits = self.policy.logits(observation, [active[i]['candidate']['genome'] for i in indices])
                 if not torch.isfinite(logits).all():
                     raise FloatingPointError('Nonfinite genetic action logits.')
-                actions = logits.argmax(-1).cpu().numpy()
+                greedy_actions = logits.argmax(-1).cpu().numpy()
+                actions = greedy_actions.copy()
+                for i, worker in enumerate(indices):
+                    item = active[worker]
+                    mode = item['candidate'].get('evaluation_mode', 'argmax')
+                    epsilon = item['candidate'].get('evaluation_epsilon', 0.0)
+                    actions[i], sampled = sample_genetic_action(
+                        greedy_actions[i], mode, epsilon, item['action_rng'], len(self.status['action_counts']))
+                    item['sampled_actions'] += int(sampled)
+                    item['non_greedy_actions'] += int(actions[i] != greedy_actions[i])
+                    item['action_hash'].update(bytes([int(actions[i])]))
+                    if item['steps'] < 60:
+                        item['prefix_hash'].update(bytes([int(actions[i])]))
                 for worker, action in zip(indices, actions):
                     self.vector.remotes[worker].send(('step', int(action)))
                 for worker, action in zip(indices, actions):

@@ -1,0 +1,44 @@
+{
+  "audit_passed": true,
+  "stage": "calibration",
+  "state": "blocked",
+  "run": "runs\\model-free\\genetic-robust-smg1\\calibration-20261027-223807-924862",
+  "source_unchanged": true,
+  "network_digest_recorded": false,
+  "real_decisions": 8495,
+  "completed_trials": 49,
+  "partial_trials": 0,
+  "stars": 0,
+  "deaths": 31,
+  "health_lost": 1,
+  "elapsed_seconds": 239.42199999999866,
+  "verified_trajectories": 49,
+  "missing_partial_trajectories": 0,
+  "decision": {
+    "groups": {
+      "0.02": {
+        "trials": 16,
+        "viable": 4,
+        "behavior_changed": 16,
+        "mean_fitness": 871.9936839401507,
+        "stars": 0
+      },
+      "0.05": {
+        "trials": 16,
+        "viable": 2,
+        "behavior_changed": 16,
+        "mean_fitness": 428.284958860133,
+        "stars": 0
+      },
+      "0.1": {
+        "trials": 16,
+        "viable": 2,
+        "behavior_changed": 16,
+        "mean_fitness": 330.40171354570884,
+        "stars": 0
+      }
+    },
+    "selected_sigma": null,
+    "rule": "Largest sigma with >=8/16 viable and >=4/16 distinct first-60 action sequence; a star is viable."
+  }
+}

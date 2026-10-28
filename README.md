@@ -14,6 +14,8 @@ champion; [the audit](docs/genetic-goal-distance-20261027.md#completed-pilot-and
 separates completed attempts, partial attempts and geometric metrics.
 The later owner-requested [three-hour run](docs/genetic-goal-distance-20261027.md#owner-requested-three-hour-run)
 also produced no star or improvement over its reevaluated initial champion.
+The subsequent [robust-selection calibration](docs/robust-genetic-plan-20261027.md#calibration-result-blocked)
+failed its preregistered viability gate; neither proposed comparison arm ran.
 
 ## Current evidence
 

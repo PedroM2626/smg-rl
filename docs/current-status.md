@@ -15,6 +15,9 @@ see the [completed pilot audit](genetic-goal-distance-20261027.md#completed-pilo
 The owner's later three-hour distance-fitness run also completed with no stars
 and no improvement over its reevaluated initial champion; see the
 [three-hour results](genetic-goal-distance-20261027.md#owner-requested-three-hour-run).
+The subsequent [robust-selection calibration](robust-genetic-plan-20261027.md#calibration-result-blocked)
+completed 49 episodes, but no mutation scale passed its preregistered gate.
+The proposed training arms were therefore not launched.
 
 ## What is established
 

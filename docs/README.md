@@ -31,6 +31,7 @@ evidence, not dashboards. World-model snapshots and final stop are in the
 | Need | Document |
 | --- | --- |
 | Installation, supported tasks, rewards, and recommended quick start | [Main README](../README.md) |
+| Robust genetic calibration, blocked gate and planned paired comparison | [Robust genetic plan and results](robust-genetic-plan-20261027.md) |
 | Model-free Rainbow/IQN implementation, PER, TensorBoard and completed trials | [Model-free learning](model-free.md) |
 | Exact command arguments, backend, and side effects | [CLI reference](cli.md) |
 | Local ROM and savestate filenames and roles | [Asset guide](../data/README.md) |
