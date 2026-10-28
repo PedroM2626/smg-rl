@@ -25,7 +25,7 @@ failed its preregistered gate in both training seeds; no larger block was starte
 The later [chocolate-frontier exploration](docs/chocolate-frontier-search-20261028.md)
 reproduced partial scripted paths from the full start, but found no stable
 archive candidate or learned mission completion; its demonstration comparison
-must be checked separately for actual completion and results.
+completed with zero stars and did not pass its continuation gate.
 
 ## Current evidence
 

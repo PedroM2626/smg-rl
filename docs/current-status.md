@@ -25,6 +25,13 @@ full-start stars. The candidate missed the preregistered improvement gate for
 both training seeds; no larger block was allocated. This short two-seed screen
 does not establish a general conclusion about reward scales.
 
+The later [chocolate demonstration comparison](chocolate-frontier-search-20261028.md#completed-demonstration-comparison)
+used equal offline IQN updates and real scripted partial full-start trajectories.
+Neither demonstration seed passed the continuation gate; sixteen frozen episodes
+contained zero stars. Two control policies each reached beyond the mapped opening
+at least once during noisy evaluation, but subsequently died. This is a small
+same-Wii-state screen, not a full-level success or a general rejection of demonstrations.
+
 The later [expanding-route trial](dynamic-route-night.md#completed-result) used
 IQN/IMPALA with six canonical-start workers and stopped after two main blocks
 without a validated extension or star. It recorded 100,884 real decisions and

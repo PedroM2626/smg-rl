@@ -99,3 +99,34 @@ are local-only and are not reproducible from Git alone. The candidate below is
 an observed frame, not a frozen-policy result.
 
 ![Observed candidate on a moving platform](assets/performance/chocolate-frontier-candidate-20261028.png)
+
+## Completed demonstration comparison
+
+All four cases completed 128 offline updates each, including 32 demonstration
+batches per treatment case and none per control. The source checkpoint and its
+replay, captured demonstration hashes, all four signed checkpoint/replay pairs,
+and frozen evaluator policy hashes passed integrity checks. There were 512
+offline updates and no new online training decisions. The sixteen frozen
+full-start evaluation episodes consumed 1,161 additional physical decisions;
+13 ended in death and three in timeout. No RAM-confirmed star was recorded.
+
+| Training seed | Control: mean grounded goal-axis projection | Demonstration: mean grounded goal-axis projection | Difference |
+| --- | ---: | ---: | ---: |
+| 142 | 3.477% | 3.361% | -0.116 percentage points |
+| 143 | 3.685% | 2.856% | -0.829 percentage points |
+
+Each mean covers three noisy action draws from the same canonical Wii savestate.
+Neither demonstration case reached the selected grounded beyond-opening region
+in those draws. Each control did so once, followed by death; control seed 143
+also entered that region in its greedy episode, again followed by death. These
+are frozen-policy observations, not star completions. The straight-axis
+projection is geometric and does not measure the fraction of the winding level.
+
+The preregistered threshold required a gain of at least 0.5 percentage points
+and at least one beyond-opening noisy episode for **both** training seeds, with
+no star regression. Neither pair passed. Consequently no longer training was
+started. This small, two-seed offline screen does not show that demonstrations
+are generally ineffective; it says this particular partial trajectory mixture
+did not justify its allocated continuation. The [full audit](assets/performance/chocolate-demo-ab-results-20261028.json)
+preserves individual episodes, physical decision counts, grounded measurements,
+checkpoint hashes and local video references.

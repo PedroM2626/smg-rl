@@ -1,4 +1,5 @@
 import importlib.util
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -23,3 +24,17 @@ def test_demonstration_replay_keeps_full_start_cut_nonterminal(tmp_path):
     assert not replay.arrays['terminal'][:8].any() and not replay.arrays['assisted'][:8].any()
     assert replay.arrays['horizon'][:4].tolist() == [3, 3, 2, 1]
     assert replay.arrays['discount'][:8].tolist() == [1.] * 8
+
+
+def test_gate_requires_projection_reachable_region_and_no_star_regression():
+    sys.path.insert(0, str(Path('scripts').resolve()))
+    try:
+        spec = importlib.util.spec_from_file_location('chocolate_audit', Path('scripts/audit_chocolate_demo_ab.py'))
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+    finally:
+        sys.path.pop(0)
+    assert module.pair_gate(.5, 1, 0, 0)
+    assert not module.pair_gate(.499, 1, 0, 0)
+    assert not module.pair_gate(.6, 0, 0, 0)
+    assert not module.pair_gate(.6, 1, 1, 0)

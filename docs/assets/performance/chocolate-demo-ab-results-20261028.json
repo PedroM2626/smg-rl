@@ -1,0 +1,302 @@
+{
+  "recorded_utc": "2026-10-28T12:49:47.442425+00:00",
+  "phase": "completed",
+  "capture_physical_decisions": 144,
+  "demonstration_training_decisions": 96,
+  "held_out_timing_decisions": 48,
+  "new_online_training_decisions": 0,
+  "offline_updates": 512,
+  "evaluation_decisions": 1161,
+  "evaluation_episodes": 16,
+  "cases": [
+    {
+      "arm": "control",
+      "seed": 142,
+      "offline_updates": 128,
+      "demo_batches": 0,
+      "agent_sha256": "2692d65239017faf25de96ea32cfb1a6e38755e58c8ce4382b4d09a09c0f2e23",
+      "replay_sha256": "622904e36cf0576f300ab825bf3c0fc7692abf60d990f0e6ed685494cec62019",
+      "evaluations": [
+        {
+          "mode": "greedy",
+          "epsilon": 0.0,
+          "mean_grounded_projection_percent": 4.549782203254895,
+          "episodes": [
+            {
+              "seed": 11,
+              "decisions": 209,
+              "outcome": "timeout",
+              "grounded_projection_percent": 4.549782203254895,
+              "opening_fraction": 1.0,
+              "beyond_opening_grounded_full_health": false,
+              "ram_star": false,
+              "trajectory": "runs/model-free/chocolate-demo-ab-20261028/control-142/eval-dqn-video-20261028-093639-981370/worker-00/sweet_sweet/episode-000001.csv"
+            }
+          ],
+          "video": "runs/model-free/chocolate-demo-ab-20261028/control-142/eval-dqn-video-20261028-093639-981370/policy.mp4"
+        },
+        {
+          "mode": "stochastic",
+          "epsilon": 0.1,
+          "mean_grounded_projection_percent": 3.477497092348251,
+          "episodes": [
+            {
+              "seed": 11,
+              "decisions": 25,
+              "outcome": "death",
+              "grounded_projection_percent": 2.888732492820808,
+              "opening_fraction": 0.44927472266167773,
+              "beyond_opening_grounded_full_health": false,
+              "ram_star": false,
+              "trajectory": "runs/model-free/chocolate-demo-ab-20261028/control-142/eval-dqn-video-20261028-093714-031206/worker-00/sweet_sweet/episode-000001.csv"
+            },
+            {
+              "seed": 23,
+              "decisions": 21,
+              "outcome": "death",
+              "grounded_projection_percent": 2.9815790333651875,
+              "opening_fraction": 0.49401647104683466,
+              "beyond_opening_grounded_full_health": false,
+              "ram_star": false,
+              "trajectory": "runs/model-free/chocolate-demo-ab-20261028/control-142/eval-dqn-video-20261028-093714-031206/worker-00/sweet_sweet/episode-000002.csv"
+            },
+            {
+              "seed": 47,
+              "decisions": 177,
+              "outcome": "death",
+              "grounded_projection_percent": 4.562179750858757,
+              "opening_fraction": 1.0,
+              "beyond_opening_grounded_full_health": true,
+              "ram_star": false,
+              "trajectory": "runs/model-free/chocolate-demo-ab-20261028/control-142/eval-dqn-video-20261028-093714-031206/worker-00/sweet_sweet/episode-000003.csv"
+            }
+          ],
+          "video": "runs/model-free/chocolate-demo-ab-20261028/control-142/eval-dqn-video-20261028-093714-031206/policy.mp4"
+        }
+      ]
+    },
+    {
+      "arm": "demonstration",
+      "seed": 142,
+      "offline_updates": 128,
+      "demo_batches": 32,
+      "agent_sha256": "e3aa3fb7020fabba59dabed50acee617351dfd7f4e6b519bfe3fec2df5ffa273",
+      "replay_sha256": "c685ac36f564445fa0377db26f8afe908e6d716a580f54b8d0f738ef17b6e834",
+      "evaluations": [
+        {
+          "mode": "greedy",
+          "epsilon": 0.0,
+          "mean_grounded_projection_percent": 4.4566531676327665,
+          "episodes": [
+            {
+              "seed": 11,
+              "decisions": 209,
+              "outcome": "timeout",
+              "grounded_projection_percent": 4.4566531676327665,
+              "opening_fraction": 1.0,
+              "beyond_opening_grounded_full_health": false,
+              "ram_star": false,
+              "trajectory": "runs/model-free/chocolate-demo-ab-20261028/demonstration-142/eval-dqn-video-20261028-093853-908799/worker-00/sweet_sweet/episode-000001.csv"
+            }
+          ],
+          "video": "runs/model-free/chocolate-demo-ab-20261028/demonstration-142/eval-dqn-video-20261028-093853-908799/policy.mp4"
+        },
+        {
+          "mode": "stochastic",
+          "epsilon": 0.1,
+          "mean_grounded_projection_percent": 3.361128303755957,
+          "episodes": [
+            {
+              "seed": 11,
+              "decisions": 26,
+              "outcome": "death",
+              "grounded_projection_percent": 2.5432723861657065,
+              "opening_fraction": 0.46052526015227446,
+              "beyond_opening_grounded_full_health": false,
+              "ram_star": false,
+              "trajectory": "runs/model-free/chocolate-demo-ab-20261028/demonstration-142/eval-dqn-video-20261028-093940-081057/worker-00/sweet_sweet/episode-000001.csv"
+            },
+            {
+              "seed": 23,
+              "decisions": 42,
+              "outcome": "death",
+              "grounded_projection_percent": 4.534148385724814,
+              "opening_fraction": 0.6617885698912711,
+              "beyond_opening_grounded_full_health": false,
+              "ram_star": false,
+              "trajectory": "runs/model-free/chocolate-demo-ab-20261028/demonstration-142/eval-dqn-video-20261028-093940-081057/worker-00/sweet_sweet/episode-000002.csv"
+            },
+            {
+              "seed": 47,
+              "decisions": 27,
+              "outcome": "death",
+              "grounded_projection_percent": 3.0059641393773515,
+              "opening_fraction": 0.6898922892269015,
+              "beyond_opening_grounded_full_health": false,
+              "ram_star": false,
+              "trajectory": "runs/model-free/chocolate-demo-ab-20261028/demonstration-142/eval-dqn-video-20261028-093940-081057/worker-00/sweet_sweet/episode-000003.csv"
+            }
+          ],
+          "video": "runs/model-free/chocolate-demo-ab-20261028/demonstration-142/eval-dqn-video-20261028-093940-081057/policy.mp4"
+        }
+      ]
+    },
+    {
+      "arm": "control",
+      "seed": 143,
+      "offline_updates": 128,
+      "demo_batches": 0,
+      "agent_sha256": "c2535595b3a00f7cd3d8b2eb212cd08ce16a2bbfcdcf4b4a41b0180bf30c8d15",
+      "replay_sha256": "b663b47cb81a162a662162263daa20c80bc4e07e4a579d954a40bf7208c8d9c3",
+      "evaluations": [
+        {
+          "mode": "greedy",
+          "epsilon": 0.0,
+          "mean_grounded_projection_percent": 4.696357518841691,
+          "episodes": [
+            {
+              "seed": 11,
+              "decisions": 38,
+              "outcome": "death",
+              "grounded_projection_percent": 4.696357518841691,
+              "opening_fraction": 1.0,
+              "beyond_opening_grounded_full_health": true,
+              "ram_star": false,
+              "trajectory": "runs/model-free/chocolate-demo-ab-20261028/control-143/eval-dqn-video-20261028-094029-283757/worker-00/sweet_sweet/episode-000001.csv"
+            }
+          ],
+          "video": "runs/model-free/chocolate-demo-ab-20261028/control-143/eval-dqn-video-20261028-094029-283757/policy.mp4"
+        },
+        {
+          "mode": "stochastic",
+          "epsilon": 0.1,
+          "mean_grounded_projection_percent": 3.684603083146019,
+          "episodes": [
+            {
+              "seed": 11,
+              "decisions": 48,
+              "outcome": "death",
+              "grounded_projection_percent": 4.760466980640772,
+              "opening_fraction": 1.0,
+              "beyond_opening_grounded_full_health": true,
+              "ram_star": false,
+              "trajectory": "runs/model-free/chocolate-demo-ab-20261028/control-143/eval-dqn-video-20261028-094039-592833/worker-00/sweet_sweet/episode-000001.csv"
+            },
+            {
+              "seed": 23,
+              "decisions": 22,
+              "outcome": "death",
+              "grounded_projection_percent": 2.7696450387944176,
+              "opening_fraction": 0.5105680944893336,
+              "beyond_opening_grounded_full_health": false,
+              "ram_star": false,
+              "trajectory": "runs/model-free/chocolate-demo-ab-20261028/control-143/eval-dqn-video-20261028-094039-592833/worker-00/sweet_sweet/episode-000002.csv"
+            },
+            {
+              "seed": 47,
+              "decisions": 27,
+              "outcome": "death",
+              "grounded_projection_percent": 3.5236972300028677,
+              "opening_fraction": 0.759037475296669,
+              "beyond_opening_grounded_full_health": false,
+              "ram_star": false,
+              "trajectory": "runs/model-free/chocolate-demo-ab-20261028/control-143/eval-dqn-video-20261028-094039-592833/worker-00/sweet_sweet/episode-000003.csv"
+            }
+          ],
+          "video": "runs/model-free/chocolate-demo-ab-20261028/control-143/eval-dqn-video-20261028-094039-592833/policy.mp4"
+        }
+      ]
+    },
+    {
+      "arm": "demonstration",
+      "seed": 143,
+      "offline_updates": 128,
+      "demo_batches": 32,
+      "agent_sha256": "4e12787f511437945b2b9dc71beb80ca5ecaa1e69d9a51599abdc51c353cb1ce",
+      "replay_sha256": "df07a139036168fde3572fcb1e7a89eaa1742d50f7baeebe5e01e02e74993c3a",
+      "evaluations": [
+        {
+          "mode": "greedy",
+          "epsilon": 0.0,
+          "mean_grounded_projection_percent": 4.4566531676327665,
+          "episodes": [
+            {
+              "seed": 11,
+              "decisions": 209,
+              "outcome": "timeout",
+              "grounded_projection_percent": 4.4566531676327665,
+              "opening_fraction": 1.0,
+              "beyond_opening_grounded_full_health": false,
+              "ram_star": false,
+              "trajectory": "runs/model-free/chocolate-demo-ab-20261028/demonstration-143/eval-dqn-video-20261028-094128-786179/worker-00/sweet_sweet/episode-000001.csv"
+            }
+          ],
+          "video": "runs/model-free/chocolate-demo-ab-20261028/demonstration-143/eval-dqn-video-20261028-094128-786179/policy.mp4"
+        },
+        {
+          "mode": "stochastic",
+          "epsilon": 0.1,
+          "mean_grounded_projection_percent": 2.85590138291295,
+          "episodes": [
+            {
+              "seed": 11,
+              "decisions": 26,
+              "outcome": "death",
+              "grounded_projection_percent": 2.888732492820808,
+              "opening_fraction": 0.44927472266167773,
+              "beyond_opening_grounded_full_health": false,
+              "ram_star": false,
+              "trajectory": "runs/model-free/chocolate-demo-ab-20261028/demonstration-143/eval-dqn-video-20261028-094206-261035/worker-00/sweet_sweet/episode-000001.csv"
+            },
+            {
+              "seed": 23,
+              "decisions": 25,
+              "outcome": "death",
+              "grounded_projection_percent": 2.6730075165406904,
+              "opening_fraction": 0.5032250324511202,
+              "beyond_opening_grounded_full_health": false,
+              "ram_star": false,
+              "trajectory": "runs/model-free/chocolate-demo-ab-20261028/demonstration-143/eval-dqn-video-20261028-094206-261035/worker-00/sweet_sweet/episode-000002.csv"
+            },
+            {
+              "seed": 47,
+              "decisions": 30,
+              "outcome": "death",
+              "grounded_projection_percent": 3.0059641393773515,
+              "opening_fraction": 0.6898922892269015,
+              "beyond_opening_grounded_full_health": false,
+              "ram_star": false,
+              "trajectory": "runs/model-free/chocolate-demo-ab-20261028/demonstration-143/eval-dqn-video-20261028-094206-261035/worker-00/sweet_sweet/episode-000003.csv"
+            }
+          ],
+          "video": "runs/model-free/chocolate-demo-ab-20261028/demonstration-143/eval-dqn-video-20261028-094206-261035/policy.mp4"
+        }
+      ]
+    }
+  ],
+  "pairs": [
+    {
+      "seed": 142,
+      "control_mean_grounded_projection_percent": 3.477497092348251,
+      "demo_mean_grounded_projection_percent": 3.361128303755957,
+      "delta_percentage_points": -0.11636878859229371,
+      "demo_beyond_count": 0,
+      "control_stars": 0,
+      "demo_stars": 0,
+      "passed": false
+    },
+    {
+      "seed": 143,
+      "control_mean_grounded_projection_percent": 3.684603083146019,
+      "demo_mean_grounded_projection_percent": 2.85590138291295,
+      "delta_percentage_points": -0.828701700233069,
+      "demo_beyond_count": 0,
+      "control_stars": 0,
+      "demo_stars": 0,
+      "passed": false
+    }
+  ],
+  "source_unchanged": true,
+  "scope": "Frozen canonical-start policy assessments; same restored Wii state across action seeds. Grounded geometric projections are not mission-completion percentages.",
+  "gate": "failed"
+}
