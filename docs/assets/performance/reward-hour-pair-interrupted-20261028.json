@@ -1,0 +1,264 @@
+{
+  "state": "failed_needs_review",
+  "error": "ValueError('Only a clean, stopped block can authorize a successor.')",
+  "reason": "Candidate stopped by configured memory-pressure guard; no further stages or evaluations launched.",
+  "arms": [
+    {
+      "arm": "control",
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-hour-pair-20261028\\control\\dqn-20261028-150958-331979",
+      "state": "completed",
+      "stop_reason": "wall_clock_budget",
+      "elapsed_seconds": 1812.9556315000082,
+      "source_real": 6144,
+      "total_real": 46086,
+      "new_real": 39942,
+      "optimizer_updates_total": 11007,
+      "attempts_new": 396,
+      "deaths_new": 378,
+      "damage_new": 0,
+      "stars_new": 0,
+      "csv_decisions": 39942,
+      "csv_decision_gap": 0,
+      "csv_terminal_episodes": 396,
+      "csv_cuts": 6,
+      "csv_stars": 0,
+      "replay_emitted": 46086,
+      "agent_sha256": "3a83ed02417a4f7ad8486501bca7961325e7d1cc68ca419dc67f2d62c2e8afcb",
+      "replay_sha256": "d602a1ee2f3a2379e34876530aefa313c666696dddd6ecf94e58a9de34546237",
+      "hashes_valid": true,
+      "signature_valid": true,
+      "memory_after_cleanup": {
+        "physical_available_bytes": 12110483456,
+        "physical_total_bytes": 34049417216,
+        "commit_total_bytes": 31381454848,
+        "commit_limit_bytes": 81294057472,
+        "commit_available_bytes": 49912602624,
+        "kernel_paged_bytes": 5343834112,
+        "kernel_nonpaged_bytes": 2699329536
+      },
+      "evaluations": [
+        {
+          "phase": "reviewed",
+          "mode": "greedy",
+          "stdout": ".local\\reward-hour-pair-20261028\\control-block1-greedy.out.log",
+          "stderr": ".local\\reward-hour-pair-20261028\\control-block1-greedy.err.log",
+          "command": [
+            "C:\\Users\\Acer\\Downloads\\smg-rl\\.venv\\Scripts\\python.exe",
+            "-m",
+            "smg_rl.cli",
+            "--config",
+            ".local\\reward-hour-pair-control-20261028.yaml",
+            "record-dqn",
+            "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-hour-pair-20261028\\control\\dqn-20261028-150958-331979\\checkpoint-final",
+            "--variation",
+            "0",
+            "--max-steps",
+            "600",
+            "--seeds",
+            "11"
+          ],
+          "pid": 21464,
+          "created_time": 1793212813.9987445,
+          "exit_code": 0,
+          "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-hour-pair-20261028\\control\\eval-dqn-video-20261028-154017-583654",
+          "scores": [
+            {
+              "seed": 11,
+              "outcome": "timeout",
+              "decisions": 190,
+              "native_star": false,
+              "first_segment_fraction": 0.6291755033951826,
+              "route_fraction": 0.0,
+              "grounded_goal_projection_percent": 2.007597701927983,
+              "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-hour-pair-20261028\\control\\eval-dqn-video-20261028-154017-583654\\worker-00\\sweet_sweet\\episode-000001.csv",
+              "trajectory_sha256": "641c6b8d282830dc78d5610f8b4871d033745cc81645fbc0b57afb1a6c2b843d",
+              "telemetry": {
+                "position": [
+                  49.37948989868164,
+                  45.0,
+                  -91.13008117675781
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 3603,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": true
+              }
+            }
+          ],
+          "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-hour-pair-20261028\\control\\eval-dqn-video-20261028-154017-583654\\policy.mp4",
+          "decisions": 190,
+          "agent_sha256": "3a83ed02417a4f7ad8486501bca7961325e7d1cc68ca419dc67f2d62c2e8afcb"
+        },
+        {
+          "phase": "reviewed",
+          "mode": "stochastic",
+          "stdout": ".local\\reward-hour-pair-20261028\\control-block1-stochastic.out.log",
+          "stderr": ".local\\reward-hour-pair-20261028\\control-block1-stochastic.err.log",
+          "command": [
+            "C:\\Users\\Acer\\Downloads\\smg-rl\\.venv\\Scripts\\python.exe",
+            "-m",
+            "smg_rl.cli",
+            "--config",
+            ".local\\reward-hour-pair-control-20261028.yaml",
+            "record-dqn",
+            "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-hour-pair-20261028\\control\\dqn-20261028-150958-331979\\checkpoint-final",
+            "--variation",
+            "0",
+            "--max-steps",
+            "600",
+            "--seeds",
+            "11",
+            "23",
+            "47",
+            "--stochastic",
+            "--evaluation-epsilon",
+            "0.1"
+          ],
+          "pid": 16020,
+          "created_time": 1793212850.092022,
+          "exit_code": 0,
+          "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-hour-pair-20261028\\control\\eval-dqn-video-20261028-154053-298472",
+          "scores": [
+            {
+              "seed": 11,
+              "outcome": "timeout",
+              "decisions": 195,
+              "native_star": false,
+              "first_segment_fraction": 0.48613697050552623,
+              "route_fraction": 0.0,
+              "grounded_goal_projection_percent": 2.460026955636717,
+              "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-hour-pair-20261028\\control\\eval-dqn-video-20261028-154053-298472\\worker-00\\sweet_sweet\\episode-000001.csv",
+              "trajectory_sha256": "b6caf621be9aa54791e0652b9f0ecd0b36b8f835e80c4a8a1ec10be455ad0649",
+              "telemetry": {
+                "position": [
+                  16.489309310913086,
+                  380.0,
+                  274.771484375
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 3663,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": false
+              }
+            },
+            {
+              "seed": 23,
+              "outcome": "timeout",
+              "decisions": 190,
+              "native_star": false,
+              "first_segment_fraction": 0.6303047765606854,
+              "route_fraction": 0.0,
+              "grounded_goal_projection_percent": 2.058079450323069,
+              "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-hour-pair-20261028\\control\\eval-dqn-video-20261028-154053-298472\\worker-00\\sweet_sweet\\episode-000002.csv",
+              "trajectory_sha256": "eda3062e30d179f3f5b30cf4da5a0f9299c39e0518e58ac1a623c21265f1e9c6",
+              "telemetry": {
+                "position": [
+                  309.4944152832031,
+                  45.0,
+                  -136.33514404296875
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 3603,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": true
+              }
+            },
+            {
+              "seed": 47,
+              "outcome": "timeout",
+              "decisions": 190,
+              "native_star": false,
+              "first_segment_fraction": 0.630548677146237,
+              "route_fraction": 0.0,
+              "grounded_goal_projection_percent": 2.081537998524538,
+              "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-hour-pair-20261028\\control\\eval-dqn-video-20261028-154053-298472\\worker-00\\sweet_sweet\\episode-000003.csv",
+              "trajectory_sha256": "267425ca4b09d7d7b74ba8ccdf3b6936ef500a7c90ceab0104f70db98e4e2403",
+              "telemetry": {
+                "position": [
+                  72.41942596435547,
+                  45.0,
+                  18.948410034179688
+                ],
+                "scenario": 1,
+                "stage": "BeltConveyerExGalaxy",
+                "actor": 2164967084,
+                "actor_nerve": 2154426424,
+                "scene_nerve": 2154437584,
+                "scene_frame": 3603,
+                "dead": false,
+                "complete": false,
+                "health": 3,
+                "max_health": 3,
+                "grounded": true
+              }
+            }
+          ],
+          "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-hour-pair-20261028\\control\\eval-dqn-video-20261028-154053-298472\\policy.mp4",
+          "decisions": 575,
+          "agent_sha256": "3a83ed02417a4f7ad8486501bca7961325e7d1cc68ca419dc67f2d62c2e8afcb"
+        }
+      ]
+    },
+    {
+      "arm": "candidate",
+      "run": "runs\\model-free\\reward-hour-pair-20261028\\candidate\\dqn-20261028-154214-457197",
+      "state": "stopped",
+      "stop_reason": "memory_pressure",
+      "elapsed_seconds": 1052.2141069999925,
+      "source_real": 6144,
+      "total_real": 35328,
+      "new_real": 29184,
+      "optimizer_updates_total": 8318,
+      "attempts_new": 231,
+      "deaths_new": 157,
+      "damage_new": 0,
+      "stars_new": 0,
+      "csv_decisions": 29184,
+      "csv_decision_gap": 0,
+      "csv_terminal_episodes": 231,
+      "csv_cuts": 6,
+      "csv_stars": 0,
+      "replay_emitted": 35328,
+      "agent_sha256": "b35dd6a05ff90227b06d60b26ef4c9055aced11f540088e3e85316d76ce26342",
+      "replay_sha256": "7da2796ef620c87b4b8aaf6d8c52a390a5e16237de91e039b6016abcb0b66753",
+      "hashes_valid": true,
+      "signature_valid": true,
+      "memory_after_cleanup": {
+        "physical_available_bytes": 6928400384,
+        "physical_total_bytes": 34049417216,
+        "commit_total_bytes": 40311250944,
+        "commit_limit_bytes": 81294057472,
+        "commit_available_bytes": 40982806528,
+        "kernel_paged_bytes": 12416446464,
+        "kernel_nonpaged_bytes": 3432677376
+      },
+      "evaluations": []
+    }
+  ],
+  "limitations": [
+    "Candidate did not complete 1800 seconds and was not frozen-evaluated; no matched one-hour comparison.",
+    "Status memory is after emulator shutdown; it does not identify the resource that crossed the guard.",
+    "Strict route and first-segment fractions are not mission completion."
+  ]
+}

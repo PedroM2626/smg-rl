@@ -63,3 +63,39 @@ the supervisor alone owns all four stages. After they finish, audit real totals,
 hashes, evaluation policy identity and outcomes before reporting. Never duplicate
 an active/completed block, blindly retry partial data, or automatically add
 another hour. Reused prior evaluations and source checkpoints remain identified.
+
+## Interrupted outcome
+
+The study stopped during the candidate's first block. The configured memory
+guard ended that block with `memory_pressure`; the supervisor refused to treat
+the stopped block as a clean 30-minute completion and did not launch its
+evaluation or either second block. The post-cleanup memory snapshot does not
+establish which resource crossed the guard while the workers were active.
+No automatic retry or extra training was made.
+
+| Arm, first block | Time including cleanup | New real decisions | Completed attempts | Deaths | RAM stars |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Opening control | 1,812.96 s | 39,942 | 396 | 378 | 0 |
+| Human-route candidate | 1,052.21 s | 29,184 | 231 | 157 | 0 |
+
+Both source checkpoints and both resulting checkpoint/replay pairs passed
+SHA-256 and signed-profile checks. Their retained CSV decisions reconcile
+exactly with the acknowledged new real decisions; each has six interrupted
+collector cuts, and neither reports nonfatal HP loss. The candidate checkpoint
+is retained as a partial result, not a completed half-hour or an exact matched
+comparison.
+
+The control's frozen 30-minute evaluation completed four full-start attempts,
+all timeout, with zero RAM stars. Its greedy first-segment diagnostic was
+62.92%; the three stochastic draws averaged 58.23%. These numbers describe
+only the first segment under the wide diagnostic corridor. The corresponding
+pre-continuation stochastic mean on reused seed-142 evaluation data was 93.83%;
+this small same-state comparison is descriptive and does not establish the
+cause of the change. The strict full-route score remained zero in all four
+episodes. The candidate was not evaluated after its interruption; therefore
+there is no matched result after one hour, or even a matched half-hour result.
+
+The [interruption evidence](assets/performance/reward-hour-pair-interrupted-20261028.json)
+includes exact counts, retained CSV/checkpoint hashes, evaluated control
+trajectories and videos, and the post-cleanup memory snapshot. Original ROMs,
+states, profiles, source checkpoints and all partial artifacts remain local.
