@@ -306,12 +306,13 @@ class GeneticEvaluator:
 
 def train_genetic(config, source, seconds=3600, population_size=24, max_decisions=1200,
                   deadline_utc=None, resume_run=None, confirmation_seconds=300, policy_mode='head',
-                  fitness_mode='goal-projection-xz-v1', initial_head=None):
+                  fitness_mode='goal-projection-xz-v1', initial_head=None, population_seed=142):
     wall_deadline = collection_deadline(seconds, deadline_utc)
     if (population_size < 6
             or population_size > 96 or max_decisions < 1 or max_decisions > 3000
             or config['parallel']['workers'] != 6 or len(config['variations']) != 1
             or not math.isfinite(confirmation_seconds) or not 0 <= confirmation_seconds <= 300
+            or type(population_seed) is not int or not 0 <= population_seed < 2**32
             or policy_mode not in ('head', 'full_visual')
             or fitness_mode not in ('goal-projection-xz-v1', 'goal-distance-xyz-v1')):
         raise ValueError('This pilot requires six workers, one mission and finite bounded dimensions/time.')
@@ -364,7 +365,7 @@ def train_genetic(config, source, seconds=3600, population_size=24, max_decision
         policy.source = genome
         head_ancestry = {'path': str(initial_head), 'sha256': digest(initial_head),
                          'genome_sha256': genome_digest(genome), 'reused_fitness_trials': 0}
-    rng = np.random.default_rng(142)
+    rng = np.random.default_rng(population_seed)
     population = None
     if not (resume_run and policy_mode == 'full_visual'):
         population = np.stack([policy.source + rng.normal(0, .02, policy.source.shape).astype(np.float32)
@@ -409,7 +410,8 @@ def train_genetic(config, source, seconds=3600, population_size=24, max_decision
                           if fitness_mode == 'goal-distance-xyz-v1' else
                           'Maximum grounded X/Z projection toward calibrated goal in world units; not native progress.'),
               'curriculum': False, 'fitness_seed': 11, 'confirmation_seeds': [23, 47], 'error': None}
-    status.update(fitness_mode=fitness_mode, initial_head_ancestry=head_ancestry)
+    status.update(fitness_mode=fitness_mode, initial_head_ancestry=head_ancestry,
+                  population_seed=population_seed)
     status.update(deadline_utc=deadline_utc, generation_offset=offset,
                   resume_genetic_run=str(resume_run) if resume_run else None,
                   inherited_completed_trials=len(inherited), confirmation_reserve_seconds=confirmation_seconds)

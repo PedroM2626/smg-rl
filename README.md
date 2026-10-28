@@ -12,6 +12,8 @@ selects full XYZ distance without a mapped route; it does not change the IQN rew
 Its five-minute pilot ended with no star and no improvement over its imported
 champion; [the audit](docs/genetic-goal-distance-20261027.md#completed-pilot-and-audit)
 separates completed attempts, partial attempts and geometric metrics.
+The later owner-requested [three-hour run](docs/genetic-goal-distance-20261027.md#owner-requested-three-hour-run)
+also produced no star or improvement over its reevaluated initial champion.
 
 ## Current evidence
 

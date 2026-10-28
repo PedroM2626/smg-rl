@@ -12,6 +12,9 @@ offline. A subsequent [frozen-vision genetic experiment](genetic-goal-distance-2
 selects distance fitness explicitly; it does not alter the IQN reward or replay.
 Its five-minute pilot ended without stars or improvement over the imported head;
 see the [completed pilot audit](genetic-goal-distance-20261027.md#completed-pilot-and-audit).
+The owner's later three-hour distance-fitness run also completed with no stars
+and no improvement over its reevaluated initial champion; see the
+[three-hour results](genetic-goal-distance-20261027.md#owner-requested-three-hour-run).
 
 ## What is established
 

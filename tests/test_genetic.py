@@ -89,6 +89,25 @@ def test_distance_fitness_cannot_reuse_old_population():
         train_genetic(config, 'unused', seconds=60, fitness_mode='goal-distance-xyz-v1', resume_run='old')
 
 
+def test_distance_three_hour_dispatch_rejects_existing_identity(tmp_path, monkeypatch):
+    from scripts import launch_goal_distance_three_hours as launcher
+
+    state = tmp_path / 'existing.json'
+    state.write_text('{}')
+    monkeypatch.setattr(launcher, 'STATE', state)
+    with pytest.raises(ValueError, match='refusing to start another job'):
+        launcher.launch()
+
+
+def test_population_seed_requires_a_bounded_integer():
+    from smg_rl.genetic import train_genetic
+
+    config = {'parallel': {'workers': 6}, 'variations': [{}]}
+    for seed in (-1, 2**32, True):
+        with pytest.raises(ValueError, match='finite bounded'):
+            train_genetic(config, 'unused', seconds=60, population_seed=seed)
+
+
 def test_elitism_preserves_best_genomes_and_mutations_are_reproducible_and_independent():
     population = np.arange(240, dtype=np.float32).reshape(24, 10) / 100
     original = population.copy()
