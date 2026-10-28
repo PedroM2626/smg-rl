@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-28",
+  "scope": "Engineering fixtures only; not a human full-start star or trained mission completion.",
+  "real_game_fixture": {
+    "death_detected": true,
+    "death_sample": 94,
+    "death_attempt_discarded": true,
+    "canonical_reset_verified": true,
+    "near_star_signal_detected": true,
+    "near_star_cannot_validate": true,
+    "near_star_sample": 5
+  },
+  "interactive_smoke": {
+    "state": "session_limit_reached",
+    "attempts_started": 1,
+    "deaths_discarded": 1,
+    "completed": 0,
+    "max_minutes": 1,
+    "max_attempts": 1
+  },
+  "real_simultaneous_control_fixture": {
+    "frames": 16,
+    "forward_and_jump_observed": true
+  },
+  "completed_human_recordings": 0
+}

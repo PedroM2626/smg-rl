@@ -119,6 +119,9 @@ See [SMG2 memory](docs/memory-profile.md), [SMG1 memory](docs/smg1.md) and
 
 ## Installation and local operation
 
+To record a human Sweet Sweet demonstration with automatic death reset and
+RAM-confirmed success, see the [human recording guide](docs/human-recording.md).
+
 Use Windows, 64-bit Python 3.11 or 3.12, and user-provided game images and
 compatible savestates. The tested GPU environment used Python 3.11 and Torch
 2.14.1+cu126. The lock records exact packages and an extra CUDA index; availability

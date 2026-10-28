@@ -34,6 +34,7 @@ evidence, not dashboards. World-model snapshots and final stop are in the
 
 | Need | Document |
 | --- | --- |
+| Human Sweet Sweet recording, automatic death reset and success-only validation | [Human recording](human-recording.md) |
 | Experiment timeline, negative results and comparison boundaries | [Experiment history](experiment-history.md) |
 | Chocolate frontier physical search and conditional demonstration study | [Chocolate frontier](chocolate-frontier-search-20261028.md) |
 | Bounded scripted Sweet Sweet search and partial map | [Sweet Sweet scripted search](sweet-manual-search-20261028.md) |
