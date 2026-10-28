@@ -1,0 +1,158 @@
+{
+  "source_greedy": {
+    "run": "runs/model-free/smg1-six-two-hour/eval-dqn-video-20261028-084851-098383",
+    "state": "completed",
+    "mode": "greedy",
+    "epsilon": 0.0,
+    "agent_sha256": "4b13d0734f09d7f0b182eff3a6ae5fdeb4a094524b83e4ef447f2310f5ce5816",
+    "episodes": [
+      {
+        "seed": 11,
+        "outcome": "death",
+        "decisions": 58,
+        "opening_fraction": 1.0,
+        "geometric_projection_percent": 4.690157022787013,
+        "star": false
+      }
+    ],
+    "mean_opening": 1.0,
+    "mean_goal_axis_projection_percent": 4.690157022787013
+  },
+  "source_stochastic": {
+    "run": "runs/model-free/smg1-six-two-hour/eval-dqn-video-20261028-084920-389220",
+    "state": "completed",
+    "mode": "noisynet_epsilon",
+    "epsilon": 0.1,
+    "agent_sha256": "4b13d0734f09d7f0b182eff3a6ae5fdeb4a094524b83e4ef447f2310f5ce5816",
+    "episodes": [
+      {
+        "seed": 11,
+        "outcome": "death",
+        "decisions": 56,
+        "opening_fraction": 1.0,
+        "geometric_projection_percent": 4.690157022787013,
+        "star": false
+      },
+      {
+        "seed": 23,
+        "outcome": "death",
+        "decisions": 27,
+        "opening_fraction": 0.49401647104683466,
+        "geometric_projection_percent": 3.247579433239709,
+        "star": false
+      },
+      {
+        "seed": 47,
+        "outcome": "death",
+        "decisions": 30,
+        "opening_fraction": 0.9361224628901708,
+        "geometric_projection_percent": 4.224762139242706,
+        "star": false
+      },
+      {
+        "seed": 101,
+        "outcome": "death",
+        "decisions": 25,
+        "opening_fraction": 0.5052678181917404,
+        "geometric_projection_percent": 2.770116397499526,
+        "star": false
+      },
+      {
+        "seed": 149,
+        "outcome": "death",
+        "decisions": 19,
+        "opening_fraction": 0.4273697766047916,
+        "geometric_projection_percent": 1.8410705390854136,
+        "star": false
+      },
+      {
+        "seed": 197,
+        "outcome": "death",
+        "decisions": 28,
+        "opening_fraction": 0.3251952835708988,
+        "geometric_projection_percent": 2.482402224339341,
+        "star": false
+      }
+    ],
+    "mean_opening": 0.614661968717406,
+    "mean_goal_axis_projection_percent": 3.2093479593656182
+  },
+  "dynamic_greedy": {
+    "run": "runs/model-free/dynamic-route-smg1-20261028/eval-dqn-video-20261028-085001-075907",
+    "state": "completed",
+    "mode": "greedy",
+    "epsilon": 0.0,
+    "agent_sha256": "a3a40652a5d38fbae6120ac2399386ee6a7326d24a0c243e0c22dad52e6615b1",
+    "episodes": [
+      {
+        "seed": 11,
+        "outcome": "timeout",
+        "decisions": 197,
+        "opening_fraction": 0.018433402297030044,
+        "geometric_projection_percent": 0.20028869169781216,
+        "star": false
+      }
+    ],
+    "mean_opening": 0.018433402297030044,
+    "mean_goal_axis_projection_percent": 0.20028869169781216
+  },
+  "dynamic_stochastic": {
+    "run": "runs/model-free/dynamic-route-smg1-20261028/eval-dqn-video-20261028-085044-086668",
+    "state": "completed",
+    "mode": "noisynet_epsilon",
+    "epsilon": 0.1,
+    "agent_sha256": "a3a40652a5d38fbae6120ac2399386ee6a7326d24a0c243e0c22dad52e6615b1",
+    "episodes": [
+      {
+        "seed": 11,
+        "outcome": "timeout",
+        "decisions": 203,
+        "opening_fraction": 0.07260935252055245,
+        "geometric_projection_percent": 1.1822546945983563,
+        "star": false
+      },
+      {
+        "seed": 23,
+        "outcome": "timeout",
+        "decisions": 210,
+        "opening_fraction": 0.08960566450737345,
+        "geometric_projection_percent": 2.000343856226037,
+        "star": false
+      },
+      {
+        "seed": 47,
+        "outcome": "timeout",
+        "decisions": 252,
+        "opening_fraction": 0.12369948540303535,
+        "geometric_projection_percent": 1.4490261845617844,
+        "star": false
+      },
+      {
+        "seed": 101,
+        "outcome": "timeout",
+        "decisions": 330,
+        "opening_fraction": 0.20151078783579868,
+        "geometric_projection_percent": 1.553997282760623,
+        "star": false
+      },
+      {
+        "seed": 149,
+        "outcome": "timeout",
+        "decisions": 514,
+        "opening_fraction": 0.2544963949485244,
+        "geometric_projection_percent": 2.1909634050086657,
+        "star": false
+      },
+      {
+        "seed": 197,
+        "outcome": "timeout",
+        "decisions": 187,
+        "opening_fraction": 0.07508757655996097,
+        "geometric_projection_percent": 1.21402431870776,
+        "star": false
+      }
+    ],
+    "mean_opening": 0.13616821029587423,
+    "mean_goal_axis_projection_percent": 1.5984349569772045
+  }
+}

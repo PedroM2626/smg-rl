@@ -89,14 +89,19 @@ def main():
             assert env.start_kind == 'curriculum' and env.start_state_id == entry['file']
             assert env.rows[0]['reward'] == 0
             start_potential = env.potential.value
+            initial_position = np.asarray(env.telemetry.position, dtype=float).copy()
             for _ in range(5):
                 _, _, terminal, truncated, _ = env.step(0)
                 report['frames'] += 12
                 assert not terminal and not truncated
                 assert env.telemetry.grounded is True and env.telemetry.health == entry['health']
+            displacement = np.asarray(env.telemetry.position, dtype=float) - initial_position
             report['restorations'].append({'file': entry['file'], 'seed': seed, 'region': entry['region'],
                                            'passed': True, 'initial_potential': start_potential,
-                                           'reset_reward': 0., 'final': env.telemetry.to_dict()})
+                                           'reset_reward': 0., 'final': env.telemetry.to_dict(),
+                                           'idle_displacement_xyz': float(np.linalg.norm(displacement)),
+                                           'idle_displacement_xz': float(np.linalg.norm(displacement[[0, 2]])),
+                                           'within_frontier_250_unit_drift_screen': bool(np.linalg.norm(displacement) <= 250)})
             env.reset(seed=seed, options={'variation': index, 'full_start': True})
             assert env.start_kind == 'full_start' and env.route_start == 0
             atomic_json(run / 'result.json', report)

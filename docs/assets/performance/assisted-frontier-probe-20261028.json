@@ -1,0 +1,204 @@
+{
+  "state": "completed",
+  "anchor": "sweet-sweet-first-chocolate.state",
+  "scope": "Assisted frozen-policy probe; never full-start success.",
+  "anchor_warning": "Prior 60-frame idle probe drifted about 478 world units on a conveyor.",
+  "maximum_decisions_per_attempt": 200,
+  "source_agent_sha256": "4b13d0734f09d7f0b182eff3a6ae5fdeb4a094524b83e4ef447f2310f5ce5816",
+  "episodes": [
+    {
+      "mode": "greedy",
+      "action_seed": 11,
+      "reset_seed": 11,
+      "decisions": 26,
+      "outcome": "death",
+      "assisted_ram_star": false,
+      "route_prefix_exited": false,
+      "start_relative_route_progress": 0.0,
+      "initial": {
+        "position": [
+          512.7356567382812,
+          -50.00029754638672,
+          -1897.1407470703125
+        ],
+        "scenario": 1,
+        "stage": "BeltConveyerExGalaxy",
+        "actor": 2164967084,
+        "actor_nerve": 2154426424,
+        "scene_nerve": 2154437584,
+        "scene_frame": 1695,
+        "dead": false,
+        "complete": false,
+        "health": 3,
+        "max_health": 3,
+        "grounded": true,
+        "start_kind": "curriculum",
+        "anchor_id": "sweet-sweet-first-chocolate.state"
+      },
+      "final": {
+        "position": [
+          330.89752197265625,
+          -2367.09375,
+          -1160.38037109375
+        ],
+        "scenario": 1,
+        "stage": "BeltConveyerExGalaxy",
+        "actor": 2164967084,
+        "actor_nerve": 2154426432,
+        "scene_nerve": 2154437600,
+        "scene_frame": 6,
+        "dead": true,
+        "complete": false,
+        "health": 3,
+        "max_health": 3,
+        "grounded": false
+      }
+    },
+    {
+      "mode": "stochastic",
+      "action_seed": 11,
+      "reset_seed": 11,
+      "decisions": 25,
+      "outcome": "death",
+      "assisted_ram_star": false,
+      "route_prefix_exited": false,
+      "start_relative_route_progress": 0.0,
+      "initial": {
+        "position": [
+          512.7356567382812,
+          -50.00029754638672,
+          -1897.1407470703125
+        ],
+        "scenario": 1,
+        "stage": "BeltConveyerExGalaxy",
+        "actor": 2164967084,
+        "actor_nerve": 2154426424,
+        "scene_nerve": 2154437584,
+        "scene_frame": 1695,
+        "dead": false,
+        "complete": false,
+        "health": 3,
+        "max_health": 3,
+        "grounded": true,
+        "start_kind": "curriculum",
+        "anchor_id": "sweet-sweet-first-chocolate.state"
+      },
+      "final": {
+        "position": [
+          381.54443359375,
+          -2401.2041015625,
+          -1173.3223876953125
+        ],
+        "scenario": 1,
+        "stage": "BeltConveyerExGalaxy",
+        "actor": 2164967084,
+        "actor_nerve": 2154426432,
+        "scene_nerve": 2154437600,
+        "scene_frame": 7,
+        "dead": true,
+        "complete": false,
+        "health": 3,
+        "max_health": 3,
+        "grounded": false
+      }
+    },
+    {
+      "mode": "stochastic",
+      "action_seed": 23,
+      "reset_seed": 11,
+      "decisions": 44,
+      "outcome": "death",
+      "assisted_ram_star": false,
+      "route_prefix_exited": false,
+      "start_relative_route_progress": 0.0,
+      "initial": {
+        "position": [
+          512.7356567382812,
+          -50.00029754638672,
+          -1897.1407470703125
+        ],
+        "scenario": 1,
+        "stage": "BeltConveyerExGalaxy",
+        "actor": 2164967084,
+        "actor_nerve": 2154426424,
+        "scene_nerve": 2154437584,
+        "scene_frame": 1695,
+        "dead": false,
+        "complete": false,
+        "health": 3,
+        "max_health": 3,
+        "grounded": true,
+        "start_kind": "curriculum",
+        "anchor_id": "sweet-sweet-first-chocolate.state"
+      },
+      "final": {
+        "position": [
+          440.4443359375,
+          -2375.75634765625,
+          -1167.7716064453125
+        ],
+        "scenario": 1,
+        "stage": "BeltConveyerExGalaxy",
+        "actor": 2164967084,
+        "actor_nerve": 2154426432,
+        "scene_nerve": 2154437600,
+        "scene_frame": 5,
+        "dead": true,
+        "complete": false,
+        "health": 3,
+        "max_health": 3,
+        "grounded": false
+      }
+    },
+    {
+      "mode": "stochastic",
+      "action_seed": 47,
+      "reset_seed": 11,
+      "decisions": 24,
+      "outcome": "death",
+      "assisted_ram_star": false,
+      "route_prefix_exited": false,
+      "start_relative_route_progress": 0.0,
+      "initial": {
+        "position": [
+          512.7356567382812,
+          -50.00029754638672,
+          -1897.1407470703125
+        ],
+        "scenario": 1,
+        "stage": "BeltConveyerExGalaxy",
+        "actor": 2164967084,
+        "actor_nerve": 2154426424,
+        "scene_nerve": 2154437584,
+        "scene_frame": 1695,
+        "dead": false,
+        "complete": false,
+        "health": 3,
+        "max_health": 3,
+        "grounded": true,
+        "start_kind": "curriculum",
+        "anchor_id": "sweet-sweet-first-chocolate.state"
+      },
+      "final": {
+        "position": [
+          465.57177734375,
+          -2423.06884765625,
+          -1181.065185546875
+        ],
+        "scenario": 1,
+        "stage": "BeltConveyerExGalaxy",
+        "actor": 2164967084,
+        "actor_nerve": 2154426432,
+        "scene_nerve": 2154437600,
+        "scene_frame": 7,
+        "dead": true,
+        "complete": false,
+        "health": 3,
+        "max_health": 3,
+        "grounded": false
+      }
+    }
+  ],
+  "source_agent_unchanged": true,
+  "local_run": "runs\\model-free\\assisted-frontier-probe-20261028\\probe-20261028-085640-616244"
+}

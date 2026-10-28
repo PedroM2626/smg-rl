@@ -20,15 +20,19 @@ from smg_rl.replay import replay_signature
 from smg_rl.train import new_run
 
 
-def record_dqn(config_path, checkpoint, variation, seeds=(11, 23, 47), maximum_steps=300, stochastic=False):
+def record_dqn(config_path, checkpoint, variation, seeds=(11, 23, 47), maximum_steps=300, stochastic=False,
+               epsilon_override=None):
     if not seeds or maximum_steps < 1:
         raise ValueError('Finite evaluation seeds and a positive decision budget are required.')
+    if epsilon_override is not None and (not stochastic or not np.isfinite(epsilon_override)
+                                         or not 0 <= epsilon_override <= 1):
+        raise ValueError('An explicit epsilon requires stochastic evaluation and must be between zero and one.')
     config = load_config(config_path)
     if variation not in range(len(config['variations'])):
         raise ValueError('Evaluation variation is outside the configured missions.')
     config['model_free_run'] = 'evaluation'
     agent = DistributionalAgent.load_policy(checkpoint, replay_signature(config), config['training']['device'])
-    epsilon = agent.epsilon(evaluate=not stochastic)
+    epsilon = agent.epsilon(evaluate=not stochastic) if epsilon_override is None else epsilon_override
     mode = 'noisynet_epsilon' if stochastic else 'epsilon_greedy' if epsilon else 'greedy'
     torch.set_num_threads(config['training']['torch_threads'])
     run = new_run(config, 'eval-dqn-video')
@@ -66,7 +70,8 @@ def record_dqn(config_path, checkpoint, variation, seeds=(11, 23, 47), maximum_s
             completed, info, random_decisions = False, {}, 0
             for step in range(maximum_steps):
                 actions, metrics = agent.act({k: v[None] for k, v in observation.items()},
-                                            evaluate=not stochastic, return_values=True)
+                                            evaluate=not stochastic, return_values=True,
+                                            epsilon_override=epsilon_override)
                 random_action = bool(metrics['epsilon_random_mask'][0])
                 random_decisions += int(random_action)
                 video.policy_image = observation['image'][-1].copy()

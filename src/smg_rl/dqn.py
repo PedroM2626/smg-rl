@@ -38,7 +38,7 @@ class DistributionalAgent:
         return start + fraction * (self.settings['epsilon'] - start)
 
     @torch.no_grad()
-    def act(self, observation, evaluate=False, return_values=False):
+    def act(self, observation, evaluate=False, return_values=False, epsilon_override=None):
         images = torch.as_tensor(observation['image'], device=self.device)
         scenario = torch.as_tensor(observation['scenario'], device=self.device)
         self.online.train(not evaluate)
@@ -46,7 +46,9 @@ class DistributionalAgent:
             self.online.reset_noise()
         values = self.online.expected(images, scenario, self.settings['quantiles'], deterministic=evaluate)
         actions = values.argmax(-1).cpu().numpy()
-        epsilon = self.epsilon(evaluate)
+        epsilon = self.epsilon(evaluate) if epsilon_override is None else float(epsilon_override)
+        if not np.isfinite(epsilon) or not 0 <= epsilon <= 1:
+            raise ValueError('Evaluation epsilon must be finite and between zero and one.')
         random = self.rng.random(len(actions)) < epsilon
         actions[random] = self.rng.integers(len(self.signature['action_names']), size=int(random.sum()))
         metrics = {'q_mean': float(values.mean()), 'q_max': float(values.max()), 'epsilon': epsilon}

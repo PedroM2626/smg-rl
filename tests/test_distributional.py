@@ -151,3 +151,13 @@ def test_explicit_random_action_provenance_is_not_confused_with_noisynet():
     observation = {'image': np.zeros((2, 4, 40, 40), np.uint8), 'scenario': np.ones((2, 1), np.float32)}
     _, metrics = agent.act(observation, evaluate=True, return_values=True)
     assert metrics['epsilon_random_mask'].all() and not agent.online.training
+
+
+def test_matched_stochastic_epsilon_overrides_schedule_without_mutation():
+    agent = DistributionalAgent(signature(), settings('iqn'))
+    observation = {'image': np.zeros((2, 4, 40, 40), np.uint8), 'scenario': np.ones((2, 1), np.float32)}
+    _, metrics = agent.act(observation, return_values=True, epsilon_override=1.0)
+    assert metrics['epsilon'] == 1.0 and metrics['epsilon_random_mask'].all()
+    assert agent.epsilon() == 1.0 and agent.updates == 0 and agent.real_decisions == 0
+    with pytest.raises(ValueError, match='epsilon'):
+        agent.act(observation, epsilon_override=float('nan'))

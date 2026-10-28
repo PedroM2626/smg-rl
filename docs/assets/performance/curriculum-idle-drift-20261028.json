@@ -1,0 +1,58 @@
+{
+  "run": "runs/regional-intervention/validate-smg1-20261028-085439-259827",
+  "frames": 180,
+  "states": [
+    {
+      "file": "sweet-sweet-right-approach.state",
+      "state_sha256": "70dbec4dc6b85a2424c98f44668645c915c2060505d6438fb6ece46c4d50b615",
+      "start": [
+        205.04385375976562,
+        45.0000114440918,
+        -51.46714782714844
+      ],
+      "after_60_frames": [
+        208.1582489013672,
+        45.0000114440918,
+        -51.48505783081055
+      ],
+      "distance_xyz": 3.114446638852975,
+      "alive_grounded_health_preserved": true,
+      "within_frontier_250_unit_drift_screen": true
+    },
+    {
+      "file": "sweet-sweet-first-pink.state",
+      "state_sha256": "03a4b9066dc50d73a23b4bb45f9b7ff6501426ac04ff78dedcfd4c0aaebff16c",
+      "start": [
+        213.2288360595703,
+        -50.00019836425781,
+        -1413.873779296875
+      ],
+      "after_60_frames": [
+        213.06776428222656,
+        -50.00019836425781,
+        -961.8770141601562
+      ],
+      "distance_xyz": 451.9967938361682,
+      "alive_grounded_health_preserved": true,
+      "within_frontier_250_unit_drift_screen": false
+    },
+    {
+      "file": "sweet-sweet-first-chocolate.state",
+      "state_sha256": "b2650f87c4390566245c12be2dd614c2f4c080c079f1deac1ecc353b66fc6a25",
+      "start": [
+        512.7356567382812,
+        -50.00029754638672,
+        -1897.1407470703125
+      ],
+      "after_60_frames": [
+        512.722412109375,
+        -50.00029754638672,
+        -1419.448974609375
+      ],
+      "distance_xyz": 477.6917726445498,
+      "alive_grounded_health_preserved": true,
+      "within_frontier_250_unit_drift_screen": false
+    }
+  ],
+  "note": "This review applies the separate 250-unit frontier heuristic after the original alive/grounded/HP restoration test. Moving more than 250 units is not by itself proof of unsafe landing; these states are not stationary."
+}

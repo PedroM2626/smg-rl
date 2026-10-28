@@ -1,0 +1,22 @@
+{
+  "completed": 666,
+  "partial_excluded": 18,
+  "by_outcome": {
+    "death": {
+      "episodes": 491,
+      "median_advance": 0.008568985033286472,
+      "max_advance": 0.028964373932405987,
+      "mean_observed_return": -1.991786931619276,
+      "mean_counterfactual_return": -1.917869316192759
+    },
+    "timeout": {
+      "episodes": 175,
+      "median_advance": 0.0036745154449295894,
+      "max_advance": 0.016028661041780988,
+      "mean_observed_return": -1.994670068635293,
+      "mean_counterfactual_return": -1.946700686352929
+    }
+  },
+  "positive_reward_on_identical_xyz_airborne_or_dead": [],
+  "counterfactual": "Retained decisions only; tenfold route credit assumes same trajectory and no saturation. It is not training or causal evidence."
+}
