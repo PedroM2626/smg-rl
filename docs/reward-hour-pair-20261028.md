@@ -137,3 +137,28 @@ resource stop or integrity failure requires a new review; never blindly retry.
 
 The physical-memory evidence is recorded in
 [the recovery audit](assets/performance/reward-hour-memory-recovery-20261028.json).
+
+### Checkpoint-cleanup overrun and second recovery
+
+The recovered control's last collector segment stopped at its requested wall
+boundary, but closing six emulators and writing the checkpoint took 22.72 s,
+more than the 20 s shutdown reserve. Its recorded cumulative elapsed time was
+3,602.72 s, exceeding the intended 3,600 s by 2.72 s. The supervisor detected
+this and stopped before the control's final frozen evaluation and before any
+second candidate block. This was a budgeting error, not an additional planned
+training block. The final control segment itself completed cleanly: its
+90,384 cumulative real decisions, 720 cumulative completed attempts, agent
+and replay hashes, signed reward and zero CSV gap passed a separate audit.
+
+The owner had requested continued recovery without repeating data. A second
+once-only recovery retains the failed supervisor state and the extra 2.72 s,
+performs no further control training, and evaluates the audited control
+checkpoint once. It resumes the candidate only from its own previously reviewed
+54,654-decision checkpoint, with 1,794.85 s already charged. The candidate's
+total limit remains 3,600 s. Its new supervisor reserves 120 s, rather than
+20 s, for cleanup and checkpointing and will not dispatch a segment if less
+than 130 s remain. This conservative reserve can leave part of the requested
+hour unused; it does not retroactively erase the control overrun. Segment
+budgets remain at most 600 s. Any subsequent fault retains data and must be
+reviewed before another dispatch. The new ledger is
+`.local/reward-hour-recovery2-20261028/state.json`.
