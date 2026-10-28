@@ -103,6 +103,7 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
     writer.add_text('accounting', 'Only real emulator decisions; no world model, synthetic rollouts or imagined transitions.')
     full_stars, assisted_stars, deaths, damage, episode_counts = 0, 0, 0, 0, 0
     stop_reason = None
+    memory_guard_snapshot = None
     visual_parameter = next(agent.online.conv.parameters())
     visual_before = visual_parameter.detach().clone()
     visual_probe = None
@@ -127,6 +128,7 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
             'tensorboard': str(logdir), 'updated_at': datetime.now(timezone.utc).isoformat(),
             'losses': metrics, 'timings': profiler.snapshot(), 'error': error,
             'memory': memory_snapshot(),
+            'memory_guard_snapshot': memory_guard_snapshot,
             'disk': disk_snapshot(config),
             'visual_encoder_trainable': all(p.requires_grad for p in agent.online.conv.parameters()),
             'visual_encoder_first_update_probe': visual_probe,
@@ -239,7 +241,8 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
                 publish()
                 ledger.flush()
                 attempts_ledger.flush()
-                if not memory_safe(memory_snapshot()):
+                memory_guard_snapshot = memory_snapshot()
+                if not memory_safe(memory_guard_snapshot):
                     stop_reason = 'memory_pressure'
                     break
                 if not disk_safe(disk_snapshot(config)):

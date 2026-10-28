@@ -123,6 +123,7 @@ def test_memory_pressure_stops_cleanly_and_flushes_committed_replay(tmp_path, mo
     assert status['state'] == 'stopped' and status['stop_reason'] == 'memory_pressure'
     assert status['real_decisions'] == status['replay_emitted'] == 64
     assert status['error'] is None
+    assert status['memory_guard_snapshot']['physical_available_bytes'] > 0
 
 
 def test_absolute_deadline_saves_clean_checkpoint_before_next_decision(tmp_path, monkeypatch):

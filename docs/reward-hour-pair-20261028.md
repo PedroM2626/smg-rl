@@ -99,3 +99,41 @@ The [interruption evidence](assets/performance/reward-hour-pair-interrupted-2026
 includes exact counts, retained CSV/checkpoint hashes, evaluated control
 trajectories and videos, and the post-cleanup memory snapshot. Original ROMs,
 states, profiles, source checkpoints and all partial artifacts remain local.
+
+## Owner-authorized memory diagnosis and recovery
+
+TensorBoard's last pre-stop resource sample shows 0.388 GiB available physical
+RAM at 35,328 cumulative real decisions, below the unchanged 0.5 GiB guard;
+available commit was 29.43 GiB. The final status memory snapshot was taken
+after workers closed and must not be mistaken for the trigger snapshot. A
+signed, per-user Realtek `-background` helper was using approximately 5.39 GiB
+private memory; this same helper had been implicated in an earlier documented
+memory leak. Its short idle measurements declined slightly, so those samples
+alone do not prove the growth mechanism or exclusive cause of the full peak.
+The verified user background helper was restarted without stopping the system
+audio service. Free physical RAM increased from approximately 11.05 GiB to
+16.29 GiB, while the replacement helper used about 5.4 MiB private memory.
+
+The owner explicitly requested investigation and continuation. An explicit
+memory-stop audit verified the candidate's exact source checkpoint, signed
+reward, optimizer/replay, native results and zero CSV decision gap. Its 29,184
+new real decisions and 1,052.21 elapsed seconds including cleanup are charged
+once. The control's already completed 1,812.96 seconds and its frozen
+evaluations are also retained and charged; none are rerun. The original failed
+state and its evidence are immutable.
+
+The isolated recovery ledger is `.local/reward-hour-recovery-20261028/state.json`.
+The first segment is a 120-second health check from the exact candidate partial
+checkpoint. Subsequent segments are at most 600 seconds, with explicit
+checkpoint/review and at least 6 GiB available physical RAM before each
+dispatch. The learner's original memory guard remains unchanged. Time including
+checkpoint/cleanup is charged after every segment, with a 20-second reserve and
+no dispatch when at most 30 seconds remain. Each arm stays within its original
+3,600-second allocation. Splitting into shorter segments adds environment
+resets; although optimizer, replay, counters and RNG are resumed, this is not
+bitwise equivalent to a single uninterrupted collector. Evaluations occur once
+at the pending half/full boundaries, separately from training. A repeated
+resource stop or integrity failure requires a new review; never blindly retry.
+
+The physical-memory evidence is recorded in
+[the recovery audit](assets/performance/reward-hour-memory-recovery-20261028.json).

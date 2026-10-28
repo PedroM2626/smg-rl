@@ -82,3 +82,22 @@ def test_reviewed_pause_requires_an_explicit_clean_owner_stop(tmp_path, monkeypa
         dqn_trial.audit_block(tmp_path, {}, 100, 0, paused=True)
     with pytest.raises(ValueError, match='Only a clean'):
         dqn_trial.audit_block(tmp_path, {}, 100, 0)
+
+
+@pytest.mark.parametrize('reason', ['owner_stop', 'interrupted', 'disk_pressure'])
+def test_resource_review_cannot_admit_other_stops(tmp_path, monkeypatch, reason):
+    status = {'state': 'stopped', 'error': None, 'stop_reason': reason, 'source_count': 999}
+    monkeypatch.setattr(dqn_trial, 'read', lambda path: status if path.name == 'status.json' else {})
+    monkeypatch.setattr(dqn_trial, 'alive', lambda _: False)
+    with pytest.raises(ValueError, match='Only a clean'):
+        dqn_trial.audit_block(tmp_path, {}, 100, 0, resource_stopped=True)
+
+
+def test_resource_review_requires_an_explicit_opt_in(tmp_path, monkeypatch):
+    status = {'state': 'stopped', 'error': None, 'stop_reason': 'memory_pressure', 'source_count': 999}
+    monkeypatch.setattr(dqn_trial, 'read', lambda path: status if path.name == 'status.json' else {})
+    monkeypatch.setattr(dqn_trial, 'alive', lambda _: False)
+    with pytest.raises(ValueError, match='Unexpected branch'):
+        dqn_trial.audit_block(tmp_path, {}, 100, 0, resource_stopped=True)
+    with pytest.raises(ValueError, match='Only a clean'):
+        dqn_trial.audit_block(tmp_path, {}, 100, 0)

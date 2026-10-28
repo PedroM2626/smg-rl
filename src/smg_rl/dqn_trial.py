@@ -90,16 +90,19 @@ def launch(state, game, steps, seconds, resume, label):
         return process, job
 
 
-def audit_block(run, config, source_real, source_attempts, failed=False, paused=False):
+def audit_block(run, config, source_real, source_attempts, failed=False, paused=False,
+                resource_stopped=False):
     """Verify real counts, reward sum, RAM outcomes, checkpoint hashes and attempts."""
     status = read(run / 'status.json')
     controller = read(run / 'controller.json')
-    if failed and paused:
-        raise ValueError('A reviewed pause cannot also be a failed recovery.')
+    if sum(map(bool, (failed, paused, resource_stopped))) > 1:
+        raise ValueError('A partial review can have only one explicit stop reason.')
     if failed:
         eligible = status['state'] == 'failed' and status['error'] == 'EOFError()'
     elif paused:
         eligible = status['state'] == 'stopped' and status['stop_reason'] == 'owner_stop' and status['error'] is None
+    elif resource_stopped:
+        eligible = status['state'] == 'stopped' and status['stop_reason'] == 'memory_pressure' and status['error'] is None
     else:
         eligible = status['state'] == 'completed' and status['error'] is None
     if alive(controller) or not eligible:
@@ -177,6 +180,7 @@ def audit_block(run, config, source_real, source_attempts, failed=False, paused=
             'elapsed_seconds': status['elapsed_seconds'], 'decisions_per_second': status['decisions_per_second'],
             'best_collection': best, 'actions': dict(actions), 'attempts': status['attempts'],
             'csv_decision_gap': gap, 'failed_partial_checkpoint': failed,
+            'resource_stopped_checkpoint': resource_stopped,
             'unacknowledged_terminal_csv_episodes': extra_terminals,
             'reason': 'Finite metrics, exact real/replay/attempt counts, signed artifacts and simple reward controls passed.',
             'note': 'Collection maxima include random exploration. Opening fractions are not mission percentages.'}
