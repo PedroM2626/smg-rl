@@ -40,11 +40,11 @@ def next_frame_deadline(previous, now):
     return max(previous + 1 / SAMPLE_FPS, now)
 
 
-def confirmed_star(telemetry, start_verified, steps):
+def confirmed_star(telemetry, start_verified, steps, game=GAME_ID, scenario=1):
     """A near-star fixture or stale/invalid terminal can never become a success."""
-    return bool(start_verified and steps > 0 and telemetry.scenario == 1
-                and telemetry.stage == PROFILES[GAME_ID].stage and telemetry.complete
-                and not telemetry.dead and telemetry.scene_nerve in PROFILES[GAME_ID].complete)
+    return bool(start_verified and steps > 0 and telemetry.scenario == scenario
+                and telemetry.stage == PROFILES[game].stage and telemetry.complete
+                and not telemetry.dead and telemetry.scene_nerve in PROFILES[game].complete)
 
 
 def controls_mask(names):
@@ -227,9 +227,10 @@ class Attempt:
                 self.trajectory.close()
         discard_attempt(self.path, self.pending_root)
 
-    def promote(self, completed_root, start_verified, source_state_sha256):
+    def promote(self, completed_root, start_verified, source_state_sha256,
+                game=GAME_ID, scenario=1, start_slot=1):
         self.close()
-        if not confirmed_star(self.last, start_verified, self.steps):
+        if not confirmed_star(self.last, start_verified, self.steps, game, scenario):
             raise ValueError('Attempt does not have a valid full-start RAM-confirmed star.')
         if not re.fullmatch(r'[0-9a-f]{64}', source_state_sha256):
             raise ValueError('A verified source savestate SHA-256 is required.')
@@ -260,7 +261,7 @@ class Attempt:
             probe.release()
         plot_human_trajectory(self.path / 'trajectory.csv', self.path / 'trajectory.png')
         files = ('gameplay.mp4', 'observations.gray8', 'inputs.jsonl', 'trajectory.csv', 'trajectory.png')
-        manifest = {'state': 'completed', 'game_id': GAME_ID, 'scenario': 1, 'start_slot': 1,
+        manifest = {'state': 'completed', 'game_id': game, 'scenario': scenario, 'start_slot': start_slot,
             'source_state_sha256': source_state_sha256, 'full_start_ram_star': True,
             'terminal_telemetry': self.last.to_dict(), 'samples': self.steps,
             'emulated_frames_per_sample': FRAMES_PER_SAMPLE, 'observation_shape': [84, 84],
@@ -322,14 +323,17 @@ def display(backend, message, attempt, names=()):
     cv2.waitKey(1)
 
 
-def start_is_canonical(telemetry, config):
-    expected = json.loads(Path(config['paths']['calibration']).read_text(encoding='utf-8'))['variations']['sweet_sweet']['start']
-    return bool(telemetry.scenario == 1 and telemetry.stage == PROFILES[GAME_ID].stage
-                and not telemetry.dead and not telemetry.complete and telemetry.health == 3
+def start_is_canonical(telemetry, config, variation='sweet_sweet'):
+    mission = next(v for v in config['variations'] if v['name'] == variation)
+    game = config['game']['id']
+    expected = json.loads(Path(config['paths']['calibration']).read_text(encoding='utf-8'))['variations'][variation]['start']
+    health_ok = telemetry.health == 3 if game == GAME_ID else telemetry.health is None
+    return bool(telemetry.scenario == mission['scenario'] and telemetry.stage == PROFILES[game].stage
+                and not telemetry.dead and not telemetry.complete and health_ok
                 and np.linalg.norm(np.subtract(telemetry.position, expected)) <= .1)
 
 
-def record_human(max_minutes=120, max_attempts=100):
+def record_human(max_minutes=120, max_attempts=100, game='smg1', variation=None):
     if os.name != 'nt':
         raise RuntimeError('The human recorder requires Windows and an interactive desktop.')
     if not 1 <= max_minutes <= 360 or not 1 <= max_attempts <= 500:
@@ -340,12 +344,20 @@ def record_human(max_minutes=120, max_attempts=100):
 
     if any((p.info['name'] or '').lower() == 'dolphin.exe' for p in psutil.process_iter(['name'])):
         raise RuntimeError('Close existing Dolphin instances before launching this isolated recorder.')
-    config = load_config('config/smg1-six-two-hour.yaml')
+    if game not in ('smg1', 'smg2'):
+        raise ValueError('Unknown game.')
+    variation = variation or ('sweet_sweet' if game == 'smg1' else 'spinning')
+    config = load_config('config/smg1-six-two-hour.yaml' if game == 'smg1' else 'config/motor8-smg2.yaml')
+    matches = [v for v in config['variations'] if v['name'] == variation]
+    if len(matches) != 1:
+        raise ValueError('Variation does not belong to this game.')
+    mission = matches[0]
+    game_id = config['game']['id']
     config['paths']['runs'] = str(Path(config['root']) / 'runs/human-demonstrations')
     config['parallel'].update(frame_skip=FRAMES_PER_SAMPLE, native_capture='full', workers=1)
     config['replay']['enabled'] = False
     require_disk_headroom(config)
-    source_state = Path(config['paths']['assets']) / f'{GAME_ID}.s01'
+    source_state = Path(config['paths']['assets']) / f'{game_id}.s{mission["start_slot"]:02d}'
     source_hash = digest(source_state)
     run = new_run(config, 'human')
     pending = run / 'pending'
@@ -354,7 +366,9 @@ def record_human(max_minutes=120, max_attempts=100):
     config['paths']['user'] = str(runtime_directory(config, run) / 'template')
     status = {'state': 'starting', 'run': str(run), 'attempts_started': 0, 'deaths_discarded': 0,
               'completed': 0, 'source_state_sha256': source_hash, 'limits_minutes': max_minutes,
-              'limits_attempts': max_attempts, 'note': 'Human input sampled only while the recorder window has focus.'}
+              'limits_attempts': max_attempts, 'game_id': game_id, 'variation': variation,
+              'start_slot': mission['start_slot'],
+              'note': 'Human input sampled only while the recorder window has focus.'}
     atomic_json(run / 'status.json', status)
     print(json.dumps({'run': str(run), 'window': WINDOW}), flush=True)
     backend = NativeDolphin(config)
@@ -363,10 +377,10 @@ def record_human(max_minutes=120, max_attempts=100):
     try:
         cv2.namedWindow(WINDOW, cv2.WINDOW_NORMAL)
         created_window = True
-        backend.load_slot(1)
+        backend.load_slot(mission['start_slot'])
         initial = backend.memory.sample()
-        if not start_is_canonical(initial, config):
-            raise ValueError('Slot 1 does not match the verified living Sweet Sweet initial state.')
+        if not start_is_canonical(initial, config, variation):
+            raise ValueError('The starting slot does not match the verified living mission start.')
         status['state'] = 'waiting_for_enter'
         atomic_json(run / 'status.json', status)
         deadline = time.monotonic() + max_minutes * 60
@@ -431,16 +445,17 @@ def record_human(max_minutes=120, max_attempts=100):
                 status['deaths_discarded'] += 1
                 status['state'] = 'resetting'
                 atomic_json(run / 'status.json', status)
-                backend.load_slot(1)
+                backend.load_slot(mission['start_slot'])
                 initial = backend.memory.sample()
-                if not start_is_canonical(initial, config):
+                if not start_is_canonical(initial, config, variation):
                     raise ValueError('Death reset did not restore the verified initial state.')
                 release_required = True
                 next_frame = time.monotonic()
-            elif confirmed_star(telemetry, True, attempt.steps):
+            elif confirmed_star(telemetry, True, attempt.steps, game_id, mission['scenario']):
                 if digest(source_state) != source_hash:
                     raise ValueError('The original savestate changed during recording.')
-                target = attempt.promote(completed, True, source_hash)
+                target = attempt.promote(completed, True, source_hash, game_id,
+                                         mission['scenario'], mission['start_slot'])
                 attempt = None
                 status.update(state='completed', completed=1, successful_attempt=str(target))
                 atomic_json(run / 'status.json', status)

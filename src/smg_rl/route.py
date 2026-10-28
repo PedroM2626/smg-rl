@@ -7,7 +7,7 @@ class RouteProgress:
     def __init__(self, specification):
         self.specification = specification
         self.schema = specification.get("schema", 1)
-        if self.schema not in (1, 2, 3):
+        if self.schema not in (1, 2, 3, 4):
             raise ValueError("Unsupported route schema.")
         self.points = np.asarray(specification["waypoints"], dtype=float)
         if (self.points.ndim != 2 or self.points.shape[1] != 3 or len(self.points) < 2
@@ -21,12 +21,17 @@ class RouteProgress:
                 or not 1 <= specification["exit_confirmations"] <= 30
                 or specification.get("requires_grounded") is not True):
             raise ValueError("Routes require positive tolerances and grounded confirmation.")
+        if self.schema == 4 and (not np.isfinite(specification.get('max_sample_distance', 1000.0))
+                                 or specification.get('max_sample_distance', 1000.0) <= 0):
+            raise ValueError('Human-route sample distance must be finite and positive.')
         self.reset(None)
 
     def reset(self, telemetry, segment=None):
         self.segment, self.best, self.confirmations = 0, 0.0, 0
         self.exited = False
         self.initial_health = telemetry.health if telemetry else None
+        self.previous_position = np.asarray(telemetry.position, dtype=float) if telemetry else None
+        self.pending_segment = 0
         self.eligible = telemetry is not None and np.linalg.norm(
             np.asarray(telemetry.position) - self.points[0]) <= self.specification["waypoint_radius"]
         if self.schema == 3 and segment is not None:
@@ -44,8 +49,12 @@ class RouteProgress:
             if not self.eligible:
                 raise ValueError('Curriculum position is outside its verified route region.')
             self.best = float((self.lengths[:segment].sum() + t * self.lengths[segment]) / self.total_length)
+        elif self.schema == 4 and segment is not None:
+            raise ValueError('Human-derived routes do not support assisted starts.')
 
     def update(self, telemetry):
+        if self.schema == 4:
+            return self._update_human_route(telemetry)
         if not self.eligible or telemetry.dead or telemetry.complete:
             self.confirmations = 0
             return 0.0
@@ -77,6 +86,50 @@ class RouteProgress:
         else:
             self.confirmations = 0
         return delta
+
+    def _update_human_route(self, telemetry):
+        """Track ordered swept waypoint visits and pay only after live contact."""
+        point = np.asarray(telemetry.position, dtype=float)
+        if not self.eligible or not np.isfinite(point).all() or telemetry.dead or telemetry.complete:
+            return 0.0
+        previous = self.previous_position
+        self.previous_position = point.copy()
+        if previous is None:
+            return 0.0
+        delta = point - previous
+        horizontal = delta[[0, 2]]
+        length2 = float(horizontal @ horizontal)
+        max_step = self.specification.get('max_sample_distance', 1000.0)
+        if np.linalg.norm(delta) > max_step:
+            # Discontinuous observations must never manufacture route credit.
+            self.eligible = False
+            return 0.0
+        if length2 > 1e-6:
+            # A point reached in the air can be credited only after a later landing.
+            # Every waypoint must intersect the actually observed motion segment.
+            last_t = 0.0
+            while self.pending_segment < len(self.lengths):
+                end = self.points[self.pending_segment + 1]
+                approach = float((end - previous)[[0, 2]] @ horizontal)
+                if approach <= 0:
+                    break
+                t = float(np.clip(approach / length2, 0, 1))
+                if t < last_t:
+                    break
+                nearest = previous + t * delta
+                if (np.linalg.norm((end - nearest)[[0, 2]]) > self.specification['waypoint_radius']
+                        or abs(end[1] - nearest[1]) > self.specification['height_tolerance']):
+                    break
+                self.pending_segment += 1
+                last_t = t
+        if telemetry.grounded is not True:
+            return 0.0
+        self.segment = min(self.pending_segment, len(self.lengths) - 1)
+        value = float(self.lengths[:self.pending_segment].sum() / self.total_length)
+        credit = max(0.0, value - self.best)
+        self.best = max(self.best, value)
+        self.exited |= self.pending_segment == len(self.lengths)
+        return credit
 
     def _update_endpoint_crossing(self, point):
         """Resolve crossings now; proximity must not manufacture later progress.

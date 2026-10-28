@@ -1,14 +1,17 @@
-# Record a human Sweet Sweet demonstration
+# Record a human demonstration
 
 The recorder launches one private, frame-stepped Dolphin using the existing
 project native build and copies of the user's assets/profile. It does not
 change the user's Dolphin settings or original slots. Only the SMG1 USA Sweet
 Sweet canonical start (`data/RMGE01.s01`) is used. The original near-star slot
-2 is never used by a recording session.
+2 is never used as a starting state by a recording session. The same recorder
+also supports SMG2 Twisty Trials, with the scenario-specific initial slots 1
+and 3; goal fixtures 2 and 4 are never recording starts.
 
 1. Close other Dolphin instances. Double-click `record-sweet-sweet.bat` in the
    project root, or from PowerShell run
    `.venv\Scripts\python.exe scripts/record_human_smg1.py`.
+   For SMG2 use `record-smg2-spinning.bat` or `record-smg2-double-time.bat`.
 2. Wait for **SMG RL - Human recorder**, click that game window, then press
    Enter. Keep the terminal open. The game is paused whenever the recorder
    window loses focus.
@@ -17,7 +20,7 @@ Sweet canonical start (`data/RMGE01.s01`) is used. The original near-star slot
    Use **F9** in the recorder window to stop without saving a demonstration.
 4. If Mario dies, the recorder discards that attempt's video, observations and
    inputs, then reloads the original starting savestate. Release the controls
-   and continue. Only a full-start star event confirmed by SMG1 RAM promotes an
+   and continue. Only a full-start star event confirmed by the selected game's RAM promotes an
    attempt to the completed folder; a near-star fixture cannot qualify.
 5. After a star, the console prints `validated_recording` and the folder path.
    Share that path with the project operator. A session ends after its first
@@ -88,3 +91,45 @@ To replay a completed recording, use an isolated emulator with a finite deadline
 The script verifies file and source-state hashes, records an independent result
 under `runs/human-verification`, and never changes the source recording. Its
 samples are verification interactions, not training steps.
+
+On October 28, a separate live SMG2 smoke test verified both canonical start
+slots, and both goal fixtures produced native star signals in their correct
+scenarios. Each fixture was rejected as a full-start completion; no human SMG2
+demonstration has yet been recorded. The SMG1 route must never be shared as an
+SMG2 route. Record and independently replay one full-start star for each SMG2
+variation before deriving a separate route for that variation.
+
+## Using the Sweet Sweet trajectory in training
+
+The [human route candidate](../config/routes/smg1-human-full-candidate-v1.json)
+contains 47 ordered waypoints sampled from the real recorded grounded path. It
+is consumed by the independent [experimental IQN profile](../config/human-route-smg1-candidate.yaml),
+which keeps eight motor actions, 12-frame decisions, visual frame stacking, no
+curiosity, and full-start resets. It uses a separate signed reward and replay;
+old checkpoints and replays are not exact-resume compatible. The raw human
+actions and frames are not relabelled or injected into the agent replay.
+
+Schema 4 checks ordered waypoint visits against observed motion segments, even
+across jumps, and releases earned credit only on a later grounded observation.
+Teleport-size discontinuities invalidate eligibility for the episode. Stationary
+samples and revisits do not repeatedly pay. Route credit is capped at 1 over
+the full path; its per-metre early reward is therefore much smaller than with
+the opening-only route. Death/timeout remain -2 and the separate RAM star is
++20. Reaching the final grounded waypoint is neither an event nor proof that
+the star was collected.
+
+On the source recording, all six offsets of 12-frame subsampling gave between
+98.4% and 100% of the route, with the lowest offset ending before its final
+eligible grounded observation. These are reused human data, not held-out agent
+results or native mission percentages. A live idle smoke test paid no route
+reward for 20 decisions, then a short motor8 test ended in death. The objective
+has not yet passed an independent A/B comparison or broad reward-exploitation
+audit, and no policy has been trained or evaluated with it. In particular,
+airborne passage only queues visits, which may grant credit after a later
+landing; this remains a possible shortcut to study. See the [adaptation evidence](assets/performance/human-route-adaptation-20261028.json).
+
+`scripts/prepare_human_route.py` prepares a mission-specific candidate from an
+exact full-start human replay, refusing to overwrite existing outputs. For SMG2,
+each mission requires its own recorded completion, replay evidence, calibration
+and separately signed reward profile; it cannot reuse the Sweet Sweet route.
+No SMG2-derived route has been prepared or validated yet.

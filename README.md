@@ -121,6 +121,9 @@ See [SMG2 memory](docs/memory-profile.md), [SMG1 memory](docs/smg1.md) and
 
 To record a human Sweet Sweet demonstration with automatic death reset and
 RAM-confirmed success, see the [human recording guide](docs/human-recording.md).
+The guide also covers the two SMG2 recording launchers and the independently
+signed experimental SMG1 profile derived from a completed human route. Route
+coverage is not a native mission-completion signal or evidence of agent success.
 
 Use Windows, 64-bit Python 3.11 or 3.12, and user-provided game images and
 compatible savestates. The tested GPU environment used Python 3.11 and Torch

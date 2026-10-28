@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-28",
+  "scope": "Near-star fixtures and canonical start checks; no full-start star and no training.",
+  "checks": [
+    {
+      "variation": "spinning",
+      "canonical_start_verified": true,
+      "near_star_fixture_steps": 4,
+      "near_star_native_terminal": true,
+      "near_star_scene_nerve": 2155696920,
+      "near_star_scenario": 1,
+      "rejected_as_full_start": true
+    },
+    {
+      "variation": "double_time",
+      "canonical_start_verified": true,
+      "near_star_fixture_steps": 8,
+      "near_star_native_terminal": true,
+      "near_star_scene_nerve": 2155696920,
+      "near_star_scenario": 2,
+      "rejected_as_full_start": true
+    }
+  ]
+}

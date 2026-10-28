@@ -88,12 +88,12 @@ class GalaxyEnv(gym.Env):
         self.potential = None
         if self.regional:
             settings = self.regional_settings
-            if (self.route is None or self.route.schema != 3
+            if (self.route is None or self.route.schema not in (3, 4)
                     or digest(config['paths']['route']) != settings['spec_sha256']
                     or config.get('route_reward', {}).get('enabled')
                     or config['rewards']['progress'] != 0 or config['rewards']['intrinsic'] != 0
                     or settings['max_idle_frames'] < 1 or settings['max_episode_frames'] < 1):
-                raise ValueError('Regional reward requires a signed schema3 route and separate shaping.')
+                raise ValueError('Regional reward requires a signed compatible route and separate shaping.')
             mode = settings.get('mode', 'potential')
             if mode not in ('potential', 'advance'):
                 raise ValueError('Unknown regional reward mode.')
@@ -111,6 +111,8 @@ class GalaxyEnv(gym.Env):
         self.curriculum_bank = None
         curriculum = config.get('curriculum', {})
         if curriculum.get('enabled', False):
+            if self.route is not None and self.route.schema == 4:
+                raise ValueError('Human-derived routes require full-start collection.')
             if not self.regional or config.get('frontier', {}).get('enabled'):
                 raise ValueError('Curated curriculum requires regional shaping and its own start bank.')
             self.curriculum_bank = CurriculumBank(config['paths']['curriculum'], curriculum['spec_sha256'],

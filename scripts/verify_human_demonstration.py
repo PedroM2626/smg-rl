@@ -33,11 +33,11 @@ def main():
         raise ValueError('The replay deadline must be between 1 and 1800 seconds.')
     source = args.demonstration.resolve()
     manifest = json.loads((source / 'manifest.json').read_text(encoding='utf-8'))
-    if (manifest['state'] != 'completed' or manifest['game_id'] != GAME_ID
-            or manifest['scenario'] != 1 or manifest['start_slot'] != 1
+    game_id = manifest['game_id']
+    if (manifest['state'] != 'completed' or game_id not in (GAME_ID, 'SB4E01')
             or not manifest['full_start_ram_star']
             or manifest['emulated_frames_per_sample'] != FRAMES_PER_SAMPLE):
-        raise ValueError('The manifest is not a full-start two-frame SMG1 demonstration.')
+        raise ValueError('The manifest is not a supported full-start two-frame demonstration.')
     for name, expected in manifest['files_sha256'].items():
         if Path(name).name != name or digest(source / name) != expected:
             raise ValueError(f'Demonstration file integrity check failed: {name}')
@@ -55,11 +55,16 @@ def main():
                 or item['duration_frames'] != FRAMES_PER_SAMPLE
                 or item['mask'] != controls_mask(item['controls'])):
             raise ValueError(f'Invalid control timeline at sample {i}.')
-    config = load_config('config/smg1-six-two-hour.yaml')
+    config = load_config('config/smg1-six-two-hour.yaml' if game_id == GAME_ID else 'config/motor8-smg2.yaml')
+    matches = [v for v in config['variations'] if v['scenario'] == manifest['scenario']
+               and v['start_slot'] == manifest['start_slot']]
+    if len(matches) != 1:
+        raise ValueError('Manifest mission does not match a configured canonical start.')
+    mission = matches[0]
     config['paths']['runs'] = str(Path(config['root']) / 'runs/human-verification')
     config['parallel'].update(frame_skip=FRAMES_PER_SAMPLE, native_capture='full', workers=1)
     config['replay']['enabled'] = False
-    state = Path(config['paths']['assets']) / f'{GAME_ID}.s01'
+    state = Path(config['paths']['assets']) / f'{game_id}.s{mission["start_slot"]:02d}'
     if digest(state) != manifest['source_state_sha256']:
         raise ValueError('The current starting savestate differs from the recorded source.')
     run = new_run(config, 'human-replay')
@@ -74,9 +79,9 @@ def main():
                              mode='r', shape=(n + 1, 84, 84))
     backend = NativeDolphin(config)
     try:
-        backend.load_slot(1)
+        backend.load_slot(mission['start_slot'])
         initial = backend.memory.sample()
-        if not start_is_canonical(initial, config):
+        if not start_is_canonical(initial, config, mission['name']):
             raise ValueError('Replay did not start at the canonical living state.')
         deadline = time.monotonic() + args.max_seconds
         for i in range(n + 1):
@@ -97,7 +102,7 @@ def main():
                 result['first_observation_divergence'] = i
             result['real_replay_samples'] = i
             if t.dead or t.complete:
-                result['ram_star'] = confirmed_star(t, True, i)
+                result['ram_star'] = confirmed_star(t, True, i, game_id, mission['scenario'])
                 result['terminal'] = t.to_dict()
                 result['state'] = 'star' if result['ram_star'] else 'terminal_without_star'
                 break

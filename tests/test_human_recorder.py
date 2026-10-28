@@ -28,6 +28,15 @@ def test_only_full_start_real_terminal_can_be_accepted():
     assert not recorder.confirmed_star(telemetry(complete=True, scenario=2, nerve=PROFILES['RMGE01'].complete[0]), True, 1)
 
 
+def test_smg2_requires_the_correct_full_start_scenario():
+    profile = PROFILES['SB4E01']
+    success = SimpleNamespace(scenario=2, stage=profile.stage, complete=True, dead=False,
+                              scene_nerve=profile.complete[0])
+    assert recorder.confirmed_star(success, True, 1, 'SB4E01', 2)
+    assert not recorder.confirmed_star(success, False, 1, 'SB4E01', 2)
+    assert not recorder.confirmed_star(success, True, 1, 'SB4E01', 1)
+
+
 def test_simultaneous_controls_are_recorded_without_forcing_exclusive_actions():
     assert recorder.controls_mask(('w', 'jump')) == (1 << recorder.CONTROLS.index('w')) | (1 << recorder.CONTROLS.index('jump'))
     with pytest.raises(ValueError):
