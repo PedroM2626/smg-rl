@@ -1,0 +1,658 @@
+{
+  "route_sha256": "c4299bc59391563b00817bbbf2b96be11ce08a163e2b54c691892d474d5204ed",
+  "studies": {
+    "reward_scale": {
+      "source_sha256": "b29fe4a35b5055ad5a152cf4cf97eb076cff0f5fa4fabf77e706e3554a060df6",
+      "phase": "completed_reviewed_gate_failed"
+    },
+    "chocolate_demo": {
+      "source_sha256": "d053fa0d83609e1f2a0ddc78db73117aa08b6f78421ca462b50d86705e3f35d2",
+      "phase": "completed_reviewed_gate_failed"
+    }
+  },
+  "episodes": [
+    {
+      "study": "reward_scale",
+      "arm": "control",
+      "training_seed": 142,
+      "mode": "greedy",
+      "action_seed": 11,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 96,
+        "native_star": false,
+        "death": true
+      },
+      "outcome": "death",
+      "hp_lost": 0,
+      "goal_axis_projection_percent": 6.6406818711820055,
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-scale-ab-20261028\\control-142\\eval-dqn-video-20261028-090159-951695\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "trajectory_sha256": "6db99814ea3baad997a07af7fe41e78063df2d561bf5f1322cf86a774be91412"
+    },
+    {
+      "study": "reward_scale",
+      "arm": "control",
+      "training_seed": 142,
+      "mode": "stochastic",
+      "action_seed": 11,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 33,
+        "native_star": false,
+        "death": true
+      },
+      "outcome": "death",
+      "hp_lost": 0,
+      "goal_axis_projection_percent": 3.927626977444667,
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-scale-ab-20261028\\control-142\\eval-dqn-video-20261028-090223-276687\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "trajectory_sha256": "f08a87a51aba6d204c450c6a1b27cc696a4c4739c7a7dec30ceda0a96877cc7a"
+    },
+    {
+      "study": "reward_scale",
+      "arm": "control",
+      "training_seed": 142,
+      "mode": "stochastic",
+      "action_seed": 23,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 53,
+        "native_star": false,
+        "death": true
+      },
+      "outcome": "death",
+      "hp_lost": 0,
+      "goal_axis_projection_percent": 5.937413644074024,
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-scale-ab-20261028\\control-142\\eval-dqn-video-20261028-090223-276687\\worker-00\\sweet_sweet\\episode-000002.csv",
+      "trajectory_sha256": "11f1ca362fe0297ccd31a58b7fba8f0ec28cde55c4e8e298e916d822a7ff89eb"
+    },
+    {
+      "study": "reward_scale",
+      "arm": "control",
+      "training_seed": 142,
+      "mode": "stochastic",
+      "action_seed": 47,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 40,
+        "native_star": false,
+        "death": true
+      },
+      "outcome": "death",
+      "hp_lost": 0,
+      "goal_axis_projection_percent": 4.726440489800359,
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-scale-ab-20261028\\control-142\\eval-dqn-video-20261028-090223-276687\\worker-00\\sweet_sweet\\episode-000003.csv",
+      "trajectory_sha256": "04ee0f887e60c1ae56eb88fdbd43f47e8f2ffdb67f45810e74b47fc697b38075"
+    },
+    {
+      "study": "reward_scale",
+      "arm": "candidate",
+      "training_seed": 142,
+      "mode": "greedy",
+      "action_seed": 11,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 47,
+        "native_star": false,
+        "death": true
+      },
+      "outcome": "death",
+      "hp_lost": 0,
+      "goal_axis_projection_percent": 7.453127643809496,
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-scale-ab-20261028\\candidate-142\\eval-dqn-video-20261028-090700-146903\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "trajectory_sha256": "30a24015a0712772ed1cbcf776c9eeb951d27ff097004a203fd3f6314ca95cca"
+    },
+    {
+      "study": "reward_scale",
+      "arm": "candidate",
+      "training_seed": 142,
+      "mode": "stochastic",
+      "action_seed": 11,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 59,
+        "native_star": false,
+        "death": true
+      },
+      "outcome": "death",
+      "hp_lost": 0,
+      "goal_axis_projection_percent": 5.571106271175203,
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-scale-ab-20261028\\candidate-142\\eval-dqn-video-20261028-090714-952970\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "trajectory_sha256": "bcf633d6ca0bee4e592e40496b955943484d668f96572c5740a09ea3668324ea"
+    },
+    {
+      "study": "reward_scale",
+      "arm": "candidate",
+      "training_seed": 142,
+      "mode": "stochastic",
+      "action_seed": 23,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 18,
+        "native_star": false,
+        "death": true
+      },
+      "outcome": "death",
+      "hp_lost": 0,
+      "goal_axis_projection_percent": 3.264535104405967,
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-scale-ab-20261028\\candidate-142\\eval-dqn-video-20261028-090714-952970\\worker-00\\sweet_sweet\\episode-000002.csv",
+      "trajectory_sha256": "ccd7469955afee22ddfc4ba955bd80cda7b7e709c473b83086ec468555627734"
+    },
+    {
+      "study": "reward_scale",
+      "arm": "candidate",
+      "training_seed": 142,
+      "mode": "stochastic",
+      "action_seed": 47,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 27,
+        "native_star": false,
+        "death": true
+      },
+      "outcome": "death",
+      "hp_lost": 0,
+      "goal_axis_projection_percent": 4.454640546445613,
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-scale-ab-20261028\\candidate-142\\eval-dqn-video-20261028-090714-952970\\worker-00\\sweet_sweet\\episode-000003.csv",
+      "trajectory_sha256": "8837ecdbc02dfb6697efce86b3ff81537723e2a720b1430c51e58551fa2e8ac3"
+    },
+    {
+      "study": "reward_scale",
+      "arm": "control",
+      "training_seed": 143,
+      "mode": "greedy",
+      "action_seed": 11,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 39,
+        "native_star": false,
+        "death": true
+      },
+      "outcome": "death",
+      "hp_lost": 0,
+      "goal_axis_projection_percent": 5.056061234177665,
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-scale-ab-20261028\\control-143\\eval-dqn-video-20261028-091151-087762\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "trajectory_sha256": "15e5509acd8372ff9c6c6c00a13076b330629f85ebca8e71a96da5511ab2b485"
+    },
+    {
+      "study": "reward_scale",
+      "arm": "control",
+      "training_seed": 143,
+      "mode": "stochastic",
+      "action_seed": 11,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 61,
+        "native_star": false,
+        "death": true
+      },
+      "outcome": "death",
+      "hp_lost": 0,
+      "goal_axis_projection_percent": 5.958767951000596,
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-scale-ab-20261028\\control-143\\eval-dqn-video-20261028-091203-283069\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "trajectory_sha256": "8d10bfb36fe01b583d088f3c878e1f4550b935675fcd0abcd1f057a0084a8db2"
+    },
+    {
+      "study": "reward_scale",
+      "arm": "control",
+      "training_seed": 143,
+      "mode": "stochastic",
+      "action_seed": 23,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 21,
+        "native_star": false,
+        "death": true
+      },
+      "outcome": "death",
+      "hp_lost": 0,
+      "goal_axis_projection_percent": 3.6779710661348144,
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-scale-ab-20261028\\control-143\\eval-dqn-video-20261028-091203-283069\\worker-00\\sweet_sweet\\episode-000002.csv",
+      "trajectory_sha256": "cd3da406ea249ae7edeef6d138839d9fc6d697c5dfa7f2b0c6ac66976099ad6e"
+    },
+    {
+      "study": "reward_scale",
+      "arm": "control",
+      "training_seed": 143,
+      "mode": "stochastic",
+      "action_seed": 47,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 27,
+        "native_star": false,
+        "death": true
+      },
+      "outcome": "death",
+      "hp_lost": 0,
+      "goal_axis_projection_percent": 3.853149533153543,
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-scale-ab-20261028\\control-143\\eval-dqn-video-20261028-091203-283069\\worker-00\\sweet_sweet\\episode-000003.csv",
+      "trajectory_sha256": "781bdcd21765dcf5436a75ca3d63b1780f14b8a789382a0abbecebbae1f5fed0"
+    },
+    {
+      "study": "reward_scale",
+      "arm": "candidate",
+      "training_seed": 143,
+      "mode": "greedy",
+      "action_seed": 11,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 14,
+        "native_star": false,
+        "death": true
+      },
+      "outcome": "death",
+      "hp_lost": 0,
+      "goal_axis_projection_percent": 2.098532564914785,
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-scale-ab-20261028\\candidate-143\\eval-dqn-video-20261028-091636-723751\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "trajectory_sha256": "4783712ff4e5de048541be4d2c142ded807a7271320f25419c4ee6fc629ff753"
+    },
+    {
+      "study": "reward_scale",
+      "arm": "candidate",
+      "training_seed": 143,
+      "mode": "stochastic",
+      "action_seed": 11,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 14,
+        "native_star": false,
+        "death": true
+      },
+      "outcome": "death",
+      "hp_lost": 0,
+      "goal_axis_projection_percent": 2.1481969826527183,
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-scale-ab-20261028\\candidate-143\\eval-dqn-video-20261028-091651-448287\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "trajectory_sha256": "8bcf07440d22e6d29d7be740839e39b0fa6c10ceccfb1a5e44b7e6cbbf09c7b2"
+    },
+    {
+      "study": "reward_scale",
+      "arm": "candidate",
+      "training_seed": 143,
+      "mode": "stochastic",
+      "action_seed": 23,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 14,
+        "native_star": false,
+        "death": true
+      },
+      "outcome": "death",
+      "hp_lost": 0,
+      "goal_axis_projection_percent": 1.4161393456697662,
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-scale-ab-20261028\\candidate-143\\eval-dqn-video-20261028-091651-448287\\worker-00\\sweet_sweet\\episode-000002.csv",
+      "trajectory_sha256": "d7a5711848072451976a19530dd9a3bab4c231407d1fc6a060885276c0dea604"
+    },
+    {
+      "study": "reward_scale",
+      "arm": "candidate",
+      "training_seed": 143,
+      "mode": "stochastic",
+      "action_seed": 47,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 14,
+        "native_star": false,
+        "death": true
+      },
+      "outcome": "death",
+      "hp_lost": 0,
+      "goal_axis_projection_percent": 2.0887909611617643,
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\reward-scale-ab-20261028\\candidate-143\\eval-dqn-video-20261028-091651-448287\\worker-00\\sweet_sweet\\episode-000003.csv",
+      "trajectory_sha256": "495539f0716280e5b548f79aea81473143775816efc23cf85dc75cdb7bf6f393"
+    },
+    {
+      "study": "chocolate_demo",
+      "arm": "control",
+      "training_seed": 142,
+      "mode": "greedy",
+      "action_seed": 11,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 209,
+        "native_star": false,
+        "death": false
+      },
+      "outcome": "timeout",
+      "hp_lost": 0,
+      "goal_axis_projection_percent": 4.549782203254895,
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\chocolate-demo-ab-20261028\\control-142\\eval-dqn-video-20261028-093639-981370\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "trajectory_sha256": "549ca612db2e0f5e159abe9642e31100395617ebe6e07c5dbd62dbf14016c986"
+    },
+    {
+      "study": "chocolate_demo",
+      "arm": "control",
+      "training_seed": 142,
+      "mode": "stochastic",
+      "action_seed": 11,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 25,
+        "native_star": false,
+        "death": true
+      },
+      "outcome": "death",
+      "hp_lost": 0,
+      "goal_axis_projection_percent": 2.924886363963516,
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\chocolate-demo-ab-20261028\\control-142\\eval-dqn-video-20261028-093714-031206\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "trajectory_sha256": "525475cbe16ca10c7ed91aced415eb96a5d3ec129ee1fa08a0984304a9e2f0d1"
+    },
+    {
+      "study": "chocolate_demo",
+      "arm": "control",
+      "training_seed": 142,
+      "mode": "stochastic",
+      "action_seed": 23,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 21,
+        "native_star": false,
+        "death": true
+      },
+      "outcome": "death",
+      "hp_lost": 0,
+      "goal_axis_projection_percent": 3.7156845658025817,
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\chocolate-demo-ab-20261028\\control-142\\eval-dqn-video-20261028-093714-031206\\worker-00\\sweet_sweet\\episode-000002.csv",
+      "trajectory_sha256": "42919689f2ef07d7d954233c81d78a100122cfd0a15fff43895eab90a2c4c092"
+    },
+    {
+      "study": "chocolate_demo",
+      "arm": "control",
+      "training_seed": 142,
+      "mode": "stochastic",
+      "action_seed": 47,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 177,
+        "native_star": false,
+        "death": true
+      },
+      "outcome": "death",
+      "hp_lost": 0,
+      "goal_axis_projection_percent": 4.562179750858757,
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\chocolate-demo-ab-20261028\\control-142\\eval-dqn-video-20261028-093714-031206\\worker-00\\sweet_sweet\\episode-000003.csv",
+      "trajectory_sha256": "ca564694e66bbc62223fe3ccadd036f64b2775ed6715da42e53dc9b6b3235a7d"
+    },
+    {
+      "study": "chocolate_demo",
+      "arm": "demonstration",
+      "training_seed": 142,
+      "mode": "greedy",
+      "action_seed": 11,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 209,
+        "native_star": false,
+        "death": false
+      },
+      "outcome": "timeout",
+      "hp_lost": 0,
+      "goal_axis_projection_percent": 4.4566531676327665,
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\chocolate-demo-ab-20261028\\demonstration-142\\eval-dqn-video-20261028-093853-908799\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "trajectory_sha256": "fb34f36f47703b770f50a671a591a875d91ec6c224b5efa092283064bec99e75"
+    },
+    {
+      "study": "chocolate_demo",
+      "arm": "demonstration",
+      "training_seed": 142,
+      "mode": "stochastic",
+      "action_seed": 11,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 26,
+        "native_star": false,
+        "death": true
+      },
+      "outcome": "death",
+      "hp_lost": 0,
+      "goal_axis_projection_percent": 2.7488851618654766,
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\chocolate-demo-ab-20261028\\demonstration-142\\eval-dqn-video-20261028-093940-081057\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "trajectory_sha256": "43a41fa9d1a35ff5b6b02139b52c8046004585012c75441a927a838144a2382b"
+    },
+    {
+      "study": "chocolate_demo",
+      "arm": "demonstration",
+      "training_seed": 142,
+      "mode": "stochastic",
+      "action_seed": 23,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 42,
+        "native_star": false,
+        "death": true
+      },
+      "outcome": "death",
+      "hp_lost": 0,
+      "goal_axis_projection_percent": 4.534148385724814,
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\chocolate-demo-ab-20261028\\demonstration-142\\eval-dqn-video-20261028-093940-081057\\worker-00\\sweet_sweet\\episode-000002.csv",
+      "trajectory_sha256": "1fe4552c3110da6658b58e733a6ebd9c620d0bd9a12a4898866538c55ba5e507"
+    },
+    {
+      "study": "chocolate_demo",
+      "arm": "demonstration",
+      "training_seed": 142,
+      "mode": "stochastic",
+      "action_seed": 47,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 27,
+        "native_star": false,
+        "death": true
+      },
+      "outcome": "death",
+      "hp_lost": 0,
+      "goal_axis_projection_percent": 3.672686893114597,
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\chocolate-demo-ab-20261028\\demonstration-142\\eval-dqn-video-20261028-093940-081057\\worker-00\\sweet_sweet\\episode-000003.csv",
+      "trajectory_sha256": "2a381b3efa3b3904a17b9eec541bb10f725c96a442ee1d73c9c93e54d7473ae9"
+    },
+    {
+      "study": "chocolate_demo",
+      "arm": "control",
+      "training_seed": 143,
+      "mode": "greedy",
+      "action_seed": 11,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 38,
+        "native_star": false,
+        "death": true
+      },
+      "outcome": "death",
+      "hp_lost": 0,
+      "goal_axis_projection_percent": 4.696357518841692,
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\chocolate-demo-ab-20261028\\control-143\\eval-dqn-video-20261028-094029-283757\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "trajectory_sha256": "dcf566fc03fee2a3cd9c4a616becf0adfa0009a2f865e0ddf6dc7dc52933c3f0"
+    },
+    {
+      "study": "chocolate_demo",
+      "arm": "control",
+      "training_seed": 143,
+      "mode": "stochastic",
+      "action_seed": 11,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 48,
+        "native_star": false,
+        "death": true
+      },
+      "outcome": "death",
+      "hp_lost": 0,
+      "goal_axis_projection_percent": 4.760466980640773,
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\chocolate-demo-ab-20261028\\control-143\\eval-dqn-video-20261028-094039-592833\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "trajectory_sha256": "3daf39f9d724a2181392c91ccc050586cb577bde345015a234faea179426d629"
+    },
+    {
+      "study": "chocolate_demo",
+      "arm": "control",
+      "training_seed": 143,
+      "mode": "stochastic",
+      "action_seed": 23,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 22,
+        "native_star": false,
+        "death": true
+      },
+      "outcome": "death",
+      "hp_lost": 0,
+      "goal_axis_projection_percent": 3.7337379453980164,
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\chocolate-demo-ab-20261028\\control-143\\eval-dqn-video-20261028-094039-592833\\worker-00\\sweet_sweet\\episode-000002.csv",
+      "trajectory_sha256": "c0f6ecdaf16f7ed4a29f902c78c2b8245560dec48449e34ad9a11b6cc04731d4"
+    },
+    {
+      "study": "chocolate_demo",
+      "arm": "control",
+      "training_seed": 143,
+      "mode": "stochastic",
+      "action_seed": 47,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 27,
+        "native_star": false,
+        "death": true
+      },
+      "outcome": "death",
+      "hp_lost": 0,
+      "goal_axis_projection_percent": 3.916368786147867,
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\chocolate-demo-ab-20261028\\control-143\\eval-dqn-video-20261028-094039-592833\\worker-00\\sweet_sweet\\episode-000003.csv",
+      "trajectory_sha256": "302aa77a1eefdcdae997523fb9de18b37870562910c078d49d906ceaef100ea9"
+    },
+    {
+      "study": "chocolate_demo",
+      "arm": "demonstration",
+      "training_seed": 143,
+      "mode": "greedy",
+      "action_seed": 11,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 209,
+        "native_star": false,
+        "death": false
+      },
+      "outcome": "timeout",
+      "hp_lost": 0,
+      "goal_axis_projection_percent": 4.4566531676327665,
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\chocolate-demo-ab-20261028\\demonstration-143\\eval-dqn-video-20261028-094128-786179\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "trajectory_sha256": "ac3126c4ef51fbfb2c82978ea7a909e88f471dd6f6c61bbdb5596a0d5dbee62c"
+    },
+    {
+      "study": "chocolate_demo",
+      "arm": "demonstration",
+      "training_seed": 143,
+      "mode": "stochastic",
+      "action_seed": 11,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 26,
+        "native_star": false,
+        "death": true
+      },
+      "outcome": "death",
+      "hp_lost": 0,
+      "goal_axis_projection_percent": 2.8887324928208082,
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\chocolate-demo-ab-20261028\\demonstration-143\\eval-dqn-video-20261028-094206-261035\\worker-00\\sweet_sweet\\episode-000001.csv",
+      "trajectory_sha256": "5e42d11e4533b559b259f1805ea78d28ac6503f70838635140d25e41501d6b07"
+    },
+    {
+      "study": "chocolate_demo",
+      "arm": "demonstration",
+      "training_seed": 143,
+      "mode": "stochastic",
+      "action_seed": 23,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 25,
+        "native_star": false,
+        "death": true
+      },
+      "outcome": "death",
+      "hp_lost": 0,
+      "goal_axis_projection_percent": 3.063533434810915,
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\chocolate-demo-ab-20261028\\demonstration-143\\eval-dqn-video-20261028-094206-261035\\worker-00\\sweet_sweet\\episode-000002.csv",
+      "trajectory_sha256": "e1f790ffef427b9f09ef48373fe0d32563dfa885d278cf83c6334fc35c84063a"
+    },
+    {
+      "study": "chocolate_demo",
+      "arm": "demonstration",
+      "training_seed": 143,
+      "mode": "stochastic",
+      "action_seed": 47,
+      "score": {
+        "route_fraction": 0.0,
+        "eligible": true,
+        "route_exit": false,
+        "decisions": 30,
+        "native_star": false,
+        "death": true
+      },
+      "outcome": "death",
+      "hp_lost": 0,
+      "goal_axis_projection_percent": 3.924481362893735,
+      "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\chocolate-demo-ab-20261028\\demonstration-143\\eval-dqn-video-20261028-094206-261035\\worker-00\\sweet_sweet\\episode-000003.csv",
+      "trajectory_sha256": "7894ccd9f68303f13bef1d27dac12478515e242f4fa4652ace9cc0818a934826"
+    }
+  ],
+  "errors": [],
+  "scope": "Post-hoc re-scoring of old frozen full-start evaluations; no new training or testing.",
+  "limitation": "Reused saved trajectories and the same Wii state; waypoint fractions are not native completion."
+}

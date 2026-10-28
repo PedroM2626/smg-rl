@@ -66,3 +66,25 @@ Study state: `.local/human-route-ab-fixed-20261028/state.json`.
 The local controller owns four sequential finite blocks; never duplicate an
 active/completed block or retry a partial failure blindly. ROMs, states,
 recordings, replays and checkpoints are not committed.
+
+## Post-hoc re-scoring of previous frozen evaluations
+
+The retained reward-scale and chocolate-demonstration studies contributed 32
+reviewed canonical frozen episodes in total, with four paired cases in each
+study. All 32 received zero under the schema-5 human-route metric, and none had
+a native RAM star. This does not mean the policies stayed at the start: the
+highest separately recorded goal-axis projection was approximately 7.45%, a
+geometric projection rather than a native mission percentage or a distance
+along the route; this old generic maximum is not restricted to grounded
+samples. The first human waypoint requires a sufficiently close ordered
+visit and landing; these past policies moved without satisfying that condition.
+
+This floor effect means the route metric alone may be too coarse to distinguish
+early policies, and a zero-versus-zero current A/B is inconclusive rather than
+evidence that either reward is equally effective. Historical re-scoring uses
+existing trajectories and is not an unseen test. It does not change the
+preregistered current gate or retroactively validate an old candidate. The
+[episode-level evidence](assets/performance/human-route-historical-frozen-20261028.json)
+contains source state and trajectory hashes, goals and failures. Future studies
+should preregister additional interpretable early-progress measurements and
+their geometric limitations before looking at their results.
