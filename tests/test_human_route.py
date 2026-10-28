@@ -1,9 +1,11 @@
+import csv
 from dataclasses import replace
 
 import pytest
 
 from smg_rl.config import load_config
 from smg_rl.env import GalaxyEnv
+from smg_rl.human_route_audit import first_segment_progress
 from smg_rl.memory import Telemetry
 from smg_rl.replay import replay_signature
 from smg_rl.route import RouteProgress
@@ -82,3 +84,21 @@ def test_smg2_candidates_are_separately_signed_and_mission_specific(tmp_path, va
     assert env.route.schema == 4 and config['game']['id'] == 'SB4E01'
     assert len(config['variations']) == 1 and config['variations'][0]['scenario'] == scenario
     assert len(env.actions) == 8 and not config['curriculum']['enabled']
+
+
+def test_initial_progress_counts_only_nearby_live_grounded_observations(tmp_path):
+    path = tmp_path / 'episode.csv'
+    columns = ['action', 'start_kind', 'x', 'y', 'z', 'grounded', 'dead', 'complete']
+    rows = [
+        ['reset', 'full_start', 0, 0, 0, True, False, False],
+        ['w', 'full_start', 50, 0, 0, True, False, False],
+        ['w', 'full_start', 100, 0, 1000, True, False, False],  # outside corridor
+        ['jump', 'full_start', 100, 0, 0, False, False, False],  # airborne
+        ['w', 'full_start', 100, 0, 0, True, True, False],  # death
+    ]
+    with path.open('w', newline='') as stream:
+        writer = csv.writer(stream)
+        writer.writerow(columns)
+        writer.writerows(rows)
+    spec = {'waypoints': [[0, 0, 0], [100, 0, 0]], 'waypoint_radius': 10}
+    assert first_segment_progress(path, spec) == pytest.approx(.5)

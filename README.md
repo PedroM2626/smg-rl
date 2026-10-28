@@ -124,6 +124,9 @@ RAM-confirmed success, see the [human recording guide](docs/human-recording.md).
 The guide also covers the two SMG2 recording launchers and the independently
 signed experimental SMG1 profile derived from a completed human route. Route
 coverage is not a native mission-completion signal or evidence of agent success.
+See the [experiment reuse register](docs/experiment-reuse-20261028.md) for prior
+results and the [one-hour-per-reward study](docs/reward-hour-pair-20261028.md)
+for its bounded protocol and evaluation limits.
 
 Use Windows, 64-bit Python 3.11 or 3.12, and user-provided game images and
 compatible savestates. The tested GPU environment used Python 3.11 and Torch
