@@ -88,3 +88,30 @@ preregistered current gate or retroactively validate an old candidate. The
 contains source state and trajectory hashes, goals and failures. Future studies
 should preregister additional interpretable early-progress measurements and
 their geometric limitations before looking at their results.
+
+## Completed comparison
+
+All four branches completed their 6,144-decision budgets and passed checkpoint,
+replay, reward and episode accounting. Each performed 1,022 optimizer updates.
+Across branches there were 24,576 training decisions, 191 completed attempts,
+163 deaths, no nonfatal HP loss and zero full-start RAM stars. The failed
+pre-dispatch attempt described above collected zero decisions and is excluded.
+
+The 16 frozen evaluations required 796 additional real decisions: 15 ended
+in death and one in timeout, with no HP loss or RAM stars. All scored zero on
+the shared schema-5 route, including both stochastic means in each seed pair.
+The preregistered gate failed. This zero-versus-zero comparison is inconclusive
+because the metric has a severe floor effect; it does not establish that the
+candidate reward is ineffective or that the policies did not move. No larger
+training block was dispatched.
+
+For a secondary, post-hoc diagnostic, the best alive-grounded X/Z projection
+toward the near-star point was 5.73% in a candidate-142 stochastic evaluation.
+This straight-line projection is neither native mission completion nor a
+distance along the winding route. Source and final checkpoint hashes, reward
+signatures and evaluation agent hashes were checked. The
+[episode-level result](assets/performance/human-route-ab-results-20261028.json)
+contains separate training/evaluation counts, videos, trajectories, HP and
+hashes. All action seeds restore the same Wii state. Two training seeds, a short
+budget, the coupled change of reward scale and route, and post-hoc secondary
+metrics limit causal and generalization claims.
