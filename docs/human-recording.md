@@ -6,7 +6,9 @@ change the user's Dolphin settings or original slots. Only the SMG1 USA Sweet
 Sweet canonical start (`data/RMGE01.s01`) is used. The original near-star slot
 2 is never used as a starting state by a recording session. The same recorder
 also supports SMG2 Twisty Trials, with the scenario-specific initial slots 1
-and 3; goal fixtures 2 and 4 are never recording starts.
+and 3; goal fixtures 2 and 4 are never recording starts. The separate SMG1
+Center of the Universe recorder uses start slot 3 and a non-star location
+reference in slot 4; see [its dedicated guide](center-of-universe.md).
 
 1. Close other Dolphin instances. Double-click `record-sweet-sweet.bat` in the
    project root, or from PowerShell run

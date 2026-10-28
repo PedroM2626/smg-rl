@@ -47,9 +47,15 @@ class GameMemory:
     # forceKill switches to +0x38; forceGameOverAbyss switches to +0x3C.
     DEATH = (0x807D4E38, 0x807D4E3C)
 
-    def __init__(self, reader: Reader | None = None, game_id="SB4E01"):
+    def __init__(self, reader: Reader | None = None, game_id="SB4E01", stage=None):
         self.profile = PROFILES[game_id]
         profile = self.profile
+        allowed_stages = {profile.stage}
+        if game_id == 'RMGE01':
+            allowed_stages.add('KoopaBattleVs3Galaxy')
+        self.expected_stage = stage or profile.stage
+        if self.expected_stage not in allowed_stages:
+            raise ValueError('Unsupported game stage.')
         if reader is None:
             import dolphin_memory_engine as engine
 
@@ -92,7 +98,7 @@ class GameMemory:
                 .decode("ascii")
             )
             scenario = self.u32(controller + p.scenario_offset)
-            if stage != p.stage or scenario not in p.scenarios:
+            if stage != self.expected_stage or scenario not in p.scenarios:
                 raise MemoryFault(f"Unexpected stage/scenario: {stage}/{scenario}")
             # Verify the current scene is actually GameScene, not a stale heap object.
             if self.u32(scene) != p.scene_vtable:

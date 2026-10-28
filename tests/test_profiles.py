@@ -140,3 +140,22 @@ def test_one_queued_screenshot_frame_does_not_masquerade_as_unpaused(monkeypatch
     )
     monkeypatch.setattr("smg_rl.background.time.sleep", lambda _: None)
     assert backend.detect_pause()
+
+
+def test_center_stage_requires_explicit_matching_game_stage():
+    ram = smg1_ram()
+    ram.put(0x80002020, b'KoopaBattleVs3Galaxy\0')
+    with pytest.raises(MemoryFault, match='Unexpected stage'):
+        GameMemory(ram, 'RMGE01').sample()
+    assert GameMemory(ram, 'RMGE01', 'KoopaBattleVs3Galaxy').sample().stage == 'KoopaBattleVs3Galaxy'
+    with pytest.raises(ValueError, match='Unsupported'):
+        GameMemory(ram, 'RMGE01', 'UnverifiedGalaxy')
+
+
+def test_center_profile_has_no_training_permission():
+    config = load_config('config/smg1-center-validation.yaml')
+    assert config['variations'][0]['start_slot'] == 3
+    assert config['variations'][0]['goal_slot'] == 4
+    assert config['game']['stage'] == 'KoopaBattleVs3Galaxy'
+    with pytest.raises(ValueError, match='validation-only'):
+        require_training_enabled(config)

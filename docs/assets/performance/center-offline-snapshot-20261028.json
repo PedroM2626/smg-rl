@@ -1,0 +1,43 @@
+{
+  "state": "offline_reference_inspection_only",
+  "game_id": "RMGE01",
+  "stage": "KoopaBattleVs3Galaxy",
+  "scenario": 1,
+  "method": "Decoded Dolphin LZ4 state data; located unique MEM1 image by game ID and executable signature; read existing SMG1 object graph without executing the game.",
+  "limitations": [
+    "No live emulator or transition test was run for these new states.",
+    "The goal is an owner-provided location, not a native completion or star signal.",
+    "The 300-unit radius is provisional and cannot alone prove arrival at the intended surface.",
+    "Human goal candidates require replay and visual review."
+  ],
+  "slots": [
+    {
+      "slot": 3,
+      "sha256": "7ab2b25c76a85d12ed23e2852eab6f8657289e6cfa85248289564131dabb6d09",
+      "position": [
+        14950.0,
+        -4100.26904296875,
+        115000.0
+      ],
+      "health": 3,
+      "grounded": true,
+      "dead": false,
+      "native_star": false,
+      "scene_nerve": "0x806A1BD0"
+    },
+    {
+      "slot": 4,
+      "sha256": "51e5a7979b88cea10a6f065f1d99a38abff015c68aa8bddb962c8d1a17eb1fa0",
+      "position": [
+        40912.55078125,
+        28495.44140625,
+        132543.484375
+      ],
+      "health": 3,
+      "grounded": true,
+      "dead": false,
+      "native_star": false,
+      "scene_nerve": "0x806A1BD0"
+    }
+  ]
+}

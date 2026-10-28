@@ -119,6 +119,10 @@ See [SMG2 memory](docs/memory-profile.md), [SMG1 memory](docs/smg1.md) and
 
 ## Installation and local operation
 
+The validation-only [Center of the Universe setup](docs/center-of-universe.md)
+includes a separate human trajectory recorder and a pre-boss reference location.
+No training is enabled for that mission.
+
 To record a human Sweet Sweet demonstration with automatic death reset and
 RAM-confirmed success, see the [human recording guide](docs/human-recording.md).
 The guide also covers the two SMG2 recording launchers and the independently

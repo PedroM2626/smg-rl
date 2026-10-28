@@ -164,3 +164,52 @@ def test_incomplete_attempt_cannot_be_promoted(tmp_path, monkeypatch):
     with pytest.raises(ValueError, match='valid full-start'):
         attempt.promote(tmp_path / 'completed', True, 'fixture-hash')
     assert not (tmp_path / 'completed').exists()
+
+
+def test_center_goal_is_manual_candidate_not_a_ram_star():
+    goal = {'position': [1., 2., 3.], 'stage': 'KoopaBattleVs3Galaxy',
+            'scenario': 1, 'radius_3d': 300.}
+    t = telemetry()
+    t.stage = goal['stage']
+    assert recorder.confirmed_manual_goal(t, True, 1, goal)
+    assert not recorder.confirmed_star(t, True, 1)
+    assert not recorder.confirmed_manual_goal(t, False, 1, goal)
+    assert not recorder.confirmed_manual_goal(t, True, 0, goal)
+    t.position = (500., 2., 3.)
+    assert not recorder.confirmed_manual_goal(t, True, 1, goal)
+    t.position, t.grounded = (1., 2., 3.), False
+    assert not recorder.confirmed_manual_goal(t, True, 1, goal)
+    t.grounded, t.dead = True, True
+    assert not recorder.confirmed_manual_goal(t, True, 1, goal)
+    t.dead = False
+    goal['radius_3d'] = 301.
+    assert not recorder.confirmed_manual_goal(t, True, 1, goal)
+
+
+def test_center_promotion_retains_no_star_and_unverified_status(tmp_path, monkeypatch):
+    class FakeVideo:
+        def __init__(self, path, rgba):
+            self.path, self.frames = Path(path), 0
+
+        def write(self, rgba):
+            self.frames += 1
+
+        def close(self):
+            self.path.write_bytes(b'fixture video')
+
+    monkeypatch.setattr(recorder, 'VideoWriter', FakeVideo)
+    monkeypatch.setattr(recorder.cv2, 'VideoCapture', lambda _: SimpleNamespace(
+        read=lambda: (True, np.zeros((10, 10, 3), dtype=np.uint8)), isOpened=lambda: True, release=lambda: None))
+    backend = SimpleNamespace(image=lambda: np.zeros((84, 84), dtype=np.uint8),
+                              bridge=SimpleNamespace(image=lambda: np.zeros((10, 10, 4), dtype=np.uint8)))
+    t = telemetry()
+    t.stage = 'KoopaBattleVs3Galaxy'
+    goal = {'position': list(t.position), 'stage': t.stage, 'scenario': 1, 'radius_3d': 300.}
+    attempt = recorder.Attempt(tmp_path / 'pending', 1, backend, t)
+    attempt.record(('w',), backend, t)
+    output = attempt.promote(tmp_path / 'candidates', True, 'a' * 64, 'RMGE01', 1, 3, goal=goal)
+    manifest = json.loads((output / 'manifest.json').read_text())
+    assert manifest['state'] == 'candidate_goal'
+    assert manifest['full_start_ram_star'] is False
+    assert manifest['goal_replay_verified'] is False
+    assert manifest['goal_confirmed_by'] == 'human_F8'

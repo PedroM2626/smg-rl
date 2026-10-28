@@ -99,7 +99,7 @@ class DesktopDolphin:
         self.focus()
         from smg_rl.memory import GameMemory
 
-        self.memory = GameMemory(game_id=game_id(config))
+        self.memory = GameMemory(game_id=game_id(config), stage=config.get('game', {}).get('stage'))
         self.paused = self.detect_pause()
 
     def detect_pause(self):

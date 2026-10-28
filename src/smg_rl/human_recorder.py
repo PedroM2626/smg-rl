@@ -47,6 +47,19 @@ def confirmed_star(telemetry, start_verified, steps, game=GAME_ID, scenario=1):
                 and not telemetry.dead and telemetry.scene_nerve in PROFILES[game].complete)
 
 
+def confirmed_manual_goal(telemetry, start_verified, steps, goal):
+    """Candidate only: owner marks a live, grounded position near the fixture."""
+    point = np.asarray(telemetry.position, dtype=float)
+    target = np.asarray(goal['position'], dtype=float)
+    return bool(start_verified and steps > 0 and telemetry.stage == goal['stage']
+                and telemetry.scenario == goal['scenario'] and not telemetry.dead
+                and not telemetry.complete and telemetry.grounded is True
+                and point.shape == (3,) and target.shape == (3,)
+                and np.isfinite(point).all() and np.isfinite(target).all()
+                and np.isfinite(goal['radius_3d']) and 0 < goal['radius_3d'] <= 300
+                and np.linalg.norm(point - target) <= goal['radius_3d'])
+
+
 def controls_mask(names):
     if any(name not in CONTROLS for name in names):
         raise ValueError('Unknown recorded game control.')
@@ -228,10 +241,12 @@ class Attempt:
         discard_attempt(self.path, self.pending_root)
 
     def promote(self, completed_root, start_verified, source_state_sha256,
-                game=GAME_ID, scenario=1, start_slot=1):
+                game=GAME_ID, scenario=1, start_slot=1, goal=None):
         self.close()
-        if not confirmed_star(self.last, start_verified, self.steps, game, scenario):
+        if goal is None and not confirmed_star(self.last, start_verified, self.steps, game, scenario):
             raise ValueError('Attempt does not have a valid full-start RAM-confirmed star.')
+        if goal is not None and not confirmed_manual_goal(self.last, start_verified, self.steps, goal):
+            raise ValueError('Attempt is not a valid manually marked goal candidate.')
         if not re.fullmatch(r'[0-9a-f]{64}', source_state_sha256):
             raise ValueError('A verified source savestate SHA-256 is required.')
         if self.video.frames != self.steps:
@@ -248,7 +263,7 @@ class Attempt:
                 raise ValueError('Input timeline or controls are inconsistent.')
         with (self.path / 'trajectory.csv').open(encoding='utf-8', newline='') as stream:
             positions = list(csv.DictReader(stream))
-        if (len(positions) != self.steps + 1 or positions[-1]['complete'] != 'True'
+        if (len(positions) != self.steps + 1 or positions[-1]['complete'] != ('True' if goal is None else 'False')
                 or positions[-1]['dead'] != 'False'
                 or int(positions[-1]['scene_nerve'], 16) != self.last.scene_nerve):
             raise ValueError('Trajectory does not end at the validated RAM event.')
@@ -259,10 +274,12 @@ class Attempt:
                 raise ValueError('Encoded video could not be decoded.')
         finally:
             probe.release()
-        plot_human_trajectory(self.path / 'trajectory.csv', self.path / 'trajectory.png')
+        plot_human_trajectory(self.path / 'trajectory.csv', self.path / 'trajectory.png',
+                              'Star event' if goal is None else 'Manually marked goal candidate')
         files = ('gameplay.mp4', 'observations.gray8', 'inputs.jsonl', 'trajectory.csv', 'trajectory.png')
-        manifest = {'state': 'completed', 'game_id': game, 'scenario': scenario, 'start_slot': start_slot,
-            'source_state_sha256': source_state_sha256, 'full_start_ram_star': True,
+        manifest = {'state': 'completed' if goal is None else 'candidate_goal',
+            'game_id': game, 'scenario': scenario, 'start_slot': start_slot,
+            'source_state_sha256': source_state_sha256, 'full_start_ram_star': goal is None,
             'terminal_telemetry': self.last.to_dict(), 'samples': self.steps,
             'emulated_frames_per_sample': FRAMES_PER_SAMPLE, 'observation_shape': [84, 84],
             'observation_dtype': 'uint8', 'video_frames': self.video.frames,
@@ -270,6 +287,8 @@ class Attempt:
             'control_semantics': 'Raw simultaneous human buttons sampled at two-frame intervals; not motor8-v1 action labels.',
             'training_compatible_without_conversion': False,
             'files_sha256': {name: digest(self.path / name) for name in files}}
+        if goal is not None:
+            manifest.update(goal=goal, goal_confirmed_by='human_F8', goal_replay_verified=False)
         if not atomic_json(self.path / 'manifest.json', manifest):
             raise OSError('Could not write success manifest.')
         completed_root = Path(completed_root)
@@ -281,7 +300,7 @@ class Attempt:
         return target
 
 
-def plot_human_trajectory(source, output):
+def plot_human_trajectory(source, output, endpoint_label='Star event'):
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
@@ -294,7 +313,7 @@ def plot_human_trajectory(source, output):
     ax.plot(x, z, linewidth=1.5, color='#3155a5')
     ax.scatter([x[0], x[-1]], [z[0], z[-1]], c=['#27a46b', '#df9e25'], s=70, zorder=3)
     ax.annotate('Start', (x[0], z[0]))
-    ax.annotate('Star event', (x[-1], z[-1]))
+    ax.annotate(endpoint_label, (x[-1], z[-1]))
     ax.set(xlabel='World X', ylabel='World Z', title='Human full-start trajectory (top-down)')
     ax.set_aspect('equal', adjustable='datalim')
     ax.grid(alpha=.2)
@@ -328,7 +347,8 @@ def start_is_canonical(telemetry, config, variation='sweet_sweet'):
     game = config['game']['id']
     expected = json.loads(Path(config['paths']['calibration']).read_text(encoding='utf-8'))['variations'][variation]['start']
     health_ok = telemetry.health == 3 if game == GAME_ID else telemetry.health is None
-    return bool(telemetry.scenario == mission['scenario'] and telemetry.stage == PROFILES[game].stage
+    stage = config['game'].get('stage', PROFILES[game].stage)
+    return bool(telemetry.scenario == mission['scenario'] and telemetry.stage == stage
                 and not telemetry.dead and not telemetry.complete and health_ok
                 and np.linalg.norm(np.subtract(telemetry.position, expected)) <= .1)
 
@@ -347,7 +367,11 @@ def record_human(max_minutes=120, max_attempts=100, game='smg1', variation=None)
     if game not in ('smg1', 'smg2'):
         raise ValueError('Unknown game.')
     variation = variation or ('sweet_sweet' if game == 'smg1' else 'spinning')
-    config = load_config('config/smg1-six-two-hour.yaml' if game == 'smg1' else 'config/motor8-smg2.yaml')
+    if variation == 'center_of_universe' and game != 'smg1':
+        raise ValueError('Center of the Universe belongs to SMG1.')
+    config_path = ('config/smg1-center-validation.yaml' if variation == 'center_of_universe' else
+                   'config/smg1-six-two-hour.yaml' if game == 'smg1' else 'config/motor8-smg2.yaml')
+    config = load_config(config_path)
     matches = [v for v in config['variations'] if v['name'] == variation]
     if len(matches) != 1:
         raise ValueError('Variation does not belong to this game.')
@@ -359,6 +383,16 @@ def record_human(max_minutes=120, max_attempts=100, game='smg1', variation=None)
     require_disk_headroom(config)
     source_state = Path(config['paths']['assets']) / f'{game_id}.s{mission["start_slot"]:02d}'
     source_hash = digest(source_state)
+    goal = None
+    if variation == 'center_of_universe':
+        calibration = json.loads(Path(config['paths']['calibration']).read_text(encoding='utf-8'))
+        entry = calibration['variations'][variation]
+        goal_state = Path(config['paths']['assets']) / f'{game_id}.s{mission["goal_slot"]:02d}'
+        if source_hash != entry['start_state_sha256'] or digest(goal_state) != entry['goal_state_sha256']:
+            raise ValueError('A reference savestate changed; recalibration is required.')
+        goal = {'position': entry['goal'], 'radius_3d': entry['goal_radius_3d'],
+                'stage': config['game']['stage'], 'scenario': mission['scenario'],
+                'goal_state_sha256': entry['goal_state_sha256']}
     run = new_run(config, 'human')
     pending = run / 'pending'
     completed = run / 'completed'
@@ -396,6 +430,24 @@ def record_human(max_minutes=120, max_attempts=100, game='smg1', variation=None)
             active = window_active(win32gui)
             if active and win32api.GetAsyncKeyState(0x78) & 0x8000:  # F9
                 break
+            if (goal is not None and active and attempt is not None
+                    and win32api.GetAsyncKeyState(0x77) & 0x8000):  # F8
+                if confirmed_manual_goal(attempt.last, True, attempt.steps, goal):
+                    if digest(source_state) != source_hash or digest(goal_state) != goal['goal_state_sha256']:
+                        raise ValueError('A reference savestate changed during recording.')
+                    target = attempt.promote(run / 'goal-candidates', True, source_hash, game_id,
+                                             mission['scenario'], mission['start_slot'], goal=goal)
+                    attempt = None
+                    status.update(state='goal_candidate', successful_attempt=str(target))
+                    atomic_json(run / 'status.json', status)
+                    print(json.dumps({'goal_candidate': str(target), 'state': 'goal_candidate'}), flush=True)
+                    display(backend, 'Goal candidate saved. Replay verification required.', status['attempts_started'])
+                    time.sleep(3)
+                    break
+                display(backend, 'F8 requires a live grounded position near the goal fixture.', status['attempts_started'])
+                time.sleep(.2)
+                next_frame = time.monotonic()
+                continue
             if not active:
                 display(backend, 'Click this window to play. Game is paused.', status['attempts_started'])
                 time.sleep(.05)
@@ -434,7 +486,9 @@ def record_human(max_minutes=120, max_attempts=100, game='smg1', variation=None)
             names = pressed_controls(win32api)
             backend.advance(names)
             telemetry = backend.memory.sample()
-            display(backend, 'Recording. A death resets this attempt.', status['attempts_started'], names)
+            message = ('Recording. F8 marks goal; a death resets.' if goal is not None
+                       else 'Recording. A death resets this attempt.')
+            display(backend, message, status['attempts_started'], names)
             attempt.record(names, backend, telemetry)
             next_frame = next_frame_deadline(next_frame, time.monotonic())
             if attempt.steps % (SAMPLE_FPS * 10) == 0:
@@ -451,7 +505,7 @@ def record_human(max_minutes=120, max_attempts=100, game='smg1', variation=None)
                     raise ValueError('Death reset did not restore the verified initial state.')
                 release_required = True
                 next_frame = time.monotonic()
-            elif confirmed_star(telemetry, True, attempt.steps, game_id, mission['scenario']):
+            elif goal is None and confirmed_star(telemetry, True, attempt.steps, game_id, mission['scenario']):
                 if digest(source_state) != source_hash:
                     raise ValueError('The original savestate changed during recording.')
                 target = attempt.promote(completed, True, source_hash, game_id,
@@ -465,7 +519,7 @@ def record_human(max_minutes=120, max_attempts=100, game='smg1', variation=None)
                 break
         else:
             status['state'] = 'session_limit_reached'
-        if status['state'] not in ('completed', 'session_limit_reached'):
+        if status['state'] not in ('completed', 'goal_candidate', 'session_limit_reached'):
             status['state'] = 'stopped_by_user'
         if attempt is not None:
             attempt.discard()

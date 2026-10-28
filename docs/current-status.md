@@ -1,5 +1,9 @@
 # Current evidence and next experiments
 
+The validation-only [Center of the Universe setup](center-of-universe.md) uses
+SMG1 slots 3 and 4, with an owner-marked pre-boss goal candidate and no native
+star claim. Live verification and a human recording remain outstanding.
+
 This page summarizes the evidence audited through October 28, 2026. It is a dated
 snapshot, not a live process monitor. Older documents may use present tense for
 their own dated experiments; their original observations remain historical.

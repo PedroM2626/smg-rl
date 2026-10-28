@@ -14,6 +14,7 @@ from smg_rl.diagnostics import atomic_json
 from smg_rl.human_recorder import (
     FRAMES_PER_SAMPLE,
     GAME_ID,
+    confirmed_manual_goal,
     confirmed_star,
     controls_mask,
     exact_observation,
@@ -34,10 +35,12 @@ def main():
     source = args.demonstration.resolve()
     manifest = json.loads((source / 'manifest.json').read_text(encoding='utf-8'))
     game_id = manifest['game_id']
-    if (manifest['state'] != 'completed' or game_id not in (GAME_ID, 'SB4E01')
-            or not manifest['full_start_ram_star']
+    goal_candidate = manifest['state'] == 'candidate_goal'
+    if (manifest['state'] not in ('completed', 'candidate_goal') or game_id not in (GAME_ID, 'SB4E01')
+            or (goal_candidate and (game_id != GAME_ID or manifest.get('full_start_ram_star') is not False))
+            or (not goal_candidate and not manifest['full_start_ram_star'])
             or manifest['emulated_frames_per_sample'] != FRAMES_PER_SAMPLE):
-        raise ValueError('The manifest is not a supported full-start two-frame demonstration.')
+        raise ValueError('The manifest is not a supported full-start two-frame recording.')
     for name, expected in manifest['files_sha256'].items():
         if Path(name).name != name or digest(source / name) != expected:
             raise ValueError(f'Demonstration file integrity check failed: {name}')
@@ -55,7 +58,8 @@ def main():
                 or item['duration_frames'] != FRAMES_PER_SAMPLE
                 or item['mask'] != controls_mask(item['controls'])):
             raise ValueError(f'Invalid control timeline at sample {i}.')
-    config = load_config('config/smg1-six-two-hour.yaml' if game_id == GAME_ID else 'config/motor8-smg2.yaml')
+    config = load_config('config/smg1-center-validation.yaml' if goal_candidate else
+                         'config/smg1-six-two-hour.yaml' if game_id == GAME_ID else 'config/motor8-smg2.yaml')
     matches = [v for v in config['variations'] if v['scenario'] == manifest['scenario']
                and v['start_slot'] == manifest['start_slot']]
     if len(matches) != 1:
@@ -67,6 +71,16 @@ def main():
     state = Path(config['paths']['assets']) / f'{game_id}.s{mission["start_slot"]:02d}'
     if digest(state) != manifest['source_state_sha256']:
         raise ValueError('The current starting savestate differs from the recorded source.')
+    if goal_candidate:
+        calibration = json.loads(Path(config['paths']['calibration']).read_text(encoding='utf-8'))
+        entry = calibration['variations'][mission['name']]
+        goal = manifest['goal']
+        goal_state = Path(config['paths']['assets']) / f'{game_id}.s{mission["goal_slot"]:02d}'
+        if (goal['stage'] != config['game']['stage'] or goal['scenario'] != mission['scenario']
+                or goal['position'] != entry['goal'] or goal['radius_3d'] != entry['goal_radius_3d']
+                or goal['goal_state_sha256'] != entry['goal_state_sha256']
+                or digest(goal_state) != entry['goal_state_sha256']):
+            raise ValueError('The marked goal does not match the unchanged reference fixture.')
     run = new_run(config, 'human-replay')
     config['paths']['user'] = str(runtime_directory(config, run) / 'template')
     result = {'state': 'running', 'source': str(source), 'run': str(run),
@@ -106,11 +120,22 @@ def main():
                 result['terminal'] = t.to_dict()
                 result['state'] = 'star' if result['ram_star'] else 'terminal_without_star'
                 break
+            if goal_candidate and i == n:
+                result['terminal'] = t.to_dict()
+                matches = confirmed_manual_goal(t, True, i, goal)
+                exact = result['first_position_divergence'] is None and result['first_observation_divergence'] is None
+                result['state'] = 'goal_candidate_replayed' if matches and exact else 'goal_candidate_not_reproduced'
+                result['goal_fixture_unchanged'] = digest(goal_state) == goal['goal_state_sha256']
+                if not result['goal_fixture_unchanged']:
+                    result['state'] = 'goal_candidate_not_reproduced'
+                break
             if i and i % 200 == 0:
                 atomic_json(run / 'result.json', result)
         else:
             result['state'] = 'inputs_exhausted_without_terminal'
         result['source_savestate_unchanged'] = digest(state) == manifest['source_state_sha256']
+        if goal_candidate and not result['source_savestate_unchanged']:
+            result['state'] = 'goal_candidate_not_reproduced'
     except BaseException as exc:
         result.update(state='failed', error=repr(exc))
         raise

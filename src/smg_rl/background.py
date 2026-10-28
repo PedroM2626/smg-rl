@@ -128,7 +128,7 @@ class BackgroundDolphin:
                     "--exec",
                     config["paths"]["rom"],
                     "--save_state",
-                    str(self.root / "StateSaves" / f"{game_id(config)}.s01"),
+                    str(self.root / "StateSaves" / f"{game_id(config)}.s{config['variations'][0]['start_slot']:02d}"),
                 ],
                 startupinfo=startup,
                 env={**os.environ, "SMG_RL_BRIDGE": self.bridge.name}
@@ -155,7 +155,7 @@ class BackgroundDolphin:
                 try:
                     if self.reader is None:
                         self.reader = ProcessMemory(self.process.pid, game_id(config))
-                    self.memory = GameMemory(self.reader, game_id(config))
+                    self.memory = GameMemory(self.reader, game_id(config), config.get('game', {}).get('stage'))
                     self.memory.sample()
                     if not self.server.clients and not hasattr(self, "bridge"):
                         raise MemoryFault("Waiting for the private DSU connection.")
