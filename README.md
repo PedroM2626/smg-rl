@@ -22,6 +22,10 @@ The [experiment history](docs/experiment-history.md) summarizes findings,
 negative results and comparison limits across the project.
 The subsequent [matched reward-scale comparison](docs/reward-scale-study-20261028.md#completed-matched-comparison)
 failed its preregistered gate in both training seeds; no larger block was started.
+The later [chocolate-frontier exploration](docs/chocolate-frontier-search-20261028.md)
+reproduced partial scripted paths from the full start, but found no stable
+archive candidate or learned mission completion; its demonstration comparison
+must be checked separately for actual completion and results.
 
 ## Current evidence
 

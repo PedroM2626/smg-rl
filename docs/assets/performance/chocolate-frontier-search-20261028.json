@@ -1,0 +1,158 @@
+{
+  "search": {
+    "attempts": 144,
+    "physical_decisions": 2779,
+    "outcomes": {
+      "death": 137,
+      "budget_cut": 7
+    },
+    "candidate_count": 6,
+    "assisted_ram_stars": 0
+  },
+  "validation": {
+    "physical_decisions": 414,
+    "candidates": [
+      {
+        "worker": 1,
+        "trial": 1,
+        "candidate_position": [
+          450.23040771484375,
+          -50.00019836425781,
+          -2328.647216796875
+        ],
+        "candidate_sha256": "a78e0a3144fa45ea7276b59e08b6360fcadedb0629dc3850e423c0ba4a59982f",
+        "full_start_reproduced": true,
+        "assisted_exact_repetitions": 2,
+        "idle_alive_grounded_60_frames": true,
+        "idle_displacement_xyz": [
+          493.9047916528408,
+          493.9047916528408
+        ],
+        "timing_perturbed_final_position": [
+          453.7839660644531,
+          -50.00019836425781,
+          -2136.04931640625
+        ],
+        "timing_perturbed_grounded": true,
+        "stable_archive_accepted": false
+      },
+      {
+        "worker": 1,
+        "trial": 12,
+        "candidate_position": [
+          505.5826721191406,
+          -50.00019073486328,
+          -2297.61962890625
+        ],
+        "candidate_sha256": "b3d8204a4821acd0d7443084f8efc6a4af12a5bd4d70966a291d1f4ec17429c1",
+        "full_start_reproduced": true,
+        "assisted_exact_repetitions": 2,
+        "idle_alive_grounded_60_frames": true,
+        "idle_displacement_xyz": [
+          468.2639059376249,
+          468.2639059376249
+        ],
+        "timing_perturbed_final_position": [
+          505.49444580078125,
+          -50.00019073486328,
+          -2129.0185546875
+        ],
+        "timing_perturbed_grounded": true,
+        "stable_archive_accepted": false
+      },
+      {
+        "worker": 4,
+        "trial": 9,
+        "candidate_position": [
+          780.3311767578125,
+          -50.00019836425781,
+          -2180.324462890625
+        ],
+        "candidate_sha256": "6535cd7dde6f14323f43d87582168341e8860f28081b5dac0dac24c5de76b4d7",
+        "full_start_reproduced": true,
+        "assisted_exact_repetitions": 2,
+        "idle_alive_grounded_60_frames": false,
+        "idle_displacement_xyz": [
+          188.39877788609644,
+          188.39877788609644
+        ],
+        "timing_perturbed_final_position": [
+          782.628173828125,
+          -50.00019836425781,
+          -2002.6591796875
+        ],
+        "timing_perturbed_grounded": true,
+        "stable_archive_accepted": false
+      },
+      {
+        "worker": 1,
+        "trial": 21,
+        "candidate_position": [
+          20.686044692993164,
+          -50.00030517578125,
+          -2151.10205078125
+        ],
+        "candidate_sha256": "29a9a3564661bc1a3833d0b861a970a79fe68118d722e6cdb35c71f303de2b89",
+        "full_start_reproduced": true,
+        "assisted_exact_repetitions": 2,
+        "idle_alive_grounded_60_frames": true,
+        "idle_displacement_xyz": [
+          345.74170736363885,
+          345.74170736363885
+        ],
+        "timing_perturbed_final_position": [
+          31.007474899291992,
+          -50.00030517578125,
+          -1993.2340087890625
+        ],
+        "timing_perturbed_grounded": true,
+        "stable_archive_accepted": false
+      }
+    ],
+    "accepted_stable": 0,
+    "full_start_reproduced": 4,
+    "video": "runs/chocolate-frontier-validation-20261028/validate-20261028-093109-247390/validation.mp4"
+  },
+  "demonstrations": {
+    "physical_decisions": 144,
+    "episodes": [
+      {
+        "purpose": "training",
+        "delay_decisions": 0,
+        "decisions": 47,
+        "final_position": [
+          450.23040771484375,
+          -50.00019836425781,
+          -2328.647216796875
+        ],
+        "sha256": "9c939f20abda097c045da552172c95c160a67656dd27ec720c095f21e511d16f",
+        "full_start_ram_star": false
+      },
+      {
+        "purpose": "training",
+        "delay_decisions": 2,
+        "decisions": 49,
+        "final_position": [
+          453.7839660644531,
+          -50.00019836425781,
+          -2136.04931640625
+        ],
+        "sha256": "1246f9adf8fc0ff552f482a471b5ee5175541f704c5a4f0a833e7a7d0bf84fc5",
+        "full_start_ram_star": false
+      },
+      {
+        "purpose": "held_out_timing_check",
+        "delay_decisions": 1,
+        "decisions": 48,
+        "final_position": [
+          453.7838439941406,
+          -50.00019836425781,
+          -2232.048095703125
+        ],
+        "sha256": "3018cf8cf1f5b1707c0b0df69f4cc0fcec968190a2f947d78b9bdc89be77562f",
+        "full_start_ram_star": false
+      }
+    ]
+  },
+  "limits": "Scripted partial trajectories and visual demonstrations, not learned completion. Existing stationary archive safety gate was not changed."
+}
