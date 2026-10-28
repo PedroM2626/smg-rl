@@ -34,7 +34,7 @@ def plot_trajectory(csv_path, output=None):
     ax.set(xlabel="World X", ylabel="World Z", title="Top-down trajectory (X/Z)")
     ax.legend(loc="best")
     progress = [100 * float(row["progress"]) for row in rows]
-    chart.plot(progress, label="Current progress", alpha=0.65)
+    chart.plot(progress, label="Current geometric projection", alpha=0.65)
     best = (
         [100 * float(row["best_progress"]) for row in rows]
         if "best_progress" in rows[0]
@@ -42,7 +42,7 @@ def plot_trajectory(csv_path, output=None):
     )
     chart.plot(
         best,
-        label="Reward-gated max projection" if "best_progress" in rows[0] else "Running max projection",
+        label="Recorded max projection (height-gated)" if "best_progress" in rows[0] else "Running max projection",
     )
     chart.set(
         xlabel=step_unit,

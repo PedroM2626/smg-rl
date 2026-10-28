@@ -22,6 +22,19 @@ PROTOCOL_VERSION = 3
 CONTROLS = ("w", "a", "s", "d", "jump", "crouch", "spin")
 
 
+def retry_sharing_violation(operation, timeout, process):
+    """Wait for a transient Windows file-sharing lock without hiding other errors."""
+    deadline = time.monotonic() + timeout
+    while True:
+        try:
+            return operation()
+        except OSError as exc:
+            if (getattr(exc, 'winerror', None) not in (32, 33)
+                    or time.monotonic() >= deadline or process.poll() is not None):
+                raise
+            time.sleep(.05)
+
+
 class BridgeEvents:
     """Private auto-reset Windows events; ownership/liveness checks stay in the bridge."""
 
@@ -212,7 +225,9 @@ class NativeDolphin(BackgroundDolphin):
             raise FileExistsError("Frontier savestates are immutable.")
         source = self.root / "StateSaves" / f"{self.memory.profile.game_id}.s08"
         if source.exists():
-            source.rename(source.with_name(source.name + ".retained-" + uuid.uuid4().hex))
+            retained = source.with_name(source.name + ".retained-" + uuid.uuid4().hex)
+            retry_sharing_violation(lambda: source.rename(retained),
+                                    min(self.config['parallel']['timeout'], 10.), self.process)
         self.release()
         self.bridge.command(5, 8, process=self.process)
         deadline = time.monotonic() + self.config["parallel"]["timeout"]
@@ -222,7 +237,8 @@ class NativeDolphin(BackgroundDolphin):
                 raise TimeoutError("Frontier state serialization did not finish.")
             time.sleep(0.01)
         destination.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(source, destination)
+        retry_sharing_violation(lambda: shutil.copy2(source, destination),
+                                min(self.config['parallel']['timeout'], 10.), self.process)
 
     def load_state(self, source):
         """Stage an immutable archive file into reserved slot 9 of this profile."""

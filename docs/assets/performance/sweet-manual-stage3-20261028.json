@@ -1,0 +1,28 @@
+{
+  "stage3": {
+    "status": "completed_needs_review",
+    "physical_decisions": 3878,
+    "trials": 288,
+    "outcomes": {
+      "death": 238,
+      "bounded_cut": 50
+    },
+    "dynamic_states_including_repeated_sources": 144,
+    "assisted_stars": 0
+  },
+  "full_start_replay": {
+    "physical_decisions": 106,
+    "exact_saved_state": true,
+    "position": [
+      -844.5616455078125,
+      -50.00029373168945,
+      -4425.8623046875
+    ],
+    "health": 3,
+    "scene_frame": 2595,
+    "native_star": false,
+    "trajectory": "runs/sweet-scripted-replay-20261028/replay-20261028-100753-233880/worker-00/sweet_sweet/episode-000001.csv",
+    "source_state_sha256": "f96ee07d2b225181fdbe0f9ad6a22e1b5eacbedb3511d12eab96319fc89f06e4"
+  },
+  "scope": "Scripted physical partial trajectory, not a trained policy or completed mission."
+}

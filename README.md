@@ -26,6 +26,8 @@ The later [chocolate-frontier exploration](docs/chocolate-frontier-search-202610
 reproduced partial scripted paths from the full start, but found no stable
 archive candidate or learned mission completion; its demonstration comparison
 completed with zero stars and did not pass its continuation gate.
+The subsequent [scripted Sweet Sweet search](docs/sweet-manual-search-20261028.md)
+replayed a longer partial path from the initial slot; it did not reach a star.
 
 ## Current evidence
 

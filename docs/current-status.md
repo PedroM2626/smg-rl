@@ -32,6 +32,11 @@ contained zero stars. Two control policies each reached beyond the mapped openin
 at least once during noisy evaluation, but subsequently died. This is a small
 same-Wii-state screen, not a full-level success or a general rejection of demonstrations.
 
+The later [scripted Sweet Sweet search](sweet-manual-search-20261028.md#first-search-and-reviewed-continuation)
+replayed a 114-decision partial path from the canonical start to a grounded
+location, with zero stars. This is physical scripted navigation, not a trained
+policy or a full course map. The search blocks have ended.
+
 The later [expanding-route trial](dynamic-route-night.md#completed-result) used
 IQN/IMPALA with six canonical-start workers and stopped after two main blocks
 without a validated extension or star. It recorded 100,884 real decisions and

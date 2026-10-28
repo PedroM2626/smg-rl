@@ -1,0 +1,29 @@
+{
+  "stage4": {
+    "status": "completed_needs_review",
+    "physical_decisions": 4254,
+    "trials": 288,
+    "outcomes": {
+      "death": 224,
+      "bounded_cut": 64
+    },
+    "dynamic_states_including_repeated_sources": 144,
+    "assisted_stars": 0
+  },
+  "full_start_replay": {
+    "physical_decisions": 114,
+    "exact_saved_state": true,
+    "position": [
+      -816.8162841796875,
+      -50.00019836425781,
+      -5099.48486328125
+    ],
+    "health": 3,
+    "scene_frame": 2691,
+    "native_star": false,
+    "max_grounded_goal_axis_projection_percent": 6.3040124996132585,
+    "trajectory": "runs/sweet-scripted-replay-20261028/replay-20261028-101228-172878/worker-00/sweet_sweet/episode-000001.csv",
+    "source_state_sha256": "f6dea07a822a001f56a56e6453f5b98cb7bb29c252b79b3bd06a4125c546b478"
+  },
+  "scope": "Scripted physical partial trajectory; goal-axis projection is not a native mission percentage or winding route fraction."
+}

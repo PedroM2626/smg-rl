@@ -6,7 +6,14 @@ from types import SimpleNamespace
 import numpy as np
 import pytest
 
-from smg_rl.native import HEADER_BYTES, PIXEL_BYTES, PROTOCOL_VERSION, NativeBridge, NativeDolphin
+from smg_rl.native import (
+    HEADER_BYTES,
+    PIXEL_BYTES,
+    PROTOCOL_VERSION,
+    NativeBridge,
+    NativeDolphin,
+    retry_sharing_violation,
+)
 
 
 def bridge():
@@ -14,6 +21,35 @@ def bridge():
     result.mapping = mmap.mmap(-1, HEADER_BYTES + PIXEL_BYTES)
     result.timeout = 0.001
     return result
+
+
+def test_temporary_windows_sharing_lock_is_retried_but_other_errors_are_not():
+    attempts = []
+
+    def transient():
+        attempts.append(1)
+        if len(attempts) < 3:
+            error = PermissionError('busy')
+            error.winerror = 32
+            raise error
+        return 'done'
+
+    assert retry_sharing_violation(transient, 1., SimpleNamespace(poll=lambda: None)) == 'done'
+    assert len(attempts) == 3
+
+    def unrelated():
+        raise PermissionError('denied')
+
+    with pytest.raises(PermissionError, match='denied'):
+        retry_sharing_violation(unrelated, 1., SimpleNamespace(poll=lambda: None))
+
+    def still_locked():
+        error = PermissionError('busy')
+        error.winerror = 32
+        raise error
+
+    with pytest.raises(PermissionError, match='busy'):
+        retry_sharing_violation(still_locked, 1., SimpleNamespace(poll=lambda: 1))
 
 
 def test_shared_frame_rejects_invalid_shape_and_returns_owned_pixels():

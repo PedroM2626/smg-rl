@@ -36,6 +36,7 @@ evidence, not dashboards. World-model snapshots and final stop are in the
 | --- | --- |
 | Experiment timeline, negative results and comparison boundaries | [Experiment history](experiment-history.md) |
 | Chocolate frontier physical search and conditional demonstration study | [Chocolate frontier](chocolate-frontier-search-20261028.md) |
+| Bounded scripted Sweet Sweet search and partial map | [Sweet Sweet scripted search](sweet-manual-search-20261028.md) |
 | Frozen checkpoints, state drift, reward audit and matched scale A/B | [Reward-scale study](reward-scale-study-20261028.md) |
 | Bounded dynamic-route trial and actual outcome | [Dynamic route trial](dynamic-route-night.md) |
 | Installation, supported tasks, rewards, and recommended quick start | [Main README](../README.md) |
