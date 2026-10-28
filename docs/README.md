@@ -35,6 +35,7 @@ evidence, not dashboards. World-model snapshots and final stop are in the
 | Need | Document |
 | --- | --- |
 | Experiment timeline, negative results and comparison boundaries | [Experiment history](experiment-history.md) |
+| Frozen checkpoints, state drift, reward audit and matched scale A/B | [Reward-scale study](reward-scale-study-20261028.md) |
 | Bounded dynamic-route trial and actual outcome | [Dynamic route trial](dynamic-route-night.md) |
 | Installation, supported tasks, rewards, and recommended quick start | [Main README](../README.md) |
 | Robust genetic calibration, blocked gate and planned paired comparison | [Robust genetic plan and results](robust-genetic-plan-20261027.md) |

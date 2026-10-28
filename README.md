@@ -20,6 +20,8 @@ The latest [expanding-route IQN trial](docs/dynamic-route-night.md#completed-res
 stopped after two main blocks without a validated route extension or a star.
 The [experiment history](docs/experiment-history.md) summarizes findings,
 negative results and comparison limits across the project.
+The subsequent [matched reward-scale comparison](docs/reward-scale-study-20261028.md#completed-matched-comparison)
+failed its preregistered gate in both training seeds; no larger block was started.
 
 ## Current evidence
 

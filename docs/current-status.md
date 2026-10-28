@@ -19,6 +19,12 @@ The subsequent [robust-selection calibration](robust-genetic-plan-20261027.md#ca
 completed 49 episodes, but no mutation scale passed its preregistered gate.
 The proposed training arms were therefore not launched.
 
+The subsequent [reward-scale A/B](reward-scale-study-20261028.md#completed-matched-comparison)
+completed four 6,144-decision blocks and sixteen frozen evaluations, with zero
+full-start stars. The candidate missed the preregistered improvement gate for
+both training seeds; no larger block was allocated. This short two-seed screen
+does not establish a general conclusion about reward scales.
+
 The later [expanding-route trial](dynamic-route-night.md#completed-result) used
 IQN/IMPALA with six canonical-start workers and stopped after two main blocks
 without a validated extension or star. It recorded 100,884 real decisions and

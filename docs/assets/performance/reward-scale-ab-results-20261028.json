@@ -1,0 +1,300 @@
+{
+  "recorded_utc": "2026-10-28T12:20:07.800375+00:00",
+  "phase": "completed",
+  "gate": "failed",
+  "training_real_decisions": 24576,
+  "training_attempts": 184,
+  "evaluation_decisions": 577,
+  "evaluation_episodes": 16,
+  "cases": [
+    {
+      "arm": "control",
+      "seed": 142,
+      "normalization_distance": 50000.0,
+      "training_real_decisions": 6144,
+      "training_attempts": 47,
+      "training_deaths": 43,
+      "training_nonfatal_hp_lost": 0,
+      "optimizer_updates": 1022,
+      "agent_sha256": "f709e16470aebde6e6fecccf1e22333398592467b0a67d84f45172f3f7963876",
+      "replay_sha256": "21d1c516b7d54a3ab0843d78c3cf08e57619f37d3de978c6600b41afba823602",
+      "signed_and_hash_verified": true,
+      "evaluations": [
+        {
+          "mode": "greedy",
+          "epsilon": 0.0,
+          "mean_opening_fraction": 1.0,
+          "mean_goal_projection_percent": 6.6406818711820055,
+          "episodes": [
+            {
+              "seed": 11,
+              "decisions": 96,
+              "outcome": "death",
+              "opening_fraction": 1.0,
+              "goal_projection_percent": 6.6406818711820055,
+              "ram_star": false
+            }
+          ],
+          "run": "runs/model-free/reward-scale-ab-20261028/control-142/eval-dqn-video-20261028-090159-951695",
+          "video": "runs/model-free/reward-scale-ab-20261028/control-142/eval-dqn-video-20261028-090159-951695/policy.mp4"
+        },
+        {
+          "mode": "stochastic",
+          "epsilon": 0.1,
+          "mean_opening_fraction": 0.7671544715301336,
+          "mean_goal_projection_percent": 4.86382703710635,
+          "episodes": [
+            {
+              "seed": 11,
+              "decisions": 33,
+              "outcome": "death",
+              "opening_fraction": 0.6470034446362384,
+              "goal_projection_percent": 3.927626977444667,
+              "ram_star": false
+            },
+            {
+              "seed": 23,
+              "decisions": 53,
+              "outcome": "death",
+              "opening_fraction": 1.0,
+              "goal_projection_percent": 5.937413644074024,
+              "ram_star": false
+            },
+            {
+              "seed": 47,
+              "decisions": 40,
+              "outcome": "death",
+              "opening_fraction": 0.6544599699541626,
+              "goal_projection_percent": 4.726440489800359,
+              "ram_star": false
+            }
+          ],
+          "run": "runs/model-free/reward-scale-ab-20261028/control-142/eval-dqn-video-20261028-090223-276687",
+          "video": "runs/model-free/reward-scale-ab-20261028/control-142/eval-dqn-video-20261028-090223-276687/policy.mp4"
+        }
+      ]
+    },
+    {
+      "arm": "candidate",
+      "seed": 142,
+      "normalization_distance": 5000.0,
+      "training_real_decisions": 6144,
+      "training_attempts": 49,
+      "training_deaths": 46,
+      "training_nonfatal_hp_lost": 0,
+      "optimizer_updates": 1022,
+      "agent_sha256": "dbe960dc86bc920bd763ca656a89a15819175797fb087492ae9313e02e907729",
+      "replay_sha256": "590aafcd95f0f7d7d7d3389d4352365330ef2329bc0facba364bd6d69464c466",
+      "signed_and_hash_verified": true,
+      "evaluations": [
+        {
+          "mode": "greedy",
+          "epsilon": 0.0,
+          "mean_opening_fraction": 1.0,
+          "mean_goal_projection_percent": 7.453127643809496,
+          "episodes": [
+            {
+              "seed": 11,
+              "decisions": 47,
+              "outcome": "death",
+              "opening_fraction": 1.0,
+              "goal_projection_percent": 7.453127643809496,
+              "ram_star": false
+            }
+          ],
+          "run": "runs/model-free/reward-scale-ab-20261028/candidate-142/eval-dqn-video-20261028-090700-146903",
+          "video": "runs/model-free/reward-scale-ab-20261028/candidate-142/eval-dqn-video-20261028-090700-146903/policy.mp4"
+        },
+        {
+          "mode": "stochastic",
+          "epsilon": 0.1,
+          "mean_opening_fraction": 0.8082739873363931,
+          "mean_goal_projection_percent": 4.430093974008927,
+          "episodes": [
+            {
+              "seed": 11,
+              "decisions": 59,
+              "outcome": "death",
+              "opening_fraction": 1.0,
+              "goal_projection_percent": 5.571106271175203,
+              "ram_star": false
+            },
+            {
+              "seed": 23,
+              "decisions": 18,
+              "outcome": "death",
+              "opening_fraction": 0.49286938632483707,
+              "goal_projection_percent": 3.264535104405967,
+              "ram_star": false
+            },
+            {
+              "seed": 47,
+              "decisions": 27,
+              "outcome": "death",
+              "opening_fraction": 0.9319525756843421,
+              "goal_projection_percent": 4.454640546445613,
+              "ram_star": false
+            }
+          ],
+          "run": "runs/model-free/reward-scale-ab-20261028/candidate-142/eval-dqn-video-20261028-090714-952970",
+          "video": "runs/model-free/reward-scale-ab-20261028/candidate-142/eval-dqn-video-20261028-090714-952970/policy.mp4"
+        }
+      ]
+    },
+    {
+      "arm": "control",
+      "seed": 143,
+      "normalization_distance": 50000.0,
+      "training_real_decisions": 6144,
+      "training_attempts": 45,
+      "training_deaths": 41,
+      "training_nonfatal_hp_lost": 0,
+      "optimizer_updates": 1022,
+      "agent_sha256": "49355ddc1dc3dd1020742590c0d3f946b21eb28fdbccbe196d9591399041f1ac",
+      "replay_sha256": "bd0aab6c69026632e783e21904bfc2bc8c5e195f231029aea1efe31d5d81d8d9",
+      "signed_and_hash_verified": true,
+      "evaluations": [
+        {
+          "mode": "greedy",
+          "epsilon": 0.0,
+          "mean_opening_fraction": 1.0,
+          "mean_goal_projection_percent": 5.056061234177665,
+          "episodes": [
+            {
+              "seed": 11,
+              "decisions": 39,
+              "outcome": "death",
+              "opening_fraction": 1.0,
+              "goal_projection_percent": 5.056061234177665,
+              "ram_star": false
+            }
+          ],
+          "run": "runs/model-free/reward-scale-ab-20261028/control-143/eval-dqn-video-20261028-091151-087762",
+          "video": "runs/model-free/reward-scale-ab-20261028/control-143/eval-dqn-video-20261028-091151-087762/policy.mp4"
+        },
+        {
+          "mode": "stochastic",
+          "epsilon": 0.1,
+          "mean_opening_fraction": 0.7319563039343715,
+          "mean_goal_projection_percent": 4.496629516762985,
+          "episodes": [
+            {
+              "seed": 11,
+              "decisions": 61,
+              "outcome": "death",
+              "opening_fraction": 1.0,
+              "goal_projection_percent": 5.958767951000596,
+              "ram_star": false
+            },
+            {
+              "seed": 23,
+              "decisions": 21,
+              "outcome": "death",
+              "opening_fraction": 0.49345406841236256,
+              "goal_projection_percent": 3.6779710661348144,
+              "ram_star": false
+            },
+            {
+              "seed": 47,
+              "decisions": 27,
+              "outcome": "death",
+              "opening_fraction": 0.7024148433907518,
+              "goal_projection_percent": 3.853149533153543,
+              "ram_star": false
+            }
+          ],
+          "run": "runs/model-free/reward-scale-ab-20261028/control-143/eval-dqn-video-20261028-091203-283069",
+          "video": "runs/model-free/reward-scale-ab-20261028/control-143/eval-dqn-video-20261028-091203-283069/policy.mp4"
+        }
+      ]
+    },
+    {
+      "arm": "candidate",
+      "seed": 143,
+      "normalization_distance": 5000.0,
+      "training_real_decisions": 6144,
+      "training_attempts": 43,
+      "training_deaths": 41,
+      "training_nonfatal_hp_lost": 0,
+      "optimizer_updates": 1022,
+      "agent_sha256": "54ccf5663207dfc9d60ce3ae6d98c848864bfb982b58f3591bf2adc49aff3b1f",
+      "replay_sha256": "44dbd01342d51a0de0b4688ee3d8c12c3dfe077c3fb7bd0dd9cb806299220223",
+      "signed_and_hash_verified": true,
+      "evaluations": [
+        {
+          "mode": "greedy",
+          "epsilon": 0.0,
+          "mean_opening_fraction": 0.10520333526429557,
+          "mean_goal_projection_percent": 2.098532564914785,
+          "episodes": [
+            {
+              "seed": 11,
+              "decisions": 14,
+              "outcome": "death",
+              "opening_fraction": 0.10520333526429557,
+              "goal_projection_percent": 2.098532564914785,
+              "ram_star": false
+            }
+          ],
+          "run": "runs/model-free/reward-scale-ab-20261028/candidate-143/eval-dqn-video-20261028-091636-723751",
+          "video": "runs/model-free/reward-scale-ab-20261028/candidate-143/eval-dqn-video-20261028-091636-723751/policy.mp4"
+        },
+        {
+          "mode": "stochastic",
+          "epsilon": 0.1,
+          "mean_opening_fraction": 0.10520333526429557,
+          "mean_goal_projection_percent": 1.8843757631614162,
+          "episodes": [
+            {
+              "seed": 11,
+              "decisions": 14,
+              "outcome": "death",
+              "opening_fraction": 0.10520333526429557,
+              "goal_projection_percent": 2.1481969826527183,
+              "ram_star": false
+            },
+            {
+              "seed": 23,
+              "decisions": 14,
+              "outcome": "death",
+              "opening_fraction": 0.10520333526429557,
+              "goal_projection_percent": 1.4161393456697662,
+              "ram_star": false
+            },
+            {
+              "seed": 47,
+              "decisions": 14,
+              "outcome": "death",
+              "opening_fraction": 0.10520333526429557,
+              "goal_projection_percent": 2.0887909611617643,
+              "ram_star": false
+            }
+          ],
+          "run": "runs/model-free/reward-scale-ab-20261028/candidate-143/eval-dqn-video-20261028-091651-448287",
+          "video": "runs/model-free/reward-scale-ab-20261028/candidate-143/eval-dqn-video-20261028-091651-448287/policy.mp4"
+        }
+      ]
+    }
+  ],
+  "pairs": [
+    {
+      "seed": 142,
+      "control_opening": 0.7671544715301336,
+      "candidate_opening": 0.8082739873363931,
+      "delta": 0.0411195158062595,
+      "threshold_passed": false,
+      "control_stars": 0,
+      "candidate_stars": 0
+    },
+    {
+      "seed": 143,
+      "control_opening": 0.7319563039343715,
+      "candidate_opening": 0.10520333526429557,
+      "delta": -0.6267529686700759,
+      "threshold_passed": false,
+      "control_stars": 0,
+      "candidate_stars": 0
+    }
+  ],
+  "assumptions": "Action seeds restore the same Wii state. Opening fraction is not full-mission completion. No statistical significance or causal ranking is established."
+}

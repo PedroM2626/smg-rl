@@ -91,3 +91,35 @@ partial budget without retry. The output ledger is
 `.local/reward-scale-ab-20261028/state.json`. Each block owns at most six
 emulators; tests, fixes and independent prior data must not be mixed into the
 study results.
+
+## Completed matched comparison
+
+All four blocks completed and passed the recorded accounting and reward audits.
+Each collected 6,144 real decisions and performed 1,022 optimizer updates; in
+total there were 24,576 training decisions and 184 complete training attempts.
+No world-model or imagined transitions were used. All four signed checkpoint
+and replay pairs, plus the original source pair, passed SHA-256 checks. The
+sixteen frozen evaluation episodes used an additional 577 real decisions; all
+started from the canonical state, ended in death and recorded zero RAM stars.
+The agent-file hashes used for evaluation matched the final checkpoint hashes.
+
+| Training seed | Control stochastic opening mean | Candidate stochastic opening mean | Candidate minus control |
+| --- | ---: | ---: | ---: |
+| 142 | 76.72% | 80.83% | +4.11 percentage points |
+| 143 | 73.20% | 10.52% | -62.68 percentage points |
+
+The candidate did not meet the preregistered five-percentage-point threshold
+in either pair; seed 143 also produced a substantial regression. The gate
+therefore failed and **no larger training block was started**. In the greedy
+episodes, both controls and candidate seed 142 reached the opening end and
+died; candidate seed 143 reached 10.52% and died. The reported percentages are
+of the mapped opening, not the full level. Three noisy action draws from the
+same restored game state are not independent environments, and two training
+seeds and one short budget do not establish a general conclusion about reward
+scales. The results are a reason not to extend this particular candidate as
+tested, not proof that a stronger progress reward can never help.
+
+The [machine-readable audit](assets/performance/reward-scale-ab-results-20261028.json)
+contains per-episode outcomes, signatures, hashes, locally retained videos and
+separate training/evaluation counts. The state ledger and runs remain local;
+the ROM, savestates, replays, checkpoints and MP4 files are not committed.
