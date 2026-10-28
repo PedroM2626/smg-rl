@@ -44,3 +44,12 @@ def test_candidate_profile_has_distinct_signed_reward_and_safe_objective(tmp_pat
     assert candidate['training']['enabled']
     env = GalaxyEnv(candidate, backend=None, run_dir=tmp_path, memory=object(), intrinsic=False)
     assert env.route.schema == 4
+
+
+@pytest.mark.parametrize(('variation', 'scenario'), [('spinning', 1), ('double-time', 2)])
+def test_smg2_candidates_are_separately_signed_and_mission_specific(tmp_path, variation, scenario):
+    config = load_config(f'config/human-route-smg2-{variation}-candidate.yaml')
+    env = GalaxyEnv(config, backend=None, run_dir=tmp_path, memory=object(), intrinsic=False)
+    assert env.route.schema == 4 and config['game']['id'] == 'SB4E01'
+    assert len(config['variations']) == 1 and config['variations'][0]['scenario'] == scenario
+    assert len(env.actions) == 8 and not config['curriculum']['enabled']

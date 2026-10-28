@@ -94,10 +94,11 @@ samples are verification interactions, not training steps.
 
 On October 28, a separate live SMG2 smoke test verified both canonical start
 slots, and both goal fixtures produced native star signals in their correct
-scenarios. Each fixture was rejected as a full-start completion; no human SMG2
-demonstration has yet been recorded. The SMG1 route must never be shared as an
-SMG2 route. Record and independently replay one full-start star for each SMG2
-variation before deriving a separate route for that variation.
+scenarios. Each fixture was rejected as a full-start completion. Later, the
+owner recorded both full-start SMG2 missions: Spinning after one discarded
+death, and Double Time after two. Independent replays reproduced the RAM star
+and every recorded image and position: 1,737 control samples for Spinning and
+2,757 for Double Time. The original recordings and replays remain local.
 
 ## Using the Sweet Sweet trajectory in training
 
@@ -129,7 +130,13 @@ airborne passage only queues visits, which may grant credit after a later
 landing; this remains a possible shortcut to study. See the [adaptation evidence](assets/performance/human-route-adaptation-20261028.json).
 
 `scripts/prepare_human_route.py` prepares a mission-specific candidate from an
-exact full-start human replay, refusing to overwrite existing outputs. For SMG2,
-each mission requires its own recorded completion, replay evidence, calibration
-and separately signed reward profile; it cannot reuse the Sweet Sweet route.
-No SMG2-derived route has been prepared or validated yet.
+exact full-start human replay, refusing to overwrite existing outputs. The
+recorded SMG2 completions produced separate signed experimental profiles for
+[Spinning](../config/human-route-smg2-spinning-candidate.yaml) and
+[Double Time](../config/human-route-smg2-double-time-candidate.yaml), with 61
+and 109 waypoints respectively. All six offsets of 12-frame subsampling
+recognized 100% of each source trajectory's mapped route; this reuses the same
+human demonstrations and is neither a held-out evaluation nor a native mission
+percentage. Each profile is mission-specific and starts with a distinct replay;
+the SMG1 route is never reused as an SMG2 route. These candidates have not been
+tested for reward exploitation or evaluated in trained agents.
