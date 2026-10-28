@@ -94,6 +94,15 @@ multiple region boundaries, pointer resolution and the actual end state. Mere
 correlation along one short route is insufficient. A field from the paper's
 final galaxy would also need independent validation for our selected stages.
 
+Since this screen, the owner recorded full-start completions of Sweet Sweet and
+both selected SMG2 missions, and the recorded controls were exactly replayed to
+native RAM star events. These trajectories provide a much better basis for a
+new memory scan, but their original recordings did not capture full memory
+snapshots. As of this update, no new scan has validated a native mission-progress
+address in either game. A new scan should capture its own paused snapshots and
+retain separate cases for both SMG2 variations and game versions; the route
+alone cannot establish that a universal native progress field exists.
+
 ## Recommended experimental order
 
 1. **Repair reward topology and scale.** Validate an ordered regional route over

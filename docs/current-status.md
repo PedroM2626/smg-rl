@@ -5,6 +5,16 @@ snapshot, not a live process monitor. Older documents may use present tense for
 their own dated experiments; their original observations remain historical.
 No command here automatically allocates training or changes an existing budget.
 
+Later on October 28, the owner recorded full-start human completions of Sweet
+Sweet and both Twisty Trials variations; exact isolated replays reproduced their
+RAM star events. The human demonstrations are not trained-agent successes.
+Separate candidate route profiles were prepared from those traces. The
+[one-hour-per-reward SMG1 comparison](reward-hour-pair-20261028.md#final-result-after-recovery)
+finished after the documented memory recovery, without a star or a clear
+winner. Its first-segment percentages are **not whole-level completion**;
+[video and telemetry examples](progress-metric-interpretation-20261028.md)
+show why they can be large while Mario remains near the initial platform.
+
 The subsequently requested [frozen IQN checkpoint evaluation](frozen-iqn-evaluation-20261027.md)
 completed six canonical episodes with zero stars. Greedy evaluation repeatedly
 reached the mapped opening and then died. A goal-distance tracker was tested
@@ -53,7 +63,7 @@ the evidence across stages.
 | --- | --- | --- |
 | Earlier four-hour SMG1 IQN/IMPALA allocation | Stopped after roughly 2h18 of the intended 4h due to disk exhaustion; zero observed RAM stars | Failed block, not a completed four-hour experiment |
 | Last valid checkpoint from that allocation | 749,006 total real decisions; 12,125 completed attempts | Source candidate only after checking its manifest, replay, signatures, state and available resources |
-| Later expanding-route IQN checkpoint | 100,884 new real decisions and 666 completed attempts in a fresh reward/replay branch | Saved and integrity checked, but not yet evaluated as a frozen policy; its counters are not a direct continuation of the source counters |
+| Later expanding-route IQN checkpoint | 100,884 new real decisions and 666 completed attempts in a fresh reward/replay branch | A subsequent frozen evaluation found no stars and lower mean opening progress than the source; different reward, replay and starts prevent attributing the change to one factor. See [frozen comparison](reward-scale-study-20261028.md#frozen-policy-baseline). |
 | Failed IQN block | 97,668 acknowledged decisions after the valid checkpoint; 148 acknowledged decisions missing from CSV tail | Real collection occurred, but the final weights/replay were not saved and the tail is incomplete |
 | Best new IQN collection trajectory | 6.5860% geometric projection from canonical start toward goal, followed by death | Exploratory maximum under changing weights/epsilon; not a frozen result or mission completion fraction |
 | Earlier frozen IQN/IMPALA evaluations | No stars; Sweet reached 23.64% of its mapped opening, SMG2 cases reached 100% of their mapped openings and died | Short opening measures, not full-mission percentages |
@@ -118,29 +128,22 @@ generalization require explicitly varied, documented states or timing.
 
 These are proposals, not results or an authorization to dispatch a job:
 
-1. **Use the completed frozen evaluation as a baseline.** The checkpoint and
-   replay hashes were verified and deterministic/stochastic videos were
-   recorded; see [the evaluation](frozen-iqn-evaluation-20261027.md). Further
-   tests would need varied documented game states or platform timing, without
-   calling collection maxima a frozen-policy success.
-2. **Validate course coverage before extending the reward.** Use read-only RAM
-   and recorded trajectories to map additional reachable, grounded regions and
-   check continuity, height and moving-platform effects. An assisted or scripted
-   traversal is a fixture, not a learned completion. Keep an independent
-   validation set and test that stationary, backward, airborne, damaged, reset
-   and terminal transitions cannot earn accidental route credit.
-3. **Run a controlled short intervention.** Compare the existing signed reward
-   with one simple, versioned extension to validated route coverage; use fresh
-   compatible replay and independently seeded learners when feasible. Keep
-   controls, model, budgets and start distribution fixed. Check real canonical
-   evaluation, attempts, deaths and trajectories at predeclared boundaries;
-   do not compare changing collection maxima alone or claim a causal result from
-   a single seed.
-4. **Only then choose a longer run.** Continue an intervention only if the
-   bounded comparison demonstrates useful, repeatable improvement and no
-   reward exploit. Report real game success and trajectory evidence separately
-   from assisted starts and geometric estimates. Retain original checkpoints,
-   unchanged quality gates, failures and allocation limits.
+1. **Use the completed frozen comparisons as baselines.** Reuse their videos,
+   exact action logs and trajectories while keeping same-Wii-state action draws
+   distinct from independent environments. See [the latest comparison](reward-hour-pair-20261028.md#final-result-after-recovery).
+2. **Improve measurement and validate the mapped course.** Full-start human
+   recordings now cover each selected mission. Ground contact, moving surfaces,
+   route order and evaluation metrics still require independent checks; the
+   current first-segment projection is not whole-course progress.
+3. **Screen RAM fields with negative controls.** Exact replay of the complete
+   human paths can provide more diverse paused memory snapshots. An address
+   becomes a progress signal only after checks against idle animations,
+   backtracking, falls, death, resets, multiple stages and separate game boots.
+   No native course-progress address has been established in either game.
+4. **Choose a new bounded experiment from the evidence.** Reward scale, action
+   timing, controls and starts remain competing hypotheses. Keep signed replay,
+   source checkpoints and quality gates separate and report full-start RAM
+   stars separately from geometric or assisted-start diagnostics.
 
 Direction-carry jumps, demonstrations, alternative algorithms, observation
 resolution and additional curriculum starts are further hypotheses, not proven

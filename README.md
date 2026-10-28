@@ -127,6 +127,9 @@ coverage is not a native mission-completion signal or evidence of agent success.
 See the [experiment reuse register](docs/experiment-reuse-20261028.md) for prior
 results and the [one-hour-per-reward study](docs/reward-hour-pair-20261028.md)
 for its bounded protocol and evaluation limits.
+The [progress interpretation](docs/progress-metric-interpretation-20261028.md)
+explains why a large initial-segment score can still occur at the starting
+platform and is not a whole-level completion percentage.
 
 Use Windows, 64-bit Python 3.11 or 3.12, and user-provided game images and
 compatible savestates. The tested GPU environment used Python 3.11 and Torch

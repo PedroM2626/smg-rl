@@ -7,6 +7,11 @@ Figures referring to route prefixes, distance or projections are not native
 percentages of the mission. A local run, a Git-tracked summary, and a video or
 trajectory have different retention and reproducibility properties.
 
+The owner's subsequent full-level recordings and the latest completed
+reward-hour comparison are summarized in [current status](current-status.md)
+and [the comparison report](reward-hour-pair-20261028.md#final-result-after-recovery).
+They supersede the open next-step proposals later on this historical page.
+
 | Stage | What was established | What remains uncertain |
 | --- | --- | --- |
 | Dolphin integration and RAM | Frame-stepped visual collection, coordinates, death/star checks and an SMG1 HP-loss detector were validated on the documented game builds; see [native backend](native-backend.md), [memory](memory-profile.md), [SMG1](smg1.md) and [damage](damage-and-recovery.md). | Detector fixtures and near-star states are not learned full-start completions; other game builds require validation. |
