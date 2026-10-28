@@ -1,0 +1,34 @@
+{
+  "state": "star",
+  "recorded_samples": 1734,
+  "real_replay_samples": 1734,
+  "ram_star": true,
+  "first_position_divergence": null,
+  "first_observation_divergence": null,
+  "matching_observations": 1735,
+  "max_position_error": 0.0,
+  "terminal": {
+    "position": [
+      26630.78125,
+      1100.7999267578125,
+      -11937.060546875
+    ],
+    "scenario": 1,
+    "stage": "BeltConveyerExGalaxy",
+    "actor": 2164967084,
+    "actor_nerve": 2154426424,
+    "scene_nerve": 2154437592,
+    "scene_frame": 1,
+    "dead": false,
+    "complete": true,
+    "health": 3,
+    "max_health": 3,
+    "grounded": false
+  },
+  "source_savestate_unchanged": true,
+  "date": "2026-10-28",
+  "kind": "human full-start demonstration replay, not training",
+  "discarded_deaths_before_recording": 2,
+  "recorded_demonstration_sha256": "5469b108be39d13a8a944b9910ecdbc1a27786ee14b03afc7ca980e27182be4b",
+  "scope": "Same original deterministic start and controls; not independent states or learned agent performance."
+}

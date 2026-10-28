@@ -1,4 +1,6 @@
 import json
+import shutil
+import time
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -38,6 +40,41 @@ def test_input_is_sampled_from_documented_physical_buttons_and_focus_is_required
     assert recorder.pressed_controls(api) == ('w', 'jump', 'spin')
     assert recorder.window_active(SimpleNamespace(FindWindow=lambda *_: 12, GetForegroundWindow=lambda: 12))
     assert not recorder.window_active(SimpleNamespace(FindWindow=lambda *_: 12, GetForegroundWindow=lambda: 13))
+
+
+def test_late_frames_are_not_replayed_as_a_catch_up_burst():
+    assert recorder.next_frame_deadline(10.0, 10.01) == pytest.approx(10.0 + 1 / 30)
+    assert recorder.next_frame_deadline(10.0, 10.5) == 10.5
+    assert recorder.next_frame_deadline(10.5, 10.5) == pytest.approx(10.5 + 1 / 30)
+
+
+@pytest.mark.skipif(not shutil.which('ffmpeg'), reason='ffmpeg is not installed')
+def test_real_video_queue_encodes_every_frame_in_order(tmp_path):
+    image = np.zeros((32, 32, 4), dtype=np.uint8)
+    image[:, :, 3] = 255
+    writer = recorder.VideoWriter(tmp_path / 'video.mp4', image)
+    try:
+        for i in range(12):
+            deadline = time.monotonic() + 10
+            while not writer.ready():
+                assert time.monotonic() < deadline
+                time.sleep(.01)
+            image[:, :, 0] = i * 20
+            writer.write(image)
+        writer.close()
+    except BaseException:
+        writer.abort()
+        raise
+    cap = recorder.cv2.VideoCapture(str(tmp_path / 'video.mp4'))
+    frames = []
+    while True:
+        ok, frame = cap.read()
+        if not ok:
+            break
+        frames.append(float(frame[:, :, 2].mean()))
+    cap.release()
+    assert len(frames) == 12
+    assert all(a < b for a, b in zip(frames, frames[1:]))
 
 
 def test_discard_only_owned_attempts_inside_pending_root(tmp_path):

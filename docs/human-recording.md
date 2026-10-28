@@ -40,8 +40,13 @@ The recorder's simultaneous buttons and two-frame timing are **not** the
 existing eight-exclusive-action, twelve-frame training signature. Do not load
 the raw data directly as motor8 replay; conversion, timing compatibility and a
 replay check are separate tasks. The visible game is paced to emulated 60 Hz
-where possible; if rendering or encoding cannot keep up, gameplay may run more
-slowly. There is no game audio in this isolated worker.
+where possible. Video encoding uses a bounded background queue: if it fills,
+the frame-stepped emulator stays paused until there is room, and the window
+reports `Encoder busy - game paused`. Late frames are not replayed in a
+catch-up burst. A stalled renderer or encoder can slow gameplay, and the
+reported problem may have other causes; there were no per-frame wall-clock
+timings in the original recording, so its specific cause cannot be established
+retrospectively. There is no game audio in this isolated worker.
 
 Failed attempts are deleted only within the recorder-owned pending directory;
 unexpected software errors retain incomplete pending files in quarantine and
@@ -55,12 +60,31 @@ confirmed the failed recording was discarded, and verified that reset restored
 the canonical initial telemetry. A separate slot-2 detector fixture reached the
 RAM star event but was rejected as a full-start demonstration. These are
 engineering checks, not a human full-level completion. Synthetic tests cover
-success gating, simultaneous inputs, output integrity and safe deletion; a real
-human full-level success remains to be recorded. The 30-fps video encoder and
+success gating, simultaneous inputs, output integrity and safe deletion. The 30-fps video encoder and
 the interactive window were also smoke-tested separately on this machine. A
 separate real-game fixture applied forward and jump simultaneously for 16
 frames and observed both forward movement and increased height. A one-minute,
 one-attempt interactive-window smoke subsequently registered game input and a
 death; its failed attempt was discarded and the session ended at its configured
-limit. A completed human full-level recording has not yet been tested.
-See the [validation summary](assets/performance/human-recorder-validation-20261028.json).
+limit. See the [initial validation summary](assets/performance/human-recorder-validation-20261028.json).
+
+Later that day, the owner recorded a full-start human completion after two
+discarded deaths. Its 1,734 two-frame inputs were independently replayed from
+the same original savestate in an isolated Dolphin: the native RAM star was
+reached at the same sample, all 1,735 saved visual observations matched exactly,
+and every sampled XYZ position matched. This establishes reproducibility of
+this recording and state on this setup, not learned agent success or robustness
+across independent states. The local recording contains simultaneous controls
+and remains incompatible with the current motor8 replay without an explicit,
+validated conversion. The owner reported intermittent display freezes; no
+original timing data prove the cause. See the [replay evidence](assets/performance/human-demonstration-replay-20261028.json).
+
+To replay a completed recording, use an isolated emulator with a finite deadline:
+
+```powershell
+.venv\Scripts\python.exe scripts/verify_human_demonstration.py <completed-attempt-folder> --max-seconds 900
+```
+
+The script verifies file and source-state hashes, records an independent result
+under `runs/human-verification`, and never changes the source recording. Its
+samples are verification interactions, not training steps.

@@ -7,9 +7,11 @@ as a bitmask; they are not silently converted into the agent's eight actions.
 import csv
 import json
 import os
+import queue
 import re
 import shutil
 import subprocess
+import threading
 import time
 from pathlib import Path
 
@@ -31,6 +33,11 @@ FRAMES_PER_SAMPLE = 2
 SAMPLE_FPS = 30
 KEYS = {'w': 0x57, 'a': 0x41, 's': 0x53, 'd': 0x44,
         'jump': 0x01, 'crouch': 0x10, 'spin': 0x04}
+
+
+def next_frame_deadline(previous, now):
+    """Do not run a burst of old frames when interactive rendering falls behind."""
+    return max(previous + 1 / SAMPLE_FPS, now)
 
 
 def confirmed_star(telemetry, start_verified, steps):
@@ -80,17 +87,60 @@ class VideoWriter:
             '-movflags', '+faststart', str(self.path)]
         self.process = subprocess.Popen(command, stdin=subprocess.PIPE, stderr=subprocess.PIPE,
                                         creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
+        self.pending = queue.Queue(maxsize=4)
+        self.error = None
+        self.worker = threading.Thread(target=self._encode, daemon=True)
+        self.worker.start()
+
+    def _encode(self):
+        try:
+            while True:
+                rgba = self.pending.get()
+                if rgba is None:
+                    break
+                self.process.stdin.write(cv2.cvtColor(rgba, cv2.COLOR_RGBA2RGB).tobytes())
+        except Exception as exc:
+            self.error = exc
+        finally:
+            try:
+                self.process.stdin.close()
+            except OSError:
+                pass
+
+    def ready(self):
+        if self.error is not None:
+            raise RuntimeError('Video encoder failed.') from self.error
+        if self.process.poll() is not None:
+            raise RuntimeError('Video encoder exited unexpectedly.')
+        return not self.pending.full()
 
     def write(self, rgba):
         if rgba.shape != (self.height, self.width, 4):
             raise ValueError('The game viewport changed size during recording.')
-        self.process.stdin.write(cv2.cvtColor(rgba, cv2.COLOR_RGBA2RGB).tobytes())
+        if not self.ready():
+            raise RuntimeError('Video encoder queue is full; game must remain paused.')
+        self.pending.put_nowait(rgba.copy())
         self.frames += 1
 
     def close(self):
-        self.process.stdin.close()
+        deadline = time.monotonic() + 60
+        while True:
+            if self.error is not None or self.process.poll() is not None:
+                self.abort()
+                raise RuntimeError('Video encoder failed while finishing.') from self.error
+            try:
+                self.pending.put(None, timeout=.1)
+                break
+            except queue.Full:
+                if time.monotonic() >= deadline:
+                    self.abort()
+                    raise RuntimeError('Video encoder did not finish in 60 seconds.') from None
+        self.worker.join(max(0, deadline - time.monotonic()))
+        if self.worker.is_alive() or self.error is not None:
+            self.abort()
+            raise RuntimeError('Video encoder could not finish its queued frames.') from self.error
         try:
-            code = self.process.wait(timeout=60)
+            code = self.process.wait(timeout=max(.01, deadline - time.monotonic()))
         except subprocess.TimeoutExpired:
             self.process.kill()
             self.process.wait()
@@ -105,14 +155,17 @@ class VideoWriter:
         if self.process.poll() is None:
             self.process.terminate()
         try:
-            self.process.stdin.close()
-        except OSError:
-            pass
-        try:
             self.process.wait(timeout=5)
         except subprocess.TimeoutExpired:
             self.process.kill()
             self.process.wait()
+        # The worker may be waiting for input or blocked in the pipe.
+        if self.worker.is_alive():
+            try:
+                self.pending.put_nowait(None)
+            except queue.Full:
+                pass
+            self.worker.join(timeout=5)
         self.process.stderr.close()
 
 
@@ -356,13 +409,22 @@ def record_human(max_minutes=120, max_attempts=100):
             now = time.monotonic()
             if now < next_frame:
                 time.sleep(next_frame - now)
-            next_frame = max(next_frame + 1 / SAMPLE_FPS, time.monotonic() - .25)
+            if not window_active(win32gui):
+                next_frame = time.monotonic()
+                continue
+            if not attempt.video.ready():
+                display(backend, 'Encoder busy - game paused.', status['attempts_started'])
+                time.sleep(.01)
+                next_frame = time.monotonic()
+                continue
+            names = pressed_controls(win32api)
             backend.advance(names)
             telemetry = backend.memory.sample()
+            display(backend, 'Recording. A death resets this attempt.', status['attempts_started'], names)
             attempt.record(names, backend, telemetry)
+            next_frame = next_frame_deadline(next_frame, time.monotonic())
             if attempt.steps % (SAMPLE_FPS * 10) == 0:
                 require_disk_headroom(config)
-            display(backend, 'Recording. A death resets this attempt.', status['attempts_started'], names)
             if telemetry.dead:
                 attempt.discard()
                 attempt = None
