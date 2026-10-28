@@ -140,7 +140,9 @@ def audit_block(run, config, source_real, source_attempts, failed=False, paused=
             raise ValueError('Physical-frame accounting differs from real decisions.')
         expected_credit = float(last['shaping_potential']) - float(first['shaping_potential'])
         observed_credit = sum(float(r['regional_shaping_reward']) for r in decisions)
-        if abs(expected_credit - observed_credit) > 1e-6 or not -1e-8 <= observed_credit <= 1.000001:
+        limit = (config['regional_reward']['scale'] if config['regional_reward'].get('mode') == 'distance_advance'
+                 else 1.0)
+        if abs(expected_credit - observed_credit) > 1e-6 or not -1e-8 <= observed_credit <= limit + 1e-6:
             raise ValueError('Incremental route credit does not telescope to the new high-water mark.')
         for row in decisions:
             actions[row['action']] += 1

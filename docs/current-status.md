@@ -5,6 +5,11 @@ snapshot, not a live process monitor. Older documents may use present tense for
 their own dated experiments; their original observations remain historical.
 No command here automatically allocates training or changes an existing budget.
 
+A later owner-requested [reward-density comparison](human-route-density-pair-20261028.md)
+tests the full human route at the previous per-distance scale against a
+matched full-route control. Status and outcomes require inspecting its local
+ledger; no result is implied by this document.
+
 Later on October 28, the owner recorded full-start human completions of Sweet
 Sweet and both Twisty Trials variations; exact isolated replays reproduced their
 RAM star events. The human demonstrations are not trained-agent successes.

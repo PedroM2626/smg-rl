@@ -50,6 +50,25 @@ class RegionalAdvance:
         return float(reward)
 
 
+class RegionalDistanceAdvance(RegionalAdvance):
+    """Explicit experimental high-water reward with a larger total budget."""
+
+    def __init__(self, scale):
+        if not np.isfinite(scale) or not 0 < scale <= 20:
+            raise ValueError('Invalid experimental distance advance scale.')
+        self.scale, self.value = scale, 0.0
+
+
+def validate_distance_objective(settings, weights, gamma):
+    """Allow positive partial failure returns only for an explicit experiment."""
+    values = [weights[k] for k in ('step', 'death', 'timeout', 'completion')] + [weights.get('damage', 0.)]
+    if (not np.isfinite(values).all() or gamma != 1.0 or settings['gamma_per_frame'] != 1.0
+            or weights['step'] != 0 or weights['death'] != weights['timeout']
+            or weights['death'] >= 0 or weights['completion'] <= settings['scale']
+            or weights.get('damage', 0.) > 0):
+        raise ValueError('Invalid experimental distance advance objective.')
+
+
 def validate_simple_objective(settings, weights, gamma):
     """Reject profiles that silently reintroduce delayed-failure preference."""
     values = [weights[k] for k in ('step', 'death', 'timeout', 'completion')] + [weights.get('damage', 0.)]

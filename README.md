@@ -127,6 +127,8 @@ coverage is not a native mission-completion signal or evidence of agent success.
 See the [experiment reuse register](docs/experiment-reuse-20261028.md) for prior
 results and the [one-hour-per-reward study](docs/reward-hour-pair-20261028.md)
 for its bounded protocol and evaluation limits.
+The [reward-density comparison](docs/human-route-density-pair-20261028.md)
+tests the full human route with two separate reward scales.
 The [progress interpretation](docs/progress-metric-interpretation-20261028.md)
 withdraws the faulty initial-segment score: it could report progress while Mario
 remained on the starting platform. Ordered human-observed landmark proximity

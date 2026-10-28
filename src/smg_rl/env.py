@@ -24,7 +24,9 @@ from smg_rl.rewards import (
     ExplorationBudget,
     ProgressReward,
     RegionalAdvance,
+    RegionalDistanceAdvance,
     RegionalPotential,
+    validate_distance_objective,
     validate_simple_objective,
 )
 from smg_rl.route import RouteProgress
@@ -95,10 +97,14 @@ class GalaxyEnv(gym.Env):
                     or settings['max_idle_frames'] < 1 or settings['max_episode_frames'] < 1):
                 raise ValueError('Regional reward requires a signed compatible route and separate shaping.')
             mode = settings.get('mode', 'potential')
-            if mode not in ('potential', 'advance'):
+            if mode not in ('potential', 'advance', 'distance_advance'):
                 raise ValueError('Unknown regional reward mode.')
-            self.potential = (RegionalAdvance(settings['scale']) if mode == 'advance'
-                              else RegionalPotential(settings['scale'], settings['gamma_per_frame']))
+            if mode == 'distance_advance':
+                self.potential = RegionalDistanceAdvance(settings['scale'])
+            elif mode == 'advance':
+                self.potential = RegionalAdvance(settings['scale'])
+            else:
+                self.potential = RegionalPotential(settings['scale'], settings['gamma_per_frame'])
             normalization = settings.get('normalization_distance', self.route.total_length)
             if not np.isfinite(normalization) or normalization <= 0:
                 raise ValueError('Regional normalization distance must be positive and finite.')
@@ -108,6 +114,8 @@ class GalaxyEnv(gym.Env):
                 raise ValueError('Learner discount must match the regional frame discount.')
             if mode == 'advance':
                 validate_simple_objective(settings, config['rewards'], learner['gamma'])
+            elif mode == 'distance_advance':
+                validate_distance_objective(settings, config['rewards'], learner['gamma'])
         self.curriculum_bank = None
         curriculum = config.get('curriculum', {})
         if curriculum.get('enabled', False):

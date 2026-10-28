@@ -221,3 +221,51 @@ def test_incremental_environment_pays_real_new_progress_once_and_keeps_failure_c
         assert env.total_reward == pytest.approx(-1.9)
     finally:
         env.close()
+
+
+def test_explicit_distance_advance_retains_full_route_and_old_density():
+    from smg_rl.rewards import (
+        RegionalAdvance,
+        RegionalDistanceAdvance,
+        validate_distance_objective,
+        validate_simple_objective,
+    )
+
+    scale = 37872.5332017393 / 2186.1422975980586
+    reward = RegionalDistanceAdvance(scale)
+    reward.reset(0.)
+    assert reward.update(2186.1422975980586 / 37872.5332017393, 12) == pytest.approx(1.)
+    assert reward.update(1., 12) == pytest.approx(scale - 1.)
+    assert reward.update(.5, 12, terminal=True) == 0.
+    settings = {'scale': scale, 'gamma_per_frame': 1.}
+    weights = {'step': 0., 'death': -2., 'timeout': -2., 'completion': 20., 'damage': -.25}
+    validate_distance_objective(settings, weights, 1.)
+    with pytest.raises(ValueError):
+        validate_simple_objective(settings, weights, 1.)
+    with pytest.raises(ValueError):
+        RegionalAdvance(scale)
+    with pytest.raises(ValueError):
+        RegionalDistanceAdvance(21.)
+
+
+def test_iqn_has_no_categorical_value_support():
+    from smg_rl.distributional import DistributionalQ
+
+    cfg = load_config('config/human-route-smg1-density-v1.yaml')
+    net = DistributionalQ(replay_signature(cfg), cfg['dqn'])
+    assert net.algorithm == 'iqn'
+    assert not hasattr(net, 'support')
+
+
+def test_density_profile_does_not_saturate_after_old_opening(tmp_path):
+    cfg = load_config('config/human-route-smg1-density-v1.yaml')
+    env = GalaxyEnv(cfg, backend=None, run_dir=tmp_path, memory=object(), intrinsic=False)
+    env.route.best = 2186.1422975980586 / env.route.total_length
+    env.potential.reset(0.)
+    first = env.potential.update(env._potential_fraction(), 12)
+    env.route.best = .5
+    later = env.potential.update(env._potential_fraction(), 12)
+    assert first == pytest.approx(1.)
+    assert later > 7.
+    assert cfg['regional_reward']['mode'] == 'distance_advance'
+    assert replay_signature(cfg) != replay_signature(load_config('config/human-route-smg1-landing-v2.yaml'))
