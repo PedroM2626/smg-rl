@@ -117,7 +117,7 @@ def test_memory_pressure_stops_cleanly_and_flushes_committed_replay(tmp_path, mo
     config['training']['device'] = 'cpu'
     config['dqn'].update(capacity=128, learning_starts=100, batch_size=2, channels=2, hidden=32)
     monkeypatch.setattr(dqn_training, 'MeasuredSubprocVecEnv', lambda *a, **k: BoundaryVector())
-    monkeypatch.setattr(dqn_training, 'memory_safe', lambda _: False)
+    monkeypatch.setattr(dqn_training, 'memory_safe', lambda _, **kwargs: False)
     run = dqn_training.train_dqn(config, 100)
     status = json.loads((run / 'status.json').read_text())
     assert status['state'] == 'stopped' and status['stop_reason'] == 'memory_pressure'

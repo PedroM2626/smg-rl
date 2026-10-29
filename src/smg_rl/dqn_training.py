@@ -72,6 +72,9 @@ def deadline_timestamp(value):
 def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
     config = deepcopy(config)
     workers = config['parallel']['workers']
+    physical_reserve = config.get('resource_guard', {}).get('physical_reserve_bytes', 512 * 2**20)
+    # Validate before any worker is started; existing profiles retain their guard.
+    memory_safe(memory_snapshot(), physical_reserve_bytes=physical_reserve)
     if steps < 1 or steps % workers:
         raise ValueError('Use a finite real-decision budget divisible by the worker count.')
     if max_seconds is not None and (not np.isfinite(max_seconds) or max_seconds <= 0):
@@ -242,7 +245,7 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
                 ledger.flush()
                 attempts_ledger.flush()
                 memory_guard_snapshot = memory_snapshot()
-                if not memory_safe(memory_guard_snapshot):
+                if not memory_safe(memory_guard_snapshot, physical_reserve_bytes=physical_reserve):
                     stop_reason = 'memory_pressure'
                     break
                 if not disk_safe(disk_snapshot(config)):

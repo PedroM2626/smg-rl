@@ -33,9 +33,11 @@ def memory_snapshot():
     return result
 
 
-def memory_safe(snapshot, reserve_bytes=6 * 2**30):
+def memory_safe(snapshot, reserve_bytes=6 * 2**30, physical_reserve_bytes=512 * 2**20):
+    if type(physical_reserve_bytes) is not int or physical_reserve_bytes < 512 * 2**20:
+        raise ValueError('The physical memory guard cannot be weakened.')
     return (snapshot['commit_available_bytes'] >= reserve_bytes
-            and snapshot['physical_available_bytes'] >= 512 * 2**20)
+            and snapshot['physical_available_bytes'] >= physical_reserve_bytes)
 
 
 def require_memory_headroom():

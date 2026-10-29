@@ -83,3 +83,8 @@ def test_commit_guard_can_fail_even_when_physical_ram_looks_available():
     assert not memory_safe({'commit_available_bytes': 2**30, 'physical_available_bytes': 12 * 2**30})
     assert not memory_safe({'commit_available_bytes': 12 * 2**30, 'physical_available_bytes': 128 * 2**20})
     assert memory_safe({'commit_available_bytes': 12 * 2**30, 'physical_available_bytes': 2 * 2**30})
+    snapshot = {'commit_available_bytes': 12 * 2**30, 'physical_available_bytes': 1536 * 2**20}
+    assert memory_safe(snapshot)
+    assert not memory_safe(snapshot, physical_reserve_bytes=2 * 2**30)
+    with pytest.raises(ValueError, match='cannot be weakened'):
+        memory_safe(snapshot, physical_reserve_bytes=256 * 2**20)
