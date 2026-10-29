@@ -41,7 +41,9 @@ def prepare_worker(config, index, port):
         },
         "Core": {"EmulationSpeed": str(config["parallel"]["emulation_speed"])},
         "Analytics": {"Enabled": "False"},
-        "DSP": {"Backend": "Null", "Volume": "0"},
+        # Dolphin falls back to Cubeb for unknown backend names. Muting that
+        # stream still starts/stops Windows audio at every frame-step boundary.
+        "DSP": {"Backend": "No Audio Output", "Volume": "0"},
     }.items():
         if section not in ini:
             ini[section] = {}

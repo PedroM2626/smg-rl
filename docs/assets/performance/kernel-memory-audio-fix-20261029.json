@@ -1,0 +1,479 @@
+{
+  "created_utc": "2026-10-29T14:52:39.732846+00:00",
+  "scope": "Bounded non-learning diagnosis and configuration correction, not a training result or a complete audit of all old kernel allocations.",
+  "correction": {
+    "file": "src/smg_rl/background.py",
+    "old_backend": "Null",
+    "new_backend": "No Audio Output",
+    "fallback_from_retained_source": "Cubeb",
+    "same_cycle_reduction_percent": 99.93279354818063
+  },
+  "probes": {
+    "invalid_audio_untraced": {
+      "state": "completed",
+      "cycles": 30,
+      "duration_seconds": 28.375,
+      "before": {
+        "EtwD": 8567378640,
+        "Etwr": 4469372320
+      },
+      "after": {
+        "EtwD": 8567675232,
+        "Etwr": 4469575680
+      },
+      "delta_bytes": {
+        "EtwD": 296592,
+        "Etwr": 203360
+      },
+      "combined_growth_bytes": 499952,
+      "source": ".local\\kernel-memory-investigation-20261029\\stock-pause-initial.json"
+    },
+    "invalid_audio_traced": {
+      "state": "completed",
+      "cycles": 30,
+      "duration_seconds": 33.875,
+      "before": {
+        "EtwD": 8567676448,
+        "Etwr": 4469576320
+      },
+      "after": {
+        "EtwD": 8567947120,
+        "Etwr": 4469761760
+      },
+      "delta_bytes": {
+        "EtwD": 270672,
+        "Etwr": 185440
+      },
+      "combined_growth_bytes": 456112,
+      "source": ".local\\kernel-memory-investigation-20261029\\stock-pause-traced.json"
+    },
+    "correct_audio_untraced": {
+      "state": "completed",
+      "cycles": 30,
+      "duration_seconds": 34.312000000005355,
+      "before": {
+        "EtwD": 8567947264,
+        "Etwr": 4469761920
+      },
+      "after": {
+        "EtwD": 8567947440,
+        "Etwr": 4469762080
+      },
+      "delta_bytes": {
+        "EtwD": 176,
+        "Etwr": 160
+      },
+      "combined_growth_bytes": 336,
+      "source": ".local\\kernel-memory-investigation-20261029\\stock-pause-no-audio.json"
+    },
+    "stock_free_running": {
+      "state": "completed",
+      "cycles": null,
+      "duration_seconds": 46.062999999994645,
+      "before": {
+        "EtwD": 8567367008,
+        "Etwr": 4469364480
+      },
+      "after": {
+        "EtwD": 8567376784,
+        "Etwr": 4469371040
+      },
+      "delta_bytes": {
+        "EtwD": 9776,
+        "Etwr": 6560
+      },
+      "combined_growth_bytes": 16336,
+      "source": ".local\\kernel-memory-investigation-20261029\\stock-dolphin-probe.json"
+    }
+  },
+  "trace_attribution": [
+    {
+      "process": "Realtek user background helper",
+      "pid": 1800,
+      "tag": "EtwD",
+      "observed_alloc_bytes": 141360,
+      "observed_matched_free_bytes": 0,
+      "still_live_count": 589,
+      "still_live_bytes": 141360,
+      "top_mapped_stacks": [
+        {
+          "frames": [
+            "ntoskrnl.exe+0x2f8483",
+            "ntoskrnl.exe+0x2f8f14",
+            "ntoskrnl.exe+0x25d355",
+            "ntoskrnl.exe+0x2ed02e",
+            "ntoskrnl.exe+0x35e515",
+            "ntoskrnl.exe+0x35b9c2",
+            "ntoskrnl.exe+0xb8217a",
+            "ntoskrnl.exe+0x9fee7a",
+            "ntoskrnl.exe+0x8c8288",
+            "ntoskrnl.exe+0xa9f216",
+            "ntoskrnl.exe+0x6c4f55",
+            "ntdll.dll+0x165824",
+            "ntdll.dll+0xec81c",
+            "MMDevAPI.dll+0xa3fa",
+            "MMDevAPI.dll+0xa5e8",
+            "MMDevAPI.dll+0x821e",
+            "RtkAudUService64.exe+0x1a372",
+            "RtkAudUService64.exe+0x1575af",
+            "RtkAudUService64.exe+0x1e35b",
+            "RtkAudUService64.exe+0x2f842",
+            "RtkAudUService64.exe+0x24d8c",
+            "RtkAudUService64.exe+0x24bfe",
+            "kernel32.dll+0x2dda7",
+            "ntdll.dll+0x7ee4c"
+          ],
+          "count": 121
+        },
+        {
+          "frames": [
+            "ntoskrnl.exe+0x2f8483",
+            "ntoskrnl.exe+0x2f8f14",
+            "ntoskrnl.exe+0x25d355",
+            "ntoskrnl.exe+0x2ed02e",
+            "ntoskrnl.exe+0x35e515",
+            "ntoskrnl.exe+0x35b9c2",
+            "ntoskrnl.exe+0xb8217a",
+            "ntoskrnl.exe+0x9fee7a",
+            "ntoskrnl.exe+0x8c8288",
+            "ntoskrnl.exe+0xa9f216",
+            "ntoskrnl.exe+0x6c4f55",
+            "ntdll.dll+0x165824",
+            "ntdll.dll+0xec81c",
+            "MMDevAPI.dll+0xa3fa",
+            "MMDevAPI.dll+0xa5e8",
+            "MMDevAPI.dll+0x821e",
+            "RtkAudUService64.exe+0x1a40a",
+            "RtkAudUService64.exe+0x1575af",
+            "RtkAudUService64.exe+0x1e35b",
+            "RtkAudUService64.exe+0x2f842",
+            "RtkAudUService64.exe+0x24d8c",
+            "RtkAudUService64.exe+0x24bfe",
+            "kernel32.dll+0x2dda7",
+            "ntdll.dll+0x7ee4c"
+          ],
+          "count": 120
+        },
+        {
+          "frames": [
+            "ntoskrnl.exe+0x2f8483",
+            "ntoskrnl.exe+0x2f8f14",
+            "ntoskrnl.exe+0x25d355",
+            "ntoskrnl.exe+0x2ed02e",
+            "ntoskrnl.exe+0x35e515",
+            "ntoskrnl.exe+0x35b9c2",
+            "ntoskrnl.exe+0xb8217a",
+            "ntoskrnl.exe+0x9fee7a",
+            "ntoskrnl.exe+0x8c8288",
+            "ntoskrnl.exe+0xa9f216",
+            "ntoskrnl.exe+0x6c4f55",
+            "ntdll.dll+0x165824",
+            "ntdll.dll+0xec81c",
+            "MMDevAPI.dll+0xa3fa",
+            "MMDevAPI.dll+0xa5e8",
+            "MMDevAPI.dll+0x821e",
+            "RtkAudUService64.exe+0x1a372",
+            "RtkAudUService64.exe+0x1575af",
+            "RtkAudUService64.exe+0x1ee87",
+            "RtkAudUService64.exe+0x2f842",
+            "RtkAudUService64.exe+0x24d8c",
+            "RtkAudUService64.exe+0x24bfe",
+            "kernel32.dll+0x2dda7",
+            "ntdll.dll+0x7ee4c"
+          ],
+          "count": 90
+        }
+      ]
+    },
+    {
+      "process": "Windows Audio service",
+      "pid": 4740,
+      "tag": "EtwD",
+      "observed_alloc_bytes": 172064,
+      "observed_matched_free_bytes": 67232,
+      "still_live_count": 468,
+      "still_live_bytes": 104832,
+      "top_mapped_stacks": [
+        {
+          "frames": [
+            "ntoskrnl.exe+0x2f8483",
+            "ntoskrnl.exe+0x2f8f14",
+            "ntoskrnl.exe+0x25d355",
+            "ntoskrnl.exe+0x2ed02e",
+            "ntoskrnl.exe+0x35e515",
+            "ntoskrnl.exe+0x35b9c2",
+            "ntoskrnl.exe+0xb8217a",
+            "ntoskrnl.exe+0x9fee7a",
+            "ntoskrnl.exe+0x8c8288",
+            "ntoskrnl.exe+0xa9f216",
+            "ntoskrnl.exe+0x6c4f55",
+            "ntdll.dll+0x165824",
+            "ntdll.dll+0xec81c",
+            "MMDevAPI.dll+0xa3fa",
+            "MMDevAPI.dll+0xafa8",
+            "MMDevAPI.dll+0xaf41",
+            "MMDevAPI.dll+0x821e",
+            "MMDevAPI.dll+0x3f90e",
+            "audiosrv.dll+0x56395",
+            "audiosrv.dll+0x562ec",
+            "audiosrv.dll+0x7ed94",
+            "rpcrt4.dll+0xd2d43",
+            "rpcrt4.dll+0xd570e",
+            "rpcrt4.dll+0x88e6c",
+            "rpcrt4.dll+0x86717",
+            "rpcrt4.dll+0x318b4",
+            "rpcrt4.dll+0x328c8",
+            "rpcrt4.dll+0x1fa53",
+            "rpcrt4.dll+0x2fe1c",
+            "rpcrt4.dll+0x35e1c",
+            "rpcrt4.dll+0x34fa3",
+            "rpcrt4.dll+0x33f48",
+            "ntdll.dll+0x2459e",
+            "ntdll.dll+0x24ef3",
+            "kernel32.dll+0x2dda7",
+            "ntdll.dll+0x7ee4c"
+          ],
+          "count": 468
+        }
+      ]
+    },
+    {
+      "process": "Realtek user background helper",
+      "pid": 1800,
+      "tag": "Etwr",
+      "observed_alloc_bytes": 1270560,
+      "observed_matched_free_bytes": 1169360,
+      "still_live_count": 1216,
+      "still_live_bytes": 97280,
+      "top_mapped_stacks": [
+        {
+          "frames": [
+            "ntoskrnl.exe+0x2f8483",
+            "ntoskrnl.exe+0x2f8f14",
+            "ntoskrnl.exe+0x25d355",
+            "ntoskrnl.exe+0x2ed02e",
+            "ntoskrnl.exe+0x35e515",
+            "ntoskrnl.exe+0x35b9c2",
+            "ntoskrnl.exe+0xb8217a",
+            "ntoskrnl.exe+0x8c8760",
+            "ntoskrnl.exe+0x8c8585",
+            "ntoskrnl.exe+0x8c82dd",
+            "ntoskrnl.exe+0xa9f216",
+            "ntoskrnl.exe+0x6c4f55"
+          ],
+          "count": 1216
+        }
+      ]
+    },
+    {
+      "process": "Windows Audio service",
+      "pid": 4740,
+      "tag": "Etwr",
+      "observed_alloc_bytes": 1021440,
+      "observed_matched_free_bytes": 940640,
+      "still_live_count": 966,
+      "still_live_bytes": 77280,
+      "top_mapped_stacks": [
+        {
+          "frames": [
+            "ntoskrnl.exe+0x2f8483",
+            "ntoskrnl.exe+0x2f8f14",
+            "ntoskrnl.exe+0x25d355",
+            "ntoskrnl.exe+0x2ed02e",
+            "ntoskrnl.exe+0x35e515",
+            "ntoskrnl.exe+0x35b9c2",
+            "ntoskrnl.exe+0xb8217a",
+            "ntoskrnl.exe+0x8c8760",
+            "ntoskrnl.exe+0x8c8585",
+            "ntoskrnl.exe+0x8c82dd",
+            "ntoskrnl.exe+0xa9f216",
+            "ntoskrnl.exe+0x6c4f55"
+          ],
+          "count": 966
+        }
+      ]
+    },
+    {
+      "process": "Realtek audio service",
+      "pid": 5788,
+      "tag": "EtwD",
+      "observed_alloc_bytes": 14880,
+      "observed_matched_free_bytes": 0,
+      "still_live_count": 62,
+      "still_live_bytes": 14880,
+      "top_mapped_stacks": [
+        {
+          "frames": [
+            "ntoskrnl.exe+0x2f8483",
+            "ntoskrnl.exe+0x2f8f14",
+            "ntoskrnl.exe+0x25d355",
+            "ntoskrnl.exe+0x2ed02e",
+            "ntoskrnl.exe+0x35e515",
+            "ntoskrnl.exe+0x35b9c2",
+            "ntoskrnl.exe+0xb8217a",
+            "ntoskrnl.exe+0x9fee7a",
+            "ntoskrnl.exe+0x8c8288",
+            "ntoskrnl.exe+0xa9f216",
+            "ntoskrnl.exe+0x6c4f55",
+            "ntdll.dll+0x165824",
+            "ntdll.dll+0xec81c",
+            "MMDevAPI.dll+0xa3fa",
+            "MMDevAPI.dll+0xa5e8",
+            "MMDevAPI.dll+0x821e",
+            "RtkAudUService64.exe+0x1a372",
+            "RtkAudUService64.exe+0xe0aef",
+            "RtkAudUService64.exe+0xf7f21",
+            "RtkAudUService64.exe+0xf6ea2",
+            "RtkAudUService64.exe+0x167a31",
+            "kernel32.dll+0x2dda7",
+            "ntdll.dll+0x7ee4c"
+          ],
+          "count": 62
+        }
+      ]
+    },
+    {
+      "process": "Realtek audio service",
+      "pid": 5788,
+      "tag": "Etwr",
+      "observed_alloc_bytes": 135040,
+      "observed_matched_free_bytes": 123600,
+      "still_live_count": 139,
+      "still_live_bytes": 11120,
+      "top_mapped_stacks": [
+        {
+          "frames": [
+            "ntoskrnl.exe+0x2f8483",
+            "ntoskrnl.exe+0x2f8f14",
+            "ntoskrnl.exe+0x25d355",
+            "ntoskrnl.exe+0x2ed02e",
+            "ntoskrnl.exe+0x35e515",
+            "ntoskrnl.exe+0x35b9c2",
+            "ntoskrnl.exe+0xb8217a",
+            "ntoskrnl.exe+0x8c8760",
+            "ntoskrnl.exe+0x8c8585",
+            "ntoskrnl.exe+0x8c82dd",
+            "ntoskrnl.exe+0xa9f216",
+            "ntoskrnl.exe+0x6c4f55"
+          ],
+          "count": 139
+        }
+      ]
+    }
+  ],
+  "trace_limits": "New allocations observed during one bounded WPR Pool trace, not a dump of the pre-existing pool. Matching frees only account for allocations seen in this trace. Module offsets are not function symbols.",
+  "cleanup": {
+    "final": {
+      "started_utc": "2026-10-29T14:50:42.6662167Z",
+      "state": "completed",
+      "restore_user_background": true,
+      "stopped": [
+        12876,
+        1800
+      ],
+      "interrupted_helper": 33176,
+      "services": [
+        {
+          "Name": "Audiosrv",
+          "State": "Running",
+          "StartMode": "Auto",
+          "ProcessId": 26968
+        },
+        {
+          "Name": "RtkAudioUniversalService",
+          "State": "Running",
+          "StartMode": "Auto",
+          "ProcessId": 34900
+        }
+      ],
+      "finished_utc": "2026-10-29T14:50:50.1498178Z"
+    },
+    "first_attempt_failed": "Hashtable property expansion error; services restored.",
+    "second_attempt_interrupted": "Internal other-owner Stop-Process confirmation in hidden helper; helper terminated and cleanup completed non-interactively.",
+    "user_background_restored_without_elevation": true,
+    "old_etw_allocation_reclaimed": false,
+    "fan_or_thermal_configuration_changed": false,
+    "startup_modes_changed": false
+  },
+  "final_system_snapshot": {
+    "memory": {
+      "physical_available_bytes": 10914463744,
+      "physical_total_bytes": 34049417216,
+      "commit_total_bytes": 34569170944,
+      "commit_limit_bytes": 81294057472,
+      "commit_available_bytes": 46724886528,
+      "kernel_paged_bytes": 10944618496,
+      "kernel_nonpaged_bytes": 5798367232
+    },
+    "pool_tags": [
+      {
+        "tag": "EtwD",
+        "paged_bytes": 8568014400,
+        "nonpaged_bytes": 0,
+        "paged_outstanding": 36749900,
+        "nonpaged_outstanding": 0
+      },
+      {
+        "tag": "Etwr",
+        "paged_bytes": 0,
+        "nonpaged_bytes": 4469806560,
+        "paged_outstanding": 0,
+        "nonpaged_outstanding": 55872582
+      }
+    ]
+  },
+  "native_validation": {
+    "status": "blocked",
+    "winerror": 4551,
+    "code_integrity_event": 3077,
+    "security_policy_changed": false,
+    "training_resumed": false
+  },
+  "portable_validation": {
+    "tests": "tests/test_background.py tests/test_native.py tests/test_windows_pool.py",
+    "passed": 22,
+    "ruff": "passed"
+  },
+  "local_evidence_manifest": {
+    ".local\\kernel-memory-investigation-20261029\\stock-pause-initial.json": {
+      "bytes": 29783,
+      "sha256": "2b4d0c608cdc5899a6d6554c689ffb595e066545da65bf6207cad51710272f37"
+    },
+    ".local\\kernel-memory-investigation-20261029\\stock-pause-traced.json": {
+      "bytes": 29777,
+      "sha256": "810ab56cc29c484921b70bd17f01270d978f5c51fb6cb78a05b35a6929e38a91"
+    },
+    ".local\\kernel-memory-investigation-20261029\\stock-pause-no-audio.json": {
+      "bytes": 29782,
+      "sha256": "d0c0c3d11f82caa2bb6cf551de375e279583e5b1a77dd8ac66ddec459306072c"
+    },
+    ".local\\kernel-memory-investigation-20261029\\pool-attribution.json": {
+      "bytes": 8780,
+      "sha256": "5aa714e3a06e986c3c86b169f2a1faeeeadca67c083cd6c7285215a8bc45f99b"
+    },
+    ".local\\kernel-memory-investigation-20261029\\audio-stack-repair.json": {
+      "bytes": 2888,
+      "sha256": "a69312f77ff97e8a9ab36ac79867e16a626b64d42bc3fd21a6d5be037d556351"
+    },
+    ".local\\kernel-memory-investigation-20261029\\audio-stack-repair2.json": {
+      "bytes": 2295,
+      "sha256": "00ad9518121e4901ee5139ff3f9d3e78b8f58ba031ef2f93349a4c54f1e2153d"
+    },
+    ".local\\kernel-memory-investigation-20261029\\audio-cleanup-final.json": {
+      "bytes": 840,
+      "sha256": "03ced5c3a51a13278de5e0601f7601ea15882661b50188a811cb8374ad83a326"
+    },
+    ".local\\kernel-memory-investigation-20261029\\acer-service-repair.json": {
+      "bytes": 1583,
+      "sha256": "a338d6d4fa6c70b6bb5abc5dff573b54a59716a55ccb292bbe37954b6422d4bf"
+    },
+    ".local\\kernel-memory-investigation-20261029\\ulic-session-stop.json": {
+      "bytes": 6163,
+      "sha256": "770ec76f3a3f809fb7a8bf584ea0bd0612899366e9a49e0b4f8486eb02dc4623"
+    },
+    ".local\\kernel-memory-investigation-20261029\\pause-pool.etl": {
+      "bytes": 1704984576,
+      "sha256": "7be492553244633935f4a6c39bc36c344ac6db230268f27ac3b0824aa4a69800"
+    }
+  }
+}

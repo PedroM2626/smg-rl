@@ -93,3 +93,9 @@ there was no new frozen evaluation after the memory stop. See the
 [partial audit](assets/performance/density-four-worker-stop-20261029.json).
 No retry or additional training was dispatched. Diagnose the continuing kernel
 pool growth before considering another bounded run.
+
+The subsequent [kernel-memory investigation](kernel-memory-diagnosis-20261029.md)
+identified and corrected the invalid null-audio backend name in worker preparation.
+The audited checkpoint above is preserved; diagnostic emulator probes are not
+additional training, and the native build still needs a permitted bounded health
+check before any new continuation.

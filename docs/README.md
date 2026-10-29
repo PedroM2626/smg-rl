@@ -34,6 +34,7 @@ evidence, not dashboards. World-model snapshots and final stop are in the
 
 | Need | Document |
 | --- | --- |
+| Kernel pool attribution, invalid audio-backend correction and bounded pause/resume evidence | [Kernel memory diagnosis](kernel-memory-diagnosis-20261029.md) |
 | Human Sweet Sweet recording, automatic death reset and success-only validation | [Human recording](human-recording.md) |
 | Experiment timeline, negative results and comparison boundaries | [Experiment history](experiment-history.md) |
 | Chocolate frontier physical search and conditional demonstration study | [Chocolate frontier](chocolate-frontier-search-20261028.md) |

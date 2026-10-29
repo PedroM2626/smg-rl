@@ -58,12 +58,15 @@ def test_worker_configuration_enables_unfocused_hotkeys_without_modifying_source
 ):
     root = tmp_path / "worker"
     (root / "Config").mkdir(parents=True)
-    (root / "Config/Dolphin.ini").write_text("[Core]\nEmulationSpeed = 1.0\n")
+    (root / "Config/Dolphin.ini").write_text(
+        "[Core]\nEmulationSpeed = 1.0\n[DSP]\nBackend = Cubeb\nVolume = 75\n"
+    )
     monkeypatch.setattr("smg_rl.background.prepare_profile", lambda _: root)
     config = {"paths": {"user": str(tmp_path / "template")}, "parallel": {"emulation_speed": 2.0}}
     prepare_worker(config, 0, 29000)
     assert "HotkeysRequireFocus = False" in (root / "Config/Dolphin.ini").read_text()
     assert "BackgroundInput = True" in (root / "Config/Dolphin.ini").read_text()
+    assert "Backend = No Audio Output" in (root / "Config/Dolphin.ini").read_text()
     assert "29000" in (root / "Config/DSUClient.ini").read_text()
     assert "DSUClient/0/SMG-RL" in (root / "Config/WiimoteNew.ini").read_text()
     assert config["paths"]["user"] == str(tmp_path / "template")

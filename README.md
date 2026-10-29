@@ -31,6 +31,12 @@ replayed a longer partial path from the initial slot; it did not reach a star.
 
 ## Current evidence
 
+The October 29 [kernel-memory diagnosis](docs/kernel-memory-diagnosis-20261029.md)
+corrects an invalid worker audio-backend name that triggered Windows audio
+start/stop activity during frame stepping. A short matched pause/resume check
+reduced ETW growth by 99.93%; the old kernel accumulation and native-build
+Application Control blocker are tracked separately. Training remains stopped.
+
 In the October 27, 2026 audit, an earlier SMG1 IQN/IMPALA allocation stopped
 after approximately 2 hours 18 minutes because the disk filled. The intended
 four hours were **not** completed. Its last valid checkpoint contains 749,006

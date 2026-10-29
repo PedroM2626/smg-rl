@@ -1,5 +1,13 @@
 # Current evidence and next experiments
 
+The October 29 [kernel-memory diagnosis](kernel-memory-diagnosis-20261029.md)
+found an invalid worker audio backend name: Dolphin fell back to real audio,
+starting/stopping it at frame-step boundaries. Correcting it to `No Audio Output`
+reduced ETW growth from 499,952 B to 336 B in matched 30-cycle stock-emulator
+checks. This does not reclaim the older accumulation or constitute a long native
+worker validation. Windows Application Control blocked the custom native binary
+during the follow-up; no security policy was changed and training remains stopped.
+
 The [frozen density review and guarded continuation](density-four-worker-continuation-20261029.md)
 found the candidate reaches the first pink belt in one greedy evaluation;
 no star was observed. Its four-worker continuation later stopped on memory
@@ -13,7 +21,7 @@ The validation-only [Center of the Universe setup](center-of-universe.md) uses
 SMG1 slots 3 and 4, with an owner-marked pre-boss goal candidate and no native
 star claim. Live verification and a human recording remain outstanding.
 
-This page summarizes the evidence audited through October 28, 2026. It is a dated
+This page summarizes the evidence audited through October 29, 2026. It is a dated
 snapshot, not a live process monitor. Older documents may use present tense for
 their own dated experiments; their original observations remain historical.
 No command here automatically allocates training or changes an existing budget.
