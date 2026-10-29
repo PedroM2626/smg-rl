@@ -1,12 +1,21 @@
 # Current evidence and next experiments
 
+The owner-authorized [24-hour SMG1 IQN continuation](iqn-day-20261029.md)
+started October 29 at 13:12 BRT from the audited 274,494-decision checkpoint,
+with four workers and six-hour reports. Its deadline is October 30 at 13:12 BRT.
+Windows was restarted, the native preflight ran successfully without ETW growth,
+and the new supervisor retains exact replay/optimizer/RNG and unchanged reward.
+Read its local state and actual processes for live outcomes; no new star is
+claimed by this dated launch record.
+
 The October 29 [kernel-memory diagnosis](kernel-memory-diagnosis-20261029.md)
 found an invalid worker audio backend name: Dolphin fell back to real audio,
 starting/stopping it at frame-step boundaries. Correcting it to `No Audio Output`
 reduced ETW growth from 499,952 B to 336 B in matched 30-cycle stock-emulator
 checks. This does not reclaim the older accumulation or constitute a long native
 worker validation. Windows Application Control blocked the custom native binary
-during the follow-up; no security policy was changed and training remains stopped.
+during that earlier follow-up. The later post-reboot preflight above succeeded;
+the project did not change a security policy.
 
 The [frozen density review and guarded continuation](density-four-worker-continuation-20261029.md)
 found the candidate reaches the first pink belt in one greedy evaluation;

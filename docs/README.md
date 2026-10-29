@@ -34,6 +34,7 @@ evidence, not dashboards. World-model snapshots and final stop are in the
 
 | Need | Document |
 | --- | --- |
+| October 29 finite24h SMG1 IQN resume, four workers, six-hour reports and exact source accounting | [IQN day continuation](iqn-day-20261029.md) |
 | Kernel pool attribution, invalid audio-backend correction and bounded pause/resume evidence | [Kernel memory diagnosis](kernel-memory-diagnosis-20261029.md) |
 | Human Sweet Sweet recording, automatic death reset and success-only validation | [Human recording](human-recording.md) |
 | Experiment timeline, negative results and comparison boundaries | [Experiment history](experiment-history.md) |

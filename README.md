@@ -34,8 +34,11 @@ replayed a longer partial path from the initial slot; it did not reach a star.
 The October 29 [kernel-memory diagnosis](docs/kernel-memory-diagnosis-20261029.md)
 corrects an invalid worker audio-backend name that triggered Windows audio
 start/stop activity during frame stepping. A short matched pause/resume check
-reduced ETW growth by 99.93%; the old kernel accumulation and native-build
-Application Control blocker are tracked separately. Training remains stopped.
+reduced ETW growth by 99.93%. After the owner restarted Windows, a native
+preflight showed no ETW growth and the
+[bounded 24-hour SMG1 IQN continuation](docs/iqn-day-20261029.md) started with
+four workers and six-hour reports, ending no later than October 30 at 13:12 BRT.
+Inspect its actual ledger for live results; this is not a completion claim.
 
 In the October 27, 2026 audit, an earlier SMG1 IQN/IMPALA allocation stopped
 after approximately 2 hours 18 minutes because the disk filled. The intended

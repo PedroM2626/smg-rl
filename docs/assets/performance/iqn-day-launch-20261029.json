@@ -1,0 +1,58 @@
+{
+  "created_utc": "2026-10-29T16:17:55.133522+00:00",
+  "state": "health_reviewed_main_running",
+  "started_utc": "2026-10-29T16:12:55.923343+00:00",
+  "deadline_utc": "2026-10-30T16:12:55.923343+00:00",
+  "report_due_utc": [
+    "2026-10-29T22:12:55.923343+00:00",
+    "2026-10-30T04:12:55.923343+00:00",
+    "2026-10-30T10:12:55.923343+00:00",
+    "2026-10-30T16:12:55.923343+00:00"
+  ],
+  "supervisor": {
+    "pid": 19056,
+    "created_time": 1793290374.5763896
+  },
+  "source_real": 274494,
+  "source_attempts": 3040,
+  "source_optimizer_updates": 68109,
+  "source_hashes": {
+    "agent_sha256": "c66ceeea79c50156d5919788e8d3d5064ee49486b00bb97740f0f109205a3d37",
+    "replay_sha256": "c650d62671b73b895399813f1728f0e02c430492538b6f742373fb0404195192"
+  },
+  "config_sha256": "a5410f9bd18518a3e06b41fab0e66259402cb31e80da722c594896cd56541775",
+  "supervisor_code_sha256": "a9bf5be50816d391442042bfde9cf2c040abc93b4fe127dc07575c66a1dad395",
+  "health": {
+    "passed": true,
+    "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\iqn-day-20261029\\dqn-20261029-131319-007003\\checkpoint-final",
+    "agent_sha256": "72b497022c3149dc19a624b3011a06cca107148cbc8eb085f664f4b616008928",
+    "real_decisions": 277566,
+    "completed_attempts": 3057,
+    "elapsed_seconds": 127.71578739999995,
+    "csv_decision_gap": 0,
+    "unacknowledged_terminal_csv_episodes": 0
+  },
+  "health_new_real": 3072,
+  "health_new_attempts": 17,
+  "health_etw_growth_bytes": 416,
+  "health_actions": {
+    "w": 463,
+    "spin": 859,
+    "none": 309,
+    "a": 45,
+    "jump": 953,
+    "crouch": 141,
+    "s": 232,
+    "d": 70
+  },
+  "scope": "Launch and health evidence only. No new mission completion or frozen policy evaluation is claimed. New counters exclude the585-decision non-learning preflight.",
+  "memory": {
+    "physical_available_bytes": 13318660096,
+    "physical_total_bytes": 34049417216,
+    "commit_total_bytes": 26396729344,
+    "commit_limit_bytes": 79146573824,
+    "commit_available_bytes": 52749844480,
+    "kernel_paged_bytes": 1016672256,
+    "kernel_nonpaged_bytes": 726069248
+  }
+}
