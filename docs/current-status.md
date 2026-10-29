@@ -1,5 +1,9 @@
 # Current evidence and next experiments
 
+The reward-density comparison stopped again on memory pressure; see the
+[partial audit](human-route-density-pair-20261028.md#october-29-review-repeated-resource-stop).
+No stars or frozen-policy comparison were established.
+
 The validation-only [Center of the Universe setup](center-of-universe.md) uses
 SMG1 slots 3 and 4, with an owner-marked pre-boss goal candidate and no native
 star claim. Live verification and a human recording remain outstanding.

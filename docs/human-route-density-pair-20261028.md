@@ -82,3 +82,38 @@ segments alter the collector history, and this mitigation is not a proven fix
 for an unidentified kernel allocation source. If pressure recurs, the recovered
 process stops for audit and does not automatically retry. Full project tests
 should not be run alongside the six workers.
+
+## October 29 review: repeated resource stop
+
+The recovery stopped at 00:41 BRT on October 29 when physical availability fell
+below the strengthened 2 GiB guard. Its supervisor stopped; no Dolphin workers
+remained. The final control segment completed checkpoint/cleanup with
+`memory_pressure`. An explicit resource-stop audit verified its checkpoint and
+replay, 16,512 additional real decisions, 363 completed attempts and zero CSV
+gap. Including that partial block exactly once, control has 193,482 real
+decisions, 3,338 attempts, 3,194 deaths and 7,104.15 accounted seconds;
+candidate has 188,070 real decisions, 2,450 attempts, 2,102 deaths and
+7,124.85 accounted seconds. Both have zero full-start RAM stars. These are
+branch counts after the fresh transfer, not the ancestor's 172,158 decisions.
+The paired allocation was not completed and no frozen evaluations were run.
+
+In reviewed recovery blocks only, 162 candidate episodes and two control
+episodes had a first-landmark proximity candidate; 493 and 951 episodes
+respectively were excluded by the landmark check. The partial final control
+segment and earlier candidate segments are not included in those counts. This
+is an exploratory, incomplete comparison under changing weights and action
+noise; excluded episodes and same-state resets prevent treating these counts as
+a success rate or generalization. One candidate sample was 20.65 XYZ world
+units from the first human reference point and was followed by death; its
+[diagram](assets/performance/density-candidate-first-landmark-20261029.png)
+connects observed samples through that point. It is not video evidence of the
+exact platform and is not a level percentage.
+
+At the stop the guard recorded about 1.99 GiB physical availability and 11.27
+GiB paged / 5.00 GiB nonpaged kernel pool. These are system-wide observations,
+not attribution to a particular driver. Both final checkpoint/replay hashes
+matched. The [partial audit](assets/performance/density-recovery-stop-20261029.json)
+retains counts, memory snapshot and source identity. Because the same resource
+failure recurred, no automatic retry, additional training block or frozen
+evaluation was dispatched. First identify the source of the resource growth,
+then plan a controlled frozen evaluation before any new training.

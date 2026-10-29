@@ -1,0 +1,99 @@
+{
+  "stop": {
+    "state": "stopped",
+    "stop_reason": "memory_pressure",
+    "real_decisions": 193482,
+    "source_count": 176970,
+    "optimizer_updates": 47856,
+    "completed_attempts": 3338,
+    "episodes_this_run": 363,
+    "deaths_this_run": 362,
+    "nonfatal_hp_lost_this_run": 0,
+    "full_start_stars_this_run": 0,
+    "elapsed_seconds": 601.4344795999932,
+    "memory_guard_snapshot": {
+      "physical_available_bytes": 2137718784,
+      "physical_total_bytes": 34049417216,
+      "commit_total_bytes": 48649854976,
+      "commit_limit_bytes": 81294057472,
+      "commit_available_bytes": 32644202496,
+      "kernel_paged_bytes": 12105248768,
+      "kernel_nonpaged_bytes": 5371322368
+    }
+  },
+  "partial_review": {
+    "passed": true,
+    "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\human-route-density-20261028\\control\\dqn-20261029-003138-408223\\checkpoint-final",
+    "agent_sha256": "bd22b0a868d17307f5daf4812c6676ed102fe7b190fa0c3b0bc1f2207d6259cb",
+    "real_decisions": 193482,
+    "completed_attempts": 3338,
+    "elapsed_seconds": 601.4344795999932,
+    "csv_decision_gap": 0,
+    "resource_stopped_checkpoint": true
+  },
+  "branches": {
+    "candidate": {
+      "real": 188070,
+      "attempts": 2450,
+      "optimizer_updates": 46503,
+      "deaths": 2102,
+      "timeouts": 348,
+      "stars": 0,
+      "accounted_seconds": 7124.846791300035,
+      "landmark_candidate_episodes": 162,
+      "landmark_exclusions": 493,
+      "blocks_reviewed": 10,
+      "checkpoint_agent_ok": true,
+      "checkpoint_replay_ok": true
+    },
+    "control": {
+      "real": 193482,
+      "attempts": 3338,
+      "optimizer_updates": 47856,
+      "deaths": 3194,
+      "timeouts": 144,
+      "stars": 0,
+      "accounted_seconds": 7104.147484099987,
+      "landmark_candidate_episodes": 2,
+      "landmark_exclusions": 951,
+      "blocks_reviewed": 11,
+      "checkpoint_agent_ok": true,
+      "checkpoint_replay_ok": true
+    }
+  },
+  "memory_now": {
+    "physical_available_bytes": 12835799040,
+    "physical_total_bytes": 34049417216,
+    "commit_total_bytes": 33727180800,
+    "commit_limit_bytes": 81294057472,
+    "commit_available_bytes": 47566876672,
+    "kernel_paged_bytes": 10087542784,
+    "kernel_nonpaged_bytes": 5215440896
+  },
+  "state": "memory_pressure_stopped_reviewed",
+  "report_scope": "Exploratory training collection; no frozen evaluations after resource stop.",
+  "source_ledger_sha256": "9dd0bd0270288e04462596e419c4319735a998d1ca284e353fc0bd5d3e0b7d20",
+  "plotted_candidate": {
+    "trajectory_sha256": "96096250bbb547da45a818b18111377994ea68dcdba29c4f08ca629ab1b0d830",
+    "landmark": {
+      "name": "First pink belt",
+      "observation_index": 23,
+      "position": [
+        -27.033010482788086,
+        -50.00019836425781,
+        -1003.7128295898438
+      ],
+      "distance_3d": 20.654293244215243,
+      "human_sample": 120
+    },
+    "outcome": "death"
+  },
+  "plot": "docs/assets/performance/density-candidate-first-landmark-20261029.png",
+  "limitations": [
+    "Candidate landmarks are proximity samples, not visually verified visits, and not level percentages.",
+    "Landmark counts cover reviewed recovery blocks only, not the final unreviewed partial block or all earlier data; exclusions differ.",
+    "Same Wii state and one training seed do not establish generalization.",
+    "This outcome includes exploratory collection with changing policies, not a frozen-policy evaluation.",
+    "Repeated system memory pressure stopped the experiment before its full allocation."
+  ]
+}
