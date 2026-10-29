@@ -1,0 +1,86 @@
+{
+  "state": "memory_pressure_stopped_audited",
+  "source_real": 188070,
+  "source_attempts": 2450,
+  "new_real": 86424,
+  "new_attempts": 590,
+  "real": 274494,
+  "attempts": 3040,
+  "optimizer_updates": 68109,
+  "new_optimizer_updates": 21606,
+  "accounted_seconds": 3195.640837599989,
+  "partial_real": 11008,
+  "partial_attempts": 81,
+  "partial_seconds": 388.2454077999864,
+  "csv_gap": 0,
+  "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\density-four-worker-20261029\\dqn-20261029-100929-298752\\checkpoint-final",
+  "agent_sha256": "c66ceeea79c50156d5919788e8d3d5064ee49486b00bb97740f0f109205a3d37",
+  "agent_hash_ok": true,
+  "replay_hash_ok": true,
+  "cumulative_deaths": 2442,
+  "native_full_start_stars": 0,
+  "cumulative_timeouts": 598,
+  "partial_deaths": 54,
+  "partial_hp_loss": 0,
+  "partial_stars": 0,
+  "stop_memory": {
+    "physical_available_bytes": 1865199616,
+    "physical_total_bytes": 34049417216,
+    "commit_total_bytes": 46887686144,
+    "commit_limit_bytes": 81294057472,
+    "commit_available_bytes": 34406371328,
+    "kernel_paged_bytes": 15442956288,
+    "kernel_nonpaged_bytes": 6274564096
+  },
+  "current_memory": {
+    "physical_available_bytes": 13300965376,
+    "physical_total_bytes": 34049417216,
+    "commit_total_bytes": 32615071744,
+    "commit_limit_bytes": 81294057472,
+    "commit_available_bytes": 48678985728,
+    "kernel_paged_bytes": 10898403328,
+    "kernel_nonpaged_bytes": 5726720000
+  },
+  "pool_tags": [
+    {
+      "tag": "EtwD",
+      "paged_bytes": 8559371360,
+      "nonpaged_bytes": 0,
+      "paged_outstanding": 36712853,
+      "nonpaged_outstanding": 0
+    },
+    {
+      "tag": "Etwr",
+      "paged_bytes": 0,
+      "nonpaged_bytes": 4489958960,
+      "paged_outstanding": 0,
+      "nonpaged_outstanding": 56124487
+    }
+  ],
+  "reviewed_block_landmark_candidates": 210,
+  "landmark_names": {
+    "First pink belt": 210
+  },
+  "landmark_exclusions": 39,
+  "partial_not_scored_for_landmarks": true,
+  "frozen_evaluations_after_stop": 0,
+  "baseline_frozen_reference": ".local\\density-frozen-review-20261029\\state.json",
+  "source_ledger_sha256": "14c8b88f3e159164ce922e4ff89b4489a7a30cbe3f8f69656b0fbb5d97390281",
+  "note": "Candidates are proximity observations and not a confirmed surface, mission percentage or frozen-policy result.",
+  "integrity": {
+    "source_agent": true,
+    "source_replay": true,
+    "migrated_agent": true,
+    "migrated_replay": true,
+    "signature_unchanged": true,
+    "migration_preserved_learner_optimizer_rng": true,
+    "migration_preserved_replay": true
+  },
+  "limitations": [
+    "Paused on repeated memory pressure, not a completed two-hour training.",
+    "No frozen evaluation was run after the memory stop.",
+    "Coordinate landmark candidates require visual verification; they are not mission percentage.",
+    "A single training seed and same Wii state cannot establish generalization.",
+    "ETW pool tags do not identify the triggering process or driver."
+  ]
+}

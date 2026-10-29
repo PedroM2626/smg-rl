@@ -2,7 +2,8 @@
 
 The [frozen density review and guarded continuation](density-four-worker-continuation-20261029.md)
 found the candidate reaches the first pink belt in one greedy evaluation;
-no star was observed. Its four-worker continuation requires local state inspection.
+no star was observed. Its four-worker continuation later stopped on memory
+pressure after 86,424 new real decisions; its partial checkpoint was audited.
 
 The reward-density comparison stopped again on memory pressure; see the
 [partial audit](human-route-density-pair-20261028.md#october-29-review-repeated-resource-stop).

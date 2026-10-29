@@ -64,3 +64,32 @@ review real trajectories, native RAM stars, deaths, hashes, resource trends
 and optionally evaluate the final frozen policy with video; collection maxima
 and coordinate proximity are not level-completion percentages. A resource stop
 requires diagnostic review, not an automatic restart.
+
+## Resource-stopped partial result
+
+The continuation stopped during block 05 at 10:15 BRT on October 29 because
+physical availability fell below the 2 GiB guard. Four-worker collection did
+not eliminate the system-wide pressure. Before shutdown the sample recorded
+1,865,199,616 bytes available, 15,442,956,288 bytes paged and 6,274,564,096
+bytes nonpaged kernel pool. The guard stopped safely and no workers remained.
+Pool tags still account for a large share, but they do not identify a driver
+or process.
+
+The final partial checkpoint passed the explicit resource-stop audit: its
+11,008 new decisions and 81 completed attempts reconcile with replay and CSV
+coverage without gaps. Including all previous blocks and this partial exactly
+once, the continuation collected 86,424 new decisions and 590 new attempts in
+3,195.64 accounted seconds. The resumed checkpoint has 274,494 cumulative
+decisions, 3,040 attempts, 68,109 optimizer updates and zero native full-start
+stars. The source, migrated and final agent/replay hashes and reward signatures
+matched. These figures are not a completed two-hour allocation.
+
+In the five reviewed blocks, 210 episodes produced first-landmark proximity
+candidates and 39 were excluded by that check; the final partial was not
+scored. These candidates are sampled coordinates, not visual confirmation,
+frozen-policy results, a mission percentage or independent environments. The
+only available frozen videos remain those recorded before this continuation;
+there was no new frozen evaluation after the memory stop. See the
+[partial audit](assets/performance/density-four-worker-stop-20261029.json).
+No retry or additional training was dispatched. Diagnose the continuing kernel
+pool growth before considering another bounded run.
