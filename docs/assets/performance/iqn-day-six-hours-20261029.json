@@ -1,0 +1,474 @@
+{
+  "captured_utc": "2026-10-29T22:16:53.559351+00:00",
+  "counter_status_utc": "2026-10-29T22:16:49.873716+00:00",
+  "supervisor_alive": true,
+  "controller_alive": true,
+  "owned_emulators": [
+    {
+      "pid": 2056,
+      "create_time": 1793311661.1332743,
+      "name": "Dolphin.exe"
+    },
+    {
+      "pid": 18160,
+      "create_time": 1793311656.0440843,
+      "name": "Dolphin.exe"
+    },
+    {
+      "pid": 22756,
+      "create_time": 1793311650.9778492,
+      "name": "Dolphin.exe"
+    },
+    {
+      "pid": 10444,
+      "create_time": 1793311645.93164,
+      "name": "Dolphin.exe"
+    }
+  ],
+  "phase": "running",
+  "started_utc": "2026-10-29T16:12:55.923343+00:00",
+  "deadline_utc": "2026-10-30T16:12:55.923343+00:00",
+  "elapsed_wall_seconds": 21837.636008,
+  "method": "IQN / trainable IMPALA /4 grayscale stacked frames /8 actions /4 collectors / full-start only / epsilon0.1 + NoisyNet; no model or curiosity",
+  "new_counters": {
+    "real_decisions": 790084,
+    "optimizer_updates": 197521,
+    "completed_attempts": 4732,
+    "deaths": 2772,
+    "timeouts": 1960,
+    "ram_stars": 0
+  },
+  "cumulative_counters": {
+    "real_decisions": 1064578,
+    "optimizer_updates": 265630,
+    "completed_attempts": 7772
+  },
+  "current_block_decisions_per_second": 36.71076948312628,
+  "reviewed_checkpoint_real": 1043842,
+  "reviewed_blocks": 13,
+  "active_attempts": [
+    {
+      "variation": "sweet_sweet",
+      "start_kind": "full_start",
+      "worker_episode": 30,
+      "episode_step": 37,
+      "start_relative_route_progress": 0.0,
+      "dead": false,
+      "complete": false
+    },
+    {
+      "variation": "sweet_sweet",
+      "start_kind": "full_start",
+      "worker_episode": 30,
+      "episode_step": 41,
+      "start_relative_route_progress": 0.0,
+      "dead": false,
+      "complete": false
+    },
+    {
+      "variation": "sweet_sweet",
+      "start_kind": "full_start",
+      "worker_episode": 31,
+      "episode_step": 33,
+      "start_relative_route_progress": 0.0,
+      "dead": false,
+      "complete": false
+    },
+    {
+      "variation": "sweet_sweet",
+      "start_kind": "full_start",
+      "worker_episode": 28,
+      "episode_step": 27,
+      "start_relative_route_progress": 0.0,
+      "dead": false,
+      "complete": false
+    }
+  ],
+  "reviewed_action_counts": {
+    "w": 99869,
+    "spin": 97361,
+    "none": 269224,
+    "a": 20457,
+    "jump": 155329,
+    "crouch": 55227,
+    "s": 47536,
+    "d": 24345
+  },
+  "observed_csv_action_counts": {
+    "w": 101859,
+    "spin": 103091,
+    "none": 276037,
+    "a": 21686,
+    "jump": 157604,
+    "crouch": 58319,
+    "s": 48635,
+    "d": 25377
+  },
+  "observed_csv_decisions": 792608,
+  "active_block_csv_rows": 23260,
+  "csv_scope": "Closed blocks are immutable and audited. Active block CSVs and ledgers were read later than the counter snapshot; they are provisional and can be ahead of acknowledged decisions.",
+  "nonfatal_hp_loss_from_block_status": 0,
+  "observed_health_lost_in_csv": 0,
+  "completed_attempt_return_mean_provisional": -1.7508921503885087,
+  "completed_attempt_return_median_provisional": -1.5547759931830767,
+  "return_scope": "Per-attempt return ledgers during exploration, including a provisional active-block tail; not frozen-policy performance.",
+  "max_alive_grounded_recorded_route_fraction": 0.025699971745324457,
+  "source_best_credited_route_fraction": 0.025699971745324457,
+  "landmark_candidate_episode_counts": {
+    "0": 2165,
+    "1": 2161
+  },
+  "landmark_exclusions": {
+    "Nonfinite or discontinuous landmark observation.": 473
+  },
+  "best_plot_path": {
+    "path": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\iqn-day-20261029\\dqn-20261029-143220-199384\\worker-03\\sweet_sweet\\episode-000104.csv",
+    "candidate_matches": [
+      {
+        "name": "First pink belt",
+        "observation_index": 51,
+        "position": [
+          -57.088462829589844,
+          -50.00019836425781,
+          -939.7820434570312
+        ],
+        "distance_3d": 91.2759319098865,
+        "human_sample": 120
+      }
+    ],
+    "route_fraction": 0.025699971745324457,
+    "outcome": "timeout",
+    "next_landmark_minimum_3d_distance": 919.4058379163232,
+    "is_closed_reviewed_block": true,
+    "rows": 232
+  },
+  "visual_surface_confirmation": false,
+  "verified_checkpoints": {
+    "source": {
+      "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\density-four-worker-20261029\\dqn-20261029-100929-298752\\checkpoint-final",
+      "agent_sha256": "c66ceeea79c50156d5919788e8d3d5064ee49486b00bb97740f0f109205a3d37",
+      "replay_sha256": "c650d62671b73b895399813f1728f0e02c430492538b6f742373fb0404195192",
+      "valid": true
+    },
+    "latest_reviewed": {
+      "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\iqn-day-20261029\\dqn-20261029-183652-832864\\checkpoint-final",
+      "agent_sha256": "9d5693fe3cf40d965b07aee703f317da0e1510c22a8c05142c13a7898f806f87",
+      "replay_sha256": "b2a89f7fd7c569ddf91d2da9daf52d8b98204040be1bc530a4e89bf8fc5d950b",
+      "valid": true
+    }
+  },
+  "config_hash_matches": true,
+  "losses": {
+    "loss": 0.006997623480856419,
+    "gradient_norm": 0.1313420534133911,
+    "beta": 1.0,
+    "mean_priority": 0.05633099004626274,
+    "effective_sample_size": 28.018022537231445
+  },
+  "visual_encoder_first_update_probe": {
+    "weights_changed": true,
+    "gradient_l2": 0.10052784532308578,
+    "source_optimizer_updates": 260446,
+    "observed_optimizer_updates": 260447
+  },
+  "memory": {
+    "physical_available_bytes": 13870735360,
+    "physical_total_bytes": 34049417216,
+    "commit_total_bytes": 28112285696,
+    "commit_limit_bytes": 79146573824,
+    "commit_available_bytes": 51034288128,
+    "kernel_paged_bytes": 1001734144,
+    "kernel_nonpaged_bytes": 773558272
+  },
+  "etw_pool_tags": [
+    {
+      "tag": "EtwD",
+      "paged_bytes": 148608,
+      "nonpaged_bytes": 0,
+      "paged_outstanding": 652,
+      "nonpaged_outstanding": 0
+    },
+    {
+      "tag": "Etwr",
+      "paged_bytes": 0,
+      "nonpaged_bytes": 94480,
+      "paged_outstanding": 0,
+      "nonpaged_outstanding": 1181
+    }
+  ],
+  "disk": {
+    "runs": {
+      "path": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\iqn-day-20261029",
+      "free_bytes": 298482139136,
+      "total_bytes": 1023008567296
+    },
+    "user": {
+      "path": "C:\\Users\\Acer\\Downloads\\smg-rl\\.local\\iqn-day-20261029\\parallel-profiles\\RMGE01\\dqn-20261029-190725-024024",
+      "free_bytes": 298482139136,
+      "total_bytes": 1023008567296
+    }
+  },
+  "blocks": [
+    {
+      "label": "block-00",
+      "closed_reviewed": true,
+      "new_real": 3072,
+      "episodes_this_run": 17,
+      "stars_this_run": 0,
+      "deaths_this_run": 8,
+      "nonfatal_hp_loss": 0,
+      "mean_return": -1.842862115241086,
+      "last_losses": {
+        "loss": 0.004247145727276802,
+        "gradient_norm": 0.13677076995372772,
+        "beta": 1.0,
+        "mean_priority": 0.04402051866054535,
+        "effective_sample_size": 25.75349998474121
+      },
+      "stop_reason": "decision_budget"
+    },
+    {
+      "label": "block-01",
+      "closed_reviewed": true,
+      "new_real": 31540,
+      "episodes_this_run": 213,
+      "stars_this_run": 0,
+      "deaths_this_run": 129,
+      "nonfatal_hp_loss": 0,
+      "mean_return": -1.8202381944307258,
+      "last_losses": {
+        "loss": 0.0039339084178209305,
+        "gradient_norm": 0.16371586918830872,
+        "beta": 1.0,
+        "mean_priority": 0.04415413737297058,
+        "effective_sample_size": 27.68406867980957
+      },
+      "stop_reason": "wall_clock_budget"
+    },
+    {
+      "label": "block-02",
+      "closed_reviewed": true,
+      "new_real": 58432,
+      "episodes_this_run": 415,
+      "stars_this_run": 0,
+      "deaths_this_run": 285,
+      "nonfatal_hp_loss": 0,
+      "mean_return": -1.7950896739710065,
+      "last_losses": {
+        "loss": 0.0042525967583060265,
+        "gradient_norm": 0.0828036293387413,
+        "beta": 1.0,
+        "mean_priority": 0.04922158643603325,
+        "effective_sample_size": 26.68251609802246
+      },
+      "stop_reason": "wall_clock_budget"
+    },
+    {
+      "label": "block-03",
+      "closed_reviewed": true,
+      "new_real": 66664,
+      "episodes_this_run": 441,
+      "stars_this_run": 0,
+      "deaths_this_run": 258,
+      "nonfatal_hp_loss": 0,
+      "mean_return": -1.778902363961664,
+      "last_losses": {
+        "loss": 0.004728406202048063,
+        "gradient_norm": 0.18728329241275787,
+        "beta": 1.0,
+        "mean_priority": 0.04938381910324097,
+        "effective_sample_size": 27.264673233032227
+      },
+      "stop_reason": "wall_clock_budget"
+    },
+    {
+      "label": "block-04",
+      "closed_reviewed": true,
+      "new_real": 66232,
+      "episodes_this_run": 456,
+      "stars_this_run": 0,
+      "deaths_this_run": 321,
+      "nonfatal_hp_loss": 0,
+      "mean_return": -1.784222575643553,
+      "last_losses": {
+        "loss": 0.004051464609801769,
+        "gradient_norm": 0.19554416835308075,
+        "beta": 1.0,
+        "mean_priority": 0.05345453694462776,
+        "effective_sample_size": 28.121706008911133
+      },
+      "stop_reason": "wall_clock_budget"
+    },
+    {
+      "label": "block-05",
+      "closed_reviewed": true,
+      "new_real": 67096,
+      "episodes_this_run": 408,
+      "stars_this_run": 0,
+      "deaths_this_run": 243,
+      "nonfatal_hp_loss": 0,
+      "mean_return": -1.7795704672131902,
+      "last_losses": {
+        "loss": 0.004864757880568504,
+        "gradient_norm": 0.12146079540252686,
+        "beta": 1.0,
+        "mean_priority": 0.05013958737254143,
+        "effective_sample_size": 27.82933235168457
+      },
+      "stop_reason": "wall_clock_budget"
+    },
+    {
+      "label": "block-06",
+      "closed_reviewed": true,
+      "new_real": 67276,
+      "episodes_this_run": 398,
+      "stars_this_run": 0,
+      "deaths_this_run": 239,
+      "nonfatal_hp_loss": 0,
+      "mean_return": -1.7594895440561849,
+      "last_losses": {
+        "loss": 0.008632481098175049,
+        "gradient_norm": 0.4065176844596863,
+        "beta": 1.0,
+        "mean_priority": 0.06789523363113403,
+        "effective_sample_size": 27.041860580444336
+      },
+      "stop_reason": "wall_clock_budget"
+    },
+    {
+      "label": "block-07",
+      "closed_reviewed": true,
+      "new_real": 67984,
+      "episodes_this_run": 384,
+      "stars_this_run": 0,
+      "deaths_this_run": 220,
+      "nonfatal_hp_loss": 0,
+      "mean_return": -1.721734995739423,
+      "last_losses": {
+        "loss": 0.0032379538752138615,
+        "gradient_norm": 0.07303090393543243,
+        "beta": 1.0,
+        "mean_priority": 0.04368651658296585,
+        "effective_sample_size": 28.18308448791504
+      },
+      "stop_reason": "wall_clock_budget"
+    },
+    {
+      "label": "block-08",
+      "closed_reviewed": true,
+      "new_real": 68144,
+      "episodes_this_run": 371,
+      "stars_this_run": 0,
+      "deaths_this_run": 216,
+      "nonfatal_hp_loss": 0,
+      "mean_return": -1.701183887608049,
+      "last_losses": {
+        "loss": 0.005515967030078173,
+        "gradient_norm": 0.17509393393993378,
+        "beta": 1.0,
+        "mean_priority": 0.049329861998558044,
+        "effective_sample_size": 28.31244468688965
+      },
+      "stop_reason": "wall_clock_budget"
+    },
+    {
+      "label": "block-09",
+      "closed_reviewed": true,
+      "new_real": 68092,
+      "episodes_this_run": 378,
+      "stars_this_run": 0,
+      "deaths_this_run": 175,
+      "nonfatal_hp_loss": 0,
+      "mean_return": -1.7656095837127839,
+      "last_losses": {
+        "loss": 0.004548818338662386,
+        "gradient_norm": 0.15912018716335297,
+        "beta": 1.0,
+        "mean_priority": 0.044553883373737335,
+        "effective_sample_size": 27.208744049072266
+      },
+      "stop_reason": "wall_clock_budget"
+    },
+    {
+      "label": "block-10",
+      "closed_reviewed": true,
+      "new_real": 68316,
+      "episodes_this_run": 362,
+      "stars_this_run": 0,
+      "deaths_this_run": 155,
+      "nonfatal_hp_loss": 0,
+      "mean_return": -1.7060537634551254,
+      "last_losses": {
+        "loss": 0.002570837503299117,
+        "gradient_norm": 0.14014895260334015,
+        "beta": 1.0,
+        "mean_priority": 0.03649374097585678,
+        "effective_sample_size": 26.4614200592041
+      },
+      "stop_reason": "wall_clock_budget"
+    },
+    {
+      "label": "block-11",
+      "closed_reviewed": true,
+      "new_real": 68260,
+      "episodes_this_run": 392,
+      "stars_this_run": 0,
+      "deaths_this_run": 242,
+      "nonfatal_hp_loss": 0,
+      "mean_return": -1.6933406075495685,
+      "last_losses": {
+        "loss": 0.0026031648740172386,
+        "gradient_norm": 0.14365097880363464,
+        "beta": 1.0,
+        "mean_priority": 0.036580562591552734,
+        "effective_sample_size": 27.799463272094727
+      },
+      "stop_reason": "wall_clock_budget"
+    },
+    {
+      "label": "block-12",
+      "closed_reviewed": true,
+      "new_real": 68240,
+      "episodes_this_run": 382,
+      "stars_this_run": 0,
+      "deaths_this_run": 229,
+      "nonfatal_hp_loss": 0,
+      "mean_return": -1.7121195558016231,
+      "last_losses": {
+        "loss": 0.0035643044393509626,
+        "gradient_norm": 0.07181055843830109,
+        "beta": 1.0,
+        "mean_priority": 0.043908219784498215,
+        "effective_sample_size": 28.22465705871582
+      },
+      "stop_reason": "wall_clock_budget"
+    },
+    {
+      "label": "block-13",
+      "closed_reviewed": false,
+      "new_real": 23552,
+      "episodes_this_run": 130,
+      "stars_this_run": 0,
+      "deaths_this_run": 62,
+      "nonfatal_hp_loss": 0,
+      "mean_return": -1.753414396224473,
+      "last_losses": {
+        "loss": 0.0035718854051083326,
+        "gradient_norm": 0.06676679104566574,
+        "beta": 1.0,
+        "mean_priority": 0.03842051327228546,
+        "effective_sample_size": 27.107603073120117
+      },
+      "stop_reason": null
+    }
+  ],
+  "stars_in_eligible_scored_csvs": 0,
+  "training_interrupted": false,
+  "limitations": [
+    "All starts reuse the same Wii savestate; attempts are not independent environment states.",
+    "No frozen-policy episodes were allocated or run.",
+    "Full-human-route fractions are credited waypoint/landing progress, not native mission completion percentages.",
+    "Landmark matches are coordinate candidates requiring visual review.",
+    "Old projection and broad first-section percentages are withdrawn."
+  ]
+}

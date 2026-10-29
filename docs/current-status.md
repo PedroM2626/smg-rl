@@ -8,6 +8,12 @@ and the new supervisor retains exact replay/optimizer/RNG and unchanged reward.
 Read its local state and actual processes for live outcomes; no new star is
 claimed by this dated launch record.
 
+At the [six-hour review](iqn-day-20261029.md#six-hour-review-october-29-1916-brt),
+the branch had 790,084 new decisions and 4,732 new completed attempts, zero
+stars, and no improvement over its retained 2.57% full-human-route credit.
+That credit is not a native mission percentage. Kernel memory remained stable;
+the owner-authorized allocation continued without changing the configuration.
+
 The October 29 [kernel-memory diagnosis](kernel-memory-diagnosis-20261029.md)
 found an invalid worker audio backend name: Dolphin fell back to real audio,
 starting/stopping it at frame-step boundaries. Correcting it to `No Audio Output`
