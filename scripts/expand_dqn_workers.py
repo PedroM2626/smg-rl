@@ -35,7 +35,12 @@ def main():
         raise FileExistsError('Never overwrite or repeat a migration checkpoint.')
     config = load_config(args.config)
     agent, original = prepare_dqn(config, source)
-    expanded = original.expanded_workers(args.workers)
+    if args.workers > original.workers:
+        expanded = original.expanded_workers(args.workers)
+    elif args.workers < original.workers:
+        expanded = original.reduced_workers(args.workers)
+    else:
+        raise ValueError('The target worker count must differ.')
     for key in original.arrays:
         np.testing.assert_array_equal(original.arrays[key], expanded.arrays[key])
     for start in range(0, len(original.frame_ids), 4096):
@@ -50,6 +55,7 @@ def main():
     if not same(before, after):
         raise ValueError('Worker migration changed learner/optimizer/RNG/counter state.')
     report = {'scope': 'Collector layout only; no learning, replay relabeling or counter reset.',
+              'target_agent_and_replay_sha256': {'agent': digest(target / 'agent.pt'), 'replay': digest(target / 'replay.npz')},
               'source': str(source.resolve()), 'target': str(target.resolve()),
               'source_workers': original.workers, 'target_workers': expanded.workers,
               'real_decisions': agent.real_decisions, 'optimizer_updates': agent.updates,

@@ -9,7 +9,7 @@ import numpy as np
 
 class PrioritizedFrames:
     def __init__(self, capacity, image_size, stack=4, workers=1, n_step=3, gamma=.997,
-                 alpha=.5, seed=42):
+                 alpha=.5, seed=42, frame_capacity=None):
         if (min(capacity, image_size, stack, workers, n_step) < 1 or not 0 < gamma <= 1
                 or not 0 <= alpha <= 1):
             raise ValueError('Invalid frame replay dimensions/discount/priority exponent.')
@@ -17,7 +17,11 @@ class PrioritizedFrames:
         self.workers, self.n_step, self.gamma, self.alpha = workers, n_step, gamma, alpha
         # Each decision creates one successor and, at most, one reset frame.
         # Extra slots protect active stacks and not-yet-emitted n-step prefixes.
-        self.frame_capacity = 2 * capacity + 2 * workers * (n_step + stack) + 16
+        minimum = 2 * capacity + 2 * workers * (n_step + stack) + 16
+        if frame_capacity is not None and (type(frame_capacity) is not int or frame_capacity < minimum
+                or frame_capacity > 2 * capacity + 2 * max(workers, 64) * (n_step + stack) + 16):
+            raise ValueError('Invalid retained replay frame capacity.')
+        self.frame_capacity = minimum if frame_capacity is None else frame_capacity
         self.frames = np.empty((self.frame_capacity, image_size, image_size), np.uint8)
         self.frame_ids = np.full(self.frame_capacity, -1, np.int64)
         self.previous = np.full(self.frame_capacity, -1, np.int64)
@@ -151,7 +155,8 @@ class PrioritizedFrames:
             raise ValueError('Flush collector cuts before publishing a resumable replay.')
         metadata = {'schema': 1, 'capacity': self.capacity, 'image_size': self.image_size,
             'stack': self.stack, 'workers': self.workers, 'n_step': self.n_step, 'gamma': self.gamma,
-            'alpha': self.alpha, 'next_frame': self.next_frame, 'position': self.position,
+            'alpha': self.alpha, 'frame_capacity': self.frame_capacity,
+            'next_frame': self.next_frame, 'position': self.position,
             'size': self.size, 'emitted': self.emitted, 'max_priority': self.max_priority,
             'rng': self.rng.bit_generator.state}
         used = min(self.next_frame, self.frame_capacity)
@@ -188,6 +193,26 @@ class PrioritizedFrames:
         result.rng.bit_generator.state = deepcopy(self.rng.bit_generator.state)
         return result
 
+    def reduced_workers(self, workers):
+        """Shrink only the collector queues while retaining the exact frame ring."""
+        if type(workers) is not int or not 1 <= workers < self.workers or any(self.pending):
+            raise ValueError('Worker reduction requires fewer workers and flushed collector cuts.')
+        result = type(self)(self.capacity, self.image_size, self.stack, workers,
+                            self.n_step, self.gamma, self.alpha, frame_capacity=self.frame_capacity)
+        used = min(self.next_frame, self.frame_capacity)
+        for start in range(0, used, 4096):
+            end = min(start + 4096, used)
+            result.frames[start:end] = self.frames[start:end]
+            result.frame_ids[start:end] = self.frame_ids[start:end]
+            result.previous[start:end] = self.previous[start:end]
+        for key, array in self.arrays.items():
+            result.arrays[key][:] = array
+        result.tree[:], result.minimum[:] = self.tree, self.minimum
+        for key in ('next_frame', 'position', 'size', 'emitted', 'max_priority'):
+            setattr(result, key, getattr(self, key))
+        result.rng.bit_generator.state = deepcopy(self.rng.bit_generator.state)
+        return result
+
     @classmethod
     def load(cls, path, expected):
         with np.load(path, allow_pickle=False) as archive:
@@ -195,7 +220,7 @@ class PrioritizedFrames:
             required = ('capacity', 'image_size', 'stack', 'workers', 'n_step', 'gamma', 'alpha')
             if meta.get('schema') != 1 or any(meta[k] != expected[k] for k in required):
                 raise ValueError('Replay capacity/control/schema differs from this checkpoint.')
-            result = cls(**{k: meta[k] for k in required})
+            result = cls(**{k: meta[k] for k in required}, frame_capacity=meta.get('frame_capacity'))
             used = min(meta['next_frame'], result.frame_capacity)
             for key in ('frames', 'frame_ids', 'previous'):
                 source, target = archive[key], getattr(result, key)

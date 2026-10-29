@@ -1,0 +1,405 @@
+{
+  "state": "completed_frozen_evaluations",
+  "recorded_utc": "2026-10-29T12:13:14.966173+00:00",
+  "source_recovery_sha256": "9dd0bd0270288e04462596e419c4319735a998d1ca284e353fc0bd5d3e0b7d20",
+  "arms": {
+    "candidate": {
+      "config": ".local\\human-route-density-recovery-candidate-20261028.yaml",
+      "config_sha256": "a763e0fd70513390fcb2a6ef4503c29ce2182889b61c63ea4c46b0e04b558161",
+      "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\human-route-density-20261028\\candidate\\dqn-20261029-002105-128906\\checkpoint-final",
+      "agent_sha256": "5e3887351c5a0c07c0e8d2a8a731328d8c1a693c2e906f0336b2857b0b606e25",
+      "replay_sha256": "ca46f872971bd45c2ddf4bd22d6ca3ba9c678b80751ca92a36e43e7059d766d0",
+      "source_real": 188070
+    },
+    "control": {
+      "config": ".local\\human-route-density-recovery-control-20261028.yaml",
+      "config_sha256": "ee55a9d8337658227a251961df51348d93d8aa404f25ace986bb6c8c036fc0fb",
+      "checkpoint": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\human-route-density-20261028\\control\\dqn-20261029-003138-408223\\checkpoint-final",
+      "agent_sha256": "bd22b0a868d17307f5daf4812c6676ed102fe7b190fa0c3b0bc1f2207d6259cb",
+      "replay_sha256": "2c8b209f347b848d9e021dd9e2cee5ab475f94ee8805cabd4125540b8d0be649",
+      "source_real": 193482
+    }
+  },
+  "jobs": [
+    {
+      "label": "candidate-greedy",
+      "arm": "candidate",
+      "mode": "greedy",
+      "phase": "reviewed",
+      "stdout": ".local\\density-frozen-review-20261029\\candidate-greedy.stdout.log",
+      "stderr": ".local\\density-frozen-review-20261029\\candidate-greedy.stderr.log",
+      "command": [
+        "C:\\Users\\Acer\\Downloads\\smg-rl\\.venv\\Scripts\\python.exe",
+        "-m",
+        "smg_rl.cli",
+        "--config",
+        ".local\\human-route-density-recovery-candidate-20261028.yaml",
+        "record-dqn",
+        "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\human-route-density-20261028\\candidate\\dqn-20261029-002105-128906\\checkpoint-final",
+        "--variation",
+        "0",
+        "--max-steps",
+        "600",
+        "--seeds",
+        "11"
+      ],
+      "pid": 33188,
+      "created_time": 1793275827.7235491,
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\human-route-density-20261028\\candidate\\eval-dqn-video-20261029-091030-740664",
+      "exit_code": 0,
+      "episodes": [
+        {
+          "seed": 11,
+          "decisions": 228,
+          "outcome": "timeout",
+          "native_star": false,
+          "epsilon_random_decisions": 0,
+          "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\human-route-density-20261028\\candidate\\eval-dqn-video-20261029-091030-740664\\worker-00\\sweet_sweet\\episode-000001.csv",
+          "trajectory_sha256": "ec2571a97d07a8912e0b0addebb6853cbd315a86c74b6a5f054503fcb2697211",
+          "observation": {
+            "candidate_landmarks": [
+              {
+                "name": "First pink belt",
+                "observation_index": 48,
+                "position": [
+                  -56.487693786621094,
+                  -50.00030517578125,
+                  -937.8076171875
+                ],
+                "distance_3d": 92.83338258606817,
+                "human_sample": 120
+              }
+            ],
+            "native_star": false,
+            "minimum_grounded_3d_distance_to_first_landmark": 41.511756292078886,
+            "scope": "XYZ proximity candidates require visual review; not a mission percentage."
+          }
+        }
+      ],
+      "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\human-route-density-20261028\\candidate\\eval-dqn-video-20261029-091030-740664\\policy.mp4",
+      "agent_sha256": "5e3887351c5a0c07c0e8d2a8a731328d8c1a693c2e906f0336b2857b0b606e25",
+      "optimizer_updates": 46503
+    },
+    {
+      "label": "candidate-stochastic",
+      "arm": "candidate",
+      "mode": "stochastic",
+      "phase": "reviewed",
+      "stdout": ".local\\density-frozen-review-20261029\\candidate-stochastic.stdout.log",
+      "stderr": ".local\\density-frozen-review-20261029\\candidate-stochastic.stderr.log",
+      "command": [
+        "C:\\Users\\Acer\\Downloads\\smg-rl\\.venv\\Scripts\\python.exe",
+        "-m",
+        "smg_rl.cli",
+        "--config",
+        ".local\\human-route-density-recovery-candidate-20261028.yaml",
+        "record-dqn",
+        "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\human-route-density-20261028\\candidate\\dqn-20261029-002105-128906\\checkpoint-final",
+        "--variation",
+        "0",
+        "--max-steps",
+        "600",
+        "--seeds",
+        "11",
+        "23",
+        "47",
+        "--stochastic",
+        "--evaluation-epsilon",
+        "0.1"
+      ],
+      "pid": 38752,
+      "created_time": 1793275876.1544144,
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\human-route-density-20261028\\candidate\\eval-dqn-video-20261029-091119-401200",
+      "exit_code": 0,
+      "episodes": [
+        {
+          "seed": 11,
+          "decisions": 180,
+          "outcome": "timeout",
+          "native_star": false,
+          "epsilon_random_decisions": 25,
+          "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\human-route-density-20261028\\candidate\\eval-dqn-video-20261029-091119-401200\\worker-00\\sweet_sweet\\episode-000001.csv",
+          "trajectory_sha256": "2e7eea6f33a8bd94122ba3f24fc6238b8989ca6fd9679209a757b5b98c0562dd",
+          "observation": {
+            "candidate_landmarks": [],
+            "native_star": false,
+            "minimum_grounded_3d_distance_to_first_landmark": 605.7543387280145,
+            "scope": "XYZ proximity candidates require visual review; not a mission percentage."
+          }
+        },
+        {
+          "seed": 23,
+          "decisions": 180,
+          "outcome": "timeout",
+          "native_star": false,
+          "epsilon_random_decisions": 18,
+          "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\human-route-density-20261028\\candidate\\eval-dqn-video-20261029-091119-401200\\worker-00\\sweet_sweet\\episode-000002.csv",
+          "trajectory_sha256": "74a3a2ca825e0f0b7f93694eecf4ce38bb075434ee6c4b3e8d279e5bbb0daac5",
+          "observation": {
+            "candidate_landmarks": [],
+            "native_star": false,
+            "minimum_grounded_3d_distance_to_first_landmark": 545.3861047562478,
+            "scope": "XYZ proximity candidates require visual review; not a mission percentage."
+          }
+        },
+        {
+          "seed": 47,
+          "decisions": 56,
+          "outcome": "death",
+          "native_star": false,
+          "epsilon_random_decisions": 4,
+          "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\human-route-density-20261028\\candidate\\eval-dqn-video-20261029-091119-401200\\worker-00\\sweet_sweet\\episode-000003.csv",
+          "trajectory_sha256": "71b3a2f89b65709a84d188508e00b6c64236307cde0f11d4cf90b1b4a7285995",
+          "observation": {
+            "candidate_landmarks": [],
+            "native_star": false,
+            "minimum_grounded_3d_distance_to_first_landmark": 553.9889401982789,
+            "scope": "XYZ proximity candidates require visual review; not a mission percentage."
+          }
+        }
+      ],
+      "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\human-route-density-20261028\\candidate\\eval-dqn-video-20261029-091119-401200\\policy.mp4",
+      "agent_sha256": "5e3887351c5a0c07c0e8d2a8a731328d8c1a693c2e906f0336b2857b0b606e25",
+      "optimizer_updates": 46503
+    },
+    {
+      "label": "control-greedy",
+      "arm": "control",
+      "mode": "greedy",
+      "phase": "reviewed",
+      "stdout": ".local\\density-frozen-review-20261029\\control-greedy.stdout.log",
+      "stderr": ".local\\density-frozen-review-20261029\\control-greedy.stderr.log",
+      "command": [
+        "C:\\Users\\Acer\\Downloads\\smg-rl\\.venv\\Scripts\\python.exe",
+        "-m",
+        "smg_rl.cli",
+        "--config",
+        ".local\\human-route-density-recovery-control-20261028.yaml",
+        "record-dqn",
+        "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\human-route-density-20261028\\control\\dqn-20261029-003138-408223\\checkpoint-final",
+        "--variation",
+        "0",
+        "--max-steps",
+        "600",
+        "--seeds",
+        "11"
+      ],
+      "pid": 46500,
+      "created_time": 1793275957.8910823,
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\human-route-density-20261028\\control\\eval-dqn-video-20261029-091241-119160",
+      "exit_code": 0,
+      "episodes": [
+        {
+          "seed": 11,
+          "decisions": 16,
+          "outcome": "death",
+          "native_star": false,
+          "epsilon_random_decisions": 0,
+          "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\human-route-density-20261028\\control\\eval-dqn-video-20261029-091241-119160\\worker-00\\sweet_sweet\\episode-000001.csv",
+          "trajectory_sha256": "94cdde235d04b91a895e47b8148a91869d8a71eade71e71dd6d941a72fa6c019",
+          "observation": {
+            "candidate_landmarks": [],
+            "native_star": false,
+            "minimum_grounded_3d_distance_to_first_landmark": 977.4556129952383,
+            "scope": "XYZ proximity candidates require visual review; not a mission percentage."
+          }
+        }
+      ],
+      "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\human-route-density-20261028\\control\\eval-dqn-video-20261029-091241-119160\\policy.mp4",
+      "agent_sha256": "bd22b0a868d17307f5daf4812c6676ed102fe7b190fa0c3b0bc1f2207d6259cb",
+      "optimizer_updates": 47856
+    },
+    {
+      "label": "control-stochastic",
+      "arm": "control",
+      "mode": "stochastic",
+      "phase": "reviewed",
+      "stdout": ".local\\density-frozen-review-20261029\\control-stochastic.stdout.log",
+      "stderr": ".local\\density-frozen-review-20261029\\control-stochastic.stderr.log",
+      "command": [
+        "C:\\Users\\Acer\\Downloads\\smg-rl\\.venv\\Scripts\\python.exe",
+        "-m",
+        "smg_rl.cli",
+        "--config",
+        ".local\\human-route-density-recovery-control-20261028.yaml",
+        "record-dqn",
+        "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\human-route-density-20261028\\control\\dqn-20261029-003138-408223\\checkpoint-final",
+        "--variation",
+        "0",
+        "--max-steps",
+        "600",
+        "--seeds",
+        "11",
+        "23",
+        "47",
+        "--stochastic",
+        "--evaluation-epsilon",
+        "0.1"
+      ],
+      "pid": 47336,
+      "created_time": 1793275970.430843,
+      "run": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\human-route-density-20261028\\control\\eval-dqn-video-20261029-091253-482123",
+      "exit_code": 0,
+      "episodes": [
+        {
+          "seed": 11,
+          "decisions": 16,
+          "outcome": "death",
+          "native_star": false,
+          "epsilon_random_decisions": 2,
+          "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\human-route-density-20261028\\control\\eval-dqn-video-20261029-091253-482123\\worker-00\\sweet_sweet\\episode-000001.csv",
+          "trajectory_sha256": "5622d34384b9aea2ea949c38e87b5cec55fc1db1d0692237814083faee4a605f",
+          "observation": {
+            "candidate_landmarks": [],
+            "native_star": false,
+            "minimum_grounded_3d_distance_to_first_landmark": 870.2942972527126,
+            "scope": "XYZ proximity candidates require visual review; not a mission percentage."
+          }
+        },
+        {
+          "seed": 23,
+          "decisions": 29,
+          "outcome": "death",
+          "native_star": false,
+          "epsilon_random_decisions": 3,
+          "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\human-route-density-20261028\\control\\eval-dqn-video-20261029-091253-482123\\worker-00\\sweet_sweet\\episode-000002.csv",
+          "trajectory_sha256": "ad3b0b1d4da95eef1b51d66eaee078bcf0c92e16e9e722ac6aed14fcb5efe8d2",
+          "observation": {
+            "excluded": "Nonfinite or discontinuous landmark observation."
+          }
+        },
+        {
+          "seed": 47,
+          "decisions": 36,
+          "outcome": "death",
+          "native_star": false,
+          "epsilon_random_decisions": 1,
+          "trajectory": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\human-route-density-20261028\\control\\eval-dqn-video-20261029-091253-482123\\worker-00\\sweet_sweet\\episode-000003.csv",
+          "trajectory_sha256": "c2c4c96b6b73ffab18c9182b086b5ee7a8d0d542df4c5c452c84c2a86862558b",
+          "observation": {
+            "excluded": "Nonfinite or discontinuous landmark observation."
+          }
+        }
+      ],
+      "video": "C:\\Users\\Acer\\Downloads\\smg-rl\\runs\\model-free\\human-route-density-20261028\\control\\eval-dqn-video-20261029-091253-482123\\policy.mp4",
+      "agent_sha256": "bd22b0a868d17307f5daf4812c6676ed102fe7b190fa0c3b0bc1f2207d6259cb",
+      "optimizer_updates": 47856
+    }
+  ],
+  "pool_samples": [
+    {
+      "utc": "2026-10-29T12:11:03.468097+00:00",
+      "memory": {
+        "physical_available_bytes": 8982470656,
+        "physical_total_bytes": 34049417216,
+        "commit_total_bytes": 38394822656,
+        "commit_limit_bytes": 81294057472,
+        "commit_available_bytes": 42899234816,
+        "kernel_paged_bytes": 10122743808,
+        "kernel_nonpaged_bytes": 5251932160
+      },
+      "pool_tags": [
+        {
+          "tag": "EtwD",
+          "paged_bytes": 7774765632,
+          "nonpaged_bytes": 0,
+          "paged_outstanding": 33347517,
+          "nonpaged_outstanding": 0
+        },
+        {
+          "tag": "Etwr",
+          "paged_bytes": 0,
+          "nonpaged_bytes": 3951505760,
+          "paged_outstanding": 0,
+          "nonpaged_outstanding": 49393822
+        }
+      ],
+      "role": "single-emulator frozen evaluation; no training"
+    },
+    {
+      "utc": "2026-10-29T12:11:52.716660+00:00",
+      "memory": {
+        "physical_available_bytes": 9234837504,
+        "physical_total_bytes": 34049417216,
+        "commit_total_bytes": 38320951296,
+        "commit_limit_bytes": 81294057472,
+        "commit_available_bytes": 42973106176,
+        "kernel_paged_bytes": 10131984384,
+        "kernel_nonpaged_bytes": 5255557120
+      },
+      "pool_tags": [
+        {
+          "tag": "EtwD",
+          "paged_bytes": 7783924944,
+          "nonpaged_bytes": 0,
+          "paged_outstanding": 33386802,
+          "nonpaged_outstanding": 0
+        },
+        {
+          "tag": "Etwr",
+          "paged_bytes": 0,
+          "nonpaged_bytes": 3957790800,
+          "paged_outstanding": 0,
+          "nonpaged_outstanding": 49472385
+        }
+      ],
+      "role": "single-emulator frozen evaluation; no training"
+    },
+    {
+      "utc": "2026-10-29T12:13:54.292993+00:00",
+      "memory": {
+        "physical_available_bytes": 11855261696,
+        "physical_total_bytes": 34049417216,
+        "commit_total_bytes": 33865531392,
+        "commit_limit_bytes": 81294057472,
+        "commit_available_bytes": 47428526080,
+        "kernel_paged_bytes": 10143227904,
+        "kernel_nonpaged_bytes": 5262352384
+      },
+      "pool_tags": [
+        {
+          "tag": "EtwD",
+          "paged_bytes": 7797688064,
+          "nonpaged_bytes": 0,
+          "paged_outstanding": 33445835,
+          "nonpaged_outstanding": 0
+        },
+        {
+          "tag": "Etwr",
+          "paged_bytes": 0,
+          "nonpaged_bytes": 3967236080,
+          "paged_outstanding": 0,
+          "nonpaged_outstanding": 49590451
+        }
+      ],
+      "role": "after frozen evaluations; no project emulators"
+    }
+  ],
+  "visual_inspection": [
+    {
+      "job": "candidate-greedy",
+      "episode": 1,
+      "decision": 50,
+      "finding": "Mario stands on the first pink belt; grounded at a position close to the first recorded human landmark."
+    },
+    {
+      "job": "candidate-greedy",
+      "episode": 1,
+      "decision": 220,
+      "finding": "Mario is back at the starting platform, before the timeout."
+    },
+    {
+      "job": "control-greedy",
+      "episode": 1,
+      "decision": 16,
+      "finding": "Mario is falling; the episode ends in death."
+    }
+  ],
+  "limitations": [
+    "No native stars in these eight frozen episodes.",
+    "The three stochastic action seeds restore one identical Wii savestate and include NoisyNet, random quantiles and epsilon randomness.",
+    "One training seed and few evaluations cannot establish generalization or isolate causality.",
+    "The pool tags identify accounting classes, not a driver or culpable process.",
+    "The logman session query was unprivileged; an empty list cannot establish that no ETW sessions exist."
+  ]
+}

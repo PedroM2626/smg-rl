@@ -102,3 +102,48 @@ def test_worker_expansion_refuses_pending_transitions_and_shrinking():
     replay.flush_cuts()
     with pytest.raises(ValueError):
         replay.expanded_workers(1)
+
+
+def test_worker_reduction_retains_ring_observations_rng_and_can_resume(tmp_path):
+    replay = PrioritizedFrames(8, 4, workers=6, n_step=3)
+    for episode in range(80):
+        current = replay.add_frame(frame(episode))
+        for step in range(4):
+            following = replay.add_frame(frame(episode + step + 1), current)
+            replay.append(episode % 6, current, step, float(step), following, 0, step == 3, step == 3)
+            current = following
+    before = {int(i): replay.observation(int(i)) for key in ('state', 'next') for i in replay.arrays[key][:replay.size]}
+    reduced = replay.reduced_workers(4)
+    assert reduced.workers == 4 and reduced.frame_capacity == replay.frame_capacity
+    assert reduced.emitted == replay.emitted and reduced.next_frame == replay.next_frame
+    for identity, pixels in before.items():
+        np.testing.assert_array_equal(reduced.observation(identity), pixels)
+    for key in replay.arrays:
+        np.testing.assert_array_equal(replay.arrays[key], reduced.arrays[key])
+    expected, actual = replay.sample(16, .6), reduced.sample(16, .6)
+    for key in expected:
+        np.testing.assert_array_equal(expected[key], actual[key])
+    path = tmp_path / 'reduced.npz'
+    reduced.save(path)
+    restored = PrioritizedFrames.load(path, {'capacity': 8, 'image_size': 4, 'stack': 4,
+        'workers': 4, 'n_step': 3, 'gamma': .997, 'alpha': .5})
+    assert restored.frame_capacity == replay.frame_capacity
+    for worker in range(4):
+        first = restored.add_frame(frame(100 + worker))
+        last = restored.add_frame(frame(110 + worker), first)
+        restored.append(worker, first, 0, 0., last, 0, True, True)
+    assert restored.emitted == replay.emitted + 4
+
+
+def test_worker_reduction_rejects_pending_or_invalid_layout():
+    replay = PrioritizedFrames(8, 4, workers=6)
+    first, last = replay.add_frame(frame(0)), replay.add_frame(frame(1))
+    replay.append(0, first, 0, 0., last, 0, False, False)
+    with pytest.raises(ValueError, match='flushed'):
+        replay.reduced_workers(4)
+    replay.flush_cuts()
+    for invalid in (0, 6, 7, True):
+        with pytest.raises(ValueError):
+            replay.reduced_workers(invalid)
+    with pytest.raises(ValueError, match='frame capacity'):
+        PrioritizedFrames(8, 4, workers=4, frame_capacity=1)
