@@ -53,6 +53,12 @@ class BoundaryVector:
             observation = self.reset()
         return observation, np.array([-2. if done else -.001]), np.array([done]), (info,)
 
+    def step_async(self, actions):
+        self.pending = actions
+
+    def step_wait(self):
+        return self.step(self.pending)
+
     def close(self):
         pass
 
@@ -302,3 +308,25 @@ def test_policy_continues_after_a_short_demonstration_without_margin_labels(tmp_
     assert sum(row['scripted'][0] for row in ledger) == 6
     with np.load(run / 'checkpoint-final' / 'replay.npz') as archive:
         assert int(archive['demonstration'][:12].sum()) == 2
+
+
+def test_overlapped_learning_collects_identically_and_defers_at_most_one_tick(tmp_path, monkeypatch):
+    import json
+
+    results = {}
+    for overlap in (False, True):
+        config = load_config('config/iqn-smg1.yaml')
+        config['paths'].update(runs=str(tmp_path / str(overlap) / 'runs'),
+                               tensorboard=str(tmp_path / str(overlap) / 'tensorboard'))
+        config['environment']['image_size'] = 40
+        config['parallel'].update(workers=1, overlap_learning=overlap)
+        config['training']['device'] = 'cpu'
+        config['dqn'].update(capacity=32, learning_starts=2, batch_size=2, channels=2, hidden=32,
+                             train_every=1, target_update_interval=2, quantiles=4)
+        vector = BoundaryVector()
+        monkeypatch.setattr(dqn_training, 'MeasuredSubprocVecEnv', lambda *a, **k: vector)
+        run = dqn_training.train_dqn(config, 9)
+        results[overlap] = json.loads((run / 'status.json').read_text())
+    assert results[True]['real_decisions'] == results[False]['real_decisions'] == 9
+    assert results[True]['episodes_this_run'] == results[False]['episodes_this_run']
+    assert 0 < results[False]['optimizer_updates'] - results[True]['optimizer_updates'] <= 1

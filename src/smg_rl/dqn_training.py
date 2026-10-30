@@ -209,7 +209,19 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
         assisted = [i.get('start_kind') == 'curriculum' for i in vector.reset_infos]
         for index in range(workers):
             schedule(index, vector.reset_infos[index])
-        tick = 0
+        tick, deferred = 0, 0
+        # Optional actor/learner overlap: updates owed by the previous tick run while emulators step.
+        overlap = config['parallel'].get('overlap_learning', False)
+
+        def run_updates(count):
+            nonlocal metrics, visual_probe
+            for _ in range(count):
+                with profiler.measure('q_update'):
+                    metrics = agent.update(replay, (demonstration or {}).get('margin'))
+                    if visual_probe is None:
+                        visual_probe = {'weights_changed': not torch.equal(visual_before, visual_parameter.detach()),
+                            'gradient_l2': float(visual_parameter.grad.norm()) if visual_parameter.grad is not None else None,
+                            'source_optimizer_updates': start_updates, 'observed_optimizer_updates': agent.updates}
         publish()
         while agent.real_decisions < initial + steps and not (run / 'STOP').exists():
             if deadline is not None and time.time() >= deadline:
@@ -231,8 +243,15 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
                         demonstrated[index] = True
                     script_step[index] += 1  # After the sequence, the policy continues the episode.
             counts += np.bincount(actions, minlength=len(counts))
-            with profiler.measure('emulator_collection'):
-                next_observation, rewards, done, infos = vector.step(actions)
+            if overlap:
+                vector.step_async(actions)
+                run_updates(deferred)
+                deferred = 0
+                with profiler.measure('emulator_collection'):
+                    next_observation, rewards, done, infos = vector.step_wait()
+            else:
+                with profiler.measure('emulator_collection'):
+                    next_observation, rewards, done, infos = vector.step(actions)
             agent.real_decisions += workers
             ledger.write(json.dumps({'real_before_action': agent.real_decisions - workers,
                 'policy_optimizer_updates': policy_updates, 'actions': actions.tolist(),
@@ -290,13 +309,10 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
             # Real-decision interval, independent of vector width.
             due = agent.real_decisions // agent.settings['train_every'] - (agent.real_decisions - workers) // agent.settings['train_every']
             if replay.size >= agent.settings['learning_starts']:
-                for _ in range(due):
-                    with profiler.measure('q_update'):
-                        metrics = agent.update(replay, (demonstration or {}).get('margin'))
-                        if visual_probe is None:
-                            visual_probe = {'weights_changed': not torch.equal(visual_before, visual_parameter.detach()),
-                                'gradient_l2': float(visual_parameter.grad.norm()) if visual_parameter.grad is not None else None,
-                                'source_optimizer_updates': start_updates, 'observed_optimizer_updates': agent.updates}
+                if overlap:
+                    deferred = due
+                else:
+                    run_updates(due)
             tick += 1
             if tick % 64 == 0:
                 assert all(np.array_equal(replay.observation(current[i]), observation['image'][i]) for i in range(workers))
