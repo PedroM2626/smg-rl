@@ -128,3 +128,20 @@ def test_backward_bank_keeps_original_idle_and_fixture_rejections(tmp_path):
     bank.write_text(json.dumps(data))
     with pytest.raises(ValueError, match='near-star'):
         CurriculumBank(bank, digest(bank), 'RMGE01', 'fixture', .5, tmp_path / 'progress.json')
+
+
+def test_only_a_labeled_anchor_diagnostic_may_start_every_attempt_assisted(tmp_path):
+    state = tmp_path / 'anchor.state'
+    state.write_bytes(b'engineering unit fixture, not a game state')
+    entry = {'file': state.name, 'sha256': digest(state), 'scenario': 1,
+        'origin_slot': 1, 'near_star_fixture': False, 'accepted': True,
+        'route_waypoint': 1, 'validation': {'passed': True, 'idle_frames': 60}}
+    bank = tmp_path / 'bank.json'
+    bank.write_text(json.dumps({'schema': 2, 'game_id': 'RMGE01', 'emulator_sha256': 'fixture',
+        'source_full_start_ram_star': True, 'entries': [entry]}))
+    with pytest.raises(ValueError, match='probability'):
+        CurriculumBank(bank, digest(bank), 'RMGE01', 'fixture', 1., tmp_path / 'progress.json')
+    diagnostic = CurriculumBank(bank, digest(bank), 'RMGE01', 'fixture', 1., tmp_path / 'progress.json',
+                                anchor_diagnostic=True)
+    rng = np.random.default_rng(3)
+    assert all(diagnostic.choose(rng, 1) == entry for _ in range(50))

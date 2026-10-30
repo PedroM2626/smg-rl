@@ -61,6 +61,22 @@ def prepare_dqn(config, resume=None):
             PrioritizedFrames(**parameters, seed=config['training']['seed']))
 
 
+def demonstration_schedule(config):
+    """Optional scripted assisted episodes that replay a verified action sequence from one anchor.
+
+    Their transitions are real emulator experience, but their outcomes are scripted fixtures:
+    never learned success, never curriculum evidence."""
+    settings = config.get('demonstration')
+    if not settings:
+        return None
+    actions, every = settings.get('actions'), settings.get('every_episodes')
+    if (not config.get('curriculum', {}).get('enabled') or not isinstance(settings.get('anchor'), str)
+            or not actions or any(type(a) is not int or not 0 <= a < len(action_set(config)) for a in actions)
+            or type(every) is not int or every < 2):
+        raise ValueError('A demonstration needs an assisted anchor, valid actions and a sparse episode interval.')
+    return settings
+
+
 def deadline_timestamp(value):
     if value is None:
         return None
@@ -85,6 +101,7 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
         raise ValueError('The absolute collection deadline has already passed.')
     require_disk_headroom(config)
     agent, replay = prepare_dqn(config, resume)
+    demonstration = demonstration_schedule(config)
     backward = None
     if config.get('curriculum', {}).get('mode') == 'human_backward_v2' and config['curriculum']['enabled']:
         backward = BackwardCurriculum(config['paths']['curriculum'], config['curriculum']['spec_sha256'],
@@ -110,6 +127,15 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
     writer.add_text('configuration', json.dumps(config, indent=2))
     writer.add_text('accounting', 'Only real emulator decisions; no world model, synthetic rollouts or imagined transitions.')
     full_stars, assisted_stars, deaths, damage, episode_counts = 0, 0, 0, 0, 0
+    scripted_stars, scripted_episodes = 0, 0
+    scripted, script_step, worker_starts = [False] * workers, [0] * workers, [0] * workers
+
+    def schedule(index, reset_info):
+        # Every Nth anchor start per worker replays the demonstration; the rest are policy-driven.
+        worker_starts[index] += 1
+        scripted[index] = bool(demonstration and reset_info.get('anchor_id') == demonstration['anchor']
+                               and worker_starts[index] % demonstration['every_episodes'] == 1)
+        script_step[index] = 0
     stop_reason = None
     memory_guard_snapshot = None
     visual_parameter = next(agent.online.conv.parameters())
@@ -130,6 +156,8 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
             'decisions_per_second': (agent.real_decisions - initial) / max(elapsed, 1e-6),
             'emulated_frames_per_second': 12 * (agent.real_decisions - initial) / max(elapsed, 1e-6),
             'full_start_stars_this_run': full_stars, 'assisted_stars_this_run': assisted_stars,
+            'scripted_demonstration_stars_this_run': scripted_stars,
+            'scripted_demonstration_episodes_this_run': scripted_episodes,
             'episodes_this_run': episode_counts, 'deaths_this_run': deaths, 'nonfatal_hp_lost_this_run': damage,
             'attempts': agent.attempts,
             'completed_attempts': sum(v['completed'] for v in agent.attempts.values()),
@@ -171,6 +199,8 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
         observation = vector.reset()
         current = [replay.add_frame(image[-1]) for image in observation['image']]
         assisted = [i.get('start_kind') == 'curriculum' for i in vector.reset_infos]
+        for index in range(workers):
+            schedule(index, vector.reset_infos[index])
         tick = 0
         publish()
         while agent.real_decisions < initial + steps and not (run / 'STOP').exists():
@@ -183,6 +213,12 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
             policy_updates = agent.updates
             with profiler.measure('policy_inference'):
                 actions, actions_metrics = agent.act(observation)
+            script = list(scripted)
+            for index in range(workers):
+                if scripted[index]:
+                    sequence = demonstration['actions']
+                    actions[index] = sequence[script_step[index]] if script_step[index] < len(sequence) else 0
+                    script_step[index] += 1
             counts += np.bincount(actions, minlength=len(counts))
             with profiler.measure('emulator_collection'):
                 next_observation, rewards, done, infos = vector.step(actions)
@@ -190,7 +226,7 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
             ledger.write(json.dumps({'real_before_action': agent.real_decisions - workers,
                 'policy_optimizer_updates': policy_updates, 'actions': actions.tolist(),
                 'worker_episodes': [i['worker_episode'] for i in infos],
-                'episode_steps': [i['episode_step'] for i in infos]}) + '\n')
+                'episode_steps': [i['episode_step'] for i in infos], 'scripted': script}) + '\n')
             for index in range(workers):
                 info = infos[index]
                 terminal = bool(done[index] and not info.get('TimeLimit.truncated', False))
@@ -204,8 +240,12 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
                 if done[index]:
                     name, kind = info['variation'], info['start_kind']
                     star = info.get('complete') and not info.get('dead') and info['scene_nerve'] in PROFILES[game_id(config)].complete
+                    if script[index]:
+                        kind = 'scripted_demonstration'
+                        scripted_stars += int(bool(star))
+                        scripted_episodes += 1
                     full_stars += int(bool(star) and kind == 'full_start')
-                    assisted_stars += int(bool(star) and kind != 'full_start')
+                    assisted_stars += int(bool(star) and kind == 'curriculum')
                     if backward is not None and kind == 'curriculum':
                         backward.record(info['frontier_state'], bool(star), agent.real_decisions)
                     deaths += int(info.get('dead', False))
@@ -232,6 +272,7 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
                     writer.add_scalar(f'attempt_axis/{name}/{kind}/mean_opening_last100',
                         np.mean(attempt['recent_opening_advances']), attempt['completed'])
                     assisted[index] = vector.reset_infos[index].get('start_kind') == 'curriculum'
+                    schedule(index, vector.reset_infos[index])
             observation = next_observation
             # Real-decision interval, independent of vector width.
             due = agent.real_decisions // agent.settings['train_every'] - (agent.real_decisions - workers) // agent.settings['train_every']

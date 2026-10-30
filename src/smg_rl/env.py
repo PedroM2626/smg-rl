@@ -129,7 +129,7 @@ class GalaxyEnv(gym.Env):
                 raise ValueError('Curated curriculum requires regional shaping and its own start bank.')
             self.curriculum_bank = CurriculumBank(config['paths']['curriculum'], curriculum['spec_sha256'],
                 game_id(config), digest(config['paths']['dolphin']), curriculum['probability'],
-                config['paths'].get('curriculum_progress'))
+                config['paths'].get('curriculum_progress'), curriculum.get('anchor_diagnostic', False))
         self.frontier_history = deque(maxlen=6)
         self.frontier_validation_decisions = 0
         replay = config.get("replay", {})

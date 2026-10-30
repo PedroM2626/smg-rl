@@ -192,3 +192,46 @@ def test_failed_checkpoint_reports_failure_instead_of_stale_running_state(tmp_pa
     status = json.loads((run / 'status.json').read_text())
     assert status['state'] == 'failed' and status['stop_reason'] == 'checkpoint_failure'
     assert 'No space' in status['error']
+
+
+class AnchorVector(BoundaryVector):
+    """Every start is the same assisted anchor; records the controls actually sent."""
+    def __init__(self):
+        super().__init__()
+        self.sent = []
+
+    def reset(self):
+        observation = super().reset()
+        self.reset_infos = [{'start_kind': 'curriculum', 'anchor_id': 'anchor.state'}]
+        return observation
+
+    def step(self, actions):
+        self.sent.append((self.episode, int(actions[0])))
+        return super().step(actions)
+
+
+def test_scripted_demonstration_episodes_are_sparse_exact_and_never_learned_success(tmp_path, monkeypatch):
+    config = load_config('config/iqn-smg1.yaml')
+    config['paths'].update(runs=str(tmp_path / 'runs'), tensorboard=str(tmp_path / 'tensorboard'))
+    config['environment']['image_size'] = 40
+    config['parallel']['workers'] = 1
+    config['training']['device'] = 'cpu'
+    config['dqn'].update(capacity=32, learning_starts=2, batch_size=2, channels=2, hidden=32,
+                         train_every=1, target_update_interval=2, quantiles=4)
+    config['curriculum'] = {'enabled': True}
+    config['demonstration'] = {'anchor': 'anchor.state', 'actions': [5, 6, 7], 'every_episodes': 2}
+    vector = AnchorVector()
+    monkeypatch.setattr(dqn_training, 'MeasuredSubprocVecEnv', lambda *a, **k: vector)
+    run = dqn_training.train_dqn(config, 12)
+    import json
+
+    status = json.loads((run / 'status.json').read_text())
+    # Starts 1 and 3 replay the demonstration exactly; starts 2 and 4 are policy-driven.
+    assert [a for e, a in vector.sent if e in (1, 3)] == [5, 6, 7, 5, 6, 7]
+    assert status['scripted_demonstration_episodes_this_run'] == 2
+    assert 'sweet_sweet/scripted_demonstration' in status['attempts']
+    assert status['attempts']['sweet_sweet/curriculum']['completed'] == 2
+    assert status['assisted_stars_this_run'] == 0
+    config['demonstration']['every_episodes'] = 1
+    with pytest.raises(ValueError, match='sparse episode interval'):
+        dqn_training.demonstration_schedule(config)

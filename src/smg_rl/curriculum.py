@@ -11,9 +11,11 @@ from smg_rl.diagnostics import atomic_json
 
 
 class CurriculumBank:
-    def __init__(self, path, expected_hash, game_id, emulator_hash, probability, progress_path=None):
+    def __init__(self, path, expected_hash, game_id, emulator_hash, probability, progress_path=None,
+                 anchor_diagnostic=False):
         self.path = Path(path)
-        if not 0 <= probability <= .5 or digest(self.path) != expected_hash:
+        # Mixed training keeps full starts; only a labeled anchor diagnostic may start every attempt assisted.
+        if not 0 <= probability <= (1. if anchor_diagnostic else .5) or digest(self.path) != expected_hash:
             raise ValueError('Curriculum probability/specification integrity mismatch.')
         self.probability = probability
         self.data = json.loads(self.path.read_text())
