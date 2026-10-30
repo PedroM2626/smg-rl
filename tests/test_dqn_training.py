@@ -219,7 +219,8 @@ def test_scripted_demonstration_episodes_are_sparse_exact_and_never_learned_succ
     config['dqn'].update(capacity=32, learning_starts=2, batch_size=2, channels=2, hidden=32,
                          train_every=1, target_update_interval=2, quantiles=4)
     config['curriculum'] = {'enabled': True}
-    config['demonstration'] = {'anchor': 'anchor.state', 'actions': [5, 6, 7], 'every_episodes': 2}
+    config['demonstration'] = {'anchor': 'anchor.state', 'actions': [5, 6, 7], 'every_episodes': 2,
+                               'margin': .8}
     vector = AnchorVector()
     monkeypatch.setattr(dqn_training, 'MeasuredSubprocVecEnv', lambda *a, **k: vector)
     run = dqn_training.train_dqn(config, 12)
@@ -232,6 +233,9 @@ def test_scripted_demonstration_episodes_are_sparse_exact_and_never_learned_succ
     assert 'sweet_sweet/scripted_demonstration' in status['attempts']
     assert status['attempts']['sweet_sweet/curriculum']['completed'] == 2
     assert status['assisted_stars_this_run'] == 0
+    with np.load(run / 'checkpoint-final' / 'replay.npz') as archive:
+        # Exactly the six scripted transitions carry the label used by the margin loss.
+        assert int(archive['demonstration'][:12].sum()) == 6
     config['demonstration']['every_episodes'] = 1
     with pytest.raises(ValueError, match='sparse episode interval'):
         dqn_training.demonstration_schedule(config)
@@ -245,3 +249,56 @@ def test_demonstration_mapping_validates_every_anchor_sequence():
     config['demonstration']['sequences']['b.state'] = [8]
     with pytest.raises(ValueError, match='valid actions'):
         dqn_training.demonstration_schedule(config)
+
+
+def test_margin_loss_raises_the_demonstrated_label_above_alternatives():
+    import torch
+
+    from smg_rl.dqn_replay import PrioritizedFrames
+
+    config = load_config('config/iqn-smg1.yaml')
+    config['dqn'].update(capacity=16, batch_size=8, channels=2, hidden=32, quantiles=4, learning_rate=1e-3)
+    config['environment']['image_size'] = 40
+    torch.manual_seed(0)
+    agent = DistributionalAgent(replay_signature(config), config['dqn'], 'cpu', 3)
+    replay = PrioritizedFrames(16, 40, workers=1, n_step=1, seed=3)
+    current = replay.add_frame(np.zeros((40, 40), np.uint8))
+    for step in range(8):
+        successor = replay.add_frame(np.full((40, 40), step + 1, np.uint8), current)
+        replay.append(0, current, 5, 0., successor, 0, False, False, True, demonstration=True)
+        current = successor
+    image = np.stack([replay.observation(current)])
+    scenario = torch.ones(1, len(agent.signature['scenario_names']))
+
+    def gap():
+        with torch.no_grad():
+            values = agent.online.expected(torch.as_tensor(image), scenario, 4, deterministic=True)[0]
+        return float(values[5] - torch.cat([values[:5], values[6:]]).max())
+
+    before = gap()
+    for _ in range(60):
+        metrics = agent.update(replay, .8)
+    assert metrics['demonstration_rows'] > 0 and gap() > before
+
+
+def test_policy_continues_after_a_short_demonstration_without_margin_labels(tmp_path, monkeypatch):
+    config = load_config('config/iqn-smg1.yaml')
+    config['paths'].update(runs=str(tmp_path / 'runs'), tensorboard=str(tmp_path / 'tensorboard'))
+    config['environment']['image_size'] = 40
+    config['parallel']['workers'] = 1
+    config['training']['device'] = 'cpu'
+    config['dqn'].update(capacity=32, learning_starts=2, batch_size=2, channels=2, hidden=32,
+                         train_every=1, target_update_interval=2, quantiles=4)
+    config['curriculum'] = {'enabled': True}
+    config['demonstration'] = {'sequences': {'anchor.state': [5]}, 'every_episodes': 2}
+    vector = AnchorVector()
+    monkeypatch.setattr(dqn_training, 'MeasuredSubprocVecEnv', lambda *a, **k: vector)
+    run = dqn_training.train_dqn(config, 12)
+    import json
+
+    ledger = [json.loads(line) for line in (run / 'collector-steps.jsonl').read_text().splitlines()]
+    # Each scripted three-step episode has one demonstrated decision, then two policy decisions.
+    assert sum(row['demonstrated'][0] for row in ledger) == 2
+    assert sum(row['scripted'][0] for row in ledger) == 6
+    with np.load(run / 'checkpoint-final' / 'replay.npz') as archive:
+        assert int(archive['demonstration'][:12].sum()) == 2

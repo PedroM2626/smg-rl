@@ -28,7 +28,7 @@ class PrioritizedFrames:
         self.arrays = {key: np.zeros(capacity, dtype) for key, dtype in {
             'state': np.int64, 'next': np.int64, 'action': np.int64, 'scenario': np.int64,
             'reward': np.float32, 'discount': np.float32, 'horizon': np.int16,
-            'terminal': np.bool_, 'assisted': np.bool_}.items()}
+            'terminal': np.bool_, 'assisted': np.bool_, 'demonstration': np.bool_}.items()}
         self.base = 1 << (capacity - 1).bit_length()
         self.tree = np.zeros(2 * self.base, np.float64)
         self.minimum = np.full(2 * self.base, np.inf, np.float64)
@@ -90,14 +90,16 @@ class PrioritizedFrames:
             self._priority(index, value)
             self.max_priority = max(self.max_priority, value)
 
-    def append(self, worker, state, action, reward, successor, scenario, terminal, ended, assisted=False):
+    def append(self, worker, state, action, reward, successor, scenario, terminal, ended, assisted=False,
+               demonstration=False):
         if not 0 <= worker < self.workers or terminal and not ended or not np.isfinite(reward):
             raise ValueError('Invalid real replay transition/boundary.')
         self._slot(state)
         self._slot(successor)
         queue = self.pending[worker]
         queue.append({'state': state, 'action': action, 'reward': reward, 'next': successor,
-                      'scenario': scenario, 'terminal': bool(terminal), 'assisted': bool(assisted)})
+                      'scenario': scenario, 'terminal': bool(terminal), 'assisted': bool(assisted),
+                      'demonstration': bool(demonstration)})
         if ended:
             while queue:
                 self._emit(queue)
@@ -228,6 +230,8 @@ class PrioritizedFrames:
                     raise ValueError('Invalid frame replay array layout.')
                 target[:used] = source
             for key, target in {**result.arrays, 'tree': result.tree, 'minimum': result.minimum}.items():
+                if key == 'demonstration' and key not in archive:
+                    continue  # Older replays predate scripted-demonstration labels: all False.
                 source = archive[key]
                 if source.shape != target.shape or source.dtype != target.dtype:
                     raise ValueError('Invalid transition replay array layout.')

@@ -49,9 +49,15 @@ Conclusion: the gap was exploration, not control or reward plumbing.
 | 2 (30 min) | 88,728 | 124 / 580 | 45 / 45 | 8/10 stars moved the frontier from waypoint 40 to 38 at 69,356 |
 | 3 (60 min) | 188,872 | 44 / 711 | 12 / 12 | Waypoint 38: no policy episode passed X 21,000 |
 | 4 (60 min, `s1b`) | 295,492 | 75 / 790 | 90 / 90 | Waypoint 40: 51 of last 100; waypoint 38: 0 / 630 |
+| 5 (60 min, `s1c`) | 366,348 | 51 / 508 | 129 / 129 | First waypoint-38 policy stars: 11 / 423 |
+| 6 (60 min, `s1d`) | 434,336 | 70 / 473 | 122 / 122 | Waypoint 38: 34 / 379; waypoint 40: 36 / 94 |
 
 Frozen evaluations after block 2 (`record-dqn --assisted-start --anchor`): at waypoint 40, epsilon 0.1 reached the RAM star in 2/3 episodes (61 and 77 decisions); greedy timed out. At waypoint 38, 0/4. Both blocks passed `audit_block`. Same Wii state and one training seed: not generalization and not full-start success.
 
 After block 3, waypoint-38 policy episodes never passed X 21,000: the conveyor carries Mario back, and the human clears a 1,250-unit gap with a long jump after deliberately waiting. Progress-scored search ran ahead of the human clock and landed on a lower surface; a time-synchronized search found a 62-decision eight-label sequence from waypoint 38 (environment-confirmed RAM star, reward 22.4). `config/anchor-diagnostic-s1b-20261030.yaml` (same replay signature) adds it through `demonstration.sequences`. In block 4 the policy reproduced the first seven demonstration labels from waypoint 38 and diverged at the long-jump preparation.
 
 After block 4 a frozen greedy evaluation from waypoint 40 reached the RAM star in 48 decisions, completing the pre-registered pass for this anchor. Block 5 (`s1c`) only shortens the demonstration interval from ten to five starts.
+
+Block 6 adds a DQfD large-margin loss (margin 0.8) on scripted demonstration decisions only; the replay stores a per-decision `demonstration` label (older replays load as unlabeled). After block 6, frozen greedy evaluations reached the RAM star from waypoint 38 (62 decisions) and waypoint 40 (40 decisions), matching the demonstration lengths: the learned policy reproduces the demonstrated segments from these exact Wii states, which is imitation on fixed states, not generalization. Collection at epsilon 0.1 limited the 8/10 frontier rule on the 62-decision segment, so block 7 (`s1e`) re-signs the checkpoint with only epsilon changed to 0.03 (weights, optimizer, counters and replay unchanged).
+
+Demonstrations may now end before the episode: after the sequence, the policy continues, the episode stays labeled scripted, and only scripted decisions carry the margin label. Anchor-to-anchor searches use `--goal-anchor` (grounded within 200 units of the next anchor); waypoint 34 reaches the waypoint-38 region in 14 decisions (environment-confirmed, alive). A single full-route search from waypoint 01 drifted off the human path and was replaced by these chained segments. Beam-search node savestates once filled the disk (about 226 GB); they are now deleted as the beam advances and the stale ones were removed, keeping every report.

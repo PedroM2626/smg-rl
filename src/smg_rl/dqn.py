@@ -57,7 +57,7 @@ class DistributionalAgent:
             metrics['epsilon_random_mask'] = random.copy()
         return actions, metrics
 
-    def update(self, replay):
+    def update(self, replay, demonstration_margin=None):
         settings = self.settings
         beta = min(1., settings['beta_start'] + (1 - settings['beta_start']) *
                    self.real_decisions / settings['beta_steps'])
@@ -97,6 +97,18 @@ class DistributionalAgent:
             per_sample = quantile_huber(predicted, target, taus)
             priority = (target[:, None] - predicted.detach()[:, :, None]).abs().mean((1, 2))
         loss = (per_sample * arrays['weights']).mean()
+        demo = arrays.get('demonstration')
+        if demonstration_margin and demo is not None and bool(demo.any()):
+            # DQfD large-margin loss on scripted demonstration rows only: the demonstrated label
+            # must exceed every other label by the margin. Its outcome is never success accounting.
+            values = (self.online.expected(images, scenario) if settings['algorithm'] == 'rainbow'
+                      else self.online.expected(images, scenario, settings['quantiles']))
+            margins = torch.full_like(values, float(demonstration_margin))
+            margins[rows, actions] = 0.
+            supervised = (values + margins).max(-1).values - values[rows, actions]
+            metrics['demonstration_margin_loss'] = float(supervised[demo].mean().detach())
+            metrics['demonstration_rows'] = int(demo.sum())
+            loss = loss + supervised[demo].mean()
         if not torch.isfinite(loss):
             raise FloatingPointError('Nonfinite distributional Q loss.')
         self.optimizer.zero_grad(set_to_none=True)

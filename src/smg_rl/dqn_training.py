@@ -77,7 +77,10 @@ def demonstration_schedule(config):
                    or any(type(a) is not int or not 0 <= a < len(action_set(config)) for a in actions)
                    for anchor, actions in sequences.items())):
         raise ValueError('A demonstration needs an assisted anchor, valid actions and a sparse episode interval.')
-    return {'sequences': sequences, 'every_episodes': every}
+    margin = settings.get('margin')
+    if margin is not None and (not np.isfinite(margin) or margin <= 0):
+        raise ValueError('A demonstration margin must be positive and finite.')
+    return {'sequences': sequences, 'every_episodes': every, 'margin': margin}
 
 
 def deadline_timestamp(value):
@@ -218,12 +221,15 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
             policy_updates = agent.updates
             with profiler.measure('policy_inference'):
                 actions, actions_metrics = agent.act(observation)
-            script = list(scripted)
+            # Episode-level label (outcome accounting) versus per-decision label (margin loss).
+            script, demonstrated = list(scripted), [False] * workers
             for index in range(workers):
                 if scripted[index]:
                     sequence = demonstration['sequences'][script_anchor[index]]
-                    actions[index] = sequence[script_step[index]] if script_step[index] < len(sequence) else 0
-                    script_step[index] += 1
+                    if script_step[index] < len(sequence):
+                        actions[index] = sequence[script_step[index]]
+                        demonstrated[index] = True
+                    script_step[index] += 1  # After the sequence, the policy continues the episode.
             counts += np.bincount(actions, minlength=len(counts))
             with profiler.measure('emulator_collection'):
                 next_observation, rewards, done, infos = vector.step(actions)
@@ -231,7 +237,8 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
             ledger.write(json.dumps({'real_before_action': agent.real_decisions - workers,
                 'policy_optimizer_updates': policy_updates, 'actions': actions.tolist(),
                 'worker_episodes': [i['worker_episode'] for i in infos],
-                'episode_steps': [i['episode_step'] for i in infos], 'scripted': script}) + '\n')
+                'episode_steps': [i['episode_step'] for i in infos], 'scripted': script,
+                'demonstrated': demonstrated}) + '\n')
             for index in range(workers):
                 info = infos[index]
                 terminal = bool(done[index] and not info.get('TimeLimit.truncated', False))
@@ -239,7 +246,8 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
                     k: v[index] for k, v in next_observation.items()}
                 next_frame = replay.add_frame(successor['image'][-1], current[index])
                 replay.append(index, current[index], int(actions[index]), float(rewards[index]), next_frame,
-                              int(observation['scenario'][index].argmax()), terminal, bool(done[index]), assisted[index])
+                              int(observation['scenario'][index].argmax()), terminal, bool(done[index]), assisted[index],
+                              demonstrated[index])
                 current[index] = (replay.add_frame(next_observation['image'][index, -1]) if done[index] else next_frame)
                 damage += int(info.get('health_lost', 0)) if not info.get('dead') and not info.get('complete') else 0
                 if done[index]:
@@ -284,7 +292,7 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
             if replay.size >= agent.settings['learning_starts']:
                 for _ in range(due):
                     with profiler.measure('q_update'):
-                        metrics = agent.update(replay)
+                        metrics = agent.update(replay, (demonstration or {}).get('margin'))
                         if visual_probe is None:
                             visual_probe = {'weights_changed': not torch.equal(visual_before, visual_parameter.detach()),
                                 'gradient_l2': float(visual_parameter.grad.norm()) if visual_parameter.grad is not None else None,
