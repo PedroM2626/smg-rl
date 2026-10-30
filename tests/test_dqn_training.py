@@ -235,3 +235,13 @@ def test_scripted_demonstration_episodes_are_sparse_exact_and_never_learned_succ
     config['demonstration']['every_episodes'] = 1
     with pytest.raises(ValueError, match='sparse episode interval'):
         dqn_training.demonstration_schedule(config)
+
+
+def test_demonstration_mapping_validates_every_anchor_sequence():
+    config = load_config('config/iqn-smg1.yaml')
+    config['curriculum'] = {'enabled': True}
+    config['demonstration'] = {'sequences': {'a.state': [3, 5], 'b.state': [7]}, 'every_episodes': 10}
+    assert dqn_training.demonstration_schedule(config)['sequences']['b.state'] == [7]
+    config['demonstration']['sequences']['b.state'] = [8]
+    with pytest.raises(ValueError, match='valid actions'):
+        dqn_training.demonstration_schedule(config)

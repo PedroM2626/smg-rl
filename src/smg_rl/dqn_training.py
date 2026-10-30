@@ -69,12 +69,15 @@ def demonstration_schedule(config):
     settings = config.get('demonstration')
     if not settings:
         return None
-    actions, every = settings.get('actions'), settings.get('every_episodes')
-    if (not config.get('curriculum', {}).get('enabled') or not isinstance(settings.get('anchor'), str)
-            or not actions or any(type(a) is not int or not 0 <= a < len(action_set(config)) for a in actions)
-            or type(every) is not int or every < 2):
+    # Either one anchor/actions pair or a mapping of verified anchor files to action sequences.
+    sequences = settings.get('sequences') or {settings.get('anchor'): settings.get('actions')}
+    every = settings.get('every_episodes')
+    if (not config.get('curriculum', {}).get('enabled') or type(every) is not int or every < 2
+            or any(not isinstance(anchor, str) or not actions
+                   or any(type(a) is not int or not 0 <= a < len(action_set(config)) for a in actions)
+                   for anchor, actions in sequences.items())):
         raise ValueError('A demonstration needs an assisted anchor, valid actions and a sparse episode interval.')
-    return settings
+    return {'sequences': sequences, 'every_episodes': every}
 
 
 def deadline_timestamp(value):
@@ -129,12 +132,14 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
     full_stars, assisted_stars, deaths, damage, episode_counts = 0, 0, 0, 0, 0
     scripted_stars, scripted_episodes = 0, 0
     scripted, script_step, worker_starts = [False] * workers, [0] * workers, [0] * workers
+    script_anchor = [None] * workers
 
     def schedule(index, reset_info):
         # Every Nth anchor start per worker replays the demonstration; the rest are policy-driven.
         worker_starts[index] += 1
-        scripted[index] = bool(demonstration and reset_info.get('anchor_id') == demonstration['anchor']
+        scripted[index] = bool(demonstration and reset_info.get('anchor_id') in demonstration['sequences']
                                and worker_starts[index] % demonstration['every_episodes'] == 1)
+        script_anchor[index] = reset_info.get('anchor_id')
         script_step[index] = 0
     stop_reason = None
     memory_guard_snapshot = None
@@ -216,7 +221,7 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
             script = list(scripted)
             for index in range(workers):
                 if scripted[index]:
-                    sequence = demonstration['actions']
+                    sequence = demonstration['sequences'][script_anchor[index]]
                     actions[index] = sequence[script_step[index]] if script_step[index] < len(sequence) else 0
                     script_step[index] += 1
             counts += np.bincount(actions, minlength=len(counts))
