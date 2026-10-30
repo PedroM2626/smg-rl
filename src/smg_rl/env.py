@@ -210,6 +210,22 @@ class GalaxyEnv(gym.Env):
         if entry and (self.telemetry.scene_frame != entry["scene_frame"]
                       or self.telemetry.health != entry["health"]):
             raise MemoryFault("Frontier reset did not restore time/health context.")
+        # Optional no-input start jitter after a verified assisted reset: varies moving-platform
+        # phase so a policy cannot replay one memorized open-loop sequence from an exact state.
+        verified = self.telemetry
+        maximum = self.config['environment'].get('assisted_start_jitter_frames', 0) if curated else 0
+        self.start_jitter_frames = int(self.np_random.integers(maximum + 1)) if maximum else 0
+        if self.start_jitter_frames:
+            previous = self.backend.config['parallel']['frame_skip']
+            self.backend.config['parallel']['frame_skip'] = self.start_jitter_frames
+            try:
+                self.backend.advance(())
+            finally:
+                self.backend.config['parallel']['frame_skip'] = previous
+            self.telemetry = self.memory.sample()
+            if (self.telemetry.dead or self.telemetry.complete
+                    or self.telemetry.scenario != self.variation['scenario']):
+                raise MemoryFault('Start jitter left the verified live context.')
         self.frontier_history.clear()
         self.frontier_history.append(self.telemetry)
         frame = self.backend.image()
@@ -224,7 +240,8 @@ class GalaxyEnv(gym.Env):
         self.progress.reset(self.telemetry.position)
         if self.route:
             if curated and self.curriculum_bank.data['schema'] == 2:
-                self.route.reset_human_anchor(self.telemetry, curated['route_waypoint'])
+                # The verified pre-jitter context initializes the route, so no prefix is ever paid.
+                self.route.reset_human_anchor(verified, curated['route_waypoint'])
             else:
                 self.route.reset(self.telemetry, segment=int(curated['region']) if curated else None)
         if self.potential:
@@ -250,7 +267,8 @@ class GalaxyEnv(gym.Env):
             self.curiosity[self.variation["name"]].reset(frame)
         self._append(-1, 0.0, self.progress.best, "running", {})
         return self._observation(), {**self.telemetry.to_dict(), 'start_kind': self.start_kind,
-                                     'anchor_id': self.start_state_id}
+                                     'anchor_id': self.start_state_id,
+                                     'start_jitter_frames': self.start_jitter_frames}
 
     @measured("step")
     def step(self, action):
