@@ -26,6 +26,7 @@ from smg_rl.rewards import (
     RegionalAdvance,
     RegionalDistanceAdvance,
     RegionalPotential,
+    validate_discounted_objective,
     validate_distance_objective,
     validate_simple_objective,
 )
@@ -97,9 +98,9 @@ class GalaxyEnv(gym.Env):
                     or settings['max_idle_frames'] < 1 or settings['max_episode_frames'] < 1):
                 raise ValueError('Regional reward requires a signed compatible route and separate shaping.')
             mode = settings.get('mode', 'potential')
-            if mode not in ('potential', 'advance', 'distance_advance'):
+            if mode not in ('potential', 'advance', 'distance_advance', 'discounted_distance_advance'):
                 raise ValueError('Unknown regional reward mode.')
-            if mode == 'distance_advance':
+            if mode in ('distance_advance', 'discounted_distance_advance'):
                 self.potential = RegionalDistanceAdvance(settings['scale'])
             elif mode == 'advance':
                 self.potential = RegionalAdvance(settings['scale'])
@@ -116,15 +117,19 @@ class GalaxyEnv(gym.Env):
                 validate_simple_objective(settings, config['rewards'], learner['gamma'])
             elif mode == 'distance_advance':
                 validate_distance_objective(settings, config['rewards'], learner['gamma'])
+            elif mode == 'discounted_distance_advance':
+                validate_discounted_objective(settings, config['rewards'], learner['gamma'])
         self.curriculum_bank = None
         curriculum = config.get('curriculum', {})
         if curriculum.get('enabled', False):
-            if self.route is not None and self.route.schema in (4, 5):
+            if (self.route is not None and self.route.schema in (4, 5)
+                    and curriculum.get('mode') != 'human_backward_v2'):
                 raise ValueError('Human-derived routes require full-start collection.')
             if not self.regional or config.get('frontier', {}).get('enabled'):
                 raise ValueError('Curated curriculum requires regional shaping and its own start bank.')
             self.curriculum_bank = CurriculumBank(config['paths']['curriculum'], curriculum['spec_sha256'],
-                game_id(config), digest(config['paths']['dolphin']), curriculum['probability'])
+                game_id(config), digest(config['paths']['dolphin']), curriculum['probability'],
+                config['paths'].get('curriculum_progress'))
         self.frontier_history = deque(maxlen=6)
         self.frontier_validation_decisions = 0
         replay = config.get("replay", {})
@@ -164,6 +169,7 @@ class GalaxyEnv(gym.Env):
             raise ValueError("Variation index is outside the configured scenarios.")
         self.variation = self.config["variations"][index]
         self.backend._motor_direction = ()
+        self.backend._motor_prepare = False
         self.start_kind, self.start_state_id = "full_start", ""
         self.archive = None
         settings = self.config.get("frontier", {})
@@ -217,7 +223,10 @@ class GalaxyEnv(gym.Env):
         )
         self.progress.reset(self.telemetry.position)
         if self.route:
-            self.route.reset(self.telemetry, segment=int(curated['region']) if curated else None)
+            if curated and self.curriculum_bank.data['schema'] == 2:
+                self.route.reset_human_anchor(self.telemetry, curated['route_waypoint'])
+            else:
+                self.route.reset(self.telemetry, segment=int(curated['region']) if curated else None)
         if self.potential:
             self.potential.reset(self._potential_fraction())
         self.route_start = self.route.best if self.route else 0.0
@@ -316,8 +325,11 @@ class GalaxyEnv(gym.Env):
             timed_out = not terminated and (
                 self.emulated_frames >= self.regional_settings['max_episode_frames']
                 or self.idle_frames >= self.regional_settings['max_idle_frames'])
-            terminated = terminated or timed_out
-            truncated = False
+            if self.regional_settings.get('timeout_mode') == 'truncation_bootstrap':
+                truncated = bool(timed_out)
+            else:
+                terminated = terminated or timed_out
+                truncated = False
         shaping_reward = self.potential.update(self._potential_fraction(), control_frames, terminated) if self.potential else 0.0
         reward += shaping_reward
         self.frontier_history.append(self.telemetry)

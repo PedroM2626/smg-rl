@@ -1,5 +1,11 @@
 # SMG RL
 
+Current work: the bounded [exploration study](docs/exploration-study.md)
+supersedes the October29 day run. It compares corrected timeout/discount and
+replay settings, feasible eight-label long-jump controls, and a validated human
+backward curriculum. Final frozen results are pending; assisted starts and
+scripted control checks do not establish learned full-start completion.
+
 Visual reinforcement-learning experiments for **Super Mario Galaxy** and
 **Super Mario Galaxy 2** on Windows, using Dolphin. This is a research project:
 no full-start, RAM-confirmed mission completion has been demonstrated in the

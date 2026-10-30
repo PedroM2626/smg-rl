@@ -1,4 +1,5 @@
 import json
+from copy import deepcopy
 from dataclasses import replace
 from pathlib import Path
 from types import SimpleNamespace
@@ -129,6 +130,28 @@ def test_regional_timeout_is_absorbing_and_replay_keeps_start_provenance(tmp_pat
         chunk = load_chunk(next((tmp_path / 'replay').rglob('*.npz')), replay_signature(env.config))
         assert chunk['terminated'][-1] and not chunk['truncated'][-1]
         assert chunk['metadata']['start_kind'] == 'full_start'
+    finally:
+        env.close()
+
+
+def test_new_discounted_timeout_is_a_zero_penalty_bootstrap_cut(tmp_path):
+    original, _ = regional_environment(tmp_path)
+    config = deepcopy(original.config)
+    original.close()
+    config['rewards'].update(step=0., timeout=0., damage=-.25)
+    config['regional_reward'].update(mode='discounted_distance_advance', timeout_mode='truncation_bootstrap')
+    backend = NativeFixture()
+    backend.config = config
+    env = GalaxyEnv(config, backend, tmp_path / 'world-model-cut-fixture' / 'worker-00', backend, intrinsic=False)
+    try:
+        env.reset(options={'variation': 0})
+        _, _, terminated, truncated, _ = env.step(0)
+        assert not terminated and not truncated
+        _, reward, terminated, truncated, info = env.step(0)
+        assert not terminated and truncated and not info['dead']
+        assert reward == 0 and info['timeout_penalty'] == 0
+        chunks = [load_chunk(p, replay_signature(config)) for p in (tmp_path / 'replay').rglob('*.npz')]
+        assert len(chunks) == 1 and chunks[0]['truncated'][-1] and not chunks[0]['terminated'][-1]
     finally:
         env.close()
 

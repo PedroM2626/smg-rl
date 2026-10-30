@@ -11,15 +11,19 @@ from smg_rl.dqn_replay import PrioritizedFrames
 from smg_rl.replay import replay_signature
 
 
-def transfer_policy(source, old_config, new_config, destination):
+def transfer_policy(source, old_config, new_config, destination, *, allow_settings_change=False):
     source, destination = Path(source), Path(destination)
     if destination.exists():
         raise FileExistsError('A transfer must not replace an existing checkpoint.')
     manifest = json.loads((source / 'manifest.json').read_text(encoding='utf-8'))
     if (manifest['agent_sha256'] != digest(source / 'agent.pt')
             or manifest['replay_sha256'] != digest(source / 'replay.npz')
-            or old_config['dqn'] != new_config['dqn']):
+            or (not allow_settings_change and old_config['dqn'] != new_config['dqn'])):
         raise ValueError('Source checkpoint or model settings do not match.')
+    architecture = ('algorithm', 'encoder', 'hidden', 'channels', 'atoms', 'quantiles',
+                    'cosine_embedding', 'frame_stack')
+    if any(old_config['dqn'].get(k) != new_config['dqn'].get(k) for k in architecture):
+        raise ValueError('Explicit settings transfer must retain the network architecture.')
     original = DistributionalAgent.load_policy(source, replay_signature(old_config), 'cpu')
     signature = replay_signature(new_config)
     if signature == replay_signature(old_config):

@@ -1,0 +1,144 @@
+environment:
+  action_seconds: 0.25
+  crop:
+  - 0.12
+  - 0.17
+  - 0.88
+  - 0.91
+  frame_stack: 4
+  idle_limit: 180
+  image_size: 84
+  key_hold_seconds: 0.08
+  max_step_distance: 2500.0
+  max_steps: 3000
+  min_reward_y: -1800.0
+  reset_timeout: 30.0
+game:
+  id: RMGE01
+  title: Super Mario Galaxy
+novelty:
+  capacity: 4000
+  device: cpu
+  embedding_size: 64
+  neighbors: 10
+  rnd_clip: 5.0
+  update_every: 8
+  enabled: false
+parallel:
+  backend: native
+  bridge_wakeup: events
+  collector: measured
+  cpu_affinity: auto
+  emulation_speed: 0.0
+  frame_skip: 12
+  graphics_backend: Vulkan
+  hidden: true
+  max_stalled_attempts: 8
+  native_capture: cpu
+  plot_every: 20
+  quiet_ui: true
+  receive_order: ordered
+  shared_observations: false
+  skip_present: false
+  timeout: 30.0
+  worker_timeout: 120.0
+  workers: 4
+  startup_spacing_seconds: 5.0
+paths:
+  assets: data
+  calibration: config/smg1-native-calibration.json
+  dolphin: .local/native-dolphin-frontier/Dolphin.exe
+  replay: runs/model-free/exploration-study-20261029/C/replay
+  rom: data/Super Mario Galaxy (USA) (En,Fr,Es).nkit.iso
+  runs: runs/model-free/exploration-study-20261029/C
+  source_user: '%APPDATA%\Dolphin Emulator'
+  user: .local\exploration-study-20261029\C\template
+  route: config/routes/smg1-human-landing-v2.json
+  curriculum: .local\exploration-study-20261029\human-bank\bank.json
+  tensorboard: runs/model-free/tensorboard
+  curriculum_progress: .local\exploration-study-20261029\C\curriculum-progress.json
+replay:
+  chunk_steps: 256
+  enabled: false
+  max_worker_bytes: 268435456
+rewards:
+  completion: 20.0
+  damage: -0.25
+  death: -2.0
+  intrinsic: 0.0
+  intrinsic_decay_end: 120
+  intrinsic_decay_start: 30
+  intrinsic_episode_budget: 0.5
+  progress: 0.0
+  revision: discounted-route-bootstrap-study-v1
+  step: 0.0
+  timeout: 0.0
+training:
+  enabled: true
+  device: cuda
+  seed: 142
+  torch_threads: 1
+  steps: 3072
+variations:
+- goal_slot: 2
+  name: sweet_sweet
+  scenario: 1
+  start_slot: 1
+  title: Rocky Road
+actions:
+  profile: motor8-longjump-v1
+frontier:
+  enabled: false
+route_reward:
+  enabled: false
+regional_reward:
+  enabled: true
+  spec_sha256: c4299bc59391563b00817bbbf2b96be11ce08a163e2b54c691892d474d5204ed
+  scale: 17.323910361805048
+  normalization_distance: 37872.5332017393
+  gamma_per_frame: 0.9997496555897012
+  max_idle_frames: 2160
+  max_episode_frames: 36000
+  mode: discounted_distance_advance
+  timeout_mode: truncation_bootstrap
+curriculum:
+  enabled: true
+  probability: 0.5
+  spec_sha256: 4bc90d8e772f727a18fea911f7bf4b0d1304ca9bd8bcb2623435f482e9f9d109
+  mode: human_backward_v2
+dqn:
+  algorithm: iqn
+  gamma: 0.997
+  frame_stack: 4
+  capacity: 250000
+  max_replay_bytes: 4000000000
+  n_step: 3
+  alpha: 0.5
+  beta_start: 0.4
+  beta_steps: 200000
+  priority_epsilon: 1.0e-06
+  batch_size: 32
+  learning_starts: 2048
+  train_every: 4
+  target_update_interval: 500
+  learning_rate: 6.25e-05
+  adam_epsilon: 0.00015
+  max_grad_norm: 10.0
+  epsilon: 0.1
+  evaluation_epsilon: 0.0
+  hidden: 512
+  channels: 32
+  atoms: 51
+  v_min: -10.0
+  v_max: 25.0
+  quantiles: 32
+  cosine_embedding: 64
+  encoder: impala
+  epsilon_start: 1.0
+  epsilon_decay_decisions: 100000
+resource_guard:
+  physical_reserve_bytes: 2147483648
+study:
+  arm: C
+  source_real_decisions: 1383998
+  source_agent_sha256: 285911ac9f39ea70d2f35d58ceacce0806575198d4d3b268180414c59b064ca5

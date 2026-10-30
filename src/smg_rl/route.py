@@ -91,6 +91,20 @@ class RouteProgress:
             self.confirmations = 0
         return delta
 
+    def reset_human_anchor(self, telemetry, waypoint):
+        """Initialize a verified demonstration anchor without paying its prefix."""
+        if self.schema != 5 or type(waypoint) is not int or not 0 <= waypoint < len(self.lengths):
+            raise ValueError('A human curriculum anchor needs a valid schema5 waypoint.')
+        point = np.asarray(telemetry.position, dtype=float)
+        if (not np.isfinite(point).all() or telemetry.dead or telemetry.complete
+                or telemetry.grounded is not True
+                or np.linalg.norm(point - self.points[waypoint]) > .01):
+            raise ValueError('Human anchor must exactly restore its living grounded waypoint.')
+        self.reset(telemetry)
+        self.eligible = True
+        self.segment = self.pending_segment = self.committed_segment = waypoint
+        self.best = float(self.lengths[:waypoint].sum() / self.total_length)
+
     def _update_human_route(self, telemetry):
         """Track ordered swept waypoint visits and pay only after live contact."""
         point = np.asarray(telemetry.position, dtype=float)

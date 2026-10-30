@@ -13,6 +13,7 @@ import torch
 from torch.utils.tensorboard import SummaryWriter
 
 from smg_rl.actions import action_set
+from smg_rl.curriculum import BackwardCurriculum
 from smg_rl.diagnostics import StageProfiler, atomic_json
 from smg_rl.dqn import DistributionalAgent
 from smg_rl.dqn_replay import PrioritizedFrames
@@ -84,6 +85,10 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
         raise ValueError('The absolute collection deadline has already passed.')
     require_disk_headroom(config)
     agent, replay = prepare_dqn(config, resume)
+    backward = None
+    if config.get('curriculum', {}).get('mode') == 'human_backward_v2' and config['curriculum']['enabled']:
+        backward = BackwardCurriculum(config['paths']['curriculum'], config['curriculum']['spec_sha256'],
+                                      config['paths']['curriculum_progress'])
     config['model_free_run'] = 'online'
     run = new_run(config, 'dqn')
     atomic_json(run / 'controller.json', {'pid': os.getpid(), 'created_time': psutil.Process().create_time(),
@@ -201,6 +206,8 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
                     star = info.get('complete') and not info.get('dead') and info['scene_nerve'] in PROFILES[game_id(config)].complete
                     full_stars += int(bool(star) and kind == 'full_start')
                     assisted_stars += int(bool(star) and kind != 'full_start')
+                    if backward is not None and kind == 'curriculum':
+                        backward.record(info['frontier_state'], bool(star), agent.real_decisions)
                     deaths += int(info.get('dead', False))
                     episode_counts += 1
                     key = f'{name}/{kind}'

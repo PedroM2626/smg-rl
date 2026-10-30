@@ -38,7 +38,9 @@ def replay_signature(config):
         result["route_reward"] = config["route_reward"]
     if config.get('regional_reward', {}).get('enabled'):
         result['regional_reward'] = config['regional_reward']
-        result['termination_revision'] = 'absorbing-frame-budget-v1'
+        result['termination_revision'] = ('budget-truncation-bootstrap-v2'
+            if config['regional_reward'].get('timeout_mode') == 'truncation_bootstrap'
+            else 'absorbing-frame-budget-v1')
     if config.get('curriculum', {}).get('enabled'):
         result['curriculum_distribution'] = config['curriculum']
     return result

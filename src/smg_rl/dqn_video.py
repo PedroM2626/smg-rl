@@ -46,13 +46,17 @@ def record_dqn(config_path, checkpoint, variation, seeds=(11, 23, 47), maximum_s
     native_config['parallel'].update(frame_skip=2, native_capture='full')
     backend = NativeDolphin(native_config)
     name = config['variations'][variation]['name']
+    ancestry = config.get('study', {})
+    counter = (f"new real {agent.real_decisions} | source real {ancestry['source_real_decisions']}"
+               if ancestry else f"real {agent.real_decisions}")
     video = VideoBackend(backend, run / 'policy.mp4',
-        f"{agent.settings['algorithm'].upper()} {mode.upper()} EVAL | {name} | eps {epsilon:.3f} | real {agent.real_decisions}",
+        f"{agent.settings['algorithm'].upper()} {mode.upper()} EVAL | {name} | eps {epsilon:.3f} | {counter}",
         decision_frames=config['parallel']['frame_skip'])
     env = None
     record = {'state': 'running', 'checkpoint': str(checkpoint),
         'agent_sha256': digest(Path(checkpoint) / 'agent.pt'), 'variation': name, 'episodes': [],
         'optimizer_updates': agent.updates, 'algorithm': agent.settings['algorithm'],
+        'initialization_ancestry': ancestry,
         'physical_training_decisions_added': 0, 'imagined_transitions': 0,
         'evaluation_epsilon': epsilon, 'evaluation_mode': mode, 'parameter_noise_enabled': stochastic,
         'quantiles': 'random' if stochastic else 'fixed_midpoints',

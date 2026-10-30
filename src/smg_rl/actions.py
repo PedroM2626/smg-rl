@@ -10,15 +10,15 @@ EIGHT_ACTIONS = ((), ("d",), ("a",), ("w",), ("s",), ("jump",), ("spin",), ("cro
 
 def action_set(config=None):
     profile = (config or {}).get("actions", {}).get("profile", "legacy54")
-    if profile not in ("legacy54", "motor16-v1", "motor8-v1", "motor8-timed-v2"):
+    if profile not in ("legacy54", "motor16-v1", "motor8-v1", "motor8-timed-v2", "motor8-carry-v1", "motor8-longjump-v1"):
         raise ValueError(f"Unknown action profile: {profile}")
-    if profile in ("motor8-v1", "motor8-timed-v2"):
+    if profile in ("motor8-v1", "motor8-timed-v2", "motor8-carry-v1", "motor8-longjump-v1"):
         return EIGHT_ACTIONS
     return MOTOR_ACTIONS if profile == "motor16-v1" else ACTIONS
 
 
 def action_name(index: int, config=None) -> str:
-    if (config or {}).get("actions", {}).get("profile") in ("motor8-v1", "motor8-timed-v2") and index == 0:
+    if (config or {}).get("actions", {}).get("profile") in ("motor8-v1", "motor8-timed-v2", "motor8-carry-v1", "motor8-longjump-v1") and index == 0:
         return "none"
     return "+".join(action_set(config)[index]) or "idle"
 
@@ -27,7 +27,7 @@ def action_timing(config):
     profile = config.get('actions', {}).get('profile', 'legacy54')
     if profile == 'legacy54':
         return None
-    if profile in ('motor8-v1', 'motor16-v1'):
+    if profile in ('motor8-v1', 'motor16-v1', 'motor8-carry-v1', 'motor8-longjump-v1'):
         frames, pressed = 12, 8
     elif profile == 'motor8-timed-v2':
         frames = config['actions'].get('decision_frames')
@@ -47,6 +47,10 @@ def execution_signature(config):
         return None
     if profile in ('motor8-v1', 'motor16-v1'):
         return profile + ':12-frames:jump-spin-8-on-4-off'
+    if profile == 'motor8-carry-v1':
+        return profile + ':12-frames:jump-spin-8-on-4-off:jump-carry'
+    if profile == 'motor8-longjump-v1':
+        return profile + ':12-frames:jump-spin-8-on-4-off:direction-carry:crouch-prepares-longjump'
     frames, pressed, released = action_timing(config)
     mode = config['actions'].get('jump_direction', 'inertia')
     if mode not in ('inertia', 'carry'):
@@ -64,8 +68,22 @@ def advance_action(backend, names, config):
     if not hasattr(backend, 'bridge'):
         raise ValueError('Motor profiles require a native bridge.')
     backend.logical_action = '+'.join(names) or 'none'
-    if config.get('actions', {}).get('profile') == 'motor8-timed-v2':
-        mode = config['actions'].get('jump_direction', 'inertia')
+    if config.get('actions', {}).get('profile') == 'motor8-longjump-v1':
+        direction = tuple(getattr(backend, '_motor_direction', ()))
+        prepared = bool(getattr(backend, '_motor_prepare', False))
+        backend._motor_prepare = False
+        if len(names) == 1 and names[0] in ('w', 'a', 's', 'd'):
+            backend._motor_direction = names
+        elif names == ('crouch',):
+            names = direction + names
+            backend._motor_prepare = bool(direction)
+        elif names == ('jump',):
+            names = direction + (('crouch',) if prepared else ()) + names
+        elif not names:
+            backend._motor_direction = ()
+    elif config.get('actions', {}).get('profile') in ('motor8-timed-v2', 'motor8-carry-v1'):
+        mode = ('carry' if config['actions']['profile'] == 'motor8-carry-v1'
+                else config['actions'].get('jump_direction', 'inertia'))
         if mode not in ('inertia', 'carry'):
             raise ValueError('Unknown timed jump direction mode.')
         if len(names) == 1 and names[0] in ('w', 'a', 's', 'd'):

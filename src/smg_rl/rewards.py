@@ -69,6 +69,16 @@ def validate_distance_objective(settings, weights, gamma):
         raise ValueError('Invalid experimental distance advance objective.')
 
 
+def validate_discounted_objective(settings, weights, gamma):
+    """A separately signed continuing task; artificial cuts retain bootstrap."""
+    values = [weights[k] for k in ('step', 'death', 'timeout', 'completion', 'damage')]
+    if (not np.isfinite(values).all() or not 0 < gamma < 1
+            or settings.get('timeout_mode') != 'truncation_bootstrap'
+            or weights['step'] != 0 or weights['timeout'] != 0 or weights['death'] >= 0
+            or weights['damage'] > 0 or weights['completion'] <= settings['scale']):
+        raise ValueError('Discounted distance objective requires unpenalized bootstrap cuts.')
+
+
 def validate_simple_objective(settings, weights, gamma):
     """Reject profiles that silently reintroduce delayed-failure preference."""
     values = [weights[k] for k in ('step', 'death', 'timeout', 'completion')] + [weights.get('damage', 0.)]
