@@ -347,6 +347,11 @@ class GalaxyEnv(gym.Env):
                 or self.idle_frames >= self.regional_settings['max_idle_frames'])
             if self.regional_settings.get('timeout_mode') == 'truncation_bootstrap':
                 truncated = bool(timed_out)
+            elif self.regional_settings.get('timeout_mode') == 'idle_terminal_penalty':
+                idle = self.idle_frames >= self.regional_settings['max_idle_frames']
+                timed_out = not terminated and idle  # Only the no-progress cut is penalized.
+                terminated = terminated or timed_out
+                truncated = not terminated and self.emulated_frames >= self.regional_settings['max_episode_frames']
             else:
                 terminated = terminated or timed_out
                 truncated = False
@@ -372,6 +377,8 @@ class GalaxyEnv(gym.Env):
             if self.telemetry.dead
             else "timeout"
             if timed_out
+            else "budget_truncation"
+            if truncated
             else "running"
         )
         metrics.update(

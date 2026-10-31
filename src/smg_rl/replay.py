@@ -40,6 +40,8 @@ def replay_signature(config):
         result['regional_reward'] = config['regional_reward']
         result['termination_revision'] = ('budget-truncation-bootstrap-v2'
             if config['regional_reward'].get('timeout_mode') == 'truncation_bootstrap'
+            else 'idle-terminal-global-truncation-v3'
+            if config['regional_reward'].get('timeout_mode') == 'idle_terminal_penalty'
             else 'absorbing-frame-budget-v1')
     if config.get('curriculum', {}).get('enabled'):
         result['curriculum_distribution'] = config['curriculum']

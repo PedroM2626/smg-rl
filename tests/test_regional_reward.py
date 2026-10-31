@@ -156,6 +156,39 @@ def test_new_discounted_timeout_is_a_zero_penalty_bootstrap_cut(tmp_path):
         env.close()
 
 
+def test_idle_terminal_penalty_absorbs_no_progress_but_bootstraps_the_global_cut(tmp_path):
+    from smg_rl.rewards import validate_discounted_objective
+
+    original, _ = regional_environment(tmp_path)
+    config = deepcopy(original.config)
+    original.close()
+    config['rewards'].update(step=0., death=-2., timeout=-2., damage=-.25)
+    config['regional_reward'].update(mode='discounted_distance_advance', timeout_mode='idle_terminal_penalty')
+    backend = NativeFixture()
+    backend.config = config
+    env = GalaxyEnv(config, backend, tmp_path / 'world-model-idle-fixture' / 'worker-00', backend, intrinsic=False)
+    try:
+        env.reset(options={'variation': 0})
+        env.step(0)
+        _, reward, terminated, truncated, info = env.step(0)
+        # The no-progress cut is an absorbing, penalized failure, never a bootstrap cut.
+        assert terminated and not truncated and not info['dead']
+        assert info['timeout_penalty'] == -2 and reward == pytest.approx(-2)
+        env.reset(options={'variation': 0})
+        env.idle_frames, env.emulated_frames = 0, config['regional_reward']['max_episode_frames']
+        _, _, terminated, truncated, info = env.step(3)
+        assert truncated and not terminated and info['timeout_penalty'] == 0
+    finally:
+        env.close()
+    weights = dict(config['rewards'], completion=20.)
+    settings = dict(config['regional_reward'], scale=1.)
+    validate_discounted_objective(settings, weights, .997)
+    with pytest.raises(ValueError):
+        validate_discounted_objective(settings, dict(weights, timeout=-3.), .997)
+    with pytest.raises(ValueError):
+        validate_discounted_objective(dict(settings, timeout_mode='truncation_bootstrap'), weights, .997)
+
+
 def test_regional_curriculum_reset_initializes_potential_without_teleport_credit(tmp_path):
     env, backend = regional_environment(tmp_path)
     try:

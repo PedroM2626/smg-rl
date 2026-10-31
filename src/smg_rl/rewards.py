@@ -72,9 +72,14 @@ def validate_distance_objective(settings, weights, gamma):
 def validate_discounted_objective(settings, weights, gamma):
     """A separately signed continuing task; artificial cuts retain bootstrap."""
     values = [weights[k] for k in ('step', 'death', 'timeout', 'completion', 'damage')]
-    if (not np.isfinite(values).all() or not 0 < gamma < 1
-            or settings.get('timeout_mode') != 'truncation_bootstrap'
-            or weights['step'] != 0 or weights['timeout'] != 0 or weights['death'] >= 0
+    mode = settings.get('timeout_mode')
+    # idle_terminal_penalty: a no-progress cut is a real failure (absorbing, penalized no worse than
+    # death); only the global episode limit stays an unpenalized bootstrap truncation.
+    timeout_valid = (weights['timeout'] == 0 if mode == 'truncation_bootstrap'
+                     else weights['death'] <= weights['timeout'] < 0 if mode == 'idle_terminal_penalty'
+                     else False)
+    if (not np.isfinite(values).all() or not 0 < gamma < 1 or not timeout_valid
+            or weights['step'] != 0 or weights['death'] >= 0
             or weights['damage'] > 0 or weights['completion'] <= settings['scale']):
         raise ValueError('Discounted distance objective requires unpenalized bootstrap cuts.')
 
