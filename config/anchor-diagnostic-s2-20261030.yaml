@@ -54,11 +54,11 @@ paths:
   rom: data/Super Mario Galaxy (USA) (En,Fr,Es).nkit.iso
   runs: runs/model-free/anchor-diagnostic-20261030/S2
   source_user: '%APPDATA%\Dolphin Emulator'
-  user: ".local\anchor-diagnostic-20261030\\S2\template"
+  user: .local/anchor-diagnostic-20261030/S2/template
   route: config/routes/smg1-human-landing-v2.json
   curriculum: .local\exploration-study-20261029\human-bank\bank.json
   tensorboard: runs/model-free/tensorboard
-  curriculum_progress: ".local\anchor-diagnostic-20261030\\S2\\curriculum-progress.json"
+  curriculum_progress: .local/anchor-diagnostic-20261030/S2/curriculum-progress.json
 replay:
   chunk_steps: 256
   enabled: false
