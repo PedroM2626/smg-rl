@@ -330,3 +330,32 @@ def test_overlapped_learning_collects_identically_and_defers_at_most_one_tick(tm
     assert results[True]['real_decisions'] == results[False]['real_decisions'] == 9
     assert results[True]['episodes_this_run'] == results[False]['episodes_this_run']
     assert 0 < results[False]['optimizer_updates'] - results[True]['optimizer_updates'] <= 1
+
+
+class JitterVector(AnchorVector):
+    """Even starts are exact anchor restores; odd starts report start jitter."""
+    def reset(self):
+        observation = super().reset()
+        self.reset_infos[0]['start_jitter_frames'] = 0 if self.episode % 2 == 0 else 7
+        return observation
+
+
+def test_jittered_starts_never_run_open_loop_demonstrations(tmp_path, monkeypatch):
+    config = load_config('config/iqn-smg1.yaml')
+    config['paths'].update(runs=str(tmp_path / 'runs'), tensorboard=str(tmp_path / 'tensorboard'))
+    config['environment'].update(image_size=40, assisted_start_jitter_frames=60)
+    config['parallel']['workers'] = 1
+    config['training']['device'] = 'cpu'
+    config['dqn'].update(capacity=32, learning_starts=2, batch_size=2, channels=2, hidden=32,
+                         train_every=1, target_update_interval=2, quantiles=4)
+    config['curriculum'] = {'enabled': True}
+    config['demonstration'] = {'sequences': {'anchor.state': [5, 6, 7]}, 'every_episodes': 10}
+    vector = JitterVector()
+    monkeypatch.setattr(dqn_training, 'MeasuredSubprocVecEnv', lambda *a, **k: vector)
+    run = dqn_training.train_dqn(config, 12)
+    import json
+
+    ledger = [json.loads(line) for line in (run / 'collector-steps.jsonl').read_text().splitlines()]
+    scripted_episodes = {row['worker_episodes'][0] for row in ledger if row['scripted'][0]}
+    assert scripted_episodes == {2, 4}
+    assert [a for e, a in vector.sent if e in (2, 4)] == [5, 6, 7, 5, 6, 7]

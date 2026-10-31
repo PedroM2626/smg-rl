@@ -214,7 +214,9 @@ class GalaxyEnv(gym.Env):
         # phase so a policy cannot replay one memorized open-loop sequence from an exact state.
         verified = self.telemetry
         maximum = self.config['environment'].get('assisted_start_jitter_frames', 0) if curated else 0
-        self.start_jitter_frames = int(self.np_random.integers(maximum + 1)) if maximum else 0
+        exact = self.config['environment'].get('assisted_start_exact_probability', 0.)
+        self.start_jitter_frames = (int(self.np_random.integers(maximum + 1))
+                                    if maximum and self.np_random.random() >= exact else 0)
         if self.start_jitter_frames:
             previous = self.backend.config['parallel']['frame_skip']
             self.backend.config['parallel']['frame_skip'] = self.start_jitter_frames

@@ -140,8 +140,10 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
     def schedule(index, reset_info):
         # Every Nth anchor start per worker replays the demonstration; the rest are policy-driven.
         worker_starts[index] += 1
-        scripted[index] = bool(demonstration and reset_info.get('anchor_id') in demonstration['sequences']
-                               and worker_starts[index] % demonstration['every_episodes'] == 1)
+        # With start jitter, open-loop demonstrations run only from exact (unjittered) anchor states.
+        exact = (reset_info.get('start_jitter_frames', 0) == 0 if config['environment'].get('assisted_start_jitter_frames')
+                 else worker_starts[index] % demonstration['every_episodes'] == 1) if demonstration else False
+        scripted[index] = bool(demonstration and reset_info.get('anchor_id') in demonstration['sequences'] and exact)
         script_anchor[index] = reset_info.get('anchor_id')
         script_step[index] = 0
     stop_reason = None
