@@ -80,7 +80,11 @@ def demonstration_schedule(config):
     margin = settings.get('margin')
     if margin is not None and (not np.isfinite(margin) or margin <= 0):
         raise ValueError('A demonstration margin must be positive and finite.')
-    return {'sequences': sequences, 'every_episodes': every, 'margin': margin}
+    # 'uniform_prefix' replays a random-length prefix and hands over to the policy (backward from demonstration).
+    handover = settings.get('handover', 'full')
+    if handover not in ('full', 'uniform_prefix'):
+        raise ValueError('A demonstration handover is either full or uniform_prefix.')
+    return {'sequences': sequences, 'every_episodes': every, 'margin': margin, 'handover': handover}
 
 
 def deadline_timestamp(value):
@@ -135,7 +139,8 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
     full_stars, assisted_stars, deaths, damage, episode_counts = 0, 0, 0, 0, 0
     scripted_stars, scripted_episodes = 0, 0
     scripted, script_step, worker_starts = [False] * workers, [0] * workers, [0] * workers
-    script_anchor = [None] * workers
+    script_anchor, script_length = [None] * workers, [0] * workers
+    handover_rng = np.random.default_rng(config['training']['seed'] + 7919)
 
     def schedule(index, reset_info):
         # Every Nth anchor start per worker replays the demonstration; the rest are policy-driven.
@@ -146,6 +151,10 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
         scripted[index] = bool(demonstration and reset_info.get('anchor_id') in demonstration['sequences'] and exact)
         script_anchor[index] = reset_info.get('anchor_id')
         script_step[index] = 0
+        if scripted[index]:
+            length = len(demonstration['sequences'][script_anchor[index]])
+            script_length[index] = (int(handover_rng.integers(length + 1))
+                                    if demonstration['handover'] == 'uniform_prefix' else length)
     stop_reason = None
     memory_guard_snapshot = None
     visual_parameter = next(agent.online.conv.parameters())
@@ -240,7 +249,7 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
             for index in range(workers):
                 if scripted[index]:
                     sequence = demonstration['sequences'][script_anchor[index]]
-                    if script_step[index] < len(sequence):
+                    if script_step[index] < script_length[index]:
                         actions[index] = sequence[script_step[index]]
                         demonstrated[index] = True
                     script_step[index] += 1  # After the sequence, the policy continues the episode.
@@ -294,7 +303,8 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
                     attempt['timeouts'] += int(not info.get('dead') and not star)
                     attempt['best_opening_advance'] = max(attempt['best_opening_advance'], advance)
                     attempt['recent_opening_advances'] = (attempt['recent_opening_advances'] + [advance])[-100:]
-                    attempts_ledger.write(json.dumps({'mission': name, 'start_kind': kind,
+                    handed = {'script_prefix': script_length[index]} if script[index] else {}
+                    attempts_ledger.write(json.dumps({'mission': name, 'start_kind': kind, **handed,
                         'attempt': attempt['completed'], 'worker': index, 'worker_episode': info['worker_episode'],
                         'real_decisions': agent.real_decisions, 'optimizer_updates': agent.updates,
                         'ram_star': bool(star), 'dead': bool(info.get('dead')), 'opening_advance': advance,

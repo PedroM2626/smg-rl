@@ -359,3 +359,34 @@ def test_jittered_starts_never_run_open_loop_demonstrations(tmp_path, monkeypatc
     scripted_episodes = {row['worker_episodes'][0] for row in ledger if row['scripted'][0]}
     assert scripted_episodes == {2, 4}
     assert [a for e, a in vector.sent if e in (2, 4)] == [5, 6, 7, 5, 6, 7]
+
+
+def test_uniform_prefix_handover_replays_a_prefix_then_the_policy_continues(tmp_path, monkeypatch):
+    import json
+
+    config = load_config('config/iqn-smg1.yaml')
+    config['paths'].update(runs=str(tmp_path / 'runs'), tensorboard=str(tmp_path / 'tensorboard'))
+    config['environment']['image_size'] = 40
+    config['parallel']['workers'] = 1
+    config['training']['device'] = 'cpu'
+    config['dqn'].update(capacity=64, learning_starts=2, batch_size=2, channels=2, hidden=32,
+                         train_every=1, target_update_interval=2, quantiles=4)
+    config['curriculum'] = {'enabled': True}
+    config['demonstration'] = {'sequences': {'anchor.state': [5, 6, 7]}, 'every_episodes': 2,
+                               'handover': 'uniform_prefix'}
+    vector = AnchorVector()
+    monkeypatch.setattr(dqn_training, 'MeasuredSubprocVecEnv', lambda *a, **k: vector)
+    run = dqn_training.train_dqn(config, 48)
+    ledger = [json.loads(line) for line in (run / 'collector-steps.jsonl').read_text().splitlines()]
+    attempts = [json.loads(line) for line in (run / 'attempts.jsonl').read_text().splitlines()]
+    prefixes = {a['worker_episode']: a['script_prefix'] for a in attempts if a['start_kind'] == 'scripted_demonstration'}
+    assert prefixes and all('script_prefix' not in a for a in attempts if a['start_kind'] != 'scripted_demonstration')
+    for episode, prefix in prefixes.items():
+        rows = [r for r in ledger if r['worker_episodes'][0] == episode]
+        # Only the replayed prefix is demonstrated; it matches the start of the sequence.
+        assert [r['actions'][0] for r in rows if r['demonstrated'][0]] == [5, 6, 7][:prefix]
+        assert all(r['scripted'][0] for r in rows)
+    assert len(set(prefixes.values())) > 1
+    config['demonstration']['handover'] = 'random'
+    with pytest.raises(ValueError, match='handover'):
+        dqn_training.demonstration_schedule(config)
