@@ -115,7 +115,7 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
     backward = None
     if config.get('curriculum', {}).get('mode') == 'human_backward_v2' and config['curriculum']['enabled']:
         backward = BackwardCurriculum(config['paths']['curriculum'], config['curriculum']['spec_sha256'],
-                                      config['paths']['curriculum_progress'])
+                                      config['paths']['curriculum_progress'], config.get('frontier_rule'))
     config['model_free_run'] = 'online'
     run = new_run(config, 'dqn')
     atomic_json(run / 'controller.json', {'pid': os.getpid(), 'created_time': psutil.Process().create_time(),
@@ -140,9 +140,11 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
     scripted_stars, scripted_episodes = 0, 0
     scripted, script_step, worker_starts = [False] * workers, [0] * workers, [0] * workers
     script_anchor, script_length = [None] * workers, [0] * workers
+    probe, frontier_starts, probe_stars, probe_episodes = [False] * workers, 0, 0, 0
     handover_rng = np.random.default_rng(config['training']['seed'] + 7919)
 
     def schedule(index, reset_info):
+        nonlocal frontier_starts
         # Every Nth anchor start per worker replays the demonstration; the rest are policy-driven.
         worker_starts[index] += 1
         # With start jitter, open-loop demonstrations run only from exact (unjittered) anchor states.
@@ -151,6 +153,12 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
         scripted[index] = bool(demonstration and reset_info.get('anchor_id') in demonstration['sequences'] and exact)
         script_anchor[index] = reset_info.get('anchor_id')
         script_step[index] = 0
+        # Under the hybrid rule every Nth policy start at the frontier acts greedily (epsilon 0).
+        probe[index] = False
+        if (backward is not None and backward.rule and not scripted[index]
+                and reset_info.get('start_kind') == 'curriculum' and script_anchor[index] == backward.current()):
+            frontier_starts += 1
+            probe[index] = frontier_starts % backward.rule['probe_every'] == 0
         if scripted[index]:
             length = len(demonstration['sequences'][script_anchor[index]])
             script_length[index] = (int(handover_rng.integers(length + 1))
@@ -177,6 +185,7 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
             'full_start_stars_this_run': full_stars, 'assisted_stars_this_run': assisted_stars,
             'scripted_demonstration_stars_this_run': scripted_stars,
             'scripted_demonstration_episodes_this_run': scripted_episodes,
+            'frontier_probe_stars_this_run': probe_stars, 'frontier_probe_episodes_this_run': probe_episodes,
             'episodes_this_run': episode_counts, 'deaths_this_run': deaths, 'nonfatal_hp_lost_this_run': damage,
             'attempts': agent.attempts,
             'completed_attempts': sum(v['completed'] for v in agent.attempts.values()),
@@ -244,8 +253,12 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
             policy_updates = agent.updates
             with profiler.measure('policy_inference'):
                 actions, actions_metrics = agent.act(observation)
+                if any(probe):
+                    greedy, _ = agent.act(observation, evaluate=True)
+                    mask = np.asarray(probe)
+                    actions[mask] = greedy[mask]
             # Episode-level label (outcome accounting) versus per-decision label (margin loss).
-            script, demonstrated = list(scripted), [False] * workers
+            script, probed, demonstrated = list(scripted), list(probe), [False] * workers
             for index in range(workers):
                 if scripted[index]:
                     sequence = demonstration['sequences'][script_anchor[index]]
@@ -267,7 +280,7 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
             ledger.write(json.dumps({'real_before_action': agent.real_decisions - workers,
                 'policy_optimizer_updates': policy_updates, 'actions': actions.tolist(),
                 'worker_episodes': [i['worker_episode'] for i in infos],
-                'episode_steps': [i['episode_step'] for i in infos], 'scripted': script,
+                'episode_steps': [i['episode_step'] for i in infos], 'scripted': script, 'probed': probed,
                 'demonstrated': demonstrated}) + '\n')
             for index in range(workers):
                 info = infos[index]
@@ -287,6 +300,11 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
                         kind = 'scripted_demonstration'
                         scripted_stars += int(bool(star))
                         scripted_episodes += 1
+                    elif probed[index]:
+                        kind = 'frontier_probe'
+                        probe_stars += int(bool(star))
+                        probe_episodes += 1
+                        backward.record_probe(info['frontier_state'], bool(star), agent.real_decisions)
                     full_stars += int(bool(star) and kind == 'full_start')
                     assisted_stars += int(bool(star) and kind == 'curriculum')
                     if backward is not None and kind == 'curriculum':

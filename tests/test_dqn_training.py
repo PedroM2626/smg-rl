@@ -390,3 +390,49 @@ def test_uniform_prefix_handover_replays_a_prefix_then_the_policy_continues(tmp_
     config['demonstration']['handover'] = 'random'
     with pytest.raises(ValueError, match='handover'):
         dqn_training.demonstration_schedule(config)
+
+
+class FrontierVector(AnchorVector):
+    def step(self, actions):
+        observation, rewards, done, (info,) = super().step(actions)
+        return observation, rewards, done, ({**info, 'frontier_state': 'anchor.state'},)
+
+
+def test_hybrid_frontier_probes_act_greedily_and_are_kept_out_of_training_attempts(tmp_path, monkeypatch):
+    import json
+
+    from smg_rl.checkpoints import digest
+
+    config = load_config('config/iqn-smg1.yaml')
+    config['paths'].update(runs=str(tmp_path / 'runs'), tensorboard=str(tmp_path / 'tensorboard'))
+    bank = tmp_path / 'bank.json'
+    bank.write_text(json.dumps({'schema': 2, 'source_full_start_ram_star': True,
+                                'entries': [{'file': 'anchor.state'}]}))
+    config['paths'].update(curriculum=str(bank), curriculum_progress=str(tmp_path / 'progress.json'))
+    config['environment']['image_size'] = 40
+    config['parallel']['workers'] = 1
+    config['training']['device'] = 'cpu'
+    config['dqn'].update(capacity=64, learning_starts=2, batch_size=2, channels=2, hidden=32,
+                         train_every=1, target_update_interval=2, quantiles=4)
+    config['curriculum'] = {'enabled': True, 'mode': 'human_backward_v2', 'spec_sha256': digest(bank)}
+    config['frontier_rule'] = {'mode': 'greedy_hybrid', 'probe_every': 2, 'probe_streak': 2,
+                               'robust_window': 10, 'robust_min': .2}
+    original = DistributionalAgent.act
+
+    def labelled(self, observation, evaluate=False, **kwargs):
+        actions, metrics = original(self, observation, evaluate=evaluate, **kwargs)
+        return np.full_like(actions, 7 if evaluate else 0), metrics
+
+    monkeypatch.setattr(DistributionalAgent, 'act', labelled)
+    vector = FrontierVector()
+    monkeypatch.setattr(dqn_training, 'MeasuredSubprocVecEnv', lambda *a, **k: vector)
+    run = dqn_training.train_dqn(config, 24)
+    ledger = [json.loads(line) for line in (run / 'collector-steps.jsonl').read_text().splitlines()]
+    attempts = [json.loads(line) for line in (run / 'attempts.jsonl').read_text().splitlines()]
+    probed = {a['worker_episode'] for a in attempts if a['start_kind'] == 'frontier_probe'}
+    assert probed == {2, 4, 6, 8}
+    assert all(r['actions'][0] == (7 if r['worker_episodes'][0] in probed else 0) for r in ledger)
+    status = json.loads((run / 'status.json').read_text())
+    assert status['frontier_probe_episodes_this_run'] == 4
+    progress = json.loads((tmp_path / 'progress.json').read_text())
+    assert progress['assisted_attempts'] == 4 and progress['probes'] == [False, False]

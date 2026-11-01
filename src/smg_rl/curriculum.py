@@ -76,10 +76,15 @@ class CurriculumBank:
 
 
 class BackwardCurriculum:
-    """The learner alone advances a signed frontier after eight of ten RAM stars."""
+    """The learner alone advances a signed frontier after eight of ten RAM stars.
 
-    def __init__(self, bank_path, expected_hash, progress_path):
+    The optional hybrid rule instead needs consecutive frozen greedy probe stars from the
+    frontier plus a minimum training-episode star rate over a longer window.
+    """
+
+    def __init__(self, bank_path, expected_hash, progress_path, rule=None):
         self.path = Path(progress_path)
+        self.rule = validate_frontier_rule(rule)
         bank_path = Path(bank_path)
         if digest(bank_path) != expected_hash:
             raise ValueError('Backward scheduler bank hash mismatch.')
@@ -98,6 +103,8 @@ class BackwardCurriculum:
                           'frontier': len(self.entries) - 1, 'recent': [], 'events': [],
                           'assisted_attempts': 0, 'assisted_ram_stars': 0}
             self.save()
+        if self.rule:
+            self.state.setdefault('probes', [])
 
     def save(self):
         if not atomic_json(self.path, self.state):
@@ -108,14 +115,60 @@ class BackwardCurriculum:
             raise ValueError('An assisted attempt lacks a verified anchor.')
         self.state['assisted_attempts'] += 1
         self.state['assisted_ram_stars'] += int(bool(ram_star))
-        current = self.entries[self.state['frontier']]['file']
-        if anchor == current:
-            self.state['recent'] = (self.state['recent'] + [bool(ram_star)])[-10:]
-            if len(self.state['recent']) == 10 and sum(self.state['recent']) >= 8 and self.state['frontier'] > 0:
-                previous = self.state['frontier']
-                self.state['frontier'] -= 1
-                self.state['events'].append({'real_decisions': real_decisions,
-                    'from_frontier': previous, 'to_frontier': self.state['frontier'],
-                    'ram_stars_last10': sum(self.state['recent'])})
-                self.state['recent'] = []
+        if anchor == self.current():
+            window = self.rule['robust_window'] if self.rule else 10
+            self.state['recent'] = (self.state['recent'] + [bool(ram_star)])[-window:]
+            self._advance(real_decisions)
         self.save()
+
+    def current(self):
+        return self.entries[self.state['frontier']]['file']
+
+    def record_probe(self, anchor, ram_star, real_decisions):
+        """Record a frozen greedy frontier probe; it never counts as a training attempt."""
+        if not self.rule:
+            raise ValueError('Greedy frontier probes require the hybrid frontier rule.')
+        if anchor not in {e['file'] for e in self.entries}:
+            raise ValueError('A frontier probe lacks a verified anchor.')
+        if anchor == self.current():
+            self.state['probes'] = (self.state['probes'] + [bool(ram_star)])[-self.rule['probe_streak']:]
+            self._advance(real_decisions)
+        self.save()
+
+    def _advance(self, real_decisions):
+        recent = self.state['recent']
+        if self.rule:
+            streak = self.rule['probe_streak']
+            ready = (len(recent) == self.rule['robust_window']
+                     and sum(recent) >= self.rule['robust_min'] * len(recent)
+                     and len(self.state['probes']) == streak and all(self.state['probes']))
+        else:
+            ready = len(recent) == 10 and sum(recent) >= 8
+        if not ready or self.state['frontier'] == 0:
+            return
+        previous = self.state['frontier']
+        self.state['frontier'] -= 1
+        event = {'real_decisions': real_decisions, 'from_frontier': previous,
+                 'to_frontier': self.state['frontier']}
+        if self.rule:
+            event.update(rule=self.rule['mode'], ram_stars_recent=sum(recent), recent_window=len(recent),
+                         greedy_probe_streak=len(self.state['probes']))
+            self.state['probes'] = []
+        else:
+            event['ram_stars_last10'] = sum(recent)
+        self.state['events'].append(event)
+        self.state['recent'] = []
+
+
+def validate_frontier_rule(rule):
+    """None keeps eight of ten training stars; 'greedy_hybrid' adds frozen greedy probes."""
+    if rule is None:
+        return None
+    keys = {'mode', 'probe_every', 'probe_streak', 'robust_window', 'robust_min'}
+    if (set(rule) != keys or rule['mode'] != 'greedy_hybrid'
+            or any(type(rule[k]) is not int for k in ('probe_every', 'probe_streak', 'robust_window'))
+            or not 2 <= rule['probe_every'] <= 100 or not 1 <= rule['probe_streak'] <= 10
+            or not 10 <= rule['robust_window'] <= 100
+            or type(rule['robust_min']) is not float or not .05 <= rule['robust_min'] <= .8):
+        raise ValueError('Invalid hybrid frontier rule.')
+    return dict(rule)

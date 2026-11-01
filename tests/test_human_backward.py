@@ -145,3 +145,37 @@ def test_only_a_labeled_anchor_diagnostic_may_start_every_attempt_assisted(tmp_p
                                 anchor_diagnostic=True)
     rng = np.random.default_rng(3)
     assert all(diagnostic.choose(rng, 1) == entry for _ in range(50))
+
+
+def test_hybrid_frontier_needs_greedy_probe_streak_and_robust_training_rate(tmp_path):
+    bank = tmp_path / 'bank.json'
+    bank.write_text(json.dumps({'schema': 2, 'source_full_start_ram_star': True,
+        'entries': [{'file': f'anchor-{i}.state'} for i in range(3)]}))
+    rule = {'mode': 'greedy_hybrid', 'probe_every': 10, 'probe_streak': 2,
+            'robust_window': 10, 'robust_min': .2}
+    scheduler = BackwardCurriculum(bank, digest(bank), tmp_path / 'progress.json', rule)
+    for i in range(10):
+        scheduler.record('anchor-2.state', i < 2, i)
+    assert scheduler.state['frontier'] == 2  # Robust rate alone is not enough.
+    scheduler.record_probe('anchor-2.state', True, 10)
+    scheduler.record_probe('anchor-1.state', True, 11)  # Probes from another anchor never count.
+    assert scheduler.state['frontier'] == 2
+    scheduler.record_probe('anchor-2.state', False, 12)
+    scheduler.record_probe('anchor-2.state', True, 13)
+    assert scheduler.state['frontier'] == 2  # The streak must be consecutive.
+    scheduler.record_probe('anchor-2.state', True, 14)
+    assert scheduler.state['frontier'] == 1
+    assert scheduler.state['probes'] == [] and scheduler.state['recent'] == []
+    assert scheduler.state['events'][-1]['rule'] == 'greedy_hybrid'
+    # Greedy competence alone cannot replace the robust training rate.
+    for i in range(10):
+        scheduler.record('anchor-1.state', i == 0, 20 + i)
+    scheduler.record_probe('anchor-1.state', True, 30)
+    scheduler.record_probe('anchor-1.state', True, 31)
+    assert scheduler.state['frontier'] == 1
+    restored = BackwardCurriculum(bank, digest(bank), tmp_path / 'progress.json', rule)
+    assert restored.state == scheduler.state
+    with pytest.raises(ValueError, match='hybrid frontier rule'):
+        BackwardCurriculum(bank, digest(bank), tmp_path / 'progress.json').record_probe('anchor-1.state', True, 32)
+    with pytest.raises(ValueError, match='Invalid hybrid'):
+        BackwardCurriculum(bank, digest(bank), tmp_path / 'progress.json', {**rule, 'robust_min': 1})
