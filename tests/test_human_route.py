@@ -36,6 +36,37 @@ def test_human_route_requires_order_motion_and_landing():
     assert not route.eligible  # A mid-level start is not the canonical full start.
 
 
+def test_schema5_lookahead_skips_a_missed_waypoint_only_when_a_later_one_is_swept():
+    spec = {'schema': 5, 'waypoints': [[0, 0, 0], [100, 0, 0], [200, 0, 0], [300, 0, 0], [400, 0, 0]],
+            'waypoint_radius': 10, 'corridor_radius': 10, 'height_tolerance': 100,
+            'exit_confirmations': 1, 'max_sample_distance': 150, 'requires_grounded': True,
+            'landing_radius': 45}
+    start = Telemetry((0, 0, 0), 1, 'BeltConveyerExGalaxy', 1, 2, 3, 0,
+                      False, False, health=3, grounded=True)
+    strict, skipping = RouteProgress(spec), RouteProgress({**spec, 'waypoint_lookahead': 1})
+    # The path passes 50 units beside waypoint 1, then sweeps waypoint 2.
+    path = [(60, 0, 50), (120, 0, 50), (200, 0, 0)]
+    for route in (strict, skipping):
+        route.reset(start)
+        route.update(start)
+        paid = sum(route.update(replace(start, position=p)) for p in path)
+        assert route.eligible
+        if route is strict:
+            assert paid == 0 and route.committed_segment == 0
+        else:
+            assert paid == pytest.approx(.5) and route.committed_segment == 2
+    # Lookahead never jumps past more than its bound.
+    skipping.reset(start)
+    skipping.update(start)
+    assert skipping.update(replace(start, position=(100, 0, 60))) == 0
+    assert skipping.update(replace(start, position=(240, 0, 60))) == 0
+    assert skipping.update(replace(start, position=(300, 0, 0))) == 0
+    with pytest.raises(ValueError):
+        RouteProgress({**spec, 'waypoint_lookahead': 7})
+    with pytest.raises(ValueError):
+        RouteProgress({**spec, 'schema': 4, 'waypoint_lookahead': 1})
+
+
 def test_schema5_does_not_pay_airborne_visit_after_return_to_start():
     spec = {'schema': 5, 'waypoints': [[0, 0, 0], [100, 0, 0], [200, 0, 0]],
             'waypoint_radius': 10, 'corridor_radius': 10, 'height_tolerance': 100,

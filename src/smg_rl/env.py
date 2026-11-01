@@ -84,7 +84,9 @@ class GalaxyEnv(gym.Env):
                 raise ValueError("Route belongs to another game.")
             if config.get("route_reward", {}).get("enabled") and digest(route_path) != config["route_reward"]["spec_sha256"]:
                 raise ValueError("Route reward specification integrity mismatch.")
-            self.route = RouteProgress(spec)
+            # The signed route file stays unchanged; lookahead is a regional reward setting.
+            lookahead = config.get('regional_reward', {}).get('waypoint_lookahead', 0)
+            self.route = RouteProgress({**spec, 'waypoint_lookahead': lookahead} if lookahead else spec)
         self.archives = {}
         self.regional_settings = config.get('regional_reward', {})
         self.regional = self.regional_settings.get('enabled', False)

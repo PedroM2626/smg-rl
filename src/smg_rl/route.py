@@ -27,6 +27,9 @@ class RouteProgress:
         if self.schema == 5 and (not np.isfinite(specification.get('landing_radius', 0))
                                  or specification.get('landing_radius', 0) <= 0):
             raise ValueError('Landing radius must be positive and finite.')
+        lookahead = specification.get('waypoint_lookahead', 0)
+        if type(lookahead) is not int or not 0 <= lookahead <= 6 or (lookahead and self.schema != 5):
+            raise ValueError('Waypoint lookahead is a small integer for schema-5 routes only.')
         self.reset(None)
 
     def reset(self, telemetry, segment=None):
@@ -125,20 +128,17 @@ class RouteProgress:
         if length2 > 1e-6:
             # A point reached in the air can be credited only after a later landing.
             # Every waypoint must intersect the actually observed motion segment.
-            last_t = 0.0
+            # An optional lookahead lets a swept later waypoint skip up to that many missed ones.
+            last_t, lookahead = 0.0, self.specification.get('waypoint_lookahead', 0)
             while self.pending_segment < len(self.lengths):
-                end = self.points[self.pending_segment + 1]
-                approach = float((end - previous)[[0, 2]] @ horizontal)
-                if approach <= 0:
+                for target in range(self.pending_segment + 1,
+                                    min(self.pending_segment + 2 + lookahead, len(self.points))):
+                    t = self._sweep(previous, delta, horizontal, length2, self.points[target])
+                    if t is not None and t >= last_t:
+                        break
+                else:
                     break
-                t = float(np.clip(approach / length2, 0, 1))
-                if t < last_t:
-                    break
-                nearest = previous + t * delta
-                if (np.linalg.norm((end - nearest)[[0, 2]]) > self.specification['waypoint_radius']
-                        or abs(end[1] - nearest[1]) > self.specification['height_tolerance']):
-                    break
-                self.pending_segment += 1
+                self.pending_segment = target
                 last_t = t
         if telemetry.grounded is not True:
             return 0.0
@@ -156,6 +156,18 @@ class RouteProgress:
         self.best = max(self.best, value)
         self.exited |= self.pending_segment == len(self.lengths)
         return credit
+
+    def _sweep(self, previous, delta, horizontal, length2, end):
+        """Return where the observed motion segment passes a waypoint, or None if it misses."""
+        approach = float((end - previous)[[0, 2]] @ horizontal)
+        if approach <= 0:
+            return None
+        t = float(np.clip(approach / length2, 0, 1))
+        nearest = previous + t * delta
+        if (np.linalg.norm((end - nearest)[[0, 2]]) > self.specification['waypoint_radius']
+                or abs(end[1] - nearest[1]) > self.specification['height_tolerance']):
+            return None
+        return t
 
     def _update_endpoint_crossing(self, point):
         """Resolve crossings now; proximity must not manufacture later progress.
