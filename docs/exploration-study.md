@@ -153,3 +153,12 @@ found a 224-decision sequence to the RAM star. Under the S5d training
 configuration it completed with reward 30.29. `config/anchor-diagnostic-s5e-20261103.yaml`
 uses it as the waypoint-14 demonstration; the replay signature is unchanged. The
 sequence is an assisted control fixture, not a learned completion.
+
+S5e block 11 (November 3, 2026) resumed the block-10 checkpoint for one hour
+(wall-clock stop, audit passed): 913,914 real decisions and 9,456 completed
+attempts in total (78,720 new decisions). Frozen greedy probes from waypoint 14
+reached the RAM star 6 of 24 times and training attempts from waypoint 14
+reached it 5 of 231 times, so the hybrid rule moved the frontier from waypoint
+14 to waypoint 08 during the block. All 119 training attempts and 13 probes
+from waypoint 08 failed; their best route fraction was 0.47. Demonstration
+episodes (41 of 136 stars from waypoint 14) are not counted as policy successes.
