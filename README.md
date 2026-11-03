@@ -1,80 +1,40 @@
 # SMG RL
 
-Current work: the bounded [exploration study](docs/exploration-study.md)
-supersedes the October29 day run. It compares corrected timeout/discount and
-replay settings, feasible eight-label long-jump controls, and a validated human
-backward curriculum. Final frozen results are pending; assisted starts and
-scripted control checks do not establish learned full-start completion.
-
 Visual reinforcement-learning experiments for **Super Mario Galaxy** and
-**Super Mario Galaxy 2** on Windows, using Dolphin. This is a research project:
-no full-start, RAM-confirmed mission completion has been demonstrated in the
-experiments reported here.
+**Super Mario Galaxy 2** on Windows, using a patched Dolphin emulator. This is a
+research project. **No learned policy has yet reached a RAM-confirmed star from
+the canonical mission start.** Assisted starts, scripted searches, detector
+fixtures and imagined trajectories are reported separately and never counted as
+learned mission completions.
 
-The later [frozen SMG1 IQN evaluation](docs/frozen-iqn-evaluation-20261027.md)
-completed six canonical attempts without a star. Its goal-distance candidate was
-analyzed offline. A separately signed [frozen-vision genetic proximity experiment](docs/genetic-goal-distance-20261027.md)
-selects full XYZ distance without a mapped route; it does not change the IQN reward.
-Its five-minute pilot ended with no star and no improvement over its imported
-champion; [the audit](docs/genetic-goal-distance-20261027.md#completed-pilot-and-audit)
-separates completed attempts, partial attempts and geometric metrics.
-The later owner-requested [three-hour run](docs/genetic-goal-distance-20261027.md#owner-requested-three-hour-run)
-also produced no star or improvement over its reevaluated initial champion.
-The subsequent [robust-selection calibration](docs/robust-genetic-plan-20261027.md#calibration-result-blocked)
-failed its preregistered viability gate; neither proposed comparison arm ran.
-The latest [expanding-route IQN trial](docs/dynamic-route-night.md#completed-result)
-stopped after two main blocks without a validated route extension or a star.
-The [experiment history](docs/experiment-history.md) summarizes findings,
-negative results and comparison limits across the project.
-The subsequent [matched reward-scale comparison](docs/reward-scale-study-20261028.md#completed-matched-comparison)
-failed its preregistered gate in both training seeds; no larger block was started.
-The later [chocolate-frontier exploration](docs/chocolate-frontier-search-20261028.md)
-reproduced partial scripted paths from the full start, but found no stable
-archive candidate or learned mission completion; its demonstration comparison
-completed with zero stars and did not pass its continuation gate.
-The subsequent [scripted Sweet Sweet search](docs/sweet-manual-search-20261028.md)
-replayed a longer partial path from the initial slot; it did not reach a star.
+## Current status (November 3, 2026)
 
-## Current evidence
+The active line is a backward human-anchor curriculum on SMG1 Sweet Sweet Galaxy
+(Rocky Road), documented block by block in the
+[exploration study](docs/exploration-study.md):
 
-The October 29 [kernel-memory diagnosis](docs/kernel-memory-diagnosis-20261029.md)
-corrects an invalid worker audio-backend name that triggered Windows audio
-start/stop activity during frame stepping. A short matched pause/resume check
-reduced ETW growth by 99.93%. After the owner restarted Windows, a native
-preflight showed no ETW growth and the
-[bounded 24-hour SMG1 IQN continuation](docs/iqn-day-20261029.md) started with
-four workers and six-hour reports, ending no later than October 30 at 13:12 BRT.
-Inspect its actual ledger for live results; this is not a completion claim.
+- A human full-start recording that reached the RAM star provides eleven verified
+  intermediate savestate anchors (route waypoints 01, 02, 04, 08, 14, 18, 23,
+  29, 34, 38 and 40). Training starts at an anchor (the *frontier*) and the frontier
+  moves toward the canonical start as the policy masters each section.
+- In frozen greedy evaluation (`record-dqn`, epsilon 0, no learning) of the
+  S5b block-8 checkpoint, six of six seeds started from waypoint 23 reached the
+  RAM star in 167 decisions. Greedy starts from waypoints 18 and 14 timed out,
+  and the canonical start died after 27 decisions. These are assisted-anchor
+  results, not full-start completions.
+- In S5c block 9 the hybrid frontier rule moved the frontier from waypoint 23 to
+  waypoint 18. All attempts from waypoint 18 in that block failed.
+- A route-aware savestate beam search found a 175-decision sequence from
+  waypoint 18 to the RAM star. It was confirmed under the training configuration's
+  route credit and idle limit. `config/anchor-diagnostic-s5d-20261103.yaml` uses it
+  as the waypoint-18 demonstration. The search result is an assisted control
+  fixture, not a learned completion.
 
-In the October 27, 2026 audit, an earlier SMG1 IQN/IMPALA allocation stopped
-after approximately 2 hours 18 minutes because the disk filled. The intended
-four hours were **not** completed. Its last valid checkpoint contains 749,006
-real decisions and 12,125 completed attempts. A further 97,668 acknowledged
-decisions in the failed segment have no usable final policy/replay checkpoint.
-The failed checkpoint is incomplete and must not be resumed. See the
-[failure audit and recovery boundaries](docs/iqn-four-hours-20261027.md).
-
-The best full-start IQN collection trajectory in that failed segment reached a
-**6.586% start-to-goal geometric projection**, then died. This is not a native
-mission percentage, a fraction of the winding route, or a frozen-policy test;
-the weights at that point were not saved. No star was observed. Earlier frozen
-IQN/IMPALA evaluations also obtained no stars. The two SMG2 evaluations reached
-100% of their *mapped openings*, not 100% of their missions, before dying.
-[Frozen results](docs/impala-final-results.md) distinguish these outcomes.
-
-A separate full-visual genetic trial obtained no stars and did not improve its
-unchanged 8.0665% geometric baseline. The strongest mutated-vision candidate
-reached 7.9463%; these are collection maxima from different experiments, not a
-controlled IQN-versus-GA ranking. See [genetic results](docs/genetic-visual.md).
-
-The expanding-route trial subsequently collected 100,884 decisions and reached
-66.25% of the existing opening during exploratory collection, with no accepted
-route extensions or stars. Its best grounded start-to-goal projection was 4.016%;
-neither number is native mission progress or a frozen-policy success. Training
-was stopped at the October 28 review; check actual process and controller state
-before starting anything.
-The [current evidence and next-experiment guide](docs/current-status.md) is the
-entry point for status, limitations, and a bounded research plan.
+The final success gate is unchanged: a frozen greedy policy must reach the RAM
+star from the canonical start. Earlier studies are summarized in the
+[experiment history](docs/experiment-history.md). Some dated status pages, such as
+[current evidence](docs/current-status.md), describe the project as of their
+own dates.
 
 ## Tasks and inputs
 
@@ -84,130 +44,139 @@ entry point for status, limitations, and a bounded research plan.
 | Galaxy 2, `SB4E01` | Twisty Trials: Turning Turning Double Time | 3 | 4 |
 | Galaxy 1, `RMGE01` | Sweet Sweet Galaxy: Rocky Road | 1 | 2 |
 
-The near-star states validate the completion detector and do not establish
-learned success. Curated intermediate states have separate assisted-start labels.
-ROMs, savestates, worker profiles, run data, replay and checkpoints are local and
-ignored by Git. See [asset names and roles](data/README.md). The checked profiles
-were validated against the documented USA game builds and Dolphin 2609a; other
-versions require recalibration.
+Galaxy 1 slots 3 and 4 hold a validation-only
+[Center of the Universe setup](docs/center-of-universe.md); no training is enabled
+for it. The near-star states validate the completion detector and do not
+establish learned success. See [asset names and roles](data/README.md).
 
-## IQN method and reward profiles
+## Method of the active line
 
-The source SMG1 run used `config/smg1-six-two-hour.yaml`, six isolated Dolphin
-collectors and one model-free IQN learner with an IMPALA-style residual visual
-encoder. The online encoder is trainable; it was not frozen in IQN. It uses
-prioritized replay, double and dueling heads, three-step returns and noisy
-layers. The learner does not use a world model, imagined experience or visual
-curiosity. Rainbow, recurrent PPO, world models and genetic search are separate
-implemented experimental alternatives, not components automatically active in
-this run. The older Rainbow/IQN comparison used different signed settings; see
-[model-free implementation](docs/model-free.md).
+- **Observation:** four stacked, cropped 84 × 84 grayscale frames plus the
+  scenario identity. RAM coordinates, health and terminal signals are used for
+  reward, curriculum and evaluation only; they are not policy inputs.
+- **Actions:** `motor8-longjump-v1`, eight exclusive logical actions (none,
+  right, left, forward, backward, jump, spin, crouch). A crouch followed by a
+  jump during forward motion produces a long jump. Each decision advances 12
+  emulated frames. See [controls and signatures](docs/motor8-and-algorithms.md).
+- **Learner:** model-free IQN with an IMPALA-style residual encoder, prioritized
+  replay, three-step returns, gamma 0.997 and training epsilon 0.02, with three
+  native Dolphin collectors. No world model, imagined experience or intrinsic
+  reward is active. See [model-free implementation](docs/model-free.md).
+- **Reward:** discounted advance along a landing-audited human route
+  (`config/routes/smg1-human-landing-v2.json`, schema 5, waypoint lookahead 5),
+  RAM star +20, death or idle timeout -2, HP loss -0.25 per HP. A waypoint is
+  credited only after a grounded landing near it. An episode ends after 1,440
+  frames without route progress.
+- **Curriculum:** 20% of starts rehearse anchors after the frontier. The hybrid
+  frontier rule makes every tenth frontier start a frozen greedy probe. The
+  frontier moves only after two consecutive probe stars and at least 10% stars
+  over the last 30 training attempts there.
+- **Demonstrations:** every third episode replays a uniformly sampled prefix of a
+  savestate-search sequence for its anchor, then hands control to the policy. A
+  DQfD large-margin loss (0.8) is applied to demonstration transitions.
+  Demonstration episodes never count as policy successes or frontier evidence.
 
-The policy receives a stack of four cropped 84 × 84 grayscale images and the
-scenario identity. RAM coordinates, health and terminal signals are used for
-reward and evaluation, not fed to the policy. The selected `motor8-v1` profile
-provides eight exclusive logical actions: none, right, left, forward, backward,
-jump, spin and crouch. Each decision advances 12 emulated frames; jump and spin
-use the documented 8-frame press / 4-frame release pulse. The separate frame-4
-carry-direction experiment has different control semantics and must not be
-silently mixed with this replay. See [controls and signatures](docs/motor8-and-algorithms.md).
+The completion detector reads a scene-state address (`0x806A1BD8` for the tested
+SMG1 mission, `0x807D5318` for the tested SMG2 missions). Address interpretation
+depends on the validated game and emulator build. See [SMG1 memory](docs/smg1.md),
+[SMG2 memory](docs/memory-profile.md) and [damage limitations](docs/damage-and-recovery.md).
 
-The source SMG1 signed reward uses `regional-advance-undiscounted-v2`: new
-grounded high-water advance along a **mapped opening only**, star +20, death or
-timeout -2, and SMG1 nonfatal HP loss -0.25 per HP; no per-step or intrinsic
-bonus, with gamma 1. It includes a mix of canonical and verified assisted
-starts. Beyond the mapped route there is no incremental route reward until the
-star; additional training time alone is not evidence this limitation is fixed.
-The later expanding-route trial used canonical starts only, a fresh signed
-replay/optimizer and a different fixed normalization; see its
-[protocol and results](docs/dynamic-route-night.md). The old
-`regional-frame-potential-v1` profiles have different reward semantics.
-See [reward specification and attempt metrics](docs/simple-reward-impala.md).
+## Savestates
 
-The game-specific completion detector reads a scene-state address
-(`0x807D5318` for the tested SMG2 missions, `0x806A1BD8` for tested SMG1);
-SMG1 HP uses actor-relative offsets. Address interpretation depends on the
-validated game/emulator state. Full-start star evidence must be distinguished
-from detector fixtures, assisted resets, imagined transitions and projections.
-See [SMG2 memory](docs/memory-profile.md), [SMG1 memory](docs/smg1.md) and
-[damage limitations](docs/damage-and-recovery.md).
+Savestates are never committed to Git. They are published as assets of the
+[`states-v1` GitHub release](https://github.com/PedroM2626/smg-rl/releases/tag/states-v1)
+as uncompressed tar bundles with a SHA-256 manifest:
+
+| Bundle | Contents | Destination |
+| --- | --- | --- |
+| `smg-rl-states-core.tar` | Mission starts and near-star fixtures, slots 1-4 of both games | `data/` |
+| `smg-rl-states-smg1-human-bank.tar` | Eleven Sweet Sweet human anchors and `bank.json` | `.local/exploration-study-20261029/human-bank/` |
+| `smg-rl-states-regional-curriculum.tar` | Earlier SMG1/SMG2 assisted regional starts | `.local/regional-curriculum/` |
+
+Download the bundles into the repository root, then verify and install them:
+
+```powershell
+.\.venv\Scripts\python.exe scripts/manage_states.py verify smg-rl-states-core.tar
+.\.venv\Scripts\python.exe scripts/manage_states.py unpack smg-rl-states-core.tar smg-rl-states-smg1-human-bank.tar smg-rl-states-regional-curriculum.tar
+```
+
+`unpack` checks every file before installing any of them. It does not overwrite a
+different local file unless `--force` is given.
+
+Compatibility limits:
+
+- The savestates come from the USA game builds (`RMGE01`, `SB4E01`) and Dolphin
+  2609a. They require your own legally obtained game images. ROMs and checkpoints
+  are not distributed.
+- The anchor banks record the SHA-256 of the patched Dolphin executable that
+  created them. The curriculum loader rejects a bank when the configured
+  executable hash differs. A Dolphin built locally from the same source can
+  produce a different binary hash, in which case the anchor banks must be
+  re-prepared with that build.
+- A savestate is a RAM snapshot of a commercial game. Downloading and using one
+  is subject to the game's rights; it is not covered by this repository's MIT
+  license.
 
 ## Installation and local operation
 
-The validation-only [Center of the Universe setup](docs/center-of-universe.md)
-includes a separate human trajectory recorder and a pre-boss reference location.
-No training is enabled for that mission.
-
-To record a human Sweet Sweet demonstration with automatic death reset and
-RAM-confirmed success, see the [human recording guide](docs/human-recording.md).
-The guide also covers the two SMG2 recording launchers and the independently
-signed experimental SMG1 profile derived from a completed human route. Route
-coverage is not a native mission-completion signal or evidence of agent success.
-See the [experiment reuse register](docs/experiment-reuse-20261028.md) for prior
-results and the [one-hour-per-reward study](docs/reward-hour-pair-20261028.md)
-for its bounded protocol and evaluation limits.
-The [reward-density comparison](docs/human-route-density-pair-20261028.md)
-tests the full human route with two separate reward scales.
-The [progress interpretation](docs/progress-metric-interpretation-20261028.md)
-withdraws the faulty initial-segment score: it could report progress while Mario
-remained on the starting platform. Ordered human-observed landmark proximity
-now provides conservative candidates for visual review, not a level percentage.
-
-Use Windows, 64-bit Python 3.11 or 3.12, and user-provided game images and
-compatible savestates. The tested GPU environment used Python 3.11 and Torch
-2.14.1+cu126. The lock records exact packages and an extra CUDA index; availability
-of the pinned wheels on those indexes is required when recreating the environment.
-The previously cached installation wheels were removed during storage cleanup.
+Use Windows, 64-bit Python 3.11 or 3.12, an NVIDIA GPU for training, and your own
+game images in `data/`. The tested environment used Python 3.11 and Torch
+2.14.1+cu126. The lock file records exact packages and an extra CUDA index.
 
 ```powershell
 py -3.11 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements-gpu.lock.txt
 .\.venv\Scripts\python.exe -m pip install --no-deps -e .
 .\.venv\Scripts\python.exe -m pip check
-.\.venv\Scripts\python.exe -c "import torch; print(torch.cuda.is_available())"
 ```
 
-Native profiles require a separately patched Dolphin build and local assets;
-see [native build and prerequisites](docs/native-backend.md). Hidden operation
-still renders through a hidden surface; it is not renderer-free headless
-emulation. Keep the original emulator and user profile untouched. If paths
-differ, copy a complete YAML directly under `config/`, adjust its paths and
-revalidate. `--config` precedes the CLI subcommand.
-
-Read-only inspection (the historical failed run can contain a stale `running`
-status; check actual PIDs, creation times and failure evidence as well):
+Training and evaluation use the native backend, which requires a separately built
+and patched Dolphin 2609a (`scripts/build_native.ps1`). See
+[native build and prerequisites](docs/native-backend.md). Hidden workers still
+render through a hidden surface; this is not renderer-free emulation.
+Configuration files are complete profiles, not overlays. If your paths differ
+(for example the Dolphin executable), copy a YAML under `config/`, adjust
+`paths` and revalidate. `--config` precedes the subcommand.
 
 ```powershell
-.\.venv\Scripts\python.exe -m smg_rl.cli --help
-.\.venv\Scripts\python.exe scripts/run_smg1_six.py snapshot --state .local/iqn-four-hour-20261027-state.json
+# Bounded training block (resume needs a matching checkpoint directory with replay).
+.\.venv\Scripts\python.exe -m smg_rl.cli --config config/anchor-diagnostic-s5d-20261103.yaml train-dqn --steps 999996 --max-seconds 3600
+# Frozen greedy evaluation from the canonical start, no learning.
+.\.venv\Scripts\python.exe -m smg_rl.cli --config config/anchor-diagnostic-s5d-20261103.yaml record-dqn <checkpoint-dir> --seeds 1 2 3
+# Assisted frozen evaluation from a verified anchor.
+.\.venv\Scripts\python.exe -m smg_rl.cli --config config/anchor-diagnostic-s5d-20261103.yaml record-dqn <checkpoint-dir> --assisted-start --anchor human-waypoint-23.state
 ```
 
-The generic CLI default is `config/impala-iqn-smg2.yaml`, **not** the latest
-SMG1 branch configuration. Configuration files are complete profiles, not
-overlays. A checkpoint must match its game, model, action, reward and replay
-signatures; preserve the original checkpoint and audit before any continuation.
-The [CLI reference](docs/cli.md) documents examples and their side effects.
-They do not authorize an unbounded job or a retry of a failed allocation.
+A checkpoint must match its game, model, action, reward and replay signatures.
+Trained checkpoints are local and not distributed. The [CLI reference](docs/cli.md)
+documents commands and their side effects, and the
+[training guide](docs/training.md) covers longer runs. To record a human
+demonstration, see the [human recording guide](docs/human-recording.md).
 
-TensorBoard event files can contain episode reward, action occupancy, sampled
-path distance, grounded route advance and attempts, depending on the run. A
-local server is not necessarily running; to start one intentionally:
+TensorBoard event files are written under `runs/model-free/tensorboard`:
 
 ```powershell
 .\.venv\Scripts\python.exe -m tensorboard.main --logdir runs/model-free/tensorboard --host 127.0.0.1 --port 6006
 ```
 
-Visit <http://127.0.0.1:6006/> while that process is running. Historical event
-coverage varies; absent metrics must not be interpreted as zero.
+## Earlier experiments
+
+Before the human-anchor curriculum, full-start training produced no stars. In the
+October 27 audit, an SMG1 IQN/IMPALA allocation stopped after about 2 hours 18
+minutes because the disk filled. Its last valid checkpoint contains 749,006 real
+decisions and 12,125 completed attempts; see the
+[failure audit](docs/iqn-four-hours-20261027.md). Genetic search over visual
+policies and goal distance ([genetic results](docs/genetic-visual.md),
+[goal-distance trial](docs/genetic-goal-distance-20261027.md)), expanding routes,
+reward-scale comparisons and world models were also tested without a full-start
+star. The [experiment history](docs/experiment-history.md) records these findings,
+negative results and comparison limits.
 
 ## Documentation, tests and license
 
-- [Documentation index](docs/README.md) and [current status](docs/current-status.md)
-- [Experimental evidence and next steps](docs/current-status.md#next-experiments)
+- [Documentation index](docs/README.md) and [exploration study](docs/exploration-study.md)
 - [Training guide](docs/training.md), [CLI](docs/cli.md) and [reproducibility](docs/reproducibility.md)
-- [Historical PPO mathematics](docs/methodology.md), [world model](docs/world-model.md)
-  and [experiment protocol](docs/experiments.md)
-- [Storage cleanup and failure evidence](docs/iqn-four-hours-20261027.md#subsequent-verified-storage-cleanup)
+- [World model](docs/world-model.md) and [experiment protocol](docs/experiments.md)
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q
@@ -215,5 +184,6 @@ coverage varies; absent metrics must not be interpreted as zero.
 ```
 
 Portable tests do not boot Dolphin or prove that a policy solved a mission.
-Original project material uses the [MIT license](LICENSE); games, Dolphin and
-dependencies have separate rights, as described in [third-party notices](THIRD_PARTY_NOTICES.md).
+Original project material uses the [MIT license](LICENSE). Games, Dolphin and
+dependencies have separate rights, as described in
+[third-party notices](THIRD_PARTY_NOTICES.md).
