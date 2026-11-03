@@ -143,3 +143,13 @@ The timed and progress-tracking waypoint-18 searches died at gaps, and two wide-
 The route-aware search (`.local/anchor18-route-search-s1-20261103`) found the RAM star from waypoint 18 in 175 decisions. Its environment confirmation under the S5c training configuration ended complete and not dead, with 29.53 return. `config/anchor-diagnostic-s5d-20261103.yaml` (arm S5d-route18) replaces the 21-decision waypoint-18 demonstration with this sequence. The replay signature is unchanged, so S5d resumes the S5c block-9 checkpoint. The sequence is an assisted control fixture, not a learned completion.
 
 S5d block 10 (41,280 decisions, stopped on memory pressure after 27 minutes; resource-stop audit passed): with the route-aware waypoint-18 demonstration, the hybrid rule moved the frontier from waypoint 18 to waypoint 14 at 833,709 decisions, after two consecutive greedy probe stars and 3/30 training stars. From waypoint 18, policy starts scored 3/201 (0/100, then 3/100), greedy probes 2/22, and demonstration handovers 42/105. Waypoint 23 scored 3/12, waypoint 29 1/6, waypoint 34 6/14, waypoint 38 7/10 and waypoint 40 14/16. The 11-decision waypoint-14 demonstration ends near waypoint 18 rather than at the star, so a route-aware continuous search from waypoint 14 (`.local/anchor14-route-search-r1-20261103`) started before the next training block.
+
+Waypoint-14 route search and S5e (November 3, 2026): a route-aware beam search
+from `human-waypoint-14.state` (beam 32, long-jump macros, prefixed by the
+11-decision waypoint-14 demonstration) was chained in 45-minute rounds. Rounds
+reached route segments 24, 27, 35 and 40; the fourth ended with every node
+idle-cut after waypoint 40, so the chain restarted from its segment-38 node and
+found a 224-decision sequence to the RAM star. Under the S5d training
+configuration it completed with reward 30.29. `config/anchor-diagnostic-s5e-20261103.yaml`
+uses it as the waypoint-14 demonstration; the replay signature is unchanged. The
+sequence is an assisted control fixture, not a learned completion.
