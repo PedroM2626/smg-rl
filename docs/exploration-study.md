@@ -162,3 +162,12 @@ reached it 5 of 231 times, so the hybrid rule moved the frontier from waypoint
 14 to waypoint 08 during the block. All 119 training attempts and 13 probes
 from waypoint 08 failed; their best route fraction was 0.47. Demonstration
 episodes (41 of 136 stars from waypoint 14) are not counted as policy successes.
+
+Waypoint-08 route search and S5f (November 3, 2026): the same chained
+route-aware search from `human-waypoint-08.state`, prefixed by the 40-decision
+waypoint-08 goal segment, reached route segments 29 and 38 in its first two
+45-minute rounds and found a 212-decision sequence to the RAM star in the third.
+Under the S5e training configuration it completed with reward 33.47.
+`config/anchor-diagnostic-s5f-20261103.yaml` uses it as the waypoint-08
+demonstration; the replay signature is unchanged. It is an assisted control
+fixture, not a learned completion.
