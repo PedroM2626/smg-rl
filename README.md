@@ -106,13 +106,15 @@ different local file unless `--force` is given.
 Compatibility limits:
 
 - The savestates come from the USA game builds (`RMGE01`, `SB4E01`) and Dolphin
-  2609a. They require your own legally obtained game images. ROMs and checkpoints
-  are not distributed.
+  2609a. They require your own legally obtained game images. ROMs and trained
+  checkpoints are not distributed.
 - The anchor banks record the SHA-256 of the patched Dolphin executable that
-  created them. The curriculum loader rejects a bank when the configured
-  executable hash differs. A Dolphin built locally from the same source can
-  produce a different binary hash, in which case the anchor banks must be
-  re-prepared with that build.
+  created them (`b9f2131c…`). The curriculum loader rejects a bank when the
+  configured executable hash differs. That exact Windows build is published in the
+  [`dolphin-2609a-native-v1` release](https://github.com/PedroM2626/smg-rl/releases/tag/dolphin-2609a-native-v1)
+  (see [Installation](#installation-and-local-operation)). A Dolphin built locally
+  from the same source can produce a different binary hash; the anchor banks must
+  then be re-prepared with that build.
 - A savestate is a RAM snapshot of a commercial game. Downloading and using one
   is subject to the game's rights; it is not covered by this repository's MIT
   license.
@@ -130,9 +132,13 @@ py -3.11 -m venv .venv
 .\.venv\Scripts\python.exe -m pip check
 ```
 
-Training and evaluation use the native backend, which requires a separately built
-and patched Dolphin 2609a (`scripts/build_native.ps1`). See
-[native build and prerequisites](docs/native-backend.md). Hidden workers still
+Training and evaluation use the native backend, which requires a patched Dolphin
+2609a. Either download `smg-rl-dolphin-2609a-native-win64.zip` from the
+[`dolphin-2609a-native-v1` release](https://github.com/PedroM2626/smg-rl/releases/tag/dolphin-2609a-native-v1)
+and extract the contents of its top-level folder into `.local/native-dolphin-frontier/`
+(the path used by the current configurations), or build it with
+`scripts/build_native.ps1`. The release also contains the complete corresponding
+GPL source. See [native build and prerequisites](docs/native-backend.md). Hidden workers still
 render through a hidden surface; this is not renderer-free emulation.
 Configuration files are complete profiles, not overlays. If your paths differ
 (for example the Dolphin executable), copy a YAML under `config/`, adjust

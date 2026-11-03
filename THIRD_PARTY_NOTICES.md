@@ -15,15 +15,23 @@ documents a measured health transition. The MIT grant does not relicense the
 underlying game artwork in that screenshot. Project-generated trajectory
 plots and numeric telemetry fixtures are distinct from game artwork.
 
-ROMs and savestates are supplied locally by the user and excluded from Git and
-the Python distribution. This repository grants no rights to those assets.
+ROMs and savestates are excluded from Git and the Python distribution. Game
+images are supplied by the user. Savestate bundles (RAM snapshots of the games)
+are published separately as release assets for research reproducibility; this
+repository grants no rights to the games or to content derived from them.
 
 ## Emulator, research sources, and dependencies
 
 Dolphin is a separate GPL-2.0-or-later program. The original MIT bridge sources
 and patch-preparation script in `native/` and `scripts/` build a modified Dolphin
 locally; the combined executable remains GPL-2.0-or-later. Upstream source,
-dependencies, and built binaries are excluded from this Git repository. See the
+dependencies, and built binaries are excluded from this Git repository. One
+Windows build is distributed separately as a GitHub release asset
+(`dolphin-2609a-native-v1`) under GPL-2.0-or-later, together with its complete
+corresponding source (the exact patched source tree with all submodules) and the
+patch against upstream commit `409881c34357d0f105fd473167d15ab0bd9c1628`. Its
+bundled Qt 6.8.3 libraries are used under LGPL-3.0-only; their license texts
+are included in the binary archive. See the
 [native build/protocol guide](docs/native-backend.md). Installed Python dependencies also retain their own
 licenses. Consult each dependency's distribution metadata and upstream license
 when redistributing an environment; the project MIT license does not replace

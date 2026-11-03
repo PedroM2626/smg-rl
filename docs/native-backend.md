@@ -20,7 +20,11 @@ ran while the original learners and a native build were active; it is an
 engineering measurement, not an isolated throughput study.
 
 The native backend removes the hotkey-based pause/capture path. It requires a
-separate patched Dolphin 2609a executable. Setting `parallel.backend: native`
+separate patched Dolphin 2609a executable. The build used by the current
+configurations (`.local/native-dolphin-frontier/Dolphin.exe`, SHA-256
+`b9f2131c647bdcd82d3846a4a820d978316ca55b517493d51503ea9f4b016fc4`) is published
+with its complete GPL source in the
+[`dolphin-2609a-native-v1` release](https://github.com/PedroM2626/smg-rl/releases/tag/dolphin-2609a-native-v1). Setting `parallel.backend: native`
 on an unmodified stock binary does not enable the protocol and will time out.
 `parallel.backend: legacy` retains the original implementation.
 
