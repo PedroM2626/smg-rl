@@ -219,3 +219,17 @@ none of 453 training attempts or 50 greedy probes from it reached the star, but
 the best waypoint-02 route fraction rose from 0.08 to 0.55, past waypoints 04
 and 08. Later anchors still produced training stars (waypoint 38: 11 of 17,
 waypoint 29: 6 of 13), except waypoint 23 (0 of 20).
+
+S5h block 15 (November 4, 2026) resumed the block-14 checkpoint for one hour
+(wall-clock stop, audit passed): 1,309,356 real decisions and 12,872 completed
+attempts in total (112,776 new decisions). None of 387 training attempts or 42
+greedy probes from waypoint 02 reached the star. Their furthest positions show
+the policy now crosses the waypoint 02-04 section on its own: 234 of 667
+waypoint-02 policy episodes in this block's episode files reached the waypoint
+24-27 area, where 221 fell to their death at full health. That is the line taken
+by the partial demonstration, and every waypoint-02 search from it also stalled
+near waypoint 28, while waypoint-04 starts in block 13 continued past it. S5i
+therefore truncates the waypoint-02 demonstration to its first 115 decisions
+(route segment 15, past waypoint 14; checked under S5h without death or
+truncation) so that handover happens before that line diverges. Replay
+signature unchanged.
