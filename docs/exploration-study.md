@@ -246,3 +246,12 @@ S5h partial demonstration stopped at segment 26, just before the jump. S5j
 therefore extends the waypoint-02 demonstration to 173 decisions (route-search
 round b2, depth 2), which includes the long jump and committed segment 27 under
 S5i without death. Replay signature unchanged.
+
+S5j block 17 (November 4, 2026) resumed the block-16 checkpoint for one hour
+(wall-clock stop, audit passed): 1,524,414 real decisions and 14,381 completed
+attempts in total (102,198 new decisions). No waypoint-02 attempt reached the
+star, but the extended demonstration changed the failure point: waypoint-02
+policy episodes now perform the waypoint 26-27 long jump and reach waypoint 27,
+where none did in block 16. They then miss the next crouch-jump toward waypoint
+28, which episodes from waypoints 08 and 14 perform before chaining further
+jumps to waypoint 30.
