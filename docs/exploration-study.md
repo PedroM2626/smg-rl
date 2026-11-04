@@ -225,8 +225,11 @@ S5h block 15 (November 4, 2026) resumed the block-14 checkpoint for one hour
 attempts in total (112,776 new decisions). None of 387 training attempts or 42
 greedy probes from waypoint 02 reached the star. Their furthest positions show
 the policy now crosses the waypoint 02-04 section on its own: 234 of 667
-waypoint-02 policy episodes in this block's episode files reached the waypoint
-24-27 area, where 221 fell to their death at full health. That is the line taken
+waypoint-02 episodes in this block's episode files reached the waypoint 24-27
+area, where 221 fell to their death at full health. (Correction: those counts
+include demonstration episodes, because the episode files label them
+`curriculum`; `attempts.jsonl` holds the true kind. Excluding demonstrations,
+99 of 429 attempts and probes reached that area, with all 42 probes among them.) That is the line taken
 by the partial demonstration, and every waypoint-02 search from it also stalled
 near waypoint 28, while waypoint-04 starts in block 13 continued past it. S5i
 therefore truncates the waypoint-02 demonstration to its first 115 decisions
@@ -265,19 +268,33 @@ S5k block 18 (November 4, 2026) resumed the block-17 checkpoint for one hour
 (wall-clock stop, audit passed): 1,634,871 real decisions and 15,190 completed
 attempts in total (110,457 new decisions). No waypoint-02 attempt reached the
 star (0 of 387 training attempts and 42 probes), but the furthest waypoint
-reached again moved forward. Mapping each waypoint-02 policy episode to its
-nearest route waypoint, the furthest waypoint was 26 in block 16, 27 in block 17
-(34 episodes) and 28-30 in block 18 (106 episodes). Greedy probe fractions rose
-from 0.51 to 0.56 during the block. The failures now occur after waypoint 29,
+reached again moved forward. Mapping each waypoint-02 training attempt and probe
+to its nearest route waypoint, excluding demonstration episodes, the furthest
+waypoint was 26 in block 16, 27 in block 17 (14 of 389 episodes) and 28-29 in
+block 18 (34 of 429 episodes; 71 reached at least 27). Greedy probe fractions
+rose from 0.51 to 0.56 during the block. The failures now occur after waypoint 29,
 where the policy spins or jumps without a crouch instead of the long jumps that
 episodes from waypoint 08 chain toward waypoint 34. Rehearsal starts from
 waypoints 08 and 14 reached no star in this block (0 of 10 and 0 of 9).
 
 A route-aware search from waypoint 02 (round c, November 4, 2026) was seeded
-with the first 215 decisions of the furthest block-18 policy episode, which
-landed at waypoint 30. Its first 45-minute round timed out; the second, resumed
+with the first 215 decisions of the furthest block-18 episode, which landed at
+waypoint 30. That episode was a demonstration episode (204 scripted decisions,
+then policy control), not a pure policy attempt as the S5l source string says. Its first 45-minute round timed out; the second, resumed
 two depths back, reached the RAM star in 358 decisions without death, confirmed
 through the training environment under S5k. S5l uses this sequence as the
 waypoint-02 demonstration, so every anchor now has a continuous demonstration to
 the star. The sequence is an assisted control fixture, not a learned completion.
 Replay signature unchanged.
+
+S5l block 19 (November 4, 2026) resumed the block-18 checkpoint for one hour
+(wall-clock stop, audit passed): 1,725,186 real decisions and 15,753 completed
+attempts in total (90,315 new decisions). Greedy frontier probes from waypoint 02
+reached the RAM star for the first time: 11 of 30, including the last 9 in a row,
+each in 356 decisions, so they stay close to the 358-decision demonstration. Training attempts
+from waypoint 02, which use epsilon 0.02, reached it once in 278, so the frontier
+did not move: the unchanged rule also needs at least 3 stars in the last 30
+training attempts. An attempt of about 356 decisions at epsilon 0.02 takes no
+random action with probability of only about 7.5%, so meeting that rule requires
+the policy to recover from perturbations. Rehearsal starts from waypoints 04, 08,
+14 and 18 reached no star in this block (0 of 24 attempts).
