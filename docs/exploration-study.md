@@ -189,3 +189,13 @@ training configuration it completed with reward 34.81.
 `config/anchor-diagnostic-s5g-20261103.yaml` uses it as the waypoint-04
 demonstration; the replay signature is unchanged. It is an assisted control
 fixture, not a learned completion.
+
+S5g block 13 (November 4, 2026) resumed the block-12 checkpoint for one hour
+(wall-clock stop, audit passed): 1,085,418 real decisions and 11,095 completed
+attempts in total (98,310 new decisions). Frozen greedy probes from waypoint 04
+reached the RAM star 16 of 29 times and training attempts from waypoint 04
+reached it 7 of 271 times, so the hybrid rule moved the frontier from waypoint
+04 to waypoint 02. All 135 training attempts and 15 probes from waypoint 02
+failed with a best route fraction of 0.08. Rehearsal starts from waypoints 08,
+14 and 18 produced no training stars in this block (0 of 44), while waypoints
+29-40 stayed between 36% and 76%.
