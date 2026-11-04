@@ -272,3 +272,12 @@ from 0.51 to 0.56 during the block. The failures now occur after waypoint 29,
 where the policy spins or jumps without a crouch instead of the long jumps that
 episodes from waypoint 08 chain toward waypoint 34. Rehearsal starts from
 waypoints 08 and 14 reached no star in this block (0 of 10 and 0 of 9).
+
+A route-aware search from waypoint 02 (round c, November 4, 2026) was seeded
+with the first 215 decisions of the furthest block-18 policy episode, which
+landed at waypoint 30. Its first 45-minute round timed out; the second, resumed
+two depths back, reached the RAM star in 358 decisions without death, confirmed
+through the training environment under S5k. S5l uses this sequence as the
+waypoint-02 demonstration, so every anchor now has a continuous demonstration to
+the star. The sequence is an assisted control fixture, not a learned completion.
+Replay signature unchanged.
