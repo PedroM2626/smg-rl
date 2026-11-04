@@ -199,3 +199,15 @@ reached it 7 of 271 times, so the hybrid rule moved the frontier from waypoint
 failed with a best route fraction of 0.08. Rehearsal starts from waypoints 08,
 14 and 18 produced no training stars in this block (0 of 44), while waypoints
 29-40 stayed between 36% and 76%.
+
+Waypoint-02 route search and S5h (November 4, 2026): chained route-aware
+searches from `human-waypoint-02.state`, prefixed by the 36-decision
+waypoint-02 goal segment, repeatedly stalled near route waypoint 28 with every
+node idle-cut; a chain that resumed from an already idle node also wasted
+rounds before a no-progress stop was added. Because the block-13 policy already
+reaches the star from waypoint 04 in 16 of 29 greedy probes while its best
+waypoint-02 route fraction was 0.08, S5h uses a verified partial sequence
+instead: 164 search decisions from waypoint 02 to route segment 26, past
+waypoints 04 and 08. Under the S5g training configuration it ran without death
+or truncation and committed segment 24. It does not reach the star and is an
+assisted control fixture, not a learned completion. Replay signature unchanged.
