@@ -260,3 +260,15 @@ S5k replaces the waypoint-02 demonstration with 209 decisions (route-search roun
 b2, depth 17), through the following crouch-jumps to the waypoint-28 area.
 Under S5j it ran without death; its route credit stays at segment 27 with 432
 idle frames at the end, below the 1,440-frame cut. Replay signature unchanged.
+
+S5k block 18 (November 4, 2026) resumed the block-17 checkpoint for one hour
+(wall-clock stop, audit passed): 1,634,871 real decisions and 15,190 completed
+attempts in total (110,457 new decisions). No waypoint-02 attempt reached the
+star (0 of 387 training attempts and 42 probes), but the furthest waypoint
+reached again moved forward. Mapping each waypoint-02 policy episode to its
+nearest route waypoint, the furthest waypoint was 26 in block 16, 27 in block 17
+(34 episodes) and 28-30 in block 18 (106 episodes). Greedy probe fractions rose
+from 0.51 to 0.56 during the block. The failures now occur after waypoint 29,
+where the policy spins or jumps without a crouch instead of the long jumps that
+episodes from waypoint 08 chain toward waypoint 34. Rehearsal starts from
+waypoints 08 and 14 reached no star in this block (0 of 10 and 0 of 9).
