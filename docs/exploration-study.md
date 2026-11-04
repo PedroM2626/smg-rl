@@ -233,3 +233,16 @@ therefore truncates the waypoint-02 demonstration to its first 115 decisions
 (route segment 15, past waypoint 14; checked under S5h without death or
 truncation) so that handover happens before that line diverges. Replay
 signature unchanged.
+
+S5i block 16 (November 4, 2026) resumed the block-15 checkpoint for one hour
+(wall-clock stop, audit passed): 1,422,216 real decisions and 13,662 completed
+attempts in total (112,860 new decisions). None of 375 training attempts or 41
+probes from waypoint 02 reached the star, and the truncated demonstration did
+not change where they fail. Action traces explain it: waypoint-02 policy
+episodes reach waypoint 26, then press nothing or backward instead of the
+crouch-jump that crosses to waypoint 27, wander back and fall near waypoint 24.
+Passing episodes from later anchors perform that long jump at waypoint 26. The
+S5h partial demonstration stopped at segment 26, just before the jump. S5j
+therefore extends the waypoint-02 demonstration to 173 decisions (route-search
+round b2, depth 2), which includes the long jump and committed segment 27 under
+S5i without death. Replay signature unchanged.
