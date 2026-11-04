@@ -211,3 +211,11 @@ instead: 164 search decisions from waypoint 02 to route segment 26, past
 waypoints 04 and 08. Under the S5g training configuration it ran without death
 or truncation and committed segment 24. It does not reach the star and is an
 assisted control fixture, not a learned completion. Replay signature unchanged.
+
+S5h block 14 (November 4, 2026) resumed the block-13 checkpoint for one hour
+(wall-clock stop, audit passed): 1,196,580 real decisions and 12,048 completed
+attempts in total (111,162 new decisions). The frontier stayed at waypoint 02:
+none of 453 training attempts or 50 greedy probes from it reached the star, but
+the best waypoint-02 route fraction rose from 0.08 to 0.55, past waypoints 04
+and 08. Later anchors still produced training stars (waypoint 38: 11 of 17,
+waypoint 29: 6 of 13), except waypoint 23 (0 of 20).
