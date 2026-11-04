@@ -255,3 +255,8 @@ policy episodes now perform the waypoint 26-27 long jump and reach waypoint 27,
 where none did in block 16. They then miss the next crouch-jump toward waypoint
 28, which episodes from waypoints 08 and 14 perform before chaining further
 jumps to waypoint 30.
+
+S5k replaces the waypoint-02 demonstration with 209 decisions (route-search round
+b2, depth 17), through the following crouch-jumps to the waypoint-28 area.
+Under S5j it ran without death; its route credit stays at segment 27 with 432
+idle frames at the end, below the 1,440-frame cut. Replay signature unchanged.
