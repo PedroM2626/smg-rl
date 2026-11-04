@@ -295,6 +295,6 @@ each in 356 decisions, so they stay close to the 358-decision demonstration. Tra
 from waypoint 02, which use epsilon 0.02, reached it once in 278, so the frontier
 did not move: the unchanged rule also needs at least 3 stars in the last 30
 training attempts. An attempt of about 356 decisions at epsilon 0.02 takes no
-random action with probability of only about 7.5%, so meeting that rule requires
+random action with probability of only about 0.08%, so meeting that rule requires
 the policy to recover from perturbations. Rehearsal starts from waypoints 04, 08,
 14 and 18 reached no star in this block (0 of 24 attempts).
