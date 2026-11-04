@@ -180,3 +180,12 @@ reached it 4 of 182 times, so the hybrid rule moved the frontier from waypoint
 08 to waypoint 04. All 189 training attempts and 21 probes from waypoint 04
 failed; their best route fraction was 0.23. Later anchors kept improving
 (waypoint 29: 8 of 18, waypoint 34: 7 of 11, waypoint 38: 12 of 16 training stars).
+
+Waypoint-04 route search and S5g (November 3, 2026): the chained route-aware
+search from `human-waypoint-04.state`, prefixed by the 29-decision waypoint-04
+goal segment, reached route segments 15, 27 and 41 in three 45-minute rounds
+and found a 237-decision sequence to the RAM star in the fourth. Under the S5f
+training configuration it completed with reward 34.81.
+`config/anchor-diagnostic-s5g-20261103.yaml` uses it as the waypoint-04
+demonstration; the replay signature is unchanged. It is an assisted control
+fixture, not a learned completion.
