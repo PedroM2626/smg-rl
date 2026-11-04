@@ -171,3 +171,12 @@ Under the S5e training configuration it completed with reward 33.47.
 `config/anchor-diagnostic-s5f-20261103.yaml` uses it as the waypoint-08
 demonstration; the replay signature is unchanged. It is an assisted control
 fixture, not a learned completion.
+
+S5f block 12 (November 3, 2026) resumed the block-11 checkpoint for one hour
+(wall-clock stop, audit passed): 987,108 real decisions and 10,233 completed
+attempts in total (73,194 new decisions). Frozen greedy probes from waypoint 08
+reached the RAM star 4 of 19 times and training attempts from waypoint 08
+reached it 4 of 182 times, so the hybrid rule moved the frontier from waypoint
+08 to waypoint 04. All 189 training attempts and 21 probes from waypoint 04
+failed; their best route fraction was 0.23. Later anchors kept improving
+(waypoint 29: 8 of 18, waypoint 34: 7 of 11, waypoint 38: 12 of 16 training stars).
