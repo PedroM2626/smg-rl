@@ -247,6 +247,25 @@ def test_scripted_demonstration_episodes_are_sparse_exact_and_never_learned_succ
         dqn_training.demonstration_schedule(config)
 
 
+def test_scripted_episodes_replay_the_main_or_a_recovery_sequence(tmp_path, monkeypatch):
+    config = load_config('config/iqn-smg1.yaml')
+    config['paths'].update(runs=str(tmp_path / 'runs'), tensorboard=str(tmp_path / 'tensorboard'))
+    config['environment']['image_size'] = 40
+    config['parallel']['workers'] = 1
+    config['training']['device'] = 'cpu'
+    config['dqn'].update(capacity=64, learning_starts=2, batch_size=2, channels=2, hidden=32,
+                         train_every=1, target_update_interval=2, quantiles=4)
+    config['curriculum'] = {'enabled': True}
+    config['demonstration'] = {'anchor': 'anchor.state', 'actions': [5, 6, 7], 'every_episodes': 2,
+                               'recovery_sequences': {'anchor.state': [[7, 6, 5]]}}
+    vector = AnchorVector()
+    monkeypatch.setattr(dqn_training, 'MeasuredSubprocVecEnv', lambda *a, **k: vector)
+    dqn_training.train_dqn(config, 24)
+    # Episodes 1, 3, 5 and 7 are scripted; each takes the whole sequence it drew, never a mixture.
+    for episode in (1, 3, 5, 7):
+        assert [a for e, a in vector.sent if e == episode][:3] in ([5, 6, 7], [7, 6, 5])
+
+
 def test_demonstration_mapping_validates_every_anchor_sequence():
     config = load_config('config/iqn-smg1.yaml')
     config['curriculum'] = {'enabled': True}
@@ -254,6 +273,22 @@ def test_demonstration_mapping_validates_every_anchor_sequence():
     assert dqn_training.demonstration_schedule(config)['sequences']['b.state'] == [7]
     config['demonstration']['sequences']['b.state'] = [8]
     with pytest.raises(ValueError, match='valid actions'):
+        dqn_training.demonstration_schedule(config)
+
+
+def test_recovery_sequences_join_the_pool_of_a_main_demonstration_anchor():
+    config = load_config('config/iqn-smg1.yaml')
+    config['curriculum'] = {'enabled': True}
+    config['demonstration'] = {'sequences': {'a.state': [3, 5]}, 'every_episodes': 10,
+                               'recovery_sequences': {'a.state': [[3, 1, 5], [3, 2, 5]]}}
+    assert dqn_training.demonstration_schedule(config)['recoveries']['a.state'] == [[3, 1, 5], [3, 2, 5]]
+    assert dqn_training.demonstration_schedule({**config, 'demonstration': {
+        'sequences': {'a.state': [3]}, 'every_episodes': 10}})['recoveries'] == {}
+    config['demonstration']['recovery_sequences'] = {'b.state': [[3]]}
+    with pytest.raises(ValueError, match='Recovery sequences'):
+        dqn_training.demonstration_schedule(config)
+    config['demonstration']['recovery_sequences'] = {'a.state': [[8]]}
+    with pytest.raises(ValueError, match='Recovery sequences'):
         dqn_training.demonstration_schedule(config)
 
 

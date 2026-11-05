@@ -84,7 +84,14 @@ def demonstration_schedule(config):
     handover = settings.get('handover', 'full')
     if handover not in ('full', 'uniform_prefix'):
         raise ValueError('A demonstration handover is either full or uniform_prefix.')
-    return {'sequences': sequences, 'every_episodes': every, 'margin': margin, 'handover': handover}
+    # Optional extra verified sequences per anchor that rejoin the goal after a deviation from the main one.
+    recoveries = settings.get('recovery_sequences') or {}
+    if any(anchor not in sequences or not isinstance(extra, list) or not extra
+           or any(not actions or any(type(a) is not int or not 0 <= a < len(action_set(config)) for a in actions)
+                  for actions in extra) for anchor, extra in recoveries.items()):
+        raise ValueError('Recovery sequences need a main sequence per anchor and valid actions.')
+    return {'sequences': sequences, 'every_episodes': every, 'margin': margin, 'handover': handover,
+            'recoveries': recoveries}
 
 
 def deadline_timestamp(value):
@@ -140,6 +147,7 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
     scripted_stars, scripted_episodes = 0, 0
     scripted, script_step, worker_starts = [False] * workers, [0] * workers, [0] * workers
     script_anchor, script_length = [None] * workers, [0] * workers
+    script_sequence = [None] * workers
     probe, frontier_starts, probe_stars, probe_episodes = [False] * workers, 0, 0, 0
     handover_rng = np.random.default_rng(config['training']['seed'] + 7919)
 
@@ -160,7 +168,11 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
             frontier_starts += 1
             probe[index] = frontier_starts % backward.rule['probe_every'] == 0
         if scripted[index]:
-            length = len(demonstration['sequences'][script_anchor[index]])
+            pool = [demonstration['sequences'][script_anchor[index]],
+                    *demonstration['recoveries'].get(script_anchor[index], [])]
+            # Draw only when recoveries exist so runs without them keep their random stream.
+            script_sequence[index] = pool[int(handover_rng.integers(len(pool)))] if len(pool) > 1 else pool[0]
+            length = len(script_sequence[index])
             script_length[index] = (int(handover_rng.integers(length + 1))
                                     if demonstration['handover'] == 'uniform_prefix' else length)
     stop_reason = None
@@ -261,7 +273,7 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
             script, probed, demonstrated = list(scripted), list(probe), [False] * workers
             for index in range(workers):
                 if scripted[index]:
-                    sequence = demonstration['sequences'][script_anchor[index]]
+                    sequence = script_sequence[index]
                     if script_step[index] < script_length[index]:
                         actions[index] = sequence[script_step[index]]
                         demonstrated[index] = True
