@@ -304,9 +304,8 @@ S5l block 20 (November 5, 2026) resumed the block-19 checkpoint for one hour
 attempts in total (99,936 new decisions). Greedy frontier probes from waypoint
 02 reached the RAM star in all 31 of 31 starts, so the policy executes the
 demonstrated line reliably when it takes no random action. Training attempts
-from waypoint 02 (epsilon 0.02) reached it in 0 of 281 (the one success in the
-outcome table was in an earlier part of the run's attempts counted as
-curriculum), so the frontier stays at waypoint 02. Where those attempts end
+from waypoint 02 (epsilon 0.02) reached it in 1 of 281, so the frontier stays at
+waypoint 02. Where those attempts end
 (nearest route waypoint, demonstrations excluded): 29 at waypoint 1, 27 at 2, 24
 at 3, 24 at 10, 23 at 9, and only 7 at 27. They mostly fall in the first ten
 waypoints, which means one random action in the opening section is enough to
