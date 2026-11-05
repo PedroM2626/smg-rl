@@ -314,3 +314,15 @@ is what the unchanged rule is measuring. Frozen greedy evaluation of the
 block-19 checkpoint from waypoint 02 reached the star in 3 of 3 seeds (356
 decisions); from waypoint 01 and from the canonical start it died after 22 and
 39 decisions. These are assisted-anchor results, not full-start completions.
+
+S5l block 21 (November 5, 2026) resumed the block-20 checkpoint for one hour
+(wall-clock stop, audit passed): 1,930,773 real decisions and 16,941 completed
+attempts in total (105,651 new decisions). Greedy frontier probes from waypoint
+02 reached the RAM star in 32 of 32 starts. Training attempts from waypoint 02
+(epsilon 0.02) reached it in 4 of 292, with the last 30 holding one star, so the
+frontier rule (at least 3 of 30) is still unmet and the frontier stays at
+waypoint 02. As in block 20, most attempts end in the first ten waypoints (47 at
+waypoint 1, 29 at 2, 27 at 9, 24 at 3, 23 at 4, 20 at 10). Two blocks with
+reliable greedy probes and a training star rate near 1% indicate that the policy
+needs recovery from perturbation in the opening section rather than more
+repetition of the same line.
