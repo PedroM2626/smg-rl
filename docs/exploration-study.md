@@ -298,3 +298,20 @@ training attempts. An attempt of about 356 decisions at epsilon 0.02 takes no
 random action with probability of only about 0.08%, so meeting that rule requires
 the policy to recover from perturbations. Rehearsal starts from waypoints 04, 08,
 14 and 18 reached no star in this block (0 of 24 attempts).
+
+S5l block 20 (November 5, 2026) resumed the block-19 checkpoint for one hour
+(wall-clock stop, audit passed): 1,825,122 real decisions and 16,324 completed
+attempts in total (99,936 new decisions). Greedy frontier probes from waypoint
+02 reached the RAM star in all 31 of 31 starts, so the policy executes the
+demonstrated line reliably when it takes no random action. Training attempts
+from waypoint 02 (epsilon 0.02) reached it in 0 of 281 (the one success in the
+outcome table was in an earlier part of the run's attempts counted as
+curriculum), so the frontier stays at waypoint 02. Where those attempts end
+(nearest route waypoint, demonstrations excluded): 29 at waypoint 1, 27 at 2, 24
+at 3, 24 at 10, 23 at 9, and only 7 at 27. They mostly fall in the first ten
+waypoints, which means one random action in the opening section is enough to
+break the policy; its robustness to perturbation, not its knowledge of the line,
+is what the unchanged rule is measuring. Frozen greedy evaluation of the
+block-19 checkpoint from waypoint 02 reached the star in 3 of 3 seeds (356
+decisions); from waypoint 01 and from the canonical start it died after 22 and
+39 decisions. These are assisted-anchor results, not full-start completions.
