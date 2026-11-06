@@ -385,3 +385,19 @@ resumed from the previous checkpoint and passed through `audit_block` before the
 next starts; the chain stops on any failed audit. A single seed cannot separate a
 real difference from run-to-run noise, so a gap between arms will be reported as
 indicative only.
+
+### S5n block 23 result
+
+Block 23 (`dqn-20261106-105109-064367`, 77,580 real decisions, audit total 19,157
+attempts, one earlier launch of the same block was discarded because two copies
+started together and stopped on memory pressure after about 190 decisions) passed the
+audit. Waypoint 02 is healthy under S5m's collection epsilon: 7 stars in 17
+training attempts and 9 of 11 demonstrations. Waypoint 01 is not: 0 of 458 training
+attempts, 0 of 50 greedy probes and 0 of 263 demonstrations reached the star. About
+94% of the demonstrations ended at decision 65, a deterministic death: the 10-action
+prefix does not land on the exact saved waypoint-02 state, so the 358-decision
+waypoint-02 sequence that wins from the saved state dies at its decision 55 when
+replayed from waypoint 01. The concatenated waypoint-01 demonstration is therefore
+not valid and no learning from it was credited. A route-aware beam search from
+waypoint 01, seeded with the first 50 actions of that sequence, is running to find a
+continuation that reaches the star.
