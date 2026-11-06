@@ -354,11 +354,10 @@ noise.
 
 ### S5m block 22 result
 
-Block 22 (`dqn-20261105-225840-701415`, 87,822 real decisions, 1,641 attempts in the
-audit total of 18,176, wall-clock stop at 3,743 s) passed the automatic audit. With the
+Block 22 (`dqn-20261105-225840-701415`, 87,822 real decisions, 1,235 attempts, audit total 18,176, wall-clock stop at 3,743 s) passed the automatic audit. With the
 collection epsilon at 0.005 the waypoint-02 frontier was cleared: 6 of 21 training
 attempts from waypoint 02 reached the RAM star (blocks 19-21 had 1, 1 and 4 in about
-280 each), 20 greedy probes from waypoint 02 had passed before and the frontier moved to
+280 each), two consecutive greedy probes passed and the frontier moved to
 waypoint 01. Attempts at waypoint 01 are 0 of 584 so far, all ending in the first
 steps (opening advance about 0.042): the waypoint-01 demonstration is still the
 10-action prefix to waypoint 02, not the full star sequence, so the policy has no
