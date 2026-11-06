@@ -139,3 +139,16 @@ def quantile_huber(predictions, targets, taus, kappa=1.):
     huber = torch.where(absolute <= kappa, .5 * difference.square(), kappa * (absolute - .5 * kappa))
     weights = (taus[:, :, None] - (difference.detach() < 0).float()).abs()
     return (weights * huber / kappa).mean(-1).sum(-1)
+
+
+def munchausen_terms(current, successor, actions, alpha, tau, floor):
+    """Munchausen-IQN reward bonus and soft next-state values.
+
+    `current` is (B, A): target-network mean values at s. `successor` is (B, N, A): target-network
+    quantile values at s'. Returns the bonus (B,) to add to the n-step return and the soft value (B, N)
+    of s' under the target's softmax policy, which replaces the double-Q selection.
+    """
+    log_next = torch.log_softmax(successor.mean(1) / tau, -1)
+    soft = (log_next.exp().unsqueeze(1) * (successor - tau * log_next.unsqueeze(1))).sum(-1)
+    log_now = torch.log_softmax(current / tau, -1).gather(1, actions[:, None]).squeeze(1)
+    return (alpha * tau * log_now).clamp(min=floor, max=0.), soft

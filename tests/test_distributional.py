@@ -6,6 +6,7 @@ from smg_rl.distributional import (
     DistributionalQ,
     NoisyLinear,
     categorical_projection,
+    munchausen_terms,
     quantile_huber,
 )
 from smg_rl.dqn import DistributionalAgent
@@ -161,3 +162,48 @@ def test_matched_stochastic_epsilon_overrides_schedule_without_mutation():
     assert agent.epsilon() == 1.0 and agent.updates == 0 and agent.real_decisions == 0
     with pytest.raises(ValueError, match='epsilon'):
         agent.act(observation, epsilon_override=float('nan'))
+
+
+def test_munchausen_terms_match_a_hand_computation_and_clip_the_bonus():
+    tau = .5
+    current = torch.tensor([[0., 1.], [0., 10.]])
+    successor = torch.tensor([[[0., 1.], [0., 1.]], [[2., 2.], [2., 2.]]])
+    actions = torch.tensor([1, 0])
+    bonus, soft = munchausen_terms(current, successor, actions, .9, tau, -1.)
+    log_pi = torch.log_softmax(current / tau, -1)
+    assert bonus[0].item() == pytest.approx(.9 * tau * log_pi[0, 1].item())
+    assert bonus[1].item() == -1.  # log pi of the unlikely action is far below the floor.
+    assert torch.all(bonus <= 0)
+    pi = torch.softmax(successor.mean(1) / tau, -1)
+    expected = (pi[0] * (successor[0, 0] - tau * pi[0].log())).sum()
+    assert soft[0, 0].item() == pytest.approx(expected.item())
+    # A uniform policy over equal values has soft value v + tau * log(actions).
+    assert soft[1, 0].item() == pytest.approx(2 + tau * np.log(2))
+
+
+def test_new_learning_options_are_off_by_default_and_validated():
+    base = settings('iqn')
+    agent = DistributionalAgent(signature(), base)
+    assert type(agent.optimizer) is torch.optim.Adam
+    assert 'munchausen_bonus' not in agent.update(replay_fixture())
+    with pytest.raises(ValueError, match='iqn algorithm only'):
+        DistributionalAgent(signature(), {**settings('rainbow'), 'munchausen': {'alpha': .9, 'tau': .03, 'floor': -1.}})
+    with pytest.raises(ValueError, match='tau > 0'):
+        DistributionalAgent(signature(), {**base, 'munchausen': {'alpha': .9, 'tau': 0., 'floor': -1.}})
+    with pytest.raises(ValueError, match='soft target'):
+        DistributionalAgent(signature(), {**base, 'target_soft_tau': 0.})
+
+
+def test_btr_style_options_update_with_adamw_munchausen_and_soft_target():
+    torch.manual_seed(0)
+    options = {**settings('iqn'), 'weight_decay': .01, 'target_soft_tau': .1,
+               'munchausen': {'alpha': .9, 'tau': .03, 'floor': -1.}}
+    agent = DistributionalAgent(signature(), options)
+    assert type(agent.optimizer) is torch.optim.AdamW
+    before = [p.clone() for p in agent.target.parameters()]
+    metrics = agent.update(replay_fixture())
+    assert np.isfinite(metrics['loss']) and metrics['munchausen_bonus'] <= 0
+    online = list(agent.online.parameters())
+    for old, new, current in zip(before, agent.target.parameters(), online):
+        torch.testing.assert_close(new, old + .1 * (current.detach() - old), atol=1e-6, rtol=1e-5)
+    assert agent.target_updates == 1

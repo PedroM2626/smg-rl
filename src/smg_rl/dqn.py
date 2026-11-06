@@ -9,7 +9,12 @@ import torch
 
 from smg_rl.checkpoints import digest
 from smg_rl.diagnostics import atomic_json
-from smg_rl.distributional import DistributionalQ, categorical_projection, quantile_huber
+from smg_rl.distributional import (
+    DistributionalQ,
+    categorical_projection,
+    munchausen_terms,
+    quantile_huber,
+)
 from smg_rl.dqn_replay import PrioritizedFrames
 
 
@@ -19,8 +24,20 @@ class DistributionalAgent:
         torch.manual_seed(seed)
         self.online = DistributionalQ(signature, settings).to(self.device)
         self.target = deepcopy(self.online).requires_grad_(False)
-        self.optimizer = torch.optim.Adam(self.online.parameters(), lr=settings['learning_rate'],
-                                           eps=settings.get('adam_epsilon', .00015))
+        decay = settings.get('weight_decay')
+        optimizer = torch.optim.Adam if decay is None else torch.optim.AdamW
+        extra = {} if decay is None else {'weight_decay': float(decay)}
+        self.optimizer = optimizer(self.online.parameters(), lr=settings['learning_rate'],
+                                   eps=settings.get('adam_epsilon', .00015), **extra)
+        munchausen = settings.get('munchausen')
+        if munchausen is not None and settings['algorithm'] != 'iqn':
+            raise ValueError('The Munchausen bonus is implemented for the iqn algorithm only.')
+        if munchausen is not None and not (munchausen['tau'] > 0 and munchausen['floor'] < 0
+                                           and 0 <= munchausen['alpha'] <= 1):
+            raise ValueError('Munchausen needs tau > 0, floor < 0 and alpha in [0, 1].')
+        soft = settings.get('target_soft_tau')
+        if soft is not None and not 0 < soft <= 1:
+            raise ValueError('The soft target coefficient must be in (0, 1].')
         self.real_decisions, self.updates, self.target_updates = 0, 0, 0
         self.rng = np.random.default_rng(seed)
         self.attempts = {}
@@ -85,12 +102,20 @@ class DistributionalAgent:
             priority = (target * (target.clamp_min(1e-8).log() - predicted.detach())).sum(-1).clamp_min(0)
         else:
             count = settings['quantiles']
+            munchausen = settings.get('munchausen')
             with torch.no_grad():
-                selected = self.online.expected(successor, scenario, count).argmax(-1)
                 target_taus = torch.rand(len(images), count, device=self.device)
                 next_values = self.target(successor, scenario, target_taus)
-                next_values = next_values.gather(-1, selected[:, None, None].expand(-1, count, 1)).squeeze(-1)
-                target = rewards[:, None] + discounts[:, None] * next_values
+                if munchausen is None:
+                    selected = self.online.expected(successor, scenario, count).argmax(-1)
+                    next_values = next_values.gather(-1, selected[:, None, None].expand(-1, count, 1)).squeeze(-1)
+                    target = rewards[:, None] + discounts[:, None] * next_values
+                else:
+                    current = self.target(images, scenario, torch.rand(len(images), count, device=self.device)).mean(1)
+                    bonus, soft = munchausen_terms(current, next_values, actions, munchausen['alpha'],
+                                                   munchausen['tau'], munchausen['floor'])
+                    target = (rewards + bonus)[:, None] + discounts[:, None] * soft
+                    metrics['munchausen_bonus'] = float(bonus.mean())
             taus = torch.rand(len(images), count, device=self.device)
             predicted = self.online(images, scenario, taus).gather(
                 -1, actions[:, None, None].expand(-1, count, 1)).squeeze(-1)
@@ -117,7 +142,13 @@ class DistributionalAgent:
         self.optimizer.step()
         replay.priorities(batch['indices'], priority.detach().cpu().numpy() + settings['priority_epsilon'])
         self.updates += 1
-        if self.updates % settings['target_update_interval'] == 0:
+        soft_tau = settings.get('target_soft_tau')
+        if soft_tau is not None:
+            with torch.no_grad():
+                for target, online in zip(self.target.parameters(), self.online.parameters()):
+                    target.lerp_(online, float(soft_tau))
+            self.target_updates += 1
+        elif self.updates % settings['target_update_interval'] == 0:
             self.target.load_state_dict(self.online.state_dict())
             self.target_updates += 1
         metrics.update(loss=float(loss.detach()), gradient_norm=float(norm), beta=beta,
