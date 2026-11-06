@@ -448,3 +448,22 @@ not dead, reward 36.35, final position at the star. It is a search fixture, not 
 learned completion. `config/anchor-diagnostic-s5o-20261106.yaml` equals S5n except
 that this sequence is the waypoint-01 demonstration. The search savestates were
 deleted after the run; the reports remain local.
+
+### S5o block 24 result
+
+Block 24 (`dqn-20261106-181449-218839`, 66,816 real decisions, audit total 19,640
+attempts) stopped on memory pressure after 2,769 s with a complete checkpoint and
+passed the audit as a resource-stopped block. At waypoint 01 the searched
+demonstration reaches the star in 32 of 127 scripted episodes (the rest end after the
+handover and are not counted as learned), training attempts reach it 6 times in 230,
+and the last three greedy frontier probes were stars. The hybrid frontier rule was
+satisfied (two probe stars, 6 of the last 30 training attempts), but waypoint 01 is
+the last anchor, so the frontier stays there. These are assisted starts, not full-start
+completions.
+
+A frozen greedy evaluation of this checkpoint from the canonical start
+(`record-dqn`, seeds 1 to 3, `eval-dqn-video-20261106-190200-346012`) died in all three
+episodes after 27 decisions, with no full-start star. The training start selector only
+ever draws curriculum anchors (`env.py` takes the canonical start only when no anchor
+is chosen), so the policy has never trained or been shown a demonstration from the
+canonical start, which is about ten decisions before waypoint 01.
