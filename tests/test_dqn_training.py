@@ -500,3 +500,11 @@ def test_hybrid_frontier_probes_act_greedily_and_are_kept_out_of_training_attemp
     assert status['frontier_probe_episodes_this_run'] == 4
     progress = json.loads((tmp_path / 'progress.json').read_text())
     assert progress['assisted_attempts'] == 4 and progress['probes'] == [False, False]
+
+
+def test_demonstration_key_names_the_anchor_or_the_canonical_start():
+    from smg_rl.dqn_training import demonstration_key
+    assert demonstration_key({'anchor_id': 'human-waypoint-01.state', 'start_kind': 'curriculum'}) == 'human-waypoint-01.state'
+    assert demonstration_key({'anchor_id': '', 'start_kind': 'full_start'}) == 'full_start'
+    assert demonstration_key({'anchor_id': '', 'start_kind': 'frontier'}) is None
+    assert demonstration_key({}) is None

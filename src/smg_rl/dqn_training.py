@@ -94,6 +94,11 @@ def demonstration_schedule(config):
             'recoveries': recoveries}
 
 
+def demonstration_key(reset_info):
+    """Sequence key of a start: its anchor file, or 'full_start' for the canonical start."""
+    return reset_info.get('anchor_id') or ('full_start' if reset_info.get('start_kind') == 'full_start' else None)
+
+
 def deadline_timestamp(value):
     if value is None:
         return None
@@ -162,8 +167,8 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
         # With start jitter, open-loop demonstrations run only from exact (unjittered) anchor states.
         exact = (reset_info.get('start_jitter_frames', 0) == 0 if config['environment'].get('assisted_start_jitter_frames')
                  else worker_starts[index] % demonstration['every_episodes'] == 1) if demonstration else False
-        scripted[index] = bool(demonstration and reset_info.get('anchor_id') in demonstration['sequences'] and exact)
-        script_anchor[index] = reset_info.get('anchor_id')
+        scripted[index] = bool(demonstration and demonstration_key(reset_info) in demonstration['sequences'] and exact)
+        script_anchor[index] = demonstration_key(reset_info)
         script_step[index] = 0
         # Under the hybrid rule every Nth policy start at the frontier acts greedily (epsilon 0).
         probe[index] = False
