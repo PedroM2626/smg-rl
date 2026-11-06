@@ -138,3 +138,5 @@ resource_guard:
 study:
   arm: algorithm-benchmark-F-iqn
   note: From scratch, no transfer, no demonstration, no curriculum; same seed, reward, start and budget as the other algorithm-benchmark arm.
+  budget_real_decisions: 1000000
+  seeds: 1

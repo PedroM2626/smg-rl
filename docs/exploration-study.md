@@ -377,3 +377,11 @@ noisy layers that both arms already have. Gamma stays 0.997 in both because it m
 match the regional reward's per-frame discount. Not included: spectral norm, adaptive
 max-pooling, vectorised replay ratio and the paper's 64 environments. A test pins
 that the arms differ only in those keys and in their run paths. Nothing has been run.
+
+The owner set the benchmark budget: one seed per arm and 1,000,000 real decisions
+each, even if the stage is not completed. The arms run one after another in
+one-hour blocks (about 12 per arm at roughly 23 decisions per second), each block
+resumed from the previous checkpoint and passed through `audit_block` before the
+next starts; the chain stops on any failed audit. A single seed cannot separate a
+real difference from run-to-run noise, so a gap between arms will be reported as
+indicative only.
