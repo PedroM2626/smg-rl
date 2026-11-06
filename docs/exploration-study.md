@@ -351,3 +351,17 @@ of a 350-decision episode without a random action rises from about 0.08% to abou
 the demonstrations and the replay signature are unchanged. Training stars under
 S5m are not comparable with S5l's: they measure the same policy under less
 noise.
+
+### S5m block 22 result
+
+Block 22 (`dqn-20261105-225840-701415`, 87,822 real decisions, 1,641 attempts in the
+audit total of 18,176, wall-clock stop at 3,743 s) passed the automatic audit. With the
+collection epsilon at 0.005 the waypoint-02 frontier was cleared: 6 of 21 training
+attempts from waypoint 02 reached the RAM star (blocks 19-21 had 1, 1 and 4 in about
+280 each), 20 greedy probes from waypoint 02 had passed before and the frontier moved to
+waypoint 01. Attempts at waypoint 01 are 0 of 584 so far, all ending in the first
+steps (opening advance about 0.042): the waypoint-01 demonstration is still the
+10-action prefix to waypoint 02, not the full star sequence, so the policy has no
+continuous example from 01. The next config extends it to the verified 02 sequence.
+No full-start star was reached (`full_start_stars_this_run` is 0); demonstration
+stars in this block are scripted and are not learned completions.
