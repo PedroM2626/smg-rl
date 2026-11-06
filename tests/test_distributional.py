@@ -207,3 +207,17 @@ def test_btr_style_options_update_with_adamw_munchausen_and_soft_target():
     for old, new, current in zip(before, agent.target.parameters(), online):
         torch.testing.assert_close(new, old + .1 * (current.detach() - old), atol=1e-6, rtol=1e-5)
     assert agent.target_updates == 1
+
+
+def test_spectral_norm_encoder_is_optional_and_bounds_the_convolution_gain():
+    plain = DistributionalQ(signature(), {**settings('iqn'), 'encoder': 'impala'})
+    assert not any('parametrizations' in name for name, _ in plain.conv.named_parameters())
+    normed = DistributionalQ(signature(), {**settings('iqn'), 'encoder': 'impala', 'spectral_norm': True})
+    layers = [m for m in normed.conv.modules() if isinstance(m, torch.nn.Conv2d)]
+    assert layers and all(hasattr(m, 'parametrizations') for m in layers)
+    for _ in range(20):  # Power iteration converges in training mode.
+        normed.conv(torch.rand(2, 4, 40, 40))
+    first = layers[0].weight.detach()
+    assert torch.linalg.matrix_norm(first.reshape(first.shape[0], -1), 2) <= 1.05
+    with pytest.raises(ValueError, match='impala encoder only'):
+        DistributionalQ(signature(), {**settings('iqn'), 'spectral_norm': True})

@@ -110,7 +110,7 @@ dqn:
   capacity: 250000
   max_replay_bytes: 4000000000
   n_step: 3
-  alpha: 0.5
+  alpha: 0.2
   beta_start: 0.4
   beta_steps: 200000
   priority_epsilon: 1.0e-06
@@ -121,20 +121,19 @@ dqn:
   learning_rate: 0.0001
   adam_epsilon: 0.00015
   max_grad_norm: 10.0
-  epsilon: 0.0
+  epsilon: 0.01
   evaluation_epsilon: 0.0
   hidden: 512
   channels: 32
   atoms: 51
   v_min: -10.0
   v_max: 25.0
-  quantiles: 32
+  quantiles: 8
   cosine_embedding: 64
   encoder: impala
-  epsilon_start: 0.0
-  epsilon_decay_decisions: 20000
-  weight_decay: 0.01
-  target_soft_tau: 0.005
+  epsilon_start: 1.0
+  epsilon_decay_decisions: 40000
+  spectral_norm: true
   munchausen:
     alpha: 0.9
     tau: 0.03
@@ -142,7 +141,7 @@ dqn:
 resource_guard:
   physical_reserve_bytes: 2147483648
 study:
-  arm: algorithm-benchmark-BTR-style
+  arm: algorithm-benchmark-BTR-official-default
   note: From scratch, no transfer, no demonstration, no curriculum; same seed, reward, start and budget as the other algorithm-benchmark arm.
   budget_real_decisions: 1000000
   seeds: 1

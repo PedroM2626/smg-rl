@@ -424,3 +424,12 @@ clipped to [-1, 1], and gradient norms are clipped at 10. The BTR-style arm here
 copies the Mario 64 project's soft update (0.005), AdamW decay 0.01 and no epsilon,
 so it is not the official default. Not yet read: the preprocessing wrapper and the
 Huber-loss body.
+
+The BTR arm now follows the official defaults where the pipeline allows: spectral
+norm on the encoder convolutions (new `spectral_norm` option; adaptive max-pooling and
+the 32/64/64 widths already existed), 8 quantiles, Munchausen 0.9/0.03/-1, hard target
+copy every 500 updates, plain Adam, learning rate 1e-4, PER alpha 0.2, gamma 0.997 and
+an epsilon schedule of 1.0 to 0.01 over 40,000 decisions (4% of the budget, the
+official 2M of 50M scaled). Kept equal to arm F so the arms differ only by the
+algorithm package: batch 32, one update per 4 decisions (official: batch 256 at
+replay ratio 1 with 64 environments), replay of 250,000 and no reward clipping.
