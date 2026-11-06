@@ -433,3 +433,18 @@ an epsilon schedule of 1.0 to 0.01 over 40,000 decisions (4% of the budget, the
 official 2M of 50M scaled). Kept equal to arm F so the arms differ only by the
 algorithm package: batch 32, one update per 4 decisions (official: batch 256 at
 replay ratio 1 with 64 environments), replay of 250,000 and no reward clipping.
+
+### Waypoint-01 demonstration search
+
+The concatenated waypoint-01 demonstration of S5n died at decision 65 in 94% of its
+episodes, so a route-aware beam search was run from the waypoint-01 savestate
+(`.local/anchor01-route-search-c1..c10-20261106`, macros on, scored against the
+human route), seeded with the first 50 actions of that concatenation. Rounds 1 to 5
+(beam 32, 45 minutes each) extended the confirmed prefix from 50 to 210 actions; round
+6 started from a doomed state and died at once. Rounds 7 to 10 restarted from the
+round-5 prefix with beam 64, and round 10 found a RAM star. The winning sequence has
+350 actions from waypoint 01 and was replayed in the training environment: complete,
+not dead, reward 36.35, final position at the star. It is a search fixture, not a
+learned completion. `config/anchor-diagnostic-s5o-20261106.yaml` equals S5n except
+that this sequence is the waypoint-01 demonstration. The search savestates were
+deleted after the run; the reports remain local.
