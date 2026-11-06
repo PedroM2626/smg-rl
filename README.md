@@ -180,7 +180,7 @@ negative results and comparison limits.
 
 ## Documentation, tests and license
 
-- [Documentation index](docs/README.md) and [exploration study](docs/exploration-study.md)
+- [Documentation index](docs/README.md) and [exploration study](docs/exploration-study.md) and [related projects](docs/related-projects.md)
 - [Training guide](docs/training.md), [CLI](docs/cli.md) and [reproducibility](docs/reproducibility.md)
 - [World model](docs/world-model.md) and [experiment protocol](docs/experiments.md)
 

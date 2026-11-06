@@ -47,6 +47,7 @@ evidence, not dashboards. World-model snapshots and final stop are in the
 | Model-free Rainbow/IQN implementation, PER, TensorBoard and completed trials | [Model-free learning](model-free.md) |
 | Exact command arguments, backend, and side effects | [CLI reference](cli.md) |
 | Local ROM and savestate filenames and roles | [Asset guide](../data/README.md) |
+| Sibling projects, the alternative BTR and external references | [Related projects](related-projects.md) |
 | Native build, shared-memory capture, exact frame stepping, profiling, and benchmarks | [Native backend](native-backend.md) |
 | Protocol v2, curiosity batches, bounded exploration, and the stagnation audit | [Optimization revision](optimization-v2.md) |
 | Historical protocol v3, event wakeups, native preprocessing, and worker barrier profiling | [Native pipeline and collection](optimization-v3.md) |

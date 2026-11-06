@@ -408,10 +408,10 @@ Planned arms for the one-seed, 1M-decision algorithm group, after the speedup wo
 control F (IQN), BTR-style, BBF-lite (higher replay ratio, periodic resets,
 annealed n-step and gamma, weight decay and a wider encoder, no self-predictive loss;
 details to be checked against the paper before implementing), the full BBF only if
-BBF-lite shows a signal, and the Mario 64 project's BTR parameters if still wanted.
+BBF-lite shows a signal, and the alternative BTR ([PedroM2626/mario64ds-rl](https://github.com/PedroM2626/mario64ds-rl), see [related projects](related-projects.md)) with its own parameters if still wanted.
 
 The official BTR (VIPTankz/BTR, commit 093ca77, `main.py`, `Agent.py`, `networks.py`,
-`PER.py`) differs from `src/btr.py` in the sibling Mario 64 project and from the
+`PER.py`) differs from the alternative BTR (`src/btr.py` in [PedroM2626/mario64ds-rl](https://github.com/PedroM2626/mario64ds-rl)) and from the
 BTR-style arm configured here: the encoder is IMPALA with width 2x, spectral norm on
 every convolution and adaptive max-pooling to 6x6; the head uses 8 quantiles, dueling
 and noisy layers with 512 hidden units; Munchausen uses alpha 0.9, tau 0.03 and
@@ -421,8 +421,8 @@ n-step 3, learning rate 1e-4, Adam by default (AdamW with decay 1e-4 optional), 
 every 500 gradient steps by default (a soft update with tau 2.5e-4 is optional).
 Epsilon-greedy still runs on top of the noisy layers early in training, rewards are
 clipped to [-1, 1], and gradient norms are clipped at 10. The BTR-style arm here
-copies the Mario 64 project's soft update (0.005), AdamW decay 0.01 and no epsilon,
-so it is not the official default. Not yet read: the preprocessing wrapper and the
+copied the alternative BTR's soft update (0.005), AdamW decay 0.01 and no epsilon,
+so it was not the official default (it has since been aligned, below). Not yet read: the preprocessing wrapper and the
 Huber-loss body.
 
 The BTR arm now follows the official defaults where the pipeline allows: spectral
