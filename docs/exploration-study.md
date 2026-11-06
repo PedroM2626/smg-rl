@@ -339,8 +339,13 @@ code now accepts `recovery_sequences` per anchor (commit 91d87d0), unused so far
 A dead search is not proof that no recovery exists, and the opening's narrow
 platforms are only a hypothesis for why single deviations are costly.
 
-S5m (`config/anchor-diagnostic-s5m-20261105.yaml`) differs from S5l only in the
-training epsilon, 0.005 instead of 0.02, with the owner's agreement. The chance
+S5m (`config/anchor-diagnostic-s5m-20261105.yaml`) differs from S5l only in a
+collection epsilon of 0.005 instead of 0.02, with the owner's agreement. The first
+attempt put the value in `dqn.epsilon`; resume refused it because the checkpoint
+manifest signs the whole `dqn` block, so no block started. The value now lives in
+a top-level `exploration.epsilon` that only overrides acting during collection
+(status.json reports it); the signed agent settings, the replay signature and the
+resume path stay as in S5l. The chance
 of a 350-decision episode without a random action rises from about 0.08% to about
 17%. The frontier rule (two probe stars and at least 3 of 30 training stars),
 the demonstrations and the replay signature are unchanged. Training stars under

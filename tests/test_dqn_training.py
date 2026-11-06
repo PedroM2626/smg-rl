@@ -266,6 +266,35 @@ def test_scripted_episodes_replay_the_main_or_a_recovery_sequence(tmp_path, monk
         assert [a for e, a in vector.sent if e == episode][:3] in ([5, 6, 7], [7, 6, 5])
 
 
+def test_collection_epsilon_overrides_acting_without_changing_signed_settings(tmp_path, monkeypatch):
+    config = load_config('config/iqn-smg1.yaml')
+    config['paths'].update(runs=str(tmp_path / 'runs'), tensorboard=str(tmp_path / 'tensorboard'))
+    config['environment']['image_size'] = 40
+    config['parallel']['workers'] = 1
+    config['training']['device'] = 'cpu'
+    config['dqn'].update(capacity=32, learning_starts=2, batch_size=2, channels=2, hidden=32,
+                         train_every=1, target_update_interval=2, quantiles=4)
+    config['curriculum'] = {'enabled': True}
+    config['exploration'] = {'epsilon': 0.0}
+    seen = []
+    original = dqn_training.DistributionalAgent.act
+
+    def spy(self, observation, evaluate=False, return_values=False, epsilon_override=None):
+        seen.append((evaluate, epsilon_override))
+        return original(self, observation, evaluate, return_values, epsilon_override)
+
+    monkeypatch.setattr(dqn_training.DistributionalAgent, 'act', spy)
+    monkeypatch.setattr(dqn_training, 'MeasuredSubprocVecEnv', lambda *a, **k: AnchorVector())
+    run = dqn_training.train_dqn(config, 4)
+    import json
+
+    assert {override for evaluate, override in seen if not evaluate} == {0.0}
+    assert json.loads((run / 'status.json').read_text())['epsilon'] == 0.0
+    config['exploration'] = {'epsilon': 1.5}
+    with pytest.raises(ValueError, match='collection epsilon'):
+        dqn_training.train_dqn(config, 4)
+
+
 def test_demonstration_mapping_validates_every_anchor_sequence():
     config = load_config('config/iqn-smg1.yaml')
     config['curriculum'] = {'enabled': True}

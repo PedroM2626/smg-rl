@@ -150,6 +150,10 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
     script_sequence = [None] * workers
     probe, frontier_starts, probe_stars, probe_episodes = [False] * workers, 0, 0, 0
     handover_rng = np.random.default_rng(config['training']['seed'] + 7919)
+    # Optional collection-only epsilon: the signed agent settings (and thus resume) stay unchanged.
+    exploration = config.get('exploration', {}).get('epsilon')
+    if exploration is not None and not (np.isfinite(exploration) and 0 <= exploration <= 1):
+        raise ValueError('The collection epsilon must be finite and between zero and one.')
 
     def schedule(index, reset_info):
         nonlocal frontier_starts
@@ -190,7 +194,8 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
             'imagined_transitions': 0, 'sampled_transitions': agent.updates * agent.settings['batch_size'],
             'replay_transitions': replay.size, 'replay_emitted': replay.emitted,
             'replay_bytes': replay.bytes_allocated, 'elapsed_seconds': elapsed,
-            'max_seconds': max_seconds, 'stop_reason': stop_reason, 'epsilon': agent.epsilon(),
+            'max_seconds': max_seconds, 'stop_reason': stop_reason,
+            'epsilon': agent.epsilon() if exploration is None else exploration,
             'deadline_utc': deadline_utc,
             'decisions_per_second': (agent.real_decisions - initial) / max(elapsed, 1e-6),
             'emulated_frames_per_second': 12 * (agent.real_decisions - initial) / max(elapsed, 1e-6),
@@ -264,7 +269,7 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
                 break
             policy_updates = agent.updates
             with profiler.measure('policy_inference'):
-                actions, actions_metrics = agent.act(observation)
+                actions, actions_metrics = agent.act(observation, epsilon_override=exploration)
                 if any(probe):
                     greedy, _ = agent.act(observation, evaluate=True)
                     mask = np.asarray(probe)

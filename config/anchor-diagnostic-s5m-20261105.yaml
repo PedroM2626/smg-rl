@@ -127,7 +127,7 @@ dqn:
   learning_rate: 6.25e-05
   adam_epsilon: 0.00015
   max_grad_norm: 10.0
-  epsilon: 0.005
+  epsilon: 0.02
   evaluation_epsilon: 0.0
   hidden: 512
   channels: 32
@@ -141,6 +141,8 @@ dqn:
   epsilon_decay_decisions: 20000
 resource_guard:
   physical_reserve_bytes: 2147483648
+exploration:
+  epsilon: 0.005
 study:
   arm: anchor-diagnostic-S5m-low-epsilon
   source_real_decisions: 505806
