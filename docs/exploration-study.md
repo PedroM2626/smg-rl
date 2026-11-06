@@ -364,3 +364,16 @@ steps (opening advance about 0.042): the waypoint-01 demonstration is still the
 continuous example from 01. The next config extends it to the verified 02 sequence.
 No full-start star was reached (`full_start_stars_this_run` is 0); demonstration
 stars in this block are scripted and are not learned completions.
+
+### Algorithm benchmark configs (not yet run)
+
+`config/algorithm-benchmark-f-iqn-20261106.yaml` (control F) and
+`config/algorithm-benchmark-btr-20261106.yaml` (BTR-style) train from scratch on
+Sweet Sweet from the canonical start: no transfer, no demonstration, no curriculum,
+same seed (142), reward, three workers and budget. The BTR arm changes only the
+learning package: Munchausen (alpha 0.9, tau 0.03, floor -1), soft target updates
+(0.005), AdamW (weight decay 0.01), learning rate 1e-4 and no epsilon, relying on the
+noisy layers that both arms already have. Gamma stays 0.997 in both because it must
+match the regional reward's per-frame discount. Not included: spectral norm, adaptive
+max-pooling, vectorised replay ratio and the paper's 64 environments. A test pins
+that the arms differ only in those keys and in their run paths. Nothing has been run.
