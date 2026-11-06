@@ -326,3 +326,23 @@ waypoint 1, 29 at 2, 27 at 9, 24 at 3, 23 at 4, 20 at 10). Two blocks with
 reliable greedy probes and a training star rate near 1% indicate that the policy
 needs recovery from perturbation in the opening section rather than more
 repetition of the same line.
+
+Recovery demonstrations (November 5, 2026). To teach recovery from a deviation in
+the waypoint-02 opening, the 358-decision sequence was perturbed at decisions 4
+(right), 20 (crouch) and 55 (spin), and the route-aware search was asked to find
+a way to the star from each perturbed prefix (up to three 45-minute rounds each,
+then resumed from the last depth without backing off). None reached the star.
+The decision-20 search ended with every beam member dead in all three rounds; the
+decision-4 and decision-55 searches reached route segments 20 and 24 and then
+died when resumed. No recovery sequence was confirmed, so none is used. The
+code now accepts `recovery_sequences` per anchor (commit 91d87d0), unused so far.
+A dead search is not proof that no recovery exists, and the opening's narrow
+platforms are only a hypothesis for why single deviations are costly.
+
+S5m (`config/anchor-diagnostic-s5m-20261105.yaml`) differs from S5l only in the
+training epsilon, 0.005 instead of 0.02, with the owner's agreement. The chance
+of a 350-decision episode without a random action rises from about 0.08% to about
+17%. The frontier rule (two probe stars and at least 3 of 30 training stars),
+the demonstrations and the replay signature are unchanged. Training stars under
+S5m are not comparable with S5l's: they measure the same policy under less
+noise.
