@@ -540,3 +540,17 @@ rises from 0.25 to 0.5 because waypoint 01 is saturated in its probes. The signa
 the dqn block are unchanged. It is a hypothesis test: if the canonical start still stays
 at about 4% route progress after this block, the cause is not the coverage of that
 stretch.
+
+### S5q block 27 result
+
+Block 27 (`dqn-20261107-031726-171496`, 115,407 real decisions, audit total 21,530
+attempts, wall-clock stop) passed the audit. All 19 greedy frontier probes at waypoint
+01 reached the star. The 224 policy episodes from the canonical start (half of the starts)
+reached no star; their median length was 63 decisions, the longest 191, the median opening
+advance 6.8% and the best 19.6%. The frozen greedy evaluation from the canonical start
+(`eval-dqn-video-20261107-041941-613113`, seeds 1 to 3, identical) follows the line to
+z = -5619 by decision 50 (past waypoint 04 at z = -4933), turns back, and dies at decision
+80 with route progress 7.7% (4.0% in block 26). The hypothesis that the failure came from
+the missing coverage of the 02-to-05 stretch is supported: the stretch is now crossed. The
+canonical start is still not solved and the next failure lies beyond the end of the
+44-action handover prefix.
