@@ -42,7 +42,7 @@ parallel:
   skip_present: false
   timeout: 30.0
   worker_timeout: 120.0
-  workers: 5
+  workers: 4
   startup_spacing_seconds: 5.0
   overlap_learning: true
 paths:

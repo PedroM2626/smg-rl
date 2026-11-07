@@ -641,3 +641,10 @@ what a second run could change. Further renderer and capture options were alread
 in the optimisation notes and are not repeated here. The two algorithm-benchmark arms now
 use five workers and `overlap_learning: true` (for both arms, so they stay matched), which
 would take roughly 9.5 hours per arm at 1,000,000 decisions instead of 12.
+
+The two algorithm-benchmark arms were then set to four workers instead of five (still with
+`overlap_learning: true`; 41.0 against 43.0 decisions per second in the probes, so about
++23% over three workers) because the machine's free Windows commit memory stayed near 10 GB
+and a five-worker run did not fit. The launch script's own start threshold was lowered from
+22 GB to 18 GB of free commit with the owner's agreement; the training code's internal guards
+(6 GB commit, 2 GB physical, and a clean stop with a checkpoint on memory pressure) are unchanged.
