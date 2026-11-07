@@ -558,8 +558,7 @@ canonical start is still not solved and the next failure lies beyond the end of 
 ### S5q block 28 result and a policy-seeded canonical-start search
 
 Block 28 (`dqn-20261107-042601-744945`, 115,782 real decisions, audit total 22,280
-attempts) passed the audit. All 17 of 19 greedy waypoint-01 probes reached the star (two
-failed). The 255 canonical-start policy episodes reached no star; the median opening
+attempts) passed the audit. 17 of 19 greedy waypoint-01 probes reached the star. The 255 canonical-start policy episodes reached no star; the median opening
 advance rose from 6.8% to 12.9% (best 19.6%, median length 74 decisions, longest 208).
 The frozen greedy evaluation from the canonical start (`eval-dqn-video-20261107-052813-937585`)
 is unchanged in shape: it follows the demonstration line to z = -5619 at decision 50, turns
