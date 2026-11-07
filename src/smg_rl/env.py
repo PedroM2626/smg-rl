@@ -12,7 +12,7 @@ from gymnasium import spaces
 
 from smg_rl.actions import action_name, action_set, advance_action
 from smg_rl.checkpoints import digest
-from smg_rl.curriculum import CurriculumBank
+from smg_rl.curriculum import CurriculumBank, canonical_start
 from smg_rl.diagnostics import StageProfiler, atomic_json, measured
 from smg_rl.frontier import FrontierArchive
 from smg_rl.memory import GameMemory, MemoryFault
@@ -186,7 +186,7 @@ class GalaxyEnv(gym.Env):
                     identity, {"minimum_height": minimum, **settings})
             self.archive = self.archives[name]
         curated = (self.curriculum_bank.choose(self.np_random, self.variation['scenario'])
-                   if self.curriculum_bank and not options.get('full_start', False) else None)
+                   if self.curriculum_bank and not canonical_start(self.config, options, self.np_random) else None)
         entry = curated or (self.archive.choose(self.np_random) if self.archive else None)
         if entry:
             owner = self.curriculum_bank if curated else self.archive

@@ -179,3 +179,25 @@ def test_hybrid_frontier_needs_greedy_probe_streak_and_robust_training_rate(tmp_
         BackwardCurriculum(bank, digest(bank), tmp_path / 'progress.json').record_probe('anchor-1.state', True, 32)
     with pytest.raises(ValueError, match='Invalid hybrid'):
         BackwardCurriculum(bank, digest(bank), tmp_path / 'progress.json', {**rule, 'robust_min': 1})
+
+
+def test_canonical_start_mix_is_off_by_default_and_draws_no_random_number():
+    from smg_rl.curriculum import canonical_start
+    rng = np.random.default_rng(5)
+    state = rng.bit_generator.state
+    assert canonical_start({}, {}, rng) is False
+    assert canonical_start({'start_mix': {'full_start_fraction': 0.}}, {}, rng) is False
+    assert rng.bit_generator.state == state
+    assert canonical_start({}, {'full_start': True}, rng) is True
+
+
+def test_canonical_start_mix_follows_its_fraction_and_rejects_bad_values():
+    from smg_rl.curriculum import canonical_start
+    rng = np.random.default_rng(7)
+    mix = {'start_mix': {'full_start_fraction': .25}}
+    share = np.mean([canonical_start(mix, {}, rng) for _ in range(4000)])
+    assert .22 < share < .28
+    assert all(canonical_start({'start_mix': {'full_start_fraction': 1.}}, {}, rng) for _ in range(20))
+    for bad in (-.1, 1.5, True, 'half', None):
+        with pytest.raises(ValueError, match='canonical-start fraction'):
+            canonical_start({'start_mix': {'full_start_fraction': bad}}, {}, rng)

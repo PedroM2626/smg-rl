@@ -172,3 +172,17 @@ def validate_frontier_rule(rule):
             or type(rule['robust_min']) is not float or not .05 <= rule['robust_min'] <= .8):
         raise ValueError('Invalid hybrid frontier rule.')
     return dict(rule)
+
+
+def canonical_start(config, options, rng):
+    """True when a reset must use the canonical start instead of a curriculum anchor.
+
+    `start_mix.full_start_fraction` is a collection-only setting kept outside the signed
+    `curriculum` block, so checkpoints resume across changes to it. No random number is drawn
+    unless the fraction is positive, which keeps earlier runs' random streams unchanged."""
+    if options.get('full_start', False):
+        return True
+    fraction = config.get('start_mix', {}).get('full_start_fraction', 0.)
+    if isinstance(fraction, bool) or not isinstance(fraction, (int, float)) or not 0 <= fraction <= 1:
+        raise ValueError('The canonical-start fraction must be a number between zero and one.')
+    return bool(fraction) and bool(rng.random() < fraction)

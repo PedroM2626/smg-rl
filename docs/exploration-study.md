@@ -490,3 +490,11 @@ prefix handover, so the policy takes over from states along that segment, and it
 start. The dqn block, the frontier rule and the replay signature are unchanged, so the
 block resumes from the S5o checkpoint. Full-start stars of the policy are counted as
 full-start; scripted full-start episodes are counted as demonstrations.
+
+S5p's first launch failed before creating a run: the replay signature includes the
+whole `curriculum` block (`curriculum_distribution`), so changing `curriculum.probability`
+broke the resume check. The canonical-start share now lives in a top-level
+`start_mix.full_start_fraction` (0.25) that only affects which start a reset draws, like
+`exploration.epsilon`; `curriculum.probability` stays 1.0, and the S5p signature and
+dqn block equal the checkpoint's. The helper draws no random number when the fraction
+is zero, so earlier runs keep their random streams.

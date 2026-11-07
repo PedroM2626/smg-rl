@@ -105,7 +105,7 @@ regional_reward:
   waypoint_lookahead: 5
 curriculum:
   enabled: true
-  probability: 0.75
+  probability: 1.0
   spec_sha256: 4bc90d8e772f727a18fea911f7bf4b0d1304ca9bd8bcb2623435f482e9f9d109
   mode: human_backward_v2
   anchor_diagnostic: true
@@ -141,6 +141,8 @@ dqn:
   epsilon_decay_decisions: 20000
 resource_guard:
   physical_reserve_bytes: 2147483648
+start_mix:
+  full_start_fraction: 0.25
 exploration:
   epsilon: 0.005
 study:
