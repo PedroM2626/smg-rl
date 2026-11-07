@@ -498,3 +498,23 @@ broke the resume check. The canonical-start share now lives in a top-level
 `exploration.epsilon`; `curriculum.probability` stays 1.0, and the S5p signature and
 dqn block equal the checkpoint's. The helper draws no random number when the fraction
 is zero, so earlier runs keep their random streams.
+
+### S5p block 25 result
+
+Block 25 (`dqn-20261107-010030-317498`, 115,506 real decisions, audit total 20,240
+attempts, wall-clock stop) passed the audit. Waypoint 01 is now learned in the
+assisted setting: 22 of the last 24 greedy frontier probes reached the RAM star, 58 of
+218 training attempts did, and 81 of 122 scripted waypoint-01 episodes did (scripted
+outcomes are not learning). The canonical-start share produced 110 policy episodes
+from the full start: 0 stars (84 deaths, 26 timeouts, median 74 decisions, longest 141),
+plus the 20-action handover demonstrations counted separately.
+
+Frozen greedy evaluation from the canonical start (`record-dqn`, seeds 1 to 3,
+`eval-dqn-video-20261107-020239-302144`): all three episodes are identical and die at
+decision 95 (before this block: decision 27). The action trace shows the policy follows
+the opening to about waypoint 02 (route progress 3.5% at decision 19), then loses it and
+walks backward with the back label for about 60 decisions before falling; best route
+progress stays at 3.9%. The canonical start is therefore still not solved, but the
+opening handled by the handover demonstration is now followed, and the failure moved
+from decision 27 to a mid-air state after the first long jumps that the anchor-based
+training rarely visits. No full-start star has been reached by the policy.
