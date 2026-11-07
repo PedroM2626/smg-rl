@@ -585,3 +585,34 @@ completion, and it is not a stage-clear by the agent.
 `full_start` demonstration (uniform-prefix handover, half of the starts from the canonical
 start). The signature and dqn block are unchanged, so it resumes from the block-28
 checkpoint. The search savestates were deleted afterwards.
+
+### S5r block 29: frozen greedy policy reaches the RAM star from the canonical start
+
+Block 29 (`dqn-20261107-112836-050758`, 114,975 real decisions, audit total 22,826
+attempts, wall-clock stop) passed the audit. During collection (epsilon 0.005) the policy
+itself reached the RAM star from the canonical start in 5 of 177 non-scripted full-start
+episodes (best opening advance 98.4%, median 18.5%, longest 451 decisions); scripted
+demonstration episodes are counted separately and are not learning. Waypoint-01 greedy
+probes: 14 of 14.
+
+**Final gate.** The frozen greedy evaluation of this checkpoint from the canonical start
+(`record-dqn`, no learning, evaluation epsilon 0, seeds 1 to 3,
+`eval-dqn-video-20261107-123101-762968`, with `policy.mp4` and `policy.inputs.jsonl`) reached the RAM
+star in all three episodes in 311 decisions, `full_start_ram_star` true, route projection
+99.5%. The three runs are identical because the emulator and the greedy policy are
+deterministic, so they are one trajectory rather than three independent successes.
+
+What this does and does not show:
+
+- The greedy policy reproduces the searched demonstration: 308 of its 311 actions equal the
+  312-action sequence found by beam search from the canonical start (first difference at
+  action 307). It is a trained policy that completes the stage from the canonical start, but
+  its route was found by search and taught through handover demonstrations; it did not
+  discover the route by itself.
+- It is brittle. A stochastic frozen evaluation with epsilon 0.005 (seeds 11 to 16,
+  `eval-dqn-video-20261107-123243-555587`) reached the star in 3 of 6 episodes: exactly the
+  three with no random decision. Episodes with one or two random actions died or timed out.
+- One start state, one game build and one training seed. This is not generalisation.
+
+The stage-completion gate named for Sweet Sweet is met under these limits. Checkpoints,
+recordings and savestates remain local and are not committed.
