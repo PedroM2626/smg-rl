@@ -518,3 +518,25 @@ progress stays at 3.9%. The canonical start is therefore still not solved, but t
 opening handled by the handover demonstration is now followed, and the failure moved
 from decision 27 to a mid-air state after the first long jumps that the anchor-based
 training rarely visits. No full-start star has been reached by the policy.
+
+### S5p block 26 result and S5q
+
+Block 26 (`dqn-20261107-020836-322961`, 116,340 real decisions, audit total 20,807
+attempts, wall-clock stop) passed the audit. All 23 greedy frontier probes at waypoint
+01 reached the star. The 84 policy episodes from the canonical start reached no star
+(median 96 decisions, longest 153). The frozen greedy evaluation from the canonical start
+(`eval-dqn-video-20261107-031052-272053`, seeds 1 to 3, identical) no longer dies: it
+times out at 141 decisions with route progress 4.0%. It passes z = -2869 around decision
+20, past waypoint 02 (z = -2608), then walks backward with the back label to about the
+start and wanders. The handover prefix leaves the policy about 36 units to the side of
+the human line (x about -66 against about -30 at waypoint 02) in the air; the anchor
+training starts grounded on the human line, so these states are rarely seen.
+
+S5q (`config/anchor-diagnostic-s5q-20261107.yaml`) changes only collection and
+demonstration settings: the `full_start` demonstration uses the first 44 confirmed
+actions (to about waypoint 05, z = -5600) instead of 20, so uniform-prefix handovers cover
+the whole off-line stretch the policy fails on, and `start_mix.full_start_fraction`
+rises from 0.25 to 0.5 because waypoint 01 is saturated in its probes. The signature and
+the dqn block are unchanged. It is a hypothesis test: if the canonical start still stays
+at about 4% route progress after this block, the cause is not the coverage of that
+stretch.
