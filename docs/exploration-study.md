@@ -616,3 +616,28 @@ What this does and does not show:
 
 The stage-completion gate named for Sweet Sweet is met under these limits. Checkpoints,
 recordings and savestates remain local and are not committed.
+
+### Speedup probes (November 7)
+
+Profile of the S5r block 29 (3,705 s): emulator collection 70% (2,607 s), learner updates
+23% (834 s), policy inference 3%, checkpoint 3%; 31 decisions per second, collection and
+learning in series. Five 10-minute probes from scratch with the arm-F algorithm settings
+(`config/speedup-probe-*-20261107.yaml`, one run each, warm-up included) gave:
+
+| probe | workers | overlap_learning | decisions per second | updates per decision |
+| --- | --- | --- | --- | --- |
+| b3 | 3 | no | 33.4 | 0.225 |
+| o3 | 3 | yes | 34.8 | 0.226 |
+| o4 | 4 | yes | 41.0 | 0.229 |
+| o5 | 5 | yes | 43.0 | 0.230 |
+| o6 | 6 | yes | 42.6 | 0.229 |
+
+Overlap alone gains little at three workers (+4%): the learner's update time rises from
+about 20 ms to 45 ms per update once emulators compete for the CPU, so the two do not
+hide each other. More workers help up to five (+29% over b3) and six adds nothing, so the
+CPU, not the worker count, is the limit there. The update-to-decision ratio is unchanged
+by overlap. One run per setting; the differences between o4, o5 and o6 are within
+what a second run could change. Further renderer and capture options were already studied
+in the optimisation notes and are not repeated here. The two algorithm-benchmark arms now
+use five workers and `overlap_learning: true` (for both arms, so they stay matched), which
+would take roughly 9.5 hours per arm at 1,000,000 decisions instead of 12.

@@ -42,9 +42,9 @@ parallel:
   skip_present: false
   timeout: 30.0
   worker_timeout: 120.0
-  workers: 3
+  workers: 5
   startup_spacing_seconds: 5.0
-  overlap_learning: false
+  overlap_learning: true
 paths:
   assets: data
   calibration: config/smg1-native-calibration.json
