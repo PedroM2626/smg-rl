@@ -655,8 +655,8 @@ Owner request: test the BTR arm with +1 per waypoint, the star kept at 20 and fe
 `config/algorithm-benchmark-btr-waypoint-20261107.yaml` equals the BTR arm except for the reward:
 mode `discounted_waypoint_bonus` (new, `RegionalWaypointBonus`) pays `waypoint_bonus` (1.0) for each
 newly committed route waypoint, never takes credit back, and the objective validation requires the
-total bonus (here 15) to stay below the star (20); the other reward terms (death -2, damage -0.25,
-timeout 0) are unchanged. The route is `config/routes/smg1-human-landing-v2-sparse15.json`, made by
+total bonus (here 15) to stay below the star (20). The owner then set death to -3 and damage to -1 for this arm (the BTR arm keeps -2 and -0.25), so the arm differs from BTR in the waypoint reward and in those two weights;
+timeout stays 0. The route is `config/routes/smg1-human-landing-v2-sparse15.json`, made by
 `scripts/make_sparse_route.py`: 16 of the 47 human landing points (kept source indices
 0, 2, 4, 7, 9, 11, 13, 20, 23, 26, 29, 31, 36, 39, 41, 46), chosen for even cumulative length. Nothing has
 been trained with it yet.

@@ -56,6 +56,7 @@ def test_waypoint_arm_builds_an_environment_whose_total_bonus_stays_below_the_st
     env = GalaxyEnv(config, backend=None, run_dir=tmp_path / 'a', memory=object(), intrinsic=False)
     assert isinstance(env.potential, RegionalWaypointBonus) and len(env.route.lengths) == 15
     assert env.potential.scale == 15 and config['rewards']['completion'] == 20
+    assert config['rewards']['death'] == -3 and config['rewards']['damage'] == -1
     greedy = deepcopy(config)
     greedy['regional_reward']['waypoint_bonus'] = 2.0
     with pytest.raises(ValueError, match='Discounted distance objective'):
@@ -66,7 +67,9 @@ def test_waypoint_arm_differs_from_the_btr_arm_only_in_reward_and_paths():
     btr = load_config(ROOT / 'config/algorithm-benchmark-btr-20261106.yaml')
     arm = load_config(CONFIG)
     assert arm['dqn'] == btr['dqn'] and arm['training'] == btr['training'] and arm['parallel'] == btr['parallel']
-    assert arm['rewards'] == btr['rewards']
+    differing = {k for k in btr['rewards'] if btr['rewards'][k] != arm['rewards'][k]}
+    assert differing == {'death', 'damage'} and arm['rewards']['death'] == -3 and arm['rewards']['damage'] == -1
+    assert arm['rewards']['completion'] == btr['rewards']['completion'] == 20
     changed = {k for k in btr['regional_reward'] if btr['regional_reward'][k] != arm['regional_reward'].get(k)}
     assert changed == {'spec_sha256', 'scale', 'mode'} and arm['regional_reward']['waypoint_bonus'] == 1.0
     assert arm['paths']['runs'] != btr['paths']['runs'] and arm['paths']['route'] != btr['paths']['route']
