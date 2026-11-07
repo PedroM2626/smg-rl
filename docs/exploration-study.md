@@ -570,3 +570,18 @@ A beam search from the canonical start seeded with the policy's own first 50 act
 at z = -5619; the same technique that produced the waypoint-02 demonstration) is running
 (`.local/full-start-route-search-s1..s6-20261106`, beam 64, route-aware, 45 minutes per
 round). Training is paused while it uses the emulator.
+
+### Canonical-start demonstration found
+
+The policy-seeded canonical-start search (`.local/full-start-route-search-s1..s8-20261106`,
+beam 64, route-aware, 45 minutes per round) extended the confirmed prefix from 50 actions
+(round 1) through 244 (round 7) and found a RAM star in round 8. The winning sequence has
+312 actions from the canonical start slot. It was replayed through the training environment
+path with `start_kind` `full_start`: complete, not dead, reward 36.80, final position at the
+star (`env_confirmation` in the round-8 report). It is a search fixture, not a learned
+completion, and it is not a stage-clear by the agent.
+
+`config/anchor-diagnostic-s5r-20261107.yaml` equals S5q except that this sequence is the
+`full_start` demonstration (uniform-prefix handover, half of the starts from the canonical
+start). The signature and dqn block are unchanged, so it resumes from the block-28
+checkpoint. The search savestates were deleted afterwards.
