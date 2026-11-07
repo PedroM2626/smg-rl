@@ -467,3 +467,26 @@ episodes after 27 decisions, with no full-start star. The training start selecto
 ever draws curriculum anchors (`env.py` takes the canonical start only when no anchor
 is chosen), so the policy has never trained or been shown a demonstration from the
 canonical start, which is about ten decisions before waypoint 01.
+
+### Canonical-start search and S5p
+
+Correction: the 10-action sequence stored for waypoint 01 leads from waypoint 01 to
+waypoint 02; it is not the segment from the canonical start to waypoint 01, which the
+human recording places at about 20 decisions. The earlier statement that the
+canonical start is "about ten decisions before waypoint 01" was wrong, and a replay of
+those 10 actions plus the 350-action sequence from the canonical start (which died at
+decision 24) was not a valid test.
+
+A beam search from the canonical start slot (`--full-start`, route-aware, beam 64;
+`.local/full-start-route-search-*`) confirmed a prefix of 53 actions that stays alive
+and reaches z = -7035 (waypoint 01 is at z = -1022, waypoint 04 at z = -4933), but every
+extension from there died, and splicing the waypoint-04 demonstration after prefixes of
+26 to 33 actions died in all eight replays: open-loop sequences do not transfer between
+states that differ by a few frames. S5p therefore does not use a full open-loop
+demonstration from the canonical start. It gives the canonical start only the first 20
+confirmed actions (about waypoint 02) as a `full_start` demonstration with a uniform
+prefix handover, so the policy takes over from states along that segment, and it lowers
+`curriculum.probability` from 1.0 to 0.75 so a quarter of the starts use the canonical
+start. The dqn block, the frontier rule and the replay signature are unchanged, so the
+block resumes from the S5o checkpoint. Full-start stars of the policy are counted as
+full-start; scripted full-start episodes are counted as demonstrations.
