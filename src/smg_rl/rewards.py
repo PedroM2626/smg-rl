@@ -59,6 +59,34 @@ class RegionalDistanceAdvance(RegionalAdvance):
         self.scale, self.value = scale, 0.0
 
 
+class RegionalWaypointBonus:
+    """A fixed bonus for each newly committed route waypoint, never taken back.
+
+    `update` receives the number of waypoints the route has committed so far (after a grounded
+    landing). Its total over a route is `bonus * segments`, which the objective validation keeps
+    below the completion reward."""
+
+    def __init__(self, bonus, segments):
+        if (not np.isfinite(bonus) or not 0 < bonus <= 5 or type(segments) is not int
+                or not 1 <= segments <= 200):
+            raise ValueError('Invalid waypoint bonus or segment count.')
+        self.bonus, self.segments, self.committed = float(bonus), segments, 0
+        self.scale = self.bonus * segments
+
+    def reset(self, committed):
+        if type(committed) is not int or not 0 <= committed <= self.segments:
+            raise ValueError('Committed waypoints must lie in [0, segments].')
+        self.committed = committed
+
+    def update(self, committed, frames, terminal=False):
+        if (not isinstance(frames, int) or frames < 1 or type(committed) is not int
+                or not 0 <= committed <= self.segments):
+            raise ValueError('A waypoint bonus needs an integer committed count and a positive frame count.')
+        gained = max(0, committed - self.committed)
+        self.committed = max(self.committed, committed)
+        return self.bonus * gained
+
+
 def validate_distance_objective(settings, weights, gamma):
     """Allow positive partial failure returns only for an explicit experiment."""
     values = [weights[k] for k in ('step', 'death', 'timeout', 'completion')] + [weights.get('damage', 0.)]

@@ -648,3 +648,39 @@ The two algorithm-benchmark arms were then set to four workers instead of five (
 and a five-worker run did not fit. The launch script's own start threshold was lowered from
 22 GB to 18 GB of free commit with the owner's agreement; the training code's internal guards
 (6 GB commit, 2 GB physical, and a clean stop with a checkpoint on memory pressure) are unchanged.
+
+### Waypoint-bonus arm (planned)
+
+Owner request: test the BTR arm with +1 per waypoint, the star kept at 20 and fewer waypoints.
+`config/algorithm-benchmark-btr-waypoint-20261107.yaml` equals the BTR arm except for the reward:
+mode `discounted_waypoint_bonus` (new, `RegionalWaypointBonus`) pays `waypoint_bonus` (1.0) for each
+newly committed route waypoint, never takes credit back, and the objective validation requires the
+total bonus (here 15) to stay below the star (20); the other reward terms (death -2, damage -0.25,
+timeout 0) are unchanged. The route is `config/routes/smg1-human-landing-v2-sparse15.json`, made by
+`scripts/make_sparse_route.py`: 16 of the 47 human landing points (kept source indices
+0, 2, 4, 7, 9, 11, 13, 20, 23, 26, 29, 31, 36, 39, 41, 46), chosen for even cumulative length. Nothing has
+been trained with it yet.
+
+A waypoint is committed only after a grounded landing within the landing radius, in order (a swept
+later waypoint can skip up to five). Replaying the frozen greedy trajectory that reaches the star
+(311 decisions, offline, no emulator) through the routes gives:
+
+| route | waypoints | commit events | waypoints committed before the star | longest stretch without credit |
+| --- | --- | --- | --- | --- |
+| current (47 points) | 46 | 19 | 45 | not computed |
+| sparse | 12 | 0 | 0 | 311 decisions |
+| sparse | 13 | 4 | 12 | 136 |
+| sparse | 15 | 6 | 14 | 101 |
+| sparse | 16 | 6 | 15 | 72 |
+| sparse | 17 | 2 | 3 | 251 |
+| sparse | 18 | 7 | 17 | 63 |
+| sparse | 19 | 2 | 4 | 239 |
+| sparse | 20 | 9 | 19 | 64 |
+
+Two cautions follow. Credit arrives in bursts (a landing can commit several waypoints at once), so
+even the current route pays on 19 of 311 decisions, not on most of them. And credit is fragile to the
+choice of waypoints: with 12, 17 or 19 waypoints that winning trajectory almost never commits
+anything, because it lands more than the landing radius from one waypoint and the ordered credit stops
+there. The 15-waypoint route works on this trajectory, which is the one that reproduces the search
+demonstration, so it says little about how another policy would land. The last waypoint (the star
+region) is never committed because the episode ends first, so at most 14 of the 15 are paid.

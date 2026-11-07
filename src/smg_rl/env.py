@@ -26,6 +26,7 @@ from smg_rl.rewards import (
     RegionalAdvance,
     RegionalDistanceAdvance,
     RegionalPotential,
+    RegionalWaypointBonus,
     validate_discounted_objective,
     validate_distance_objective,
     validate_simple_objective,
@@ -100,9 +101,12 @@ class GalaxyEnv(gym.Env):
                     or settings['max_idle_frames'] < 1 or settings['max_episode_frames'] < 1):
                 raise ValueError('Regional reward requires a signed compatible route and separate shaping.')
             mode = settings.get('mode', 'potential')
-            if mode not in ('potential', 'advance', 'distance_advance', 'discounted_distance_advance'):
+            if mode not in ('potential', 'advance', 'distance_advance', 'discounted_distance_advance',
+                            'discounted_waypoint_bonus'):
                 raise ValueError('Unknown regional reward mode.')
-            if mode in ('distance_advance', 'discounted_distance_advance'):
+            if mode == 'discounted_waypoint_bonus':
+                self.potential = RegionalWaypointBonus(settings['waypoint_bonus'], len(self.route.lengths))
+            elif mode in ('distance_advance', 'discounted_distance_advance'):
                 self.potential = RegionalDistanceAdvance(settings['scale'])
             elif mode == 'advance':
                 self.potential = RegionalAdvance(settings['scale'])
@@ -121,6 +125,9 @@ class GalaxyEnv(gym.Env):
                 validate_distance_objective(settings, config['rewards'], learner['gamma'])
             elif mode == 'discounted_distance_advance':
                 validate_discounted_objective(settings, config['rewards'], learner['gamma'])
+            elif mode == 'discounted_waypoint_bonus':
+                validate_discounted_objective({**settings, 'scale': self.potential.scale},
+                                              config['rewards'], learner['gamma'])
         self.curriculum_bank = None
         curriculum = config.get('curriculum', {})
         if curriculum.get('enabled', False):
@@ -149,6 +156,8 @@ class GalaxyEnv(gym.Env):
                                          replay.get("chunk_steps", 256), replay.get("max_worker_bytes", 268435456))
 
     def _potential_fraction(self):
+        if self.regional_settings.get('mode') == 'discounted_waypoint_bonus':
+            return int(self.route.committed_segment)
         distance = self.route.best * self.route.total_length
         normalization = self.regional_settings.get('normalization_distance', self.route.total_length)
         return float(min(1.0, distance / normalization))

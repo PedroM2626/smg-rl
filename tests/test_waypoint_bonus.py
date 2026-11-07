@@ -1,0 +1,72 @@
+import json
+from copy import deepcopy
+from pathlib import Path
+
+import numpy as np
+import pytest
+
+from smg_rl.config import load_config
+from smg_rl.env import GalaxyEnv
+from smg_rl.rewards import RegionalWaypointBonus
+from smg_rl.route import RouteProgress
+
+ROOT = Path(__file__).resolve().parents[1]
+SOURCE = ROOT / 'config/routes/smg1-human-landing-v2.json'
+CONFIG = ROOT / 'config/algorithm-benchmark-btr-waypoint-20261107.yaml'
+
+
+def sparse():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location('make_sparse_route', ROOT / 'scripts/make_sparse_route.py')
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module.sparse_route
+
+
+def test_waypoint_bonus_pays_each_new_waypoint_once_and_never_takes_credit_back():
+    bonus = RegionalWaypointBonus(1.0, 15)
+    bonus.reset(0)
+    assert [bonus.update(c, 12) for c in (0, 1, 1, 3, 2, 3, 15)] == [0, 1, 0, 2, 0, 0, 12]
+    assert bonus.update(15, 12, terminal=True) == 0 and bonus.scale == 15
+    for bad in ((0, 15), (1, 0), (np.nan, 15), (6, 15), (1, 201)):
+        with pytest.raises(ValueError):
+            RegionalWaypointBonus(*bad)
+    with pytest.raises(ValueError):
+        bonus.update(16, 12)
+    with pytest.raises(ValueError):
+        bonus.update(1.5, 12)
+
+
+def test_sparse_route_keeps_real_landing_points_evenly_spaced_and_is_a_valid_route():
+    source = json.loads(SOURCE.read_text())
+    route = sparse()(source, 15)
+    kept = route['kept_source_indices']
+    assert len(kept) == 16 and kept[0] == 0 and kept[-1] == len(source['waypoints']) - 1
+    assert kept == sorted(set(kept))
+    assert route['waypoints'] == [source['waypoints'][i] for i in kept]
+    full, thin = RouteProgress(source), RouteProgress(route)
+    assert len(thin.lengths) == 15 and 0.9 * full.total_length < thin.total_length <= full.total_length
+    assert thin.lengths.max() < 2.5 * thin.lengths.mean()
+    with pytest.raises(ValueError):
+        sparse()(source, len(source['waypoints']))
+
+
+def test_waypoint_arm_builds_an_environment_whose_total_bonus_stays_below_the_star(tmp_path):
+    config = load_config(CONFIG)
+    env = GalaxyEnv(config, backend=None, run_dir=tmp_path / 'a', memory=object(), intrinsic=False)
+    assert isinstance(env.potential, RegionalWaypointBonus) and len(env.route.lengths) == 15
+    assert env.potential.scale == 15 and config['rewards']['completion'] == 20
+    greedy = deepcopy(config)
+    greedy['regional_reward']['waypoint_bonus'] = 2.0
+    with pytest.raises(ValueError, match='Discounted distance objective'):
+        GalaxyEnv(greedy, backend=None, run_dir=tmp_path / 'b', memory=object(), intrinsic=False)
+
+
+def test_waypoint_arm_differs_from_the_btr_arm_only_in_reward_and_paths():
+    btr = load_config(ROOT / 'config/algorithm-benchmark-btr-20261106.yaml')
+    arm = load_config(CONFIG)
+    assert arm['dqn'] == btr['dqn'] and arm['training'] == btr['training'] and arm['parallel'] == btr['parallel']
+    assert arm['rewards'] == btr['rewards']
+    changed = {k for k in btr['regional_reward'] if btr['regional_reward'][k] != arm['regional_reward'].get(k)}
+    assert changed == {'spec_sha256', 'scale', 'mode'} and arm['regional_reward']['waypoint_bonus'] == 1.0
+    assert arm['paths']['runs'] != btr['paths']['runs'] and arm['paths']['route'] != btr['paths']['route']
