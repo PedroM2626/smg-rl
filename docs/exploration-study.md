@@ -554,3 +554,20 @@ z = -5619 by decision 50 (past waypoint 04 at z = -4933), turns back, and dies a
 the missing coverage of the 02-to-05 stretch is supported: the stretch is now crossed. The
 canonical start is still not solved and the next failure lies beyond the end of the
 44-action handover prefix.
+
+### S5q block 28 result and a policy-seeded canonical-start search
+
+Block 28 (`dqn-20261107-042601-744945`, 115,782 real decisions, audit total 22,280
+attempts) passed the audit. All 17 of 19 greedy waypoint-01 probes reached the star (two
+failed). The 255 canonical-start policy episodes reached no star; the median opening
+advance rose from 6.8% to 12.9% (best 19.6%, median length 74 decisions, longest 208).
+The frozen greedy evaluation from the canonical start (`eval-dqn-video-20261107-052813-937585`)
+is unchanged in shape: it follows the demonstration line to z = -5619 at decision 50, turns
+back and dies at decision 78 with route progress 7.7%. The greedy policy therefore repeats the
+44-action handover prefix and fails right after its end, so the next lever is a longer
+confirmed prefix, not more of the same training.
+
+A beam search from the canonical start seeded with the policy's own first 50 actions (alive
+at z = -5619; the same technique that produced the waypoint-02 demonstration) is running
+(`.local/full-start-route-search-s1..s6-20261106`, beam 64, route-aware, 45 minutes per
+round). Training is paused while it uses the emulator.
