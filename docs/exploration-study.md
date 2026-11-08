@@ -989,3 +989,18 @@ random-checkpoint block (`dqn-20261108-125804-760812`) was stopped with a STOP f
 (169,656 real decisions in total) and passed the audit as an owner-stopped block; the BTR projection arm kept
 running. Its first 26 minutes ran at half speed and the 25 minutes before that, none, so its decision counts per
 elapsed time are not comparable with the other arms for that stretch.
+
+### BTR with projection credit: block 1
+
+The audit first rejected the block because it checked that route credit is paid only on the ground, a rule of
+the landing routes; the projection route pays airborne progress by design, so the check now skips schema-6 routes.
+`dqn-20261108-125757-212844` (116,632 real decisions, 636 attempts, about half of them at half speed because of the
+concurrent run described above): 0 RAM stars, 169 deaths, best route advance 3.8% (2.6% was the best of every earlier
+arm), 138 attempts above 0.5% and 47 above 2%, so the projection credit is being earned; the mean advance of the first
+100 attempts, while epsilon was still high, was 1.1%. By the last 200 attempts the policy idles again (median 180
+decisions, no deaths, return about 0, 116 of 119 decisions spin in the last sampled episode), as the BTR arm did, with
+epsilon at 0.01. Moving forward earns about 0.06 per waypoint and dying costs 2 (33 waypoints), while idling costs
+nothing, so once epsilon is low the safe action wins. The Mario 64 DS recipe differs exactly there (death, damage
+and timeout all cost 0). `config/algorithm-benchmark-btr-proj-free-20261108.yaml` repeats the arm with that recipe:
+death 0, damage 0, 0.1 per waypoint (27.8 in total), star 50 (the validator needs the star above the total, and
+accepts a zero death cost only with the explicit `allow_unpenalized_failure`). It is the next run.

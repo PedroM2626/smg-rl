@@ -139,6 +139,8 @@ def audit_block(run, config, source_real, source_attempts, failed=False, paused=
         if int(last['emulated_frames']) != config['parallel']['frame_skip'] * len(decisions):
             raise ValueError('Physical-frame accounting differs from real decisions.')
         regional = bool(config.get('regional_reward', {}).get('enabled'))
+        # Projection routes (schema 6) pay airborne progress by design; the landing routes do not.
+        projection = regional and json.loads(Path(config['paths']['route']).read_text()).get('schema') == 6
         if regional:
             expected_credit = float(last['shaping_potential']) - float(first['shaping_potential'])
             observed_credit = sum(float(r['regional_shaping_reward']) for r in decisions)
@@ -163,7 +165,7 @@ def audit_block(run, config, source_real, source_attempts, failed=False, paused=
             expected_reward += timeout
             if abs(float(row['reward']) - expected_reward) > 1e-6:
                 raise ValueError('Unexpected reward component in simple objective.')
-            if regional and float(row['regional_shaping_reward']) > 1e-8 and row['grounded'] != 'True':
+            if regional and not projection and float(row['regional_shaping_reward']) > 1e-8 and row['grounded'] != 'True':
                 raise ValueError('Airborne progress was rewarded.')
         if last['outcome'] == 'success' and (last['complete'] != 'True' or last['dead'] == 'True'
                 or int(last['scene_nerve'], 16) not in PROFILES[game_id(config)].complete):

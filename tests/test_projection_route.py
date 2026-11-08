@@ -130,3 +130,18 @@ def test_projection_arm_pays_through_environment_steps_and_logs_a_consistent_pot
     # Airborne throughout (grounded False): the projection route still pays, unlike the landing route.
     assert sum(rewards) == pytest.approx(16.68) and min(rewards) >= 0
     assert env.potential.value == pytest.approx(16.68) and env.route.committed_segment == 278
+
+
+def test_no_failure_cost_projection_arm_differs_from_the_btr_projection_arm_only_in_reward_scale(tmp_path):
+    from smg_rl.env import GalaxyEnv
+    base = load_config(ROOT / 'config/algorithm-benchmark-btr-proj-20261108.yaml')
+    free = load_config(ROOT / 'config/algorithm-benchmark-btr-proj-free-20261108.yaml')
+    assert free['dqn'] == base['dqn'] and free['training'] == base['training'] and free['parallel'] == base['parallel']
+    assert {k for k in base['rewards'] if base['rewards'][k] != free['rewards'][k]} == {'completion', 'damage', 'death'}
+    assert free['rewards']['death'] == 0 and free['rewards']['damage'] == 0 and free['rewards']['timeout'] == 0
+    changed = {k for k in base['regional_reward'].keys() | free['regional_reward'].keys()
+               if base['regional_reward'].get(k) != free['regional_reward'].get(k)}
+    assert changed == {'scale', 'waypoint_bonus', 'allow_unpenalized_failure'}
+    env = GalaxyEnv(free, backend=None, run_dir=tmp_path, memory=object(), intrinsic=False)
+    assert env.potential.scale == pytest.approx(27.8)
+    assert env.potential.scale < free['rewards']['completion']
