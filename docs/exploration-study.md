@@ -837,3 +837,12 @@ the regional reward's per-frame discount, and the replay fixes its n-step at con
 So this is a BBF-style learner on the F arm's data rate, not BBF. It has not been trained; given that arms F and
 BTR collapsed to a passive policy before any learner difference could matter, a from-scratch run of it would
 mostly test the same exploration problem.
+
+### Exploration arm: block 3
+
+Block 3 (`dqn-20261108-040745-704522`, 397,864 real decisions in total, 130 attempts, audited): 0 RAM stars,
+route advance still 0.0 in every attempt, 46 deaths in the block (9 in block 2), a median attempt of about 1,144
+decisions. The change from block 2 is direction: among the last 30 episodes the lowest z reaches -1,286, -1,148
+and -1,101, past the first waypoint's z of about -1,022, where in block 2 it was mostly above -500. The agent is now
+making forward progress and dying more (falls), but it has not landed within the landing radius of the first
+waypoint, so the route diagnostic has not moved. Continuing for a further block.
