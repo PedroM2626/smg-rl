@@ -794,3 +794,13 @@ not the owner's recording (the recording supplies the anchors and the route used
 found by beam search over the eight actions), and the network does map frames to actions rather than counting
 steps, but in a deterministic emulator that distinction does not show up in the greedy result. Not
 tested: starts perturbed by random actions before the agent takes over, other savestates, other game builds.
+
+### Exploration arm: block 1 (partial)
+
+Block 1 of the position-novelty arm (`dqn-20261108-002312-149241`) stopped on memory pressure after 1,960 s
+and 79,104 real decisions, with a complete checkpoint, and passed the audit as a resource-stopped block. The
+stop followed a 30-episode robustness evaluation that I ran at the same time on the same machine, which I
+should not have done during a training block. Results so far: 378 attempts, 0 RAM stars, 324 deaths, no route
+advance (the diagnostic route), but a median of about 404 decisions per recent attempt, well above the 180
+decisions at which an idle policy is cut, so the policy is moving and entering new cells rather than idling.
+Whether that reaches the first waypoint is not known yet.
