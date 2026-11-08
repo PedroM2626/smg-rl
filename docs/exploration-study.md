@@ -922,3 +922,7 @@ start 497 attempts (292 deaths, 204 idle cuts, best route advance 2.6%); waypoin
 no advance (median 15 to 28 decisions); waypoints 38 and 40, the closest to the star, 123 of 138 and 128 of 133
 deaths, no advance; the only anchors with visible progress are 14 (mean advance 2.7%, best 14.3%), 18 (best 6.3%),
 34 and 8 (best 12.3%), mostly ending in the idle cut. No anchor was cleared in the block. One block, one seed.
+
+The second block of the random-checkpoint arm (`dqn-20261108-105146-290436`) stopped on memory pressure after 123 s
+and 1,280 decisions (17 attempts, no stars, checkpoint complete, audited as a resource-stopped block), because the
+free commit memory fell while it ran. It adds nothing to the results above and is rerun from that checkpoint.
