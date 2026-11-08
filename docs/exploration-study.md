@@ -958,3 +958,26 @@ learning rate 1e-4, AdamW decay 0.01, soft target 0.005, Munchausen, prioritisat
 its batch size stays 32, not the 128 of that project, to match the other arms). The Mario 64 DS project's TTC
 reward has no death penalty; keeping arm F's here makes the credit mechanism the only reward difference from F.
 Tests walk a route through the environment, check the projection rules and pin the arm differences.
+
+### Official BTR agent in this project (built, not run)
+
+`third_party/btr/` holds `Agent.py`, `PER.py`, `networks.py` and `Analytic.py` of VIPTankz/BTR at commit
+`093ca77f08540d646f12fd942ee5fda763e0fd8a`, unchanged, with the MIT licence and a notice (only these files were
+downloaded, 120 KB; the repository itself is 275 MB). `src/smg_rl/official_btr.py` runs that agent with this
+project's environment workers and a collection loop copied in structure from the repository's `main.py` (choose
+actions for the batch, start the step, call `learn`, finish the step, store each transition), plus the attempts
+ledger and status file the other arms write. Command: `train-official-btr`. A stand-in module replaces the
+`torchvision` import that `Agent.py` makes only in commented code.
+
+Defaults are the official `--vector 0` desktop settings (four environments, batch 16, learning rate 5e-5, replay
+ratio 1, spectral norm, Munchausen, IQN with 8 quantiles, noisy layers, hard target copy every 500 updates,
+prioritisation alpha 0.2, discount 0.997, rewards clipped to [-1, 1]). Scaled for the budget, as the official
+values assume 50M frames: warm-up 20,000 decisions (200,000), epsilon over 40,000 decisions (2M), memory 250,000
+transitions (1M). The reward clipping means this arm sees the star as 1 and a death as -1, not 20 and -2;
+that is the official behaviour and is kept. Differences from the project's other arms: the official prioritised
+replay and its importance weights, no demonstration or resume (the weights are saved but not the replay, so a run
+is one process), and the 8.8 GB the official memory would need at 1M transitions is not used.
+`config/algorithm-benchmark-officialbtr-proj-20261108.yaml` is the BTR projection arm with this agent. A test
+drives the real agent through the adapter with fake environments for 160 decisions (learning happens, the ledger
+and status are written) and pins the defaults, the discount check and the vendored notice. Nothing has been run
+on the emulator.

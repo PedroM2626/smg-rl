@@ -57,6 +57,9 @@ def main():
     dqn.add_argument('--max-seconds', type=float, help='Stop and checkpoint at this finite wall-clock budget.')
     dqn.add_argument('--deadline-utc', help='Timezone-qualified absolute collection deadline; checkpoint afterward.')
     dqn.add_argument('--resume', help='Immutable model-free checkpoint directory, including replay.')
+    official = commands.add_parser('train-official-btr', help='Finite training of the vendored official BTR agent.')
+    official.add_argument('--steps', type=int)
+    official.add_argument('--max-seconds', type=float, help='Stop and save the weights at this wall-clock budget.')
     q_video = commands.add_parser('record-dqn', help='Finite canonical-start Rainbow/IQN Q-value/input video.')
     q_video.add_argument('checkpoint')
     q_video.add_argument('--variation', type=int, default=0)
@@ -122,6 +125,12 @@ def main():
 
         print(record_dqn(args.config, args.checkpoint, args.variation, args.seeds, args.max_steps,
                          args.stochastic, args.evaluation_epsilon, args.assisted_start, args.anchor))
+        return
+    if args.command == 'train-official-btr':
+        from smg_rl.official_btr import train_official_btr
+
+        print(train_official_btr(config, args.steps if args.steps is not None else config['training']['steps'],
+                                 args.max_seconds))
         return
     if args.command == 'train-dqn':
         from smg_rl.dqn_training import train_dqn
