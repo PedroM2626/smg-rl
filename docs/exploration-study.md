@@ -728,3 +728,18 @@ audited): 0 RAM stars, 0 deaths, best route advance 0.0%. Every sampled episode 
 blocks this is two arms, two algorithms and one seed each showing the same passive collapse under
 the current reward, so the BTR arm was stopped at 290,608 decisions (checkpoints kept, chain state
 allows resuming) and the no-failure-penalty probe on arm F is next.
+
+### Probe without failure penalties: block 1
+
+Arm F with death 0 and damage 0 (`dqn-20261107-225955-498040`, 149,852 real decisions, 1,240
+attempts, audited, one block): 0 RAM stars, 792 deaths, best route advance 2.6% (the same early value
+as arms F and BTR, not repeated), and a mean advance of 0 over every 100-attempt window sampled
+(attempts 0 to 100, about 570 to 670 and the last 100). The median attempt length rose from 80 to 116
+to 180 decisions and deaths fell from 91 to 77 to 0 per 100, so by the end the policy again idles to the
+cut (spin and no-op). Removing the failure penalties therefore did not prevent the passive policy in
+this block. A likely reading is that no waypoint payment is ever seen, so all values stay near zero and
+the greedy action is arbitrary and constant, which would make the lack of any reward signal in the
+opening, not the penalties, the cause. This is one block and one seed; it was not run for a second
+block. Related check: the sparse 15-waypoint route's first kept waypoint is about 2,560 units from the
+start (the first segments of the 47-point route are about 980 and 1,590 units), so a from-scratch
+agent would reach its first payment later, not sooner.
