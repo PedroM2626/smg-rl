@@ -880,3 +880,12 @@ opening is therefore not supported by those runs: they never tested a reward in 
 `config/algorithm-benchmark-f-idle-20261108.yaml` is arm F with only that reward changed (timeout -2 as an idle-cut
 terminal, 1,440 idle frames, lookahead 5; a test pins it). The earlier arms' results stand as results of their
 reward, not of their algorithms.
+
+### Arm F with an idle penalty: block 1
+
+`dqn-20261108-073133-733399` (147,452 real decisions, 1,333 attempts, audited): 0 RAM stars, 292 deaths, and
+the first waypoint was confirmed in single attempts (best route advance 2.6%, present both in the first 100
+attempts and again among the last 100). Idling is no longer free, yet by the end 81 of the last 100 attempts still
+end in the idle cut at 120 decisions with a return of -2.0, and the policy uses spin, no-op, crouch and jump in place.
+So one hour of the corrected reward did not by itself remove the passive policy; its effect, if any, is not
+visible in this block. One more block before judging.
