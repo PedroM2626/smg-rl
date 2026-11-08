@@ -106,8 +106,12 @@ def validate_discounted_objective(settings, weights, gamma):
     timeout_valid = (weights['timeout'] == 0 if mode == 'truncation_bootstrap'
                      else weights['death'] <= weights['timeout'] < 0 if mode == 'idle_terminal_penalty'
                      else False)
+    # An explicit opt-in allows an experiment with no failure penalty: dying then costs only the
+    # discounted future reward it forfeits, which the owner wants tested against a passive policy.
+    unpenalized = settings.get('allow_unpenalized_failure') is True
+    death_valid = weights['death'] <= 0 if unpenalized else weights['death'] < 0
     if (not np.isfinite(values).all() or not 0 < gamma < 1 or not timeout_valid
-            or weights['step'] != 0 or weights['death'] >= 0
+            or weights['step'] != 0 or not death_valid
             or weights['damage'] > 0 or weights['completion'] <= settings['scale']):
         raise ValueError('Discounted distance objective requires unpenalized bootstrap cuts.')
 

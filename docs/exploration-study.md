@@ -705,3 +705,16 @@ deaths, best route advance 2.6% (the same value as the F arm's first block) and 
 0 over the last 100 attempts. By the end the policy is close to a single action: the last
 episodes use spin in 174 of 181 and 109 of 111 decisions and time out at 180 decisions. This is
 the same passive failure as the F arm showed from its second block, reached here within one hour.
+
+### Probe without failure penalties (planned)
+
+Owner suggestion: if the arms share the passive failure, remove the death and damage penalties.
+`config/algorithm-benchmark-f-nopenalty-20261107.yaml` is arm F with death 0 and damage 0 (instead
+of -2 and -0.25) and nothing else changed (a test pins that). The discounted-objective validation
+used to require a negative death weight; it now accepts zero only when the config sets
+`regional_reward.allow_unpenalized_failure: true`, and still rejects positive failure pay, a step cost
+or a negative timeout. With no penalty, dying costs only the discounted future reward it forfeits, so
+trying a risky first jump no longer costs more than idling; whether that is enough to leave the
+passive policy is the question the probe tests. Planned as a two-block probe from scratch before
+re-running any other arm without penalties, because the reward is a controlled variable and changing
+it for every arm would repeat their costs. Not run yet.

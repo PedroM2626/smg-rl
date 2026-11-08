@@ -73,3 +73,28 @@ def test_waypoint_arm_differs_from_the_btr_arm_only_in_reward_and_paths():
     changed = {k for k in btr['regional_reward'] if btr['regional_reward'][k] != arm['regional_reward'].get(k)}
     assert changed == {'spec_sha256', 'scale', 'mode'} and arm['regional_reward']['waypoint_bonus'] == 1.0
     assert arm['paths']['runs'] != btr['paths']['runs'] and arm['paths']['route'] != btr['paths']['route']
+
+
+def test_unpenalized_failure_needs_an_explicit_opt_in_and_still_rejects_positive_failure_pay():
+    import pytest
+
+    from smg_rl.rewards import validate_discounted_objective
+    weights = {'step': 0., 'death': 0., 'timeout': 0., 'completion': 20., 'damage': 0.}
+    settings = {'scale': 17., 'timeout_mode': 'truncation_bootstrap'}
+    with pytest.raises(ValueError, match='Discounted distance objective'):
+        validate_discounted_objective(settings, weights, .997)
+    validate_discounted_objective({**settings, 'allow_unpenalized_failure': True}, weights, .997)
+    for bad in ({'death': .5}, {'damage': .5}, {'step': -.1}, {'timeout': -1.}):
+        with pytest.raises(ValueError, match='Discounted distance objective'):
+            validate_discounted_objective({**settings, 'allow_unpenalized_failure': True}, {**weights, **bad}, .997)
+    validate_discounted_objective(settings, {**weights, 'death': -2., 'damage': -.25}, .997)
+
+
+def test_no_penalty_probe_differs_from_arm_f_only_in_the_two_failure_weights(tmp_path):
+    f = load_config(ROOT / 'config/algorithm-benchmark-f-iqn-20261106.yaml')
+    probe = load_config(ROOT / 'config/algorithm-benchmark-f-nopenalty-20261107.yaml')
+    assert probe['dqn'] == f['dqn'] and probe['training'] == f['training'] and probe['parallel'] == f['parallel']
+    assert {k for k in f['rewards'] if f['rewards'][k] != probe['rewards'][k]} == {'death', 'damage'}
+    assert probe['rewards']['death'] == 0 and probe['rewards']['damage'] == 0
+    assert probe['regional_reward']['allow_unpenalized_failure'] is True
+    GalaxyEnv(probe, backend=None, run_dir=tmp_path, memory=object(), intrinsic=False)
