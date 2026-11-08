@@ -7,7 +7,7 @@ class RouteProgress:
     def __init__(self, specification):
         self.specification = specification
         self.schema = specification.get("schema", 1)
-        if self.schema not in (1, 2, 3, 4, 5):
+        if self.schema not in (1, 2, 3, 4, 5, 6):
             raise ValueError("Unsupported route schema.")
         self.points = np.asarray(specification["waypoints"], dtype=float)
         if (self.points.ndim != 2 or self.points.shape[1] != 3 or len(self.points) < 2
@@ -17,11 +17,23 @@ class RouteProgress:
         if np.any(self.lengths < 1):
             raise ValueError("Route segments must have distinct horizontal endpoints.")
         self.total_length = self.lengths.sum()
+        if self.schema == 6:
+            # Schema 6 pays by projecting the position onto the 3D polyline inside a corridor (airborne
+            # progress counts); its waypoints only mark where credit units fall along the arc length.
+            self.seg3 = np.diff(self.points, axis=0)
+            self.len3 = np.linalg.norm(self.seg3, axis=1)
+            self.cum3 = np.concatenate([[0.0], np.cumsum(self.len3)])
+            self.total3 = float(self.cum3[-1])
+            self.lookahead = float(specification.get('lookahead', 600.0))
+            self.lookbehind = float(specification.get('lookbehind', 300.0))
+            if (not np.isfinite([self.lookahead, self.lookbehind]).all() or self.lookahead <= 0
+                    or self.lookbehind < 0 or np.any(self.len3 <= 0)):
+                raise ValueError('Projection routes need positive lookahead and distinct 3D waypoints.')
         if (min(specification[k] for k in ("waypoint_radius", "corridor_radius", "height_tolerance")) <= 0
                 or not 1 <= specification["exit_confirmations"] <= 30
                 or specification.get("requires_grounded") is not True):
             raise ValueError("Routes require positive tolerances and grounded confirmation.")
-        if self.schema in (4, 5) and (not np.isfinite(specification.get('max_sample_distance', 1000.0))
+        if self.schema in (4, 5, 6) and (not np.isfinite(specification.get('max_sample_distance', 1000.0))
                                  or specification.get('max_sample_distance', 1000.0) <= 0):
             raise ValueError('Human-route sample distance must be finite and positive.')
         if self.schema == 5 and (not np.isfinite(specification.get('landing_radius', 0))
@@ -33,6 +45,8 @@ class RouteProgress:
         self.reset(None)
 
     def reset(self, telemetry, segment=None):
+        if self.schema == 6:
+            return self._reset_projection(telemetry)
         self.segment, self.best, self.confirmations = 0, 0.0, 0
         self.exited = False
         self.initial_health = telemetry.health if telemetry else None
@@ -60,6 +74,8 @@ class RouteProgress:
             raise ValueError('Human-derived routes do not support assisted starts.')
 
     def update(self, telemetry):
+        if self.schema == 6:
+            return self._update_projection(telemetry)
         if self.schema in (4, 5):
             return self._update_human_route(telemetry)
         if not self.eligible or telemetry.dead or telemetry.complete:
@@ -93,6 +109,47 @@ class RouteProgress:
         else:
             self.confirmations = 0
         return delta
+
+    def _project(self, point, lo, hi):
+        """(arc length, 3D distance) of the closest point on segments lo..hi-1."""
+        a, d, n = self.points[lo:hi], self.seg3[lo:hi], self.len3[lo:hi]
+        t = np.clip(np.einsum('ij,ij->i', point - a, d) / n ** 2, 0.0, 1.0)
+        distance = np.linalg.norm(a + t[:, None] * d - point, axis=1)
+        i = int(np.argmin(distance))
+        return float(self.cum3[lo + i] + t[i] * n[i]), float(distance[i])
+
+    def _reset_projection(self, telemetry):
+        self.segment = self.pending_segment = self.committed_segment = 0
+        self.best, self.best_s, self.confirmations, self.exited = 0.0, 0.0, 0, False
+        self.initial_health = telemetry.health if telemetry else None
+        self.previous_position = np.asarray(telemetry.position, dtype=float) if telemetry else None
+        self.eligible = False
+        if telemetry is not None and np.isfinite(telemetry.position).all():
+            arc, distance = self._project(np.asarray(telemetry.position, dtype=float), 0, len(self.seg3))
+            if distance <= self.specification['corridor_radius']:
+                self.eligible, self.best_s = True, arc
+                self.best = arc / self.total3
+                self.committed_segment = self.pending_segment = int(np.searchsorted(self.cum3, arc, side='right')) - 1
+
+    def _update_projection(self, telemetry):
+        point = np.asarray(telemetry.position, dtype=float)
+        if not self.eligible or telemetry.dead or telemetry.complete or not np.isfinite(point).all():
+            return 0.0
+        previous, self.previous_position = self.previous_position, point.copy()
+        if previous is not None and np.linalg.norm(point - previous) > self.specification.get('max_sample_distance', 1000.0):
+            self.eligible = False  # A teleport or respawn must never create route credit.
+            return 0.0
+        lo = max(int(np.searchsorted(self.cum3, self.best_s - self.lookbehind, side='right')) - 1, 0)
+        hi = min(max(int(np.searchsorted(self.cum3, self.best_s + self.lookahead, side='left')), lo + 1), len(self.seg3))
+        arc, distance = self._project(point, lo, hi)
+        if distance > self.specification['corridor_radius'] or arc > self.best_s + self.lookahead or arc <= self.best_s:
+            return 0.0
+        credit = (arc - self.best_s) / self.total3
+        self.best_s, self.best = arc, arc / self.total3
+        self.committed_segment = self.pending_segment = int(np.searchsorted(self.cum3, arc, side='right')) - 1
+        self.segment = min(self.committed_segment, len(self.seg3) - 1)
+        self.exited = self.committed_segment >= len(self.seg3)
+        return credit
 
     def reset_human_anchor(self, telemetry, waypoint):
         """Initialize a verified demonstration anchor without paying its prefix."""

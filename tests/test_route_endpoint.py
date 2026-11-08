@@ -78,7 +78,7 @@ def test_candidate_rejects_ground_contact_damage_and_corner_shortcuts():
         assert route.update(point) == 0
     assert route.update(sample(route.points[-1])) == 0
     with pytest.raises(ValueError, match='schema'):
-        RouteProgress(specification(6))
+        RouteProgress(specification(7))
 
 
 def test_candidate_keeps_historical_file_and_requires_a_distinct_replay_signature():

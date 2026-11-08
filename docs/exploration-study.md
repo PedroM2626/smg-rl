@@ -926,3 +926,35 @@ deaths, no advance; the only anchors with visible progress are 14 (mean advance 
 The second block of the random-checkpoint arm (`dqn-20261108-105146-290436`) stopped on memory pressure after 123 s
 and 1,280 decisions (17 attempts, no stars, checkpoint complete, audited as a resource-stopped block), because the
 free commit memory fell while it ran. It adds nothing to the results above and is rerun from that checkpoint.
+
+### Mario 64 DS waypoint credit, ported (built, not run)
+
+The owner pointed out that the Mario 64 DS project's BTR with a waypoint reward makes progress on Tick Tock Clock,
+and asked to test it here with priority. In that project (`scripts/train_btr.py`, `src/route.py`; results in its
+`results/btr_ttc_*_train.csv` and commit messages of November 6 to 8) the reward is +1 per waypoint of a recorded
+human ascent and +100 for the star, no coin term, no death penalty and no step cost. Its commit messages report
+about 26 of 371 waypoints after a 2-hour run from scratch and 58 to 63 of 371 after a second 2-hour stage; an
+earlier arc-length mode reached less (route progress about 2,179 and 173 units against 3,876 for the waypoint mode
+in their 2-hour tables). The route is 53.2k units long, so 371 waypoints are about 143 units apart.
+
+The credit mechanism differs from this project's: there a position is projected onto the route polyline inside a
+corridor of 250 units, with a window of 600 units ahead and 300 behind the best arc length, airborne progress counts,
+and the reward is the number of waypoints between the old and the new arc length; here the schema-5 route pays a
+waypoint only after an ordered, grounded landing within the landing radius, with 47 waypoints about 800 units apart.
+On the trajectory that completes the stage the landing route pays on 19 of 311 decisions, the projection route on
+74 or more.
+
+Built for this project: route schema 6 (`RouteProgress` projects onto the 3D polyline; the window is 1,500 units
+ahead and the corridor 500, because a 12-frame decision moves up to about 320 units and the Mario 64 DS window
+of 600 lost the winning trajectory after 6 waypoints, while 500 and 1,500 commit 277 of 278 with no pair of route
+points closer than 500 units that are more than 1,500 units apart along it), `scripts/make_projection_route.py`
+(resamples the recorded human trajectory every 150 units into `config/routes/smg1-human-projection-v1.json`, 279
+points) and the existing waypoint-bonus mode, now allowing up to 2,000 segments. Three arms use it, all from scratch
+with no demonstration and no curriculum, with arm F's reward scale and terms (bonus 0.06 per waypoint, 16.68 in total
+against a star of 20, death -2, damage -0.25, timeout 0): `algorithm-benchmark-f-proj-20261108.yaml` (arm F's learner),
+`algorithm-benchmark-btr-proj-20261108.yaml` (this project's BTR with the official defaults) and
+`algorithm-benchmark-altbtr-proj-20261108.yaml` (the alternative BTR's learner settings: discount 0.99, 8 quantiles,
+learning rate 1e-4, AdamW decay 0.01, soft target 0.005, Munchausen, prioritisation alpha 0.2, noisy exploration only;
+its batch size stays 32, not the 128 of that project, to match the other arms). The Mario 64 DS project's TTC
+reward has no death penalty; keeping arm F's here makes the credit mechanism the only reward difference from F.
+Tests walk a route through the environment, check the projection rules and pin the arm differences.

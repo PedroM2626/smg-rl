@@ -28,7 +28,7 @@ def test_waypoint_bonus_pays_each_new_waypoint_once_and_never_takes_credit_back(
     bonus.reset(0)
     assert [bonus.update(c, 12) for c in (0, 1, 1, 3, 2, 3, 15)] == [0, 1, 0, 2, 0, 0, 12]
     assert bonus.update(15, 12, terminal=True) == 0 and bonus.scale == 15
-    for bad in ((0, 15), (1, 0), (np.nan, 15), (6, 15), (1, 201)):
+    for bad in ((0, 15), (1, 0), (np.nan, 15), (6, 15), (1, 2001)):
         with pytest.raises(ValueError):
             RegionalWaypointBonus(*bad)
     with pytest.raises(ValueError):

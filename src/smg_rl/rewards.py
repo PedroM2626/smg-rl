@@ -68,7 +68,7 @@ class RegionalWaypointBonus:
 
     def __init__(self, bonus, segments):
         if (not np.isfinite(bonus) or not 0 < bonus <= 5 or type(segments) is not int
-                or not 1 <= segments <= 200):
+                or not 1 <= segments <= 2000):
             raise ValueError('Invalid waypoint bonus or segment count.')
         self.bonus, self.segments, self.committed = float(bonus), segments, 0
         self.scale = self.bonus * segments
