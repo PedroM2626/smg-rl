@@ -119,7 +119,7 @@ coin reward (+1 per RAM coin, +20 at the finish region, no death penalty, no ste
 3.5M environment steps; the 500,000-step checkpoint already finished ds1 and ds2 and died on ds3 in its stored
 evaluation). Tick Tock Clock is not solved: its README states that no agent has climbed it, that the v1 to v3 agents
 stay on the start platform, and that v4, trained with a human-route reward, a curriculum of 89 saved states, 1,732
-demonstration transitions and a larger action set, falls at decision 128 from the full start. Its own diagnosis for the
+demonstration transitions and a larger action set, falls at decision 128 from the full start (+268.5 height there, below v3's +378). That is not zero progress: from 13 human checkpoints along the route, v4 gains a median 336.7 route units with 11 of 13 ending in a fall, against 8.2 units and 2 of 13 for doing nothing. Its own diagnosis for the
 clock lists the same causes met here: standing still is paid (the gears move, so idling earns optical flow), the straight
 distance to the goal is almost all height so a distance ratchet pays nothing along the winding path, random exploration
 falls within about 37 decisions, and the action set could not express a running jump.
