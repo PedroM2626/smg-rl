@@ -696,3 +696,12 @@ blocks 2 and 3 (no route waypoint confirmed in 1,711 attempts); deaths 221, 1 an
 using spin, crouch, jump and no-op rather than the forward label. One seed, one reward, no
 demonstration: it says this control did not find the opening in 462,132 decisions, not that it
 cannot. The checkpoints are kept and the chain state allows resuming it.
+
+### BTR arm block 1
+
+BTR arm (official-default settings, from scratch, four workers with overlap), block 1
+(`dqn-20261107-204734-238052`, 142,288 real decisions, 888 attempts, audited): 0 RAM stars, 197
+deaths, best route advance 2.6% (the same value as the F arm's first block) and a mean advance of
+0 over the last 100 attempts. By the end the policy is close to a single action: the last
+episodes use spin in 174 of 181 and 109 of 111 decisions and time out at 180 decisions. This is
+the same passive failure as the F arm showed from its second block, reached here within one hour.
