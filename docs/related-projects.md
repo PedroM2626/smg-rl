@@ -127,3 +127,18 @@ falls within about 37 decisions, and the action set could not express a running 
 So there is no working waypoint system there to compare with. What works there is a dense collectible reward on courses
 where gravity carries the character forward (idling is not possible on a slide), which is a different task from a stage
 that must be crossed by chained long jumps from a platform where idling is stable.
+
+## Licences and what is run of the official BTR
+
+Checked on November 8, 2026 from the repositories' pages: VIPTankz/BTR carries the MIT licence (copyright 2024
+VIPTankz), so its agent code may be reused with its notice kept. VIPTankz/Wii-RL has no licence file, so its code
+cannot be copied without the author's permission. Wii-RL has its own Mario Kart Wii environment (Luigi Circuit,
+four Dolphin instances through Felk's scripting fork) and its own copy of the BTR agent in `BTR.py`; its README
+mentions no other game, and the Super Mario Galaxy experiment the paper reports (Appendix J.1, the final fight
+of The Center of the Universe) has no public environment code, as the BTR review in this repository records.
+
+What the benchmark runs today is this project's own implementation configured with the official repository's
+default settings (arm BTR, and BTR with projection credit), not the official code itself. The alternative BTR
+(mario64ds-rl) is a second independent implementation. Running the official agent unchanged would mean
+vendoring the MIT BTR repository's `Agent.py`, `networks.py` and `PER.py` with their licence and writing an adapter
+to this project's multi-process Dolphin collection; nothing of that is built yet.
