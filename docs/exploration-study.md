@@ -771,3 +771,26 @@ longest stretch of 77 decisions, the best of the 15-waypoint variants tried. Eve
 waypoint, that trajectory's first payment arrives at decision 21 because credit needs a grounded landing
 and the first landing is there. Heads of 3 to 7 with 17 or 19 waypoints paid more often on that trajectory
 (for example 17 with head 5: 8 events, 16 paid, longest stretch 60), but exceed the 15 the owner asked for.
+
+### Does the Sweet Sweet policy generalise or follow a memorised route?
+
+Frozen stochastic evaluation of the block-29 checkpoint from the canonical start (`record-dqn --stochastic`,
+evaluation epsilon 0.01, seeds 101 to 130, `eval-dqn-video-20261108-002506-973818`; 30 episodes, one
+checkpoint, one start state). Success by the number of random actions an episode happened to contain:
+
+| random actions in the episode | stars | episodes |
+| --- | --- | --- |
+| 0 | 3 | 3 |
+| 1 | 2 | 16 |
+| 2 | 1 | 6 |
+| 3 or more | 0 | 5 |
+| all | 6 | 30 |
+
+A single random action out of about 311 decisions turns a certain success into roughly one in eight, and three
+or more were never survived. Together with the earlier result that 308 of the 311 greedy actions equal the
+searched 312-action sequence, this is the pattern of a policy that reproduces one trajectory, not of one that
+has learned to play the stage: it has not learned to recover from small deviations. The action sequence is
+not the owner's recording (the recording supplies the anchors and the route used for scoring; the sequence was
+found by beam search over the eight actions), and the network does map frames to actions rather than counting
+steps, but in a deterministic emulator that distinction does not show up in the greedy result. Not
+tested: starts perturbed by random actions before the agent takes over, other savestates, other game builds.
