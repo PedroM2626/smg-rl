@@ -804,3 +804,14 @@ should not have done during a training block. Results so far: 378 attempts, 0 RA
 advance (the diagnostic route), but a median of about 404 decisions per recent attempt, well above the 180
 decisions at which an idle policy is cut, so the policy is moving and entering new cells rather than idling.
 Whether that reaches the first waypoint is not known yet.
+
+### Exploration arm: block 2
+
+Block 2 (`dqn-20261108-030051-357241`, 236,124 real decisions in total, 137 attempts, audited): 0 RAM stars,
+9 deaths, route advance 0.0 in every attempt, a median attempt of about 1,134 decisions (it was 404 in the
+partial first block), 43 decisions per second. The policy keeps entering new cells (a median of 47 distinct
+cells and up to 101 in an episode among the last 40) but does not go forward: it ranges sideways (x from about
+-500 to +650 on the start area), most of those episodes never get below z = -500, and several never leave the
+start. Its actions are spread over jump, spin, sideways moves, no-op and crouch. So position novelty with this
+cell size and bonus produces long, moving episodes but, so far, no route advance. Continuing one more block
+before judging the arm.
