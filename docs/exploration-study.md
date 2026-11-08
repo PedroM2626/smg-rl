@@ -889,3 +889,17 @@ attempts and again among the last 100). Idling is no longer free, yet by the end
 end in the idle cut at 120 decisions with a return of -2.0, and the policy uses spin, no-op, crouch and jump in place.
 So one hour of the corrected reward did not by itself remove the passive policy; its effect, if any, is not
 visible in this block. One more block before judging.
+
+### Start-distribution arms (built, not run)
+
+The owner's curriculum comparison has three arms on the same algorithm, reward and budget: playing from the
+start (arm F with the idle penalty, running), random checkpoints and the backward frontier. Random checkpoints
+follow the Mario 64 DS project's rule (a uniform pick among the saved human states plus a share of full starts);
+here `curriculum.sampling: uniform` (new; the default stays the frontier rule) draws each of the 11 verified
+anchors equally and `start_mix.full_start_fraction` 0.25 adds canonical starts.
+`config/algorithm-benchmark-random-points-20261108.yaml` has no frontier and no probes.
+`config/algorithm-benchmark-backward-20261108.yaml` keeps the hybrid frontier of the Sweet Sweet runs (frontier
+anchor, 20 percent rehearsal of later anchors, advance on two greedy probes and enough training stars) and
+no canonical starts. Both start from scratch, without demonstrations, with arm F-idle's reward (idle cut as a terminal
+failure of -2), four workers and overlap; a test pins that nothing else differs. Earlier backward runs used
+search-found demonstrations from the start, so this arm tests the start rule alone. Neither has been run.

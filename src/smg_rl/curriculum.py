@@ -12,8 +12,11 @@ from smg_rl.diagnostics import atomic_json
 
 class CurriculumBank:
     def __init__(self, path, expected_hash, game_id, emulator_hash, probability, progress_path=None,
-                 anchor_diagnostic=False):
+                 anchor_diagnostic=False, sampling='frontier'):
         self.path = Path(path)
+        if sampling not in ('frontier', 'uniform'):
+            raise ValueError('Curriculum sampling is either frontier or uniform.')
+        self.sampling = sampling
         # Mixed training keeps full starts; only a labeled anchor diagnostic may start every attempt assisted.
         if not 0 <= probability <= (1. if anchor_diagnostic else .5) or digest(self.path) != expected_hash:
             raise ValueError('Curriculum probability/specification integrity mismatch.')
@@ -51,6 +54,9 @@ class CurriculumBank:
         entries = [e for e in self.entries if e['scenario'] == scenario]
         if not entries or rng.random() >= self.probability:
             return None
+        if self.data['schema'] == 2 and self.sampling == 'uniform':
+            # Random-checkpoint starts: every verified anchor equally likely, no frontier and no rehearsal rule.
+            return entries[int(rng.integers(len(entries)))]
         if self.data['schema'] == 2:
             frontier = len(entries) - 1
             if self.progress_path.exists():

@@ -201,3 +201,30 @@ def test_canonical_start_mix_follows_its_fraction_and_rejects_bad_values():
     for bad in (-.1, 1.5, True, 'half', None):
         with pytest.raises(ValueError, match='canonical-start fraction'):
             canonical_start({'start_mix': {'full_start_fraction': bad}}, {}, rng)
+
+
+def test_uniform_sampling_draws_every_anchor_and_ignores_the_frontier(tmp_path):
+    entries = []
+    for index in (1, 2, 3, 4):
+        state = tmp_path / f'anchor-{index}.state'
+        state.write_bytes(f'fixture {index}'.encode())
+        entries.append({'file': state.name, 'sha256': digest(state), 'scenario': 1, 'origin_slot': 1,
+                        'near_star_fixture': False, 'accepted': True, 'route_waypoint': index,
+                        'validation': {'passed': True, 'idle_frames': 60}})
+    bank = tmp_path / 'bank.json'
+    bank.write_text(json.dumps({'schema': 2, 'game_id': 'RMGE01', 'emulator_sha256': 'fixture',
+                                'source_full_start_ram_star': True, 'entries': entries}))
+    uniform = CurriculumBank(bank, digest(bank), 'RMGE01', 'fixture', 1., tmp_path / 'progress.json',
+                             anchor_diagnostic=True, sampling='uniform')
+    rng = np.random.default_rng(1)
+    counts = {e['file']: 0 for e in entries}
+    for _ in range(4000):
+        counts[uniform.choose(rng, 1)['file']] += 1
+    assert all(850 < n < 1150 for n in counts.values())
+    frontier = CurriculumBank(bank, digest(bank), 'RMGE01', 'fixture', 1., tmp_path / 'progress2.json',
+                              anchor_diagnostic=True)
+    # Before any progress the frontier is the last anchor (nearest the star) and nothing is rehearsed.
+    assert {frontier.choose(np.random.default_rng(2), 1)['file'] for _ in range(20)} == {'anchor-4.state'}
+    with pytest.raises(ValueError, match='sampling'):
+        CurriculumBank(bank, digest(bank), 'RMGE01', 'fixture', 1., tmp_path / 'p3.json',
+                       anchor_diagnostic=True, sampling='random')

@@ -60,3 +60,19 @@ def test_idle_penalty_arm_differs_from_arm_f_only_in_idle_handling_and_builds(tm
     assert idle['rewards']['timeout'] == idle['rewards']['death'] == -2.0
     assert control['rewards']['timeout'] == 0.0 and control['regional_reward']['timeout_mode'] == 'truncation_bootstrap'
     GalaxyEnv(idle, backend=None, run_dir=tmp_path, memory=object(), intrinsic=False)
+
+
+def test_start_distribution_arms_differ_only_in_how_episodes_start(tmp_path):
+    idle = load_config(ROOT / 'algorithm-benchmark-f-idle-20261108.yaml')
+    random_arm = load_config(ROOT / 'algorithm-benchmark-random-points-20261108.yaml')
+    backward = load_config(ROOT / 'algorithm-benchmark-backward-20261108.yaml')
+    start_keys = {'paths', 'study', 'curriculum', 'start_mix', 'frontier_rule'}
+    for arm in (random_arm, backward):
+        assert {k: v for k, v in arm.items() if k not in start_keys} == {k: v for k, v in idle.items() if k not in start_keys} \
+            or {k for k in arm if k not in idle} <= start_keys
+        assert arm['dqn'] == idle['dqn'] and arm['rewards'] == idle['rewards'] and arm['regional_reward'] == idle['regional_reward']
+        assert 'demonstration' not in arm and arm['curriculum']['enabled'] and arm['training'] == idle['training']
+    assert random_arm['curriculum']['sampling'] == 'uniform' and random_arm['start_mix']['full_start_fraction'] == 0.25
+    assert 'frontier_rule' not in random_arm and backward['start_mix']['full_start_fraction'] == 0.0
+    assert backward['frontier_rule']['mode'] == 'greedy_hybrid' and 'sampling' not in backward['curriculum']
+    assert random_arm['paths']['runs'] != backward['paths']['runs'] != idle['paths']['runs']
