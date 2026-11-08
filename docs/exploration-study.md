@@ -903,3 +903,13 @@ anchor, 20 percent rehearsal of later anchors, advance on two greedy probes and 
 no canonical starts. Both start from scratch, without demonstrations, with arm F-idle's reward (idle cut as a terminal
 failure of -2), four workers and overlap; a test pins that nothing else differs. Earlier backward runs used
 search-found demonstrations from the start, so this arm tests the start rule alone. Neither has been run.
+
+### Arm F with an idle penalty: block 2 and closing
+
+Block 2 (`dqn-20261108-083808-038097`, 296,572 real decisions in total, 1,245 attempts, audited): 0 RAM stars, 29
+deaths, every attempt ending in the idle cut at 120 decisions with a return of -2.0, and a route advance above zero in
+1 of 1,245 attempts (the early 2.6% seen in block 1). The idle penalty did not move the policy out of idling in 296,572
+decisions, so the earlier reading that a free idle was the main cause is not supported either: with idling and dying
+both costing -2, a learner that never sees a waypoint has no reason to prefer anything. The arm was stopped here
+(checkpoints kept). What this and the earlier arms show together is that from-scratch exploration does not find the
+first waypoint with epsilon-greedy or noisy layers, with or without an idle cost, in the budgets tried.
