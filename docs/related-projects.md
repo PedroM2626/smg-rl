@@ -111,3 +111,19 @@ nothing in it is trained or evaluated on Mario Galaxy.
   periodic resets, annealed n-step and discount, weight decay, a wider encoder,
   without the self-predictive loss). Its details are to be checked against the paper
   before implementation, so no claim about it is made here yet.
+
+## What works and what does not in mario64ds-rl (read November 8, 2026)
+
+Its README separates two results. The three slide courses (ds1 to ds3) are finished by the alternative BTR with a
+coin reward (+1 per RAM coin, +20 at the finish region, no death penalty, no step cost, five environments per slide,
+3.5M environment steps; the 500,000-step checkpoint already finished ds1 and ds2 and died on ds3 in its stored
+evaluation). Tick Tock Clock is not solved: its README states that no agent has climbed it, that the v1 to v3 agents
+stay on the start platform, and that v4, trained with a human-route reward, a curriculum of 89 saved states, 1,732
+demonstration transitions and a larger action set, falls at decision 128 from the full start. Its own diagnosis for the
+clock lists the same causes met here: standing still is paid (the gears move, so idling earns optical flow), the straight
+distance to the goal is almost all height so a distance ratchet pays nothing along the winding path, random exploration
+falls within about 37 decisions, and the action set could not express a running jump.
+
+So there is no working waypoint system there to compare with. What works there is a dense collectible reward on courses
+where gravity carries the character forward (idling is not possible on a slide), which is a different task from a stage
+that must be crossed by chained long jumps from a platform where idling is stable.
