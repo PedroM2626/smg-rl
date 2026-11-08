@@ -718,3 +718,13 @@ trying a risky first jump no longer costs more than idling; whether that is enou
 passive policy is the question the probe tests. Planned as a two-block probe from scratch before
 re-running any other arm without penalties, because the reward is a controlled variable and changing
 it for every arm would repeat their costs. Not run yet.
+
+### BTR arm block 2 and closing
+
+Block 2 of the BTR arm (`dqn-20261107-215344-257267`, 290,608 real decisions in total, 824 attempts,
+audited): 0 RAM stars, 0 deaths, best route advance 0.0%. Every sampled episode is the same: spin in
+177 of 181, 179 of 181 and 51 of 51 decisions, standing at z = -50 (the start) until the idle cut at
+180 decisions. The policy has collapsed to a single action that never moves. With the F arm's three
+blocks this is two arms, two algorithms and one seed each showing the same passive collapse under
+the current reward, so the BTR arm was stopped at 290,608 decisions (checkpoints kept, chain state
+allows resuming) and the no-failure-penalty probe on arm F is next.
