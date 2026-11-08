@@ -89,6 +89,17 @@ class GalaxyEnv(gym.Env):
             lookahead = config.get('regional_reward', {}).get('waypoint_lookahead', 0)
             self.route = RouteProgress({**spec, 'waypoint_lookahead': lookahead} if lookahead else spec)
         self.archives = {}
+        self.novelty = config.get('position_novelty', {})
+        self.novelty_on = bool(self.novelty.get('enabled', False))
+        self.novelty_counts, self.episode_cells = {}, set()
+        if self.novelty_on:
+            values = [self.novelty.get(k) for k in ('cell_xz', 'cell_y', 'bonus', 'power')]
+            if (any(isinstance(v, bool) or not isinstance(v, (int, float)) or not np.isfinite(v) for v in values)
+                    or min(values[:3]) <= 0 or not 0.5 <= values[3] <= 1 or values[2] > 1):
+                raise ValueError('Position novelty needs positive cells, a bonus up to one and a power in [0.5, 1].')
+            if (config.get('regional_reward', {}).get('enabled') or config.get('route_reward', {}).get('enabled')
+                    or config.get('curriculum', {}).get('enabled') or config.get('demonstration')):
+                raise ValueError('Position novelty excludes route rewards, curricula and demonstrations.')
         self.regional_settings = config.get('regional_reward', {})
         self.regional = self.regional_settings.get('enabled', False)
         self.potential = None
@@ -154,6 +165,10 @@ class GalaxyEnv(gym.Env):
             folder = root / self.run_dir.relative_to(training_run)
             self.replay = ReplayRecorder(folder, replay_signature(config),
                                          replay.get("chunk_steps", 256), replay.get("max_worker_bytes", 268435456))
+
+    def _novelty_cell(self, position):
+        return (int(np.floor(position[0] / self.novelty['cell_xz'])), int(np.floor(position[1] / self.novelty['cell_y'])),
+                int(np.floor(position[2] / self.novelty['cell_xz'])))
 
     def _potential_fraction(self):
         if self.regional_settings.get('mode') == 'discounted_waypoint_bonus':
@@ -260,6 +275,7 @@ class GalaxyEnv(gym.Env):
         if self.potential:
             self.potential.reset(self._potential_fraction())
         self.route_start = self.route.best if self.route else 0.0
+        self.episode_cells = {self._novelty_cell(self.telemetry.position)} if self.novelty_on else set()
         self.damage = DamageTracker()
         self.damage.reset(self.telemetry.health)
         self.steps, self.idle_steps, self.total_reward = 0, 0, 0.0
@@ -306,7 +322,22 @@ class GalaxyEnv(gym.Env):
         )
         route_delta = self.route.update(self.telemetry) if self.route else 0.0
         route_settings = self.config.get("route_reward", {})
-        advance = route_delta if route_settings.get("enabled") or self.regional else delta
+        novelty_reward = 0.0
+        if self.novelty_on:
+            # Reward-only RAM position novelty: per-worker visit counts across episodes, paid once per cell per
+            # episode while alive and above the fall limit. Idling is measured as no new cell in this episode.
+            cell = self._novelty_cell(self.telemetry.position)
+            fresh = cell not in self.episode_cells
+            if (fresh and not self.telemetry.dead and not self.telemetry.complete
+                    and self.telemetry.position[1] >= self.config["environment"]["min_reward_y"]):
+                # Paid only on entering a cell new to this episode, so standing in one cell earns nothing;
+                # the persistent count lowers the bonus of cells that earlier episodes already covered.
+                self.episode_cells.add(cell)
+                self.novelty_counts[cell] = self.novelty_counts.get(cell, 0) + 1
+                novelty_reward = self.novelty['bonus'] / self.novelty_counts[cell] ** self.novelty['power']
+            advance = 1.0 if fresh else 0.0
+        else:
+            advance = route_delta if route_settings.get("enabled") or self.regional else delta
         self.idle_steps = 0 if advance > 1e-5 else self.idle_steps + 1
         measured_frames = getattr(self.backend, 'last_frame_count', None)
         control_frames = int(measured_frames) if measured_frames is not None else None
@@ -332,7 +363,7 @@ class GalaxyEnv(gym.Env):
         raw_intrinsic = weights["intrinsic"] * curiosity
         intrinsic_reward, intrinsic_gate = self.exploration_budget.pay(raw_intrinsic, self.idle_steps)
         step_reward = weights['step'] * (control_frames / 12 if self.regional else 1)
-        reward = step_reward + weights["progress"] * delta + intrinsic_reward
+        reward = step_reward + weights["progress"] * delta + intrinsic_reward + novelty_reward
         route_reward = route_settings.get("weight", 0.0) * route_delta if route_settings.get("enabled") else 0.0
         reward += route_reward
         if self.telemetry.complete:
@@ -419,6 +450,7 @@ class GalaxyEnv(gym.Env):
             start_relative_route_progress=self.route.best - self.route_start if self.route else None,
             emulated_frames=self.emulated_frames,
             step_reward=step_reward,
+            position_novelty_reward=novelty_reward,
         )
         with self.profiler.measure("logging"):
             self._append(action, reward, fraction, outcome, metrics)
@@ -501,6 +533,7 @@ class GalaxyEnv(gym.Env):
                 step_reward=metrics.get('step_reward', 0.0),
                 health_lost=metrics.get("health_lost", 0),
                 damage_penalty=metrics.get("damage_penalty", 0.0),
+                position_novelty_reward=metrics.get('position_novelty_reward', 0.0),
             )
         )
         if self.steps % 16 == 0 or outcome != "running":

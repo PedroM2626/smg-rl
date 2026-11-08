@@ -138,16 +138,23 @@ def audit_block(run, config, source_real, source_attempts, failed=False, paused=
         physical += len(decisions)
         if int(last['emulated_frames']) != config['parallel']['frame_skip'] * len(decisions):
             raise ValueError('Physical-frame accounting differs from real decisions.')
-        expected_credit = float(last['shaping_potential']) - float(first['shaping_potential'])
-        observed_credit = sum(float(r['regional_shaping_reward']) for r in decisions)
-        limit = (config['regional_reward']['scale'] if config['regional_reward'].get('mode') in
-                 ('distance_advance', 'discounted_distance_advance')
-                 else 1.0)
-        if abs(expected_credit - observed_credit) > 1e-6 or not -1e-8 <= observed_credit <= limit + 1e-6:
-            raise ValueError('Incremental route credit does not telescope to the new high-water mark.')
+        regional = bool(config.get('regional_reward', {}).get('enabled'))
+        if regional:
+            expected_credit = float(last['shaping_potential']) - float(first['shaping_potential'])
+            observed_credit = sum(float(r['regional_shaping_reward']) for r in decisions)
+            limit = (config['regional_reward']['scale'] if config['regional_reward'].get('mode') in
+                     ('distance_advance', 'discounted_distance_advance')
+                     else 1.0)
+            if abs(expected_credit - observed_credit) > 1e-6 or not -1e-8 <= observed_credit <= limit + 1e-6:
+                raise ValueError('Incremental route credit does not telescope to the new high-water mark.')
+        novelty = config.get('position_novelty', {})
         for row in decisions:
             actions[row['action']] += 1
-            expected_reward = float(row['regional_shaping_reward']) + float(row['damage_penalty'])
+            novelty_paid = float(row.get('position_novelty_reward') or 0.)
+            if novelty_paid and (not novelty.get('enabled') or not 0 < novelty_paid <= novelty['bonus'] + 1e-9):
+                raise ValueError('Position novelty was paid outside its configured bonus.')
+            expected_reward = (float(row['regional_shaping_reward']) if regional else 0.)
+            expected_reward += float(row['damage_penalty']) + novelty_paid
             expected_reward += config['rewards']['completion'] if row['complete'] == 'True' else (
                 config['rewards']['death'] if row['dead'] == 'True' else 0.)
             timeout = config['rewards']['timeout'] if row['outcome'] == 'timeout' else 0.
@@ -156,7 +163,7 @@ def audit_block(run, config, source_real, source_attempts, failed=False, paused=
             expected_reward += timeout
             if abs(float(row['reward']) - expected_reward) > 1e-6:
                 raise ValueError('Unexpected reward component in simple objective.')
-            if float(row['regional_shaping_reward']) > 1e-8 and row['grounded'] != 'True':
+            if regional and float(row['regional_shaping_reward']) > 1e-8 and row['grounded'] != 'True':
                 raise ValueError('Airborne progress was rewarded.')
         if last['outcome'] == 'success' and (last['complete'] != 'True' or last['dead'] == 'True'
                 or int(last['scene_nerve'], 16) not in PROFILES[game_id(config)].complete):

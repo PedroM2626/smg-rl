@@ -98,3 +98,14 @@ def test_no_penalty_probe_differs_from_arm_f_only_in_the_two_failure_weights(tmp
     assert probe['rewards']['death'] == 0 and probe['rewards']['damage'] == 0
     assert probe['regional_reward']['allow_unpenalized_failure'] is True
     GalaxyEnv(probe, backend=None, run_dir=tmp_path, memory=object(), intrinsic=False)
+
+
+def test_dense_head_keeps_the_sources_first_waypoints_then_spreads_the_rest():
+    source = json.loads(SOURCE.read_text())
+    route = sparse()(source, 15, 8)
+    kept = route['kept_source_indices']
+    assert kept[:9] == list(range(9)) and kept[-1] == len(source['waypoints']) - 1 and len(kept) == 16
+    assert kept == sorted(set(kept))
+    for bad in (15, -1, 2.5):
+        with pytest.raises(ValueError):
+            sparse()(source, 15, bad)

@@ -743,3 +743,31 @@ opening, not the penalties, the cause. This is one block and one seed; it was no
 block. Related check: the sparse 15-waypoint route's first kept waypoint is about 2,560 units from the
 start (the first segments of the 47-point route are about 980 and 1,590 units), so a from-scratch
 agent would reach its first payment later, not sooner.
+
+### Position-novelty exploration arm and a dense-start waypoint route
+
+Both arms are built and tested; neither has been trained.
+
+**Exploration arm** (`config/algorithm-benchmark-exploration-20261107.yaml`, new `position_novelty` reward).
+From scratch, no route reward, no anchor, no demonstration, no checkpoint seeding. The reward is RAM position
+novelty plus the RAM star: 0.05 divided by the square root of the cell's visit count, paid once per
+episode on entering a cell of 200 x 250 x 200 units that is new to the episode, while alive and above the
+fall limit, with the visit counts kept per worker across episodes; star +20, death -2, damage -0.25 as in arm F.
+An episode that finds no new cell for 180 decisions is cut as a bootstrap truncation, so standing still
+earns nothing and ends the episode. The policy input stays visual. The route is loaded only so the
+route advance can be reported as a diagnostic: it never pays and never ends an episode. A first
+version paid on every step in a cell, which made standing still a growing income; the test that caught it
+now pins the once-per-cell rule. The environment refuses to combine this reward with regional or route
+rewards, a curriculum or demonstrations; the replay signature includes it; the block audit checks that
+novelty is paid only within its configured bonus. The counts are per worker (four processes), so the
+cross-episode decay is not shared between workers, and they restart with each block.
+
+**Waypoint arm route.** `make_sparse_route.py` takes an optional head: the first `head` waypoints are the
+source's own, the rest are spread by length. The waypoint arm now uses `smg1-human-landing-v2-sparse15h8.json`
+(source indices 0 to 8, 11, 17, 24, 28, 34, 40, 46; first waypoint 973 units away instead of 2,559). Replaying
+the winning greedy trajectory offline over 15-waypoint routes with other heads gave between 1 and 7 commit
+events and between 2 and 14 waypoints paid, so the choice is fragile; head 8 gave 7 events, 13 paid and a
+longest stretch of 77 decisions, the best of the 15-waypoint variants tried. Even with the nearer first
+waypoint, that trajectory's first payment arrives at decision 21 because credit needs a grounded landing
+and the first landing is there. Heads of 3 to 7 with 17 or 19 waypoints paid more often on that trajectory
+(for example 17 with head 5: 8 events, 16 paid, longest stretch 60), but exceed the 15 the owner asked for.

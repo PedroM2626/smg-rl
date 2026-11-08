@@ -45,6 +45,8 @@ def replay_signature(config):
             else 'absorbing-frame-budget-v1')
     if config.get('curriculum', {}).get('enabled'):
         result['curriculum_distribution'] = config['curriculum']
+    if config.get('position_novelty', {}).get('enabled'):
+        result['position_novelty'] = config['position_novelty']
     return result
 
 

@@ -54,7 +54,7 @@ paths:
   runs: runs/model-free/algorithm-benchmark-20261106/BTR-wp
   source_user: '%APPDATA%\Dolphin Emulator'
   user: .local/algorithm-benchmark-20261106/BTR-wp-wp/template
-  route: config/routes/smg1-human-landing-v2-sparse15.json
+  route: config/routes/smg1-human-landing-v2-sparse15h8.json
   curriculum: .local\exploration-study-20261029\human-bank\bank.json
   tensorboard: runs/model-free/tensorboard
 replay:
@@ -93,7 +93,7 @@ route_reward:
   enabled: false
 regional_reward:
   enabled: true
-  spec_sha256: 10c03ad2ede60bc4fa2193834bdf8377556cadc76f011f2b4d3c27c831d5b3ae
+  spec_sha256: 0a5e47a68fd26c0611d49e1ac196272e202c86579f693ad88f48a0dd068ba891
   scale: 15.0
   waypoint_bonus: 1.0
   normalization_distance: 37872.5332017393
@@ -143,6 +143,6 @@ resource_guard:
   physical_reserve_bytes: 2147483648
 study:
   arm: algorithm-benchmark-BTR-waypoint-bonus
-  note: From scratch, no transfer, no demonstration, no curriculum; same seed, start, budget and algorithm as the BTR arm; only the reward differs (+1 per committed waypoint on a 15-waypoint sparse route, star 20, death -3, damage -1).
+  note: From scratch, no transfer, no demonstration, no curriculum; same seed, start, budget and algorithm as the BTR arm; only the reward differs (+1 per committed waypoint on a 15-waypoint route dense at the start, star 20, death -3, damage -1).
   budget_real_decisions: 1000000
   seeds: 1
