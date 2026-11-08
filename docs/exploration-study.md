@@ -684,3 +684,15 @@ anything, because it lands more than the landing radius from one waypoint and th
 there. The 15-waypoint route works on this trajectory, which is the one that reproduces the search
 demonstration, so it says little about how another policy would land. The last waypoint (the star
 region) is never committed because the episode ends first, so at most 14 of the 15 are paid.
+
+### Arm F closed at 462,132 decisions
+
+Control arm F (IQN, from scratch, no demonstration, no curriculum, four workers with overlap)
+ran three one-hour blocks (`runs/model-free/algorithm-benchmark-20261106/F`, all audited) and
+the owner closed it there, short of the 1,000,000-decision budget. Per block: 153,624, 314,744 and
+462,132 real decisions; 0 RAM stars in all of them; best route advance 2.6% in block 1 and 0.0% in
+blocks 2 and 3 (no route waypoint confirmed in 1,711 attempts); deaths 221, 1 and 6. In blocks 2 and
+3 almost every attempt ended by the idle cut at 180 decisions, the policy drifting backward and
+using spin, crouch, jump and no-op rather than the forward label. One seed, one reward, no
+demonstration: it says this control did not find the opening in 462,132 decisions, not that it
+cannot. The checkpoints are kept and the chain state allows resuming it.
