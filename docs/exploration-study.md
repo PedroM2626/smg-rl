@@ -861,3 +861,22 @@ Exploration arm block 4 (`dqn-20261108-051504-940475`, 551,288 real decisions in
 decisions. The lowest z among the last 30 episodes is -1,086, no better than block 3's -1,286, so the forward
 trend of block 3 did not continue. Four blocks and 551,288 decisions without a single route waypoint, so the arm
 was closed here under the same rule as arms F and BTR (checkpoints kept, chain state can resume).
+
+### Waypoint arm block 1, and why the from-scratch arms collapsed
+
+Waypoint arm (BTR learner, +1 per waypoint on the dense-start 15-waypoint route, star 20, death -3, damage -1),
+block 1 (`dqn-20261108-062422-342474`, 142,088 real decisions, 895 attempts, audited): 0 RAM stars, 204 deaths,
+no waypoint confirmed, and by the end every sampled attempt is the same idle policy (spin in 179 of 181 decisions,
+return 0, cut at 180 decisions), as in the BTR arm.
+
+Correcting the diagnosis I gave after the no-penalty probe: comparing the arms' reward configuration with the
+Sweet Sweet curriculum runs shows that arms F, BTR, the probe and the waypoint arm (and the exploration arm)
+all used `timeout_mode: truncation_bootstrap` with a timeout weight of 0, so a policy that idles until the cut
+loses nothing, while the curriculum runs used `idle_terminal_penalty` (an idle cut is a terminal failure of -2,
+as bad as a death), `max_idle_frames` 1,440 and a waypoint lookahead of 5. Under the first setting idling is the
+costless action and the passive collapse is what a learner should do; the no-penalty probe removed the death cost
+as well and left idling free. The statement that the failure came from the lack of any reward signal in the
+opening is therefore not supported by those runs: they never tested a reward in which idling costs something.
+`config/algorithm-benchmark-f-idle-20261108.yaml` is arm F with only that reward changed (timeout -2 as an idle-cut
+terminal, 1,440 idle frames, lookahead 5; a test pins it). The earlier arms' results stand as results of their
+reward, not of their algorithms.

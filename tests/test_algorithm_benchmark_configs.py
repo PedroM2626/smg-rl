@@ -46,3 +46,17 @@ def test_bbf_lite_arm_differs_from_arm_f_only_in_the_learner_settings():
     agent = DistributionalAgent({'image_size': 84, 'scenario_names': ['sweet_sweet'], 'action_names': list('01234567')},
                                 bbf['dqn'])
     assert type(agent.optimizer).__name__ == 'AdamW' and agent.online.conv[0].out_channels == 64
+
+
+def test_idle_penalty_arm_differs_from_arm_f_only_in_idle_handling_and_builds(tmp_path):
+    from smg_rl.env import GalaxyEnv
+    control = load_config(ROOT / 'algorithm-benchmark-f-iqn-20261106.yaml')
+    idle = load_config(ROOT / 'algorithm-benchmark-f-idle-20261108.yaml')
+    assert idle['dqn'] == control['dqn'] and idle['training'] == control['training'] and idle['parallel'] == control['parallel']
+    keys = {k for k in control['regional_reward'].keys() | idle['regional_reward'].keys()
+            if control['regional_reward'].get(k) != idle['regional_reward'].get(k)}
+    assert keys == {'waypoint_lookahead', 'max_idle_frames', 'timeout_mode'}
+    assert {k for k in control['rewards'] if control['rewards'][k] != idle['rewards'][k]} == {'revision', 'timeout'}
+    assert idle['rewards']['timeout'] == idle['rewards']['death'] == -2.0
+    assert control['rewards']['timeout'] == 0.0 and control['regional_reward']['timeout_mode'] == 'truncation_bootstrap'
+    GalaxyEnv(idle, backend=None, run_dir=tmp_path, memory=object(), intrinsic=False)
