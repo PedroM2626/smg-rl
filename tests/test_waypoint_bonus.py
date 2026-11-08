@@ -109,3 +109,52 @@ def test_dense_head_keeps_the_sources_first_waypoints_then_spreads_the_rest():
     for bad in (15, -1, 2.5):
         with pytest.raises(ValueError):
             sparse()(source, 15, bad)
+
+
+def test_waypoint_arm_pays_through_real_environment_steps_and_audits_its_credit(tmp_path):
+    from types import SimpleNamespace
+
+    from smg_rl.memory import Telemetry
+    config = load_config(CONFIG)
+    config['actions'] = {'profile': 'legacy54'}  # the fake backend has no native bridge
+    route = json.loads((ROOT / config['paths']['route']).read_text())
+    points = route['waypoints']
+    # A scripted walk that lands on every waypoint in order, in steps under the route's sample limit.
+    path = [points[0]]
+    for start, end in zip(points, points[1:]):
+        count = int(np.ceil(np.linalg.norm(np.subtract(end, start)) / 800))
+        path += [list(np.add(start, (np.subtract(end, start)) * k / count)) for k in range(1, count + 1)]
+
+    class Walker:
+        last_frame_count = 12
+
+        def __init__(self):
+            self.steps, self.slot = 0, 1
+
+        def load_slot(self, slot):
+            self.steps = 0
+
+        def advance(self, names):
+            self.steps += 1
+
+        def image(self):
+            return np.zeros((84, 84), np.uint8)
+
+        def sample(self):
+            x, y, z = path[min(self.steps, len(path) - 1)]
+            return Telemetry((x, y, z), 1, 'BeltConveyerExGalaxy', 1, 2, 3, self.steps, False, False,
+                             health=3, max_health=3, grounded=True)
+
+        def close(self):
+            pass
+
+    backend = Walker()
+    calibration = {'validated': True, 'game_id': 'RMGE01', 'variations': {'sweet_sweet': {'start': points[0], 'goal': points[-1]}}}
+    (tmp_path / 'c.json').write_text(json.dumps(calibration))
+    config['paths']['calibration'] = str(tmp_path / 'c.json')
+    env = GalaxyEnv(config, backend, tmp_path / 'run', memory=backend, intrinsic=False)
+    env.reset(options={'variation': 0, 'full_start': True})
+    rewards = [env.step(0)[1] for _ in range(len(path) - 1)]
+    assert set(np.round(rewards, 6)) <= {0.0, 1.0, 2.0}
+    assert sum(rewards) == pytest.approx(15) and env.potential.value == pytest.approx(15)
+    assert SimpleNamespace(**env.rows[-1]).shaping_potential == pytest.approx(15)

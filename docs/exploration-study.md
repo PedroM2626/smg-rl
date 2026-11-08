@@ -846,3 +846,18 @@ decisions. The change from block 2 is direction: among the last 30 episodes the 
 and -1,101, past the first waypoint's z of about -1,022, where in block 2 it was mostly above -500. The agent is now
 making forward progress and dying more (falls), but it has not landed within the landing radius of the first
 waypoint, so the route diagnostic has not moved. Continuing for a further block.
+
+### Waypoint-bonus fix, and the exploration arm closed at 551k
+
+Before the waypoint arm was run, a check that drove the environment step by step found that its reward class
+had no `value` attribute, which the environment reads on every step, so the first training step would have
+crashed; the earlier tests built the environment but never stepped it. `RegionalWaypointBonus` now exposes
+`value` (bonus times committed waypoints), the block audit's credit limit now includes the new mode, and a test
+walks the 15-waypoint route through the real environment and checks 15 points are paid in total and
+the logged potential reaches 15.
+
+Exploration arm block 4 (`dqn-20261108-051504-940475`, 551,288 real decisions in total, 124 attempts, audited):
+0 RAM stars, route advance 0.0 in every attempt, 53 deaths in the block, a median attempt of about 1,242
+decisions. The lowest z among the last 30 episodes is -1,086, no better than block 3's -1,286, so the forward
+trend of block 3 did not continue. Four blocks and 551,288 decisions without a single route waypoint, so the arm
+was closed here under the same rule as arms F and BTR (checkpoints kept, chain state can resume).

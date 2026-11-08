@@ -143,7 +143,7 @@ def audit_block(run, config, source_real, source_attempts, failed=False, paused=
             expected_credit = float(last['shaping_potential']) - float(first['shaping_potential'])
             observed_credit = sum(float(r['regional_shaping_reward']) for r in decisions)
             limit = (config['regional_reward']['scale'] if config['regional_reward'].get('mode') in
-                     ('distance_advance', 'discounted_distance_advance')
+                     ('distance_advance', 'discounted_distance_advance', 'discounted_waypoint_bonus')
                      else 1.0)
             if abs(expected_credit - observed_credit) > 1e-6 or not -1e-8 <= observed_credit <= limit + 1e-6:
                 raise ValueError('Incremental route credit does not telescope to the new high-water mark.')

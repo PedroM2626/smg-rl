@@ -73,6 +73,11 @@ class RegionalWaypointBonus:
         self.bonus, self.segments, self.committed = float(bonus), segments, 0
         self.scale = self.bonus * segments
 
+    @property
+    def value(self):
+        """Total bonus earned so far, in the same units as the other shaping classes' potential."""
+        return self.bonus * self.committed
+
     def reset(self, committed):
         if type(committed) is not int or not 0 <= committed <= self.segments:
             raise ValueError('Committed waypoints must lie in [0, segments].')
