@@ -981,3 +981,11 @@ is one process), and the 8.8 GB the official memory would need at 1M transitions
 drives the real agent through the adapter with fake environments for 160 decisions (learning happens, the ledger
 and status are written) and pins the defaults, the discount check and the vendored notice. Nothing has been run
 on the emulator.
+
+A concurrency mistake on November 8: stopping the background task of the random-checkpoint arm's chain did not
+stop its script, which stayed in the memory wait and started when memory freed, at the same time as the BTR
+projection arm. Both ran at about half speed for about 26 minutes with free physical memory down to 5.3 GB. The
+random-checkpoint block (`dqn-20261108-125804-760812`) was stopped with a STOP file, wrote its checkpoint
+(169,656 real decisions in total) and passed the audit as an owner-stopped block; the BTR projection arm kept
+running. Its first 26 minutes ran at half speed and the 25 minutes before that, none, so its decision counts per
+elapsed time are not comparable with the other arms for that stretch.
