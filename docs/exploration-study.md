@@ -815,3 +815,25 @@ cells and up to 101 in an episode among the last 40) but does not go forward: it
 start. Its actions are spread over jump, spin, sideways moves, no-op and crouch. So position novelty with this
 cell size and bonus produces long, moving episodes but, so far, no route advance. Continuing one more block
 before judging the arm.
+
+### BBF-lite arm (built, not run)
+
+Source: Schwarzer et al., "Bigger, Better, Faster" (arXiv 2305.19452v3). The paper's text states: Impala-CNN
+with every layer 4 times wider, AdamW with weight decay 0.1, no noisy layers, periodic resets every 40,000
+gradient steps with the convolutional layers moved 50% toward a random target and later layers fully reset,
+an n-step horizon decreasing from 10 to 3 and a discount rising from 0.97 to 0.997 over the 10,000 updates after
+each reset, an EMA target network, a replay ratio of 8 (2 is also reported) and a self-predictive (SPR) loss.
+The text and appendix do not give the batch size, learning rate, EMA coefficient or epsilon schedule, and the
+component-removal numbers are only in figures I could not read; those values here are mine.
+
+`config/algorithm-benchmark-bbf-lite-20261108.yaml` is arm F with only the learner changed: encoder base
+channels 64 (twice the F arm's, the 4x width of the standard 16/32/32 base), AdamW weight decay 0.1, EMA target
+0.005 (my choice), plain linear heads (new `noisy: false`) with epsilon-greedy, and a reset every 40,000 updates
+(new `reset: {interval, shrink}`; encoder shrink and perturb at 0.5, later layers re-initialised, optimizer state
+cleared, target copied). A test pins that nothing else differs from arm F. Not included, and why: the replay ratio
+(one update per four decisions stays, because at the measured 29 to 45 ms per update a ratio near BBF's would
+leave the learner far slower than the emulators), the n-step and discount schedules (the discount must equal
+the regional reward's per-frame discount, and the replay fixes its n-step at construction), and the SPR loss.
+So this is a BBF-style learner on the F arm's data rate, not BBF. It has not been trained; given that arms F and
+BTR collapsed to a passive policy before any learner difference could matter, a from-scratch run of it would
+mostly test the same exploration problem.

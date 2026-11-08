@@ -33,3 +33,16 @@ def test_btr_arm_builds_an_agent_with_the_new_learning_options():
     assert type(agent.optimizer) is torch.optim.Adam and agent.settings['target_update_interval'] == 500
     assert any('parametrizations' in name for name, _ in agent.online.conv.named_parameters())
     assert agent.epsilon() == 1.0 and btr['dqn']['epsilon'] == 0.01
+
+
+def test_bbf_lite_arm_differs_from_arm_f_only_in_the_learner_settings():
+    control = load_config(ROOT / 'algorithm-benchmark-f-iqn-20261106.yaml')
+    bbf = load_config(ROOT / 'algorithm-benchmark-bbf-lite-20261108.yaml')
+    skip = {'paths', 'study', 'dqn'}
+    assert {k: v for k, v in control.items() if k not in skip} == {k: v for k, v in bbf.items() if k not in skip}
+    changed = {k for k in control['dqn'].keys() | bbf['dqn'].keys() if control['dqn'].get(k) != bbf['dqn'].get(k)}
+    assert changed == {'channels', 'noisy', 'weight_decay', 'target_soft_tau', 'reset'}
+    assert bbf['dqn']['train_every'] == control['dqn']['train_every'] and bbf['dqn']['gamma'] == control['dqn']['gamma']
+    agent = DistributionalAgent({'image_size': 84, 'scenario_names': ['sweet_sweet'], 'action_names': list('01234567')},
+                                bbf['dqn'])
+    assert type(agent.optimizer).__name__ == 'AdamW' and agent.online.conv[0].out_channels == 64

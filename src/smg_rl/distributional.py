@@ -86,8 +86,10 @@ class DistributionalQ(nn.Module):
             features = self.conv(torch.zeros(1, stack, size, size)).shape[-1]
         self.encode = nn.Sequential(nn.Linear(features, hidden), nn.ReLU())
         output = self.atoms if self.algorithm == 'rainbow' else 1
-        self.value = nn.Sequential(NoisyLinear(hidden + self.scenarios, hidden), nn.ReLU(), NoisyLinear(hidden, output))
-        self.advantage = nn.Sequential(NoisyLinear(hidden + self.scenarios, hidden), nn.ReLU(), NoisyLinear(hidden, self.actions * output))
+        # Noisy heads by default; `noisy: false` gives plain linear heads (epsilon-greedy only).
+        linear = NoisyLinear if settings.get('noisy', True) else nn.Linear
+        self.value = nn.Sequential(linear(hidden + self.scenarios, hidden), nn.ReLU(), linear(hidden, output))
+        self.advantage = nn.Sequential(linear(hidden + self.scenarios, hidden), nn.ReLU(), linear(hidden, self.actions * output))
         if self.algorithm == 'iqn':
             embedding = int(settings.get('cosine_embedding', 64))
             self.register_buffer('frequencies', torch.arange(1, embedding + 1).float() * math.pi)

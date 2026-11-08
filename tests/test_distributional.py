@@ -221,3 +221,42 @@ def test_spectral_norm_encoder_is_optional_and_bounds_the_convolution_gain():
     assert torch.linalg.matrix_norm(first.reshape(first.shape[0], -1), 2) <= 1.05
     with pytest.raises(ValueError, match='impala encoder only'):
         DistributionalQ(signature(), {**settings('iqn'), 'spectral_norm': True})
+
+
+def test_plain_linear_heads_replace_noisy_layers_when_noise_is_switched_off():
+    noisy = DistributionalQ(signature(), {**settings('iqn'), 'encoder': 'impala'})
+    plain = DistributionalQ(signature(), {**settings('iqn'), 'encoder': 'impala', 'noisy': False})
+    assert any(isinstance(m, NoisyLinear) for m in noisy.modules())
+    assert not any(isinstance(m, NoisyLinear) for m in plain.modules())
+    plain.reset_noise()  # a no-op, must not fail
+    assert plain.expected(torch.zeros(2, 4, 40, 40), torch.ones(2, 1)).shape == (2, 8)
+
+
+def test_periodic_reset_shrinks_the_encoder_toward_random_and_reinitialises_later_layers():
+    torch.manual_seed(1)
+    options = {**settings('iqn'), 'encoder': 'impala', 'noisy': False, 'target_update_interval': 10 ** 6,
+               'reset': {'interval': 1, 'shrink': 0.5}}
+    agent = DistributionalAgent(signature(), options)
+    replay = replay_fixture()
+    agent.update(replay)  # interval 1: the reset happens inside this update
+    # The reset leaves the target equal to the online network and the optimizer without state.
+    for name, tensor in agent.online.state_dict().items():
+        torch.testing.assert_close(agent.target.state_dict()[name], tensor)
+    assert not agent.optimizer.state
+    with pytest.raises(ValueError, match='Periodic resets'):
+        DistributionalAgent(signature(), {**options, 'reset': {'interval': 0, 'shrink': 0.5}})
+    with pytest.raises(ValueError, match='Periodic resets'):
+        DistributionalAgent(signature(), {**options, 'reset': {'interval': 5, 'shrink': 1.5}})
+
+
+def test_reset_changes_both_the_encoder_and_the_heads():
+    torch.manual_seed(2)
+    options = {**settings('iqn'), 'encoder': 'impala', 'noisy': False}
+    agent = DistributionalAgent(signature(), options)
+    before = {n: p.detach().clone() for n, p in agent.online.named_parameters()}
+    torch.manual_seed(3)
+    agent.reset_network(0.5)
+    conv = next(n for n in before if n.startswith('conv.') and before[n].dim() == 4)
+    head = next(n for n in before if n.startswith('advantage.') and before[n].dim() == 2)
+    after = dict(agent.online.named_parameters())
+    assert not torch.equal(after[conv], before[conv]) and not torch.equal(after[head], before[head])

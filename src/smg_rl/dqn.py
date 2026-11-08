@@ -38,6 +38,10 @@ class DistributionalAgent:
         soft = settings.get('target_soft_tau')
         if soft is not None and not 0 < soft <= 1:
             raise ValueError('The soft target coefficient must be in (0, 1].')
+        resets = settings.get('reset')
+        if resets is not None and not (type(resets.get('interval')) is int and resets['interval'] > 0
+                                       and 0 <= resets.get('shrink', -1) <= 1):
+            raise ValueError('Periodic resets need a positive integer interval and a shrink in [0, 1].')
         self.real_decisions, self.updates, self.target_updates = 0, 0, 0
         self.rng = np.random.default_rng(seed)
         self.attempts = {}
@@ -142,6 +146,10 @@ class DistributionalAgent:
         self.optimizer.step()
         replay.priorities(batch['indices'], priority.detach().cpu().numpy() + settings['priority_epsilon'])
         self.updates += 1
+        resets = settings.get('reset')
+        if resets and self.updates % resets['interval'] == 0:
+            self.reset_network(resets['shrink'])
+            metrics['network_reset'] = 1
         soft_tau = settings.get('target_soft_tau')
         if soft_tau is not None:
             with torch.no_grad():
@@ -155,6 +163,19 @@ class DistributionalAgent:
                        mean_priority=float(priority.detach().mean()),
                        effective_sample_size=float(arrays['weights'].sum().square() / arrays['weights'].square().sum()))
         return metrics
+
+    @torch.no_grad()
+    def reset_network(self, shrink):
+        """Shrink-and-perturb the convolutional encoder toward a fresh random one and fully
+        re-initialise every later layer; optimizer state is cleared and the target copied."""
+        fresh = DistributionalQ(self.signature, self.settings).to(self.device)
+        for (name, parameter), (_, random) in zip(self.online.named_parameters(), fresh.named_parameters()):
+            if name.startswith('conv.'):
+                parameter.mul_(1. - shrink).add_(random, alpha=shrink)
+            else:
+                parameter.copy_(random)
+        self.optimizer.state.clear()
+        self.target.load_state_dict(self.online.state_dict())
 
     def save(self, folder, replay):
         if replay.emitted != self.real_decisions or any(replay.pending):
