@@ -913,3 +913,12 @@ decisions, so the earlier reading that a free idle was the main cause is not sup
 both costing -2, a learner that never sees a waypoint has no reason to prefer anything. The arm was stopped here
 (checkpoints kept). What this and the earlier arms show together is that from-scratch exploration does not find the
 first waypoint with epsilon-greedy or noisy layers, with or without an idle cost, in the budgets tried.
+
+### Random-checkpoint arm: block 1
+
+`dqn-20261108-094452-008962` (133,148 real decisions, 2,054 attempts, audited; uniform anchors plus 25% canonical
+starts, no demonstration, idle terminal penalty): 0 RAM stars at any start, 1,512 deaths. By start: the canonical
+start 497 attempts (292 deaths, 204 idle cuts, best route advance 2.6%); waypoints 01, 02 and 04 almost all deaths with
+no advance (median 15 to 28 decisions); waypoints 38 and 40, the closest to the star, 123 of 138 and 128 of 133
+deaths, no advance; the only anchors with visible progress are 14 (mean advance 2.7%, best 14.3%), 18 (best 6.3%),
+34 and 8 (best 12.3%), mostly ending in the idle cut. No anchor was cleared in the block. One block, one seed.
