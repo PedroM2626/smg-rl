@@ -228,7 +228,8 @@ class GalaxyEnv(gym.Env):
             raise MemoryFault("Reset did not restore the requested live starting state.")
         expected = self.calibration[self.variation["name"]]
         if curated:
-            if curated['route_sha256'] != self.regional_settings['spec_sha256']:
+            anchor_route = self.curriculum_bank.data['route_sha256'] if self.route.schema == 6 else self.regional_settings['spec_sha256']
+            if curated['route_sha256'] != anchor_route:
                 raise ValueError('Curriculum anchor belongs to another regional route.')
             self.curriculum_bank.verify_reset(curated, self.telemetry, expected['goal'])
         target = entry["position"] if entry else expected["start"]

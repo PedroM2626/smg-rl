@@ -6,7 +6,7 @@ from smg_rl.config import load_config
 from smg_rl.env import GalaxyEnv
 
 ROOT = Path(__file__).resolve().parents[1] / 'config'
-NAMES = ('f-pf', 'altbtr-pf', 'officialbtr-pf', 'bbf-pf', 'random-pf', 'backward-pf')
+NAMES = ('f-pf', 'altbtr-pf', 'officialbtr-pf', 'bbf-pf', 'random-pf', 'backward-pf', 'random-fpf', 'backward-fpf')
 
 
 def arm(name):
@@ -42,4 +42,14 @@ def test_start_distribution_arms_differ_only_in_how_episodes_start():
         assert config['dqn'] == base['dqn'] and config['curriculum']['enabled'] and 'frontier' not in config['curriculum']
     assert uniform['curriculum']['sampling'] == 'uniform' and uniform['start_mix']['full_start_fraction'] == 0.25
     assert 'frontier_rule' not in uniform
+    assert backward['start_mix']['full_start_fraction'] == 0.0 and backward['frontier_rule']['mode'] == 'greedy_hybrid'
+
+
+def test_start_distribution_arms_with_the_f_learner_differ_only_in_how_episodes_start():
+    base = arm('f-pf')
+    uniform, backward = arm('random-fpf'), arm('backward-fpf')
+    for config in (uniform, backward):
+        assert config['dqn'] == base['dqn'] and config['rewards'] == base['rewards']
+        assert config['curriculum']['enabled'] and 'demonstration' not in config
+    assert uniform['curriculum']['sampling'] == 'uniform' and uniform['start_mix']['full_start_fraction'] == 0.25
     assert backward['start_mix']['full_start_fraction'] == 0.0 and backward['frontier_rule']['mode'] == 'greedy_hybrid'
