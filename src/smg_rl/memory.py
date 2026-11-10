@@ -35,6 +35,7 @@ class Telemetry:
     health: int | None = None
     max_health: int | None = None
     grounded: bool | None = None
+    purple_coins: int | None = None
 
     def to_dict(self):
         return asdict(self)
@@ -47,12 +48,10 @@ class GameMemory:
     # forceKill switches to +0x38; forceGameOverAbyss switches to +0x3C.
     DEATH = (0x807D4E38, 0x807D4E3C)
 
-    def __init__(self, reader: Reader | None = None, game_id="SB4E01", stage=None):
+    def __init__(self, reader: Reader | None = None, game_id="SB4E01", stage=None, signals=None):
         self.profile = PROFILES[game_id]
         profile = self.profile
-        allowed_stages = {profile.stage}
-        if game_id == 'RMGE01':
-            allowed_stages.add('KoopaBattleVs3Galaxy')
+        allowed_stages = {profile.stage, *profile.extra_stages}
         self.expected_stage = stage or profile.stage
         if self.expected_stage not in allowed_stages:
             raise ValueError('Unsupported game stage.')
@@ -64,6 +63,8 @@ class GameMemory:
                 raise MemoryFault("Start exactly one Dolphin process and boot the game first.")
             reader = engine
         self.reader = reader
+        # Optional per-mission read-only signals found by RAM scans (see docs/luigi-purple-coins.md).
+        self.signals = signals or {}
         if self.reader.read_bytes(0x80000000, 6) != profile.game_id.encode("ascii"):
             raise MemoryFault(f"Expected the USA {profile.game_id} executable.")
         if self.reader.read_bytes(profile.signature_address, 8) != profile.signature:
@@ -86,6 +87,16 @@ class GameMemory:
         # Spine::getCurrentNerve returns the pending nerve when non-null.
         return self.u32(spine + 8) or self.u32(spine + 4)
 
+    def purple_coins(self):
+        """Purple coin count of missions that define the signal; the other words are mirrors used by audits."""
+        signal = self.signals.get('purple_coins')
+        if not signal:
+            return None
+        count = self.u32(signal['address'])
+        if not 0 <= count <= signal.get('limit', 1000):
+            raise MemoryFault(f"Implausible purple coin count: {count}")
+        return count
+
     def sample(self) -> Telemetry:
         try:
             p = self.profile
@@ -98,7 +109,7 @@ class GameMemory:
                 .decode("ascii")
             )
             scenario = self.u32(controller + p.scenario_offset)
-            if stage != self.expected_stage or scenario not in p.scenarios:
+            if stage != self.expected_stage or scenario not in (*p.scenarios, *p.extra_scenarios):
                 raise MemoryFault(f"Unexpected stage/scenario: {stage}/{scenario}")
             # Verify the current scene is actually GameScene, not a stale heap object.
             if self.u32(scene) != p.scene_vtable:
@@ -116,6 +127,9 @@ class GameMemory:
             maximum = (
                 self.u32(actor + p.max_health_offset) if p.max_health_offset is not None else None
             )
+            signal = self.signals.get('health')
+            if p.health_offset is None and signal:
+                health, maximum = self.u32(actor + signal['actor_offset']), signal['max']
             if health is not None and (maximum not in (1, 3, 6) or not 0 <= health <= maximum):
                 raise MemoryFault(f"Invalid health telemetry: {health}/{maximum}")
             grounded = None
@@ -138,6 +152,7 @@ class GameMemory:
                 health,
                 maximum,
                 grounded,
+                self.purple_coins(),
             )
         except MemoryFault:
             raise

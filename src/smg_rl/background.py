@@ -157,7 +157,8 @@ class BackgroundDolphin:
                 try:
                     if self.reader is None:
                         self.reader = ProcessMemory(self.process.pid, game_id(config))
-                    self.memory = GameMemory(self.reader, game_id(config), config.get('game', {}).get('stage'))
+                    self.memory = GameMemory(self.reader, game_id(config), config.get('game', {}).get('stage'),
+                                         config.get('game', {}).get('signals'))
                     self.memory.sample()
                     if not self.server.clients and not hasattr(self, "bridge"):
                         raise MemoryFault("Waiting for the private DSU connection.")

@@ -151,3 +151,15 @@ not be mistaken for one agent learning six times faster. Benchmark 2/4/6 collect
 under finite budgets after reward validation, then select concurrency by measured
 real frames/second, update-to-data ratio and navigation gains. No six-instance
 or indefinite run was launched for this research review.
+
+
+## Native progress scan on the Sweet Sweet recording (November 10, 2026)
+
+The paper's Appendix J.1 (read in its arXiv HTML version) says the reward is paid when a progress-like memory value
+increases from the last frame, that a region-dependent adjustment moves that value when the position enters a set region,
+that a life is worth +1 or -1 (maximum 3), that the episode ends at 0 lives or at the end of the level with no termination
+reward stated, and that episodes start at many points. It does not give the address, the scale, the regions or the number
+of start points. `scripts/scan_progress_ram.py` replayed the verified Sweet Sweet recording, saved 146 MEM1 snapshots and
+ranked aligned 32-bit words (float, unsigned and signed) by level and increment correlation with the route progress,
+excluding coordinate aliases. No word passed the normal filters; with loose ones the survivors were frame counters.
+MEM2 was not scanned, so this is a negative result for MEM1 scalars on one trajectory, not a proof of absence.

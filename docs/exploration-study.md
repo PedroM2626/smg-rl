@@ -1023,6 +1023,8 @@ accepts a zero death cost only with the explicit `allow_unpenalized_failure`). I
 
 ### Arms with the BTR projection-free reward (built, not run)
 
+> Status, November 10: all of these arms have run one block each (and the `random-pf` and `backward-pf` variants with the BTR learner did not; the F learner versions `random-fpf` and `backward-fpf` ran instead); results are in "Projection-free round of November 10, 2026" below. The text here describes them as built and not run, which was true when it was written.
+
 Owner decisions of November 10: test the remaining learners with the reward of the BTR projection arm without failure
 cost (the one that has shown the most route progress so far) and test the start-distribution methods with it, while the
 BTR learner with that reward stays the main line. Seven arms share it (projection credit of 0.1 per waypoint on the
@@ -1034,3 +1036,59 @@ among the 11 verified anchors plus 25 percent canonical starts) and `backward-pf
 canonical starts), the last two with the BTR learner. Anchors work with the projection route because the environment now
 locates an anchor on the polyline and pays no prefix (all 11 anchors lie within 53 units of it, inside the 500-unit
 corridor). Not run yet; they are run one hour each, one at a time, after the main line's current block.
+
+
+### Projection-free round of November 10, 2026 (one block of about one hour per arm, one seed)
+
+Reward in every arm: 0.1 per waypoint of the 279-point projection route (27.8 in total), star 50, death, damage and
+timeout 0; from scratch, no demonstration. Numbers are from each arm's attempts ledger: mean route advance of the last
+100 attempts, best single attempt, median decisions of recent attempts. They come from the **stochastic collection
+policy** (epsilon-greedy and noisy layers as each learner defines them: F and BBF-lite 0.3 falling to 0.1, the BTR
+learner 1.0 to 0.01 with noisy layers, the alternative BTR epsilon 0 with noisy layers); no frozen greedy evaluation was run
+for these arms, and the exploration settings differ between arms, so the comparison is not like for like.
+
+| Arm | Decisions | Attempts | Recent mean | Best | Median decisions | Stars |
+| --- | --- | --- | --- | --- | --- | --- |
+| BTR learner (BTR-proj-free), block 1 | 134,376 | 1,738 | 2.5% | 5.1% | 24 | 0 |
+| BTR learner, block 2 (263,240 in total) | +128,864 | 1,861 | 2.6% | 4.2% | 192 | 0 |
+| F-pf (two runs, see below) | 85,628 and 86,964 | 2,707 and 2,452 | 3.1% and 3.6% | 9.2% and 11.0% | 17 and 26 | 0 |
+| altBTR-pf (alternative BTR) | 112,740 | 4,231 | 5.0% | 6.7% | 32 | 0 |
+| BBF-pf (BBF-lite) | 120,864 | 1,598 | 5.0% | 9.2% | 193 | 0 |
+| OfficialBTR-pf (vendored agent) | 83,928 (15,982 updates) | 2,608 | 3.6% | 12.5% | 25.5 | 0 |
+| random-fpf (F, uniform anchors plus 25% canonical) | 126,944 | 2,229 | 2.5% | 16.5% from anchors | 26.5 | 0 |
+| backward-fpf (F, hybrid backward frontier) | 105,884 | 3,638 | 4.0% | 17.1% from anchors | 19 | 60 (all from anchor starts) |
+
+What it shows and does not show:
+- Nothing reached the star from the canonical start, and the learners are not separable: one seed, one hour, advances of
+  2.5% to 5.0%, and a "best" that is a maximum over thousands of attempts (more attempts raise it). The official BTR agent
+  ran on the emulator for the first time here, without an integration error; it saves weights only and cannot resume.
+- The route advance of an anchor-started attempt is measured from its start, so the 16.5% and 17.1% maxima are not
+  comparable with the canonical-start figures. In random-fpf, the canonical-start attempts (548) had a recent mean of
+  3.2% and a best of 8.7%; in backward-fpf the 343 canonical-start probes had 4.5% and 11.4%.
+- The 60 stars of backward-fpf come from anchor starts near the end (the frontier moved from the last anchor to the one
+  before it at 78,204 decisions, one of 11 steps). They are not completions from the start and are not counted as such.
+- The 5.0% of the alternative BTR with a median of 32 decisions and 99.9% deaths is the same dash-and-fall pattern as the
+  others; BBF-lite survives longer (median 193) but with the same mean advance.
+
+Errors made in this round, kept for the record: the two F-pf runs started 30 seconds apart because a launch that looked
+dead was alive, so they ran at the same time (a thing the project forbids; each reached about 87,000 decisions
+instead of about 130,000 and both are kept); a second launch pattern left the BBF-lite block unattended for about 28
+minutes after it finished; and random-fpf and backward-fpf first failed at the first reset because the environment compared
+an anchor's route hash with the projection route's hash instead of the anchor bank's (fixed, commit 9380c16; the failed
+run directories held no decisions). The exploration arm (route advance 0 over 769 attempts) is not comparable with these
+arms: it used the older landing-gated route, whose first waypoint needs a landing.
+
+### Next stages prepared and a native-progress scan (November 10, 2026)
+
+- **Galaxy 2 Double Time and Center of the Universe** were prepared without training: a projection route from each
+  verified human recording (266 and 274 waypoints), validated anchors (11 for Double Time, built by replaying the recorded
+  star; 8 for Center, replaying the owner-marked end location), BBF-lite configs from the canonical start and with random
+  anchors, and a start-up test of the Double Time configs (a few decisions, one emulator). The Center of the Universe has no
+  RAM star; a `goal_marker` option ends an attempt as a success at the calibrated end location (300 units, grounded, alive)
+  and logs `goal_reached` without touching `ram_star`. See [its guide](center-of-universe.md). No agent was trained on
+  either; the owner decides when.
+- **A scan for a native progress variable** replayed the Sweet Sweet human recording, saved 146 snapshots of MEM1 and
+  ranked 32-bit words by how their increments follow the route progress. With the normal filters there were no hits; with
+  looser filters the only monotone words were frame counters (increment correlation about 0.25, values such as 672 and
+  1,887). MEM2 was not scanned (the reader does not locate it), only 32-bit integers and floats were tried, and the human
+  path is one trajectory, so this does not prove there is no such variable. See the [BTR review](btr-research-review.md).

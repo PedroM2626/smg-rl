@@ -1,0 +1,37 @@
+# Read-only RAM signals found on November 10, 2026 for the two Luigi's Purple Coins missions. They are
+# detection settings only: no reward weights and no training are defined here. The owner savestates are
+# read in place from the owner's folder and are never copied over, renamed or saved to.
+# Addresses are Wii virtual addresses of heap objects. They were identical in every fresh emulator process
+# that loaded these states; whether they hold after a different boot path into the stage is not verified.
+smg2_mario_squared:
+  game_id: SB4E01
+  mission: "Luigi's Purple Coins Chaos (Mario Squared Galaxy)"
+  stage: MarioOnMarioGalaxy
+  scenario: 2
+  states:
+    start: D:\luigi-coins\SB4E01.s02          # intro of the mission, 0 of 100 purple coins
+    star_ready: D:\luigi-coins\SB4E01.s03     # 100 of 100 purple coins, life 2, one jump from the star
+  signals:
+    purple_coins:
+      address: 0x80A75D08                       # live counter, resets to 0 on respawn
+      mirrors: [0x81321034, 0x81321038]         # copies that follow it one respawn step later
+      limit: 100
+    health:
+      actor_offset: 0x6B0                       # Mario actor + 0x6B0, 3 at the start, 2 in star_ready
+      max: 3
+  star: the scene nerve 0x807D5318 (the existing completion check) after the jump
+smg1_toy_time:
+  game_id: RMGE01
+  mission: "Luigi's Purple Coins (Toy Time Galaxy)"
+  stage: FactoryGalaxy
+  scenario: 5
+  states:
+    start: D:\luigi-coins\RMGE01.s01          # intro of the mission, 0 purple coins
+    star_ready: D:\luigi-coins\RMGE01.s02     # 102 purple coins (the HUD counts past 100), star in reach
+  signals:
+    purple_coins:
+      address: 0x810550DC
+      mirrors: [0x812F3DF4, 0x812F3DF8]
+      limit: 1000
+    # Health is already read by the SMG1 profile (actor + 0x380, maximum at actor + 0x3E0).
+  star: the scene nerve 0x806A1BD8 (the existing completion check) after the jump

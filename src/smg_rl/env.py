@@ -40,7 +40,8 @@ class GalaxyEnv(gym.Env):
     def __init__(self, config, backend, run_dir, memory=None, intrinsic=True, variation=None):
         super().__init__()
         self.config, self.backend = config, backend
-        self.memory = memory or GameMemory(game_id=game_id(config), stage=config.get('game', {}).get('stage'))
+        self.memory = memory or GameMemory(game_id=game_id(config), stage=config.get('game', {}).get('stage'),
+                                              signals=config.get('game', {}).get('signals'))
         self.run_dir = Path(run_dir)
         self.run_dir.mkdir(parents=True, exist_ok=True)
         calibration = json.loads(Path(config["paths"]["calibration"]).read_text(encoding="utf-8"))

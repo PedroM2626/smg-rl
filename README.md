@@ -29,16 +29,24 @@ counted as learned mission completions.
   demonstrations: 169,656 decisions, no anchor cleared. They idle, wander or fall
   before the first waypoint; the best route advance in them was 2.6%, except the
   exploration arm, which moved but confirmed no waypoint.
-- **Current focus.** A projection credit modelled on the Mario 64 DS project (pay
-  a fixed bonus for each waypoint passed along a dense human route, airborne
-  progress included) with the BTR learner reached 3.8% to 5.1% route advance in its
-  first blocks, and the variant with no failure cost is being trained further. It
-  has not completed any stage. Details, dates and the corrections made along the
-  way are in the [exploration study](docs/exploration-study.md); the sibling
-  projects and licences are in [related projects](docs/related-projects.md).
-- **Not done yet:** Galaxy 2 Double Time and Spinning, Center of the Universe, the
-  official BTR agent run (vendored and wired in `third_party/btr`, never run on
-  the emulator), BBF-lite, GA and ES arms, Go-Explore.
+- **Projection credit, from scratch (one seed, about one hour per arm, no RAM star from the canonical start in any).**
+  A fixed bonus per waypoint passed along a dense human route, with no cost for failure (the recipe of the Mario 64 DS
+  project), reaches 2.5% to 5.0% mean recent route advance and 4% to 12.5% best single-attempt advance across the BTR,
+  alternative BTR, official BTR, F and BBF-lite learners; the differences are too small to rank them. The attempts
+  mostly end in a fall within a median of 17 to 193 decisions. The learners were compared on their stochastic collection
+  attempts, not on frozen greedy evaluations. Start methods: a backward frontier over the 11 human anchors made the
+  F learner reach the star from the last anchor (60 stars, all from anchor starts, none from the canonical start);
+  uniform random anchors did not improve the advance from the canonical start in one hour. Numbers, errors and
+  caveats are in the [exploration study](docs/exploration-study.md); the sibling projects and licences are in
+  [related projects](docs/related-projects.md).
+- **Prepared, not trained:** Galaxy 2 Double Time (projection route, 11 validated anchors, BBF-lite configs, start-up
+  smoke test) and The Center of the Universe (projection route, 8 anchors, a goal-marker gate that ends an attempt at
+  the end location instead of a star, BBF-lite configs; see [its guide](docs/center-of-universe.md)). No agent has been
+  trained on either. RAM signals for the two Luigi's Purple Coins missions are in
+  [docs/luigi-purple-coins.md](docs/luigi-purple-coins.md).
+- **Not done yet:** a long training of any from-scratch arm, a replicated benchmark (the current one has one seed and
+  one hour per arm), Spinning, GA and ES arms, Go-Explore, a native progress variable (a scan of the Sweet Sweet
+  replay found none).
 
 The final success gate is unchanged: a frozen greedy policy must reach the RAM
 star from the canonical start, and a gate passed by reproducing a searched

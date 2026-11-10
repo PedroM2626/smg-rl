@@ -48,6 +48,8 @@ evidence, not dashboards. World-model snapshots and final stop are in the
 | Exact command arguments, backend, and side effects | [CLI reference](cli.md) |
 | Local ROM and savestate filenames and roles | [Asset guide](../data/README.md) |
 | Sibling projects, the alternative BTR and external references | [Related projects](related-projects.md) |
+| Luigi's Purple Coins RAM signals (Galaxy 2 Mario Squared, Galaxy 1 Toy Time) | [Luigi's Purple Coins](luigi-purple-coins.md) |
+| Center of the Universe recording, goal-marker gate and arms | [Center of the Universe](center-of-universe.md) |
 | Native build, shared-memory capture, exact frame stepping, profiling, and benchmarks | [Native backend](native-backend.md) |
 | Protocol v2, curiosity batches, bounded exploration, and the stagnation audit | [Optimization revision](optimization-v2.md) |
 | Historical protocol v3, event wakeups, native preprocessing, and worker barrier profiling | [Native pipeline and collection](optimization-v3.md) |

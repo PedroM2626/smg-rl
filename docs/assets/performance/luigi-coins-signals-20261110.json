@@ -1,0 +1,98 @@
+{
+ "smg2_mario_squared": {
+  "mission": "Luigi's Purple Coins Chaos (Mario Squared Galaxy)",
+  "stage": "MarioOnMarioGalaxy",
+  "states": {
+   "start": {
+    "path": "D:\\luigi-coins\\SB4E01.s02",
+    "sha256": "eb1eb06c2baaf61a5334590159fdf554f186fb93060930fe0e5267d4c4c18700",
+    "loaded": {
+     "purple_coins": 0,
+     "health": 3,
+     "max_health": 3,
+     "complete": false,
+     "dead": false,
+     "grounded": true,
+     "mirrors": [
+      0,
+      0
+     ],
+     "scene_nerve": "0x807d5310"
+    },
+    "sha256_after": "eb1eb06c2baaf61a5334590159fdf554f186fb93060930fe0e5267d4c4c18700"
+   },
+   "star_ready": {
+    "path": "D:\\luigi-coins\\SB4E01.s03",
+    "sha256": "d4ecf4d171025dcfdbce4ce422f6963b6e9d0faa628b89db275852711ceb2e54",
+    "loaded": {
+     "purple_coins": 100,
+     "health": 2,
+     "max_health": 3,
+     "complete": false,
+     "dead": false,
+     "grounded": true,
+     "mirrors": [
+      100,
+      100
+     ],
+     "scene_nerve": "0x807d5310"
+    },
+    "star": {
+     "decision": 1,
+     "scene_nerve": "0x807d5318",
+     "purple_coins": 100,
+     "dead": false
+    },
+    "sha256_after": "d4ecf4d171025dcfdbce4ce422f6963b6e9d0faa628b89db275852711ceb2e54"
+   }
+  }
+ },
+ "smg1_toy_time": {
+  "mission": "Luigi's Purple Coins (Toy Time Galaxy)",
+  "stage": "FactoryGalaxy",
+  "states": {
+   "start": {
+    "path": "D:\\luigi-coins\\RMGE01.s01",
+    "sha256": "9af10580450e674d303555d1243b8b14c6f3b6206131ee1c9332c58bbd3aba28",
+    "loaded": {
+     "purple_coins": 0,
+     "health": 3,
+     "max_health": 3,
+     "complete": false,
+     "dead": false,
+     "grounded": true,
+     "mirrors": [
+      0,
+      0
+     ],
+     "scene_nerve": "0x806a1bd0"
+    },
+    "sha256_after": "9af10580450e674d303555d1243b8b14c6f3b6206131ee1c9332c58bbd3aba28"
+   },
+   "star_ready": {
+    "path": "D:\\luigi-coins\\RMGE01.s02",
+    "sha256": "fc0933dcee587c80340f01f315701ae7c7ea162540e8e12b81e5f9e77980278c",
+    "loaded": {
+     "purple_coins": 102,
+     "health": 3,
+     "max_health": 3,
+     "complete": false,
+     "dead": false,
+     "grounded": true,
+     "mirrors": [
+      102,
+      102
+     ],
+     "scene_nerve": "0x806a1bd0"
+    },
+    "star": {
+     "decision": 1,
+     "scene_nerve": "0x806a1bd8",
+     "purple_coins": 102,
+     "dead": false
+    },
+    "sha256_after": "fc0933dcee587c80340f01f315701ae7c7ea162540e8e12b81e5f9e77980278c"
+   }
+  }
+ }
+}

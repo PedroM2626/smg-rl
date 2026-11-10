@@ -99,3 +99,28 @@ def test_rejects_unsafe_telemetry(ram, mutation):
         ram.put(0x80006014, struct.pack(">fff", float("nan"), 0, 0))
     with pytest.raises(MemoryFault):
         GameMemory(ram).sample()
+
+
+def test_purple_coin_signal_and_signal_health_are_read_only_when_configured(ram):
+    ram.word(0x80006000 + 0x6B0, 2)
+    ram.word(0x80A75D08, 41)
+    plain = GameMemory(ram).sample()
+    assert plain.purple_coins is None and plain.health is None
+    signals = {'purple_coins': {'address': 0x80A75D08, 'limit': 100}, 'health': {'actor_offset': 0x6B0, 'max': 3}}
+    configured = GameMemory(ram, signals=signals).sample()
+    assert configured.purple_coins == 41 and configured.health == 2 and configured.max_health == 3
+
+
+def test_implausible_purple_coin_counts_and_health_are_refused(ram):
+    ram.word(0x80A75D08, 5000)
+    with pytest.raises(MemoryFault, match='purple coin'):
+        GameMemory(ram, signals={'purple_coins': {'address': 0x80A75D08, 'limit': 100}}).sample()
+    ram.word(0x80006000 + 0x6B0, 9)
+    with pytest.raises(MemoryFault, match='health'):
+        GameMemory(ram, signals={'health': {'actor_offset': 0x6B0, 'max': 3}}).sample()
+
+
+def test_extra_stages_are_limited_to_known_profile_stages(ram):
+    assert GameMemory(ram, stage='MarioOnMarioGalaxy').expected_stage == 'MarioOnMarioGalaxy'
+    with pytest.raises(ValueError, match='stage'):
+        GameMemory(ram, stage='UnknownGalaxy')

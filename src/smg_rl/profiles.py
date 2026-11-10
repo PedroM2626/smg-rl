@@ -30,6 +30,8 @@ class MemoryProfile:
     movement_flags_offset: int | None = None
     grounded_mask: int | None = None
     grounded_exclusion_offset: int | None = None
+    extra_stages: tuple[str, ...] = ()
+    extra_scenarios: tuple[int, ...] = ()
 
 
 PROFILES = {
@@ -56,6 +58,7 @@ PROFILES = {
         movement_flags_offset=0x0C,
         grounded_mask=0x40000000,
         grounded_exclusion_offset=0xE24,
+        extra_stages=("MarioOnMarioGalaxy",),
     ),
     "RMGE01": MemoryProfile(
         "RMGE01",
@@ -81,6 +84,8 @@ PROFILES = {
         mario_offset=0x230,
         movement_flags_offset=8,
         grounded_mask=0x40000000,
+        extra_stages=("KoopaBattleVs3Galaxy", "FactoryGalaxy"),
+        extra_scenarios=(5,),
     ),
 }
 
