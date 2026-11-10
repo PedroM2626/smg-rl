@@ -270,7 +270,10 @@ class GalaxyEnv(gym.Env):
         if self.route:
             if curated and self.curriculum_bank.data['schema'] == 2:
                 # The verified pre-jitter context initializes the route, so no prefix is ever paid.
-                self.route.reset_human_anchor(verified, curated['route_waypoint'])
+                if self.route.schema == 6:
+                    self.route.reset(verified)  # Projection routes locate the anchor on the polyline; no prefix is paid.
+                else:
+                    self.route.reset_human_anchor(verified, curated['route_waypoint'])
             else:
                 self.route.reset(self.telemetry, segment=int(curated['region']) if curated else None)
         if self.potential:

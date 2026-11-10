@@ -1020,3 +1020,17 @@ nothing, so once epsilon is low the safe action wins. The Mario 64 DS recipe dif
 and timeout all cost 0). `config/algorithm-benchmark-btr-proj-free-20261108.yaml` repeats the arm with that recipe:
 death 0, damage 0, 0.1 per waypoint (27.8 in total), star 50 (the validator needs the star above the total, and
 accepts a zero death cost only with the explicit `allow_unpenalized_failure`). It is the next run.
+
+### Arms with the BTR projection-free reward (built, not run)
+
+Owner decisions of November 10: test the remaining learners with the reward of the BTR projection arm without failure
+cost (the one that has shown the most route progress so far) and test the start-distribution methods with it, while the
+BTR learner with that reward stays the main line. Seven arms share it (projection credit of 0.1 per waypoint on the
+279-point human route, 27.8 in total, star 50, death 0, damage 0, no timeout cost; from scratch, no demonstration), each
+`config/algorithm-benchmark-<name>-pf-20261110.yaml` and each differing only in the learner or the start rule, which tests
+pin: `f-pf` (arm F's IQN settings), `altbtr-pf` (the alternative BTR's settings, discount 0.99), `officialbtr-pf` (the
+vendored official agent, whose reward clipping turns the star into 1), `bbf-pf` (BBF-lite), `random-pf` (uniform choice
+among the 11 verified anchors plus 25 percent canonical starts) and `backward-pf` (the hybrid backward frontier, no
+canonical starts), the last two with the BTR learner. Anchors work with the projection route because the environment now
+locates an anchor on the polyline and pays no prefix (all 11 anchors lie within 53 units of it, inside the 500-unit
+corridor). Not run yet; they are run one hour each, one at a time, after the main line's current block.
