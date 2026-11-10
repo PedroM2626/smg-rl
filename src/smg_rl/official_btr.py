@@ -168,7 +168,7 @@ def train_official_btr(config, steps, max_seconds=None, vector_factory=None):
                     attempts_ledger.write(json.dumps({
                         'mission': info['variation'], 'start_kind': kind, 'attempt': record['completed'],
                         'worker': index, 'worker_episode': info['worker_episode'], 'real_decisions': decisions,
-                        'optimizer_updates': agent.grad_steps, 'ram_star': star, 'dead': bool(info.get('dead')),
+                        'optimizer_updates': agent.grad_steps, 'ram_star': star, 'goal_reached': bool(info.get('goal_reached')), 'dead': bool(info.get('dead')),
                         'opening_advance': float(info.get('start_relative_route_progress') or 0.),
                         'return': float(info['episode']['r']), 'decisions': int(info['episode']['l'])}) + '\n')
             observation = next_observation

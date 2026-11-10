@@ -49,7 +49,7 @@ def nearest_waypoints(route, points):
     return [int(np.linalg.norm(waypoints - p, axis=1).argmin()) for p in points]
 
 
-def prepare(source, route_path, config_path, variation, output, count, maximum_seconds=1500):
+def prepare(source, route_path, config_path, variation, output, count, maximum_seconds=1500, goal_candidate=False):
     source, route_path, output = map(Path, (source, route_path, output))
     if not 60 <= maximum_seconds <= 1800 or output.exists():
         raise ValueError('Use a new output directory and a finite preparation budget.')
@@ -57,9 +57,11 @@ def prepare(source, route_path, config_path, variation, output, count, maximum_s
         raise ValueError('Existing emulators must finish before preparation.')
     manifest = json.loads((source / 'manifest.json').read_text())
     route = json.loads(route_path.read_text())
-    if (manifest['state'] != 'completed' or not manifest['full_start_ram_star']
+    expected_state = 'candidate_goal' if goal_candidate else 'completed'
+    if (manifest['state'] != expected_state or bool(manifest.get('full_start_ram_star')) == goal_candidate
             or manifest['emulated_frames_per_sample'] != FRAMES_PER_SAMPLE or route['schema'] != 6):
-        raise ValueError('A completed full-start star recording and a schema 6 route are required.')
+        raise ValueError('A completed full-start star recording (or, with goal_candidate, an owner-marked goal '
+                         'recording) and a schema 6 route are required.')
     for name, expected in manifest['files_sha256'].items():
         if Path(name).name != name or digest(source / name) != expected:
             raise ValueError('Human source integrity failed.')
@@ -128,12 +130,16 @@ def prepare(source, route_path, config_path, variation, output, count, maximum_s
                     'validation': {'passed': False, 'idle_frames': 60, 'repetitions': 2}})
                 atomic_json(output / 'preparation.json', report)
             if t.dead:
-                raise ValueError('Human replay died before its recorded star.')
+                raise ValueError('Human replay died before its recorded end.')
+            if goal_candidate and index == len(rows) - 1:
+                inside = np.linalg.norm(np.array(t.position) - goal) <= calibration['goal_radius_3d']
+                report['human_ram_star'] = bool(inside and t.grounded is True)
+                break
             if t.complete:
                 report['human_ram_star'] = confirmed_star(t, True, index, game_id, mission['scenario'])
                 break
         if not report['human_ram_star'] or report['human_replay_samples'] != len(inputs):
-            raise ValueError('Exact full-start human completion was not reproduced.')
+            raise ValueError('Exact full-start human completion (or goal-marker arrival) was not reproduced.')
         for candidate in report['candidates']:
             passed = True
             for repetition in range(2):
@@ -157,7 +163,8 @@ def prepare(source, route_path, config_path, variation, output, count, maximum_s
         if len(entries) < 3:
             raise ValueError('Insufficient safe anchors along the human route.')
         bank = {'schema': 2, 'game_id': game_id, 'emulator_sha256': digest(config['paths']['dolphin']),
-                'route_sha256': digest(route_path), 'source_full_start_ram_star': True,
+                'route_sha256': digest(route_path), 'source_full_start_ram_star': not goal_candidate,
+                'source_goal_candidate_replayed': goal_candidate,
                 'source_manifest_sha256': report['source_manifest_sha256'], 'entries': entries,
                 'scope': 'Validated human-assisted starts, not learned mission completions.'}
         atomic_json(output / 'bank.json', bank)
@@ -181,6 +188,8 @@ if __name__ == '__main__':
     parser.add_argument('output', type=Path)
     parser.add_argument('--count', type=int, default=11)
     parser.add_argument('--max-seconds', type=int, default=1500)
+    parser.add_argument('--goal-candidate', action='store_true',
+                        help='The source is an owner-marked goal recording and the gate is the calibrated end location.')
     args = parser.parse_args()
     print(json.dumps(prepare(args.source, args.route, args.config, args.variation, args.output, args.count,
-                             args.max_seconds), indent=2))
+                             args.max_seconds, args.goal_candidate), indent=2))

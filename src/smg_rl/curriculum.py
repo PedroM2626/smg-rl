@@ -30,7 +30,8 @@ class CurriculumBank:
         self.progress_path = Path(progress_path) if progress_path else None
         if self.data['schema'] == 2:
             indices = [e.get('route_waypoint') for e in self.entries]
-            if (not self.data.get('source_full_start_ram_star') or not indices
+            if (not (self.data.get('source_full_start_ram_star') or self.data.get('source_goal_candidate_replayed'))
+                    or not indices
                     or any(type(i) is not int or i < 1 for i in indices)
                     or indices != sorted(set(indices)) or self.progress_path is None):
                 raise ValueError('Human backward curriculum requires ordered verified anchors.')

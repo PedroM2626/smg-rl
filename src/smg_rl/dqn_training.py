@@ -347,7 +347,8 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
                     attempts_ledger.write(json.dumps({'mission': name, 'start_kind': kind, **handed,
                         'attempt': attempt['completed'], 'worker': index, 'worker_episode': info['worker_episode'],
                         'real_decisions': agent.real_decisions, 'optimizer_updates': agent.updates,
-                        'ram_star': bool(star), 'dead': bool(info.get('dead')), 'opening_advance': advance,
+                        'ram_star': bool(star), 'goal_reached': bool(info.get('goal_reached')), 'dead': bool(info.get('dead')),
+                        'opening_advance': advance,
                         'return': float(info['episode']['r']), 'decisions': int(info['episode']['l'])}) + '\n')
                     for key, value in {'return': info['episode']['r'], 'decisions': info['episode']['l'],
                         'ram_star': bool(star), 'opening_advance': info.get('start_relative_route_progress', 0)}.items():

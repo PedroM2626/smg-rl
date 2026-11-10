@@ -1,5 +1,3 @@
-# DRAFT for owner review (November 10, 2026). training.enabled is false on purpose: the marker gate described in
-# docs/center-of-universe.md is not implemented, so a run from this file would never pay its completion reward.
 environment:
   action_seconds: 0.25
   crop:
@@ -52,12 +50,14 @@ paths:
   assets: data
   calibration: config/smg1-center-calibration.json
   dolphin: .local/native-dolphin-frontier/Dolphin.exe
-  replay: runs/model-free/center-20261110/BBF/replay
+  replay: runs/model-free/center-20261110/Anchors/replay
   rom: data/Super Mario Galaxy (USA) (En,Fr,Es).nkit.iso
-  runs: runs/model-free/center-20261110/BBF
+  runs: runs/model-free/center-20261110/Anchors
   source_user: '%APPDATA%\Dolphin Emulator'
-  user: .local/center-20261110/BBF/template
+  user: .local/center-20261110/Anchors/template
   route: config/routes/smg1-center-projection-v1.json
+  curriculum: .local/center-anchors-20261110/bank.json
+  curriculum_progress: .local/center-20261110/Anchors/curriculum-progress.json
   tensorboard: runs/model-free/tensorboard
 replay:
   chunk_steps: 256
@@ -76,7 +76,7 @@ rewards:
   step: 0.0
   timeout: 0.0
 training:
-  enabled: false
+  enabled: true
   device: cuda
   seed: 142
   torch_threads: 1
@@ -105,7 +105,12 @@ regional_reward:
   allow_unpenalized_failure: true
   timeout_mode: truncation_bootstrap
 curriculum:
-  enabled: false
+  enabled: true
+  probability: 1.0
+  spec_sha256: cdb77f83869f6bc7f8083afe3a59048d93f1423894ceff4f8d13158a84ad5ff8
+  mode: human_backward_v2
+  anchor_diagnostic: true
+  sampling: uniform
 dqn:
   algorithm: iqn
   gamma: 0.997
@@ -142,10 +147,15 @@ dqn:
   reset:
     interval: 40000
     shrink: 0.5
+goal_marker:
+  enabled: true
+  require_grounded: true
 resource_guard:
   physical_reserve_bytes: 2147483648
 study:
-  arm: center-of-universe-BBF-lite-DRAFT
-  note: DRAFT for owner review, training disabled. The environment has no marker-reached success event yet, so this file cannot be trained; see docs/center-of-universe.md, proposed training gate.
+  arm: center-of-universe-BBF-lite-random-anchors
+  note: The Center of the Universe before Bowser, from scratch, no demonstration and no human action in any replay. Learner BBF-lite, reward of the projection arms without failure cost (0.1 per route segment, 27.3 in total, 50 for the gate event, 0 for death, damage and timeout). The gate event is reaching the calibrated end location (300 unit 3D radius, grounded, alive); it is not a RAM star and not a Bowser victory. Start rule - uniform choice among the 8 verified human anchors plus 25 percent canonical starts; the final gate is always measured from the canonical start.
   budget_real_decisions: 1000000
   seeds: 1
+start_mix:
+  full_start_fraction: 0.25

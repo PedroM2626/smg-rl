@@ -1,7 +1,7 @@
 {
   "game_id": "RMGE01",
-  "validated": false,
-  "source": "Offline decoded Dolphin 2609a savestates; live-game/reachability not yet verified",
+  "validated": true,
+  "source": "Offline decoded Dolphin 2609a savestates; the owner recording reaches the goal marker and its replay reproduces exactly (November 10, 2026)",
   "variations": {
     "center_of_universe": {
       "start": [
@@ -17,7 +17,7 @@
       "goal_radius_3d": 300.0,
       "start_state_sha256": "7ab2b25c76a85d12ed23e2852eab6f8657289e6cfa85248289564131dabb6d09",
       "goal_state_sha256": "51e5a7979b88cea10a6f065f1d99a38abff015c68aa8bddb962c8d1a17eb1fa0",
-      "goal_radius_status": "provisional, owner-marked and requires replay plus visual review"
+      "goal_radius_status": "300 unit 3D radius around the slot 4 reference, grounded and alive; used as the training and evaluation gate event from November 10, 2026 (owner: reach the end location like the Sweet Sweet star)"
     }
   }
 }

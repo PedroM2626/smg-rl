@@ -49,6 +49,10 @@ class GalaxyEnv(gym.Env):
         if calibration.get("game_id", "SB4E01") != game_id(config):
             raise ValueError("Calibration belongs to another game.")
         self.calibration = calibration["variations"]
+        self.goal_marker = config.get('goal_marker', {})
+        if self.goal_marker.get('enabled') and any(
+                'goal' not in entry or not entry.get('goal_radius_3d') for entry in self.calibration.values()):
+            raise ValueError('A goal marker needs the goal position and radius of every calibrated variation.')
         self.scenario_count = len(config["variations"])
         n, stack = config["environment"]["image_size"], config["environment"]["frame_stack"]
         self.observation_space = spaces.Dict(
@@ -304,6 +308,22 @@ class GalaxyEnv(gym.Env):
                                      'anchor_id': self.start_state_id,
                                      'start_jitter_frames': self.start_jitter_frames}
 
+    def _goal_reached(self, previous):
+        """Marker success for missions without a RAM star: alive, grounded and inside the calibrated 3D radius.
+
+        A jump larger than one decision can travel is never a success, so a teleport cannot trigger it.
+        """
+        t = self.telemetry
+        if not self.goal_marker.get('enabled') or t.dead:
+            return False
+        if self.goal_marker.get('require_grounded', True) and t.grounded is not True:
+            return False
+        step = np.linalg.norm(np.subtract(t.position, previous.position))
+        if step > self.config['environment']['max_step_distance']:
+            return False
+        entry = self.calibration[self.variation['name']]
+        return bool(np.linalg.norm(np.subtract(t.position, entry['goal'])) <= entry['goal_radius_3d'])
+
     @measured("step")
     def step(self, action):
         if not self.rows:
@@ -318,6 +338,8 @@ class GalaxyEnv(gym.Env):
         with self.profiler.measure("telemetry"):
             self.telemetry = self.memory.sample()
         health_lost = self.damage.update(self.telemetry.health)
+        goal_reached = self._goal_reached(previous_telemetry)
+        success = self.telemetry.complete or goal_reached
         if self.telemetry.scenario != self.variation["scenario"]:
             raise MemoryFault("Scenario changed during an episode.")
         frame = self.backend.image()
@@ -371,7 +393,7 @@ class GalaxyEnv(gym.Env):
         reward = step_reward + weights["progress"] * delta + intrinsic_reward + novelty_reward
         route_reward = route_settings.get("weight", 0.0) * route_delta if route_settings.get("enabled") else 0.0
         reward += route_reward
-        if self.telemetry.complete:
+        if success:
             reward += weights["completion"]
         elif self.telemetry.dead:
             reward += weights["death"]
@@ -382,7 +404,7 @@ class GalaxyEnv(gym.Env):
         )
         reward += damage_penalty
         self.steps += 1
-        terminated = self.telemetry.complete or self.telemetry.dead
+        terminated = success or self.telemetry.dead
         truncated = not terminated and (
             self.steps >= self.config["environment"]["max_steps"]
             or self.idle_steps >= self.config["environment"]["idle_limit"]
@@ -419,7 +441,7 @@ class GalaxyEnv(gym.Env):
         self.total_reward += reward
         outcome = (
             "success"
-            if self.telemetry.complete
+            if success
             else "death"
             if self.telemetry.dead
             else "timeout"
@@ -442,7 +464,8 @@ class GalaxyEnv(gym.Env):
             intrinsic_gate=intrinsic_gate,
             intrinsic_budget_remaining=self.exploration_budget.remaining,
             timeout_penalty=timeout_penalty,
-            is_success=self.telemetry.complete,
+            is_success=success,
+            goal_reached=goal_reached,
             variation=self.variation["name"],
             health_lost=health_lost,
             damage_penalty=damage_penalty,
