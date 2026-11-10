@@ -53,3 +53,40 @@ Human recordings contain simultaneous two-frame button inputs; they are not
 directly compatible with motor8 twelve-frame training replay. Converting and
 validating a route and any future training require separate work. Assets and
 recordings remain local and are not committed.
+
+## Proposed training setup and gate (draft for owner review, November 10, 2026)
+
+Nothing below is implemented as a training run. The draft config
+[`config/center-bbf-draft-20261110.yaml`](../config/center-bbf-draft-20261110.yaml) has `training.enabled: false`, and
+the environment still refuses to build because `config/smg1-center-calibration.json` is not marked `validated`.
+That guard is deliberate and stays until the owner approves the points under "Decisions for the owner".
+
+What exists after the November 10 work: the owner's pre-boss recording (7,103 samples, slot 3 start, F8 marker) replays
+exactly (no position or observation divergence over 7,104 samples), ending 180 units from the slot-4 reference with
+2 of 3 health, grounded and without a star. A projection route of 274 waypoints (`config/routes/smg1-center-projection-v1.json`,
+530-unit spacing, about 149,400 units of arc) was cut from it.
+
+**Learner and reward (same recipe as the Double Time arms, no demonstrations).** BBF-lite, `motor8-longjump-v1`, 0.1 per
+newly passed route waypoint (27.3 in total, 273 segments), 50 for the gate event, 0 for death, damage and timeout,
+no step cost. Episodes are capped at 36,000 frames (3,000 decisions); the human run took about 1,185 decisions.
+
+**Proposed gate event (the "star" of this mission).** A policy attempt succeeds when, in one decision, Mario is alive,
+grounded and within the calibrated 3D radius of the slot-4 reference (300 units around
+(40912.6, 28495.4, 132543.5)), and the attempt was not invalidated by a teleport-size position jump. It is reported as
+"pre-boss goal reached", never as a star or a Bowser victory, because the Bowser fight is outside the route.
+
+**Proposed final check.** The frozen greedy policy from the canonical slot-3 start, with no anchors and no scripted action,
+reaches the gate event in at least one run and then in repeated runs; the number of runs and the pass rule are for the
+owner to set, since one run proves little (the Sweet Sweet gate was one run and is listed with that limitation).
+
+**Not built yet, and why it matters.** (1) The environment has no terminal for "reached a marker without a RAM star";
+only a RAM star ends an attempt as completed. (2) `scripts/prepare_anchor_bank.py` requires a RAM-star recording, so anchors
+for this mission need a goal-candidate mode. (3) The calibration `validated` flag.
+
+### Decisions for the owner
+
+1. Is the end of the recording (the video) the place the agent must reach?
+2. Is a 300-unit 3D radius right, given the owner's run ended 180 units away and 162 units higher? A tighter radius is
+   harder; a looser one may be met by a different surface.
+3. Must the policy stay grounded at the marker, and is a single frozen greedy run enough or should it be repeated?
+4. May the validation flag be set after (1) to (3), and the environment get a marker-reached success event?
