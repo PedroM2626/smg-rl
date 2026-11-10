@@ -142,3 +142,14 @@ default settings (arm BTR, and BTR with projection credit), not the official cod
 (mario64ds-rl) is a second independent implementation. Running the official agent unchanged would mean
 vendoring the MIT BTR repository's `Agent.py`, `networks.py` and `PER.py` with their licence and writing an adapter
 to this project's multi-process Dolphin collection; nothing of that is built yet.
+
+## Newer Tick Tock Clock results in mario64ds-rl (commits of November 6 to 8, 2026)
+
+After the README section quoted above, that project added a mode of `train_btr.py` for the clock: the BTR learner with
++1 for each of the 371 waypoints of the recorded human ascent passed for the first time and +100 for the star, no coin
+term, and the credit computed by projecting the position onto the route (see `src/route.py`). Its commit messages
+report about 26 waypoints after a 2-hour run from scratch and 58 to 63 after a second 2-hour stage, and its result
+tables (`results/btr_ttc_wp_train.csv`, `btr_ttc_wp2_train.csv`) show the mean route arc length of recent episodes at
+about 3,860 and 8,900 units of a 53.2k-unit route; arc-length and no-coin variants reached less in the same tables.
+These are the figures reported by that project, read here from its commits and CSV files; they are progress along the
+route, not a completed climb, and its README had not yet been updated for them when read.

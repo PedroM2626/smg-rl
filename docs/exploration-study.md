@@ -2,6 +2,8 @@
 
 The owner authorized implementing the critique after the original day run plateaued. The old run stopped intentionally with an audited checkpoint at 1,383,998 cumulative real decisions and 9,545 attempts; zero RAM stars. Originals remain retained.
 
+> Reading note (November 10, 2026): this file is a dated lab notebook. Later sections correct earlier ones, and sections whose text was overtaken carry a status line under their heading. The current summary is in the README; the numbers in each block section are the measured ones.
+
 ## Physical feasibility and curriculum
 
 The human demonstration reproduced its RAM star and all 1,735 images. Eleven intermediate anchors passed independent restore, health, grounded and idle checks. Loading an anchor pays zero reward. Assisted success is never canonical success.
@@ -367,6 +369,8 @@ stars in this block are scripted and are not learned completions.
 
 ### Algorithm benchmark configs (not yet run)
 
+> Status, November 10: arm F ran three blocks and the BTR arm two, both with 0 stars, and were closed (see their closing sections); the 1,000,000-decision budget below was never reached by any arm.
+
 `config/algorithm-benchmark-f-iqn-20261106.yaml` (control F) and
 `config/algorithm-benchmark-btr-20261106.yaml` (BTR-style) train from scratch on
 Sweet Sweet from the canonical start: no transfer, no demonstration, no curriculum,
@@ -403,6 +407,8 @@ waypoint 01, seeded with the first 50 actions of that sequence, is running to fi
 continuation that reaches the star.
 
 ### Planned algorithm arms and what the official BTR does
+
+> Status, November 10: the F, BTR, exploration, waypoint and idle-penalty arms listed or implied here have run and were closed; BBF-lite is built and not run; the official BTR code is vendored and not run. The differences listed between the official BTR and the other implementations stand.
 
 Planned arms for the one-seed, 1M-decision algorithm group, after the speedup work:
 control F (IQN), BTR-style, BBF-lite (higher replay ratio, periodic resets,
@@ -651,6 +657,8 @@ and a five-worker run did not fit. The launch script's own start threshold was l
 
 ### Waypoint-bonus arm (planned)
 
+> Status, November 10: the 15-waypoint route in this section was replaced by `smg1-human-landing-v2-sparse15h8.json`; the arm ran one block (142,088 decisions, no waypoint confirmed) and was superseded by the projection-credit arms below.
+
 Owner request: test the BTR arm with +1 per waypoint, the star kept at 20 and fewer waypoints.
 `config/algorithm-benchmark-btr-waypoint-20261107.yaml` equals the BTR arm except for the reward:
 mode `discounted_waypoint_bonus` (new, `RegionalWaypointBonus`) pays `waypoint_bonus` (1.0) for each
@@ -708,6 +716,8 @@ the same passive failure as the F arm showed from its second block, reached here
 
 ### Probe without failure penalties (planned)
 
+> Status, November 10: run for one block; its reading was later corrected, see the sections on the idle penalty.
+
 Owner suggestion: if the arms share the passive failure, remove the death and damage penalties.
 `config/algorithm-benchmark-f-nopenalty-20261107.yaml` is arm F with death 0 and damage 0 (instead
 of -2 and -0.25) and nothing else changed (a test pins that). The discounted-objective validation
@@ -731,6 +741,8 @@ allows resuming) and the no-failure-penalty probe on arm F is next.
 
 ### Probe without failure penalties: block 1
 
+> Superseded reading: the explanation in this section (no waypoint payment is ever seen) was revised in the section that corrects the collapse diagnosis and again after the idle-penalty arm; no cause of the passive policy in the from-scratch arms is established. The measured numbers stand.
+
 Arm F with death 0 and damage 0 (`dqn-20261107-225955-498040`, 149,852 real decisions, 1,240
 attempts, audited, one block): 0 RAM stars, 792 deaths, best route advance 2.6% (the same early value
 as arms F and BTR, not repeated), and a mean advance of 0 over every 100-attempt window sampled
@@ -745,6 +757,8 @@ start (the first segments of the 47-point route are about 980 and 1,590 units), 
 agent would reach its first payment later, not sooner.
 
 ### Position-novelty exploration arm and a dense-start waypoint route
+
+> Status, November 10: the exploration arm has run (closed at 551,288 decisions, no route advance) and the waypoint arm ran one block; the text below describes them as built and untrained, which was true on the day it was written.
 
 Both arms are built and tested; neither has been trained.
 
@@ -891,6 +905,8 @@ So one hour of the corrected reward did not by itself remove the passive policy;
 visible in this block. One more block before judging.
 
 ### Start-distribution arms (built, not run)
+
+> Status, November 10: the random-checkpoint arm ran 169,656 decisions with no anchor cleared and was paused; the backward arm without demonstrations has not been run.
 
 The owner's curriculum comparison has three arms on the same algorithm, reward and budget: playing from the
 start (arm F with the idle penalty, running), random checkpoints and the backward frontier. Random checkpoints

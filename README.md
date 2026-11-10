@@ -2,14 +2,51 @@
 
 Visual reinforcement-learning experiments for **Super Mario Galaxy** and
 **Super Mario Galaxy 2** on Windows, using a patched Dolphin emulator. This is a
-research project. **No learned policy has yet reached a RAM-confirmed star from
-the canonical mission start.** Assisted starts, scripted searches, detector
-fixtures and imagined trajectories are reported separately and never counted as
-learned mission completions.
+research project. One frozen greedy policy reaches a RAM-confirmed star from the
+canonical start in the deterministic emulator, but it reproduces a 312-action
+sequence found by beam search and fails after one or two random actions, so it has
+not learned the stage in a general sense; no agent has learned the stage from
+scratch without demonstrations or anchors. Assisted starts, scripted searches,
+detector fixtures and imagined trajectories are reported separately and never
+counted as learned mission completions.
 
-## Current status (November 3, 2026)
+## Current status (November 10, 2026)
 
-The active line is a backward human-anchor curriculum on SMG1 Sweet Sweet Galaxy
+- **Sweet Sweet Galaxy gate (met, with limits).** The checkpoint after S5r block 29
+  reaches the RAM star from the canonical start in 311 decisions in frozen greedy
+  evaluation (`record-dqn`, epsilon 0, three runs that are identical because the
+  emulator and the policy are deterministic). 308 of its 311 actions equal the
+  searched sequence it was taught with. With evaluation epsilon 0.01, 6 of 30
+  episodes reach the star: all 3 with no random action, 2 of 16 with one, 1 of 6
+  with two, none of 5 with three or more. One start state, one game build, one
+  training seed. The action sequences came from beam searches over the eight
+  actions; the human recording supplied the anchors and the route used for scoring.
+- **From scratch (no demonstration, no curriculum anchors), one seed each, no RAM
+  star in any of them:** arm F (462,132 decisions), the BTR learner with the
+  official repository's default settings (290,608), F with an idle penalty
+  (296,572), a position-novelty exploration arm (551,288) and the BTR learner with
+  a landing-gated waypoint reward (142,088). Random-checkpoint starts without
+  demonstrations: 169,656 decisions, no anchor cleared. They idle, wander or fall
+  before the first waypoint; the best route advance in them was 2.6%, except the
+  exploration arm, which moved but confirmed no waypoint.
+- **Current focus.** A projection credit modelled on the Mario 64 DS project (pay
+  a fixed bonus for each waypoint passed along a dense human route, airborne
+  progress included) with the BTR learner reached 3.8% to 5.1% route advance in its
+  first blocks, and the variant with no failure cost is being trained further. It
+  has not completed any stage. Details, dates and the corrections made along the
+  way are in the [exploration study](docs/exploration-study.md); the sibling
+  projects and licences are in [related projects](docs/related-projects.md).
+- **Not done yet:** Galaxy 2 Double Time and Spinning, Center of the Universe, the
+  official BTR agent run (vendored and wired in `third_party/btr`, never run on
+  the emulator), BBF-lite, GA and ES arms, Go-Explore.
+
+The final success gate is unchanged: a frozen greedy policy must reach the RAM
+star from the canonical start, and a gate passed by reproducing a searched
+sequence is reported as such.
+
+## Earlier status (November 3, 2026, superseded by the section above)
+
+The active line was a backward human-anchor curriculum on SMG1 Sweet Sweet Galaxy
 (Rocky Road), documented block by block in the
 [exploration study](docs/exploration-study.md):
 
