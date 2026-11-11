@@ -86,7 +86,7 @@ variations:
 - name: toy_time
   scenario: 5
   start_slot: 1
-  start_state: D:\luigi-coins\RMGE01.s01
+  start_state: data/luigi-coins/RMGE01.s01
   start_state_sha256: 9af10580450e674d303555d1243b8b14c6f3b6206131ee1c9332c58bbd3aba28
   title: "Luigi's Purple Coins (Toy Time Galaxy)"
 actions:

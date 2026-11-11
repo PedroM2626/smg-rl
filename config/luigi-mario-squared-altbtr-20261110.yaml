@@ -89,7 +89,7 @@ variations:
 - name: mario_squared
   scenario: 2
   start_slot: 1
-  start_state: D:\luigi-coins\SB4E01.s02
+  start_state: data/luigi-coins/SB4E01.s02
   start_state_sha256: eb1eb06c2baaf61a5334590159fdf554f186fb93060930fe0e5267d4c4c18700
   title: "Luigi's Purple Coins Chaos (Mario Squared Galaxy)"
 actions:

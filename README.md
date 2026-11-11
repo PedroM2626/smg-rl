@@ -146,6 +146,7 @@ as uncompressed tar bundles with a SHA-256 manifest:
 | `smg-rl-states-core.tar` | Mission starts and near-star fixtures, slots 1-4 of both games | `data/` |
 | `smg-rl-states-smg1-human-bank.tar` | Eleven Sweet Sweet human anchors and `bank.json` | `.local/exploration-study-20261029/human-bank/` |
 | `smg-rl-states-regional-curriculum.tar` | Earlier SMG1/SMG2 assisted regional starts | `.local/regional-curriculum/` |
+| `smg-rl-states-luigi-coins` | Luigi's Purple Coins states (Galaxy 2 Mario Squared, Galaxy 1 Toy Time); defined in `manage_states.py` but **not yet uploaded** to the release, so build it with `manage_states.py pack` from your own copies | `data/luigi-coins/` |
 
 Download the bundles into the repository root, then verify and install them:
 

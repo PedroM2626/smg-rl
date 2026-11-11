@@ -13,6 +13,15 @@ Place your own legally obtained game images here. The Dolphin savestates below a
 | `RMGE01.s03` | Center of the Universe: full-start recording reference |
 | `RMGE01.s04` | Center of the Universe: owner-selected pre-boss location, not a star |
 
+Luigi's Purple Coins states live in `data/luigi-coins/` (a separate folder because the slot names would clash with the table above). Their hashes are pinned in the Luigi configs.
+
+| File | Purpose |
+| --- | --- |
+| `data/luigi-coins/SB4E01.s02` | Galaxy 2 Mario Squared Galaxy: mission start, 0 of 100 purple coins, life 3 (training start) |
+| `data/luigi-coins/SB4E01.s03` | Galaxy 2: 100 purple coins, life 2, one jump from the star (detector validation only) |
+| `data/luigi-coins/RMGE01.s01` | Galaxy 1 Toy Time Galaxy: mission start, 0 purple coins (zero-shot evaluation start) |
+| `data/luigi-coins/RMGE01.s02` | Galaxy 1: 102 purple coins, star in reach (detector validation only) |
+
 The Galaxy 1 ROM is `Super Mario Galaxy (USA) (En,Fr,Es).nkit.iso`; Galaxy 2 is `Super Mario Galaxy 2 (USA) (En,Fr,Es).nkit.iso`. Use the matching explicit configuration.
 
 The near-star states and the Center of the Universe goal-location fixture are not completed states. Completion must be observed after collecting the star.

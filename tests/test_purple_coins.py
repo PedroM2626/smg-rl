@@ -178,7 +178,7 @@ def test_the_luigi_configs_load_and_pin_the_owner_hash():
     assert config['purple_coin_reward']['enabled'] and config['rewards']['damage'] == -1.0
     assert config['rewards']['completion'] == 50.0 and config['rewards']['death'] == 0.0
     variation = config['variations'][0]
-    assert variation['start_state'] == 'D:\\luigi-coins\\SB4E01.s02'
+    assert variation['start_state'] == 'data/luigi-coins/SB4E01.s02'
     assert variation['start_state_sha256'] == json.loads(
         open('.local/luigi-coins/original-hashes.json').read()).get('SB4E01.s02', variation['start_state_sha256'])
     assert config['dqn']['algorithm'] == 'iqn' and config['game']['signals']['purple_coins']['address'] == 0x80A75D08

@@ -9,8 +9,8 @@ smg2_mario_squared:
   stage: MarioOnMarioGalaxy
   scenario: 2
   states:
-    start: D:\luigi-coins\SB4E01.s02          # intro of the mission, 0 of 100 purple coins
-    star_ready: D:\luigi-coins\SB4E01.s03     # 100 of 100 purple coins, life 2, one jump from the star
+    start: data/luigi-coins/SB4E01.s02          # intro of the mission, 0 of 100 purple coins
+    star_ready: data/luigi-coins/SB4E01.s03     # 100 of 100 purple coins, life 2, one jump from the star
   signals:
     purple_coins:
       address: 0x80A75D08                       # live counter, resets to 0 on respawn
@@ -26,8 +26,8 @@ smg1_toy_time:
   stage: FactoryGalaxy
   scenario: 5
   states:
-    start: D:\luigi-coins\RMGE01.s01          # intro of the mission, 0 purple coins
-    star_ready: D:\luigi-coins\RMGE01.s02     # 102 purple coins (the HUD counts past 100), star in reach
+    start: data/luigi-coins/RMGE01.s01          # intro of the mission, 0 purple coins
+    star_ready: data/luigi-coins/RMGE01.s02     # 102 purple coins (the HUD counts past 100), star in reach
   signals:
     purple_coins:
       address: 0x810550DC

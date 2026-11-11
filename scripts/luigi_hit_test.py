@@ -21,7 +21,7 @@ from smg_rl.checkpoints import digest  # noqa: E402
 from smg_rl.config import load_config  # noqa: E402
 from smg_rl.native import NativeDolphin  # noqa: E402
 
-STATE = Path('D:/luigi-coins/SB4E01.s02')
+STATE = Path('data/luigi-coins/SB4E01.s02')
 POLICY = (('w',),) * 6 + (('w', 'jump'),) * 2 + (('w', 'a'), ('w', 'd'))  # mostly forward, so it stays on the platforms
 
 

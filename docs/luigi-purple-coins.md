@@ -8,10 +8,14 @@ The reward the owner specified for the Galaxy 2 stage is implemented (section "R
 
 ## Savestates and how they are handled
 
-The owner's states are in `D:\luigi-coins` (`SB4E01.s02` and `.s03`, `RMGE01.s01` and `.s02`). They are read in place:
-the native backend copies a state into its own disposable profile before loading it, nothing is written back, and
-their SHA-256 hashes were recorded before any work (`.local/luigi-coins/original-hashes.json`, local only) and
-checked again after every verification run (unchanged). The project's own `data/` states were not touched.
+The owner's states are kept in the project at `data/luigi-coins/` (`SB4E01.s02` and `.s03`, `RMGE01.s01` and `.s02`;
+byte-identical copies of the originals, hashes below). They are ignored by Git like every savestate, so they are not in
+a clone: anyone reproducing this work needs the matching bundle (`smg-rl-states-luigi-coins`, defined in
+`scripts/manage_states.py` and not yet uploaded to the release) or their own saves of the same moments. The configs pin
+each file's SHA-256 and refuse a different one. They are read only: the native backend copies a state into its own
+disposable profile before loading it and nothing is written back. Hashes: `RMGE01.s01` 9af10580…, `RMGE01.s02` fc0933dc…,
+`SB4E01.s02` eb1eb06c…, `SB4E01.s03` d4ecf4d1…; they were recorded before any work and checked after every
+verification run (unchanged). The project's other `data/` states were not touched.
 The Dolphin native bridge reports error 2 when these states are loaded (a captured frame it does not accept); the
 load itself succeeds, which the stage name, position and a frame confirm, so `scripts/luigi_dump.py` tolerates that error
 and no other.

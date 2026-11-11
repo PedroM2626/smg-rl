@@ -27,6 +27,10 @@ BUNDLES = {
         'scope': 'Mission starts and near-star detector fixtures for both games (data/).',
         'files': [f'data/{game}.s0{slot}' for game in ('RMGE01', 'SB4E01') for slot in range(1, 5)],
     },
+    'smg-rl-states-luigi-coins': {
+        'scope': "Owner states of Luigi's Purple Coins missions: Galaxy 2 Mario Squared and Galaxy 1 Toy Time (data/luigi-coins/).",
+        'files': [f'data/luigi-coins/{name}' for name in ('SB4E01.s02', 'SB4E01.s03', 'RMGE01.s01', 'RMGE01.s02')],
+    },
     'smg-rl-states-smg1-human-bank': {
         'scope': 'Validated human-assisted Sweet Sweet anchors for the backward curriculum.',
         'files': [f'{HUMAN_BANK}/bank.json']
