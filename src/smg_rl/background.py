@@ -50,6 +50,8 @@ def prepare_worker(config, index, port):
         ini[section].update(entries)
     if "cpu_thread" in config["parallel"]:
         ini["Core"]["CPUThread"] = str(bool(config["parallel"]["cpu_thread"]))
+    if "dsp_thread" in config["parallel"]:
+        ini["DSP"]["DSPThread"] = str(bool(config["parallel"]["dsp_thread"]))
     if "graphics_backend" in config["parallel"]:
         graphics_backend = config["parallel"]["graphics_backend"]
         if graphics_backend not in ("D3D", "D3D12", "Vulkan", "OGL"):
