@@ -1,6 +1,6 @@
 # Local game assets
 
-Place your own legally obtained game images here. The Dolphin savestates below are ignored by Git and never committed; they are published as the `smg-rl-states-core.tar` bundle of the [`states-v1` release](https://github.com/PedroM2626/smg-rl/releases/tag/states-v1) and installed with `scripts/manage_states.py unpack` (see the [main README](../README.md#savestates)). Game images are not distributed.
+Place your own legally obtained game images here. The Dolphin savestates below are ignored by Git and never committed; they are published as the `smg-rl-states-core.tar` bundle (the Luigi states below as `smg-rl-states-luigi-coins.tar`) of the [`states-v1` release](https://github.com/PedroM2626/smg-rl/releases/tag/states-v1) and installed with `scripts/manage_states.py unpack` (see the [main README](../README.md#savestates)). Game images are not distributed.
 
 | File | Purpose |
 | --- | --- |

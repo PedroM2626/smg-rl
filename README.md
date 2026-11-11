@@ -146,13 +146,13 @@ as uncompressed tar bundles with a SHA-256 manifest:
 | `smg-rl-states-core.tar` | Mission starts and near-star fixtures, slots 1-4 of both games | `data/` |
 | `smg-rl-states-smg1-human-bank.tar` | Eleven Sweet Sweet human anchors and `bank.json` | `.local/exploration-study-20261029/human-bank/` |
 | `smg-rl-states-regional-curriculum.tar` | Earlier SMG1/SMG2 assisted regional starts | `.local/regional-curriculum/` |
-| `smg-rl-states-luigi-coins` | Luigi's Purple Coins states (Galaxy 2 Mario Squared, Galaxy 1 Toy Time); defined in `manage_states.py` but **not yet uploaded** to the release, so build it with `manage_states.py pack` from your own copies | `data/luigi-coins/` |
+| `smg-rl-states-luigi-coins.tar` | Luigi's Purple Coins states (Galaxy 2 Mario Squared, Galaxy 1 Toy Time) | `data/luigi-coins/` |
 
 Download the bundles into the repository root, then verify and install them:
 
 ```powershell
 .\.venv\Scripts\python.exe scripts/manage_states.py verify smg-rl-states-core.tar
-.\.venv\Scripts\python.exe scripts/manage_states.py unpack smg-rl-states-core.tar smg-rl-states-smg1-human-bank.tar smg-rl-states-regional-curriculum.tar
+.\.venv\Scripts\python.exe scripts/manage_states.py unpack smg-rl-states-core.tar smg-rl-states-smg1-human-bank.tar smg-rl-states-regional-curriculum.tar smg-rl-states-luigi-coins.tar
 ```
 
 `unpack` checks every file before installing any of them. It does not overwrite a
