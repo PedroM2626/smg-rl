@@ -35,6 +35,7 @@ class VideoBackend:
         self.last_action = "reset"
         self.last_controls = ()
         self.policy_image = None
+        self.policy_stack = None  # optional (frames, h, w): the whole stacked input, oldest first
         self.policy_probabilities = None
         self.policy_q_values = None
         self.input_log = None
@@ -57,12 +58,24 @@ class VideoBackend:
         x = w + 14
         cv2.putText(canvas, "Actual policy input", (x, 22), cv2.FONT_HERSHEY_SIMPLEX,
                     0.6, (235,235,235), 1, cv2.LINE_AA)
-        if self.policy_image is not None:
+        stack = self.policy_stack
+        if stack is not None and len(stack) == 4:
+            # The four stacked frames the network sees, oldest top-left to newest bottom-right.
+            for index, frame in enumerate(stack):
+                tile = cv2.resize(frame, (124, 124), interpolation=cv2.INTER_NEAREST)
+                row, column = divmod(index, 2)
+                top, left = 36 + 128 * row, x + 128 * column
+                canvas[top:top+124, left:left+124] = cv2.cvtColor(tile, cv2.COLOR_GRAY2RGB)
+        elif self.policy_image is not None:
             tile = cv2.resize(self.policy_image, (252,252), interpolation=cv2.INTER_NEAREST)
             canvas[36:288, x:x+252] = cv2.cvtColor(tile, cv2.COLOR_GRAY2RGB)
         shape = self.policy_image.shape if self.policy_image is not None else (0,0)
         input_label = f"{shape[1]}x{shape[0]} grayscale; held for this decision" if shape[0] else "No policy sample (control fixture)"
-        cv2.putText(canvas, input_label, (x, 308),
+        if stack is not None and len(stack) == 4:
+            input_label = f"{shape[1]}x{shape[0]} x4 stacked frames"
+            cv2.putText(canvas, "oldest top-left, newest bottom-right", (x, 321),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.39, (190,190,190), 1, cv2.LINE_AA)
+        cv2.putText(canvas, input_label, (x, 304 if stack is not None and len(stack) == 4 else 308),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.39, (190,190,190), 1, cv2.LINE_AA)
         labels = ((None,"None"),("d","Right (D)"),("a","Left (A)"),("w","Forward (W)"),
                   ("s","Backward (S)"),("jump","Jump (LMB)"),("spin","Spin (MMB)"),("crouch","Crouch (Shift)"))
@@ -111,7 +124,9 @@ class VideoBackend:
             'policy_action_source': self.__dict__.get('policy_action_source'),
             'policy_epsilon': self.__dict__.get('policy_epsilon'),
             'policy_input_sha256':hashlib.sha256(self.policy_image.tobytes()).hexdigest()
-                if self.policy_image is not None else None})+'\n')
+                if self.policy_image is not None else None,
+            'policy_stack_sha256':hashlib.sha256(np.ascontiguousarray(self.policy_stack).tobytes()).hexdigest()
+                if self.policy_stack is not None else None})+'\n')
         self.frames_written += 1
 
     def advance(self, names):

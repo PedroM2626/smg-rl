@@ -75,7 +75,7 @@ def record_dqn(config_path, checkpoint, variation, seeds=(11, 23, 47), maximum_s
     name = config['variations'][variation]['name']
     ancestry = config.get('study', {})
     counter = (f"new real {agent.real_decisions} | source real {ancestry['source_real_decisions']}"
-               if ancestry else f"real {agent.real_decisions}")
+               if ancestry.get('source_real_decisions') is not None else f"real {agent.real_decisions}")
     video = VideoBackend(backend, run / 'policy.mp4',
         f"{agent.settings['algorithm'].upper()} {mode.upper()} EVAL | {name} | eps {epsilon:.3f} | {counter}",
         decision_frames=config['parallel']['frame_skip'])
@@ -90,7 +90,7 @@ def record_dqn(config_path, checkpoint, variation, seeds=(11, 23, 47), maximum_s
         'assisted_start': assisted_start, 'anchor': anchor,
         'scope': ('Assisted curriculum-anchor start' if assisted_start else 'Canonical-start')
                  + ' frozen weights; explicit parameter-noise/epsilon mode. No fitting, training or training-success accounting.',
-        'overlay': 'Exact policy grayscale frame, raw expected Q returns (not probabilities), selected action and applied controls.',
+        'overlay': 'Exact stacked policy grayscale frames (four, oldest first), raw expected Q returns (not probabilities), selected action and applied controls.',
         'video': str((run / 'policy.mp4').resolve())}
     atomic_json(run / 'recording.json', record)
     try:
@@ -112,6 +112,7 @@ def record_dqn(config_path, checkpoint, variation, seeds=(11, 23, 47), maximum_s
                 random_action = bool(metrics['epsilon_random_mask'][0])
                 random_decisions += int(random_action)
                 video.policy_image = observation['image'][-1].copy()
+                video.policy_stack = observation['image'].copy()
                 video.policy_q_values = metrics['q_values'][0]
                 video.policy_action_source = 'epsilon_random' if random_action else 'noisynet_argmax' if stochastic else 'greedy_argmax'
                 video.policy_epsilon = epsilon

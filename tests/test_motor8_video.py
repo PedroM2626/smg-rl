@@ -63,3 +63,18 @@ def test_four_frame_video_keeps_logical_jump_and_actual_carried_controls():
     assert calls == [('w', 'jump'), ('w', 'jump')]
     assert video.last_frame_count == 4
     assert video.last_action == 'jump' and video.last_controls == ('w', 'jump')
+
+
+def test_video_shows_all_four_stacked_frames_oldest_first():
+    backend = SimpleNamespace(bridge=SimpleNamespace(image=lambda: np.zeros((100, 100, 4), np.uint8)))
+    video = VideoBackend(backend, Path('unused.mp4'), 'test')
+    stack = np.stack([np.full((84, 84), value, np.uint8) for value in (10, 80, 150, 220)])
+    video.policy_image, video.policy_stack = stack[-1], stack
+    video.policy_probabilities = np.full(8, 0.125)
+    canvas = video.compose_frame()
+    x = 114
+    assert [int(canvas[36 + 128 * row + 60, x + 128 * column + 60, 0]) for row in (0, 1) for column in (0, 1)] \
+        == [10, 80, 150, 220]
+    video.policy_stack = None  # no stack: the old single enlarged newest frame
+    single = video.compose_frame()
+    assert int(single[36 + 100, x + 100, 0]) == 220
