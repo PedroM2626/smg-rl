@@ -64,13 +64,29 @@ def prepare_profile(config: dict) -> Path:
         marker.write_text("ready\n", encoding="utf-8")
     state_dir = target / "StateSaves"
     state_dir.mkdir(exist_ok=True)
+    variations = config.get("variations", [])
+    # A mission may start from a savestate outside the project (the owner's); it is copied, never moved or
+    # overwritten, into this disposable profile under the mission's start slot, and its sha256 is checked first.
+    owner = {v["start_slot"]: v for v in variations if "start_state" in v}
     slots = (
-        sorted({v[k] for v in config["variations"] for k in ("start_slot", "goal_slot")})
+        sorted({v[k] for v in variations for k in ("start_slot", "goal_slot") if k in v and
+                not (k == "start_slot" and "start_state" in v)} | set(owner))
         if "variations" in config
         else range(1, 5)
     )
     for slot in slots:
-        source_state = Path(paths["assets"]) / f"{game_id(config)}.s{slot:02d}"
+        name = f"{game_id(config)}.s{slot:02d}"
+        if slot in owner:
+            from smg_rl.checkpoints import digest
+
+            source_state, expected = Path(owner[slot]["start_state"]), owner[slot]["start_state_sha256"]
+            if not source_state.is_file() or digest(source_state) != expected:
+                raise ValueError("The configured start state is missing or differs from its pinned sha256.")
+            dest = state_dir / name
+            if not dest.exists() or digest(dest) != expected:
+                shutil.copy2(source_state, dest)
+            continue
+        source_state = Path(paths["assets"]) / name
         if not source_state.is_file():
             raise FileNotFoundError(source_state)
         dest = state_dir / source_state.name

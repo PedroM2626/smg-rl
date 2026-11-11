@@ -42,8 +42,16 @@ counted as learned mission completions.
 - **Prepared, not trained:** Galaxy 2 Double Time (projection route, 11 validated anchors, BBF-lite configs, start-up
   smoke test) and The Center of the Universe (projection route, 8 anchors, a goal-marker gate that ends an attempt at
   the end location instead of a star, BBF-lite configs; see [its guide](docs/center-of-universe.md)). No agent has been
-  trained on either. RAM signals for the two Luigi's Purple Coins missions are in
+  trained on either. RAM signals for the two Luigi's Purple Coins missions, and the implemented reward for the Galaxy 2
+  Mario Squared mission (+1 per purple coin, -1 per damage point, no death cost, an approach credit once 100 coins are
+  collected, +50 for the star, starting from the owner's savestate), are in
   [docs/luigi-purple-coins.md](docs/luigi-purple-coins.md).
+- **One model for every stage (decision of November 11, 2026):** the alternative BTR learner. In the projection-free
+  round it tied the best recent mean (5.0%) with BBF-lite while using a median of 32 decisions per attempt instead of
+  193 and making more than twice the attempts; this is a working choice from one seed, not a proven ranking. From-start
+  configs exist for every stage: `algorithm-benchmark-altbtr-pf-20261110.yaml` (Sweet Sweet),
+  `double-time-altbtr-start-20261110.yaml`, `center-altbtr-start-20261110.yaml` and
+  `luigi-mario-squared-altbtr-20261110.yaml`. No training has been started on any of them.
 - **Not done yet:** a long training of any from-scratch arm, a replicated benchmark (the current one has one seed and
   one hour per arm), Spinning, GA and ES arms, Go-Explore, a native progress variable (a scan of the Sweet Sweet
   replay found none).

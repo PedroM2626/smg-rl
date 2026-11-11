@@ -1070,6 +1070,14 @@ What it shows and does not show:
 - The 5.0% of the alternative BTR with a median of 32 decisions and 99.9% deaths is the same dash-and-fall pattern as the
   others; BBF-lite survives longer (median 193) but with the same mean advance.
 
+Decision of November 11, 2026 (owner): every stage trains with one learner, the alternative BTR, from the canonical
+start. Reasoning: the alternative BTR and BBF-lite share the 5.0% recent mean; the alternative BTR reached it with a
+median of 32 decisions per attempt (BBF-lite 193) and 4,231 attempts (1,598), so a longer survival without more advance
+is not an advantage. This is one seed and one hour per arm with different exploration, so it is a working choice, not a
+ranking. From-start configs: Sweet Sweet (`algorithm-benchmark-altbtr-pf-20261110.yaml`), Double Time
+(`double-time-altbtr-start-20261110.yaml`), Center (`center-altbtr-start-20261110.yaml`) and the Luigi Mario Squared
+mission (`luigi-mario-squared-altbtr-20261110.yaml`, reward in [Luigi's Purple Coins](luigi-purple-coins.md)).
+
 Errors made in this round, kept for the record: the two F-pf runs started 30 seconds apart because a launch that looked
 dead was alive, so they ran at the same time (a thing the project forbids; each reached about 87,000 decisions
 instead of about 130,000 and both are kept); a second launch pattern left the BBF-lite block unattended for about 28

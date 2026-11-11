@@ -47,6 +47,10 @@ def replay_signature(config):
         result['curriculum_distribution'] = config['curriculum']
     if config.get('position_novelty', {}).get('enabled'):
         result['position_novelty'] = config['position_novelty']
+    if config.get('purple_coin_reward', {}).get('enabled'):
+        result['purple_coin_reward'] = config['purple_coin_reward']
+        result['start_states'] = {v['name']: v['start_state_sha256'] for v in config['variations']
+                                  if 'start_state_sha256' in v}
     return result
 
 

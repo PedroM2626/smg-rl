@@ -336,7 +336,7 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
                     key = f'{name}/{kind}'
                     attempt = agent.attempts.setdefault(key, {'completed': 0, 'ram_stars': 0, 'deaths': 0,
                         'timeouts': 0, 'best_opening_advance': 0., 'recent_opening_advances': []})
-                    advance = float(info.get('start_relative_route_progress', 0))
+                    advance = float(info.get('start_relative_route_progress') or 0)
                     attempt['completed'] += 1
                     attempt['ram_stars'] += int(bool(star))
                     attempt['deaths'] += int(bool(info.get('dead')))
@@ -348,10 +348,12 @@ def train_dqn(config, steps, resume=None, max_seconds=None, deadline_utc=None):
                         'attempt': attempt['completed'], 'worker': index, 'worker_episode': info['worker_episode'],
                         'real_decisions': agent.real_decisions, 'optimizer_updates': agent.updates,
                         'ram_star': bool(star), 'goal_reached': bool(info.get('goal_reached')), 'dead': bool(info.get('dead')),
-                        'opening_advance': advance,
+                        'opening_advance': advance, 'purple_coins_best': info.get('purple_coins_best'),
                         'return': float(info['episode']['r']), 'decisions': int(info['episode']['l'])}) + '\n')
                     for key, value in {'return': info['episode']['r'], 'decisions': info['episode']['l'],
-                        'ram_star': bool(star), 'opening_advance': info.get('start_relative_route_progress', 0)}.items():
+                        'ram_star': bool(star), 'opening_advance': info.get('start_relative_route_progress') or 0,
+                        **({'purple_coins_best': info['purple_coins_best']}
+                           if info.get('purple_coins_best') is not None else {})}.items():
                         writer.add_scalar(f'episodes/{name}/{kind}/{key}', value, agent.real_decisions)
                         writer.add_scalar(f'attempt_axis/{name}/{kind}/{key}', value, attempt['completed'])
                     writer.add_scalar(f'attempt_axis/{name}/{kind}/mean_opening_last100',

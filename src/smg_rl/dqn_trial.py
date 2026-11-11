@@ -156,7 +156,7 @@ def audit_block(run, config, source_real, source_attempts, failed=False, paused=
             if novelty_paid and (not novelty.get('enabled') or not 0 < novelty_paid <= novelty['bonus'] + 1e-9):
                 raise ValueError('Position novelty was paid outside its configured bonus.')
             expected_reward = (float(row['regional_shaping_reward']) if regional else 0.)
-            expected_reward += float(row['damage_penalty']) + novelty_paid
+            expected_reward += float(row['damage_penalty']) + novelty_paid + float(row.get('purple_reward') or 0.)
             expected_reward += config['rewards']['completion'] if row['complete'] == 'True' else (
                 config['rewards']['death'] if row['dead'] == 'True' else 0.)
             timeout = config['rewards']['timeout'] if row['outcome'] == 'timeout' else 0.

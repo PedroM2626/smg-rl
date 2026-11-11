@@ -18,6 +18,7 @@ from smg_rl.frontier import FrontierArchive
 from smg_rl.memory import GameMemory, MemoryFault
 from smg_rl.plotting import plot_trajectory
 from smg_rl.profiles import game_id
+from smg_rl.purple_coins import PurpleCoinReward
 from smg_rl.replay import ReplayRecorder, replay_signature
 from smg_rl.rewards import (
     DamageTracker,
@@ -54,6 +55,25 @@ class GalaxyEnv(gym.Env):
         if self.goal_marker.get('enabled') and any(
                 'goal' not in entry or not entry.get('goal_radius_3d') for entry in self.calibration.values()):
             raise ValueError('A goal marker needs the goal position and radius of every calibrated variation.')
+        self.purple_settings = config.get('purple_coin_reward', {})
+        self.purple_on = bool(self.purple_settings.get('enabled', False))
+        self.purple = None
+        self.state_digests = {}
+        if self.purple_on:
+            weights = config['rewards']
+            if (any(config.get(k, {}).get('enabled') for k in ('regional_reward', 'route_reward', 'curriculum',
+                                                              'frontier', 'position_novelty', 'goal_marker'))
+                    or config.get('demonstration') or intrinsic and weights['intrinsic'] != 0
+                    or weights['progress'] != 0 or weights['step'] != 0 or weights['timeout'] != 0
+                    or weights['death'] != 0 or weights['damage'] >= 0
+                    or any('goal' not in entry for entry in self.calibration.values())
+                    or 'purple_coins' not in config.get('game', {}).get('signals', {})):
+                raise ValueError('The purple coin reward needs the coin signal, a star position, a damage penalty, '
+                                 'no death or timeout cost and no other shaping.')
+            self.purple = PurpleCoinReward(self.purple_settings, next(iter(self.calibration.values()))['goal'])
+        for entry in config['variations']:
+            if 'start_state' in entry and not entry.get('start_state_sha256'):
+                raise ValueError('A start state outside the project needs its expected sha256.')
         self.scenario_count = len(config["variations"])
         n, stack = config["environment"]["image_size"], config["environment"]["frame_stack"]
         self.observation_space = spaces.Dict(
@@ -222,6 +242,8 @@ class GalaxyEnv(gym.Env):
             owner = self.curriculum_bank if curated else self.archive
             self.backend.load_state(owner.state_path(entry))
             self.start_kind, self.start_state_id = 'curriculum' if curated else 'frontier', entry['file']
+        elif 'start_state' in self.variation:
+            self._load_owner_state(self.variation['start_state'], self.variation['start_state_sha256'])
         else:
             self.backend.load_slot(self.variation["start_slot"])
         self.telemetry = self.memory.sample()
@@ -288,6 +310,10 @@ class GalaxyEnv(gym.Env):
         self.episode_cells = {self._novelty_cell(self.telemetry.position)} if self.novelty_on else set()
         self.damage = DamageTracker()
         self.damage.reset(self.telemetry.health)
+        if self.purple:
+            if self.telemetry.purple_coins is None:
+                raise MemoryFault('The purple coin counter is not readable.')
+            self.purple.reset(self.telemetry.purple_coins, self.telemetry.position)
         self.steps, self.idle_steps, self.total_reward = 0, 0, 0.0
         self.emulated_frames, self.idle_frames = 0, 0
         weights = self.config["rewards"]
@@ -308,6 +334,26 @@ class GalaxyEnv(gym.Env):
         return self._observation(), {**self.telemetry.to_dict(), 'start_kind': self.start_kind,
                                      'anchor_id': self.start_state_id,
                                      'start_jitter_frames': self.start_jitter_frames}
+
+    def _load_owner_state(self, path, expected):
+        """Load a savestate that lives outside the project (read only: the backend copies it into its own profile).
+
+        The file is hashed once per process and must match the sha256 pinned in the config. Some owner states make
+        the native bridge report "error 2" while publishing the first frame; the load itself succeeded, so one idle
+        decision is stepped and the live-state checks that follow decide whether it is usable.
+        """
+        path = str(path)
+        if path not in self.state_digests:
+            self.state_digests[path] = digest(path)
+        if self.state_digests[path] != expected:
+            raise ValueError('The start state differs from the sha256 pinned in the configuration.')
+        try:
+            self.backend.load_state(path)
+        except RuntimeError as error:
+            if 'error 2' not in str(error):
+                raise
+            self.backend.paused = True
+            self.backend.advance(())
 
     def _goal_reached(self, previous):
         """Marker success for missions without a RAM star: alive, grounded and inside the calibrated 3D radius.
@@ -350,6 +396,16 @@ class GalaxyEnv(gym.Env):
         )
         route_delta = self.route.update(self.telemetry) if self.route else 0.0
         route_settings = self.config.get("route_reward", {})
+        coins_gained, coin_reward, approach_reward = 0, 0.0, 0.0
+        if self.purple:
+            if self.telemetry.purple_coins is None:
+                raise MemoryFault('The purple coin counter is not readable.')
+            try:
+                coins_gained, coin_reward, approach_reward = self.purple.update(
+                    self.telemetry.purple_coins, self.telemetry.position)
+            except ValueError as error:
+                raise MemoryFault(str(error)) from error
+        purple_reward = coin_reward + approach_reward
         novelty_reward = 0.0
         if self.novelty_on:
             # Reward-only RAM position novelty: per-worker visit counts across episodes, paid once per cell per
@@ -364,6 +420,8 @@ class GalaxyEnv(gym.Env):
                 self.novelty_counts[cell] = self.novelty_counts.get(cell, 0) + 1
                 novelty_reward = self.novelty['bonus'] / self.novelty_counts[cell] ** self.novelty['power']
             advance = 1.0 if fresh else 0.0
+        elif self.purple:
+            advance = 1.0 if coins_gained or approach_reward > 0 else 0.0  # Idle means no coin and no approach.
         else:
             advance = route_delta if route_settings.get("enabled") or self.regional else delta
         self.idle_steps = 0 if advance > 1e-5 else self.idle_steps + 1
@@ -393,7 +451,7 @@ class GalaxyEnv(gym.Env):
         step_reward = weights['step'] * (control_frames / 12 if self.regional else 1)
         reward = step_reward + weights["progress"] * delta + intrinsic_reward + novelty_reward
         route_reward = route_settings.get("weight", 0.0) * route_delta if route_settings.get("enabled") else 0.0
-        reward += route_reward
+        reward += route_reward + purple_reward
         if success:
             reward += weights["completion"]
         elif self.telemetry.dead:
@@ -480,6 +538,12 @@ class GalaxyEnv(gym.Env):
             emulated_frames=self.emulated_frames,
             step_reward=step_reward,
             position_novelty_reward=novelty_reward,
+            purple_coins=self.telemetry.purple_coins,
+            purple_coins_best=self.purple.best_count if self.purple else None,
+            purple_coin_gain=coins_gained,
+            purple_coin_reward=coin_reward,
+            purple_approach_reward=approach_reward,
+            purple_reward=purple_reward,
         )
         with self.profiler.measure("logging"):
             self._append(action, reward, fraction, outcome, metrics)
@@ -563,6 +627,10 @@ class GalaxyEnv(gym.Env):
                 health_lost=metrics.get("health_lost", 0),
                 damage_penalty=metrics.get("damage_penalty", 0.0),
                 position_novelty_reward=metrics.get('position_novelty_reward', 0.0),
+                purple_coins=t.purple_coins,
+                purple_coin_reward=metrics.get('purple_coin_reward', 0.0),
+                purple_approach_reward=metrics.get('purple_approach_reward', 0.0),
+                purple_reward=metrics.get('purple_reward', 0.0),
             )
         )
         if self.steps % 16 == 0 or outcome != "running":
@@ -621,6 +689,8 @@ class GalaxyEnv(gym.Env):
                         "regional_shaping_total": sum(r['regional_shaping_reward'] for r in self.rows),
                         "emulated_frames": self.emulated_frames,
                         "route_start": self.route_start,
+                        "purple_reward_total": sum(r['purple_reward'] for r in self.rows),
+                        "purple_coins_best": self.purple.best_count if self.purple else None,
                     }
                 )
                 + "\n"

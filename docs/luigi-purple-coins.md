@@ -4,7 +4,7 @@ Two owner missions, both "collect the purple coins, then jump to the star": Gala
 "Luigi's Purple Coins Chaos" (internal stage `MarioOnMarioGalaxy`, scenario 2), and Galaxy 1 **Toy Time Galaxy**,
 "Luigi's Purple Coins" (`FactoryGalaxy`, scenario 5). Only the Galaxy 2 mission is planned for training; the same agent
 is to be tested on the Galaxy 1 mission as a similar stage. This page records what was found and how it was checked.
-No reward weights and no training are defined here; the owner will specify the reward for the Galaxy 2 stage.
+The reward the owner specified for the Galaxy 2 stage is implemented (section "Reward and environment"); no training has been run on it.
 
 ## Savestates and how they are handled
 
@@ -54,9 +54,38 @@ a Star!"), with the coin count unchanged.
   It should be confirmed with a deliberate hit before it is used as a damage penalty.
 - No coin-collection ground truth beyond the HUD frames I read (counts of 1 and 2) exists; the counters are
   consistent with them, and mirrors agree.
-- The stage and scenario names were added to the memory profiles (`extra_stages`, `extra_scenarios`); training on these
-  missions would also need start states supported by the environment (it loads canonical start slots today), which is
-  not built.
+- The stage and scenario names were added to the memory profiles (`extra_stages`, `extra_scenarios`).
+
+## Reward and environment (implemented November 11, 2026)
+
+Config `config/luigi-mario-squared-altbtr-20261110.yaml` (learner: the alternative BTR of the benchmark, the project's
+single model for every stage; calibration `config/luigi-smg2-calibration.json`):
+
+| Event | Reward |
+| --- | --- |
+| purple coin gained | +1 each (the counter rises by one per coin) |
+| damage | -1 per point of energy lost (`rewards.damage`); not paid on the decision that kills |
+| death | 0 |
+| count reaches 100 | switches on the approach credit |
+| approach to the star | 10 in total, paid only when the 3D distance to the star position falls below its previous best, in proportion to the gain over the distance at the moment 100 was reached; retreating or regaining distance pays nothing |
+| star (RAM star, scene nerve) | +50 |
+
+Notes and limits:
+- The star position is the owner's `star_ready` state (Mario one jump below the star); it is an approximation of the star,
+  and only 47 units from the start point, so the approach credit is measured from wherever the count reaches 100.
+  Success is the RAM star, never this point.
+- Idle (no coin and no approach) ends an attempt after 400 decisions; an attempt has at most 9000 decisions. A counter
+  jump of more than 25 coins in one decision is treated as a memory fault.
+- A variation may set `start_state` plus its `start_state_sha256`: the owner file is hashed (once per process), checked
+  against the pin and copied by the emulator profile into its own disposable slot; the original is only read. A bridge
+  "error 2" at load is tolerated with one idle decision. The emulator also boots from that state, so the stage check
+  at start-up passes.
+- Checked on the real emulator with one worker (not a training run): the reset reads 0 coins and energy 3 from `s02`,
+  100 coins and energy 2 from `s03`, a jump from `s03` ends the attempt with the star and a reward of +50, and the owner
+  hashes are unchanged afterwards (`.local/luigi-coins/env_check.py`).
+- The same agent is meant to be tested on Toy Time (SMG1) with the same reward; that needs a Toy Time variation in a
+  config of its own (signals are in `config/luigi-coins-signals.yaml`) and is not built. The SMG2 damage signal still
+  needs a deliberate-hit confirmation before training.
 
 ## Scripts
 

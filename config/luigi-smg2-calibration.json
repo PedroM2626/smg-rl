@@ -1,0 +1,12 @@
+{
+  "game_id": "SB4E01",
+  "validated": true,
+  "source": "Owner savestates SB4E01.s02 (mission intro) and SB4E01.s03 (100 of 100 purple coins, one jump from the star), read in place on November 10, 2026",
+  "variations": {
+    "mario_squared": {
+      "start": [3869.878173828125, -650.0, 2382.033447265625],
+      "goal": [3856.872802734375, -650.0, 2337.322998046875],
+      "goal_status": "Position of Mario in the star_ready state, one jump below the star; the approach credit uses it as the star position. The episode success is the RAM star (scene nerve), not this point."
+    }
+  }
+}
