@@ -44,7 +44,8 @@ counted as learned mission completions.
   the end location instead of a star, BBF-lite configs; see [its guide](docs/center-of-universe.md)). No agent has been
   trained on either. RAM signals for the two Luigi's Purple Coins missions, and the implemented reward for the Galaxy 2
   Mario Squared mission (+1 per purple coin, -1 per damage point, no death cost, an approach credit once 100 coins are
-  collected, +50 for the star, starting from the owner's savestate), are in
+  collected, +50 for the star, starting from the owner's savestate) and the Toy Time zero-shot evaluation config
+  (SMG1, frozen agent, no training), are in
   [docs/luigi-purple-coins.md](docs/luigi-purple-coins.md).
 - **One model for every stage (decision of November 11, 2026):** the alternative BTR learner. In the projection-free
   round it tied the best recent mean (5.0%) with BBF-lite while using a median of 32 decisions per attempt instead of

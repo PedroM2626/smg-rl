@@ -194,3 +194,23 @@ def test_every_stage_has_an_altbtr_from_start_config_with_the_same_learner():
         assert bool(config.get('goal_marker', {}).get('enabled')) is gate
         assert config['curriculum']['enabled'] is False if 'curriculum' in config else True
         assert 'BBF' not in json.dumps(config)
+
+
+def test_the_toy_time_config_is_an_evaluation_only_zero_shot_test_of_the_mario_squared_agent():
+    from smg_rl.dqn_video import checkpoint_signature
+    from smg_rl.replay import replay_signature
+
+    source = load_config('config/luigi-mario-squared-altbtr-20261110.yaml')
+    target = load_config('config/luigi-toy-time-zero-shot-20261110.yaml')
+    assert target['training']['enabled'] is False and target['dqn'] == source['dqn']
+    assert target['game']['id'] == 'RMGE01' and target['variations'][0]['scenario'] == 5
+    assert target['rewards'] == source['rewards'] and target['purple_coin_reward'] == source['purple_coin_reward']
+    assert checkpoint_signature(target) == replay_signature(source)
+    assert checkpoint_signature(source) == replay_signature(source)
+    target['actions'] = {'profile': 'legacy54'}
+    with pytest.raises(ValueError):
+        checkpoint_signature(target)
+    target = load_config('config/luigi-toy-time-zero-shot-20261110.yaml')
+    target['training']['enabled'] = True
+    with pytest.raises(ValueError):
+        checkpoint_signature(target)

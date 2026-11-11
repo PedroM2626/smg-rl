@@ -1,0 +1,12 @@
+{
+  "game_id": "RMGE01",
+  "validated": true,
+  "source": "Owner savestates RMGE01.s01 (mission intro) and RMGE01.s02 (102 purple coins, star in reach), read in place on November 10, 2026",
+  "variations": {
+    "toy_time": {
+      "start": [-11031.390625, 4727.50927734375, -80400.0],
+      "goal": [-11041.1953125, 4771.65966796875, -80400.0],
+      "goal_status": "Position of Mario in the star_ready state, in reach of the star; the approach credit uses it as the star position. The episode success is the RAM star (scene nerve), not this point."
+    }
+  }
+}

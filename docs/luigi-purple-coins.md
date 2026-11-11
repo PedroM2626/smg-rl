@@ -49,9 +49,13 @@ a Star!"), with the coin count unchanged.
 - The counters and the energy value reproduced in every fresh emulator process that loaded these states (more than 25
   loads). Their addresses are heap addresses and are valid for these saved states; a different route into the stage
   (a fresh boot, another savestate) was not tried and may move them.
-- **A live damage event (3 to 2) was not observed for Galaxy 2.** Random and idle play (about eight runs of 150 to 250 decisions) was not
-  hit. The energy value is supported by the states (3 at the start and after respawn, 2 where the HUD shows life 2).
-  It should be confirmed with a deliberate hit before it is used as a damage penalty.
+- **A live damage event (3 to 2) is still not observed for Galaxy 2.** On November 11 `scripts/luigi_hit_test.py`
+  played 18 attempts from the owner start state with a forward-biased random policy (8 attempts, then 10 with a
+  more forward policy): every attempt fell off the sky platforms within 15 to 80 decisions (a fall kills at energy 3,
+  with no damage step) or hit a transient pointer fault after the fall, and none met an enemy. The owner state hash was
+  unchanged. The energy value stays supported only by the two states (3 at the start and after respawn, 2 where the
+  HUD shows life 2, see the `s03` frame) and the filtering by tracking; a savestate placed just before a hazard or
+  enemy of this stage would settle it, and until then the -1 damage penalty rests on that evidence.
 - No coin-collection ground truth beyond the HUD frames I read (counts of 1 and 2) exists; the counters are
   consistent with them, and mirrors agree.
 - The stage and scenario names were added to the memory profiles (`extra_stages`, `extra_scenarios`).
@@ -83,12 +87,18 @@ Notes and limits:
 - Checked on the real emulator with one worker (not a training run): the reset reads 0 coins and energy 3 from `s02`,
   100 coins and energy 2 from `s03`, a jump from `s03` ends the attempt with the star and a reward of +50, and the owner
   hashes are unchanged afterwards (`.local/luigi-coins/env_check.py`).
-- The same agent is meant to be tested on Toy Time (SMG1) with the same reward; that needs a Toy Time variation in a
-  config of its own (signals are in `config/luigi-coins-signals.yaml`) and is not built. The SMG2 damage signal still
-  needs a deliberate-hit confirmation before training.
+- **Toy Time zero-shot test (SMG1):** `config/luigi-toy-time-zero-shot-20261110.yaml` (calibration
+  `config/luigi-smg1-calibration.json`) uses the same reward and learner settings, the coin counter at `0x810550DC`
+  (the energy comes from the SMG1 profile) and the owner state `RMGE01.s01` (sha256 pinned); it has training
+  disabled and a `zero_shot.source_config` pointing at the Mario Squared config. `record-dqn` then accepts a
+  checkpoint trained under the source config (`checkpoint_signature` demands identical pixels, crop, frame skip,
+  action set and execution and scenario count) and runs it frozen, reporting the best coin count and the star.
+  Checked on the real emulator with one worker: `s01` reads 0 coins and energy 3, `s02` reads 102 coins (the count
+  passes 100, so the approach credit is armed at reset) and a jump ends the attempt with the star and +50; the owner
+  hashes were unchanged. No agent has been evaluated on it.
 
 ## Scripts
 
 `scripts/luigi_probe.py` (stage, position, a full frame), `scripts/luigi_dump.py` (MEM1 dumps; MEM2 is not located by
 the reader), `scripts/luigi_explore.py` (a forward-biased random policy that logs chosen words and frames) and
-`scripts/verify_luigi_signals.py` (the checked evidence above).
+`scripts/verify_luigi_signals.py` (the checked evidence above) and `scripts/luigi_hit_test.py` (the damage search).

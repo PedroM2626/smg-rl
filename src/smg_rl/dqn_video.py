@@ -20,6 +20,28 @@ from smg_rl.replay import replay_signature
 from smg_rl.train import new_run
 
 
+def checkpoint_signature(config):
+    """The identity a checkpoint must carry to be evaluated under `config`.
+
+    Normally it is the config's own replay signature. A config with a `zero_shot` block is an evaluation-only transfer
+    test: the checkpoint belongs to the source config, and the network inputs and outputs (pixels, crop, frame skip,
+    action set and execution, scenario count) must be identical so the frozen weights apply unchanged.
+    """
+    own = replay_signature(config)
+    source = config.get('zero_shot', {}).get('source_config')
+    if not source:
+        return own
+    if config.get('training', {}).get('enabled'):
+        raise ValueError('A zero-shot evaluation config must have training disabled.')
+    trained = replay_signature(load_config(source))
+    for key in ('image_size', 'crop', 'frame_skip', 'action_names', 'action_execution'):
+        if trained.get(key) != own.get(key):
+            raise ValueError(f'Zero-shot transfer needs the same {key} as the source config.')
+    if len(trained['scenario_names']) != len(own['scenario_names']):
+        raise ValueError('Zero-shot transfer needs the same number of scenario inputs as the source config.')
+    return trained
+
+
 def record_dqn(config_path, checkpoint, variation, seeds=(11, 23, 47), maximum_steps=300, stochastic=False,
                epsilon_override=None, assisted_start=False, anchor=None):
     if not seeds or maximum_steps < 1:
@@ -35,7 +57,7 @@ def record_dqn(config_path, checkpoint, variation, seeds=(11, 23, 47), maximum_s
     if assisted_start and not config.get('curriculum', {}).get('anchor_diagnostic'):
         raise ValueError('Assisted-start evaluation requires an anchor-only diagnostic curriculum.')
     config['model_free_run'] = 'evaluation'
-    agent = DistributionalAgent.load_policy(checkpoint, replay_signature(config), config['training']['device'])
+    agent = DistributionalAgent.load_policy(checkpoint, checkpoint_signature(config), config['training']['device'])
     epsilon = agent.epsilon(evaluate=not stochastic) if epsilon_override is None else epsilon_override
     mode = 'noisynet_epsilon' if stochastic else 'epsilon_greedy' if epsilon else 'greedy'
     torch.set_num_threads(config['training']['torch_threads'])
@@ -104,6 +126,8 @@ def record_dqn(config_path, checkpoint, variation, seeds=(11, 23, 47), maximum_s
                 'assisted_ram_star': bool(info['complete'] and not info['dead']) and assisted_start,
                 'epsilon_random_decisions': random_decisions,
                 'opening_fraction': info['route_prefix_progress'],
+                'purple_coins_best': info.get('purple_coins_best'),
+                'zero_shot_source': config.get('zero_shot', {}).get('source_config'),
                 'maximum_geometric_projection_percent': 100 * info['best_progress'],
                 'telemetry': env.telemetry.to_dict()})
             atomic_json(run / 'recording.json', record)
