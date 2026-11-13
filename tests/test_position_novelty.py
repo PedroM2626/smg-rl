@@ -91,13 +91,12 @@ def test_invalid_novelty_settings_are_rejected(tmp_path, change):
         make_env(tmp_path, lambda t: (0, -1150, 500), **change)
 
 
-def test_exploration_arm_excludes_routes_curricula_and_demonstrations_and_builds(tmp_path):
+def test_exploration_arm_excludes_curricula_and_demonstrations_and_builds(tmp_path):
     config = load_config(ROOT / 'config/algorithm-benchmark-exploration-20261107.yaml')
     assert not config['regional_reward']['enabled'] and not config['curriculum']['enabled']
     assert 'demonstration' not in config and config['position_novelty']['bonus'] == 0.05
     GalaxyEnv(config, backend=None, run_dir=tmp_path / 'ok', memory=object(), intrinsic=False)
-    for key, value in (('regional_reward', {'enabled': True}), ('curriculum', {'enabled': True}),
-                       ('demonstration', {'sequences': {}})):
+    for key, value in (('curriculum', {'enabled': True}), ('demonstration', {'sequences': {}})):
         broken = deepcopy(config)
         broken[key] = value
         with pytest.raises(ValueError):
@@ -109,3 +108,24 @@ def test_exploration_arm_differs_from_arm_f_in_reward_only():
     arm = load_config(ROOT / 'config/algorithm-benchmark-exploration-20261107.yaml')
     assert arm['dqn'] == f['dqn'] and arm['training'] == f['training'] and arm['parallel'] == f['parallel']
     assert {k for k in f['rewards'] if f['rewards'][k] != arm['rewards'][k]} == {'revision'}
+
+
+def test_center_novelty_arm_adds_only_the_novelty_bonus_to_the_plain_center_arm(tmp_path):
+    plain = load_config(ROOT / 'config/center-altbtr-start-20261110.yaml')
+    arm = load_config(ROOT / 'config/center-altbtr-novelty-20261113.yaml')
+    assert arm['position_novelty']['enabled'] and arm['regional_reward'] == plain['regional_reward']
+    assert arm['dqn'] == plain['dqn'] and arm['rewards'] == plain['rewards'] and arm['goal_marker'] == plain['goal_marker']
+    assert arm['paths']['runs'] != plain['paths']['runs'] and arm['paths']['replay'] != plain['paths']['replay']
+    assert replay_signature(arm)['position_novelty']['bonus'] == 0.02
+    GalaxyEnv(arm, backend=None, run_dir=tmp_path / 'ok', memory=object(), intrinsic=False)
+    broken = deepcopy(arm)
+    broken['demonstration'] = {'sequences': {}}
+    with pytest.raises(ValueError, match='Position novelty excludes'):
+        GalaxyEnv(broken, backend=None, run_dir=tmp_path / 'bad', memory=object(), intrinsic=False)
+
+
+def test_center_novelty_arm_fall_limit_is_below_the_center_start_height():
+    arm = load_config(ROOT / 'config/center-altbtr-novelty-20261113.yaml')
+    calibration = json.loads((ROOT / 'config/smg1-center-calibration.json').read_text())
+    start_height = list(calibration['variations'].values())[0]['start'][1]
+    assert arm['environment']['min_reward_y'] < start_height  # the Sweet Sweet limit of -1800 paid nothing here

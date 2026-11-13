@@ -122,7 +122,9 @@ class GalaxyEnv(gym.Env):
             if (any(isinstance(v, bool) or not isinstance(v, (int, float)) or not np.isfinite(v) for v in values)
                     or min(values[:3]) <= 0 or not 0.5 <= values[3] <= 1 or values[2] > 1):
                 raise ValueError('Position novelty needs positive cells, a bonus up to one and a power in [0.5, 1].')
-            if (config.get('regional_reward', {}).get('enabled') or config.get('route_reward', {}).get('enabled')
+            # The regional waypoint reward may be combined with it (a small bonus for new cells beside the route
+            # credit); the continuous route reward, curricula and demonstrations may not.
+            if (config.get('route_reward', {}).get('enabled')
                     or config.get('curriculum', {}).get('enabled') or config.get('demonstration')):
                 raise ValueError('Position novelty excludes route rewards, curricula and demonstrations.')
         self.regional_settings = config.get('regional_reward', {})
@@ -419,7 +421,7 @@ class GalaxyEnv(gym.Env):
                 self.episode_cells.add(cell)
                 self.novelty_counts[cell] = self.novelty_counts.get(cell, 0) + 1
                 novelty_reward = self.novelty['bonus'] / self.novelty_counts[cell] ** self.novelty['power']
-            advance = 1.0 if fresh else 0.0
+            advance = 1.0 if fresh or (self.regional and route_delta > 1e-5) else 0.0  # a route advance is not idle
         elif self.purple:
             advance = 1.0 if coins_gained or approach_reward > 0 else 0.0  # Idle means no coin and no approach.
         else:
