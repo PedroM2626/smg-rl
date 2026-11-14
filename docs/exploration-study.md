@@ -1094,7 +1094,8 @@ arms: it used the older landing-gated route, whose first waypoint needs a landin
   anchors, and a start-up test of the Double Time configs (a few decisions, one emulator). The Center of the Universe has no
   RAM star; a `goal_marker` option ends an attempt as a success at the calibrated end location (300 units, grounded, alive)
   and logs `goal_reached` without touching `ram_star`. See [its guide](center-of-universe.md). No agent was trained on
-  either; the owner decides when.
+  either at that date; the owner decides when. (Status November 14: the Center of the Universe was later trained from
+  scratch, see [Center training results](center-training-20261114.md); Double Time was not.)
 - **A scan for a native progress variable** replayed the Sweet Sweet human recording, saved 146 snapshots of MEM1 and
   ranked 32-bit words by how their increments follow the route progress. With the normal filters there were no hits; with
   looser filters the only monotone words were frame counters (increment correlation about 0.25, values such as 672 and

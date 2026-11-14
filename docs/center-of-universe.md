@@ -1,7 +1,8 @@
 # Center of the Universe: pre-boss route recording
 
-This is a separate, **validation-only** Super Mario Galaxy USA mission. Training
-is disabled in `config/smg1-center-validation.yaml`. Slot `data/RMGE01.s03` is
+This is a separate Super Mario Galaxy USA mission. The validation config
+`config/smg1-center-validation.yaml` has training disabled; from-scratch training with the altBTR
+configs and its results are in [Center training results](center-training-20261114.md). Slot `data/RMGE01.s03` is
 the full-start reference; slot `data/RMGE01.s04` is the owner-selected position
 before the Bowser fight. Slot 4 is not a star or an automatically verified
 mission terminal. Do not treat loading it, reaching its approximate coordinates,

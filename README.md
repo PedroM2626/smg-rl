@@ -6,12 +6,22 @@ research project. One frozen greedy policy reaches a RAM-confirmed star from the
 canonical start in the deterministic emulator, but it reproduces a 312-action
 sequence found by beam search and fails after one or two random actions, so it has
 not learned the stage in a general sense; no agent has learned the stage from
-scratch without demonstrations or anchors. Assisted starts, scripted searches,
-detector fixtures and imagined trajectories are reported separately and never
-counted as learned mission completions.
+scratch without demonstrations or anchors. The furthest from-scratch result is on
+The Center of the Universe: 26% of its route confirmed, no gate reached. Assisted
+starts, scripted searches, detector fixtures and imagined trajectories are reported
+separately and never counted as learned mission completions.
 
-## Current status (November 10, 2026)
+## Current status (November 14, 2026)
 
+- **Center of the Universe, from scratch (one seed per arm, no demonstration, no anchor, no curriculum; no attempt
+  reached the end-location gate).** The alternative BTR learner with a reward of 0.1 per confirmed route segment (273
+  segments) and 50 for the gate froze at 3.24% of the route for four blocks (1.1 million decisions): the policy jumped
+  in place on one platform and its action values were flat. Adding a position-novelty bonus (0.02 per new cell per
+  attempt) broke the freeze: the median confirmed route rose through successive plateaus to about 26% in 2,570,500
+  decisions (10 blocks of two hours, four workers), best single attempt 32.1%, typical best about 27%. The frozen greedy
+  policy of the last checkpoint crosses a molten planetoid on small platforms and dies there after 359 decisions at
+  26.3% of the route. The chain was stopped by the owner after block 10; nothing is training. Details, per-block
+  tables and limits: [Center training results](docs/center-training-20261114.md).
 - **Sweet Sweet Galaxy gate (met, with limits).** The checkpoint after S5r block 29
   reaches the RAM star from the canonical start in 311 decisions in frozen greedy
   evaluation (`record-dqn`, epsilon 0, three runs that are identical because the
@@ -39,23 +49,26 @@ counted as learned mission completions.
   uniform random anchors did not improve the advance from the canonical start in one hour. Numbers, errors and
   caveats are in the [exploration study](docs/exploration-study.md); the sibling projects and licences are in
   [related projects](docs/related-projects.md).
-- **Prepared, not trained:** Galaxy 2 Double Time (projection route, 11 validated anchors, BBF-lite configs, start-up
-  smoke test) and The Center of the Universe (projection route, 8 anchors, a goal-marker gate that ends an attempt at
-  the end location instead of a star, BBF-lite configs; see [its guide](docs/center-of-universe.md)). No agent has been
-  trained on either. RAM signals for the two Luigi's Purple Coins missions, and the implemented reward for the Galaxy 2
-  Mario Squared mission (+1 per purple coin, -1 per damage point, no death cost, an approach credit once 100 coins are
-  collected, +50 for the star, starting from the owner's savestate) and the Toy Time zero-shot evaluation config
-  (SMG1, frozen agent, no training), are in
-  [docs/luigi-purple-coins.md](docs/luigi-purple-coins.md).
+- **Prepared, not trained:** Galaxy 2 Double Time (projection route, 11 validated anchors, BBF-lite and altBTR
+  from-start configs, start-up smoke test); no agent has been trained on it. For The Center of the Universe
+  (projection route, 8 anchors, a goal-marker gate that ends an attempt at the end location instead of a star) see its
+  [guide](docs/center-of-universe.md) and the results above. RAM signals for the two Luigi's Purple Coins missions, the
+  implemented reward for the Galaxy 2 Mario Squared mission (+1 per purple coin, -1 per damage point, no death cost, an
+  approach credit once 100 coins are collected, +50 for the star, starting from the owner's savestate) and the Toy Time
+  zero-shot evaluation config (SMG1, frozen agent, no training) are in
+  [docs/luigi-purple-coins.md](docs/luigi-purple-coins.md); their states are in the `smg-rl-states-luigi-coins` bundle.
+  The Galaxy 2 damage signal (energy 3 to 2) has not been observed live.
 - **One model for every stage (decision of November 11, 2026):** the alternative BTR learner. In the projection-free
   round it tied the best recent mean (5.0%) with BBF-lite while using a median of 32 decisions per attempt instead of
   193 and making more than twice the attempts; this is a working choice from one seed, not a proven ranking. From-start
   configs exist for every stage: `algorithm-benchmark-altbtr-pf-20261110.yaml` (Sweet Sweet),
   `double-time-altbtr-start-20261110.yaml`, `center-altbtr-start-20261110.yaml` and
-  `luigi-mario-squared-altbtr-20261110.yaml`. No training has been started on any of them.
-- **Not done yet:** a long training of any from-scratch arm, a replicated benchmark (the current one has one seed and
-  one hour per arm), Spinning, GA and ES arms, Go-Explore, a native progress variable (a scan of the Sweet Sweet
-  replay found none).
+  `luigi-mario-squared-altbtr-20261110.yaml`. Only the Center configs (`center-altbtr-start-20261110.yaml` and
+  `center-altbtr-novelty-20261113.yaml`) have been trained; the others are untrained.
+- **Not done yet:** a from-scratch agent that reaches a gate or star from the canonical start, a replicated benchmark
+  (the current one has one seed and one hour per arm), a long training on Sweet Sweet, Double Time or the Luigi
+  mission with the single learner, Spinning, GA and ES arms, Go-Explore, a native progress variable (a scan of the
+  Sweet Sweet replay found none).
 
 The final success gate is unchanged: a frozen greedy policy must reach the RAM
 star from the canonical start, and a gate passed by reproducing a searched
@@ -97,13 +110,34 @@ own dates.
 | Galaxy 2, `SB4E01` | Twisty Trials: Spinning and Spinning and Spinning | 1 | 2 |
 | Galaxy 2, `SB4E01` | Twisty Trials: Turning Turning Double Time | 3 | 4 |
 | Galaxy 1, `RMGE01` | Sweet Sweet Galaxy: Rocky Road | 1 | 2 |
+| Galaxy 1, `RMGE01` | The Center of the Universe (end-location gate, not a star) | 3 | 4 (owner-selected location, not a star) |
+| Galaxy 2, `SB4E01` | Luigi's Purple Coins Chaos, Mario Squared Galaxy (owner state, `data/luigi-coins/`) | `SB4E01.s02` | `SB4E01.s03` |
+| Galaxy 1, `RMGE01` | Luigi's Purple Coins, Toy Time Galaxy (zero-shot evaluation only) | `RMGE01.s01` | `RMGE01.s02` |
 
-Galaxy 1 slots 3 and 4 hold a validation-only
-[Center of the Universe setup](docs/center-of-universe.md); no training is enabled
-for it. The near-star states validate the completion detector and do not
-establish learned success. See [asset names and roles](data/README.md).
+The Center of the Universe is trained with its own configs
+([guide](docs/center-of-universe.md), [results](docs/center-training-20261114.md)); its slot 4 is a location, not a
+completed state. The Luigi missions are described in [docs/luigi-purple-coins.md](docs/luigi-purple-coins.md). The
+near-star states validate the completion detector and do not establish learned success. See
+[asset names and roles](data/README.md).
 
-## Method of the active line
+## Method of the active line (from November 11, 2026)
+
+One learner for every stage, trained from the canonical start only (no anchors, no demonstrations):
+
+- **Observation and actions:** as below (four stacked 84 x 84 grayscale frames, `motor8-longjump-v1`, 12 emulated
+  frames per decision). The reward reaches the learner unchanged: there is no reward clipping or sign transform.
+- **Learner:** the alternative BTR: IQN with an IMPALA-style encoder (32 channels), 8 quantiles, noisy layers,
+  Munchausen terms, gamma 0.99, learning rate 1e-4, weight decay 0.01, prioritized replay, three-step returns, four
+  native Dolphin workers.
+- **Reward (route stages):** 0.1 for every newly confirmed route segment (paid once, never taken back), 50 for the
+  star or the Center gate, 0 for death, damage and timeout. Optional position novelty: 0.02 per 200 x 250 x 200 unit
+  cell new to the episode, decaying with the visit count (used for the Center arm that broke its freeze).
+- **Reward (Luigi Mario Squared):** +1 per purple coin, -1 per damage point, no death cost, an approach credit of 10 in
+  total once 100 coins are collected, +50 for the star.
+- **Evaluation:** a frozen greedy `record-dqn` run from the canonical start; the video overlay shows the four stacked
+  frames, the expected return of each action and the applied controls.
+
+### Earlier method (the human-anchor curriculum, October 27 to November 4)
 
 - **Observation:** four stacked, cropped 84 × 84 grayscale frames plus the
   scenario identity. RAM coordinates, health and terminal signals are used for
@@ -204,6 +238,9 @@ Configuration files are complete profiles, not overlays. If your paths differ
 .\.venv\Scripts\python.exe -m smg_rl.cli --config config/anchor-diagnostic-s5d-20261103.yaml train-dqn --steps 999996 --max-seconds 3600
 # Frozen greedy evaluation from the canonical start, no learning.
 .\.venv\Scripts\python.exe -m smg_rl.cli --config config/anchor-diagnostic-s5d-20261103.yaml record-dqn <checkpoint-dir> --seeds 1 2 3
+# The Center of the Universe arm that reached 26% of the route: a two-hour block resumed from a checkpoint, and a video.
+.\.venv\Scripts\python.exe -m smg_rl.cli --config config/center-altbtr-novelty-20261113.yaml train-dqn --steps 1000000 --max-seconds 7200 --resume <checkpoint-dir>
+.\.venv\Scripts\python.exe -m smg_rl.cli --config config/center-altbtr-novelty-20261113.yaml record-dqn <checkpoint-dir> --seeds 11 --max-steps 500
 # Assisted frozen evaluation from a verified anchor.
 .\.venv\Scripts\python.exe -m smg_rl.cli --config config/anchor-diagnostic-s5d-20261103.yaml record-dqn <checkpoint-dir> --assisted-start --anchor human-waypoint-23.state
 ```
@@ -236,7 +273,7 @@ negative results and comparison limits.
 ## Documentation, tests and license
 
 - [Documentation index](docs/README.md) and [exploration study](docs/exploration-study.md) and [related projects](docs/related-projects.md)
-- [Training guide](docs/training.md), [CLI](docs/cli.md) and [reproducibility](docs/reproducibility.md)
+- [Center training results](docs/center-training-20261114.md), [Luigi's Purple Coins](docs/luigi-purple-coins.md), [Training guide](docs/training.md), [CLI](docs/cli.md) and [reproducibility](docs/reproducibility.md)
 - [World model](docs/world-model.md) and [experiment protocol](docs/experiments.md)
 
 ```powershell
