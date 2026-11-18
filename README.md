@@ -65,6 +65,10 @@ separately and never counted as learned mission completions.
   `double-time-altbtr-start-20261110.yaml`, `center-altbtr-start-20261110.yaml` and
   `luigi-mario-squared-altbtr-20261110.yaml`. Only the Center configs (`center-altbtr-start-20261110.yaml` and
   `center-altbtr-novelty-20261113.yaml`) have been trained; the others are untrained.
+- **Prepared, not run:** a 6 hour per arm Sweet Sweet benchmark (configs for the alternative BTR with and without
+  position novelty, BBF-lite and the official BTR with novelty, and a Dreamer-style world-model arm; Go-Explore,
+  evolutionary search and a self-built curriculum are still missing). See
+  [the plan](docs/benchmark-6h-plan.md).
 - **Not done yet:** a from-scratch agent that reaches a gate or star from the canonical start, a replicated benchmark
   (the current one has one seed and one hour per arm), a long training on Sweet Sweet, Double Time or the Luigi
   mission with the single learner, Spinning, GA and ES arms, Go-Explore, a native progress variable (a scan of the

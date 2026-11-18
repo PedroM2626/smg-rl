@@ -77,6 +77,7 @@ def main():
         world.add_argument("--resume")
         if name == "train-world-model":
             world.add_argument("--steps", type=int)
+            world.add_argument("--max-seconds", type=float, help="Stop and save at this finite wall-clock budget.")
         else:
             world.add_argument("--cycles", type=int, default=100)
     commands.add_parser("inspect-replay", help="Inspect visual replay without collecting or fitting.")
@@ -163,7 +164,7 @@ def main():
         require_training_enabled(config)
         from smg_rl.world_training import fit_world_model, train_world_model
 
-        print(train_world_model(config, args.steps, args.resume) if args.command == "train-world-model"
+        print(train_world_model(config, args.steps, args.resume, args.max_seconds) if args.command == "train-world-model"
               else fit_world_model(config, args.cycles, args.resume))
         return
     if args.command == "benchmark":

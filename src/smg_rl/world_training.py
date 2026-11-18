@@ -136,7 +136,7 @@ def update_cycle(agent, replay, settings):
     return {"replay": summary, "validation": validation, "imagination_gate": gate, "losses": metrics}
 
 
-def publish(run, agent, started, state, diagnostics=None, infos=(), start_real=0):
+def publish(run, agent, started, state, diagnostics=None, infos=(), start_real=0, stop_reason=None):
     elapsed = time.monotonic() - started
     data = {"state": state, "algorithm": "gaussian-rssm-imagination-v1",
             "timesteps": agent.real_decisions, "real_decisions": agent.real_decisions,
@@ -150,12 +150,12 @@ def publish(run, agent, started, state, diagnostics=None, infos=(), start_real=0
             "real_validation_decisions": sum(info.get("frontier_validation_decisions", 0) for info in infos),
             "physical_decisions_this_run": agent.real_decisions - start_real + sum(
                 info.get("frontier_validation_decisions", 0) for info in infos),
-            "diagnostics": diagnostics or {},
+            "diagnostics": diagnostics or {}, "stop_reason": stop_reason,
             "note": "Only real RAM-verified episodes can establish mission completion. Imagined transitions are not real timesteps."}
     atomic_json(run / "status.json", data)
 
 
-def train_world_model(config, steps=None, resume=None):
+def train_world_model(config, steps=None, resume=None, max_seconds=None):
     # The user hold is checked before any emulator is created.
     require_training_enabled(config)
     config = deepcopy(config)
@@ -167,6 +167,8 @@ def train_world_model(config, steps=None, resume=None):
     budget = steps if steps is not None else config["training"]["steps"]
     if budget < 1:
         raise ValueError("Real-decision budget must be positive.")
+    if max_seconds is not None and not max_seconds > 0:
+        raise ValueError("The wall-clock budget must be positive.")
     config["paths"]["user"] = str(runtime_directory(config, run) / "template")
     controller = {"pid": os.getpid(), "created_time": psutil.Process().create_time(),
                   "workers": workers, "algorithm": "gaussian-rssm-imagination-v1", "resume": str(resume) if resume else None}
@@ -174,7 +176,7 @@ def train_world_model(config, steps=None, resume=None):
     environments = None
     started, start_real = time.monotonic(), agent.real_decisions
     target, checkpoint_at = agent.real_decisions + budget, agent.real_decisions
-    diagnostics, infos, state = {}, [], "running"
+    diagnostics, infos, state, stop_reason = {}, [], "running", None
     try:
         shape = (config["environment"]["frame_stack"], config["environment"]["image_size"], config["environment"]["image_size"])
         environments = MeasuredSubprocVecEnv([WorkerFactory(config, i, str(run)) for i in range(workers)],
@@ -183,7 +185,8 @@ def train_world_model(config, steps=None, resume=None):
         environments.seed(config["training"]["seed"])
         observation = environments.reset()
         latent, previous, first, vector_steps = None, None, np.ones(workers, dtype=bool), 0
-        while agent.real_decisions < target and not (run / "STOP").exists():
+        while (agent.real_decisions < target and not (run / "STOP").exists()
+               and not (max_seconds and time.monotonic() - started >= max_seconds)):
             actions, latent, previous = agent.act(observation, latent, previous, first,
                                                   epsilon=settings.get("warmup_epsilon", 1.0) if agent.actor_updates == 0 else settings.get("epsilon", 0.05))
             observation, _, first, infos = environments.step(actions)
@@ -203,6 +206,8 @@ def train_world_model(config, steps=None, resume=None):
             if vector_steps % 16 == 0:
                 publish(run, agent, started, state, diagnostics, infos, start_real)
         state = "stopped" if (run / "STOP").exists() else "completed"
+        stop_reason = ("stop_file" if state == "stopped" else
+                       "wall_clock_budget" if agent.real_decisions < target else "real_decision_budget")
     except KeyboardInterrupt:
         state = "stopped"
     except BaseException as exc:
@@ -213,7 +218,7 @@ def train_world_model(config, steps=None, resume=None):
         try:
             agent.replay_rng_state = replay.rng.bit_generator.state
             agent.save(run / "world-final.pt")
-            publish(run, agent, started, state, diagnostics, infos, start_real)
+            publish(run, agent, started, state, diagnostics, infos, start_real, stop_reason)
         finally:
             if environments is not None:
                 environments.close()

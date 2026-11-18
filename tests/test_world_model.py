@@ -370,3 +370,41 @@ def test_online_workflow_counts_only_real_decisions_and_resumes_with_mock_enviro
     status = json.loads((second / "status.json").read_text())
     assert status["real_decisions"] == 8 and status["imagined_transitions"] == 0
     assert len(closed) == 2
+
+
+def test_online_workflow_stops_at_the_wall_clock_budget_and_validates_it(tmp_path, monkeypatch):
+    import time
+
+    from smg_rl.world_training import train_world_model
+
+    config = configuration(tmp_path)
+    config["parallel"]["workers"] = 2
+    config["world_model"].update(deterministic_size=16, stochastic_size=4, embedding_size=8,
+                                  hidden_size=16, channels=4, collect_vector_steps=1, checkpoint_steps=1000)
+
+    class SlowVector:
+        def __init__(self, *args, **kwargs):
+            pass
+
+        def seed(self, seed):
+            pass
+
+        def reset(self):
+            return {"image": np.zeros((2, 4, 16, 16), np.uint8), "scenario": np.eye(2, dtype=np.float32)}
+
+        def step(self, actions):
+            time.sleep(0.02)
+            return self.reset(), np.zeros(2), np.ones(2, dtype=bool), [{"best_progress": 0.0}] * 2
+
+        def close(self):
+            pass
+
+    monkeypatch.setattr("smg_rl.world_training.MeasuredSubprocVecEnv", SlowVector)
+    run = train_world_model(config, steps=10000, max_seconds=0.3)
+    status = json.loads((run / "status.json").read_text())
+    assert status["state"] == "completed" and status["stop_reason"] == "wall_clock_budget"
+    assert 0 < status["real_decisions"] < 10000 and status["imagined_transitions"] == 0
+    with pytest.raises(ValueError, match="wall-clock budget"):
+        train_world_model(config, steps=2, max_seconds=0)
+    finished = train_world_model(config, steps=2)
+    assert json.loads((finished / "status.json").read_text())["stop_reason"] == "real_decision_budget"
