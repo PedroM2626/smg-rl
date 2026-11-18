@@ -162,8 +162,10 @@ class PrioritizedFrames:
             'size': self.size, 'emitted': self.emitted, 'max_priority': self.max_priority,
             'rng': self.rng.bit_generator.state}
         used = min(self.next_frame, self.frame_capacity)
+        # Stored without deflate: three long-run saves crashed inside zlib's compress() with an access
+        # violation, and frame data compresses by only about 15%. np.load reads both layouts.
         with open(path, 'xb') as stream:
-            np.savez_compressed(stream, metadata=np.asarray(json.dumps(metadata)),
+            np.savez(stream, metadata=np.asarray(json.dumps(metadata)),
                 frames=self.frames[:used], frame_ids=self.frame_ids[:used], previous=self.previous[:used],
                 tree=self.tree, minimum=self.minimum, **self.arrays)
 
