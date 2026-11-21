@@ -7,7 +7,8 @@ canonical start in the deterministic emulator, but it reproduces a 312-action
 sequence found by beam search and fails after one or two random actions, so it has
 not learned the stage in a general sense; no agent has learned the stage from
 scratch without demonstrations or anchors. The furthest from-scratch result is on
-The Center of the Universe: 26% of its route confirmed, no gate reached. Assisted
+The Center of the Universe: a median of about 91% of its route confirmed (best attempt
+95.6%) after 14.1 million decisions, no gate reached. Assisted
 starts, scripted searches, detector fixtures and imagined trajectories are reported
 separately and never counted as learned mission completions.
 
@@ -22,6 +23,10 @@ separately and never counted as learned mission completions.
   policy of the last checkpoint crosses a molten planetoid on small platforms and dies there after 359 decisions at
   26.3% of the route. The chain was stopped by the owner after block 10; nothing is training. Details, per-block
   tables and limits: [Center training results](docs/center-training-20261114.md).
+  **Update, November 20, 2026:** the novelty arm was resumed and continued to block 62 (14,139,056 real decisions).
+  The median route rose through plateaus at about 47.5%, 60.8%, 71%, 79%, 84% and 91%; the best attempt reached
+  95.63%, and no attempt has reached the gate. Temporary regressions of 100 to 300 attempts occur and recover without
+  intervention. Per-block table: [Center training, blocks 26 to 62](docs/center-training-20261120.md).
 - **Sweet Sweet Galaxy gate (met, with limits).** The checkpoint after S5r block 29
   reaches the RAM star from the canonical start in 311 decisions in frozen greedy
   evaluation (`record-dqn`, epsilon 0, three runs that are identical because the
